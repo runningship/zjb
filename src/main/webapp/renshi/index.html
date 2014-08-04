@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<meta HTTP-EQUIV="expires" CONTENT="0">
+<title>人事管理</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" href="/zb/style/css.css">
+<link rel="stylesheet" href="/zb/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/zb/style/house.css">
+<script type="text/javascript" src="/zb/js/jquery.js"></script>
+<script src="/zb/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/zb/js/Dialog/jquery.artDialog.js?skin=aero"></script>
+<script type="text/javascript" src="/zb/js/Dialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src="/zb/js/jquery.caozuobendi.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $(document).on('click', '.aNavBtn', function(event) {
+        var aHref=$(this).attr( 'href');
+        $('#renshi_frame').attr('src',aHref);
+        return false;
+    });
+    $('.sider').find('a').eq(0).click();
+});
+</script>
+</head>
+<body>
+    <div class="body hmain">
+        <div class="sider">
+            <dl class="sidedl">
+                <dt></dt>
+                <dd><a class="aNavBtn" href="quyu_list.html"  target="renshi_frame" >区域列表</a></dd>
+                <dd><a class="aNavBtn" href="dept_list.html"  target="renshi_frame" >分公司列表</a></dd>
+            </dl>
+            <dl auth="rs_users" class="sidedl">
+                <dt></dt>
+                <dd auth="rs_users_list" ><a class="aNavBtn" href="user_list.html?dataScope=all"  target="renshi_frame" >人员列表</a></dd>
+            </dl>
+            <dl auth="rs_rz" class="sidedl">
+                <dt></dt>
+                <dd auth="rs_rz_add" ><a class="aNavBtn" href="ruzhi_add.html?dataScope=rs_rz"  target="renshi_frame" >登记提交</a></dd>
+                <dd auth="rs_rz_list" ><a class="aNavBtn" href="ruzhi_list.html?dataScope=rs_rz"  target="renshi_frame" >登记审核</a></dd>
+            </dl>
+            <dl auth="rs_zwtz" class="sidedl">
+                <dt></dt>
+                <dd auth="rs_zwtz_add" ><a class="aNavBtn" href="zwtz_add.html?dataScope=rs_zwtz"  target="renshi_frame" >申请调整</a></dd>
+                <dd auth="rs_zwtz_list" ><a class="aNavBtn" href="zwtz_list.html?dataScope=rs_zwtz"  target="renshi_frame" >待审核审核</a></dd>
+            </dl>
+            <dl auth="rs_lizhi" class="sidedl">
+                <dt></dt>
+                <dd auth="rs_lizhi_add" ><a class="aNavBtn" href="lizhi_add.html?dataScope=rs_lizhi"  target="renshi_frame" >离职申请</a></dd>
+                <dd auth="rs_lzsq_list" ><a class="aNavBtn" href="lzsq_list.html?dataScope=rs_lizhi"  target="renshi_frame" >待审核</a></dd>
+                <dd auth="rs_lizhi_list" ><a class="aNavBtn" href="lizhi_list.html?dataScope=rs_lizhi"  target="renshi_frame" >已离职人员</a></dd>
+            </dl>
+        </div>
+        <div class="mainer">
+            <iframe src="" id="renshi_frame" name="renshi_frame" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+    </div>
+</body>
+</html>

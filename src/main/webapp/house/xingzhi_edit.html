@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Examples</title>
+<link rel="stylesheet" href="/zb/style/css.css">
+<link rel="stylesheet" href="/zb/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/zb/style/house.css">
+<script type="text/javascript" src="/zb/js/jquery.js"></script>
+<script src="/zb/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/zb/js/Dialog/jquery.artDialog.js?skin=aero"></script>
+<script type="text/javascript" src="/zb/js/Dialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src="/zb/js/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/zb/js/jquery.timers.js"></script>
+<script type="text/javascript" src="/zb/js/jquery.caozuobendi.js"></script>
+<script type="text/javascript" src="/zb/js/buildHtml.js"></script>
+<script type="text/javascript" src="/zb/js/jquery.xianshang.users.js"></script>
+<script type="text/javascript" src="/zb/js/pagination.js"></script>
+<script type="text/javascript">
+  var getStr,xingzhi;
+      
+  var QueryOptions='';
+var dialog;
+
+function save(){
+    var url=$('form[name=form1]').attr('action');
+    YW.ajax({
+      type: 'get',
+      url: '/zb/c/house/updateXingzhi',
+  //    async:false,
+      data:formSerialize($('form[name=form1]')),
+      success: function(data){
+        art.dialog.opener.doSearch();
+        art.dialog.close();
+        alert("提交成功")
+      }
+    });
+    return false;
+}
+
+$(function(){
+
+  $.get('/zb/c/house/getQueryOptions', function(data) {
+   var hid=getParam('hid')
+      xingzhi=getParam('xingzhi');
+      $('#hid').val(hid);
+    QueryOptions=JSON.parse(data);
+    buildHtmlWithJsonArray("id_xingzhi",QueryOptions['xingzhi'],true); //房型
+    $('#id_xingzhi').val(xingzhi);
+  });
+});
+</script>
+<style type="text/css">
+body{ overflow: hidden;}
+</style>
+</head>
+<body class="hadd bodyer">
+<div id="id_house_see">
+<form name="form1" method="post" action="/zb/c/house/updateXingzhi" >
+  <input type="hidden" class="form-control" id="hid" name="hid" >
+  <table class="table table-condensed">
+      <td>
+        <div class="input-group">
+          <span class="input-group-addon" >性质</span>
+          <select class="form-control" id="id_xingzhi" name="xingzhi" style="width:100px">
+            <option value="${code}">${name}</option>
+          </select>
+        </div>
+      </td>
+  </table>
+    
+</form>
+<div class="btn-group">
+  <button onclick="save()" class="btn btn-primary ">提交</button>
+</div>
+</div>
+</body>
+</html>
