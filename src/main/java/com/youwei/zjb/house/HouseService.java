@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
-import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.BeanUtil;
@@ -18,12 +17,10 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.DateSeparator;
-import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.client.DaiKuanType;
 import com.youwei.zjb.client.FuKuan;
-import com.youwei.zjb.client.KeHuXingzhi;
 import com.youwei.zjb.client.KeHuLaiYuan;
+import com.youwei.zjb.client.KeHuXingzhi;
 import com.youwei.zjb.entity.Department;
 import com.youwei.zjb.entity.User;
 import com.youwei.zjb.entity.UserAuthority;
@@ -33,7 +30,6 @@ import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
-import com.youwei.zjb.work.PiYue;
 
 @Module(name="/house/")
 public class HouseService {
@@ -237,7 +233,6 @@ public class HouseService {
 		mv.data.put("zhuangxiu", ZhuangXiu.toJsonArray());
 		mv.data.put("kehu", KeHuXingzhi.toJsonArray());
 		mv.data.put("kehulaiyuan", KeHuLaiYuan.toJsonArray());
-		mv.data.put("piyue", PiYue.toJsonArray());
 		mv.data.put("fukuan", FuKuan.toJsonArray());
 		return mv;
 	}

@@ -10,15 +10,12 @@ import org.junit.Test;
 
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.user.UserQuery;
-import com.youwei.zjb.user.UserQuitService;
 import com.youwei.zjb.user.UserService;
-import com.youwei.zjb.user.entity.UserQuit;
 import com.youwei.zjb.util.DebugHelper;
 
 public class TestUserService {
 
 	UserService us = new UserService();
-	UserQuitService qs = new UserQuitService();
 	@Before
 	public void init(){
 		StartUpListener.initDataSource();
@@ -26,17 +23,6 @@ public class TestUserService {
 	
 	@Test
 	public void TestGetUserTree(){
-	}
-	
-	@Test
-	public void testAddUserQuit(){
-		UserQuit uq = new UserQuit();
-		uq.userId = 316;
-		uq.fyTo = 222;
-		uq.fyTo = 32;
-		uq.reason = "test";
-		uq.jiaojie = "test";
-		qs.add(uq);
 	}
 	
 	@Test

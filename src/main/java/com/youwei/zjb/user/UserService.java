@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -29,11 +27,8 @@ import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.cache.UserSessionCache;
 import com.youwei.zjb.entity.Department;
 import com.youwei.zjb.entity.Role;
-import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.entity.User;
 import com.youwei.zjb.entity.UserAuthority;
-import com.youwei.zjb.im.IMServer;
-import com.youwei.zjb.oa.entity.NoticeReceiver;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.sys.entity.PC;
@@ -127,21 +122,6 @@ public class UserService {
 		Map<String, JSONArray> quyus = groupByQuyu(users);
 		Map<String, JSONArray> depts = groupByDeptId(users);
 		
-		List<NoticeReceiver> receivers = dao.listByParams(NoticeReceiver.class, new String[]{"noticeId"}, new Object[]{noticeId});
-		for(JSONArray arr : depts.values()){
-			for(int i=0;i<arr.size();i++){
-				JSONObject obj = arr.getJSONObject(i);
-				for(NoticeReceiver nr : receivers){
-					if(String.valueOf(nr.receiverId).equals(obj.getString("userId"))){
-						System.out.println(nr.receiverId);
-						JSONObject state = new JSONObject();
-						state.put("selected", true);
-						obj.put("state", state);
-					}
-				}
-				
-			}
-		}
 		JSONArray root = merge(quyus,depts,users);
 //		mv.contentType="text/plain";
 		mv.data.put("result", 0);
