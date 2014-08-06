@@ -1,8 +1,6 @@
-package com.youwei.zjb.entity;
+package com.youwei.zjb.user.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -15,11 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.youwei.zjb.SimpDaoTool;
-
 /**
- * 房产公司，房产公司的子公司，店面，或部门，层级关系通过fid来关联
- * fid=0;表示为根级公司
+ * fid为0 表示公司，其他表示分公司
  */
 @Entity
 @Table(name="uc_comp")
@@ -32,7 +27,7 @@ public class Department {
 	public Integer id;
 	
 	/**
-	 * 上级公司id
+	 * 公司id
 	 */
 	public Integer fid;
 	
@@ -42,16 +37,28 @@ public class Department {
 	@Column(name="code_num")
 	public String codeNum;
 	
-	public String path;
+	@Column(name="auth_code")
+	public String authCode;
 	
-	public Department Parent(){
-		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class, fid);
-	}
-	public List<Department> DirectChildren(){
-		List<Department> children = SimpDaoTool.getGlobalCommonDaoService().listByParams(Department.class, new String[]{"fid"}, new Object[]{id});
-		if(children==null){
-			return new ArrayList<Department>();
-		}
-		return children;
+	public String cnum;
+	
+	public Integer pcnum;
+	
+	public String lxr;
+	
+	public String tel;
+	
+	public String beizhu;
+	
+	public Date addtime;
+	
+	public Integer flag;
+	
+	public Integer sh;
+	
+	public Integer share;
+	
+	public void Group(){
+		
 	}
 }

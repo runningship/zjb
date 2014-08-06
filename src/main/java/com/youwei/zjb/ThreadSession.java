@@ -1,6 +1,6 @@
 package com.youwei.zjb;
 
-import com.youwei.zjb.entity.User;
+import com.youwei.zjb.user.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 public class ThreadSession {

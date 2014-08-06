@@ -18,16 +18,12 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.client.FuKuan;
-import com.youwei.zjb.client.KeHuLaiYuan;
-import com.youwei.zjb.client.KeHuXingzhi;
-import com.youwei.zjb.entity.Department;
-import com.youwei.zjb.entity.User;
-import com.youwei.zjb.entity.UserAuthority;
 import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
+import com.youwei.zjb.user.entity.Department;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 
@@ -231,9 +227,6 @@ public class HouseService {
 		mv.data.put("zhuangtai", State.toJsonArray());
 		mv.data.put("shenhe", ShenHe.toJsonArray());
 		mv.data.put("zhuangxiu", ZhuangXiu.toJsonArray());
-		mv.data.put("kehu", KeHuXingzhi.toJsonArray());
-		mv.data.put("kehulaiyuan", KeHuLaiYuan.toJsonArray());
-		mv.data.put("fukuan", FuKuan.toJsonArray());
 		return mv;
 	}
 	
@@ -275,21 +268,15 @@ public class HouseService {
 		mv.data.put("house", JSONHelper.toJSONArray(list));
 		User fbr = service.get(User.class, house.userId);
 		if(fbr!=null){
-			Department dept = fbr.Department();
-			Department quyu = dept.Parent();
-			String fbrStr = quyu.namea+" "+dept.namea + " "+fbr.uname;
-			mv.data.put("fbr", fbrStr);
+//			Department dept = fbr.Department();
+//			Department quyu = dept.Parent();
+//			String fbrStr = quyu.namea+" "+dept.namea + " "+fbr.uname;
+//			mv.data.put("fbr", fbrStr);
 		}
 		Favorite fav = service.getUniqueByParams(Favorite.class, new String[]{"userId" , "houseId"}, new Object[]{ user.id , houseId });
 		mv.data.put("fav", fav==null ? 0:1);
 		if(user.id.equals(house.userId)){
 			mv.data.put("showTel", "true");
-		}
-		for(UserAuthority ua :  user.Authorities()){
-			if((authParent+"_xingzhi").equals(ua.name)){
-				mv.data.put("showTel", "true");
-				break;
-			}
 		}
 		return mv;
 	}
@@ -425,12 +412,6 @@ public class HouseService {
 		page = service.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		for(UserAuthority ua :  user.Authorities()){
-			if((query.authParent+"_xingzhi").equals(ua.name)){
-				mv.data.put("shy", "true");
-				break;
-			}
-		}
 		mv.data.put("page", JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern()));
 		return mv;
 	}

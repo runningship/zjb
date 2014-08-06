@@ -25,8 +25,7 @@ import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
-import com.youwei.zjb.entity.User;
-import com.youwei.zjb.sys.entity.Qzy;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/sys/")
@@ -81,32 +80,6 @@ public class AuthorityService {
 		User user = ThreadSession.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 删除了职务["+po.title+"]";
 		operService.add(OperatorType.权限记录, operConts);
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView addQzy(Qzy qzy){
-		ModelAndView mv = new ModelAndView();
-		Qzy po = dao.getUniqueByKeyValue(Qzy.class, "userId", qzy.userId);
-		if(po!=null){
-			throw new GException(PlatformExceptionType.BusinessException, "不能添加重复的签证员");
-		}
-		if(qzy.userId==null){
-			throw new GException(PlatformExceptionType.BusinessException, "请先选择签证员");
-		}
-		dao.saveOrUpdate(qzy);
-		mv.data.put("msg", "添加成功");
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView deleteQzy(int id){
-		ModelAndView mv = new ModelAndView();
-		Qzy po = dao.get(Qzy.class, id);
-		if(po!=null){
-			dao.delete(po);
-		}
-		mv.data.put("msg", "添加成功");
 		return mv;
 	}
 	
@@ -195,30 +168,5 @@ public class AuthorityService {
 		role.title = title;
 		dao.saveOrUpdate(role);
 		return new ModelAndView();
-	}
-	
-	@WebMethod
-	public ModelAndView getSubMenus(Authority authority , int userId){
-		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
-		if(user==null){
-			user = dao.get(User.class, userId);
-		}
-		if(user==null){
-			throw new GException(PlatformExceptionType.BusinessException, "用户不存在");
-		}
-		String hql = "from RoleAuthority where roleId=? and isMenu=1";
-		List<RoleAuthority> list = dao.listByParams(RoleAuthority.class, hql, user.roleId);
-		JSONArray results = new JSONArray();
-		for(RoleAuthority ra : list){
-			Authority au = Authority.valueOf(ra.name);
-			results.add(au.toJSONObject());
-		}
-		mv.data.put("menus", JSONHelper.toJSONArray(results));
-		return mv;
-	}
-	
-	public void getTopMenus(){
-		
 	}
 }

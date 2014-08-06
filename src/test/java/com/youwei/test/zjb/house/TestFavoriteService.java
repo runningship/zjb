@@ -9,10 +9,10 @@ import org.junit.Test;
 
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.entity.User;
 import com.youwei.zjb.house.FavoriteService;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.user.entity.User;
 
 public class TestFavoriteService {
 

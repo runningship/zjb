@@ -1,6 +1,7 @@
 package com.youwei.zjb.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
-import com.youwei.zjb.entity.Department;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/dept/")
@@ -28,15 +29,9 @@ public class DepartmentService {
 	@WebMethod
 	public ModelAndView add(Department dept){
 		if(dept.fid==null){
-			dept.fid=1;
+			dept.fid=0;
 		}
-		Department parent = dao.get(Department.class, dept.fid);
-		dao.saveOrUpdate(dept);
-		if(parent.path!=null){
-			dept.path=parent.path+dept.id;
-		}else{
-			dept.path=String.valueOf(dept.id);
-		}
+		dept.addtime = new Date();
 		dao.saveOrUpdate(dept);
 		return new ModelAndView();
 	}
@@ -53,9 +48,10 @@ public class DepartmentService {
 	public ModelAndView update(Department dept){
 		Department po = dao.get(Department.class, dept.id);
 		po.namea = dept.namea;
-		po.fid = dept.fid;
-		Department parent = dao.get(Department.class, dept.fid);
-		po.path = parent.path+po.id;
+		po.lxr = dept.lxr;
+		po.tel = dept.tel;
+		po.beizhu = dept.beizhu;
+		po.sh = dept.sh;
 		dao.saveOrUpdate(po);
 		return new ModelAndView();
 	}
@@ -89,10 +85,6 @@ public class DepartmentService {
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql = new StringBuilder("select d1.namea as quyu , d2.id as id , d2.namea as name from Department d1, Department d2 where d1.id=d2.fid and d1.id<>1 order by quyu ");
-//		if(query.quyuId!=null){
-//			hql.append(" and fid=? ");
-//			params.add(query.quyuId);
-//		}
 		page = dao.findPage(page, hql.toString(), true,  params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;

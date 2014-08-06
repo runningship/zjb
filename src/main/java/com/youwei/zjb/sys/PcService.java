@@ -14,9 +14,9 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.SimpDaoTool;
-import com.youwei.zjb.entity.Department;
 import com.youwei.zjb.sys.entity.AuthCode;
 import com.youwei.zjb.sys.entity.PC;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/pc/")

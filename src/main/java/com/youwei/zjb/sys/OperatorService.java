@@ -15,8 +15,8 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.entity.User;
 import com.youwei.zjb.sys.entity.OperRecord;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 

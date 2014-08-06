@@ -10,8 +10,8 @@ import org.bc.sdak.utils.LogUtil;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.SimpDaoTool;
-import com.youwei.zjb.entity.User;
-import com.youwei.zjb.entity.UserSession;
+import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.user.entity.UserSession;
 
 public class UserSessionCache {
 

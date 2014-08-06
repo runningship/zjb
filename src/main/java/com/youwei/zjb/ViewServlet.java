@@ -5,31 +5,15 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.logging.Level;
 
-import javassist.ClassClassPath;
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.NotFoundException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.bc.sdak.GException;
-import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.LogUtil;
-import org.bc.web.Handler;
-import org.bc.web.ModelAndView;
-import org.bc.web.ModuleManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,9 +21,7 @@ import org.jsoup.select.Elements;
 
 import com.youwei.zjb.cache.UserSessionCache;
 import com.youwei.zjb.entity.RoleAuthority;
-import com.youwei.zjb.entity.User;
-import com.youwei.zjb.entity.UserAuthority;
-import com.youwei.zjb.util.JSONHelper;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.SessionHelper;
 
 
@@ -93,7 +75,7 @@ public class ViewServlet extends HttpServlet{
 		}
 		
 		String authParent = req.getParameter("authParent");
-		List<UserAuthority> authList = user.Authorities();
+		List<RoleAuthority> authList = user.getRole().Authorities();
 //		JSONArray arr = JSONHelper.toJSONArray(authList);
 		if(!user.isSuper){
 			Elements list = doc.getElementsByAttribute("auth");
@@ -106,7 +88,7 @@ public class ViewServlet extends HttpServlet{
 					target = target.replace("$${authParent}", authParent);
 				}
 				boolean auth = false;
-				for(UserAuthority ra : authList){
+				for(RoleAuthority ra : authList){
 					if(ra.name.equals(target)){
 						auth = true;
 						break;

@@ -28,6 +28,10 @@ public class Role {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
+	/**
+	 * 公司
+	 */
+	public Integer cid;
 	
 	/**
 	 * 职务，相当于角色名称
@@ -45,7 +49,7 @@ public class Role {
 	
 	public Integer num;
 	
-	List<RoleAuthority> Authorities(){
+	public List<RoleAuthority> Authorities(){
 		return SimpDaoTool.getGlobalCommonDaoService().listByParams(RoleAuthority.class, new String[]{"roleId"}, new Object[]{id});
 	}
 }

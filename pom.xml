@@ -69,12 +69,6 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.7.3</version>
 		</dependency>
-		
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.websocket</groupId> -->
-<!-- 			<artifactId>javax.websocket-api</artifactId> -->
-<!-- 			<version>1.0</version> -->
-<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>com.belerweb</groupId>

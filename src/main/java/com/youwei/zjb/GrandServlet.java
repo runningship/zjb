@@ -29,7 +29,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.ModuleManager;
 
 import com.youwei.zjb.cache.UserSessionCache;
-import com.youwei.zjb.entity.User;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.SessionHelper;
 
 

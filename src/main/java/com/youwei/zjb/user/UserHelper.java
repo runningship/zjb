@@ -3,7 +3,7 @@ package com.youwei.zjb.user;
 import java.util.List;
 
 import com.youwei.zjb.SimpDaoTool;
-import com.youwei.zjb.entity.User;
+import com.youwei.zjb.user.entity.User;
 
 public class UserHelper {
 

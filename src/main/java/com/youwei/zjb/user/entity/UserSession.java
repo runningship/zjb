@@ -1,20 +1,27 @@
-package com.youwei.zjb.sys.entity;
+package com.youwei.zjb.user.entity;
+
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * 签证员 
- */
 @Entity
-public class Qzy {
+public class UserSession {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
 	public Integer userId;
+	
+	public String sessionId;
+	
+	public String ip;
+	
+	public Date addtime;
+	
+	public Date updatetime;
 	
 }

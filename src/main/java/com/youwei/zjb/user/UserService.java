@@ -25,14 +25,13 @@ import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.cache.UserSessionCache;
-import com.youwei.zjb.entity.Department;
 import com.youwei.zjb.entity.Role;
-import com.youwei.zjb.entity.User;
-import com.youwei.zjb.entity.UserAuthority;
+import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.sys.entity.PC;
-import com.youwei.zjb.user.entity.RenShiReview;
+import com.youwei.zjb.user.entity.Department;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
@@ -52,25 +51,7 @@ public class UserService {
 	public ModelAndView getUserTree(String dataScope){
 		
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
 		String code = "";
-		if(!"all".equals(dataScope)){
-			if(user!=null){
-				List<UserAuthority> authorities = user.Authorities();
-				code = user.orgpath;
-				for(UserAuthority ra : authorities){
-					if((dataScope+"_data_dept").equals(ra.name)){
-						code = user.Department().path;
-					}
-					if((dataScope+"_data_quyu").equals(ra.name)){
-						code = String.valueOf(user.Department().Parent().path);
-					}
-					if((dataScope+"_data_all").equals(ra.name)){
-						code = "";
-					}
-				}
-			}
-		}
 		
 		String sql = "select tt.*,xx.uname as user,xx.id as userId from (select c1.namea as pname , c2.namea as cname , c1.id as qid ,c2.id as did from uc_comp c1 left JOIN uc_comp c2 on c1.id=c2.fid where c1.fid=1"
 				+ " ) as tt"
@@ -133,7 +114,7 @@ public class UserService {
 	public ModelAndView authorities(){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		mv.data.put("authorities", JSONHelper.toJSONArray(user.Authorities()));
+		mv.data.put("authorities", JSONHelper.toJSONArray(user.getRole().Authorities()));
 		return mv;
 	}
 	@WebMethod
@@ -141,7 +122,6 @@ public class UserService {
 		ModelAndView mv = new ModelAndView();
 		List<Role> roles = dao.listByParams(Role.class, "from Role");
 		mv.data.put("roles", JSONHelper.toJSONArray(roles));
-		mv.data.put("rqtjs", RuQiTuJin.toJsonArray());
 		return mv;
 	}
 	
@@ -200,24 +180,11 @@ public class UserService {
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
 		
-		if(StringUtils.isEmpty(user.sfz)){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"sfz","");
-		}
-		User tmp = dao.getUniqueByKeyValue(User.class, "sfz" , user.sfz);
-		if(tmp!=null && !tmp.id.equals(user.id)){
-			throw new GException(PlatformExceptionType.BusinessException,  "身份证号已经存在");
-		}
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
 		po.gender = user.gender;
-		po.age = user.age;
-		po.xueli = user.xueli;
-		po.hunyin = user.hunyin;
-		po.sfz = user.sfz;
 		po.tel = user.tel;
 		po.address = user.address;
-		po.rqsj = user.rqsj;
-		po.rqtj = user.rqtj;
 		dao.saveOrUpdate(po);
 		return mv;
 	}
@@ -235,13 +202,6 @@ public class UserService {
 		if(dept==null){
 			throw new GException(PlatformExceptionType.BusinessException, "没有指定用户所属公司");
 		}
-		if(StringUtils.isEmpty(user.sfz)){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"sfz","");
-		}
-		User po = dao.getUniqueByKeyValue(User.class, "sfz" , user.sfz);
-		if(po!=null){
-			throw new GException(PlatformExceptionType.BusinessException,  "身份证号已经存在");
-		}
 		List<User> sprList = UserHelper.getUserWithAuthority("rs_rz_list");
 		if(sprList==null || sprList.size()==0){
 			throw new GException(PlatformExceptionType.BusinessException,  "没有用户拥有入职登记审核权限，请先在系统管理中设置入职登记审核人.或者联系系统管理员为您处理");
@@ -253,17 +213,10 @@ public class UserService {
 		user.pwd = SecurityHelper.Md5(DataHelper.User_Default_Password);
 		
 		dao.saveOrUpdate(user);
-		user.orgpath = dept.path+user.id;
+		//TODO
+//		user.orgpath = dept.path+user.id;
 		dao.saveOrUpdate(user);
-//		 添加审批项
-		for(User spr : sprList){
-			RenShiReview review = new RenShiReview();
-			review.category=RenShiReview.Join;
-			review.sh=0;
-			review.sprId = spr.id;
-			review.userId = user.id;
-			dao.saveOrUpdate(review);
-		}
+
 		User operUser = ThreadSession.getUser();
 		String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 添加了用户["+user.Department().namea+"-"+user.uname+"]";
 		operService.add(OperatorType.人事记录, operConts);

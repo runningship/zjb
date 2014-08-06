@@ -1,8 +1,7 @@
 package com.youwei.zjb.user;
 
-import com.youwei.zjb.AbstractQuery;
 
-public class UserQuery extends AbstractQuery{
+public class UserQuery{
 
 	public String name;
 	

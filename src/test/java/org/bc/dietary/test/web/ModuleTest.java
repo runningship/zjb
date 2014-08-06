@@ -1,7 +1,6 @@
 package org.bc.dietary.test.web;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
-import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
@@ -13,11 +12,7 @@ import org.junit.Test;
 
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
-import com.youwei.zjb.entity.Client;
-import com.youwei.zjb.entity.Department;
-import com.youwei.zjb.entity.FanKui;
 import com.youwei.zjb.entity.Role;
-import com.youwei.zjb.entity.User;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.House;
@@ -25,6 +20,8 @@ import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.entity.AuthCode;
 import com.youwei.zjb.sys.entity.OperRecord;
 import com.youwei.zjb.sys.entity.PC;
+import com.youwei.zjb.user.entity.Department;
+import com.youwei.zjb.user.entity.User;
 
 public class ModuleTest {
 
@@ -62,14 +59,6 @@ public class ModuleTest {
 		Page<District> page = new Page<District>();
 		page.setCurrentPageNo(1);
 		page = SimpDaoTool.getGlobalCommonDaoService().findPage(page, "from District");
-		System.out.println(page.getResult().size());
-	}
-	
-	@Test
-	public void testFanKui(){
-		Page<FanKui> page = new Page<FanKui>();
-		page.setCurrentPageNo(1);
-		page = SimpDaoTool.getGlobalCommonDaoService().findPage(page, "from FanKui");
 		System.out.println(page.getResult().size());
 	}
 	
@@ -120,15 +109,6 @@ public class ModuleTest {
 		page = SimpDaoTool.getGlobalCommonDaoService().findPage(page, "from AuthCode");
 		System.out.println(page.getResult().size());
 	}
-	
-	@Test
-	public void testClient(){
-		Page<Client> page = new Page<Client>();
-		page.setCurrentPageNo(1);
-		page = SimpDaoTool.getGlobalCommonDaoService().findPage(page, "from Client");
-		System.out.println(page.getResult().size());
-	}
-	
 	@Test
 	public void testPinyin() throws BadHanyuPinyinOutputFormatCombination{
 		HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();

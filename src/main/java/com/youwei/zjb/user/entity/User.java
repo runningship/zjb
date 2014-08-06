@@ -1,7 +1,6 @@
-package com.youwei.zjb.entity;
+package com.youwei.zjb.user.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -16,6 +15,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.youwei.zjb.SimpDaoTool;
+import com.youwei.zjb.entity.Role;
 
 /**
  * 终端用户
@@ -31,15 +31,25 @@ public class User {
 	@WebParam(name="userId")
 	public Integer id;
 	
+	/**
+	 * 分店
+	 */
 	@Column(name="did")
 	public Integer deptId;
 	
 	public String uname;
 	
+	/**
+	 * 登录帐号
+	 */
+	public String lname;
+	
 	@Column(name="lpwds")
 	public String pwd;
 	
 	public Date addtime;
+	
+	public Date lasttime;
 	
 	@Column(name="unid")
 	public Integer roleId;
@@ -53,53 +63,25 @@ public class User {
 	public String address;
 	
 	/**
-	 * 0 或null 在职,1 离职
+	 *TODO
 	 */
 	public Integer flag;
 	
 	/**
-	 * 入职登记是否审核
+	 * TODO
 	 */
 	public Integer sh;
 	
 	@Column(name="sex")
 	public Integer gender;
 	
-	public String xueli;
+	public Integer share;
 	
-	@Column(name="nling")
-	public Integer age;
-	
-	public String sfz;
-	
-	public Integer hunyin;
-	
-	/**
-	 * 入企时间
-	 */
-	public Date rqsj;
-	
-	/**
-	 * 离职时间
-	 */
-	public Date lzsj;
-	
-	/**
-	 * 入企途径
-	 */
-	public String rqtj;
-	
+	public String sim;
 	/**
 	 * 部门架构中的层次
 	 */
 	public String orgpath;
-	
-	/**
-	 * 人员架构中的层次
-	 */
-	public String dutypath;
-	
-	public Integer avatar;
 	
 	public transient boolean isSuper;
 	public Role getRole(){
@@ -108,18 +90,5 @@ public class User {
 	
 	public Department Department(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class, deptId);
-	}
-	
-	public List<UserAuthority> Authorities(){
-		List<UserAuthority> result = SimpDaoTool.getGlobalCommonDaoService().listByParams(UserAuthority.class, new String[]{"userId"}, new Object[]{id});
-		List<RoleAuthority> list = getRole().Authorities();
-		for(RoleAuthority ra : list){
-			UserAuthority ua = new UserAuthority();
-			ua.name = ra.name;
-			if(!result.contains(ua)){
-				result.add(ua);
-			}
-		}
-		return result;
 	}
 }

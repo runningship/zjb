@@ -11,9 +11,9 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.entity.User;
 import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/house/fav/")
