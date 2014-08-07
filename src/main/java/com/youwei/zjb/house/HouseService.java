@@ -11,7 +11,6 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.BeanUtil;
-import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -22,7 +21,6 @@ import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
-import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
@@ -45,24 +43,17 @@ public class HouseService {
 			mv.data.put("result", 2);
 		}else{
 			house.isdel = 0;
-			house.dateadd = new Date();
+			house.dateadds = new Date();
 			house.userId = user.id;
 			house.deptId = user.deptId;
-			if(house.sjia ==null){
-				house.sjia=0f;
+			if(house.zjia ==null){
+				house.zjia=0f;
 			}
 			if(house.mianji!=null && house.mianji!=0){
-				int jiage = (int) (house.sjia*10000/house.mianji);
+				int jiage = (int) (house.zjia*10000/house.mianji);
 				house.djia = (float) jiage;
 			}
 			service.saveOrUpdate(house);
-			String py = DataHelper.toPinyin(house.quyu);
-			if(StringUtils.isNotEmpty(py) && py.length()>0){
-				house.houseNumber=  py.toUpperCase().charAt(0)+"-" + house.id;
-				service.saveOrUpdate(house);
-			}else{
-				LogUtil.warning("生成房源编号失败,houseId="+house.id);
-			}
 			mv.data.put("msg", "发布成功");
 			mv.data.put("result", 0);
 		}
@@ -75,38 +66,18 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView update(House house){
 		ModelAndView mv = new ModelAndView();
-		String py = DataHelper.toPinyin(house.quyu);
-		if(StringUtils.isNotEmpty(py) && py.length()>0){
-			house.houseNumber=  py.toUpperCase().charAt(0)+"-" + house.id;
-		}else{
-			LogUtil.warning("生成房源编号失败,houseId="+house.id);
-		}
 		House po = service.get(House.class, house.id);
 		house.isdel = po.isdel;
-		house.dateadd = po.dateadd;
+		house.dateadds = po.dateadds;
 		house.userId = po.userId;
 		house.deptId = po.deptId;
 		if(house.mianji!=null && house.mianji!=0){
-			int jiage = (int) (house.sjia*10000/house.mianji);
+			int jiage = (int) (house.zjia*10000/house.mianji);
 			house.djia = (float) jiage;
 		}
 		service.saveOrUpdate(house);
 		User user = ThreadSession.getUser();
-		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.houseNumber+"]";
-		operService.add(OperatorType.房源记录, operConts);
-		mv.data.put("msg", "修改成功");
-		mv.data.put("result", 0);
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView updateXingzhi(int hid, String xingzhi){
-		ModelAndView mv = new ModelAndView();
-		House house = service.get(House.class, hid);
-		house.xingzhi = xingzhi;
-		service.saveOrUpdate(house);
-		User user = ThreadSession.getUser();
-		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房屋性质["+house.houseNumber+"]";
+		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
 		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "修改成功");
 		mv.data.put("result", 0);
@@ -202,14 +173,8 @@ public class HouseService {
 	
 	@WebMethod
 	public ModelAndView listMy(HouseQuery query ,Page<House> page){
-//		User user = ThreadSession.getUser();
-//		if(user==null){
-//			ModelAndView mv = new ModelAndView();
-//			mv.data.put("msg", "用户已经掉线");
-//			return mv;
-//		}
-//		query.userId = user.id;
-		query.userId = 396;
+		User user = ThreadSession.getUser();
+		query.userId = user.id;
 		return listAll(query ,page);
 	}
 	

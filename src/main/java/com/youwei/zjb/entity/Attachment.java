@@ -20,7 +20,7 @@ public class Attachment {
 	
 	public String filename;
 	
-	public transient String filename_encoded;
-	
 	public Date uploadTime;
+	
+	public Integer size;
 }

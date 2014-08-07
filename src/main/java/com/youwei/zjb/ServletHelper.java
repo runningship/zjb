@@ -31,9 +31,7 @@ import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.WebParam;
 
-import com.youwei.zjb.house.HouseAttribute;
 import com.youwei.zjb.util.DataHelper;
-import com.youwei.zjb.util.HqlHelper;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class ServletHelper {
@@ -239,12 +237,4 @@ public class ServletHelper {
 //		return path.substring(path.lastIndexOf("/"));
 	}
 	
-//	public static String getMethod(String path){
-//		if(StringUtils.isEmpty(path)){
-//			return "";
-//		}
-//		path = StringUtils.substringBefore(path, "?");
-//		//path = StringUtils.removeEnd(path, "/");
-//		return path.substring(path.lastIndexOf("/")+1);
-//	}
 }

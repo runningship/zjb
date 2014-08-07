@@ -7,12 +7,14 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.sys.entity.AuthCode;
 import com.youwei.zjb.sys.entity.PC;
@@ -32,34 +34,30 @@ public class PcService {
 		}
 		
 		if(pc.deptId==null){
-			mv.data.put("result", "1");
-			mv.data.put("msg", "授权失败，没有店id");
-			return mv;
+			throw new GException(PlatformExceptionType.BusinessException, "请先填写店面信息");
 		}
 		
-		if(StringUtils.isEmpty(pc.baseboard) && StringUtils.isEmpty(pc.cpu) && StringUtils.isEmpty(pc.harddrive) && StringUtils.isEmpty(pc.bios)){
-			mv.data.put("result", "2");
-			mv.data.put("msg", "机器码为空，不能授权，可能是由于您安装的是精简版的操作系统.");
-			return mv;
+		if(StringUtils.isEmpty(pc.mac) && StringUtils.isEmpty(pc.board) && StringUtils.isEmpty(pc.uuid)){
+			throw new GException(PlatformExceptionType.BusinessException, "机器码为空，不能授权，可能是由于您安装的是精简版的操作系统.");
 		}
 		
 		Department comp = dao.getUniqueByKeyValue(Department.class, "fid", 0);
 		AuthCode code = dao.getUniqueByKeyValue(AuthCode.class, "fidn", comp.id);
 		if(code==null || code.authCode==null || !code.authCode.equals(pc.authCode)){
-			mv.data.put("result", "3");
-			mv.data.put("msg", "授权码不正确,请联系系统管理员");
-			return mv;
+			throw new GException(PlatformExceptionType.BusinessException, "授权码不正确,请联系系统管理员");
 		}
 		
-		PC po = dao.getUniqueByParams(PC.class, new String[]{"deptId","baseboard","cpu","harddrive","bios"},	new Object[]{pc.deptId,pc.baseboard,pc.cpu,pc.harddrive,pc.bios});
+		PC po = dao.getUniqueByParams(PC.class, new String[]{"deptId","mac","board","uuid"},	new Object[]{pc.deptId,pc.mac,pc.board,pc.uuid});
 		if(po==null){
 			pc.addtime = new Date();
 			pc.lock=0;
 			dao.saveOrUpdate(pc);
+		}else{
+			throw new GException(PlatformExceptionType.BusinessException, "您已经申请过授权，无需重复申请");
 		}
 		
 		mv.data.put("result", "0");
-		mv.data.put("msg", "授权成功，等待审核");
+		mv.data.put("msg", "申请授权成功，等待审核");
 		return mv;
 	}
 	
@@ -77,10 +75,6 @@ public class PcService {
 		StringBuilder hql = new StringBuilder("select pc.id as id, pc.pcname as pcname, pc.addtime as addtime, pc.bios as bios, pc.cpu as cpu, pc.harddrive as harddrive, pc.baseboard as baseboard,"
 				+ " pc.lock as lock, pc.beizhu as beizhu,d.path as xpath,d.namea as deptName,q.namea as quyu from PC pc, Department d , Department q  where pc.deptId=d.id and d.fid=q.id");
 		List<Object> params = new ArrayList<Object>();
-//		if(query.deptId!=null){
-//			hql.append(" and deptId=? ");
-//			params.add(query.deptId);
-//		}
 		if(query.lock!=null){
 			hql.append(" and pc.lock=? ");
 			params.add(query.lock);

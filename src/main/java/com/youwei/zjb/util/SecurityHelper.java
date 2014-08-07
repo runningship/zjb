@@ -49,71 +49,11 @@ public class SecurityHelper {
 			return false;
 		}
 		for(PC pc : list){
-			if(target.baseboard.equals(pc.baseboard) && target.bios.equals(pc.bios) && target.cpu.equals(pc.cpu) && target.harddrive.equals(pc.harddrive)){
+			if(target.mac.equals(pc.mac) && target.board.equals(pc.board) && target.uuid.equals(pc.uuid)){
 				if(pc.lock==1){
 					return true;
 				}
 				throw new GException(PlatformExceptionType.BusinessException, "授权审核中...");
-			}
-		}
-//		if(hasMac(list,pc)){
-//			return true;
-//		}
-//		if(hasCPU(list,pc)){
-//			return true;
-//		}
-//		if(hasHarddrive(list,pc)){
-//			return true;
-//		}
-//		if(hasUUID(list,pc)){
-//			return true;
-//		}
-		return false;
-	}
-	
-	private static boolean hasMac(List<PC> list, PC target){
-		if(StringUtils.isEmpty(target.baseboard)){
-			return false;
-		}
-		for(PC pc : list){
-			if(pc.baseboard!=null && pc.baseboard.contains(target.baseboard)){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private static boolean hasCPU(List<PC> list, PC target){
-		if(StringUtils.isEmpty(target.cpu)){
-			return false;
-		}
-		for(PC pc : list){
-			if(pc.cpu!=null && pc.cpu.contains(target.cpu)){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private static boolean hasHarddrive(List<PC> list, PC target){
-		if(StringUtils.isEmpty(target.harddrive)){
-			return false;
-		}
-		for(PC pc : list){
-			if(pc.harddrive!=null && pc.harddrive.contains(target.harddrive)){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private static boolean hasUUID(List<PC> list, PC target){
-		if(StringUtils.isEmpty(target.bios)){
-			return false;
-		}
-		for(PC pc : list){
-			if(pc.bios!=null && pc.bios.contains(target.bios)){
-				return true;
 			}
 		}
 		return false;

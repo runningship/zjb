@@ -19,10 +19,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.youwei.zjb.cache.UserSessionCache;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.SessionHelper;
 
 
 public class ViewServlet extends HttpServlet{
@@ -36,24 +34,14 @@ public class ViewServlet extends HttpServlet{
 		String path = req.getPathInfo();
 		String clazz = path.replace("/", ".");
 		clazz = clazz.replace(".html", "");
-//		if(clazz.startsWith(".")){
-//			clazz = StringUtils.removeStart(clazz, ".");
-//		}
 		
 		//com.youwei.zjb.view.client.client_list
-		SessionHelper.updateSession(req);
 //		req.getSession().setMaxInactiveInterval(20);
 		resp.setContentType(getMimeType(path));
 		if(!path.endsWith(".html")){
 			return;
 		}
-		User user = UserSessionCache.getUser(req.getSession().getId());
-		if(user==null){
-			//返回登录
-//			return;
-			resp.sendRedirect(req.getContextPath()+"/login/login.html");
-			return;
-		}
+		User user = ThreadSession.getUser();
 		String filePath = req.getServletContext().getRealPath("/")+path;
 		String html = FileUtils.readFileToString(new File(filePath),"utf-8");
 		html = html.replace("$${userId}", user.id.toString());

@@ -1,32 +1,12 @@
 package com.youwei.zjb.util;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
-import org.bc.sdak.utils.LogUtil;
-
-import com.youwei.zjb.cache.UserSessionCache;
+import com.youwei.zjb.user.entity.User;
 
 public class SessionHelper {
-	public static void updateSession(HttpServletRequest req){
-		if(req.getSession().isNew()==false){
-			return;
-		}
-		String oldSessionId = "";
-		if(req.getCookies()==null){
-			return;
-		}
-		for(Cookie coo : req.getCookies()){
-			if("JSESSIONID".equals(coo.getName())){
-				oldSessionId = coo.getValue();
-				break;
-			}
-		}
-		if(StringUtils.isEmpty(oldSessionId)){
-			return;
-		}
-		UserSessionCache.updateSession(oldSessionId, req.getSession().getId());
-		LogUtil.info("old session ["+oldSessionId+"] to new session ["+req.getSession().getId()+"]");
+	
+	public static void initHttpSession(HttpSession session, User user) {
+		session.setAttribute("user", user);
 	}
 }

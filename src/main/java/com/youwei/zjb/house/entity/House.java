@@ -16,6 +16,11 @@ public class House {
 	public Integer id;
 
 	/**
+	 * 房产公司
+	 */
+	public Integer cid;
+	
+	/**
 	 * 店面编号
 	 */
 	@Column(name = "did")
@@ -77,38 +82,31 @@ public class House {
 	 */
 	public Integer hxw;
 
-	/**
-	 * 房型
-	 */
-	public Integer hxy;
-
-	public String chaoxiang;
 
 	/**
 	 * 装修
 	 */
+	@Column(name="zxiu")
 	public Integer zhuangxiu;
 
-	@Column(nullable=false)
+	@Column(name="mji", nullable=false)
 	public Float mianji;
 
 	/**
-	 * 租价
+	 * 总价(单位万)
 	 */
 	public Float zjia;
-
-	/**
-	 * 售价
-	 */
-	public Float sjia;
 
 	public Float djia;
 
 	/**
-	 * 联系人
+	 * 联系人,房主
 	 */
 	public String lxr;
 
+	/**
+	 * 房主电话，/ 分隔
+	 */
 	public String tel;
 
 	/**
@@ -120,31 +118,14 @@ public class House {
 
 	public String beizhu;
 
-	// TODO
-	
-	@Column(name = "xxlb")
-	public Integer jiaoyi;
-
-	@Column(name = "yongtu")
-	public String leibie;
-
 	 /**
 	 * 状态：4 在售，6 已售，7 停售
 	 */
-	@Column(name="flag")
 	public String ztai;
-
-	@Column(name = "biaoshi")
-	public String xingzhi;
-
-	public String tuijie;
 
 	public Integer dateyear;
 
-	public Date dateweituo;
-	public Date datejiaofang;
-
-	public Date dateadd;
+	public Date dateadds;
 
 	public Date dategenjin;
 
@@ -153,26 +134,17 @@ public class House {
 	 */
 	public String fav;
 
-	public String houseNumber;
-
 	/**
 	 * 1,已删除 0 或空未删除
 	 */
 	public Integer isdel;
 
 	public Integer sh;
-
-	// TODO
-	public String chanquan;
-
-	// TODO
-	/**
-	 * 1 有，0 无
-	 */
-	public Integer tudizheng;
 	
-	public String fordlr;
+	public Integer seeGX;
 	
-	public String fordlrtel;
+	public Integer seeHM;
+	
+	public Integer seeFH;
 
 }

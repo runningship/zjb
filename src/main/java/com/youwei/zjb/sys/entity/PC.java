@@ -2,16 +2,12 @@ package com.youwei.zjb.sys.entity;
 
 import java.util.Date;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GeneratorType;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 授权的电脑
@@ -24,6 +20,14 @@ public class PC {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
+	/**
+	 * 公司
+	 */
+	public Integer cid;
+	
+	/**
+	 * 店面
+	 */
 	@Column(name="did")
 	public Integer deptId;
 	
@@ -32,20 +36,27 @@ public class PC {
 	
 	public Date addtime;
 	
-//	@Column(name="code_ma")
-	public String baseboard="";
+	public Date lasttime;
 	
-	public String cpu="";
+	public String lastip;
 	
-	public String harddrive="";
+	@Column(name="code_ma")
+	public String mac="";
 	
-	public String bios="";
+	@Column(name="code_pc")
+	public String board="";
 	
-	@Column(name="llock")
-	public Integer lock;
+	/**
+	 * 加密过的机器码
+	 */
+	@Column(name="code_cp")
+	public String uuid="";
 	
 	@Column(name="regnumber")
 	public String authCode;
+	
+	@Column(name="llock")
+	public Integer lock;
 	
 	public String beizhu;
 }

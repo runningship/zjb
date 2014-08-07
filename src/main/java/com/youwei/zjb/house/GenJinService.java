@@ -34,7 +34,6 @@ public class GenJinService {
 		User user = ThreadSession.getUser();
 		House house = service.get(House.class, gj.hid);
 		gj.userId = user.id;
-		gj.bianhao = house.houseNumber;
 		gj.area = house.area +house.dhao+"#"+house.fhao;
 		gj.addtime = new Date();
 		service.saveOrUpdate(gj);

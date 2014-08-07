@@ -50,4 +50,13 @@
 	    <url-pattern>/file/download/*</url-pattern>
 	</servlet-mapping>
 	
+	<filter>
+		<filter-name>session</filter-name>
+		<filter-class>com.youwei.zjb.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>session</filter-name>
+		<url-pattern>/c/*</url-pattern>
+		<url-pattern>/v/*</url-pattern>
+	</filter-mapping>
 </web-app>
