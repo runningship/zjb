@@ -29,6 +29,9 @@ public class ThreadSession {
     
     public static User getUser(){
     	HttpSession session = HttpSession.get();
+    	if(session==null){
+    		return null;
+    	}
     	return (User)session.getAttribute("user");
     }
     public static String getIp(){

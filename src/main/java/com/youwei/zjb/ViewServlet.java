@@ -44,28 +44,14 @@ public class ViewServlet extends HttpServlet{
 		User user = ThreadSession.getUser();
 		String filePath = req.getServletContext().getRealPath("/")+path;
 		String html = FileUtils.readFileToString(new File(filePath),"utf-8");
-		html = html.replace("$${userId}", user.id.toString());
-		html = html.replace("$${myName}", user.uname);
-		html = html.replace("$${myTel}", user.tel==null? "": user.tel);
 		Document doc = Jsoup.parse(html);
-		
-		clazz = "com.youwei.zjb.view"+clazz;
-		String dataScope = req.getParameter("dataScope");
-		try {
-			Class<?> pageClass = Class.forName(clazz);
-			Method init = pageClass.getDeclaredMethod("initPage", Document.class ,String.class);
-			Object page = pageClass.newInstance();
-			init.invoke(page, doc , dataScope);
-		} catch (IllegalArgumentException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException ex) {
-			LogUtil.warning("page init failed.");
-		}catch (InvocationTargetException e1) {
-			e1.printStackTrace();
-		}
-		
-		String authParent = req.getParameter("authParent");
-		List<RoleAuthority> authList = user.getRole().Authorities();
-//		JSONArray arr = JSONHelper.toJSONArray(authList);
-		if(!user.isSuper){
+		if(user!=null){
+			html = html.replace("$${userId}", user.id.toString());
+			html = html.replace("$${myName}", user.uname);
+			html = html.replace("$${myTel}", user.tel==null? "": user.tel);
+			
+			String authParent = req.getParameter("authParent");
+			List<RoleAuthority> authList = user.getRole().Authorities();
 			Elements list = doc.getElementsByAttribute("auth");
 			for(Element e : list){
 				String target = e.attr("auth");
@@ -86,8 +72,17 @@ public class ViewServlet extends HttpServlet{
 					e.remove();
 				}
 			}
-		}else{
-			System.out.println("super admin login...");
+		}
+		clazz = "com.youwei.zjb.view"+clazz;
+		try {
+			Class<?> pageClass = Class.forName(clazz);
+			Method init = pageClass.getDeclaredMethod("initPage", Document.class ,HttpServletRequest.class);
+			Object page = pageClass.newInstance();
+			doc = (Document) init.invoke(page, doc , req);
+		} catch (IllegalArgumentException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException ex) {
+			LogUtil.warning("page init failed.");
+		}catch (InvocationTargetException e1) {
+			e1.printStackTrace();
 		}
 		
 		

@@ -83,7 +83,6 @@ public class User {
 	 */
 	public String orgpath;
 	
-	public transient boolean isSuper;
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}
