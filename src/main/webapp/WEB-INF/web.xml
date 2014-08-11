@@ -21,6 +21,7 @@
 	<servlet-mapping>
 	    <servlet-name>grand</servlet-name>
 	    <url-pattern>/c/*</url-pattern>
+	    <url-pattern>/phone/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

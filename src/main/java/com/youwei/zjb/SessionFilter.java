@@ -31,7 +31,7 @@ public class SessionFilter implements Filter{
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		String path = req.getPathInfo();
-		if(path.contains("pay")){
+		if(path.contains("")){
 		chain.doFilter(request, response);
 			return;
 		}

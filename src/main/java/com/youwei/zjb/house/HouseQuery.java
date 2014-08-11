@@ -8,19 +8,21 @@ public class HouseQuery{
 	public List<String> quyus;
 	public FangXing fangxing;
 	public List<String> jiaoyis;
-	public State ztai;
+	public String ztai;
 	public String leibie;
 	public Float sjiaStart;
 	public Float sjiaEnd;
 	public Float zjiaStart;
 	public Float zjiaEnd;
+	public Float djiaStart;
+	public Float djiaEnd;
 	public String xpath;
 	public DateType dateType;
 	public String dateStart;
 	public String dateEnd;
 	public String louxing;
-	public Float mianjiStart;
-	public Float mianjiEnd;
+	public Float mjiStart;
+	public Float mjiEnd;;
 	public Integer lcengStart;
 	public Integer lcengEnd;
 	public String chaoxiang;
@@ -31,4 +33,10 @@ public class HouseQuery{
 	public String area;
 	public String houseNumber;
 	public String authParent;
+	
+	// for phone client
+	//current page number
+	public Integer page;
+	public String specArea;
+	public String search;
 }

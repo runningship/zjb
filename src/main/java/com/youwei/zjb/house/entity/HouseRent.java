@@ -88,8 +88,7 @@ public class HouseRent {
 	/**
 	 * 装修
 	 */
-	@Column(name="zxiu")
-	public Integer zhuangxiu;
+	public Integer zxiu;
 
 	@Column(name="mji", nullable=false)
 	public Float mianji;

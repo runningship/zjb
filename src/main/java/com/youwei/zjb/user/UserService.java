@@ -210,7 +210,7 @@ public class UserService {
 		user.flag = 0;
 		user.lock = 0;
 		user.pwd = SecurityHelper.Md5(DataHelper.User_Default_Password);
-		
+		user.cid = dept.fid;
 		dao.saveOrUpdate(user);
 		//TODO
 //		user.orgpath = dept.path+user.id;

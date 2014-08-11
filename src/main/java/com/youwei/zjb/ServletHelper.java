@@ -76,10 +76,14 @@ public class ServletHelper {
 //				Class<?> pt = Class.forName(pTypes[i].getName());
         		if("int".equals(typeName) || "java.lang.Integer".equals(typeName)){
         			if(pval==null || pval.length==0){
-        				throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");
+        				if("int".equals(typeName)){
+        					throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");
+        				}else{
+        					obj=null;
+        				}
+        			}else{
+        				obj = Integer.valueOf(pval[0]);
         			}
-//        			obj = Integer.valueOf(String.valueOf(obj));
-        			obj = Integer.valueOf(pval[0]);
         		}else if("long".equals(typeName) || "java.lang.Long".equals(typeName)){
         			if(pval==null || pval.length==0){
         				throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");

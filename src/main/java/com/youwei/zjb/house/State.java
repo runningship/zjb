@@ -1,13 +1,15 @@
 package com.youwei.zjb.house;
 
+import org.bc.sdak.utils.LogUtil;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public enum State {
 
-	有效(1),
-	无效(4),
-	暂缓(3);
+	在售(4),
+	已售(6),
+	停售(7);
 	private int code;
 	
 	private State( int code){
@@ -28,5 +30,19 @@ public enum State {
 			arr.add(jobj);
 		}
 		return arr;
+	}
+	
+	public static State parse(String code){
+		try{
+			int codec = Integer.valueOf(code);
+			for(State zx : State.values()){
+				if(zx.code==codec){
+					return zx;
+				}
+			}
+		}catch(Exception ex){
+			LogUtil.warning("state with error code "+ code);
+		}
+		return null;
 	}
 }

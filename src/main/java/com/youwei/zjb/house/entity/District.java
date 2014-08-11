@@ -49,12 +49,12 @@ public class District {
 	/**
 	 * 维度
 	 */
-	public String maplat;
+	public Float maplat;
 	
 	/**
 	 * 经度
 	 */
-	public String maplng;
+	public Float maplng;
 	
 	public Date addtime;
 	

@@ -23,11 +23,9 @@ public class House {
 	/**
 	 * 店面编号
 	 */
-	@Column(name = "did")
-	public Integer deptId;
+	public Integer did;
 
-	@Column(name = "uid")
-	public Integer userId;
+	public Integer uid;
 
 	@Column(nullable=false)
 	public String quyu;
@@ -49,7 +47,8 @@ public class House {
 	 */
 	public String fhao;
 
-	public String luduan;
+	@Column(name="luduan")
+	public String address;
 
 	/**
 	 * 楼层
@@ -86,11 +85,9 @@ public class House {
 	/**
 	 * 装修
 	 */
-	@Column(name="zxiu")
-	public Integer zhuangxiu;
+	public String zxiu;
 
-	@Column(name="mji", nullable=false)
-	public Float mianji;
+	public Float mji;
 
 	/**
 	 * 总价(单位万)
@@ -123,9 +120,11 @@ public class House {
 	 */
 	public String ztai;
 
-	public Integer dateyear;
+	@Column(name="dateyear")
+	public Integer year;
 
-	public Date dateadds;
+	@Column(name="dateadds")
+	public Date dateadd;
 
 	public Date dategenjin;
 
@@ -136,9 +135,13 @@ public class House {
 
 	/**
 	 * 1,已删除 0 或空未删除
+	 * 好像没用
 	 */
 	public Integer isdel;
 
+	/**
+	 * 1 审核通过，0 审核不通过
+	 */
 	public Integer sh;
 	
 	public Integer seeGX;

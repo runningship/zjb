@@ -43,14 +43,14 @@ public class HouseService {
 			mv.data.put("result", 2);
 		}else{
 			house.isdel = 0;
-			house.dateadds = new Date();
-			house.userId = user.id;
-			house.deptId = user.deptId;
+			house.dateadd = new Date();
+			house.uid = user.id;
+			house.did = user.deptId;
 			if(house.zjia ==null){
 				house.zjia=0f;
 			}
-			if(house.mianji!=null && house.mianji!=0){
-				int jiage = (int) (house.zjia*10000/house.mianji);
+			if(house.mji!=null && house.mji!=0){
+				int jiage = (int) (house.zjia*10000/house.mji);
 				house.djia = (float) jiage;
 			}
 			service.saveOrUpdate(house);
@@ -68,11 +68,11 @@ public class HouseService {
 		ModelAndView mv = new ModelAndView();
 		House po = service.get(House.class, house.id);
 		house.isdel = po.isdel;
-		house.dateadds = po.dateadds;
-		house.userId = po.userId;
-		house.deptId = po.deptId;
-		if(house.mianji!=null && house.mianji!=0){
-			int jiage = (int) (house.zjia*10000/house.mianji);
+		house.dateadd = po.dateadd;
+		house.uid = po.uid;
+		house.did = po.did;
+		if(house.mji!=null && house.mji!=0){
+			int jiage = (int) (house.zjia*10000/house.mji);
 			house.djia = (float) jiage;
 		}
 		service.saveOrUpdate(house);
@@ -231,7 +231,7 @@ public class HouseService {
 		List<House> list = new ArrayList<House>();
 		list.add(house);
 		mv.data.put("house", JSONHelper.toJSONArray(list));
-		User fbr = service.get(User.class, house.userId);
+		User fbr = service.get(User.class, house.uid);
 		if(fbr!=null){
 //			Department dept = fbr.Department();
 //			Department quyu = dept.Parent();
@@ -240,7 +240,7 @@ public class HouseService {
 		}
 		Favorite fav = service.getUniqueByParams(Favorite.class, new String[]{"userId" , "houseId"}, new Object[]{ user.id , houseId });
 		mv.data.put("fav", fav==null ? 0:1);
-		if(user.id.equals(house.userId)){
+		if(user.id.equals(house.uid)){
 			mv.data.put("showTel", "true");
 		}
 		return mv;
@@ -249,10 +249,9 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView listAll(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
-		System.out.println(BeanUtil.toString(query));
 		StringBuilder hql = null;
 		if(StringUtils.isNotEmpty(query.xpath)){
-			hql = new StringBuilder(" select h from  House h  ,User u where h.userId=u.id and u.id is not null and u.orgpath like ? ");
+			hql = new StringBuilder(" select h from  House h  ,User u where h.uid=u.id and u.id is not null and u.orgpath like ? ");
 			params.add(query.xpath+"%");
 		}else{
 			hql = new StringBuilder(" select h  from House  h where 1=1 ");
@@ -301,10 +300,6 @@ public class HouseService {
 			}
 			hql.append(" )");
 		}
-		if(query.ztai!=null){
-			hql.append(" and h.ztai = ?");
-			params.add(String.valueOf(query.ztai.getCode()));
-		}
 		if(StringUtils.isNotEmpty(query.leibie)){
 			hql.append(" and h.leibie = ? ");
 			params.add(query.leibie);
@@ -335,13 +330,13 @@ public class HouseService {
 			hql.append(" and h.lxing= ? ");
 			params.add(query.louxing);
 		}
-		if(query.mianjiStart!=null){
-			hql.append(" and h.mianji>= ? ");
-			params.add(query.mianjiStart);
+		if(query.mjiStart!=null){
+			hql.append(" and h.mji>= ? ");
+			params.add(query.mjiStart);
 		}
-		if(query.mianjiEnd!=null){
-			hql.append(" and h.mianji<= ? ");
-			params.add(query.mianjiEnd);
+		if(query.mjiEnd!=null){
+			hql.append(" and h.mji<= ? ");
+			params.add(query.mjiEnd);
 		}
 		if(query.lcengStart!=null){
 			hql.append(" and h.lceng>= ? ");
@@ -361,7 +356,7 @@ public class HouseService {
 		}
 		
 		if(query.userId!=null){
-			hql.append(" and h.userId= ? ");
+			hql.append(" and h.uid= ? ");
 			params.add(query.userId);
 		}
 		if(query.isdel==null){

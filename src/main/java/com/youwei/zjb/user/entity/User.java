@@ -28,8 +28,9 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@WebParam(name="userId")
 	public Integer id;
+	
+	public Integer cid;
 	
 	/**
 	 * 分店

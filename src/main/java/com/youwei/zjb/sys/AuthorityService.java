@@ -82,17 +82,6 @@ public class AuthorityService {
 	}
 	
 	@WebMethod
-	public ModelAndView listQzy(){
-		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder();
-		hql.append("select u.uname as uname,qzy.id as id ,r.title as title ,u.tel as tel,u.sfz as sfz, u.gender as gender,u.address as address,u.rqsj as rqsj, u.lzsj as lzsj,d.namea as deptName "
-				+ "from User  u, Department d,Role r ,Qzy qzy where u.roleId = r.id and d.id = u.deptId and u.id=qzy.userId");
-		List<Map> list = dao.listAsMap(hql.toString());
-		mv.data.put("data", JSONHelper.toJSONArray(list));
-		return mv;
-	}
-	
-	@WebMethod
 	public ModelAndView rolesList(Page<Role> page){
 		ModelAndView mv = new ModelAndView();
 		page = dao.findPage(page,  "from Role");

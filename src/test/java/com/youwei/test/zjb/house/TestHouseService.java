@@ -94,16 +94,6 @@ public class TestHouseService {
 	}
 	
 	@Test
-	public void testListByMianJi(){
-		HouseService hs = new HouseService();
-		HouseQuery hq = new HouseQuery();
-		hq.mianjiStart=50f;
-		hq.mianjiEnd=60f;
-		ModelAndView mv = hs.listAll(hq,new Page<House>());
-		printResult(mv);
-	}
-	
-	@Test
 	public void testListByLouCeng(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
