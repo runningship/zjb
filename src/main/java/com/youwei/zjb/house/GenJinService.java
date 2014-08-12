@@ -32,9 +32,7 @@ public class GenJinService {
 	public ModelAndView add(GenJin gj){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		House house = service.get(House.class, gj.hid);
-		gj.userId = user.id;
-		gj.area = house.area +house.dhao+"#"+house.fhao;
+		gj.uid = user.id;
 		gj.addtime = new Date();
 		service.saveOrUpdate(gj);
 		mv.data.put("msg", "保存成功");
@@ -75,7 +73,7 @@ public class GenJinService {
 	public ModelAndView list(GenJinQuery query , Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder(" select gj.id as id,gj.hid as houseId,gj.conts as conts,gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu ,gj.area as area, gj.bianhao as bianhao, "
-				+ "u.uname as uname,dept.namea as deptName from  GenJin gj  ,User u,Department dept where gj.userId=u.id and u.id is not null and dept.id=u.deptId");
+				+ "u.uname as uname,dept.namea as deptName from  GenJin gj  ,User u,Department dept where gj.userId=u.id and u.id is not null and dept.id=u.did");
 		List<Object> params = new ArrayList<Object>();
 		if(StringUtils.isNotEmpty(query.xpath)){
 			hql.append(" and u.orgpath like ? ");

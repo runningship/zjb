@@ -40,7 +40,7 @@ public class OperatorService {
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		params.add(operType);
-		StringBuilder hql = new StringBuilder("select r.conts as conts , u.uname as uname , d.namea as deptName ,r.addtime as addtime, r.ip as ip from OperRecord r ,User u , Department d where r.uid=u.id and u.deptId=d.id and r.type=?");
+		StringBuilder hql = new StringBuilder("select r.conts as conts , u.uname as uname , d.namea as deptName ,r.addtime as addtime, r.ip as ip from OperRecord r ,User u , Department d where r.uid=u.id and u.did=d.id and r.type=?");
 		hql.append(HqlHelper.buildDateSegment("r.addtime", query.addtimeStart, DateSeparator.After, params));
 		hql.append(HqlHelper.buildDateSegment("r.addtime", query.addtimeEnd, DateSeparator.Before, params));
 		if(StringUtils.isNotEmpty(query.xpath)){

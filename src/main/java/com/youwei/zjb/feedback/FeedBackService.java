@@ -27,7 +27,7 @@ public class FeedBackService {
 	public ModelAndView list(Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,20) as conts ,fb.addtime as addtime , u.uname as uname, d.namea as deptName from FeedBack fb, User u, "
-				+ "Department d where fb.userId=u.id and u.deptId=d.id");
+				+ "Department d where fb.userId=u.id and u.did=d.id");
 		List<Object> params = new ArrayList<Object>();
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));

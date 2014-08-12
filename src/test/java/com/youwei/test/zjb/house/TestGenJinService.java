@@ -55,8 +55,6 @@ public class TestGenJinService {
 	public void testAdd(){
 		GenJinService service = new GenJinService();
 		GenJin gj = new GenJin();
-		gj.area="蜀鑫雅苑";
-		gj.bianhao = "S-123";
 		gj.conts="测试";
 		gj.addtime = new Date();
 		service.add(gj);

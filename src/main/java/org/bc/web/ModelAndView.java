@@ -1,8 +1,5 @@
 package org.bc.web;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.sf.json.JSONObject;
 
 public class ModelAndView {
@@ -16,7 +13,7 @@ public class ModelAndView {
 	public JSONObject data = new JSONObject();
 	
 	public String returnText = "";
-	
+	public boolean encodeReturnText;
 	public ModelAndView(){
 		
 	}

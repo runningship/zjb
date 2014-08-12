@@ -19,6 +19,7 @@ public class PFavService {
 	@WebMethod(name="phone/addFavorite.asp")
 	public ModelAndView add(Integer houseId , Integer userId){
 		ModelAndView mv = new ModelAndView();
+		mv.encodeReturnText=true;
 		JSONArray arr = new JSONArray();
 		JSONObject jobj = new JSONObject();
 		if(houseId==null || userId==null){

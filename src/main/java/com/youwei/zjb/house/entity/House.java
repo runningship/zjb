@@ -127,6 +127,8 @@ public class House {
 	public Date dateadd;
 
 	public Date dategenjin;
+	
+	public Date dategjlock;
 
 	/**
 	 * 收藏此房源的人

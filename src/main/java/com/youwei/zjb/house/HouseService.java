@@ -45,7 +45,7 @@ public class HouseService {
 			house.isdel = 0;
 			house.dateadd = new Date();
 			house.uid = user.id;
-			house.did = user.deptId;
+			house.did = user.did;
 			if(house.zjia ==null){
 				house.zjia=0f;
 			}
@@ -174,7 +174,7 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView listMy(HouseQuery query ,Page<House> page){
 		User user = ThreadSession.getUser();
-		query.userId = user.id;
+		query.userid = user.id;
 		return listAll(query ,page);
 	}
 	
@@ -355,9 +355,9 @@ public class HouseService {
 			params.add("%"+query.chanquan+"%");
 		}
 		
-		if(query.userId!=null){
+		if(query.userid!=null){
 			hql.append(" and h.uid= ? ");
-			params.add(query.userId);
+			params.add(query.userid);
 		}
 		if(query.isdel==null){
 			hql.append(" and ( isdel= 0 or isdel is null) ");

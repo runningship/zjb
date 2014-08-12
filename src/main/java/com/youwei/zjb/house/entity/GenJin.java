@@ -17,12 +17,14 @@ public class GenJin {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
+	public Integer cid;
+	
+	public Integer did;
 	
 	/**
 	 * 用户id
 	 */
-	@Column(name="uid")
-	public Integer userId;
+	public Integer uid;
 	
 	/**
 	 * 房源id
@@ -37,11 +39,13 @@ public class GenJin {
 	
 	public Date addtime;
 	
-	public Integer sh =0;
+	public Integer sh;
 	
 	public Integer chuzu;
 	
-	public String area;
+	//与House.ztai对应
+	public Integer flag;
 	
-	public String bianhao;
+	//状态改变记录
+	public String ztai;
 }

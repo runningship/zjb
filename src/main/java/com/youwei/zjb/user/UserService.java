@@ -97,7 +97,7 @@ public class UserService {
 	public ModelAndView getUserTree2(int noticeId){
 		ModelAndView mv = new ModelAndView();
 		String hql = "select child.namea as cname,parent.namea as pname ,child.id as did ,child.fid as qid ,u.uname as user ,u.id as userId ,u.hunyin as hunyin "+
-					"from Department child,Department parent , User u where child.fid = parent.id and child.id=u.deptId and u.flag <> 1  ";
+					"from Department child,Department parent , User u where child.fid = parent.id and child.id=u.did and u.flag <> 1  ";
 		List<Map> users = dao.listAsMap(hql);
 		Map<String, JSONArray> quyus = groupByQuyu(users);
 		Map<String, JSONArray> depts = groupByDeptId(users);
@@ -194,10 +194,10 @@ public class UserService {
 		if(StringUtils.isEmpty(user.uname)){
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
-		if(user.deptId==null){
-			user.deptId = -1;
+		if(user.did==null){
+			user.did = -1;
 		}
-		Department dept = dao.get(Department.class, user.deptId);
+		Department dept = dao.get(Department.class, user.did);
 		if(dept==null){
 			throw new GException(PlatformExceptionType.BusinessException, "没有指定用户所属公司");
 		}
@@ -230,7 +230,7 @@ public class UserService {
 		List<Object> params = new ArrayList<Object>();
 		User user = ThreadSession.getUser();
 		hql.append("select review.sh as rzsh, u.uname as uname,u.id as uid ,r.title as title ,u.tel as tel,u.sfz as sfz, u.gender as gender,u.address as address,u.rqsj as rqsj, u.lzsj as lzsj,d.namea as deptName "
-				+ "from User  u, Department d,Role r , RenShiReview review where u.sh=0 and u.roleId = r.id and d.id = u.deptId and u.id=review.userId and review.sprId=? and review.category='join' ");
+				+ "from User  u, Department d,Role r , RenShiReview review where u.sh=0 and u.roleId = r.id and d.id = u.did and u.id=review.userId and review.sprId=? and review.category='join' ");
 		params.add(user.id);
 		query.sh=null;
 		fillQuery(query,hql,params);
@@ -306,7 +306,7 @@ public class UserService {
 		StringBuilder hql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		hql.append("select u.uname as uname,u.id as uid ,r.title as title ,u.tel as tel,u.sfz as sfz, u.gender as gender,u.address as address,u.rqsj as rqsj, u.lzsj as lzsj,d.namea as deptName "
-				+ "from User  u, Department d,Role r where u.roleId = r.id and d.id = u.deptId ");
+				+ "from User  u, Department d,Role r where u.roleId = r.id and d.id = u.did ");
 		fillQuery(query,hql,params);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));

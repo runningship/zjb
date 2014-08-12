@@ -6,6 +6,7 @@ public class HouseQuery{
 
 	public HouseAttribute xingzhi;
 	public List<String> quyus;
+	
 	public FangXing fangxing;
 	public List<String> jiaoyis;
 	public String ztai;
@@ -27,7 +28,7 @@ public class HouseQuery{
 	public Integer lcengEnd;
 	public String chaoxiang;
 	public String chanquan;
-	public Integer userId;
+	public Integer userid;
 	public Integer isdel = 0;
 	public Integer id;
 	public String area;
@@ -36,6 +37,7 @@ public class HouseQuery{
 	
 	// for phone client
 	//current page number
+	public String quyu;
 	public Integer page;
 	public String specArea;
 	public String search;

@@ -1,5 +1,6 @@
 package com.youwei.zjb.phone;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +37,10 @@ public class PHouseService {
 	@WebMethod(name="nearby.asp")
 	public ModelAndView nearBy(float longitude , float latitude){
 		ModelAndView mv = new ModelAndView();
-		String hql="select area,maplat,maplng,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area " 
+		String hql="select area as name,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area " 
 							+" and ((maplat>=? and maplat<=?) and (maplng>=? and maplng<=?)) group by annex.area) as tt where xarea = area";
-		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset*2 , latitude+latOffset*2 , longitude-lngOffset*2 , longitude+lngOffset*2);
+		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset , latitude+latOffset , longitude-lngOffset , longitude+lngOffset);
+		mv.encodeReturnText=true;
 		mv.returnText = JSONHelper.toJSONArray(list).toString();
 		return mv;
 	}
@@ -46,6 +48,7 @@ public class PHouseService {
 	@WebMethod(name="detail.asp")
 	public ModelAndView detail(int houseId , Integer userId){
 		ModelAndView mv = new ModelAndView();
+		mv.encodeReturnText=true;
 		House house = dao.get(House.class, houseId);
 		JSONArray arr = new JSONArray();
 		JSONObject result = JSONHelper.toJSON(house);
@@ -72,14 +75,11 @@ public class PHouseService {
 			result.put("latitude", "");
 			result.put("longitude", "");
 		}
-		User me = ThreadSession.getUser();
-		if(me!=null){
-			Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{me.id,houseId});
-			if(po==null){
-				result.put("isFav", "0");
-			}else{
-				result.put("isFav", "1");
-			}
+		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{userId,houseId});
+		if(po==null){
+			result.put("isfav", "0");
+		}else{
+			result.put("isfav", "1");
 		}
 		//状态
 		State state = State.parse(house.ztai);
@@ -114,14 +114,15 @@ public class PHouseService {
 	@WebMethod(name="list.asp")
 	public ModelAndView list(HouseQuery query){
 		ModelAndView mv = new ModelAndView();
+		mv.encodeReturnText=true;
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql  = new StringBuilder();
-		if(query.userId!=null){
+		if(query.userid!=null){
 			//我的收藏
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
 					+ " h.lceng as lceng, h.zceng as zceng from House h , Favorite f where h.sh=1 and f.houseId=h.id and f.userId=?");
-			params.add(query.userId);
+			params.add(query.userid);
 		}else{
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
@@ -134,9 +135,24 @@ public class PHouseService {
 			hq.specArea = query.specArea;
 			query = hq;
 		}
+		if(StringUtils.isNotEmpty(query.ztai)){
+			String[] arr = query.ztai.split(",");
+			hql.append(" and ( ");
+			for(int i=0;i<arr.length;i++){
+				if(StringUtils.isEmpty(arr[i])){
+					continue;
+				}
+				hql.append(" h.ztai = ? ");
+				if(i<arr.length-1){
+					hql.append(" or ");
+				}
+				params.add(arr[i]);
+			}
+			hql.append(" )");
+		}
 		if(StringUtils.isNotEmpty(query.specArea)){
-			hql.append(" and h.area like ?");
-			params.add("%"+query.specArea+"%");
+			hql.append(" and h.area = ?");
+			params.add(query.specArea);
 		}
 		if(query.mjiStart!=null){
 			hql.append(" and h.mji>= ? ");
@@ -170,14 +186,15 @@ public class PHouseService {
 			hql.append(" and h.lceng<= ? ");
 			params.add(query.lcengEnd);
 		}
-		if(query.quyus!=null){
+		if(StringUtils.isNotEmpty(query.quyu)){
 			hql.append(" and ( ");
-			for(int i=0;i<query.quyus.size();i++){
-				hql.append(" h.quyu = ? ");
-				if(i<query.quyus.size()-1){
+			String[] arr = query.quyu.split(",");
+			for(int i=0;i<arr.length;i++){
+				hql.append(" h.quyu like ? ");
+				if(i<arr.length-1){
 					hql.append(" or ");
 				}
-				params.add(query.quyus.get(i));
+				params.add("%"+arr[i]+"%");
 			}
 			hql.append(" )");
 		}

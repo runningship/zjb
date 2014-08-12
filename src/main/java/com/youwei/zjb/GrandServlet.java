@@ -2,6 +2,7 @@ package com.youwei.zjb;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLEncoder;
 
 import javassist.ClassClassPath;
 import javassist.ClassPool;
@@ -75,7 +76,11 @@ public class GrandServlet extends HttpServlet{
 					resp.setContentType(mv.contentType);
 				}
 				if(StringUtils.isNotEmpty(mv.returnText)){
-					resp.getWriter().write(mv.returnText);
+					if(mv.encodeReturnText){
+						resp.getWriter().write(Escape.escape(mv.returnText));
+					}else{
+						resp.getWriter().write(mv.returnText);
+					}
 				}else{
 					resp.getWriter().write(mv.data.toString());
 				}

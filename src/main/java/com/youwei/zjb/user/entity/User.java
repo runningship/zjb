@@ -36,7 +36,7 @@ public class User {
 	 * 分店
 	 */
 	@Column(name="did")
-	public Integer deptId;
+	public Integer did;
 	
 	public String uname;
 	
@@ -89,6 +89,6 @@ public class User {
 	}
 	
 	public Department Department(){
-		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class, deptId);
+		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class, did);
 	}
 }
