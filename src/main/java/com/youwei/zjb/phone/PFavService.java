@@ -17,7 +17,7 @@ public class PFavService {
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
 	@WebMethod(name="phone/addFavorite.asp")
-	public ModelAndView add(Integer houseId , Integer userId){
+	public ModelAndView add(String houseId , Integer userId){
 		ModelAndView mv = new ModelAndView();
 		mv.encodeReturnText=true;
 		JSONArray arr = new JSONArray();
@@ -29,17 +29,15 @@ public class PFavService {
 			mv.returnText = arr.toString();
 			return mv;
 		}
-		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{userId ,houseId});
-		if(po==null){
-			po = new Favorite();
-			po.houseId = houseId;
-			po.userId = userId;
-			dao.saveOrUpdate(po);
-			jobj.put("result", "0");
+		String[] hids = houseId.split(",");
+		String result = "";
+		for(String hid : hids){
+			result = triggerFav(Integer.valueOf(hid) , userId);
+		}
+		jobj.put("result", result);
+		if("0".equals(result)){
 			jobj.put("msg", "收藏成功");
 		}else{
-			dao.delete(po);
-			jobj.put("result", "1");
 			jobj.put("msg", "已取消收藏");
 		}
 		arr.add(jobj);
@@ -47,4 +45,17 @@ public class PFavService {
 		return mv;
 	}
 	
+	private String triggerFav(int hid , int uid){
+		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{uid ,hid});
+		if(po==null){
+			po = new Favorite();
+			po.houseId = hid;
+			po.userId = uid;
+			dao.saveOrUpdate(po);
+			return "0";
+		}else{
+			dao.delete(po);
+			return "1";
+		}
+	}
 }

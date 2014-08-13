@@ -20,6 +20,7 @@ import com.youwei.zjb.sys.entity.AuthCode;
 import com.youwei.zjb.sys.entity.PC;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.util.JSONHelper;
+import com.youwei.zjb.util.SecurityHelper;
 
 @Module(name="/pc/")
 public class PcService {
@@ -51,6 +52,7 @@ public class PcService {
 		if(po==null){
 			pc.addtime = new Date();
 			pc.lock=0;
+			pc.uuid = SecurityHelper.Md5(pc.uuid);
 			dao.saveOrUpdate(pc);
 		}else{
 			throw new GException(PlatformExceptionType.BusinessException, "您已经申请过授权，无需重复申请");

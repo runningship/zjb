@@ -1,6 +1,7 @@
 package com.youwei.zjb.phone;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.Track;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 @Module(name="/house/")
 public class PHouseService {
@@ -63,6 +65,7 @@ public class PHouseService {
 		Department dept = dao.get(Department.class, house.did);
 		Department comp = dao.get(Department.class, house.cid);
 		
+		result.put("dateadd", new SimpleDateFormat("yyyy/M/dd HH:mm:ss").format(house.dateadd));
 		result.put("dname", dept.namea);
 		result.put("cname", comp.namea);
 		User user = dao.get(User.class,house.uid);
@@ -128,7 +131,10 @@ public class PHouseService {
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
 					+ " h.lceng as lceng, h.zceng as zceng from House h where h.sh=1 ");
 		}
-		
+		if(StringUtils.isNotEmpty(query.search)){
+			hql.append(" and area like ?");
+			params.add("%"+query.search+"%");
+		}
 		if(StringUtils.isNotEmpty(query.specArea)){
 			HouseQuery hq = new HouseQuery();
 			hq.page = query.page;

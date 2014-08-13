@@ -117,6 +117,7 @@ public class GrandServlet extends HttpServlet{
 	}
 
 	private void processGException(HttpServletResponse resp ,GException ex){
+		LogUtil.log(Level.WARN, "警告", ex);
 		resp.setStatus(400);
 		JSONObject jobj = new JSONObject();
 		if(ex.getType()==PlatformExceptionType.ParameterMissingError){
