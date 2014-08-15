@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>授权</title>
+<link href="/style/css.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="/style/style.css" rel="stylesheet">
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="/js/jquery.timers.js" type="text/javascript"></script>
+<script src="/js/jquery.input.js" type="text/javascript"></script>
+<script src="/js/jquery.j.tool.js" type="text/javascript"></script>
+<link href="/js/Ladda/ladda-themeless.min.css" rel="stylesheet">
+<script src="/js/Ladda/spin.min.js" type="text/javascript"></script>
+<script src="/js/Ladda/ladda.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/buildHtml.js"></script>
+<script type="text/javascript" src="/js/sysinfo.js"></script>
+<style>
+    /* html,body{overflow: hidden; overflow-y: auto;} */
+    .city_list li{ float: left; margin-right: 10px;}
+    .btn_submit_box{ position: absolute; right:50px; bottom: 20px;}
+    .winBox li{ position: relative;}
+</style>
+<script type="text/javascript">
+var winBoxHeight=0;
+function setCity(){
+    $.post('/c/city/list', function(data, textStatus, xhr) {
+        var  json = JSON.parse(data);
+        buildHtmlWithJsonArray('set_citys' , json.citys ,true);
+    });
+}
+function setDomSize(){
+    $('html,body').height('100%').width('100%').css({'overflow':'hidden','overflow-y':'hidden'});
+    var domW=$(document).width(),
+    winBox=$('.winBox'),
+    WinBoxW=$('body').width(),
+    winBoxH=$('body').height(),
+    //alert(WinBoxW+'|'+winBoxH);
+    winBoxLi=winBox.children('li');
+    winBoxLi.height(winBoxH).css({'overflow':'hidden','overflow-y':'auto'});
+}
+function goto_marTop(ThiGoto){
+    //$('.winBox').animate({'margin-top':-$('#'+ThiGoto).offset().top}, 1000);
+    $('.winBox').animate({'margin-top':ThiGoto}, 600);
+}
+function btnAction(){
+    $(document).on('click', '.apage', function(event) {
+        var Thi=$(this),
+        ThiGoto=Thi.data('goto'),
+        ThiNext=Thi.data('next'),
+        ThiIndex=Thi.index(),
+        ThiLi=Thi.parents('li'),
+        ThiLiH=ThiLi.height(),
+        LiBoxHeight=0;
+        if(ThiNext=='next'){
+            var l = Ladda.create(this);
+            l.start();
+            for(var i=0;i<=ThiIndex;i++){
+               LiBoxHeight=+Thi.parents('ul').find('li').eq(i).height()
+            }
+            var ThiFormId=ThiLi.attr('data-formId');
+            winBoxHeight=-LiBoxHeight;
+            if(ThiFormId=="auth"){
+                var form=$(ThiFormId),
+                getCode=$('#authCode').val(),
+                param={
+                    authCode:getCode
+                };
+                YW.ajax({
+                    type: 'POST',
+                    async:false,
+                    url: '/c/dept/listDept',
+                    data:param,
+                    success: function(data){
+                        var json = JSON.parse(data);
+                        if(json['depts'].length>0){
+                            buildHtmlWithJsonArray('fendian' , json['depts'] , "true");
+                            var inTime=setTimeout(function(){
+                                l.stop();
+                                goto_marTop(winBoxHeight);
+                                clearTimeout(inTime);
+                            },1000);
+                        }else{
+
+                        }
+                        return false;
+                    },complete:function(){
+                    }
+                });
+            }else if(ThiFormId=="idFendian"){
+                winBoxHeight=-LiBoxHeight;
+                var form=$(ThiFormId),
+                getDid=$('select[name=fendian]').val(),
+                getDname=$('select[name=fendian]').text(),
+                getCode=$('#authCode').val(),
+                param;
+
+                window.parent.getSysData(function(json){
+                    param=json;
+                    param.authCode=getCode;
+                    param.did=getDid[0];
+                    blockAlert(getCode)
+                    YW.ajax({
+                        type: 'POST',
+                        async:false,
+                        url: '/c/pc/add',
+                        data:param,
+                        success: function(data){
+                            l.stop();
+                            $('.view_fendian').text(getDname);
+                            var inTime=setTimeout(function(){
+                                goto_marTop(winBoxHeight);
+                                clearTimeout(inTime);
+                            },1000)
+                        },error:function(e){
+                            var msg=JSON.parse(e.responseText)
+                            art.dialog({
+                                content:msg.msg,
+                                ok:function(){
+                                    goto_marTop(0);
+                                    parent.onClickNav(0);
+                                },
+                                okVal:'前去登陆'
+                            })
+                        },complete:function(){
+                            l.stop();
+                        }
+                    });
+                });
+                            return false;
+            }else if(ThiFormId==""){
+                var inTime=setTimeout(function(){
+                    goto_marTop(0);
+                    clearTimeout(inTime);
+                },1000);
+            }else {
+
+            }
+        }else if(ThiNext=='p'){
+            for(var i=0;i<=ThiIndex;i++){
+               LiBoxHeight=+Thi.parents('ul').find('li').eq(i).height()
+            }
+            winBoxHeight=(LiBoxHeight-ThiLiH);
+            goto_marTop(winBoxHeight);
+        }else{
+            winBoxHeight=0;
+            parent.onClickNav(0);
+            goto_marTop(winBoxHeight);
+        }
+    }).on('click', '.btn_city', function(event) {
+        var Thi=$(this),
+        ThiCity=Thi.data('city'),
+        ThiText=Thi.text();
+        goto_marTop('body2');
+        $('#city').val(ThiCity);
+        return false;
+    });
+}
+$(document).ready(function() {
+//    setCity();
+    setDomSize();
+    btnAction();
+    // Ladda.bind( 'button', { timeout: 2000 } );
+    $('.view_city').text(decodeURI(getParam('cityName')));
+});
+$(window).resize(function() {
+    setDomSize();
+});
+
+</script>
+</head>
+<body style="position: relative;">
+<ul class="winBox">
+    <li id="body1" data-formId="auth">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="page-header">
+                    <h1><b style="padding:0 25px;"></b>授权验证 <small>请输入授权码</small></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">当前城市：</label>
+                        <div class="col-xs-6 view_city"></div>
+                    </div>
+                </div>
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label for="authCode" class="col-xs-3 control-label">授权密码：</label>
+                        <div class="col-xs-6">
+                            <input type="password" class="form-control" id="authCode" name="authCode">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10 btn_submit_box" style="margin-left:8.33333333%;">
+            <button class=" pull-right btn btn-primary ladda-button apage" data-style="expand-right" data-goto="body2" data-next="next"><span class="ladda-label">下一步</span></button>
+        </div>
+    </li>
+    <li id="body2" data-formId="idFendian">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="page-header">
+                    <h1><b style="padding:0 25px;"></b>授权范围 <small>请选择所在分公司</small></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">当前城市：</label>
+                        <div class="col-xs-6 view_city"></div>
+                    </div>
+                </div>
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label for="city" class="col-xs-3 control-label">选择分店：</label>
+                        <div class="col-xs-6">
+                            <select class="form-control" multiple size="6" name="fendian">
+                                <option class="fendian" value="${id}">${name}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10 btn_submit_box" style="margin-left:8.33333333%;">
+            <button class=" pull-right btn btn-primary ladda-button apage" data-style="expand-left" data-goto="body3" data-next="next"><span class="ladda-label">提交</span></button>
+            <button class=" pull-right btn btn-link apage" data-next="p">上一步</button>
+        </div>
+    </li>
+    <li id="body3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="page-header">
+                    <h1><b style="padding:0 25px;"></b>授权成功 <small>机器授权成功</small></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="bs-callout bs-callout-info col-xs-10" style="margin-left:8.33333333%;">
+                    <h4>注册信息</h4>
+                    <ol>
+                        <li>城市：<span class="view_city"></span></li>
+                        <li>分店：<span class="view_fendian"></span></li>
+                        <li></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10 btn_submit_box" style="margin-left:8.33333333%;">
+            <button class=" pull-right btn btn-primary apage" data-style="expand-left"><span class="ladda-label" data-next="0">立即登录</span></button>
+        </div>
+    </li>
+</ul>
+</body>
+</html>
