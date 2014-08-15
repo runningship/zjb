@@ -24,9 +24,9 @@ import com.youwei.zjb.util.SessionHelper;
 public class SessionFilter implements Filter{
 	private static List<String> excludes= new ArrayList<String>();
 	static{
-		excludes.add("/user/login");
-		excludes.add("/pc/add");
-		excludes.add("/dept/listDept");
+		excludes.add("/c/user/login");
+		excludes.add("/c/pc/add");
+		excludes.add("/c/dept/listDept");
 		excludes.add("/login/index.html");
 		excludes.add("/login/iframe_reg.html");
 	}

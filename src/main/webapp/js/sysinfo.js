@@ -2,7 +2,7 @@
 function loadHardwareInfo(callback){
     try{
     var exec = require('child_process').exec;
-    var command = "7.exe";
+    var command = "hinf.exe";
     var xx = exec(command, function(err, stdout, stderr) {
         var fs=require("fs");
         var result = fs.readFileSync("sys.data","utf-8");
