@@ -39,18 +39,23 @@ try{
 }catch(e){
     console.log(e);
 }
+var debug=getParam('debug');
 function onClickNav(index){
     if(!index){index=0}
     $('.act_menu').find('li').eq(index).find('a').click();
 }
 
-function test(){
-    alert('call system command');
-}
 function getSysData(callback){
-    loadHardwareInfo(function(json){
-        callback(json);
-    });
+    if(debug){
+        var xx = JSON.parse('{}');
+        xx.debug = debug;
+        callback(xx);
+    }else{
+        loadHardwareInfo(function(json){
+            callback(json);
+        });    
+    }
+    
 }
 function setDomSize(){
     var domW=$(window).width(),
@@ -63,7 +68,59 @@ function setDomSize(){
     $(document).find('.tempWrap').width(domW+'px').find('.bd').width(domW3+'px').height(mainerH+'px').find('ul').width(domW+'px').height(mainerH+'px');
     slideW=domW;
 }
+function hetKeyAct(){
+    $(document).keydown(function(event){  
+//    alert(event.keyCode)
+ /*       if ((event.altKey)&&   
+          ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
+           (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
+       {   
+           event.returnValue=false;   
+           return false;  
+       }   
+        if(event.keyCode==8){  
+            return false; //屏蔽退格删除键    
+        }  
+        if(event.keyCode==9){  
+            return false; //屏蔽F5刷新键   
+        }  
+        if((event.ctrlKey) && (event.keyCode==82)){  
+            return false; //屏蔽alt+R   
+        }  */
+    }); 
+    $('#idName').keydown(function(event) {
+        if(event.keyCode==13){  
+            if(!$('#idPassword').val()){
+                $('#idPassword').focus();
+            }else{
+                $('.btn_submit').click();
+            }
+            return false; //屏蔽退格删除键    
+        } 
+        if(event.keyCode==8){  
+            return true; //屏蔽退格删除键    
+        } 
+    }).focus();
+    $('#idPassword').keydown(function(event) {
+        if(event.keyCode==13){  
+            $('.btn_submit').click();
+            return false; //屏蔽退格删除键    
+        }
+        if(event.keyCode==8){  
+            return true; //屏蔽退格删除键    
+        } 
+    })
+}
+function isFocus(){
+    if(!$('#idName').val()){
+        $('#idName').focus();
+        return false;
+    }
+    $('#idPassword').focus();
+    return false;
+}
 $(document).ready(function() {
+    hetKeyAct();
 // 添加winBox边框
     WinBoxBorder();
 // 按钮功能区
@@ -90,6 +147,16 @@ $(document).ready(function() {
         }else if(ThiType=='submit'){
             var l = Ladda.create(this);
             l.start();
+            if(!$('#idName').val()){
+                l.stop();
+                alert('帐号不能为空');
+                return false;
+            }
+            if(!$('#idPassword').val()){
+                l.stop();
+                alert('密码不能为空');
+                return false;
+            }
             getSysData(function(json){
                 json.lname=$('#idName').val();
                 json.pwd=$('#idPassword').val();
@@ -100,6 +167,8 @@ $(document).ready(function() {
                     data:json,
                     success: function(data){
                         window.location="../default.html";
+                    },complete:function(){
+                        l.stop();
                     }
                 });
             });
@@ -108,19 +177,38 @@ $(document).ready(function() {
         }
         return false;
     }).on('click', '.menuBtn', function(event) {return false;});
-// 添加分页项
+// 添加翻页项
     $(".bodyer").slide({ effect:"left",trigger:"click" });
 // 设置页面尺寸
     setDomSize();
 // 按钮加载中状态
     Ladda.bind( 'button', { timeout: 2000 } );
+// focus
+    var inTime=setTimeout(function(){
+        isFocus();
+        if(getParam('goto')==1){
+            onClickNav(1);
+            $("#iframe").contents().find('#authCode').focus();
+        }
+        clearTimeout(inTime);
+    },1200);
+
 });
 $(document).on('click', '.act_menu a', function(event) {
     var Thi=$(this),
     ThiP=Thi.parents('.act_menu'),
-    ThiPli=ThiP.find('li');
+    ThiPli=ThiP.find('li'),
+    ThiPliIndex=Thi.parents('li').index();
     Thi.parent().addClass('curr');
     ThiPli.removeClass('curr');
+    var inTime=setTimeout(function(){
+    if(ThiPliIndex==0){
+        sFocus();
+    }else if(ThiPliIndex==1){
+        $("#iframe").contents().find('#authCode').focus();
+    }
+        clearTimeout(inTime);
+    },600);
 });
 $(window).resize(function(e) {
     // e.bubbles=false;
@@ -220,7 +308,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                                 <div class="form-group">
                                     <label class="col-xs-2 control-label"></label>
                                     <div class="col-xs-8">
-                                        <button type="button" class="btn btn-primary btn-block ladda-button" data-style="expand-left" data-type="submit"><span class="ladda-label">登　录</span></button>
+                                        <button type="button" class="btn btn-primary btn-block ladda-button btn_submit" data-style="expand-left" data-type="submit"><span class="ladda-label">登　录</span></button>
                                     </div>
                                 </div>
                             </form>

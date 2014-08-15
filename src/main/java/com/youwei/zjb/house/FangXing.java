@@ -5,41 +5,49 @@ import net.sf.json.JSONObject;
 
 public enum FangXing {
 
-	单间("单间"," hxf = 1 "),
-	房1("1房"," hxf = 1 "),
-	房2("2房"," hxf = 2 "),
-	房3("3房"," hxf = 3 "),
-	房4("4房"," hxf = 4 "),
-	房5("5房"," hxf = 5 "),
-	单间1房("单间+1房"," hxf=2 "),
-	房1到2("1-2房"," hxf =1 or hxf = 2 "),
-	房2到3("2-3房"," hxf = 2 or hxf = 3 "),
-	房3到4("3-4房"," hxf = 3 or hxf = 4 "),
-	房4到5("4-5房"," hxf = 4 or hxf = 5 "),
-	房6("6房以上"," hxf >= 6 ");
+	房1厅0卫0("1房0厅0卫",1,0,0),
+	房1厅1卫0("1房1厅0卫",1,1,0),
+	房1厅1卫1("1房1厅1卫",1,1,1),
+	房2厅1卫1("2房2厅1卫",2,1,1),
+	房2厅2卫1("2房2厅1卫",2,2,1),
+	房3厅1卫1("3房1厅1卫",3,1,1),
+	房3厅2卫1("3房2厅1卫",3,2,1),
+	房3厅2卫2("3房2厅2卫",3,2,2),
+	房4厅2卫1("4房2厅1卫",4,2,1),
+	房4厅2卫2("4房2厅2卫",4,2,2),
+	房5厅2卫2("5房2厅2卫",5,2,2),
+	房5厅3卫2("5房3厅2卫",5,3,2);
 	
 	private String name;
-	private String queryStr;
+	private int hxf;
+	private int hxt;
+	private int hxw;
 	
-	private FangXing(String name, String queryStr){
+	private FangXing(String name, int f , int t , int w){
 		this.name = name;
-		this.queryStr = queryStr;
+		this.hxf = f;
+		this.hxt = t;
+		this.hxw = w;
 	}
 
-	public String getName() {
-		return name;
+	public int getHxf() {
+		return hxf;
 	}
 
-	public String getQueryStr() {
-		return queryStr;
+	public int getHxt() {
+		return hxt;
 	}
-	
+
+	public int getHxw() {
+		return hxw;
+	}
+
 	public static JSONArray toJsonArray(){
 		JSONArray arr = new JSONArray();
 		for(FangXing fx : FangXing.values()){
 			JSONObject jobj = new JSONObject();
-			jobj.put("name", fx.name());
-			jobj.put("value", fx.name);
+			jobj.put("name", fx.name);
+			jobj.put("value", fx.name());
 			arr.add(jobj);
 		}
 		return arr;

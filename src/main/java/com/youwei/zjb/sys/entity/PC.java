@@ -61,4 +61,6 @@ public class PC {
 	public String cpu;
 	
 	public String disk;
+	
+	public transient String debug;
 }

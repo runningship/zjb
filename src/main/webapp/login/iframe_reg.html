@@ -44,24 +44,70 @@ function setDomSize(){
     winBoxLi=winBox.children('li');
     winBoxLi.height(winBoxH).css({'overflow':'hidden','overflow-y':'auto'});
 }
-function goto_marTop(ThiGoto){
+function goto_marTop(ThiGoto,callback){
     //$('.winBox').animate({'margin-top':-$('#'+ThiGoto).offset().top}, 1000);
-    $('.winBox').animate({'margin-top':ThiGoto}, 600);
+    $('.winBox').animate({'margin-top':ThiGoto}, 600,callback);
+}
+function hetKeyAct(){
+    $(document).keydown(function(event){  
+//    alert(event.keyCode)
+        if ((event.altKey)&&   
+          ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
+           (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
+       {   
+           event.returnValue=false;   
+           return false;  
+       }   
+        if(event.keyCode==8){  
+            return false; //屏蔽退格删除键    
+        }  
+        if(event.keyCode==9){  
+            return false; //屏蔽F5刷新键   
+        }  
+        if((event.ctrlKey) && (event.keyCode==82)){  
+            return false; //屏蔽alt+R   
+        }  
+    }); 
+    $('#authCode').keydown(function(event) {
+        if(event.keyCode==13){  
+            $(this).parents('li').find('.apage').click();
+            return false; //屏蔽退格删除键    
+        } 
+        
+    }).focus();
+    $('select[name=fendian]').keydown(function(event) {
+        if(event.keyCode==13){
+ //           alert($(this).parents('li').find('.apage').html());
+//            alert($(this).val());return false;
+            $(this).parents('li').find('.apage').eq(0).click();
+            return false;
+        }
+    });
+    $('select[name=fendian]').keydown(function(event) {
+        if(event.keyCode==13){
+ //           alert($(this).parents('li').find('.apage').html());
+//            alert($(this).val());return false;
+            $(this).parents('li').find('.apage').eq(0).click();
+            return false;
+        }
+    });
 }
 function btnAction(){
     $(document).on('click', '.apage', function(event) {
         var Thi=$(this),
         ThiGoto=Thi.data('goto'),
         ThiNext=Thi.data('next'),
-        ThiIndex=Thi.index(),
+        ThiIndex=Thi.parents('li').index(),
         ThiLi=Thi.parents('li'),
+        ThiLiIndex=ThiLi.index(),
         ThiLiH=ThiLi.height(),
         LiBoxHeight=0;
         if(ThiNext=='next'){
             var l = Ladda.create(this);
             l.start();
-            for(var i=0;i<=ThiIndex;i++){
-               LiBoxHeight=+Thi.parents('ul').find('li').eq(i).height()
+            for(var i=0;i<ThiLiIndex+1;i++){
+                LiBoxHeight=LiBoxHeight+Thi.parents('ul').find('li').eq(i).height();
+                //blockAlert(i +'|'+ Thi.parents('li').index() +'|'+ LiBoxHeight);
             }
             var ThiFormId=ThiLi.attr('data-formId');
             winBoxHeight=-LiBoxHeight;
@@ -71,6 +117,12 @@ function btnAction(){
                 param={
                     authCode:getCode
                 };
+                if(!getCode){
+                    art.dialog.tips('请输入授权码');
+                    $('#authCode').focus();
+                    l.stop();
+                    return false;
+                }
                 YW.ajax({
                     type: 'POST',
                     async:false,
@@ -82,7 +134,9 @@ function btnAction(){
                             buildHtmlWithJsonArray('fendian' , json['depts'] , "true");
                             var inTime=setTimeout(function(){
                                 l.stop();
-                                goto_marTop(winBoxHeight);
+                                goto_marTop(winBoxHeight,function(){
+                                    $('select[name=fendian]').focus();
+                                });
                                 clearTimeout(inTime);
                             },1000);
                             $('.view_company').text(json['cname']);
@@ -93,7 +147,7 @@ function btnAction(){
                         return false;
                     },error:function(e){
                         var msg=JSON.parse(e.responseText)
-                        art.dialog.tips(msg);
+                        art.dialog.tips(msg['msg']);
                         l.stop();
                     },complete:function(){
                     }
@@ -102,9 +156,15 @@ function btnAction(){
                 winBoxHeight=-LiBoxHeight;
                 var form=$(ThiFormId),
                 getDid=$('select[name=fendian]').val(),
-                getDname=$('select[name=fendian]').text(),
+                getDname=$('select[name=fendian] option:selected').text(),
                 getCode=$('#authCode').val(),
                 param;
+                if(!getDid||!getDname){
+                    art.dialog.tips('请选择分公司');
+                    $('select[name=fendian]').focus();
+                    l.stop();
+                    return false;
+                }
 
                 window.parent.getSysData(function(json){
                     param=json;
@@ -116,57 +176,68 @@ function btnAction(){
                         url: '/c/pc/add',
                         data:param,
                         success: function(data){
-                            l.stop();
                             $('.view_fendian').text(getDname);
-                            var inTime=setTimeout(function(){
-                                goto_marTop(winBoxHeight);
-                                clearTimeout(inTime);
-                            },1000)
+                            l.stop();
+                            goto_marTop(winBoxHeight,function(){$('.getologin').focus();});
                         },error:function(e){
                             var msg=JSON.parse(e.responseText)
                             art.dialog({
                                 content:msg.msg,
                                 ok:function(){
-                                    goto_marTop(0);
-                                    parent.onClickNav(0);
+                                    this.close();
                                 },
-                                okVal:'前去登陆'
+                                okVal:'前去登陆',
+                                close:function(){
+                                    goto_marTop(0,function(){});
+                                    parent.onClickNav(0);
+                                    parent.isFocus();
+                                }
                             })
-                        },complete:function(){
                             l.stop();
+                        },complete:function(){
+                            $('#authCode').val('');
+                            $('select[name=fendian]').empty();
+                            $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
                         }
                     });
                 });
                             return false;
             }else if(ThiFormId==""){
                 var inTime=setTimeout(function(){
-                    goto_marTop(0);
+                    goto_marTop(0,function(){});
                     clearTimeout(inTime);
                 },1000);
             }else {
 
             }
         }else if(ThiNext=='p'){
-            for(var i=0;i<=ThiIndex;i++){
+            for(var i=0;i<=ThiLiIndex;i++){
                LiBoxHeight=+Thi.parents('ul').find('li').eq(i).height()
             }
             winBoxHeight=(LiBoxHeight-ThiLiH);
-            goto_marTop(winBoxHeight);
+            goto_marTop(winBoxHeight,function(){
+                //blockAlert(ThiLiIndex)
+                if(ThiLiIndex==1){
+                    $('#authCode').focus();
+                }
+            });
         }else{
             winBoxHeight=0;
             parent.onClickNav(0);
-            goto_marTop(winBoxHeight);
+            goto_marTop(winBoxHeight,function(){});
+            parent.isFocus();
         }
     }).on('click', '.btn_city', function(event) {
         var Thi=$(this),
         ThiCity=Thi.data('city'),
         ThiText=Thi.text();
-        goto_marTop('body2');
+        goto_marTop('body2',function(){});
         $('#city').val(ThiCity);
         return false;
     });
 }
 $(document).ready(function() {
+    hetKeyAct();
 //    setCity();
     setDomSize();
     btnAction();
@@ -257,15 +328,16 @@ $(window).resize(function() {
                 <div class="bs-callout bs-callout-info col-xs-10" style="margin-left:8.33333333%;">
                     <h4>注册信息</h4>
                     <ol>
-                        <li>城市：<span class="view_city"></span></li>
-                        <li>分店：<span class="view_fendian"></span></li>
+                        <li>城　市：<span class="view_city"></span></li>
+                        <li>公　司：<span class="view_company"></span></li>
+                        <li>分公司：<span class="view_fendian"></span></li>
                         <li></li>
                     </ol>
                 </div>
             </div>
         </div>
         <div class="col-xs-10 btn_submit_box" style="margin-left:8.33333333%;">
-            <button class=" pull-right btn btn-primary apage" data-style="expand-left"><span class="ladda-label" data-next="0">立即登录</span></button>
+            <button class=" pull-right btn btn-primary apage getologin" data-style="expand-left"><span class="ladda-label" data-next="0">立即登录</span></button>
         </div>
     </li>
 </ul>

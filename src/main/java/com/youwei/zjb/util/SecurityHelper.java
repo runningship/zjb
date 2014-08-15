@@ -43,10 +43,7 @@ public class SecurityHelper {
 	}
 	
 	public static boolean validate(PC target){
-		List<PC> list = SimpDaoTool.getGlobalCommonDaoService().listByParams(PC.class, new String[]{"did"}, new Object[]{target.did});
-		if(list==null){
-			return false;
-		}
+		
 		if(target.pcname!=null){
 			target.pcname = target.pcname.replace("-", "").toLowerCase();
 		}
@@ -57,14 +54,13 @@ public class SecurityHelper {
 			target.cpu = target.cpu.toLowerCase();
 		}
 		String targetUUID = SecurityHelper.Md5(target.cpu+target.disk)+SecurityHelper.Md5(target.mac);
-		for(PC pc : list){
-			if(targetUUID.equals(pc.uuid)){
-				if(pc.lock==1){
-					return true;
-				}
-				throw new GException(PlatformExceptionType.BusinessException, "授权审核中...");
-			}
+		PC pc= SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(PC.class, new String[]{"did" , "uuid"}, new Object[]{target.did , targetUUID});
+		if(pc==null){
+			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权...");
 		}
-		return false;
+		if(pc.lock==1){
+			return true;
+		}
+		throw new GException(PlatformExceptionType.BusinessException, "授权审核中...");
 	}
 }

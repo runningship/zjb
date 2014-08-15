@@ -80,8 +80,10 @@ var iframeBox=$('#iframeBox'),
 }
 $(document).ready(function() {
 try{
-  WinMaxRev()
-}catch(e){}
+  WinMaxRev();
+}catch(e){
+	console.error(e);
+}
     setSideMenu();
     $(document).on('click', '.winBtn', function(event) {
         var Thi=$(this);

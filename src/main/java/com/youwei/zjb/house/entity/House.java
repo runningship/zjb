@@ -139,7 +139,7 @@ public class House {
 	 * 1,已删除 0 或空未删除
 	 * 好像没用
 	 */
-	public Integer isdel;
+//	public Integer isdel;
 
 	/**
 	 * 1 审核通过，0 审核不通过
@@ -151,5 +151,7 @@ public class House {
 	public Integer seeHM;
 	
 	public Integer seeFH;
+
+	public Integer isdel;
 
 }

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
@@ -23,9 +26,10 @@ import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
+import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
-
+@Module(name="/house/")
 public class HouseService {
 
 	CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
@@ -202,7 +206,7 @@ public class HouseService {
 	
 	@WebMethod
 	public ModelAndView listRecycle(HouseQuery query ,Page<House> page){
-		query.isdel=1;
+//		query.isdel=1;
 		return listAll(query , page);
 	}
 	
@@ -239,18 +243,32 @@ public class HouseService {
 		}else{
 			hql = new StringBuilder(" select h  from House  h where 1=1 ");
 		}
-		if(query.xingzhi!=null){
-			hql.append(" and h.xingzhi = ? ");
-			params.add(String.valueOf(query.xingzhi.getCode()));
+		
+//		if(StringUtils.isNotEmpty(query.area)){
+//			hql.append(" and h.area like ?");
+//			params.add("%"+query.area+"%");
+//		}
+		if(StringUtils.isNotEmpty(query.ztai)){
+			hql.append(" and h.ztai like ? ");
+			params.add(query.ztai);
 		}
-		if(StringUtils.isNotEmpty(query.area)){
-			hql.append(" and h.area like ?");
-			params.add("%"+query.area+"%");
+		
+		if(StringUtils.isNotEmpty(query.search)){
+			hql.append(" and (h.area like ? or h.address like or h.tel like ?)");
+			params.add("%"+query.search+"%");
+			params.add("%"+query.search+"%");
+			params.add("%"+query.search+"%");
 		}
-		if(StringUtils.isNotEmpty(query.houseNumber)){
-			hql.append(" and h.houseNumber like ?");
-			params.add("%"+query.houseNumber+"%");
+		
+		if(StringUtils.isNotEmpty(query.dhao)){
+			hql.append(" and h.dhao like ? ");
+			params.add("%"+query.dhao+"%");
 		}
+		if(StringUtils.isNotEmpty(query.fhao)){
+			hql.append(" and h.fhao like ? ");
+			params.add("%"+query.fhao+"%");
+		}
+		
 		if(query.id!=null){
 			hql.append(" and h.id = ?");
 			params.add(query.id);
@@ -268,32 +286,58 @@ public class HouseService {
 			hql.append(" )");
 		}
 		
-		if(query.fangxing!=null){
-			hql.append(" and ").append(query.fangxing.getQueryStr());
-		}
-		
-		if(query.jiaoyis!=null){
+		if(query.lxing!=null){
 			hql.append(" and ( ");
-			for(int i=0;i<query.jiaoyis.size();i++){
-				hql.append(" h. jiaoyi = ? ");
-				if(i<query.jiaoyis.size()-1){
+			for(int i=0;i<query.lxing.size();i++){
+				hql.append(" h.lxing = ? ");
+				if(i<query.lxing.size()-1){
 					hql.append(" or ");
 				}
-				params.add(JiaoYi.valueOf(query.jiaoyis.get(i)).getCode());
+				params.add(query.lxing.get(i));
 			}
 			hql.append(" )");
 		}
+		if(query.zxiu!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.zxiu.size();i++){
+				hql.append(" h.zxiu = ? ");
+				if(i<query.zxiu.size()-1){
+					hql.append(" or ");
+				}
+				params.add(query.zxiu.get(i));
+			}
+			hql.append(" )");
+		}
+		
+		if(query.fxing!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.fxing.size();i++){
+				String fxing = query.fxing.get(i);
+				FangXing fx = FangXing.valueOf(fxing);
+				hql.append("( h.hxf=? and h.hxt=? and h.hxw=?)");
+				if(i<query.fxing.size()-1){
+					hql.append(" or ");
+				}
+				params.add(fx.getHxf());
+				params.add(fx.getHxt());
+				params.add(fx.getHxw());
+			}
+			hql.append(" )");
+		}
+//		if(query.jiaoyis!=null){
+//			hql.append(" and ( ");
+//			for(int i=0;i<query.jiaoyis.size();i++){
+//				hql.append(" h. jiaoyi = ? ");
+//				if(i<query.jiaoyis.size()-1){
+//					hql.append(" or ");
+//				}
+//				params.add(JiaoYi.valueOf(query.jiaoyis.get(i)).getCode());
+//			}
+//			hql.append(" )");
+//		}
 		if(StringUtils.isNotEmpty(query.leibie)){
 			hql.append(" and h.leibie = ? ");
 			params.add(query.leibie);
-		}
-		if(query.sjiaStart!=null){
-			hql.append(" and h.sjia>= ? ");
-			params.add(query.sjiaStart);
-		}
-		if(query.sjiaEnd!=null){
-			hql.append(" and h.sjia<= ? ");
-			params.add(query.sjiaEnd);
 		}
 		if(query.zjiaStart!=null){
 			hql.append(" and h.zjia>= ? ");
@@ -303,16 +347,9 @@ public class HouseService {
 			hql.append(" and h.zjia<= ? ");
 			params.add(query.zjiaEnd);
 		}
-		if(query.dateType==null){
-			query.dateType = DateType.首次录入日;
-		}
-		hql.append(buildDateHql(query.dateType,query.dateStart,DateSeparator.After,params));
-		hql.append(buildDateHql(query.dateType,query.dateEnd, DateSeparator.Before , params));
+		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateStart,DateSeparator.After,params));
+		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateEnd, DateSeparator.Before , params));
 		
-		if(StringUtils.isNotEmpty(query.louxing)){
-			hql.append(" and h.lxing= ? ");
-			params.add(query.louxing);
-		}
 		if(query.mjiStart!=null){
 			hql.append(" and h.mji>= ? ");
 			params.add(query.mjiStart);
@@ -329,36 +366,50 @@ public class HouseService {
 			hql.append(" and h.lceng<= ? ");
 			params.add(query.lcengEnd);
 		}
-		if(StringUtils.isNotEmpty(query.chaoxiang)){
-			hql.append(" and h.chaoxiang= ? ");
-			params.add(query.chaoxiang);
+		if(query.djiaStart!=null){
+			hql.append(" and h.djia>= ? ");
+			params.add(query.djiaStart);
 		}
-		if(StringUtils.isNotEmpty(query.chanquan)){
-			hql.append(" and h.chanquan like ?");
-			params.add("%"+query.chanquan+"%");
+		if(query.djiaEnd!=null){
+			hql.append(" and h.djia<= ? ");
+			params.add(query.djiaEnd);
 		}
 		
 		if(query.userid!=null){
 			hql.append(" and h.uid= ? ");
 			params.add(query.userid);
 		}
-		if(query.isdel==null){
-			hql.append(" and ( isdel= 0 or isdel is null) ");
-		}
-		if(query.isdel!=null){
-			hql.append(" and h.isdel=?");
-			params.add(query.isdel);
-		}
+//		if(query.isdel==null){
+//			hql.append(" and ( isdel= 0 or isdel is null) ");
+//		}
+//		if(query.isdel!=null){
+//			hql.append(" and h.isdel=?");
+//			params.add(query.isdel);
+//		}
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
 //		hql.append(" and ( isdel= 0 or isdel is null) ");
 		page = service.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		mv.data.put("page", JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern()));
+		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern());
+		fixEnumValue(jpage);
+		mv.data.put("page", jpage);
 		return mv;
 	}
 	
+	private void fixEnumValue(JSONObject jpage) {
+		JSONArray results = jpage.getJSONArray("data");
+		for(int i=0;i<results.size();i++){
+			JSONObject obj = results.getJSONObject(i);
+			String key = (String)obj.get("ztai");
+			State state = State.parse(key);
+			if(state!=null){
+				obj.put("ztai", state.toString());
+			}
+		}
+	}
+
 	private String buildDateHql(DateType dateType,String dateStr,DateSeparator sep,List<Object> params){
 		if(StringUtils.isNotEmpty(dateStr)){
 			if(DateType.建房年代==dateType){

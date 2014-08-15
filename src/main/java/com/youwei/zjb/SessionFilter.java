@@ -89,7 +89,9 @@ public class SessionFilter implements Filter{
 
 	private void relogin(HttpServletRequest req , HttpServletResponse resp) throws IOException{
 		req.getSession().setAttribute("relogin", "true");
-		resp.sendRedirect(req.getContextPath()+"/login/login.html");
+//		resp.setContentType("text/javascript");
+		resp.getWriter().write("<script type='text/javascript'>window.parent.location="+req.getContextPath()+"'/login/index.html'</script>");
+//		resp.sendRedirect(req.getContextPath()+"/login/index.html");
 	}
 	
 	@Override

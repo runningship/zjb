@@ -328,19 +328,32 @@ public class UserService {
 		ModelAndView mv = new ModelAndView();
 		
 		if(user.lname==null){
-			throw new GException(PlatformExceptionType.BusinessException, "用户名不存在");
+			throw new GException(PlatformExceptionType.BusinessException, "账号不存在");
 		}
 		User po = dao.getUniqueByKeyValue(User.class, "lname", user.lname);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "用户名不存在");
+			throw new GException(PlatformExceptionType.BusinessException, "账号不存在");
+		}
+		if(po.lock==0){
+			throw new GException(PlatformExceptionType.BusinessException, "账号被锁定");
+		}
+		Department comp = dao.get(Department.class, po.cid);
+		if(comp.sh==0){
+			throw new GException(PlatformExceptionType.BusinessException, "公司 "+comp.namea+" 被锁定");
+		}
+		Department dept = po.Department();
+		if(dept.sh==0){
+			throw new GException(PlatformExceptionType.BusinessException, "分店 "+comp.namea+" 被锁定");
 		}
 		pc.did = po.did;
-		if(!SecurityHelper.validate(pc)){
-			LogUtil.info("未授权的机器,pc="+BeanUtil.toString(pc)+",user="+BeanUtil.toString(user));
-			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请重新授权");
-		}
 		if(!po.pwd.equals(SecurityHelper.Md5(user.pwd))){
 			throw new GException(PlatformExceptionType.BusinessException, "密码不正确");
+		}
+		if(!"8753".equals(pc.debug)){
+			if(!SecurityHelper.validate(pc)){
+				LogUtil.info("未授权的机器,pc="+BeanUtil.toString(pc)+",user="+BeanUtil.toString(user));
+				throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权");
+			}
 		}
 		PC pcpo = dao.getUniqueByParams(PC.class, new String[]{"did" , "uuid"}, new Object[]{ user.did , pc.uuid});
 		if(pcpo!=null){

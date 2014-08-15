@@ -55,6 +55,9 @@ public class User {
 	@Column(name="unid")
 	public Integer roleId;
 	
+	/**
+	 * 0锁定
+	 */
 	@Column(name="llock")
 	public Integer lock;
 	

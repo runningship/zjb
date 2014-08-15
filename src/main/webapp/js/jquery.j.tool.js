@@ -145,7 +145,7 @@ $(document).ready(function() {
   //页面侧边动作
   //aBtnNavFun('.aNavBtn');
   //设置表格标题宽度
-  setTableFix()
+  setTableFix();
   //winBtn
     $(document).on('click', '.winBtn', function(event) {
         var Thi=$(this);

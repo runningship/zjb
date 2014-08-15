@@ -42,8 +42,14 @@ public class Department {
 	@Column(name="auth_code")
 	public String authCode;
 	
+	/**
+	 * 序号
+	 */
 	public String cnum;
 	
+	/**
+	 * 机器数
+	 */
 	public Integer pcnum;
 	
 	public String lxr;
@@ -56,6 +62,9 @@ public class Department {
 	
 	public Integer flag;
 	
+	/**
+	 * 0锁定
+	 */
 	public Integer sh;
 	
 	public Integer share;

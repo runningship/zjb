@@ -24,11 +24,11 @@ public class ConfigService {
 		ModelAndView mv = new ModelAndView();
 		mv.data.put("chaoxiang", ChaoXiang.toJsonArray());
 		mv.data.put("datetype", DateType.toJsonArray());
-		mv.data.put("fangxing", FangXing.toJsonArray());
+		mv.data.put("fxing", FangXing.toJsonArray());
 		mv.data.put("xingzhi", HouseAttribute.toJsonArray());
 		mv.data.put("leibie", HouseType.toJsonArray());
 		mv.data.put("jiaoyi", JiaoYi.toJsonArray());
-		mv.data.put("louxing", LouXing.toJsonArray());
+		mv.data.put("lxing", LouXing.toJsonArray());
 		mv.data.put("quyu", QuYu.toJsonArray());
 		mv.data.put("zhuangtai", State.toJsonArray());
 		mv.data.put("shenhe", ShenHe.toJsonArray());

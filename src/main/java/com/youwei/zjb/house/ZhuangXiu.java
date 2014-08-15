@@ -5,30 +5,23 @@ import net.sf.json.JSONObject;
 
 public enum ZhuangXiu {
 
-	毛坯(1),
-	清水(2),
-	简装(3),
-	中装(4),
-	精装(5),
-	豪装(6);
+	毛坯,
+	简装,
+	中装,
+	精装,
+	豪装,
+	老式简装,
+	老式中装,
+	老式精装,
+	老式豪装;
 	
-	private int code;
-	
-	private ZhuangXiu( int code){
-		this.code = code;
-	}
-
-	public int getCode() {
-		return code;
-	}
-	
+//	毛坯,简装,中装,精装,豪装,老式简装,老式中装,老式精装,老式豪装
 	public static JSONArray toJsonArray(){
 		JSONArray arr = new JSONArray();
 		for(ZhuangXiu zx : ZhuangXiu.values()){
 			JSONObject jobj = new JSONObject();
 			jobj.put("value", zx.name());
 			jobj.put("name", zx.name());
-			jobj.put("code", zx.code);
 			arr.add(jobj);
 		}
 		return arr;

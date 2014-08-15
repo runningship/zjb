@@ -51,7 +51,6 @@ public class TestHouseService {
 	public void testListByFangXing(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
-		hq.fangxing = FangXing.房1到2;
 		ModelAndView mv = hs.listAll(hq,new Page<House>());
 		printResult(mv);
 	}
@@ -78,8 +77,6 @@ public class TestHouseService {
 	public void testListBySJia(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
-		hq.sjiaStart = 50f;
-		hq.sjiaEnd = 60f;
 		ModelAndView mv = hs.listAll(hq,new Page<House>());
 		printResult(mv);
 	}
@@ -88,7 +85,6 @@ public class TestHouseService {
 	public void testListByLouXing(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
-		hq.louxing = LouXing.小高层.toString();
 		ModelAndView mv = hs.listAll(hq,new Page<House>());
 		printResult(mv);
 	}
@@ -116,7 +112,6 @@ public class TestHouseService {
 	public void testListBydateweituo(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
-		hq.dateType = DateType.委托日期;
 		hq.dateStart = "2013-09-13";
 		hq.dateEnd = "2013-09-14";
 		ModelAndView mv = hs.listAll(hq,new Page<House>());
@@ -127,7 +122,6 @@ public class TestHouseService {
 	public void testListBydategenjin(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
-		hq.dateType = DateType.最后跟进日;
 		hq.dateStart = "2013-09-13";
 		hq.dateEnd = "2013-09-14";
 		ModelAndView mv = hs.listAll(hq,new Page<House>());
@@ -138,7 +132,6 @@ public class TestHouseService {
 	public void testListBydateadd(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
-		hq.dateType = DateType.首次录入日;
 		hq.dateStart = "2013-03-13";
 		hq.dateEnd = "2013-09-14";
 		ModelAndView mv = hs.listAll(hq,new Page<House>());
@@ -149,7 +142,6 @@ public class TestHouseService {
 	public void testListBydateyear(){
 		HouseService hs = new HouseService();
 		HouseQuery hq = new HouseQuery();
-		hq.dateType = DateType.建房年代;
 		hq.dateStart = "2013";
 		hq.dateEnd = "2013";
 		ModelAndView mv = hs.listAll(hq,new Page<House>());
