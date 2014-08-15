@@ -201,13 +201,13 @@ public class UserService {
 		if(dept==null){
 			throw new GException(PlatformExceptionType.BusinessException, "没有指定用户所属公司");
 		}
-		List<User> sprList = UserHelper.getUserWithAuthority("rs_rz_list");
-		if(sprList==null || sprList.size()==0){
-			throw new GException(PlatformExceptionType.BusinessException,  "没有用户拥有入职登记审核权限，请先在系统管理中设置入职登记审核人.或者联系系统管理员为您处理");
-		}
+//		List<User> sprList = UserHelper.getUserWithAuthority("rs_rz_list");
+//		if(sprList==null || sprList.size()==0){
+//			throw new GException(PlatformExceptionType.BusinessException,  "没有用户拥有入职登记审核权限，请先在系统管理中设置入职登记审核人.或者联系系统管理员为您处理");
+//		}
 		user.addtime = new Date();
-		user.sh = 0;
-		user.flag = 0;
+		user.sh = 1;
+		user.flag = 1;
 		user.lock = 0;
 		user.pwd = SecurityHelper.Md5(DataHelper.User_Default_Password);
 		user.cid = dept.fid;
@@ -326,23 +326,31 @@ public class UserService {
 	@WebMethod
 	public ModelAndView login(User user,PC pc){
 		ModelAndView mv = new ModelAndView();
-		if(user.id==null){
+		
+		if(user.lname==null){
 			throw new GException(PlatformExceptionType.BusinessException, "用户名不存在");
 		}
-		User po = dao.get(User.class, user.id);
+		User po = dao.getUniqueByKeyValue(User.class, "lname", user.lname);
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException, "用户名不存在");
 		}
-		if(!po.pwd.equals(SecurityHelper.Md5(user.pwd))){
-			throw new GException(PlatformExceptionType.BusinessException, "密码不正确");
-		}
+		pc.did = po.did;
 		if(!SecurityHelper.validate(pc)){
 			LogUtil.info("未授权的机器,pc="+BeanUtil.toString(pc)+",user="+BeanUtil.toString(user));
 			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请重新授权");
 		}
+		if(!po.pwd.equals(SecurityHelper.Md5(user.pwd))){
+			throw new GException(PlatformExceptionType.BusinessException, "密码不正确");
+		}
+		PC pcpo = dao.getUniqueByParams(PC.class, new String[]{"did" , "uuid"}, new Object[]{ user.did , pc.uuid});
+		if(pcpo!=null){
+			pcpo.lasttime = new Date();
+			pcpo.lastip = ThreadSession.getIp();
+			dao.saveOrUpdate(pcpo);
+		}
 		mv.data.put("result", "0");
 		mv.data.put("msg", "登录成功");
-		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), user);
+		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
 		String operConts = "["+po.Department().namea+"-"+po.uname+ "] 登录成功";
 		operService.add(OperatorType.登录记录, operConts);
 		return mv;

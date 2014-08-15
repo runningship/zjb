@@ -28,11 +28,9 @@ public class PC {
 	/**
 	 * 店面
 	 */
-	@Column(name="did")
-	public Integer deptId;
+	public Integer did;
 	
-	@Column(name="lname")
-	public String pcname;
+	public String lname;
 	
 	public Date addtime;
 	
@@ -44,7 +42,7 @@ public class PC {
 	public String mac="";
 	
 	@Column(name="code_pc")
-	public String board="";
+	public String pcname="";
 	
 	/**
 	 * 加密过的机器码
@@ -59,4 +57,8 @@ public class PC {
 	public Integer lock;
 	
 	public String beizhu;
+	
+	public String cpu;
+	
+	public String disk;
 }

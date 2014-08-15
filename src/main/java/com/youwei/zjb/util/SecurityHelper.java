@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.GException;
 
 import com.youwei.zjb.PlatformExceptionType;
@@ -14,7 +13,7 @@ import com.youwei.zjb.sys.entity.PC;
 public class SecurityHelper {
 
 	public static void main(String[] args){
-		Md5("123456");
+		System.out.println(Md5("123456"));
 	}
 	public static String Md5(String plainText) {
 		try {
@@ -44,12 +43,22 @@ public class SecurityHelper {
 	}
 	
 	public static boolean validate(PC target){
-		List<PC> list = SimpDaoTool.getGlobalCommonDaoService().listByParams(PC.class, new String[]{"deptId"}, new Object[]{target.deptId});
+		List<PC> list = SimpDaoTool.getGlobalCommonDaoService().listByParams(PC.class, new String[]{"did"}, new Object[]{target.did});
 		if(list==null){
 			return false;
 		}
+		if(target.pcname!=null){
+			target.pcname = target.pcname.replace("-", "").toLowerCase();
+		}
+		if(target.disk!=null){
+			target.disk = target.disk.toLowerCase();
+		}
+		if(target.cpu!=null){
+			target.cpu = target.cpu.toLowerCase();
+		}
+		String targetUUID = SecurityHelper.Md5(target.cpu+target.disk)+SecurityHelper.Md5(target.mac);
 		for(PC pc : list){
-			if(target.mac.equals(pc.mac) && target.board.equals(pc.board) && target.uuid.equals(pc.uuid)){
+			if(targetUUID.equals(pc.uuid)){
 				if(pc.lock==1){
 					return true;
 				}

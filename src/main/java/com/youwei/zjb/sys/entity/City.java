@@ -15,4 +15,6 @@ public class City {
 	public String name;
 	
 	public String province;
+	
+	public String domain;
 }

@@ -71,21 +71,13 @@ public class DepartmentService {
 	}
 	
 	@WebMethod
-	public ModelAndView listQuyu(Page<Map> page){
-		ModelAndView mv = new ModelAndView();
-		String hql = "select namea as name , id as id ,fid as fid from Department where fid=1";
-		page = dao.findPage(page, hql, true,new Object[]{});
-		mv.data.put("page", JSONHelper.toJSON(page));
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView listDept(Page<Map> page, DeptQuery query){
+	public ModelAndView listDept(String authCode){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder hql = new StringBuilder("select d1.namea as quyu , d2.id as id , d2.namea as name from Department d1, Department d2 where d1.id=d2.fid and d1.id<>1 order by quyu ");
-		page = dao.findPage(page, hql.toString(), true,  params.toArray());
-		mv.data.put("page", JSONHelper.toJSON(page));
+		//TODO  sh ,flag 什么意思
+		StringBuilder hql = new StringBuilder("select id as id , namea as name from Department where fid=(select id from Department where authCode=?) and sh=1");
+		List<Map> list = dao.listAsMap(hql.toString(), new Object[]{authCode});
+		mv.data.put("depts", JSONHelper.toJSONArray(list));
 		return mv;
 	}
 	

@@ -14,23 +14,20 @@ import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/house/fav/")
-public class FavoriteService {
+public class FavoriteService2 {
 
-	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
 	@WebMethod
 	public ModelAndView add(Integer houseId){
 		User user = ThreadSession.getUser();
-		House h = dao.get(House.class, houseId);
-		String favStr = "@"+user.id+"|";
-		if(h.fav==null){
-			h.fav= favStr;
-		}else{
-			if(!h.fav.contains(favStr)){
-				h.fav+=favStr;
-			}
+		Favorite po = service.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{user.id,houseId});
+		if(po==null){
+			Favorite fav = new Favorite();
+			fav.houseId = houseId;
+			fav.userId = user.id;
+			service.saveOrUpdate(fav);
 		}
-		dao.saveOrUpdate(h);
 		return new ModelAndView();
 	}
 	
@@ -38,11 +35,9 @@ public class FavoriteService {
 	public ModelAndView delete(Integer houseId){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		String favStr = "@"+user.id+"|";
-		House h = dao.get(House.class, houseId);
-		if(h.fav!=null){
-			h.fav = h.fav.replace(favStr, "");
-			dao.saveOrUpdate(h);
+		Favorite po = service.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{user.id,houseId});
+		if(po!=null){
+			service.delete(po);
 		}
 		mv.data.put("msg", "已取消关注");
 		return mv;
@@ -52,10 +47,9 @@ public class FavoriteService {
 	public ModelAndView list(HouseQuery query){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		String favStr = "@"+user.id+"|";
-		StringBuilder hql = new StringBuilder("select h from House where fav like '"+favStr+"%'");
+		StringBuilder hql = new StringBuilder("select h from House h,Favorite f where h.id=f.houseId and f.userId="+user.id);
 		Page<House> page = new Page<House>();
-		page = dao.findPage(page, hql.toString());
+		page = service.findPage(page, hql.toString());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

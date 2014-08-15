@@ -20,18 +20,23 @@ public class OperRecord {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
-//	@Column(name="did")
-//	public Integer deptId;
+	public Integer did;
+	
+	public Integer cid;
 	
 	public Integer uid;
 	
-//	public String uname;
+	public String uname;
 	
 	public Date addtime;
 	
 	public String ip;
 	
-	public int type;
+	public String pcma;
+	
+	public Integer type;
+	
+	public String fenlei;
 	
 	/**
 	 * 操作内容

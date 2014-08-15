@@ -91,4 +91,7 @@ public class User {
 	public Department Department(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class, did);
 	}
+	public Department Company(){
+		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class, Department().fid);
+	}
 }

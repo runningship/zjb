@@ -16,7 +16,6 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.SimpDaoTool;
-import com.youwei.zjb.sys.entity.AuthCode;
 import com.youwei.zjb.sys.entity.PC;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.util.JSONHelper;
@@ -34,25 +33,32 @@ public class PcService {
 			return mv;
 		}
 		
-		if(pc.deptId==null){
+		if(pc.did==null){
 			throw new GException(PlatformExceptionType.BusinessException, "请先填写店面信息");
 		}
 		
-		if(StringUtils.isEmpty(pc.mac) && StringUtils.isEmpty(pc.board) && StringUtils.isEmpty(pc.uuid)){
+		if(StringUtils.isEmpty(pc.mac) && StringUtils.isEmpty(pc.disk)){
 			throw new GException(PlatformExceptionType.BusinessException, "机器码为空，不能授权，可能是由于您安装的是精简版的操作系统.");
 		}
-		
-		Department comp = dao.getUniqueByKeyValue(Department.class, "fid", 0);
-		AuthCode code = dao.getUniqueByKeyValue(AuthCode.class, "fidn", comp.id);
-		if(code==null || code.authCode==null || !code.authCode.equals(pc.authCode)){
+		Department comp =  dao.getUniqueByKeyValue(Department.class, "authCode", pc.authCode);
+		if(comp==null){
 			throw new GException(PlatformExceptionType.BusinessException, "授权码不正确,请联系系统管理员");
 		}
-		
-		PC po = dao.getUniqueByParams(PC.class, new String[]{"deptId","mac","board","uuid"},	new Object[]{pc.deptId,pc.mac,pc.board,pc.uuid});
+		if(pc.pcname!=null){
+			pc.pcname = pc.pcname.replace("-", "").toLowerCase();
+		}
+		if(pc.disk!=null){
+			pc.disk = pc.disk.toLowerCase();
+		}
+		if(pc.cpu!=null){
+			pc.cpu = pc.cpu.toLowerCase();
+		}
+		pc.uuid = SecurityHelper.Md5(pc.cpu+pc.disk)+SecurityHelper.Md5(pc.mac);
+		PC po = dao.getUniqueByParams(PC.class, new String[]{"did","uuid"},	new Object[]{pc.did , pc.uuid});
 		if(po==null){
 			pc.addtime = new Date();
 			pc.lock=0;
-			pc.uuid = SecurityHelper.Md5(pc.uuid);
+			pc.cid = comp.id;
 			dao.saveOrUpdate(pc);
 		}else{
 			throw new GException(PlatformExceptionType.BusinessException, "您已经申请过授权，无需重复申请");

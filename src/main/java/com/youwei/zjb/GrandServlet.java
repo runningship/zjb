@@ -2,7 +2,6 @@ package com.youwei.zjb;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URLEncoder;
 
 import javassist.ClassClassPath;
 import javassist.ClassPool;

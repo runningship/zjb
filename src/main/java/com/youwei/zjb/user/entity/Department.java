@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.youwei.zjb.SimpDaoTool;
+
 /**
  * fid为0 表示公司，其他表示分公司
  */
@@ -60,5 +62,9 @@ public class Department {
 	
 	public void Group(){
 		
+	}
+	
+	public Department Company(){
+		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class,fid);
 	}
 }

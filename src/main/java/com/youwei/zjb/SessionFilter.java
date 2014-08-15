@@ -1,6 +1,8 @@
 package com.youwei.zjb;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,7 +22,14 @@ import com.youwei.zjb.user.entity.UserSession;
 import com.youwei.zjb.util.SessionHelper;
 
 public class SessionFilter implements Filter{
-
+	private static List<String> excludes= new ArrayList<String>();
+	static{
+		excludes.add("/user/login");
+		excludes.add("/pc/add");
+		excludes.add("/dept/listDept");
+		excludes.add("/login/index.html");
+		excludes.add("/login/iframe_reg.html");
+	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
@@ -30,16 +39,14 @@ public class SessionFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
-		String path = req.getPathInfo();
-		if(path.contains("")){
-		chain.doFilter(request, response);
-			return;
-		}
-		if(path.equals("/user/login")){
+		String path = req.getRequestURI().toString();
+		HttpSession session = req.getSession();
+		ThreadSession.setHttpSession(session);
+		if(excludes.contains(path)){
 			chain.doFilter(request, response);
 			return;
 		}
-		HttpSession session = req.getSession();
+		
 		if(session.isNew()){
 			//has an old session id?
 			String oldSessionId = getClientSid(req);
@@ -63,20 +70,25 @@ public class SessionFilter implements Filter{
 						relogin(req,resp);
 						return;
 					}
-					SessionHelper.initHttpSession(session,user);
+					SessionHelper.initHttpSession(session,user , us);
 				}
 			}
 		}else{
-			if(session.getAttribute("user")==null){
-				relogin(req, resp);
-				return;
+			if("true".equals(session.getAttribute("relogin"))){
+				
+			}else{
+				if(session.getAttribute("user")==null){
+					relogin(req, resp);
+					return;
+				}
 			}
-			ThreadSession.setHttpSession(session);
+			
 		}
 		chain.doFilter(request, response);
 	}
 
 	private void relogin(HttpServletRequest req , HttpServletResponse resp) throws IOException{
+		req.getSession().setAttribute("relogin", "true");
 		resp.sendRedirect(req.getContextPath()+"/login/login.html");
 	}
 	

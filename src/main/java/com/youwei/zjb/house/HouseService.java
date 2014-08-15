@@ -25,7 +25,7 @@ import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 
-@Module(name="/house/")
+
 public class HouseService {
 
 	CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
@@ -176,23 +176,6 @@ public class HouseService {
 		User user = ThreadSession.getUser();
 		query.userid = user.id;
 		return listAll(query ,page);
-	}
-	
-	@WebMethod
-	public ModelAndView getQueryOptions(){
-		ModelAndView mv = new ModelAndView();
-		mv.data.put("chaoxiang", ChaoXiang.toJsonArray());
-		mv.data.put("datetype", DateType.toJsonArray());
-		mv.data.put("fangxing", FangXing.toJsonArray());
-		mv.data.put("xingzhi", HouseAttribute.toJsonArray());
-		mv.data.put("leibie", HouseType.toJsonArray());
-		mv.data.put("jiaoyi", JiaoYi.toJsonArray());
-		mv.data.put("louxing", LouXing.toJsonArray());
-		mv.data.put("quyu", QuYu.toJsonArray());
-		mv.data.put("zhuangtai", State.toJsonArray());
-		mv.data.put("shenhe", ShenHe.toJsonArray());
-		mv.data.put("zhuangxiu", ZhuangXiu.toJsonArray());
-		return mv;
 	}
 	
 	@WebMethod

@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -16,6 +18,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.sys.entity.OperRecord;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
@@ -28,11 +31,19 @@ public class OperatorService {
 	public void add(OperatorType operType , String conts){
 		OperRecord oper = new OperRecord();
 		oper.addtime = new Date();
-		oper.uid = ThreadSession.getUser().id;
+		User user = ThreadSession.getUser();
+		oper.uid = user.id;
 		oper.type = operType.getCode();
 		oper.ip = ThreadSession.getIp();
+		oper.did = user.did;
+		oper.cid = user.cid;
+		oper.uname = user.uname;
 		oper.conts = conts;
-		dao.saveOrUpdate(oper);
+		try{
+			dao.saveOrUpdate(oper);
+		}catch(Exception ex){
+			LogUtil.log(Level.WARN, "记录日志失败", ex);
+		}
 	}
 	
 	@WebMethod
