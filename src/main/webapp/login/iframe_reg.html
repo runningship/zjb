@@ -85,10 +85,16 @@ function btnAction(){
                                 goto_marTop(winBoxHeight);
                                 clearTimeout(inTime);
                             },1000);
+                            $('.view_company').text(json['cname']);
                         }else{
-
+                            art.dialog.tips('当前授权码无效');
+                            l.stop();
                         }
                         return false;
+                    },error:function(e){
+                        var msg=JSON.parse(e.responseText)
+                        art.dialog.tips(msg);
+                        l.stop();
                     },complete:function(){
                     }
                 });
@@ -104,7 +110,6 @@ function btnAction(){
                     param=json;
                     param.authCode=getCode;
                     param.did=getDid[0];
-                    blockAlert(getCode)
                     YW.ajax({
                         type: 'POST',
                         async:false,
@@ -194,7 +199,7 @@ $(window).resize(function() {
                     <div class="form-group">
                         <label for="authCode" class="col-xs-3 control-label">授权密码：</label>
                         <div class="col-xs-6">
-                            <input type="password" class="form-control" id="authCode" name="authCode">
+                            <input type="password" class="form-control" id="authCode" name="authCode" value="dafenqi3.0jie2333">
                         </div>
                     </div>
                 </div>
@@ -220,7 +225,13 @@ $(window).resize(function() {
                 </div>
                 <div class="col-xs-10" style="margin-left:8.33333333%;">
                     <div class="form-group">
-                        <label for="city" class="col-xs-3 control-label">选择分店：</label>
+                        <label class="col-xs-3 control-label">所属公司：</label>
+                        <div class="col-xs-6 view_company"></div>
+                    </div>
+                </div>
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label for="city" class="col-xs-3 control-label">选择分公司：</label>
                         <div class="col-xs-6">
                             <select class="form-control" multiple size="6" name="fendian">
                                 <option class="fendian" value="${id}">${name}</option>

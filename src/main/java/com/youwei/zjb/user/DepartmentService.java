@@ -73,6 +73,12 @@ public class DepartmentService {
 	@WebMethod
 	public ModelAndView listDept(String authCode){
 		ModelAndView mv = new ModelAndView();
+		Department comp = dao.getUniqueByKeyValue(Department.class, "authCode", authCode);
+		if(comp!=null){
+			mv.data.put("cname", comp.namea);
+		}else{
+			throw new GException(PlatformExceptionType.BusinessException, "授权码不正确");
+		}
 		List<Object> params = new ArrayList<Object>();
 		//TODO  sh ,flag 什么意思
 		StringBuilder hql = new StringBuilder("select id as id , namea as name from Department where fid=(select id from Department where authCode=?) and sh=1");

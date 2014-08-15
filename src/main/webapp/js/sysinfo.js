@@ -1,7 +1,7 @@
 
 function loadHardwareInfo(callback){
     try{
-    var exec = require('child_process').exec;
+    var exec = require('child_process').execFile;
     var command = "hinf.exe";
     var xx = exec(command, function(err, stdout, stderr) {
         var fs=require("fs");
