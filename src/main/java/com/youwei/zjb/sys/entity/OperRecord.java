@@ -28,6 +28,10 @@ public class OperRecord {
 	
 	public String uname;
 	
+	public String dname;
+	
+	public String cname;
+	
 	public Date addtime;
 	
 	public String ip;

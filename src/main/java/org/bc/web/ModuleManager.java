@@ -31,11 +31,16 @@ public class ModuleManager {
 			WebMethod wm = m.getAnnotation(WebMethod.class);
 			if(wm!=null){
 				Handler handler = new Handler(clazz,m.getName());
+				if(StringUtils.isNotEmpty(wm.alias())){
+					handlers.put(moduleUrl +"/"+ wm.alias(), handler);
+				}
 				if(StringUtils.isNotEmpty(wm.name())){
 					handlers.put(moduleUrl +"/"+ wm.name(), handler);
-				}else{
+				}
+				if(StringUtils.isEmpty(wm.alias()) && StringUtils.isEmpty(wm.name())){
 					handlers.put(moduleUrl +"/"+ m.getName(), handler);
 				}
+				
 			}
 		}
 	}

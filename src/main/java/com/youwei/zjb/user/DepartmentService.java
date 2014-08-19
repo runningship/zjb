@@ -2,7 +2,6 @@ package com.youwei.zjb.user;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
-import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
@@ -19,6 +17,7 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.user.entity.Department;
+import com.youwei.zjb.user.entity.DeptGroup;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/dept/")
@@ -88,39 +87,74 @@ public class DepartmentService {
 	}
 	
 	@WebMethod
-	public ModelAndView getDeptTree(){
+	public ModelAndView getDeptTree(Integer cid){
 		ModelAndView mv = new ModelAndView();
-		String hql = "select child.namea as cname,parent.namea as pname ,child.id as did ,child.fid as qid "+
-				"from Department child,Department parent  where child.fid = parent.id and parent.id<>1";
-		List<Map> users = dao.listAsMap(hql);
-		Map<Map, JSONArray> quyus = groupByQuyu(users);
-		JSONArray arr = new JSONArray();
-		for(Map map : quyus.keySet()){
-			JSONObject key = new JSONObject();
-			key.put("text", map.get("pname").toString());
-			key.put("deptId",  map.get("did"));
-			key.put("children", quyus.get(map));
-			arr.add(key);
+		if(cid==1){
+			List<Department> comps = dao.listByParams(Department.class, "from Department where 1=1 order by cnum");
+			JSONArray result = new JSONArray();
+			for(Department dept : comps){
+				JSONObject json = new JSONObject();
+				json.put("id", dept.id);
+				if(dept.dgroup!=null){
+					json.put("pId", dept.dgroup);
+				}else{
+					json.put("pId", dept.fid);
+				}
+				json.put("name", dept.namea);
+				json.put("cnum", dept.cnum);
+				result.add(json);
+			}
+			//加载分组信息
+			List<DeptGroup> groups = dao.listByParams(DeptGroup.class, "from DeptGroup where 1=1" );
+			for(DeptGroup g : groups){
+				JSONObject json = new JSONObject();
+				json.put("id",g.id);
+				if(g.pid!=null){
+					json.put("pId", g.pid);
+				}else{
+					//中介宝用户看到的分组略有不同
+					if(g.cid!=1){
+						json.put("pId", g.cid);
+					}
+				}
+				json.put("name", g.name);
+				result.add(json);
+			}
+			mv.data.put("result", result.toString());
+			return mv;
+		}else{
+			List<Department> depts = dao.listByParams(Department.class, "from Department where fid=? or id=?", cid , cid);
+			List<DeptGroup> groups = dao.listByParams(DeptGroup.class, "from DeptGroup where cid=?", cid);
+			JSONArray result = new JSONArray();
+			for(Department dept : depts){
+				JSONObject json = new JSONObject();
+				json.put("id", dept.id);
+				if(dept.id==cid){
+					json.put("pId", 0);
+					json.put("type", "comp");
+				}else{
+					json.put("pId", dept.dgroup);
+					json.put("type", "dept");
+				}
+				json.put("name", dept.namea);
+				result.add(json);
+			}
+			for(DeptGroup g : groups){
+				JSONObject json = new JSONObject();
+				json.put("id",g.id);
+				if(g.pid==null){
+					json.put("pId", cid);
+				}else{
+					json.put("pId", g.pid);
+				}
+				json.put("type", "group");
+				json.put("name", g.name);
+				result.add(json);
+			}
+			mv.data.put("result", result.toString());
+			return mv;
 		}
-		mv.data.put("result", arr.toString());
-		return mv;
-	}
-	
-	private Map<Map,JSONArray>  groupByQuyu(List<Map> users){
-		Map<Map,JSONArray> quyus = new HashMap<Map,JSONArray>();
 		
-		for(Map user : users){
-			if(!quyus.containsKey(user)){
-				quyus.put(user, new JSONArray());
-			}
-			JSONArray arr = quyus.get(user);
-			JSONObject dept = new JSONObject();
-			dept.put("text", user.get("cname"));
-			dept.put("deptId", user.get("did"));
-			if(!arr.contains(dept)){
-				quyus.get(user).add(dept);
-			}
-		}
-		return quyus;
 	}
+
 }

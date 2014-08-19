@@ -1,0 +1,47 @@
+package com.youwei.zjb.view.house;
+
+import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
+
+import org.bc.sdak.CommonDaoService;
+import org.jsoup.nodes.Document;
+
+import com.youwei.zjb.SimpDaoTool;
+import com.youwei.zjb.house.RentState;
+import com.youwei.zjb.house.RentType;
+import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.user.entity.Department;
+import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.JSONHelper;
+
+
+public class houseSee_rent extends AbstractSee{
+
+	@Override
+	public Document initPage(Document doc, HttpServletRequest req) {
+		return super.initPage(doc, req);
+	}
+
+	@Override
+	protected JSONObject getData(int id) {
+		CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
+		HouseRent h = dao.get(HouseRent.class, id);
+		if(h==null){
+			return null;
+		}
+		JSONObject json = JSONHelper.toJSON(h);
+		Department dept = dao.get(Department.class, h.did);
+		User user = dao.get(User.class, h.uid);
+		json.put("fbr", user.uname);
+		json.put("dname", dept.namea);
+		json.put("ztai", RentState.parse(h.ztai));
+		json.put("fangshi", RentType.parse(h.fangshi));
+		return json;
+	}
+
+	@Override
+	protected int getChuzu() {
+		return 1;
+	}
+}

@@ -27,7 +27,9 @@
     .winBox li{ position: relative;}
 </style>
 <script type="text/javascript">
-var winBoxHeight=0;
+var winBoxHeight=0,
+domains=getParam('domain'),
+cityNames=decodeURI(getParam('cityName'));
 function setCity(){
     $.post('/c/city/list', function(data, textStatus, xhr) {
         var  json = JSON.parse(data);
@@ -179,6 +181,8 @@ function btnAction(){
                             $('.view_fendian').text(getDname);
                             l.stop();
                             goto_marTop(winBoxHeight,function(){$('.getologin').focus();});
+                            putConfig('dmain', domains);
+                            putConfig('cityName', cityNames);
                         },error:function(e){
                             var msg=JSON.parse(e.responseText)
                             art.dialog({
@@ -242,7 +246,7 @@ $(document).ready(function() {
     setDomSize();
     btnAction();
     // Ladda.bind( 'button', { timeout: 2000 } );
-    $('.view_city').text(decodeURI(getParam('cityName')));
+    $('.view_city').text(cityNames);
 });
 $(window).resize(function() {
     setDomSize();

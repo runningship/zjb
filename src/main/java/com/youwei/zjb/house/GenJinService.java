@@ -18,7 +18,8 @@ import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.GenJin;
-import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.phone.PGenjinService;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
@@ -26,26 +27,35 @@ import com.youwei.zjb.util.JSONHelper;
 @Module(name="/genjin")
 public class GenJinService {
 
-	CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
 	@WebMethod
 	public ModelAndView add(GenJin gj){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		gj.uid = user.id;
-		gj.addtime = new Date();
-		service.saveOrUpdate(gj);
-		mv.data.put("msg", "保存成功");
-		return mv;
+		if(gj.chuzu==0){
+			PGenjinService ps = new PGenjinService();
+			mv = ps.add(user.id, gj.hid, gj.flag, gj.conts);
+			mv.encodeReturnText=false;
+			return mv;
+		}else{
+			gj.uid = user.id;
+			gj.addtime = new Date();
+			HouseRent hr = dao.get(HouseRent.class, gj.hid);
+			gj.ztai = RentState.parse(hr.ztai)+"-"+RentState.parse(String.valueOf(gj.flag));
+			dao.saveOrUpdate(gj);
+			mv.data.put("msg", "保存成功");
+			return mv;
+		}
 	}
 	
 	@WebMethod
 	public ModelAndView delete(Integer id){
 		ModelAndView mv = new ModelAndView();
 		if(id!=null){
-			GenJin po = service.get(GenJin.class, id);
+			GenJin po = dao.get(GenJin.class, id);
 			if(po!=null){
-				service.delete(po);
+				dao.delete(po);
 			}
 		}
 		mv.data.put("result", 0);
@@ -59,10 +69,10 @@ public class GenJinService {
 			if(sh!=0 && sh!=1){
 				throw new GException(PlatformExceptionType.BusinessException, "无效的参数");
 			}
-			GenJin po = service.get(GenJin.class, id);
+			GenJin po = dao.get(GenJin.class, id);
 			if(po!=null){
 				po.sh = sh;
-				service.saveOrUpdate(po);
+				dao.saveOrUpdate(po);
 			}
 		}
 		mv.data.put("result", 0);
@@ -72,13 +82,9 @@ public class GenJinService {
 	@WebMethod
 	public ModelAndView list(GenJinQuery query , Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder(" select gj.id as id,gj.hid as houseId,gj.conts as conts,gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu ,gj.area as area, gj.bianhao as bianhao, "
-				+ "u.uname as uname,dept.namea as deptName from  GenJin gj  ,User u,Department dept where gj.userId=u.id and u.id is not null and dept.id=u.did");
+		StringBuilder hql = new StringBuilder(" select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu , "
+				+ "u.uname as uname,d.namea as dname , c.namea as cname from  GenJin gj  ,User u,Department c , Department d where gj.uid=u.id  and d.id=gj.did and d.fid=c.id");
 		List<Object> params = new ArrayList<Object>();
-		if(StringUtils.isNotEmpty(query.xpath)){
-			hql.append(" and u.orgpath like ? ");
-			params.add(query.xpath+"%");
-		}
 		
 		if(query.houseId!=null){
 			hql.append(" and hid=? ");
@@ -90,20 +96,16 @@ public class GenJinService {
 			params.add(query.sh.getCode());
 		}
 		
-		if(StringUtils.isNotEmpty(query.area)){
-			hql.append(" and area like ?");
-			params.add("%"+query.area+"%");
+		if(query.chuzu!=null){
+			hql.append(" and gj.chuzu=? ");
+			params.add(query.chuzu);
 		}
 		
-		if(StringUtils.isNotEmpty(query.bianhao)){
-			hql.append(" and bianhao like ?");
-			params.add("%"+query.bianhao+"%");
-		}
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeStart, DateSeparator.After, params));
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeEnd, DateSeparator.Before, params));
 		
 		hql.append(" order by gj.addtime desc ");
-		page = service.findPage(page, hql.toString(), true,params.toArray());
+		page = dao.findPage(page, hql.toString(), true,params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

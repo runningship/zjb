@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -50,6 +51,25 @@ public class Role {
 	public Integer num;
 	
 	public List<RoleAuthority> Authorities(){
-		return SimpDaoTool.getGlobalCommonDaoService().listByParams(RoleAuthority.class, new String[]{"roleId"}, new Object[]{id});
+		List<RoleAuthority> list = SimpDaoTool.getGlobalCommonDaoService().listByParams(RoleAuthority.class, new String[]{"roleId"}, new Object[]{id});
+		Purview purview = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(Purview.class, "unid", id);
+		if(StringUtils.isNotEmpty(purview.fy)){
+			merge(list, purview.fy);
+		}
+		if(StringUtils.isNotEmpty(purview.sz)){
+			merge(list, purview.sz);
+		}
+		return list;
+	}
+
+	private void merge(List<RoleAuthority> list, String fy) {
+		String[] arr = fy.split("|1");
+		for(String item : arr){
+			item = item.replace("", "");
+			RoleAuthority ra = new RoleAuthority();
+			if(!list.contains(ra)){
+				list.add(ra);
+			}
+		}
 	}
 }

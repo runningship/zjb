@@ -8,20 +8,21 @@
 //$(document).bind("contextmenu", function () { return false; });
 //$(document).bind("selectstart", function () { return false; });
 /*
+*/
 //屏蔽右键菜单
-document.oncontextmenu = function (event){
-	if(window.event){
-		event = window.event;
-	}try{
-		var the = event.srcElement;
-		if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA")){
-			return false;
-		}
-		return true;
-	}catch (e){
-		return false; 
-	} 
-}
+// document.oncontextmenu = function (event){
+// 	if(window.event){
+// 		event = window.event;
+// 	}try{
+// 		var the = event.srcElement;
+// 		if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA")){
+// 			return false;
+// 		}
+// 		return true;
+// 	}catch (e){
+// 		return false; 
+// 	} 
+// }
 //屏蔽全选
 document.onselectstart = function (event){
 	if(window.event){
@@ -37,7 +38,6 @@ document.onselectstart = function (event){
 		return false; 
 	} 
 }
-*/
 $(document).keydown(function(event){  
 //alert(event.keyCode)
     if ((event.altKey)&&   
@@ -127,11 +127,18 @@ function WinBoxBorder(){
 	$('body').append(winBorder)
 
 }
+//计算内页侧边标题高度等
+function getSideH(){
+  var htmls=$('.html'),
+  sides=htmls.find('.sideCont');
+  return sides.css('top');
+}
 // 列表标题与内容宽度保持一致
 function tableFix(TableH,TableB){
   for(var i=0;i<=TableB.find('td:last').index();i++){
-    TableH.find('th').eq(i).width(TableB.find('tr').eq(1).find('td').eq(i).width());
+    TableH.find('th').eq(i).width(TableB.find('tr').eq(2).find('td').eq(i).width());
   }
+//  blockAlert(TableB.find('tr').eq(2).html());
 }
 function setTableFix(){
 	var TableH=$('.TableH'),
@@ -139,6 +146,7 @@ function setTableFix(){
 	if(TableH&&TableB){
 		tableFix(TableH,TableB);
 	}
+//    blockAlert(TableB.html())
 }
 //页面加载完之后执行的脚本
 $(document).ready(function() {
@@ -350,11 +358,11 @@ function DelCookie(name){
 //使用示例
 //SetCookie("a","yimixia.com");
 //alert(GetCookie("a"));
-$(function(){
-//屏蔽JS报错
-function killErrors() {return true;}
-window.onerror = killErrors;	
-})
+// $(function(){
+// //屏蔽JS报错
+// function killErrors() {return true;}
+// window.onerror = killErrors;	
+// })
 
 
 

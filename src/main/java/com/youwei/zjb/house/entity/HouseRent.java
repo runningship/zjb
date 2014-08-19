@@ -25,11 +25,9 @@ public class HouseRent {
 	/**
 	 * 店面编号
 	 */
-	@Column(name = "did")
-	public Integer deptId;
+	public Integer did;
 
-	@Column(name = "uid")
-	public Integer userId;
+	public Integer uid;
 
 	@Column(nullable=false)
 	public String quyu;
@@ -51,7 +49,8 @@ public class HouseRent {
 	 */
 	public String fhao;
 
-	public String luduan;
+	@Column(name="luduan")
+	public String address;
 
 	/**
 	 * 楼层
@@ -88,10 +87,9 @@ public class HouseRent {
 	/**
 	 * 装修
 	 */
-	public Integer zxiu;
+	public String zxiu;
 
-	@Column(name="mji", nullable=false)
-	public Float mianji;
+	public Float mji;
 
 	/**
 	 * 总价(单位万)
@@ -120,15 +118,14 @@ public class HouseRent {
 	public String beizhu;
 
 	 /**
-	 * 状态：4 在售，6 已售，7 停售
+	 * 状态：1 在租，2 已租，3 停租
 	 */
 	public String ztai;
 
 	public Integer dateyear;
 
-	public Date dateadds;
-
-	public Date dategenjin;
+	@Column(name="dateadds")
+	public Date dateadd;
 
 	/**
 	 * 收藏此房源的人
@@ -141,6 +138,11 @@ public class HouseRent {
 	public Integer isdel;
 
 	public Integer sh;
+	
+	/**
+	 * 1 整租, 2 合租
+	 */
+	public Integer fangshi;
 	
 	public Integer seeGX;
 	

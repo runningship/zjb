@@ -13,8 +13,6 @@ public class GenJinQuery{
 	
 	public ShenHe sh;
 	
-	public String bianhao;
-	
-	public String area;
+	public Integer chuzu;
 	
 }

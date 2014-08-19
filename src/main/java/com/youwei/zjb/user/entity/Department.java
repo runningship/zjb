@@ -69,6 +69,8 @@ public class Department {
 	
 	public Integer share;
 	
+	public Integer dgroup;
+	
 	public void Group(){
 		
 	}

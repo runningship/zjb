@@ -1,7 +1,5 @@
 package com.youwei.zjb.house;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,15 +11,14 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
-import org.bc.sdak.utils.BeanUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.user.entity.User;
@@ -29,15 +26,15 @@ import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
-@Module(name="/house/")
-public class HouseService {
+@Module(name="/house/rent/")
+public class HouseRentService {
 
 	CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
 	@WebMethod
-	public ModelAndView add(House house){
+	public ModelAndView add(HouseRent house){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
@@ -68,9 +65,9 @@ public class HouseService {
 	}
 	
 	@WebMethod
-	public ModelAndView update(House house){
+	public ModelAndView update(HouseRent house){
 		ModelAndView mv = new ModelAndView();
-		House po = service.get(House.class, house.id);
+		HouseRent po = service.get(HouseRent.class, house.id);
 		house.isdel = po.isdel;
 		house.dateadd = po.dateadd;
 		house.uid = po.uid;
@@ -88,41 +85,6 @@ public class HouseService {
 		return mv;
 	}
 	
-	@WebMethod
-	public ModelAndView softDelete(Integer houseId){
-		ModelAndView mv = new ModelAndView();
-		if(houseId!=null){
-			House po = service.get(House.class, houseId);
-			if(po!=null){
-				po.isdel= 1;
-				service.saveOrUpdate(po);
-				User user = ThreadSession.getUser();
-				String operConts = "["+user.Department().namea+"-"+user.uname+ "] 删除了房源["+po.area+"]";
-				operService.add(OperatorType.房源记录, operConts);
-			}
-		}
-		
-		mv.data.put("msg", "删除成功");
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView softDeleteBatch(List<Object> ids){
-		List<Integer> params = new ArrayList<Integer>();
-		ModelAndView mv = new ModelAndView();
-		mv.data.put("result", 0);
-		if(ids.isEmpty()){
-			return mv;
-		}
-		StringBuilder hql = new StringBuilder("delete from House where id in (-1");
-		for(Object id : ids){
-			hql.append(",").append("?");
-			params.add(Integer.valueOf(id.toString()));
-		}
-		hql.append(")");
-		service.execute(hql.toString(), params.toArray());
-		return mv;
-	}
 	
 	@WebMethod
 	public ModelAndView physicalDeleteBatch(List<Object> ids){
@@ -132,7 +94,7 @@ public class HouseService {
 		if(ids.isEmpty()){
 			return mv;
 		}
-		StringBuilder hql = new StringBuilder("delete from House where id in (-1");
+		StringBuilder hql = new StringBuilder("delete from HouseRent where id in (-1");
 		StringBuilder gjHql = new StringBuilder("delete from GenJin where hid in (-1");
 		for(Object id : ids){
 			hql.append(",").append("?");
@@ -147,25 +109,11 @@ public class HouseService {
 	}
 	
 	@WebMethod
-	public ModelAndView recover(Integer houseId){
-		ModelAndView mv = new ModelAndView();
-		if(houseId!=null){
-			House po = service.get(House.class, houseId);
-			if(po!=null){
-				po.isdel= 0;
-				service.saveOrUpdate(po);
-			}
-		}
-		mv.data.put("msg", "恢复成功");
-		return mv;
-	}
-	
-	@WebMethod
 	public ModelAndView physicalDelete(Integer houseId){
 		ModelAndView mv = new ModelAndView();
 		//是否需要权限
 		if(houseId!=null){
-			House po = service.get(House.class, houseId);
+			HouseRent po = service.get(HouseRent.class, houseId);
 			if(po!=null){
 				service.delete(po);
 				service.execute("delete from GenJin where hid=?", po.id);
@@ -176,50 +124,21 @@ public class HouseService {
 	}
 	
 	@WebMethod
-	public ModelAndView listMy(HouseQuery query ,Page<House> page){
+	public ModelAndView listMy(HouseQuery query ,Page<HouseRent> page){
 		User user = ThreadSession.getUser();
 		query.userid = user.id;
 		return listAll(query ,page);
 	}
 	
 	@WebMethod
-	public ModelAndView listRecycle(HouseQuery query ,Page<House> page){
-//		query.isdel=1;
-		return listAll(query , page);
-	}
-	
-	@WebMethod
-	public ModelAndView view(String authParent , int houseId){
-		User user = ThreadSession.getUser();
-		ModelAndView mv = new ModelAndView();
-		House house = service.get(House.class, houseId);
-		List<House> list = new ArrayList<House>();
-		list.add(house);
-		mv.data.put("house", JSONHelper.toJSONArray(list));
-		User fbr = service.get(User.class, house.uid);
-		if(fbr!=null){
-//			Department dept = fbr.Department();
-//			Department quyu = dept.Parent();
-//			String fbrStr = quyu.namea+" "+dept.namea + " "+fbr.uname;
-//			mv.data.put("fbr", fbrStr);
-		}
-		Favorite fav = service.getUniqueByParams(Favorite.class, new String[]{"userId" , "houseId"}, new Object[]{ user.id , houseId });
-		mv.data.put("fav", fav==null ? 0:1);
-		if(user.id.equals(house.uid)){
-			mv.data.put("showTel", "true");
-		}
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView listAll(HouseQuery query ,Page<House> page){
+	public ModelAndView listAll(HouseQuery query ,Page<HouseRent> page){
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql = null;
 		if(StringUtils.isNotEmpty(query.xpath)){
-			hql = new StringBuilder(" select h from  House h  ,User u where h.uid=u.id and u.id is not null and u.orgpath like ? ");
+			hql = new StringBuilder(" select h from  HouseRent h  ,User u where h.uid=u.id and u.id is not null and u.orgpath like ? ");
 			params.add(query.xpath+"%");
 		}else{
-			hql = new StringBuilder(" select h  from House  h where 1=1 ");
+			hql = new StringBuilder(" select h  from HouseRent  h where 1=1 ");
 		}
 		
 		if(StringUtils.isNotEmpty(query.ztai)){
@@ -298,17 +217,7 @@ public class HouseService {
 			}
 			hql.append(" )");
 		}
-//		if(query.jiaoyis!=null){
-//			hql.append(" and ( ");
-//			for(int i=0;i<query.jiaoyis.size();i++){
-//				hql.append(" h. jiaoyi = ? ");
-//				if(i<query.jiaoyis.size()-1){
-//					hql.append(" or ");
-//				}
-//				params.add(JiaoYi.valueOf(query.jiaoyis.get(i)).getCode());
-//			}
-//			hql.append(" )");
-//		}
+
 		if(StringUtils.isNotEmpty(query.leibie)){
 			hql.append(" and h.leibie = ? ");
 			params.add(query.leibie);
@@ -320,6 +229,10 @@ public class HouseService {
 		if(query.zjiaEnd!=null){
 			hql.append(" and h.zjia<= ? ");
 			params.add(query.zjiaEnd);
+		}
+		if(query.fangshi!=null){
+			hql.append(" and h.fangshi=? ");
+			params.add(query.fangshi);
 		}
 		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateStart,DateSeparator.After,params));
 		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateEnd, DateSeparator.Before , params));
@@ -353,17 +266,11 @@ public class HouseService {
 			hql.append(" and h.uid= ? ");
 			params.add(query.userid);
 		}
-//		if(query.isdel==null){
-//			hql.append(" and ( isdel= 0 or isdel is null) ");
-//		}
-//		if(query.isdel!=null){
-//			hql.append(" and h.isdel=?");
-//			params.add(query.isdel);
-//		}
+
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
 		page.setPageSize(20);
-//		hql.append(" and ( isdel= 0 or isdel is null) ");
+		
 		page = service.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
@@ -385,30 +292,4 @@ public class HouseService {
 		}
 	}
 
-	private String buildDateHql(DateType dateType,String dateStr,DateSeparator sep,List<Object> params){
-		if(StringUtils.isNotEmpty(dateStr)){
-			if(DateType.建房年代==dateType){
-				params.add(Integer.valueOf(dateStr));
-				if(sep==DateSeparator.Before){
-					return " and " + dateType.getField()+"<=?";
-				}else{
-					return " and " + dateType.getField()+">=?";
-				}
-			}
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				Date date = sdf.parse(dateStr);
-				params.add(date);
-				if(sep==DateSeparator.Before){
-					return " and "+dateType.getField()+" <=?";
-				}else{
-					return " and "+dateType.getField()+" >=?";
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-				return "";
-			}
-		}
-		return "";
-	}
 }

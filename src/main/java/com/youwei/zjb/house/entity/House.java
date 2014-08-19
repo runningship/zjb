@@ -120,8 +120,7 @@ public class House {
 	 */
 	public String ztai;
 
-	@Column(name="dateyear")
-	public Integer year;
+	public Integer dateyear;
 
 	@Column(name="dateadds")
 	public Date dateadd;

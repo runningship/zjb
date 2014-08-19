@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WebMethod {
 	public String name() default "";
+	public String alias() default "";
 }

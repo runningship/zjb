@@ -16,6 +16,7 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.SimpDaoTool;
+import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.sys.entity.PC;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.util.JSONHelper;
@@ -59,6 +60,7 @@ public class PcService {
 			pc.addtime = new Date();
 			pc.lock=0;
 			pc.cid = comp.id;
+			pc.lastip = ThreadSession.getIp();
 			dao.saveOrUpdate(pc);
 		}else{
 			throw new GException(PlatformExceptionType.BusinessException, "您已经申请过授权，无需重复申请");
@@ -80,16 +82,16 @@ public class PcService {
 	@WebMethod
 	public ModelAndView list(Page<Map> page,PCQuery query){
 		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder("select pc.id as id, pc.pcname as pcname, pc.addtime as addtime, pc.bios as bios, pc.cpu as cpu, pc.harddrive as harddrive, pc.baseboard as baseboard,"
-				+ " pc.lock as lock, pc.beizhu as beizhu,d.path as xpath,d.namea as deptName,q.namea as quyu from PC pc, Department d , Department q  where pc.deptId=d.id and d.fid=q.id");
+		StringBuilder hql = new StringBuilder("select pc.id as id, pc.pcname as pcname, pc.addtime as addtime, pc.lasttime as lasttime, pc.uuid as uuid,pc.lastip as ip, "
+				+ " pc.lock as lock, pc.beizhu as beizhu,d.namea as deptName  from PC pc,Department d where d.id=pc.did");
 		List<Object> params = new ArrayList<Object>();
 		if(query.lock!=null){
 			hql.append(" and pc.lock=? ");
 			params.add(query.lock);
 		}
-		if(StringUtils.isNotEmpty(query.xpath)){
-			hql.append(" and d.path like ?");
-			params.add(query.xpath+"%");
+		if(query.deptId!=null){
+			hql.append(" and pc.did=? ");
+			params.add(query.deptId);
 		}
 		page.orderBy = "pc.addtime";
 		page.order = Page.DESC;

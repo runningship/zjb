@@ -1,0 +1,124 @@
+<style type="text/css">
+  div#rMenu {position:absolute; visibility:hidden; top:0;width:150px; text-align: left;padding: 2px;}
+  div#rMenu ul li{
+    margin: 5px 0;
+    padding: 0 15px;
+    cursor: pointer;
+    list-style: none outside none;
+  }
+</style>
+<script type="text/javascript">
+var rMenu;
+var id;
+    var setting = {
+      view: {
+        showIcon: false,
+        addDiyDom: addDiyDom
+      },
+      data: {
+        simpleData: {
+          enable: true
+        }
+      },
+      callback: {
+        onRightClick: OnRightClick
+      }
+     };
+
+  YW.ajax({
+    type: 'POST',
+    url: '/c/dept/getDeptTree?cid=98',
+    data:'',
+    success: function(data){
+        var result=JSON.parse(data);
+        $.fn.zTree.init($("#treeDemo"), setting, result.result);
+        rMenu = $("#rMenu");
+    }
+  });
+
+function OnRightClick(event, treeId, treeNode) {
+  console.log(treeId);
+  if(event.target.tagName!='SPAN'){
+    return;
+  }
+  id = treeNode.id;
+  showRMenu(treeNode.type, event.clientX, event.clientY);
+}
+function showRMenu(type, x, y) {
+  $("#rMenu a").show();
+  y=y-30;
+  if(type!="comp"){
+    $('#m_add_group').hide();
+  }
+  if(type=="comp"){
+    $('#m_move_to').hide();
+  }
+  if(type=="group"){
+    $('#m_list_records').hide();
+    $('#m_list_genjin').hide();
+  }
+  rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
+  $("body").bind("mousedown", onBodyMouseDown);
+}
+function hideRMenu() {
+      if (rMenu) rMenu.css({"visibility": "hidden"});
+      $("body").unbind("mousedown", onBodyMouseDown);
+    }
+function onBodyMouseDown(event){
+    rMenu.css({"visibility" : "hidden"});
+}
+
+function addDiyDom(treeId, treeNode) {
+  $("#" + treeNode.tId + "_ico").remove();
+  $("#" + treeNode.tId).css('display','inline');
+  var aObj = $("#" + treeNode.tId + "_a");
+  if(treeNode.cnum!=null){
+    var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+    aObj.prepend(editStr);  
+  }
+  
+}
+</script>
+<div class="sideHead">
+    分公司列表
+</div>
+
+<table class="table table-nopadding side_table" width="100%">
+  <tbody>
+    <tr class="list">
+      <td>
+        <div class="zTreeDemoBackground left">
+          <ul id="treeDemo" class="ztree"></ul>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="sideFoot">
+  <ul>
+    <li>
+      <a href="" data-toggle="tooltip" title="添加跟进" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加分公司</a>
+    </li>
+  </ul>
+</div>
+
+<!-- <div id="rMenu">
+  <ul>
+    <li id="m_add" onclick="addTreeNode();">查看记录</li>
+    <li id="m_unCheck" onclick="checkTreeNode(false);">查看跟进</li>
+    <li id="m_check" onclick="checkTreeNode(true);">添加分组</li>
+    <li id="m_check" onclick="checkTreeNode(true);">移动至</li>
+    <li id="m_check" onclick="checkTreeNode(true);">编辑</li>
+    <li id="m_del" onclick="removeTreeNode();">删除</li>
+  </ul>
+</div> -->
+
+<div id="rMenu" class="list-group">
+  <a href="#" id="m_list_records" class="list-group-item disabled">查看记录</a>
+  <a href="#" id="m_list_genjin" class="list-group-item">查看跟进</a>
+  <a href="#" id="m_add_group" class="list-group-item" onclick="">添加分组</a>
+  <a href="#" id="m_move_to" class="list-group-item">移动至</a>
+  <a href="#" class="list-group-item">编辑</a>
+  <a href="#" class="list-group-item">删除</a>
+</div>

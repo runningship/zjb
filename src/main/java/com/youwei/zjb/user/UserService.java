@@ -364,6 +364,7 @@ public class UserService {
 		mv.data.put("result", "0");
 		mv.data.put("msg", "登录成功");
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
+		ThreadSession.getHttpSession().setAttribute("pc", pcpo);
 		String operConts = "["+po.Department().namea+"-"+po.uname+ "] 登录成功";
 		operService.add(OperatorType.登录记录, operConts);
 		return mv;

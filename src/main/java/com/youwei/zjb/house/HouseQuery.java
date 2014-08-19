@@ -33,6 +33,7 @@ public class HouseQuery{
 	public String fhao;
 	public String yearStart;
 	public String yearEnd;
+	public Integer fangshi;
 	
 	// for phone client
 	//current page number

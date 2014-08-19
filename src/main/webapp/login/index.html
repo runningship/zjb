@@ -39,7 +39,11 @@ try{
 }catch(e){
     console.log(e);
 }
-var debug=getParam('debug');
+var debug=getParam('debug'),
+domains=getParam('domain'),
+cityNames=decodeURI(getParam('cityName')),
+gotos=getParam('goto');
+//blockAlert(window.location.href);
 function onClickNav(index){
     if(!index){index=0}
     $('.act_menu').find('li').eq(index).find('a').click();
@@ -67,6 +71,42 @@ function setDomSize(){
     mainerH=bodyerH-menuerH;
     $(document).find('.tempWrap').width(domW+'px').find('.bd').width(domW3+'px').height(mainerH+'px').find('ul').width(domW+'px').height(mainerH+'px');
     slideW=domW;
+}
+function ActLnane(){
+    var actBox=$('#idNameBox'),
+    actInput=actBox.find('.form-control'),
+    actList=actBox.find('.form_menu_list'),
+    getLnameJSON=loadConfigAsJSON(),
+    getLnames=getLnameJSON["account"];
+    if (getLnames!=undefined&&getLnames.length>0) {
+        var htmls='';
+        $.each(getLnames, function(index, val) {
+            htmls=htmls + '<li><a href="#"><b>X</b><span>'+val+'</span><a></li>';
+        });
+        var actListOl=actList.find('ol').html(htmls);
+    };
+    actInput.on('focusin', actInput, function(event) {
+        actList.show(300);
+    }).on('focusout', actInput, function(event) {
+        var thiTimes=setTimeout(function(){
+            actList.hide(100);
+            clearTimeout(thiTimes);
+        },100)
+    });
+    actList.on('click', 'a,span', function(event) {
+        var a=$(this),
+        aTxt=a.text();
+        if(aTxt){
+            actInput.val(aTxt);
+            actList.hide(100);
+        }
+        return false;
+    }).on('click', 'a span', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+
+        return false;
+    });
 }
 function hetKeyAct(){
     $(document).keydown(function(event){  
@@ -133,14 +173,14 @@ $(document).ready(function() {
         }else if(ThiType=='wangjimima'){
             art.dialog({
                 id:'tips',
-                title:false,
+                title:'提示',
                 content:'忘记密码，请致电贵公司管理部门，或者联系中介宝客服！',
                 ok:true
             });
         }else if(ThiType=='wangjizhanghao'){
             art.dialog({
                 id:'tips',
-                title:false,
+                title:'提示',
                 content:'忘记帐号，请致电贵公司管理部门，或者联系中介宝客服！',
                 ok:true
             });
@@ -166,6 +206,11 @@ $(document).ready(function() {
                     url: '/c/user/login',
                     data:json,
                     success: function(data){
+                        if(!debug){
+                            putConfig('domain', domains);
+                            putConfig('cityName', cityNames);
+                            appendConfig('account', json.lname);
+                        }
                         window.location="../default.html";
                     },complete:function(){
                         l.stop();
@@ -181,18 +226,23 @@ $(document).ready(function() {
     $(".bodyer").slide({ effect:"left",trigger:"click" });
 // 设置页面尺寸
     setDomSize();
-// 按钮加载中状态
-    Ladda.bind( 'button', { timeout: 2000 } );
-// focus
+// 设置页面参数
+    $('#idCity').val(cityNames);
+    $('#iframe').attr('src','iframe_reg.html?cityName='+cityNames+'&domain='+domains);
+// 设置默认显示页面
     var inTime=setTimeout(function(){
-        isFocus();
-        if(getParam('goto')==1){
+        if(gotos==1){
             onClickNav(1);
             $("#iframe").contents().find('#authCode').focus();
+        }else{
+            isFocus();
         }
         clearTimeout(inTime);
-    },1200);
-
+    },1300);
+// 按钮加载中状态
+    Ladda.bind( 'button', { timeout: 2000 } );
+// 设置登陆帐号
+    ActLnane();
 });
 $(document).on('click', '.act_menu a', function(event) {
     var Thi=$(this),
@@ -287,20 +337,21 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                                 <div class="form-group">
                                     <label for="idCity" class="col-xs-2 control-label">城市:</label>
                                     <div class="col-xs-8">
-                                        <input type="text" class="form-control" value="合肥市" placeholder="" readonly>
+                                        <input type="text" class="form-control" value="" id="idCity" placeholder="" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="idName" class="col-xs-2 control-label">账号:</label>
-                                    <div class="col-xs-8">
-                                        <input type="email" class="form-control" id="idName" placeholder="">
+                                    <div class="col-xs-8 form_menu_box" id="idNameBox">
+                                        <input type="text" class="form-control" id="idName" tabindex="10" placeholder="">
+                                        <div class="form_menu_list"><ol></ol></div>
                                     </div>
                                     <a class="col-xs-2 btn btn-link" data-type="wangjizhanghao">忘记帐号？</a>
                                 </div>
                                 <div class="form-group">
                                     <label for="idPassword" class="col-xs-2 control-label">密码:</label>
                                     <div class="col-xs-8">
-                                        <input type="password" class="form-control" id="idPassword" placeholder="">
+                                        <input type="password" class="form-control" id="idPassword" tabindex="11" placeholder="">
                                     </div>
                                     <a class="col-xs-2 btn btn-link" data-type="wangjimima">忘记密码？</a>
                                 </div>
@@ -308,7 +359,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                                 <div class="form-group">
                                     <label class="col-xs-2 control-label"></label>
                                     <div class="col-xs-8">
-                                        <button type="button" class="btn btn-primary btn-block ladda-button btn_submit" data-style="expand-left" data-type="submit"><span class="ladda-label">登　录</span></button>
+                                        <button type="button" class="btn btn-primary btn-block ladda-button btn_submit" data-style="expand-left" data-type="submit" tabindex="12"><span class="ladda-label">登　录</span></button>
                                     </div>
                                 </div>
                             </form>

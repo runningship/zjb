@@ -1,12 +1,15 @@
-function buildHtmlWithJsonArray(id,json,removeTemplate){
+function buildHtmlWithJsonArray(id,json,removeTemplate,remainItems){
     var temp = $('.'+id);
 
     var subCatagory = temp.parent();
     var dhtml = temp[0].outerHTML;
     //var temp = $(first);
-    // var jtemp=$(temp);
-    $(subCatagory).empty();
-
+    var copy=$(dhtml);
+    temp.removeClass(id);
+    temp.remove();
+    if(!remainItems){
+        $(subCatagory).empty();
+    }
     for(var i=0;i<json.length;i++){
         //temp[0]表示dom元素
         var html = buildHtmlWithJson(temp[0],json[i] ,i);
@@ -51,8 +54,8 @@ function buildHtmlWithJsonArray(id,json,removeTemplate){
     });
 
     if(!removeTemplate){
-        temp.css('display','none');
-        subCatagory.prepend(temp);
+        copy.css('display','none');
+        subCatagory.prepend(copy);
     }
 }
 function buildHtmlWithJson(temp,json , rowIndex){
@@ -188,6 +191,21 @@ function writeConfig(json){
 function putConfig(key, val){
     var json = loadConfigAsJSON();
     json[key] = val;
+    writeConfig(json);
+}
+
+//添加
+function appendConfig(key, val){
+    var json = loadConfigAsJSON();
+    var arr = json[key];
+    if(arr==undefined){
+        arr=[];
+        json[key]=arr;
+    }
+    if(arr.indexOf(val)==-1){
+        arr.push(val);
+    }
+
     writeConfig(json);
 }
 

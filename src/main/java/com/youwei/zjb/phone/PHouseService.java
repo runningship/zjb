@@ -19,7 +19,7 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.HouseQuery;
-import com.youwei.zjb.house.State;
+import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
@@ -85,7 +85,7 @@ public class PHouseService {
 			result.put("isfav", "1");
 		}
 		//状态
-		State state = State.parse(house.ztai);
+		SellState state = SellState.parse(house.ztai);
 		if(state!=null){
 			result.put("ztai", state.toString());
 		}

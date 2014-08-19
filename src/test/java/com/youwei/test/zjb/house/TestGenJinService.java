@@ -29,26 +29,6 @@ public class TestGenJinService {
 		query.addtimeStart = "2013-08-21";
 		query.addtimeEnd = "2013-08-23";
 		GenJinService service = new GenJinService();
-		ModelAndView mv = service.list(query , new Page<Map>());
-		DebugHelper.printResult(mv.data.getJSONObject("page").getJSONArray("data"));
-	}
-	
-	@Test
-	public void testQueryByArea(){
-		GenJinQuery query = new GenJinQuery();
-		query.area="太阳城";
-		GenJinService service = new GenJinService();
-		ModelAndView mv = service.list(query , new Page<Map>());
-		DebugHelper.printResult(mv.data.getJSONObject("page").getJSONArray("data"));
-	}
-	
-	@Test
-	public void testQueryByXpath(){
-		GenJinQuery query = new GenJinQuery();
-		query.xpath="169";
-		GenJinService service = new GenJinService();
-		ModelAndView mv = service.list(query , new Page<Map>());
-		DebugHelper.printResult(mv.data.getJSONObject("page").getJSONArray("data"));
 	}
 	
 	@Test

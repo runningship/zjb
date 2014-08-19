@@ -14,7 +14,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.house.State;
+import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.User;
@@ -27,10 +27,10 @@ public class PGenjinService {
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
 	@WebMethod(name="house/genjin/add.asp")
-	public ModelAndView add(Integer userId , Integer houseId , int type , String content){
-		if(type==0){
+	public ModelAndView add(Integer userId , Integer houseId , Integer type , String content){
+		if(type==null){
 			//客户端bug
-			type=State.已售.getCode();
+			type=SellState.已售.getCode();
 		}
 		JSONArray arr = new JSONArray();
 		JSONObject obj = new JSONObject();
@@ -66,7 +66,7 @@ public class PGenjinService {
 		//TODO 关键词检查
 		gj.sh=1;
 		gj.flag = type;
-		gj.ztai = State.parse(String.valueOf(type)).toString();
+		gj.ztai = SellState.parse(String.valueOf(type)).toString();
 		Date lockdate = h.dategjlock;
 		if(lockdate==null){
 			try {
@@ -75,36 +75,36 @@ public class PGenjinService {
 			}
 		}
 		boolean delete=false;
-		long count = dao.countHql("select count(distinct cid) from GenJin where hid=? and sh=1 and addtime>? and flag=? ", h.id, lockdate , type);
-		if(String.valueOf(State.在售.getCode()).equals(h.ztai)){
-			if(State.已售.getCode()==type || State.停售.getCode()==type){
+		long count = dao.countHql("select count(distinct cid) from GenJin where hid=? and sh=1 and addtime>? and chuzu=0 and flag=? ", h.id, lockdate , type);
+		if(String.valueOf(SellState.在售.getCode()).equals(h.ztai)){
+			if(SellState.已售.getCode()==type || SellState.停售.getCode()==type){
 				if(count>=5){
-					gj.ztai=State.parse(h.ztai).toString()+"-"+State.parse(String.valueOf(type)).toString();
+					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
 					dao.saveOrUpdate(h);
 				}
 			}
-		}else if(String.valueOf(State.已售.getCode()).equals(h.ztai)){
+		}else if(String.valueOf(SellState.已售.getCode()).equals(h.ztai)){
 			if(count>=2){
-				if(type==State.已售.getCode()){
+				if(type==SellState.已售.getCode()){
 					dao.delete(h);
 					delete = true;
 				}else{
-					gj.ztai=State.parse(h.ztai).toString()+"-"+State.parse(String.valueOf(type)).toString();
+					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
 					dao.saveOrUpdate(h);
 					
 				}
 			}
-		}else if(String.valueOf(State.停售.getCode()).equals(h.ztai)){
+		}else if(String.valueOf(SellState.停售.getCode()).equals(h.ztai)){
 			if(count>=2){
-				if(type==State.停售.getCode()){
+				if(type==SellState.停售.getCode()){
 					dao.delete(h);
 					delete = true;
 				}else{
-					gj.ztai=State.parse(h.ztai).toString()+"-"+State.parse(String.valueOf(type)).toString();
+					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
 					dao.saveOrUpdate(h);

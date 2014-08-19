@@ -29,6 +29,9 @@ public class SessionFilter implements Filter{
 		excludes.add("/c/dept/listDept");
 		excludes.add("/login/index.html");
 		excludes.add("/login/iframe_reg.html");
+		excludes.add("/welcome.html");
+		excludes.add("/start.html");
+		excludes.add("/c/city/list");
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,6 +43,7 @@ public class SessionFilter implements Filter{
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		String path = req.getRequestURI().toString();
+		System.out.println(path);
 		HttpSession session = req.getSession();
 		ThreadSession.setHttpSession(session);
 		if(excludes.contains(path)){
@@ -56,9 +60,14 @@ public class SessionFilter implements Filter{
 				// update session
 				UserSession us = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(UserSession.class, "sessionId", oldSessionId);
 				if(us==null){
-					//have to login again.
-					relogin(req,resp);
-					return;
+					us = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(UserSession.class, "sessionId", session.getId());
+					if(us==null){
+						//have to login again.
+						relogin(req,resp);
+						return;
+					}else{
+						System.out.println("已经成功更新session");
+					}
 				}else{
 					if(us.userId==null){
 						relogin(req,resp);

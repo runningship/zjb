@@ -41,6 +41,9 @@ public class GenJin {
 	
 	public Integer sh;
 	
+	/**
+	 * 1 出租，0出售
+	 */
 	public Integer chuzu;
 	
 	//与House.ztai对应

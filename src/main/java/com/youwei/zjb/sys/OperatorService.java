@@ -18,6 +18,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.sys.entity.OperRecord;
+import com.youwei.zjb.sys.entity.PC;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.HqlHelper;
@@ -38,6 +39,14 @@ public class OperatorService {
 		oper.did = user.did;
 		oper.cid = user.cid;
 		oper.uname = user.uname;
+		oper.ip = ThreadSession.getIp();
+		oper.dname = user.Department().namea;
+		oper.cname = user.Company().namea;
+		oper.yesno=1;
+		PC pc= (PC)ThreadSession.getHttpSession().getAttribute("pc");
+		if(pc!=null){
+			oper.pcma = pc.uuid;
+		}
 		oper.conts = conts;
 		try{
 			dao.saveOrUpdate(oper);
@@ -47,20 +56,36 @@ public class OperatorService {
 	}
 	
 	@WebMethod
-	public ModelAndView list(Page<Map> page , OperatorQuery query, int operType){
+	public ModelAndView list(Page<OperRecord> page , OperatorQuery query, Integer operType){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		params.add(operType);
-		StringBuilder hql = new StringBuilder("select r.conts as conts , u.uname as uname , d.namea as deptName ,r.addtime as addtime, r.ip as ip from OperRecord r ,User u , Department d where r.uid=u.id and u.did=d.id and r.type=?");
+		
+		StringBuilder hql = new StringBuilder("from OperRecord r where 1=1 ");
+		if(operType!=null){
+			hql.append(" and type=? ");
+			params.add(operType);
+		}
+		if(query.cid!=null){
+			hql.append(" and cid=? ");
+			params.add(query.cid);
+		}
+		if(query.did!=null){
+			hql.append(" and did=? ");
+			params.add(query.did);
+		}
+		if(StringUtils.isNotEmpty(query.ip)){
+			hql.append(" and ip like ? ");
+			params.add("%"+query.ip+"%");
+		}
+		if(StringUtils.isNotEmpty(query.conts)){
+			hql.append(" and conts like ? ");
+			params.add("%"+query.conts+"%");
+		}
 		hql.append(HqlHelper.buildDateSegment("r.addtime", query.addtimeStart, DateSeparator.After, params));
 		hql.append(HqlHelper.buildDateSegment("r.addtime", query.addtimeEnd, DateSeparator.Before, params));
-		if(StringUtils.isNotEmpty(query.xpath)){
-			hql.append(" and u.orgpath like ? ");
-			params.add("%"+query.xpath+"%");
-		}
 		page.orderBy="r.addtime";
 		page.order = Page.DESC;
-		page = dao.findPage(page, hql.toString(), true , params.toArray());
+		page = dao.findPage(page, hql.toString(),  params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

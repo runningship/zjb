@@ -2,7 +2,6 @@ package com.youwei.test.zjb.house;
 
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.bc.sdak.Page;
 import org.bc.sdak.utils.BeanUtil;
 import org.bc.web.ModelAndView;
@@ -10,18 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.youwei.zjb.StartUpListener;
-import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.ChaoXiang;
-import com.youwei.zjb.house.DateType;
-import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.house.HouseAttribute;
 import com.youwei.zjb.house.HouseQuery;
 import com.youwei.zjb.house.HouseService;
 import com.youwei.zjb.house.HouseType;
-import com.youwei.zjb.house.JiaoYi;
-import com.youwei.zjb.house.LouXing;
 import com.youwei.zjb.house.entity.House;
-import com.youwei.zjb.user.entity.User;
 
 public class TestHouseService {
 

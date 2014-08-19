@@ -1,18 +1,14 @@
 package com.youwei.zjb.house;
 
-import org.bc.sdak.utils.LogUtil;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public enum State {
-
-	在售(4),
-	已售(6),
-	停售(7);
+public enum RentType {
+	整租(1),
+	合租(2);
 	private int code;
 	
-	private State( int code){
+	private RentType( int code){
 		this.code = code;
 	}
 
@@ -22,7 +18,7 @@ public enum State {
 	
 	public static JSONArray toJsonArray(){
 		JSONArray arr = new JSONArray();
-		for(State state : State.values()){
+		for(RentType state : RentType.values()){
 			JSONObject jobj = new JSONObject();
 			jobj.put("value", state.name());
 			jobj.put("name", state.name());
@@ -32,16 +28,11 @@ public enum State {
 		return arr;
 	}
 	
-	public static State parse(String code){
-		try{
-			int codec = Integer.valueOf(code);
-			for(State zx : State.values()){
-				if(zx.code==codec){
-					return zx;
-				}
+	public static RentType parse(int codec){
+		for(RentType zx : RentType.values()){
+			if(zx.code==codec){
+				return zx;
 			}
-		}catch(Exception ex){
-			LogUtil.warning("state with error code "+ code);
 		}
 		return null;
 	}
