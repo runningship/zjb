@@ -85,7 +85,7 @@ $(document).ready(function() {
         buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
         buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-        buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true);
+        buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
         Page.Init();
         doSearch();
     });
@@ -101,27 +101,6 @@ $(document).ready(function() {
         // Thi.toggleClass('selected');
         return false;
     });
-    $('.menuLi').on('click', 'a', function(event) {
-        var Thi=$(this),
-        ThiUl=Thi.parents('ul'),
-        ThiLi=Thi.parents('li'),
-        ThiUrl=Thi.attr('href'),
-        ThiType=Thi.data('type');
-        if(ThiType=='url'){
-        blockAlert(ThiUrl)
-
-        }else if(ThiType=='dialog'){
-            art.dialog.open(ThiUrl,{
-              title:'房源',
-              ok:function(){
-
-              },okVal:'保存'
-            });
-            return false;
-        }else{
-            return false;
-        }
-    });
     $.get('menuTop.html', function(data) {
         $('#menuTop').html(data);
     });
@@ -133,6 +112,17 @@ $(window).resize(function() {      //类别
   .selected{
     background-color: blue;
   }
+  .btn_group{ margin: 0;}
+  .btn_group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+      border-bottom-left-radius: 0;
+  }
+  .btn_group > .btn:last-child:not(:first-child), .btn_group > .dropdown-toggle:not(:first-child) {
+border-bottom-right-radius: 0;
+}
+  .btn_group .btn{ width: 80.6px;}
+  .form_group { margin: 0; padding: 0;}
+  .form_group textarea{ border-radius: 0;}
+  .form_group .btn{ border-top-left-radius: 0; border-top-right-radius: 0;}
 </style>
 </head>
 <body>
@@ -145,25 +135,29 @@ $(window).resize(function() {      //类别
     <input type="hidden" class="userInput" name="xpath" value="">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
-      <div class="btn-group btn-sm" style="width">
-        <select class="form-control " onchange='setDateSec(this)'>
-          <option value="1">所有</option>
-          <option value="3">公司</option>
-          <option value="7">个人</option>
-        </select>
+      <div class="btn-group btn-sm">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right: 11px;padding-left: 10px;">
+          综合 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><label><input type="radio" name="ztai" value="1"> 所有</label>
+          <li><label><input type="radio" name="ztai" value="3"> 公司</label>
+          <li><label><input type="radio" name="ztai" value="7"> 共享</label>
+        </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right: 4px;">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 10px;padding-left: 10px;">
           状态 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
+          <li><label><input type="radio" name="ztai" value=""> 所有</label>
           <li class="id_zhuangtai"><label><input type="radio" name="ztai" value="${code}"> ${name}</label>
         </ul>
       </div>
       <div class="input-group input-group-max" style="width: 265px;">
         <span class="input-group-addon">智能</span>
         <!-- <input type="hidden" class="form-control input-sm" name="Address" id="Address"> -->
-        <input type="text" class="form-control input-sm" name="search" id="search"  onkeyup="keyupdeal(event);" onkeydown="keydowndeal(event);" onclick="keyupdeal(event);" autocomplete="off" placeholder="楼盘/路段/电话">
+        <input type="text" class="form-control input-sm" name="search" id="search"  onkeyup="keyupdeal(event);" onkeydown="keydowndeal(event);" onclick="keyupdeal(event);" autocomplete="off" placeholder="楼盘/路段/电话/编号">
           <div id="suggest" style="position:absolute;height:400px;overflow-y:auto;z-index: 100;display:none"></div>
       </div>
       <div class="input-group input-group-too" style="width:130px;">
@@ -172,7 +166,7 @@ $(window).resize(function() {      //类别
         <input type="text" class="form-control input-sm" name="fhao" placeholder="房号">
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:75px;">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:77px;">
           区域<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -180,7 +174,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:75px;">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:76px;">
           楼型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -188,7 +182,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:75px;">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:76px;">
           房型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -196,20 +190,16 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:75px;">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:76px;">
           装潢<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
           <li class="id_zhuangxiu"><label><input type="checkbox" name="zxiu" value="${name}" /> ${name}</label></li>
         </ul>
       </div>
-      <div class="input-group" style="width: 103px;">
-        <span class="input-group-addon">编号</span>
-        <input type="text" class="form-control input-sm" name="id">
-      </div>
     </div>
 
-    <div class="form-group clearfix">
+    <div class="form-group clearfix" style="line-height: 30px;">
       <div class="input-group">
         <span class="input-group-addon">面积</span>
         <input type="text" class="form-control input-sm" name="mjiStart">
@@ -241,8 +231,10 @@ $(window).resize(function() {      //类别
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索提交</button>
-        <button type="button" class="btn btn-sms" data-type="qingkong" onclick="window.location.href='house_list.html?nav='+getParamS">清空</button>
+        <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索</button>
+      </div><br>
+      <div class="btn-group">
+        <button type="button" class="btn btn-sms" data-type="qingkong" onclick="window.location.href='house_list.html?nav='getParamS">清空</button>
       </div>
     </div>
   </form>

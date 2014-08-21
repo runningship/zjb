@@ -34,7 +34,7 @@ function doSearch(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/house/listAll',
+    url: '/c/user/list',
     data:a,
     success: function(data){
         var houseData=JSON.parse(data);
@@ -58,6 +58,10 @@ function getSider(id){
 
         });
     }
+}
+
+function uc_edit(id){
+  art.dialog.open('/v/settings/user_edit.html?id='+id)
 }
 
 $(document).ready(function() {
@@ -87,22 +91,18 @@ $(document).ready(function() {
         Page.Init();
         doSearch();
     });
-// 
-    $('.id_House_list').on('click', 'a', function(event) {
-        var Thi=$(this),
-        rel=Thi.data('rel'),
-        this_hid=Thi.data('hid');
-    });
-    $('.sideCont').on('click', '.btns', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        var Thi=$(this),
-        ThiType=Thi.data('type');
-        if(ThiType=='add_company'){
-            art.dialog.open('/settings/uc_index_c_add.html');
-        }
-        return false;
-    });
+// // 
+//     $('.id_House_list').on('click', 'a', function(event) {
+//         var Thi=$(this),
+//         ThiType=Thi.data('type'),
+//         ThiPtr=Thi.parents('tr'),
+//         ThiUid=ThiPtr.data('uid');
+//         if(ThiType=='edit'){
+//           uc_edit(ThiUid);
+//         }else{
+//           return false;
+//         }
+//     });
     $.get('menuTop.html', function(data) {
         $('#menuTop').html(data);
     });
@@ -119,7 +119,8 @@ $(window).resize(function() {      //类别
             </ul>
         </div>
   <form class="form-horizontal form1 hidden" onsubmit="doSearch();return false;" role="form" name="form1">
-    <input type="hidden" class="userInput" name="xpath" value="">
+    <input type="hidden" name="cid" id="cid" value="">
+    <input type="hidden" name="did" id="did" value="">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix">
       <div class="btn-group">
@@ -135,7 +136,7 @@ $(window).resize(function() {      //类别
       <th>姓名</th>
       <th>联系电话</th>
       <th>部门</th>
-      <th>最后登陆</th>
+      <th>最后登陆时间</th>
       <th>最后ＩＰ</th>
       <th>操作</th>
     </tr>
@@ -149,16 +150,15 @@ $(window).resize(function() {      //类别
         <table class="table table-hover table-striped table-nopadding TableB" >
           <tbody>
           <tr data-hid="${id}" style="display:none;" class="id_House_list">
-            <td>${ztai}</td>
-            <td>${quyu}</td>
-            <td>${lxing}</td>
-            <td>${mji}</td>
-            <td>${zjia}</td>
-            <td>${zjia}</td>
+            <td>${lname}</td>
+            <td>${uname}</td>
+            <td>${tel}</td>
+            <td>${dname}</td>
+            <td>${lasttime}</td>
+            <td>${ip}</td>
             <td>
-              <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">审</a>
-              <a auth="$${authParent}_edit" href="#" class="edit" data-hid="${id}" data-rel="edit">改</a>
-              <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">删</a>
+              <a auth="$${authParent}_edit" href="#" class="btns" data-type="edit" onclick="uc_edit(${uid})">编辑</a>
+              <a auth="$${authParent}_del" href="#" class="btns" data-type="del">离职</a>
             </td>
           </tr>
           </tbody>

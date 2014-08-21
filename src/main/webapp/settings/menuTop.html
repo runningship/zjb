@@ -1,3 +1,23 @@
-                <li class="curr"><a href="uc_index.html"><i class="icon iconfont font_icon">员</i> 成员管理</a></li>
-                <li class="hover"><a href="uc_purview.html"><i class="icon iconfont font_icon">权</i> 职位权限管理</a></li>
-                <li class="hover"><a href="pc_index.html"><i class="icon iconfont font_icon">机</i> 授权管理</a></li>
+                <li class="curr"><a href="uc_index.html" data-type="url"><i class="icon iconfont font_icon">员</i> 成员管理</a></li>
+                <li class="hover"><a href="uc_purview.html" data-type="url"><i class="icon iconfont font_icon">权</i> 职位权限管理</a></li>
+                <li class="hover"><a href="pc_index.html" data-type="url"><i class="icon iconfont font_icon">机</i> 授权管理</a></li>
+<script type="text/javascript">
+$(document).ready(function() {
+    menuTopFun();/* 顶部自动选中 */
+    $('.menuLi').on('click', 'a', function(event) {
+        var Thi=$(this),
+        ThiUl=Thi.parents('ul'),
+        ThiLi=Thi.parents('li'),
+        ThiUrl=Thi.attr('href'),
+        ThiType=Thi.data('type');
+        if(ThiType=='url'){
+
+        }else if(ThiType=='dialog'){
+            art.dialog.open(ThiUrl);
+            return false;
+        }else{
+            return false;
+        }
+    });
+});
+</script>

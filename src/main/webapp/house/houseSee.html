@@ -1,3 +1,141 @@
+
+<script type="text/javascript">
+function replaceAlls(a){
+  var aa=a;
+  aa=aa.replace(/ /g, '');
+  aa=aa.replace(/　/g, '');
+  aa=aa.replace(/，/g, ',');
+  aa=aa.replace(/、/g, ',');
+  aa=aa.replace(/\//g, ',');
+  return aa;
+
+}
+var houseGJbox
+$(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip();
+
+    $('.sideCont').on('click', '.btns', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var Thi=$(this),
+        ThiType=Thi.data('type');
+        if(ThiType=='add_company'){
+        }
+        return false;
+    });
+    $('.sideCont').on('click', '.btns', function(event) {
+        var Thi=$(this),
+        ThiHid=Thi.data('hid'),
+        ThiType=Thi.data('type');
+        if(ThiType=='addGenjin'){
+            if(houseGJbox)houseGJbox.close();
+            houseGJbox=art.dialog({
+                follow: document.getElementById('addGenjinBtn'),
+                content: '加载中...',
+                title:'添加跟进',
+                left:20,
+                id:'houseGenjinBox',
+                width:'250px',
+                padding:'0'
+            });
+            // jQuery ajax   
+            $.ajax({
+                url: '/house/house_genjin_add.html',
+                success: function (data) {
+                    houseGJbox.content(data);
+                },
+                cache: false
+            });
+        }else if(ThiType=='fav'){
+            var ThiIsFav=Thi.attr('fav'),
+            url,param={
+                houseId:$('#dimHouseId').text()
+            }
+            if(ThiIsFav==1){
+                url='add';
+                alertStr="收藏成功";
+                dimStr='<i class="iconfont">&#xe648;</i> 已收藏';
+            }else{
+                url='delete';
+                alertStr="已取消收藏";
+                dimStr='<i class="iconfont">&#xe648;</i> 收藏';
+                //$('.btns[data-type=fav]')
+            }
+            YW.ajax({
+                type: 'POST',
+                url: '/c/house/fav/'+url,
+                data:param,
+                success: function(data){
+                    //var json = JSON.parse(data);
+                    alert(alertStr);
+                    Thi.html(dimStr);
+                },complete:function(){
+                    
+                }
+            });
+        }else if(ThiType=='map'){
+            art.dialog.open('/house/house_see_map.html',{id:'seemap',height:400,width:900});
+        }else if(ThiType=='copy'){
+            alert('不给复制');
+        }else{
+            return false;
+        }
+    });
+        var lxr='$${lxr}',
+        tel='$${tel}';
+    if($('.telBox').length>0){
+        var telArr=new Array(),
+        lxrArr=new Array();
+        tel=replaceAlls(tel);
+        lxr=replaceAlls(lxr);
+        telArr=tel.split(',');
+        lxrArr=lxr.split(',');
+        var ThiBox=$('.telBox');
+        ThiBox.html('');
+        ThiBox.prepend('<a class="btn btn-success btn-xs"></a>');
+        var ThiBoxBtn=ThiBox.find('a')
+        ThiBoxBtn.css({'display':'block','overflow':'hidden'}).attr('href', '#')
+        $('.telBox').find('p:last-child').css({'margin':'0'});
+        ThiBoxBtn.html('点此查看房主资料');
+        var TelBoxStr='';
+        $.each(telArr, function(index, val) {
+        var thiTel=telArr[index],thiLxr='';
+            if(lxrArr.length>index){
+                thiLxr=lxrArr[index]
+            }
+            TelBoxStr=TelBoxStr+'<p><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" title="百度">&#xe64a;</span></p>';
+        });
+        ThiBox.on('click', 'a', function(event) {
+            event.preventDefault();
+            if($(this).find('p').length<1){
+                ThiBoxBtn.html(TelBoxStr);
+                ThiBox.find('p').each(function(index, el) {
+                    var Thisa=$(this),
+                    ThiTel=Thisa.find('.tel').text(),
+                    ThiTelFrom=Thisa.find('.telFrom');
+                    getTelFrom(ThiTel,Thisa,function(e){
+                        ThiTelFrom.html('['+ e +']');
+                    });
+                });
+                $('[data-toggle=tooltip]').tooltip();
+            }else{
+              //blockAlert($(this).find('p').length)
+                ThiBoxBtn.html('点此查看房主资料');
+            }
+            return false;
+        });
+        ThiBox.on('click', 'span.baidu', function(event) {
+            var ThiTel=$(this).parent().find('.tel').html();
+            art.dialog.open('http://www.baidu.com/s?wd='+ThiTel,{
+              title:'百度搜索',
+              height:'80%',
+              width:'80%'
+            })
+            return false;
+        });
+    }
+});
+</script>
 <div class="sideHead">
     房源详细
 </div>
@@ -9,7 +147,7 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
         <tr>
           <td class="biaoti">编号：</td>
-          <td class="neirong">${id} &nbsp;</td>
+          <td class="neirong" id="dimHouseId">${id}</td>
         </tr>
       </table>
     </td>
@@ -61,7 +199,7 @@
         </tr>
       </table>
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
-        <tr>
+        <tr extend_id="djia">
           <td class="biaoti">单价：</td>
           <td class="neirong">
           ${djia} 元
@@ -82,7 +220,7 @@
       </table></td>
     <td class="You">
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
-        <tr>
+        <tr extend_id="zjia">
           <td class="biaoti">总价：</td>
           <td class="neirong">
           <span style=" color:#F00; font-weight:bold;">${zjia}</span> 万元
@@ -146,19 +284,12 @@
         <tr>
           <td>
             <table width="100%">
-        <tr>
-        <td class="biaoti">房主：</td>
-                <td class="neirong telSEE">
-            <div class="TelInfoBox">
-              <div class="TelShowBox">
-                <p class="telList" id="tel" tel="TelStr(i)"><span class="telLXR">${lxr}</span> <span class="telNum">${tel}</span> [<span class="telCity">搜索中</span>] <span class="telSel">查</span></p>
-              </div>
-              <div class="telTopBox">点此查看电话号码</div>
-            </div>
-                </td>
+              <tr>
+                <td class="biaoti">房主：</td>
+                <td class="neirong telBox"></td>
               </tr>
             </table>
-      </td>
+          </td>
         </tr>
       </table>
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
@@ -192,10 +323,11 @@
 <div class="sideFoot">
   <ul>
     <li>
-      <a href="" data-toggle="tooltip" title="添加跟进"><i class="iconfont">&#xe640;</i>添加跟进</a>
-      <a href=""><i class="iconfont">&#xe648;</i>收藏</a>
-      <a href=""><i class="iconfont">&#xe60e;</i>地图</a>
-      <a href=""><i class="iconfont" style="font-weight: bold;">&#xe647;</i>复制</a>
+      <a href="" data-toggle="tooltip" title="添加跟进" class="btns" data-type="addGenjin" id="addGenjinBtn"><i class="iconfont">&#xe640;</i> 添加跟进</a>
+      <a href="" data-toggle="tooltip" title="收藏房源" class="btns" data-type="fav" fav="1"><i class="iconfont">&#xe62e;</i> 收藏</a>
+      <a href="" data-toggle="tooltip" title="已收藏房源" class="btns" data-type="fav" fav="0"><i class="iconfont">&#xe62e;</i> 已收藏</a>
+      <a href="" data-toggle="tooltip" title="地图查看" class="btns" data-type="map"><i class="iconfont">&#xe60e;</i> 地图</a>
+      <a href="" data-toggle="tooltip" title="复制详细" class="btns" data-type="copy"><i class="iconfont" style="font-weight: bold;">&#xe647;</i> 复制</a>
     </li>
   </ul>
 </div>

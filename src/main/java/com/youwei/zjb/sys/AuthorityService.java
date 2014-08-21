@@ -2,6 +2,7 @@ package com.youwei.zjb.sys;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -22,6 +23,7 @@ import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
@@ -32,6 +34,7 @@ public class AuthorityService {
 	
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
+	private static final int cidOffset = 1000000;
 	@Transactional
 	@WebMethod
 	public ModelAndView update(int roleId,String authData){
@@ -81,10 +84,55 @@ public class AuthorityService {
 	}
 	
 	@WebMethod
-	public ModelAndView rolesList(Page<Role> page){
+	public ModelAndView rolesList(Page<Role> page , Integer cid){
 		ModelAndView mv = new ModelAndView();
-		page = dao.findPage(page,  "from Role");
-		mv.data.put("page", JSONHelper.toJSON(page));
+		if(cid!=null && cid==1){
+			List<Department> comps = dao.listByParams(Department.class, "from Department where fid=0 order by cnum");
+			JSONArray result = new JSONArray();
+			for(Department dept : comps){
+				JSONObject json = new JSONObject();
+				json.put("id", dept.id+cidOffset);
+				json.put("type", "comp");
+				json.put("name", dept.namea);
+				result.add(json);
+			}
+			List<Role> roles = dao.listByParams(Role.class, "from Role");
+			for(Role role : roles){
+				JSONObject json = new JSONObject();
+				json.put("id", role.id);
+				json.put("type", "role");
+				json.put("name", role.title);
+				json.put("pId", role.cid+cidOffset);
+				result.add(json);
+			}
+			mv.data.put("result", result.toString());
+			return mv;
+		}
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql = new StringBuilder("from Role where 1=1 ");
+		if(cid!=null){
+			hql.append(" and cid=?");
+			params.add(cid);
+		}
+		List<Role> list = dao.listByParams(Role.class, hql.toString(), params.toArray());
+		JSONArray result = new JSONArray();
+		Department dept = dao.get(Department.class, cid);
+		JSONObject comp = new JSONObject();
+		int nodeCid = cid+cidOffset;
+		comp.put("id", nodeCid);
+		comp.put("type", "comp");
+		comp.put("name", dept.namea);
+		comp.put("pId",0);
+		result.add(comp);
+		for(Role role : list){
+			JSONObject json = new JSONObject();
+			json.put("id", role.id);
+			json.put("type", "role");
+			json.put("name", role.title);
+			json.put("pId",nodeCid);
+			result.add(json);
+		}
+		mv.data.put("result", result.toString());
 		return mv;
 	}
 	

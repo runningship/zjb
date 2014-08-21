@@ -10,52 +10,86 @@
 <script type="text/javascript">
 var rMenu;
 var id;
-    var setting = {
-      view: {
-        showIcon: false,
-        addDiyDom: addDiyDom
-      },
-      data: {
-        simpleData: {
-          enable: true
-        }
-      },
-      callback: {
-        onRightClick: OnRightClick
-      }
-     };
-
-  YW.ajax({
-    type: 'POST',
-    url: '/c/dept/getDeptTree?cid=98',
-    data:'',
-    success: function(data){
-        var result=JSON.parse(data);
-        $.fn.zTree.init($("#treeDemo"), setting, result.result);
-        rMenu = $("#rMenu");
+var node;
+var setting = {
+  view: {
+    showIcon: true,
+    addDiyDom: addDiyDom
+  },
+  data: {
+    simpleData: {
+      enable: true
     }
-  });
+  },
+  callback: {
+    onRightClick: OnRightClick,
+    onClick: onClick
+  }
+};
+
+YW.ajax({
+  type: 'POST',
+  url: '/c/dept/getDeptTree?cid=1',
+  data:'',
+  success: function(data){
+      var result=JSON.parse(data);
+      $.fn.zTree.init($("#treeDemo"), setting, result.result);
+      rMenu = $("#rMenu");
+  }
+});
+
+function onClick(event, treeId, treeNode, clickFlag) {
+  node = treeNode;
+  console.log(treeNode);
+  $('#cid').val("");
+  $('#did').val("");
+  if(treeNode.type=="comp"){
+    $('#cid').val(treeNode.id);
+  }else if(treeNode.type=="dept"){
+    $('#did').val(treeNode.id);
+  }else{
+    return;
+  }
+  doSearch();
+} 
+
+//add new node to current selected node
+function addNode(data){
+  var newNodeData = JSON.parse(data);
+  var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+  if(newNodeData.type=="comp"){
+    getSider('');
+  }else{
+    treeObj.addNodes(node, newNodeData);
+  }
+}
 
 function OnRightClick(event, treeId, treeNode) {
   console.log(treeId);
+  var treeObj = $.fn.zTree.getZTreeObj(treeId);
+  treeObj.selectNode(treeNode);
+  onClick(event, treeId, treeNode);
   if(event.target.tagName!='SPAN'){
     return;
   }
   id = treeNode.id;
-  showRMenu(treeNode.type, event.clientX, event.clientY);
+  // blockAlert(event.target.offsetTop);
+  showRMenu(treeNode.type, event.clientX, event.target.offsetTop+70);
 }
 function showRMenu(type, x, y) {
   $("#rMenu a").show();
   y=y-30;
   if(type!="comp"){
     $('#m_add_group').hide();
+    $('#m_add_dept').hide();
   }
-  if(type=="comp"){
+  if(type!="dept"){
     $('#m_move_to').hide();
   }
   if(type=="group"){
     $('#m_list_records').hide();
     $('#m_list_genjin').hide();
+    $('#m_add_user').hide();
   }
   rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
   $("body").bind("mousedown", onBodyMouseDown);
@@ -69,8 +103,11 @@ function onBodyMouseDown(event){
 }
 
 function addDiyDom(treeId, treeNode) {
-  $("#" + treeNode.tId + "_ico").remove();
-  $("#" + treeNode.tId).css('display','inline');
+  if(treeNode.type!="group"){
+    $("#" + treeNode.tId + "_ico").remove();  
+  }
+  
+  // $("#" + treeNode.tId).css('display','inline');
   var aObj = $("#" + treeNode.tId + "_a");
   if(treeNode.cnum!=null){
     var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
@@ -78,6 +115,113 @@ function addDiyDom(treeId, treeNode) {
   }
   
 }
+</script>
+
+<script type="text/javascript">
+function updateGroup(val){
+  YW.ajax({
+    type: 'POST',
+    url: '/c/dept/group/updateName',
+    data:'name='+val+'&id='+node.id,
+    success: function(data){
+        alert('修改成功');
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        node.name =val;
+        treeObj.updateNode(node);
+    }
+  });
+}
+
+function updateDept(){
+  if(node.type=='comp'){
+    art.dialog.open('/settings/uc_index_c_edit.html?cid='+node.id);
+  }else{
+    art.dialog.open('/settings/uc_index_d_edit.html?cid='+node.id);
+  }
+}
+
+function delNode(){
+  if(node.type=='group'){
+    YW.ajax({
+      type: 'POST',
+      url: '/c/dept/group/delete',
+      data:'id='+node.id,
+      success: function(data){
+          var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+          treeObj.removeNode(node);
+          alert('修改成功');
+      }
+    });
+  }else{
+
+  }
+}
+
+$(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip();
+    $('.sideCont').on('click', '.btns', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var Thi=$(this),
+        ThiType=Thi.data('type');
+        if(ThiType=='add_company'){
+            art.dialog.open('/settings/uc_index_c_add.html');
+        }
+        return false;
+    });
+    $('#rMenu').on('click', 'a', function(event) {
+        var Thi=$(this),
+        ThiUl=Thi.parents('ul'),
+        ThiLi=Thi.parents('li'),
+        ThiUrl=Thi.attr('href'),
+        ThiType=Thi.data('type');
+        if(ThiType=='seeRecords'){
+            blockAlert(id)
+        }else if(ThiType=='seeGenjin'){
+            art.dialog.open(ThiUrl);
+            return false;
+        }else if(ThiType=='addGroup'){
+            art.dialog.prompt('新的分组名称', function (val) {
+                YW.ajax({
+                  type: 'POST',
+                  url: '/c/dept/group/add',
+                  data:'name='+val+'&cid='+node.id,
+                  success: function(data){
+                      var newNodeData = JSON.parse(data);
+                      var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                      treeObj.addNodes(node, newNodeData);
+                      alert('添加成功');
+                  }
+                });
+            }, '');
+            return false;
+        }else if(ThiType=='addUser'){
+          art.dialog.open('/v/settings/uc_index_u_add.html?id='+node.id);
+        }else if(ThiType=='moveTo'){
+            art.dialog.open(ThiUrl);
+            return false;
+        }else if(ThiType=='editThis'){
+            if(node.type=='group'){
+              art.dialog.prompt('修改分组', function (val) {
+                updateGroup(val);
+              }, node.name);
+            }else{
+              updateDept();
+            }
+            return false;
+        }else if(ThiType=='delThis'){
+            art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+                delNode();
+            },'warning');
+            return false;
+        }else if(ThiType=='adddept'){
+          art.dialog.open('/settings/uc_index_d_add.html?cid='+node.id);
+        }else{
+            return false;
+        }
+    });
+
+});
 </script>
 <div class="sideHead">
     分公司列表
@@ -98,27 +242,18 @@ function addDiyDom(treeId, treeNode) {
 <div class="sideFoot">
   <ul>
     <li>
-      <a href="" data-toggle="tooltip" title="添加跟进" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加分公司</a>
+      <a href="" data-toggle="tooltip" title="添加公司" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加公司</a>
     </li>
   </ul>
 </div>
 
-<!-- <div id="rMenu">
-  <ul>
-    <li id="m_add" onclick="addTreeNode();">查看记录</li>
-    <li id="m_unCheck" onclick="checkTreeNode(false);">查看跟进</li>
-    <li id="m_check" onclick="checkTreeNode(true);">添加分组</li>
-    <li id="m_check" onclick="checkTreeNode(true);">移动至</li>
-    <li id="m_check" onclick="checkTreeNode(true);">编辑</li>
-    <li id="m_del" onclick="removeTreeNode();">删除</li>
-  </ul>
-</div> -->
-
 <div id="rMenu" class="list-group">
-  <a href="#" id="m_list_records" class="list-group-item disabled">查看记录</a>
-  <a href="#" id="m_list_genjin" class="list-group-item">查看跟进</a>
-  <a href="#" id="m_add_group" class="list-group-item" onclick="">添加分组</a>
-  <a href="#" id="m_move_to" class="list-group-item">移动至</a>
-  <a href="#" class="list-group-item">编辑</a>
-  <a href="#" class="list-group-item">删除</a>
+  <a href="#" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看记录</a>
+  <a href="#" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
+  <a href="#" id="m_add_group" data-type="addGroup" class="list-group-item" onclick="">添加分组</a>
+  <a href="#" id="m_add_user" data-type="addUser" class="list-group-item" onclick="">添加用户</a>
+  <a href="#" id="m_add_dept" data-type="adddept" class="list-group-item" onclick="">添加分公司</a>
+  <a href="#" id="m_move_to" data-type="moveTo" class="list-group-item">移动至</a>
+  <a href="#" data-type="editThis" class="list-group-item">编辑</a>
+  <a href="#" data-type="delThis" class="list-group-item">删除</a>
 </div>

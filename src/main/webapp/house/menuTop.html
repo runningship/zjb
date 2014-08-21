@@ -1,4 +1,28 @@
-                <li class="curr"><a href="house.html" data-type="url"><i class="icon iconfont font_icon">售</i> 出售</a></li>
-                <li class="hover"><a href="house_rent.html" data-type="url"><i class="icon iconfont font_icon">租</i> 出租</a></li>
-                <li class="hover"><a href="/v/house/house_add.html" data-type="dialog"><i class="icon iconfont font_icon">+</i> 登记</a></li>
-                <li class="hover"><a href="house.html" data-type="url"><i class="icon iconfont font_icon">我</i> 我的</a></li>
+                <li class="act_shou hover"><a href="house.html?act=shou" data-type="url"><i class="icon iconfont font_icon">售</i> 出售</a></li>
+                <li class="act_zu hover"><a href="house_rent.html?act=zu" data-type="url"><i class="icon iconfont font_icon">租</i> 出租</a></li>
+                <li class="act_add hover"><a href="/v/house/house_add.html?act=add" data-type="dialog"><i class="icon iconfont font_icon">+</i> 登记</a></li>
+                <li class="act_my hover"><a href="house.html?act=my" data-type="url"><i class="icon iconfont font_icon">我</i> 我的</a></li>
+<script type="text/javascript">
+$(document).ready(function() {
+    menuTopFun();/* 顶部自动选中 */
+    $('.menuLi').on('click', 'a', function(event) {
+        var Thi=$(this),
+        ThiUl=Thi.parents('ul'),
+        ThiLi=Thi.parents('li'),
+        ThiUrl=Thi.attr('href'),
+        ThiType=Thi.data('type');
+        function setCurr(This){
+            ThiUl.find('li').removeClass('curr');
+            ThiUl.addClass('curr')
+        }
+        if(ThiType=='url'){
+            setCurr(Thi);
+        }else if(ThiType=='dialog'){
+            art.dialog.open(ThiUrl);
+            return false;
+        }else{
+            return false;
+        }
+    });
+});
+</script>

@@ -30,7 +30,6 @@ public class TestUserService {
 		UserQuery query = new UserQuery();
 //		query.name = "你";
 		query.gender = 0;
-		query.hunyin = 0;
 		query.ageStart=25;
 		query.ageEnd = 25;
 		ModelAndView mv = us.list(query, new Page<Map>());

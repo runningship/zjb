@@ -1,16 +1,150 @@
+<style type="text/css">
+  div#rMenu {position:absolute; visibility:hidden; top:0;width:150px; text-align: left;padding: 2px;}
+  div#rMenu ul li{
+    margin: 5px 0;
+    padding: 0 15px;
+    cursor: pointer;
+    list-style: none outside none;
+  }
+</style>
+<script type="text/javascript">
+var rMenu;
+var id;
+    var setting = {
+      view: {
+        showIcon: false,
+        addDiyDom: addDiyDom
+      },
+      data: {
+        simpleData: {
+          enable: true
+        }
+      },
+      callback: {
+        onRightClick: OnRightClick,
+        onClick: onClick
+      }
+     };
+
+  YW.ajax({
+    type: 'POST',
+    url: '/c/sys/rolesList?cid=1',
+    data:'',
+    success: function(data){
+        var result=JSON.parse(data);
+        $.fn.zTree.init($("#treeDemo"), setting, result.result);
+        rMenu = $("#rMenu");
+    }
+  });
+
+function onClick(event, treeId, treeNode, clickFlag) {
+  console.log(treeNode);
+  
+} 
+
+function OnRightClick(event, treeId, treeNode) {
+  console.log(treeId);
+  var treeObj = $.fn.zTree.getZTreeObj(treeId);
+  treeObj.selectNode(treeNode);
+  onClick(event, treeId, treeNode);
+  if(event.target.tagName!='SPAN'){
+    return;
+  }
+  id = treeNode.id;
+  showRMenu(treeNode.type, event.clientX, event.clientY);
+}
+function showRMenu(type, x, y) {
+  $("#rMenu a").show();
+  y=y-30;
+  if(type!="comp"){
+  }
+  if(type=="comp"){
+  }
+  
+  rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
+  $("body").bind("mousedown", onBodyMouseDown);
+}
+function hideRMenu() {
+      if (rMenu) rMenu.css({"visibility": "hidden"});
+      $("body").unbind("mousedown", onBodyMouseDown);
+    }
+function onBodyMouseDown(event){
+    rMenu.css({"visibility" : "hidden"});
+}
+
+function addDiyDom(treeId, treeNode) {
+  $("#" + treeNode.tId + "_ico").remove();
+  // $("#" + treeNode.tId).css('display','inline');
+  var aObj = $("#" + treeNode.tId + "_a");
+  if(treeNode.cnum!=null){
+    var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+    aObj.prepend(editStr);  
+  }
+  
+}
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip();
+    $('.sideCont').on('click', '.btns', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var Thi=$(this),
+        ThiType=Thi.data('type');
+        if(ThiType=='add_company'){
+            art.dialog.open('/settings/uc_index_c_add.html');
+        }
+        return false;
+    });
+    $('#rMenu').on('click', 'a', function(event) {
+        var Thi=$(this),
+        ThiUl=Thi.parents('ul'),
+        ThiLi=Thi.parents('li'),
+        ThiUrl=Thi.attr('href'),
+        ThiType=Thi.data('type');
+        if(ThiType=='seeRecords'){
+            blockAlert(id)
+        }else if(ThiType=='seeGenjin'){
+            art.dialog.open(ThiUrl);
+            return false;
+        }else if(ThiType=='editThis'){
+            art.dialog.prompt('修改名称', function (val) {
+                art.dialog.tips(val);
+            }, '');
+            return false;
+        }else if(ThiType=='delThis'){
+            art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+                art.dialog.tips('执行确定操作');
+            }, function () {
+                
+            },'warning');
+            return false;
+        }else{
+            return false;
+        }
+    });
+// seeRecords
+// seeGenjin
+// addGroup
+// moveTo
+// editThis
+// delThis
+
+});
+</script>
 <div class="sideHead">
-    房源详细
+    职务列表
 </div>
 
-<table class="table table-hover table-striped table-nopadding side_table" width="100%">
+<table class="table table-nopadding side_table" width="100%">
   <tbody>
     <tr class="list">
-      <td></td>
       <td>
-        <h3>名称</h3>
-        <p>某某某分公司<span style="float:right">2014-8-18 14:47:39</span></p>
+        <div class="zTreeDemoBackground left">
+          <ul id="treeDemo" class="ztree"></ul>
+        </div>
       </td>
-      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -18,7 +152,14 @@
 <div class="sideFoot">
   <ul>
     <li>
-      <a href="" data-toggle="tooltip" title="添加跟进"><i class="glyphicon glyphicon-plus"></i>添加分公司</a>
+      <a href="" data-toggle="tooltip" ></a>
     </li>
   </ul>
+</div>
+
+<div id="rMenu" class="list-group">
+  <a href="#" data-type="add_role" class="list-group-item">添加职务</a>
+  <a href="#" data-type="editThis" class="list-group-item">编辑</a>
+  <a href="#" data-type="delThis" class="list-group-item">删除</a>
+
 </div>

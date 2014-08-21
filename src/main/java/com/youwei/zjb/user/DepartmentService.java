@@ -29,16 +29,36 @@ public class DepartmentService {
 		if(dept.fid==null){
 			dept.fid=0;
 		}
+		Department po = dao.getUniqueByKeyValue(Department.class, "cnum", dept.cnum);
+		if(po!=null){
+			throw new GException(PlatformExceptionType.BusinessException, "公司代码重复");
+		}
+		po = dao.getUniqueByKeyValue(Department.class, "namea", dept.namea);
+		if(po!=null){
+			throw new GException(PlatformExceptionType.BusinessException, "公司名称重复");
+		}
 		dept.addtime = new Date();
 		dao.saveOrUpdate(dept);
-		return new ModelAndView();
+		ModelAndView mv = new ModelAndView();
+		JSONObject json = new JSONObject();
+		json.put("id", dept.id);
+		json.put("pId", dept.fid);
+		if(dept.fid==0){
+			json.put("type", "comp");
+		}else{
+			json.put("type", "dept");
+		}
+		json.put("sh", dept.sh);
+		json.put("name", dept.namea);
+		mv.data = json;
+		return mv;
 	}
 	
 	@WebMethod
-	public ModelAndView get(int deptId){
+	public ModelAndView get(int id){
 		ModelAndView mv = new ModelAndView();
-		Department dept = dao.get(Department.class, deptId);
-		mv.data.put("dept", JSONHelper.toJSON(dept));
+		Department dept = dao.get(Department.class, id);
+		mv.data.put("comp", JSONHelper.toJSON(dept));
 		return mv;
 	}
 	
@@ -50,6 +70,11 @@ public class DepartmentService {
 		po.tel = dept.tel;
 		po.beizhu = dept.beizhu;
 		po.sh = dept.sh;
+		
+		//公司需要更新的字段
+		po.share = dept.share;
+		po.authCode = dept.authCode;
+		po.pcnum = dept.pcnum;
 		dao.saveOrUpdate(po);
 		return new ModelAndView();
 	}
@@ -90,7 +115,7 @@ public class DepartmentService {
 	public ModelAndView getDeptTree(Integer cid){
 		ModelAndView mv = new ModelAndView();
 		if(cid==1){
-			List<Department> comps = dao.listByParams(Department.class, "from Department where 1=1 order by cnum");
+			List<Department> comps = dao.listByParams(Department.class, "from Department where 1=1 order by sh desc, cnum");
 			JSONArray result = new JSONArray();
 			for(Department dept : comps){
 				JSONObject json = new JSONObject();
@@ -100,6 +125,12 @@ public class DepartmentService {
 				}else{
 					json.put("pId", dept.fid);
 				}
+				if(dept.fid==0){
+					json.put("type", "comp");
+				}else{
+					json.put("type", "dept");
+				}
+				json.put("sh", dept.sh);
 				json.put("name", dept.namea);
 				json.put("cnum", dept.cnum);
 				result.add(json);
@@ -109,6 +140,8 @@ public class DepartmentService {
 			for(DeptGroup g : groups){
 				JSONObject json = new JSONObject();
 				json.put("id",g.id);
+				json.put("type", "group");
+				json.put("icon", "/style/images/icon_lock_current.png");
 				if(g.pid!=null){
 					json.put("pId", g.pid);
 				}else{
@@ -131,7 +164,9 @@ public class DepartmentService {
 				json.put("id", dept.id);
 				if(dept.id==cid){
 					json.put("pId", 0);
+					json.put("open", true);
 					json.put("type", "comp");
+					json.put("sh", dept.sh);
 				}else{
 					json.put("pId", dept.dgroup);
 					json.put("type", "dept");
@@ -148,6 +183,7 @@ public class DepartmentService {
 					json.put("pId", g.pid);
 				}
 				json.put("type", "group");
+				json.put("icon", "/style/images/icon_lock_current.png");
 				json.put("name", g.name);
 				result.add(json);
 			}

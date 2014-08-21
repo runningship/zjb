@@ -27,11 +27,11 @@ function submits(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/dept/add',
+    url: '/c/user/add',
     data:a,
     success: function(data){
         art.dialog.close();
-        art.dialog.opener.addNode(data);
+        art.dialog.opener.doSearch();
         alert('添加成功');
     }
   });
@@ -43,7 +43,7 @@ $(document).ready(function() {
     form1=$('.form1');
     if (!api) return;
     // 操作对话框
-    api.title('部门修改')
+    api.title('添加用户')
     // 自定义按钮
       .button({
           name: '保存',
@@ -54,7 +54,6 @@ $(document).ready(function() {
       },{
           name: '取消'
       });
-    $('#idCname').focus();
 });
 
 </script>
@@ -66,33 +65,37 @@ $(document).ready(function() {
             <form name="form1" class="form-horizontal form1" role="form" onsubmit="submits();return false;">
                 
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">公司名称:</label>
+                    <label class="col-xs-3 control-label">登录帐号:</label>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="namea" value="" id="idCname" placeholder="">
+                        <input type="text" class="form-control" name="lname" readonly="readonly" value="$${lname}" id="lname" placeholder="">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">公司代码:</label>
+                    <label class="col-xs-3 control-label">登录密码:</label>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="cnum" value="" id="idCnum" placeholder="">
+                        <input type="password" class="form-control" name="pwd" value="" placeholder="">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">授权码:</label>
-                    <div class="col-xs-8 form_menu_box" id="idNameBox">
-                        <input type="text" class="form-control" name="authCode" placeholder="">
+                    <label class="col-xs-3 control-label">所属分公司:</label>
+                    <div class="col-xs-8 form_menu_box" >
+                        <select class="form-control" name="did">
+                            <option class="deptList" value="${id}">${namea}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">授权数量:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="pcnum" placeholder="">
+                    <label class="col-xs-3 control-label">职务:</label>
+                    <div class="col-xs-8 form_menu_box" >
+                        <select class="form-control" name="roleId">
+                            <option class="roleList" value="${id}">${title}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">联系人:</label>
+                    <label class="col-xs-3 control-label">姓名:</label>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="lxr" placeholder="">
+                        <input type="text" class="form-control" name="uname" placeholder="">
                     </div>
                 </div>
                 <div class="form-group">
@@ -101,40 +104,19 @@ $(document).ready(function() {
                         <input type="text" class="form-control" name="tel" placeholder="">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">备注:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="beizhu" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">查看共享:</label>
-                    <div class="col-xs-8">
-                        <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary active">
-                                <input type="radio" value="1" name="share" autocomplete="off" checked> 允许
-                            </label>
-                            <label class="btn btn-primary">
-                                <input type="radio" value="0" name="share" autocomplete="off"> 禁止查看共享房源
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="form-group">
                     <label class="col-xs-3 control-label">锁定:</label>
                     <div class="col-xs-8">
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-primary active">
-                                <input type="radio" value="1" name="sh" autocomplete="off" checked> 允许
+                                <input type="radio" value="1" name="lock" autocomplete="off" checked> 开启
                             </label>
                             <label class="btn btn-primary">
-                                <input type="radio" value="0" name="sh" autocomplete="off"> 禁止所有帐号登陆
+                                <input type="radio" value="0" name="lock" autocomplete="off"> 锁定
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="form-group hidden">
-                    <button type="button" class="btn btn-primary btn-block btn_submit" tabindex="12"><span class="ladda-label">登　录</span></button>
                 </div>
             </form>
 

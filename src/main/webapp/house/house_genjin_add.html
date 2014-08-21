@@ -1,0 +1,80 @@
+
+<script type="text/javascript">
+var queryOptions;
+try{
+}catch(e){}
+
+function submits(){
+    var radio=$('form[name=formGJ] [type=radio]:checked'),
+    text=$('form[name=formGJ] textarea'),
+    btn_submit=$('form[name=formGJ] .btn_submit');
+    if(!radio.val()){
+        $('.btn_submit').html('跟进请选择房源状态！');return false;
+    }
+    if(!text.val()){
+        alert('请填跟进内容！');return false;
+    }
+  var a=$('form[name=form1]').serialize();
+  YW.ajax({
+    type: 'POST',
+    url: '/c/house/listAll',
+    data:a,
+    success: function(data){
+        var houseData=JSON.parse(data);
+        buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
+    }
+  });
+}
+
+$(document).ready(function() {
+var parent = art.dialog.parent,       // 父页面window对象
+api = art.dialog.open.api,  //      art.dialog.open扩展方法
+form1=$('.form1');
+if (!api) return;
+// 操作对话框
+api.title('添加跟进')
+// 自定义按钮
+  .button({
+      name: '保存',
+      callback: function () {
+        form1.submit();
+        return false;
+      },focus: true
+  },{
+      name: '取消'
+  });
+
+
+// 列表内容
+    $.get('/c/config/getQueryOptions', function(data) {
+        queryOptions=JSON.parse(data);
+        // buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
+        //doSearch();
+    });
+    $('#idCname').focus();
+});
+$(window).resize(function() {      //类别
+});
+</script>
+            <form class="form1 formGJ" role="form" style="width:240px; padding-bottom: 6px;" onsubmit="submits();return false;">
+                
+                <div class="form-group form_group">
+                    <div class="btn-group btn_group ">
+                        <label class="checkbox-inline btn btn-info">
+                            <input type="radio" name="ztai" value="option1"> 在售 
+                        </label>
+                        <label class="checkbox-inline btn btn-info">
+                            <input type="radio" name="ztai" value="option2"> 已售 
+                        </label>
+                        <label class="checkbox-inline btn btn-info">
+                            <input type="radio" name="ztai" value="option3"> 停售 
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group form_group">
+                    <textarea class="form-control" rows="3" id="idPassword"></textarea>
+                </div>
+                <div class="form-group form_group">
+                    <button type="submit" class="btn btn-primary btn-block btn_submit" tabindex="12"><span class="ladda-label">提  交</span></button>
+                </div>
+            </form>

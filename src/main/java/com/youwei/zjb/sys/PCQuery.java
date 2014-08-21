@@ -3,7 +3,9 @@ package com.youwei.zjb.sys;
 
 public class PCQuery{
 
-	public Integer deptId;
+	public Integer did;
+	
+	public Integer cid;
 	
 	public Integer desc;
 	

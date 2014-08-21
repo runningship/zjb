@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
@@ -16,8 +15,9 @@ import org.jsoup.select.Elements;
 
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.util.JSONHelper;
+import com.youwei.zjb.view.page;
 
-public abstract class AbstractSee {
+public abstract class AbstractSee extends page{
 	public Document initPage(Document doc , HttpServletRequest req){
 		String html = doc.html();
 		String id = req.getParameter("id");
@@ -39,28 +39,19 @@ public abstract class AbstractSee {
 					+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=?";
 			List<Map> gjList = dao.listAsMap(hql, Integer.valueOf(id) , getChuzu());
 			Elements temp = doc.getElementsByClass("list");
-			temp.first().parent();
 			buildHtmlWithJsonArray(temp.first() , JSONHelper.toJSONArray(gjList));
 			temp.remove();
 		}
-		return doc;
+		Elements fav = doc.getElementsByAttributeValue("fav", json.getString("fav"));
+		fav.remove();
+		html = doc.html();
+		html = html.replace("$${lxr}", json.getString("lxr"));
+		html = html.replace("$${tel}", json.getString("tel"));
+		return Jsoup.parse(html);
 	}
 
 	protected abstract JSONObject getData(int id);
 	
 	protected abstract int getChuzu();
 	
-	protected void buildHtmlWithJsonArray(Element temp, JSONArray arr) {
-		for(int i=0;i<arr.size();i++){
-			String child = buildHtmlWithJson(temp.toString() , arr.getJSONObject(i));
-			temp.parent().append(child);
-		}
-	}
-
-	protected String buildHtmlWithJson(String innerHtml, JSONObject json) {
-		for(Object key : json.keySet()){
-			innerHtml= innerHtml.replace("${"+key+"}", String.valueOf(json.get(key)));
-		}
-		return innerHtml;
-	}
 }

@@ -108,11 +108,15 @@ function WinClose(){/*退出*/
 //根据titile可拖动窗口
 document.addEventListener('mousemove', function (e) {
     if (e.target.classList.contains('title')) {
-        hex.setAsTitleBarAreas(e.clientX, e.clientY);
-        // hex.setAsSystemMenuIconAreas(e.clientX, e.clientY);
+        try{
+            hex.setAsTitleBarAreas(e.clientX, e.clientY);
+            // hex.setAsSystemMenuIconAreas(e.clientX, e.clientY);
+        }catch(e){}
     } else {
-        hex.setAsTitleBarAreas(-1, -1);
-        hex.setAsNonBorderAreas(-1, -1);
+        try{
+            hex.setAsTitleBarAreas(-1, -1);
+            hex.setAsNonBorderAreas(-1, -1);
+        }catch(e){}
     }
 }, false);
 try{
@@ -225,14 +229,42 @@ function aBtnNavFun(a){
     });
   }
 }
+function menuTopFun(){
+    var acts=getParam('act'),
+    menuBox=$('.menuLi'),
+    menuBLi=menuBox.children('li');
+    if(acts){
+        menuBLi.removeClass('curr');
+        menuBox.children('.act_'+acts).addClass('curr')
+    }else{
+        menuBLi.eq(0).addClass('curr')
+    }
+}
+
+// 获取归属地信息
+function getTelFrom(a,t,callback){
+$.ajax({
+dataType:'script',
+scriptCharset:'gb2312',////////
+url:'http://php.tech.sina.com.cn/iframe/download/download_srv.php?action=bst_ms&code='+a,
+success:function(e){
+if(I_SUCCESS==1){
+    //extAlert(a,ms_data[1]+ms_data[2]);
+    callback(ms_data[1]+ms_data[2])
+}else {
+    callback('查询失败');
+}
+}
+})
+}
 	
 
 
 
-function copyToClipBoard(text){ 
+function copyToClipBoard(text,callback){ 
 var clipBoardContent=text; 
 window.clipboardData.setData("Text",clipBoardContent); 
-$.dialog.tips('复制成功',3);
+callback('复制成功');
 } 
 
 

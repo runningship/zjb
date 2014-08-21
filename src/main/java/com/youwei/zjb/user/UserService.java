@@ -42,34 +42,6 @@ public class UserService {
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
-	/**
-	 * 3级联动下拉框
-	 * @return
-	 */
-	@WebMethod
-	public ModelAndView getUserTree(String dataScope){
-		
-		ModelAndView mv = new ModelAndView();
-		String code = "";
-		
-		String sql = "select tt.*,xx.uname as user,xx.id as userId from (select c1.namea as pname , c2.namea as cname , c1.id as qid ,c2.id as did from uc_comp c1 left JOIN uc_comp c2 on c1.id=c2.fid where c1.fid=1"
-				+ " ) as tt"
-				+" LEFT JOIN (select u.orgpath, u.uname,u.did ,u.id from uc_user u where u.sh=1 and u.flag <> 1 ) as xx on tt.did=xx.did ";
-		if(StringUtils.isNotEmpty(code)){
-			sql += " where xx.orgpath like '"+code+"%' ";
-		}
-//		String sql2 = "select tt.*,u.uname from (select c1.namea as quyu , c2.namea as dept , c1.id as qid ,c2.id as did from Department c1 , Department c2 where c1.id=c2.fid and c1.id<>1) as tt"
-//				+" LEFT JOIN User u on tt.did=u.did where u.sh=1 and u.flag <> 1";
-//		String hql = "select child.namea as cname,parent.namea as pname ,child.id as did ,child.fid as qid ,u.uname as user ,u.id as userId "+
-//					"from Department child,Department parent , User u where child.fid = parent.id and child.id=u.deptId and u.sh=1 and u.flag <> 1  and u.orgpath like '"+code+"%'";
-		List<Map> users = dao.listSqlAsMap(sql);
-		Map<String, JSONArray> quyus = groupByQuyu(users);
-		Map<String, JSONArray> depts = groupByDeptId(users);
-		JSONArray root = merge(quyus,depts,users);
-//		mv.contentType="text/plain";
-		mv.data.put("result", root.toString());
-		return mv;
-	}
 	
 	@WebMethod
 	public ModelAndView initIndex(){
@@ -88,26 +60,6 @@ public class UserService {
 		return mv;
 	}
 	
-	/**
-	 * 树状选人控件
-	 * @param noticeId
-	 * @return
-	 */
-	@WebMethod
-	public ModelAndView getUserTree2(int noticeId){
-		ModelAndView mv = new ModelAndView();
-		String hql = "select child.namea as cname,parent.namea as pname ,child.id as did ,child.fid as qid ,u.uname as user ,u.id as userId ,u.hunyin as hunyin "+
-					"from Department child,Department parent , User u where child.fid = parent.id and child.id=u.did and u.flag <> 1  ";
-		List<Map> users = dao.listAsMap(hql);
-		Map<String, JSONArray> quyus = groupByQuyu(users);
-		Map<String, JSONArray> depts = groupByDeptId(users);
-		
-		JSONArray root = merge(quyus,depts,users);
-//		mv.contentType="text/plain";
-		mv.data.put("result", 0);
-		mv.data.put("data", root.toString());
-		return mv;
-	}
 	
 	@WebMethod
 	public ModelAndView authorities(){
@@ -181,10 +133,21 @@ public class UserService {
 		
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
-		po.gender = user.gender;
+		po.pwd = SecurityHelper.Md5(user.pwd);
 		po.tel = user.tel;
-		po.address = user.address;
+		po.did = user.did;
+		po.roleId = user.roleId;
+		po.sh = user.sh;
 		dao.saveOrUpdate(po);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView get(int id){
+		ModelAndView mv = new ModelAndView();
+		User po = dao.get(User.class, id);
+		mv.data = JSONHelper.toJSON(po);
+		mv.data.remove("pwd");
 		return mv;
 	}
 	
@@ -194,6 +157,9 @@ public class UserService {
 		if(StringUtils.isEmpty(user.uname)){
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
+		if(StringUtils.isEmpty(user.pwd)){
+			throw new GException(PlatformExceptionType.BusinessException,"请先设置密码");
+		}
 		if(user.did==null){
 			user.did = -1;
 		}
@@ -201,17 +167,11 @@ public class UserService {
 		if(dept==null){
 			throw new GException(PlatformExceptionType.BusinessException, "没有指定用户所属公司");
 		}
-//		List<User> sprList = UserHelper.getUserWithAuthority("rs_rz_list");
-//		if(sprList==null || sprList.size()==0){
-//			throw new GException(PlatformExceptionType.BusinessException,  "没有用户拥有入职登记审核权限，请先在系统管理中设置入职登记审核人.或者联系系统管理员为您处理");
-//		}
 		user.addtime = new Date();
-		user.sh = 1;
 		user.flag = 1;
-		user.lock = 0;
+		user.sh = 1;
 		user.pwd = SecurityHelper.Md5(DataHelper.User_Default_Password);
 		user.cid = dept.fid;
-		dao.saveOrUpdate(user);
 		//TODO
 //		user.orgpath = dept.path+user.id;
 		dao.saveOrUpdate(user);
@@ -223,47 +183,10 @@ public class UserService {
 		return mv;
 	}
 	
-	@WebMethod
-	public ModelAndView listRuZhi(UserQuery query , Page<Map> page){
-		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder();
-		List<Object> params = new ArrayList<Object>();
-		User user = ThreadSession.getUser();
-		hql.append("select review.sh as rzsh, u.uname as uname,u.id as uid ,r.title as title ,u.tel as tel,u.sfz as sfz, u.gender as gender,u.address as address,u.rqsj as rqsj, u.lzsj as lzsj,d.namea as deptName "
-				+ "from User  u, Department d,Role r , RenShiReview review where u.sh=0 and u.roleId = r.id and d.id = u.did and u.id=review.userId and review.sprId=? and review.category='join' ");
-		params.add(user.id);
-		query.sh=null;
-		fillQuery(query,hql,params);
-		page = dao.findPage(page, hql.toString(), true, params.toArray());
-		mv.data.put("page", JSONHelper.toJSON(page));
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView listLiZhi(UserQuery query , Page<Map> page){
-		query.sh=null;
-		query.lizhi=1;
-		return list(query,page);
-	}
-	
 	private void fillQuery(UserQuery query,StringBuilder hql, List<Object> params){
 		if(StringUtils.isNotEmpty(query.name)){
 			hql.append(" and u.uname like ? ");
 			params.add("%"+query.name+"%");
-		}
-		if(StringUtils.isNotEmpty(query.xpath)){
-			hql.append(" and u.orgpath like ?");
-			params.add(query.xpath+"%");
-		}
-		if(query.lizhi!=null){
-			hql.append(" and u.flag=?");
-			params.add(query.lizhi);
-		}else{
-			hql.append(" and u.flag<>1 ");
-		}
-		if(StringUtils.isNotEmpty(query.sfz)){
-			hql.append(" and u.sfz like ? ");
-			params.add("%"+query.sfz+"%");
 		}
 		if(StringUtils.isNotEmpty(query.tel)){
 			hql.append(" and u.tel like ? ");
@@ -281,13 +204,13 @@ public class UserService {
 			hql.append(" and u.roleId=?");
 			params.add(query.roleId);
 		}
-		if(query.sh!=null){
-			hql.append(" and u.sh = ? ");
-			params.add(query.sh);
+		if(query.did!=null){
+			hql.append(" and u.did=?");
+			params.add(query.did);
 		}
-		if(query.hunyin!=null){
-			hql.append(" and u.hunyin=?");
-			params.add(query.hunyin);
+		if(query.cid!=null){
+			hql.append(" and u.cid=?");
+			params.add(query.cid);
 		}
 		if(query.ageStart!=null){
 			hql.append(" and u.age>=?");
@@ -305,8 +228,8 @@ public class UserService {
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		hql.append("select u.uname as uname,u.id as uid ,r.title as title ,u.tel as tel,u.sfz as sfz, u.gender as gender,u.address as address,u.rqsj as rqsj, u.lzsj as lzsj,d.namea as deptName "
-				+ "from User  u, Department d,Role r where u.roleId = r.id and d.id = u.did ");
+		hql.append("select u.lname as lname, u.uname as uname,u.id as uid ,u.tel as tel,d.namea as dname, u.lasttime as lasttime ,u.ip as ip "
+				+ "from User  u, Department d where d.id = u.did ");
 		fillQuery(query,hql,params);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
@@ -361,6 +284,7 @@ public class UserService {
 			pcpo.lastip = ThreadSession.getIp();
 			dao.saveOrUpdate(pcpo);
 		}
+		po.ip = ThreadSession.getIp();
 		mv.data.put("result", "0");
 		mv.data.put("msg", "登录成功");
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
@@ -379,74 +303,4 @@ public class UserService {
 		return mv;
 	}
 
-	private JSONArray merge(Map<String, JSONArray> quyus ,Map<String, JSONArray> depts , List<Map> users){
-		JSONArray root = new JSONArray();
-		for(String key : quyus.keySet()){
-			JSONArray jarr = quyus.get(key);
-			for(int i=0;i<jarr.size();i++){
-				JSONObject dept = jarr.getJSONObject(i);
-				dept.put("children", depts.get(dept.get("text")));
-//				dept.put("children", depts.get(dept.get("name")));
-			}
-			JSONObject jobj = new JSONObject();
-			jobj.put("text", key);
-//			jobj.put("name", key);
-			jobj.put("deptId", getDeptName(users,key));
-			jobj.put("children", jarr);
-			root.add(jobj);
-		}
-		return root;
-	}
-	
-	private String getDeptName(List<Map> users ,String deptName){
-		if(StringUtils.isEmpty(deptName)){
-			return "";
-		}
-		for(Map user : users){
-			if(deptName.equals(user.get("pname"))){
-				return user.get("qid").toString();
-			}
-		}
-		return "";
-	}
-	private Map<String,JSONArray>  groupByQuyu(List<Map> users){
-		Map<String,JSONArray> quyus = new HashMap<String,JSONArray>();
-		for(Map user : users){
-			if(!quyus.containsKey(user.get("pname"))){
-				if(user.get("pname")==null){
-					System.out.println("");
-				}else{
-					quyus.put(user.get("pname").toString(), new JSONArray());
-				}
-			}
-			JSONArray arr = quyus.get(user.get("pname"));
-			JSONObject dept = new JSONObject();
-			dept.put("text", user.get("cname"));
-//			dept.put("name", user.get("cname"));
-			dept.put("deptId", user.get("did"));
-			if(!arr.contains(dept)){
-				quyus.get(user.get("pname")).add(dept);
-			}
-		}
-		return quyus;
-	}
-	private Map<String,JSONArray> groupByDeptId(List<Map> users){
-		Map<String,JSONArray> deptUsers = new HashMap<String,JSONArray>();
-		for(Map user : users){
-			if(user.get("cname")==null){
-				System.out.println();
-				continue;
-			}
-			if(!deptUsers.containsKey(user.get("cname"))){
-				deptUsers.put(user.get("cname").toString(), new JSONArray());
-			}
-			JSONObject json = new JSONObject();
-			json.put("text", user.get("user"));
-//			json.put("name", user.get("user"));
-			json.put("userId", user.get("userId"));
-			deptUsers.get(user.get("cname")).add(json);
-		}
-		return deptUsers;
-	}
-	
 }

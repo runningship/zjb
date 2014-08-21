@@ -13,21 +13,16 @@ public class UserQuery{
 	
 	public Integer roleId;
 	
-	public Integer hunyin;
-	
 	public String tel;
 	
 	public String address;
-	
-	public String sfz;
 	
 	public String rqtimeStart;
 	
 	public String rqtimeEnd;
 	
-	public Integer sh = 1;
+	public Integer cid;
 	
-	public Integer lizhi;
+	public Integer did;
 	
-	public String xpath;
 }

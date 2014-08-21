@@ -37,6 +37,12 @@ public class houseSee_rent extends AbstractSee{
 		json.put("dname", dept.namea);
 		json.put("ztai", RentState.parse(h.ztai));
 		json.put("fangshi", RentType.parse(h.fangshi));
+		String favStr = "@"+user.id+"|";
+		if(h.fav!=null && h.fav.contains(favStr)){
+			json.put("fav", "1");
+		}else{
+			json.put("fav", "0");
+		}
 		return json;
 	}
 

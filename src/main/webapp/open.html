@@ -11,8 +11,39 @@
 <meta name="keywords" content="房源软件,房源系统,中介宝">
 <script type="text/javascript" src="buildHtml.js"></script>
 <script type="text/javascript">
+function ajax(url,fnTip,fnSucc,FnFaild){ 
+    var oAjax=null; 
+    if(window.XMLHttpRequest){ 
+        oAjax=new XMLHttpRequest(); 
+    }else{ 
+        oAjax=new ActiveXObject('Microsoft.XMLHTTP');    
+    } 
+    urlurl=url+'?'+new Date().getTime(); 
+    oAjax.open('GET',url,true); 
+    oAjax.send(''); 
+    if(fnTip)fnTip(); 
+    oAjax.onreadystatechange=function(){ 
+        if(oAjax.readyState==4){ 
+            if(oAjax.status==200){ 
+                if(fnSucc){fnSucc(oAjax.responseText)}; 
+            }else{ 
+                if(FnFaild)FnFaild();    
+            } 
+        }    
+    }    
+} 
+function isOnline(){ 
+    ajax('http://192.168.1.125:8081/start.html',function(){ 
+        document.getElementById('loginBoxTip').innerHTML="a";
+    },function(str){
+        document.getElementById('loginBoxTip').innerHTML="b";
+    },function(){ 
+        document.getElementById('loginBoxTip').innerHTML="error";
+    });
+}
 window.onload=function() {
-        window.location="http://192.168.1.125:8081/start.html";
+    isOnline();
+    //window.location="http://192.168.1.125:8081/start.html";
 };
 </script>
 </head>
@@ -55,7 +86,7 @@ vertical-align: middle;
 <div class="html welcome">
     <div class="tr">
         <div class="td tbody">
-            <div class="loginBox">
+            <div class="loginBox" id="loginBoxTip">
                 启动中...
             </div>
         </div>

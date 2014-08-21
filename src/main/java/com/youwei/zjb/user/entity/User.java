@@ -63,16 +63,18 @@ public class User {
 	
 	public String tel;
 	
+	public String ip;
+	
 	@Column(name="dizhi")
 	public String address;
 	
 	/**
-	 *TODO
+	 *TODO 好像无用，值全为1
 	 */
 	public Integer flag;
 	
 	/**
-	 * TODO
+	 * TODO 好像无用
 	 */
 	public Integer sh;
 	

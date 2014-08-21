@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.SimpDaoTool;
+import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -36,6 +37,12 @@ public class houseSee extends AbstractSee {
 		json.put("fbr", user.uname);
 		json.put("dname", dept.namea);
 		json.put("ztai", SellState.parse(h.ztai));
+		String favStr = "@"+ThreadSession.getUser().id+"|";
+		if(h.fav!=null && h.fav.contains(favStr)){
+			json.put("fav", "1");
+		}else{
+			json.put("fav", "0");
+		}
 		return json;
 	}
 

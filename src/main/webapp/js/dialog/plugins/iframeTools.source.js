@@ -316,11 +316,12 @@ artDialog.load = function(url, options, cache){
  * 警告
  * @param	{String}	消息内容
  */
-artDialog.alert = function (content, callback) {
+artDialog.alert = function (content, icon, callback) {
+	if(!icon){icon=''}
 	return _proxyDialog({
 		id: 'Alert',
 		zIndex: _zIndex(),
-		icon: 'warning',
+		icon: icon,
 		fixed: true,
 		lock: true,
 		content: content,
@@ -336,11 +337,12 @@ artDialog.alert = function (content, callback) {
  * @param	{Function}	确定按钮回调函数
  * @param	{Function}	取消按钮回调函数
  */
-artDialog.confirm = function (content, yes, no) {
+artDialog.confirm = function (content, yes, no, icon) {
+	if(!icon){icon='question'}
 	return _proxyDialog({
 		id: 'Confirm',
 		zIndex: _zIndex(),
-		icon: 'question',
+		icon: icon,
 		fixed: true,
 		lock: true,
 		opacity: .1,
@@ -361,14 +363,14 @@ artDialog.confirm = function (content, yes, no) {
  * @param	{Function}	回调函数. 接收参数：输入值
  * @param	{String}	默认值
  */
-artDialog.prompt = function (content, yes, value) {
+artDialog.prompt = function (content, yes, value, icon) {
 	value = value || '';
 	var input;
-	
+	if(!icon){icon='question'}
 	return _proxyDialog({
 		id: 'Prompt',
 		zIndex: _zIndex(),
-		icon: 'question',
+		icon: icon,
 		fixed: true,
 		lock: true,
 		opacity: .1,
@@ -400,10 +402,11 @@ artDialog.prompt = function (content, yes, value) {
  * @param	{String}	提示内容
  * @param	{Number}	显示时间 (默认1.5秒)
  */
-artDialog.tips = function (content, time) {
+artDialog.tips = function (content, time, icon) {4
 	return _proxyDialog({
 		id: 'Tips',
 		zIndex: _zIndex(),
+		icon: icon,
 		title: false,
 		cancel: false,
 		fixed: true,

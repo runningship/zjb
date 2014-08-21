@@ -13,7 +13,7 @@ import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
-@Module(name="/house/fav/")
+//@Module(name="/house/fav/")
 public class FavoriteService2 {
 
 	CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);

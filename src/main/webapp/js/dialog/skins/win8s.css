@@ -12,7 +12,7 @@
 body { _margin:0; _height:100%; /*IE6 BUG*/ }
 .aui_outer { text-align:left; }
 table.aui_border, table.aui_dialog { border:0; margin:0; border-collapse:collapse; width:auto; }
-table.aui_border{ border:0px solid #fff;background-color: #FFF;border-collapse: separate; border-radius: 5px; box-shadow: 0 0 10px #555;}
+table.aui_border{ border:0px solid #fff;background-color: #FFF;border-collapse: separate; border-radius: 5px; box-shadow: 0 0 10px #555;overflow: hidden;}
 .aui_nw, .aui_n, .aui_ne, .aui_w, .aui_c, .aui_e, .aui_sw, .aui_s, .aui_se, .aui_header, .aui_tdIcon, .aui_main, .aui_footer { padding:0; }
 .aui_header, .aui_buttons button { font: 12px/1.11 'Microsoft Yahei', Tahoma, Arial, Helvetica, STHeiti; _font-family:Tahoma,Arial,Helvetica,STHeiti; -o-font-family: Tahoma, Arial; position: relative; }
 .aui_title { overflow:hidden; text-overflow: ellipsis; }

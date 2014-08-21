@@ -1,5 +1,7 @@
 package com.youwei.zjb.user;
 
+import net.sf.json.JSONObject;
+
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
@@ -20,14 +22,21 @@ public class GroupService {
 	@WebMethod
 	public ModelAndView add(DeptGroup group){
 		if(group.cid==null){
-			group.cid = ThreadSession.getUser().cid;
+			throw new GException(PlatformExceptionType.BusinessException, "未指定分组所在公司");
 		}
 		DeptGroup po = dao.getUniqueByParams(DeptGroup.class, new String[]{"cid" , "name"}, new Object[]{group.cid , group.name});
 		if(po!=null){
 			throw new GException(PlatformExceptionType.BusinessException, "已经存在相同名称的分组");
 		}
 		dao.saveOrUpdate(group);
-		return new ModelAndView();
+		ModelAndView mv = new ModelAndView();
+		JSONObject json = new JSONObject();
+		json.put("id", group.id);
+		json.put("pId", group.cid);
+		json.put("type", "group");
+		json.put("name", group.name);
+		mv.data = json;
+		return mv;
 	}
 	
 	@WebMethod
@@ -35,6 +44,26 @@ public class GroupService {
 		Department dept = dao.get(Department.class, did);
 		dept.dgroup = gid;
 		dao.saveOrUpdate(dept);
+		return new ModelAndView();
+	}
+	
+	@WebMethod
+	public ModelAndView delete(int id){
+		DeptGroup group = dao.get(DeptGroup.class, id);
+		if(group!=null){
+			dao.delete(group);
+		}
+		return new ModelAndView();
+	}
+	
+	@WebMethod
+	public ModelAndView updateName(DeptGroup group){
+		DeptGroup po = dao.get(DeptGroup.class, group.id);
+		if(po==null){
+			throw new GException(PlatformExceptionType.BusinessException, "已经存在相同名称的分组");
+		}
+		po.name = group.name;
+		dao.saveOrUpdate(po);
 		return new ModelAndView();
 	}
 }

@@ -45,6 +45,10 @@ public class PcService {
 		if(comp==null){
 			throw new GException(PlatformExceptionType.BusinessException, "授权码不正确,请联系系统管理员");
 		}
+		long pcCount = dao.countHql("from PC where cid=?", comp.id);
+		if(pcCount>=comp.pcnum){
+			throw new GException(PlatformExceptionType.BusinessException, "已经授权的机器数量超过预定额度");
+		}
 		if(pc.pcname!=null){
 			pc.pcname = pc.pcname.replace("-", "").toLowerCase();
 		}
@@ -89,10 +93,15 @@ public class PcService {
 			hql.append(" and pc.lock=? ");
 			params.add(query.lock);
 		}
-		if(query.deptId!=null){
+		if(query.did!=null){
 			hql.append(" and pc.did=? ");
-			params.add(query.deptId);
+			params.add(query.did);
 		}
+		if(query.cid!=null){
+			hql.append(" and pc.cid=? ");
+			params.add(query.cid);
+		}
+		
 		page.orderBy = "pc.addtime";
 		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString(), true, params.toArray());

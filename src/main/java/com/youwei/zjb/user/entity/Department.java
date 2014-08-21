@@ -36,6 +36,7 @@ public class Department {
 	@Column(nullable=false)
 	public String namea;
 	
+	//无用
 	@Column(name="code_num")
 	public String codeNum;
 	
@@ -43,7 +44,7 @@ public class Department {
 	public String authCode;
 	
 	/**
-	 * 序号
+	 * 公司代码
 	 */
 	public String cnum;
 	
@@ -60,6 +61,7 @@ public class Department {
 	
 	public Date addtime;
 	
+	//似乎无用，全为1
 	public Integer flag;
 	
 	/**

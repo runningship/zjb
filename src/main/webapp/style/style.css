@@ -104,7 +104,7 @@ table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
 .form-group .form_menu_list ul{ padding:0;margin:0;}
 .form-group .form_menu_list a{ height: 100%; width: 100%; display: block;}
 
-ul.pagination.ymx_page{ margin:0;height: 30px;}
+ul.pagination.ymx_page{ margin:0;height: 34px;display: block;}
 ul.pagination.ymx_page > li > a{ border-top: none; border-bottom: none;}
 ul.pagination.ymx_page > li:first-child > a, 
 ul.pagination.ymx_page > li:first-child > span {border-top-left-radius: 0px;border-bottom-left-radius: 0px;border-left: none;}
@@ -231,6 +231,9 @@ opacity:1}
 .table-nopadding > thead > tr > th, .table-nopadding > tbody > tr > th, .table-nopadding > tfoot > tr > th, .table-nopadding > thead > tr > td, .table-nopadding > tbody > tr > td, .table-nopadding > tfoot > tr > td {
 padding: 5px 0;
 }
+.table-nopadding > thead > tr > td, .table-nopadding > tbody > tr > td, .table-nopadding > tfoot > tr > td {padding: 8px 0;}
+
+.table-minpadding > thead > tr > td, .table-minpadding > tbody > tr > td, .table-minpadding > tfoot > tr > td {padding: 3px 0;}
 
 .default{background-color: #278ADD;width: 100%;}
 .default .lefter{ width: 50px;  box-shadow:0 0 -5px #666;}
@@ -279,7 +282,7 @@ padding: 5px 0;
 .list.addSide .bodyer .sideCont .biaotiMax{ width: 78px;}
 .list.addSide .bodyer .sideCont .neirong{ text-align: left;}
 .list.addSide .bodyer .sideCont .biaoti,
-.list.addSide .bodyer .sideCont .neirong{ padding:2px 0;}
+.list.addSide .bodyer .sideCont .neirong{ padding:5px 0;}
 .list.addSide .bodyer .sideCont h2{ font-size: 14px; font-weight: bold; height: 31px; line-height: 31px; text-indent: 10px; background-color: #FFF; border-top: 1px solid #DDD; border-bottom: 0px solid #DDD; margin:0; text-align: center;  background-color: #E0EFFF;}
 .list.addSide .bodyer .sideCont th{padding: 0; border:0;}
 .list.addSide .bodyer .sideCont .see_house_genjin { margin-top: 10px;}
@@ -293,7 +296,7 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .list.addSide .bodyer .sideCont .sideFoot ul,
 .list.addSide .bodyer .sideCont .sideFoot ul li,
 .list.addSide .bodyer .sideCont .sideFoot ul li a{ height: 35px; line-height: 34px;}
-.list.addSide .bodyer .sideCont .sideFoot ul li a{ display: inline-block; padding:0 5px; margin:0;}
+.list.addSide .bodyer .sideCont .sideFoot ul li a{ display: inline-block; padding:0 5px; margin:0; color: #F00;}
 .list.addSide .bodyer .sideCont .sideFoot ul li a:hover{ background-color: #EEE;}
 
 .list.addSide .mainCont{ padding-left: 270px;}
@@ -329,8 +332,9 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .list .TableH th{background-color: #EEE;}
 
 
-
-
+.telBox p{margin:0; border-bottom: 1px solid #4cae4c;}
+.telBox p:last-child{ border:none;}
+.telBox a{color:#FFF;}
 
 
 

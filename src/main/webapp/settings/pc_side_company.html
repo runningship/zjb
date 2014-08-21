@@ -1,16 +1,80 @@
+
+<script type="text/javascript">
+var rMenu;
+var id;
+  var setting = {
+    view: {
+      showIcon: false,
+      addDiyDom: addDiyDom
+    },
+    data: {
+      simpleData: {
+        enable: true
+      }
+    },
+    callback: {
+      onClick: onClick
+    }
+   };
+
+YW.ajax({
+  type: 'POST',
+  url: '/c/dept/getDeptTree?cid=1',
+  data:'',
+  success: function(data){
+      var result=JSON.parse(data);
+      $.fn.zTree.init($("#treeDemo"), setting, result.result);
+      rMenu = $("#rMenu");
+  }
+});
+
+function addDiyDom(treeId, treeNode) {
+  $("#" + treeNode.tId + "_ico").remove();
+  // $("#" + treeNode.tId).css('display','inline');
+  var aObj = $("#" + treeNode.tId + "_a");
+  aObj.css('display','inline');
+  if(treeNode.cnum!=null){
+    var cnumStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+    aObj.prepend(cnumStr);  
+  }
+  var color="";
+  if(treeNode.sh==0){
+    color="red";
+  }
+  if(treeNode.type!="group"){
+    var lockStr = "<i style='float:right;font-size:14px;color:"+color+"' class='icon iconfont'>&#xe64e;</i>";
+    aObj.append(lockStr);
+  }
+}
+
+function onClick(event, treeId, treeNode, clickFlag) {
+  console.log(treeNode);
+  $('#cid').val("");
+  $('#did').val("");
+  if(treeNode.type=="comp"){
+    $('#cid').val(treeNode.id);
+  }else if(treeNode.type=="dept"){
+    $('#did').val(treeNode.id);
+  }else{
+    return;
+  }
+  doSearch();
+} 
+
+</script>
+
 <div class="sideHead">
-    房源详细
+    分公司列表
 </div>
 
-<table class="table table-hover table-striped table-nopadding side_table" width="100%">
+<table class="table table-nopadding side_table" width="100%">
   <tbody>
     <tr class="list">
-      <td></td>
       <td>
-        <h3>名称</h3>
-        <p>某某某分公司<span style="float:right">2014-8-18 14:47:39</span></p>
+        <div class="zTreeDemoBackground left right">
+          <ul id="treeDemo" class="ztree"></ul>
+        </div>
       </td>
-      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -18,7 +82,7 @@
 <div class="sideFoot">
   <ul>
     <li>
-      <a href="" data-toggle="tooltip" title="添加跟进"><i class="glyphicon glyphicon-plus"></i>添加分公司</a>
+      <a href="" data-toggle="tooltip" title="添加跟进" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加分公司</a>
     </li>
   </ul>
 </div>

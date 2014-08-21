@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
 import org.bc.sdak.utils.LogUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -45,6 +46,28 @@ public class ViewServlet extends HttpServlet{
 		String filePath = req.getServletContext().getRealPath("/")+path;
 		String html = FileUtils.readFileToString(new File(filePath),"utf-8");
 		Document doc = Jsoup.parse(html);
+		
+		///处理继承
+		Elements parents = doc.getElementsByTag("extend");
+		if(!parents.isEmpty()){
+			Element parent = parents.get(0);
+			String phtmlFile = parent.attr("parent");
+			phtmlFile = filePath+"/../"+phtmlFile;
+			String pHtml = FileUtils.readFileToString(new File(phtmlFile),"utf-8");
+			Document pDoc = Jsoup.parse(pHtml);
+			Elements extendList = pDoc.getElementsByAttribute("extend_id");
+			for(Element e : extendList){
+				Elements children = doc.getElementsByAttributeValue("extend_id", e.attr("extend_id"));
+				if(!children.isEmpty()){
+					e.html(children.get(0).html());
+				}
+			}
+			//处理完继承后的html内容
+			html = pDoc.html();
+			doc = Jsoup.parse(html);
+		}
+		///
+				
 		if(user!=null){
 			html = html.replace("$${userId}", user.id.toString());
 			html = html.replace("$${myName}", user.uname);
@@ -72,7 +95,10 @@ public class ViewServlet extends HttpServlet{
 					e.remove();
 				}
 			}
+		}else{
+			LogUtil.log(Level.ERROR, "user session is null", null);
 		}
+		
 		clazz = "com.youwei.zjb.view"+clazz;
 		try {
 			Class<?> pageClass = Class.forName(clazz);
