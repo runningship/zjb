@@ -122,7 +122,7 @@ public class HouseRent {
 	 */
 	public String ztai;
 
-	public Integer dateyear;
+	public String dateyear;
 
 	@Column(name="dateadds")
 	public Date dateadd;

@@ -48,7 +48,7 @@ public class houseSee extends AbstractSee {
 
 	@Override
 	protected int getChuzu() {
-		return 1;
+		return 0;
 	}
 
 }

@@ -87,7 +87,7 @@ public class PcService {
 	public ModelAndView list(Page<Map> page,PCQuery query){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder("select pc.id as id, pc.pcname as pcname, pc.addtime as addtime, pc.lasttime as lasttime, pc.uuid as uuid,pc.lastip as ip, "
-				+ " pc.lock as lock, pc.beizhu as beizhu,d.namea as deptName  from PC pc,Department d where d.id=pc.did");
+				+ " pc.lock as lock, pc.beizhu as beizhu,d.namea as dname  from PC pc,Department d where d.id=pc.did");
 		List<Object> params = new ArrayList<Object>();
 		if(query.lock!=null){
 			hql.append(" and pc.lock=? ");
@@ -110,9 +110,9 @@ public class PcService {
 	}
 	
 	@WebMethod
-	public ModelAndView shenhe(Integer pcId){
+	public ModelAndView shenhe(Integer id){
 		ModelAndView mv = new ModelAndView();
-		PC pc = dao.get(PC.class, pcId);
+		PC pc = dao.get(PC.class, id);
 		if(pc!=null){
 			if(pc.lock==1){
 				pc.lock=0;
@@ -122,6 +122,16 @@ public class PcService {
 			dao.saveOrUpdate(pc);
 		}
 		mv.data.put("result", 0);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView delete(Integer id){
+		ModelAndView mv = new ModelAndView();
+		PC pc = dao.get(PC.class, id);
+		if(pc!=null){
+			dao.delete(pc);
+		}
 		return mv;
 	}
 }

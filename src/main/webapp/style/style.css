@@ -99,6 +99,18 @@ table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
 .input-group.input-group-too input.form-control{ width: 100%; padding: 6px 4px; text-align: center;}
 .input-group.input-group-too .input-group-addon{ padding: 6px 4px; border-radius: 0;}
 
+.btn_group{ margin: 0;}
+.btn_group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-bottom-left-radius: 0;
+}
+.btn_group > .btn:last-child:not(:first-child), .btn_group > .dropdown-toggle:not(:first-child) {
+border-bottom-right-radius: 0;
+}
+.btn_group .btn{ width: 80.6px;}
+.form_group { margin: 0; padding: 0;}
+.form_group textarea{ border-radius: 0;}
+.form_group .btn{ border-top-left-radius: 0; border-top-right-radius: 0;}
+
 .form-group .form_menu_box{ position: relative;}
 .form-group .form_menu_list{ position: absolute; z-index: 99; left:15px; right: 16px;  display:none;overflow-y: auto; max-height: 120px; background-color: #FFF; border:1px solid #09F; border-radius: 5px; box-shadow: 0 0 10px #09F; border-top:none;}
 .form-group .form_menu_list ul{ padding:0;margin:0;}

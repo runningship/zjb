@@ -1,6 +1,7 @@
 package com.youwei.zjb.view.settings;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,10 +32,22 @@ public class uc_index_u_add extends page{
 		}else{
 			cid = comp.fid;
 		}
-		long count = dao.countHql("select count(*) from User where cid=?", cid);
-		String pattern="0000";
+		int count=0;
+		List<Map> list = dao.listAsMap("select max(lname) as maxLName from User where cid=?", cid);
+		if(!list.isEmpty()){
+			if(list.get(0).get("maxLName")!=null){
+				count = Integer.valueOf(list.get(0).get("maxLName").toString());
+			}
+		}
+		String pattern="0000000";
+		String lname="";
 		 java.text.DecimalFormat df = new java.text.DecimalFormat(pattern);
-		String lname=comp.cnum+ df.format(count+1);
+		 if(count==0){
+			 lname=comp.cnum+"0001";
+		 }else{
+			 lname=df.format(count+1);
+		 }
+		
 		
 		
 		//分公司

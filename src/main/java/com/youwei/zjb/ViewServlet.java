@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.user.entity.User;
 
@@ -64,17 +66,22 @@ public class ViewServlet extends HttpServlet{
 			}
 			//处理完继承后的html内容
 			html = pDoc.html();
-			doc = Jsoup.parse(html);
+			
 		}
 		///
-				
+		doc = Jsoup.parse(html);
 		if(user!=null){
 			html = html.replace("$${userId}", user.id.toString());
+			html = html.replace("$${cid}", user.cid.toString());
 			html = html.replace("$${myName}", user.uname);
 			html = html.replace("$${myTel}", user.tel==null? "": user.tel);
 			
 			String authParent = req.getParameter("authParent");
-			List<RoleAuthority> authList = user.getRole().Authorities();
+			Role role = user.getRole();
+			List<RoleAuthority> authList = new ArrayList<RoleAuthority>();
+			if(role!=null){
+				authList = role.Authorities();
+			}
 			Elements list = doc.getElementsByAttribute("auth");
 			for(Element e : list){
 				String target = e.attr("auth");
@@ -98,7 +105,7 @@ public class ViewServlet extends HttpServlet{
 		}else{
 			LogUtil.log(Level.ERROR, "user session is null", null);
 		}
-		
+		doc = Jsoup.parse(html);
 		clazz = "com.youwei.zjb.view"+clazz;
 		try {
 			Class<?> pageClass = Class.forName(clazz);

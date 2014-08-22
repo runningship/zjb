@@ -32,6 +32,7 @@ function submits(){
     data:a,
     success: function(data){
         art.dialog.close();
+        art.dialog.opener.updateNode($('#namea').val());
         alert('修改成功');
     }
   });
@@ -109,7 +110,7 @@ $(document).ready(function() {
                 <div class="form-group fgs">
                     <label class="col-xs-3 control-label">公司代码:</label>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="cnum" value="" id="cnum" placeholder="">
+                        <input type="text" class="form-control" name="cnum" value="" id="cnum" placeholder="" readonly="readonly">
                     </div>
                 </div>
                 <div class="form-group fgs">

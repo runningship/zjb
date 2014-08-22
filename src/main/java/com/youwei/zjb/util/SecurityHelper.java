@@ -42,7 +42,7 @@ public class SecurityHelper {
 		}
 	}
 	
-	public static boolean validate(PC target){
+	public static PC validate(PC target){
 		
 		if(target.pcname!=null){
 			target.pcname = target.pcname.replace("-", "").toLowerCase();
@@ -59,7 +59,7 @@ public class SecurityHelper {
 			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权...");
 		}
 		if(pc.lock==1){
-			return true;
+			return pc;
 		}
 		throw new GException(PlatformExceptionType.BusinessException, "授权审核中...");
 	}

@@ -31,9 +31,11 @@ function submits(){
     url: '/c/dept/update',
     data:a,
     success: function(data){
-        art.dialog.close();
-        art.dialog.opener.addNode(data);
+      console.log(1);
+      art.dialog.close();
+        art.dialog.opener.updateNode($('#namea').val());
         alert('修改成功');
+        
     }
   });
 }

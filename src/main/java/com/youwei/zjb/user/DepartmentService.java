@@ -63,6 +63,21 @@ public class DepartmentService {
 	}
 	
 	@WebMethod
+	public ModelAndView toggleShenhe(int id){
+		ModelAndView mv = new ModelAndView();
+		Department dept = dao.get(Department.class, id);
+		if(dept!=null){
+			if(dept.sh==1){
+				dept.sh=0;
+			}else{
+				dept.sh=1;
+			}
+			dao.saveOrUpdate(dept);
+		}
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView update(Department dept){
 		Department po = dao.get(Department.class, dept.id);
 		po.namea = dept.namea;
@@ -86,7 +101,7 @@ public class DepartmentService {
 		if(count>0){
 			throw new GException(PlatformExceptionType.BusinessException, "请先删除分公司");
 		}
-		count = dao.countHqlResult("from User where deptId=?", deptId);
+		count = dao.countHqlResult("from User where did=?", deptId);
 		if(count>0){
 			throw new GException(PlatformExceptionType.BusinessException, "该分公司下有人员信息，请先删除公司人员信息");
 		}
@@ -162,13 +177,17 @@ public class DepartmentService {
 			for(Department dept : depts){
 				JSONObject json = new JSONObject();
 				json.put("id", dept.id);
+				json.put("sh", dept.sh);
 				if(dept.id==cid){
 					json.put("pId", 0);
 					json.put("open", true);
 					json.put("type", "comp");
-					json.put("sh", dept.sh);
 				}else{
-					json.put("pId", dept.dgroup);
+					if(dept.dgroup!=null){
+						json.put("pId", dept.dgroup);
+					}else{
+						json.put("pId", cid);
+					}
 					json.put("type", "dept");
 				}
 				json.put("name", dept.namea);

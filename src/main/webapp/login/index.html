@@ -12,6 +12,7 @@
 <link href="/style/css.css" rel="stylesheet">
 <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="/style/style.css" rel="stylesheet">
+<link href="/style/titlebar.css" rel="stylesheet">
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
@@ -26,6 +27,7 @@
 <script src="/js/Ladda/ladda.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" src="/js/sysinfo.js"></script>
+<script type="text/javascript" src="/js/titlebar.js"></script>
 <script type="text/javascript">
 try{
     // hex.deleteSystemCommand(hex.SIZE);
@@ -264,7 +266,7 @@ $(window).resize(function(e) {
     // e.bubbles=false;
     // e.preventDefault();
     // e.stopPropagation();
-    hex.sizeTo(692,660);
+    //hex.sizeTo(692,660);
     // setDomSize();
 });
 
@@ -294,12 +296,12 @@ menuerBoxOnI=menuerBoxOn.index();
 
 menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxOnW*menuerBoxOnI)},300);
 
+// addTitlebar("top-titlebar", "", "");
 }); 
 </script>
 </head>
 <body>
 <div class="html login">
-    <div class="header">
         <div class="wintool">
             <ul class="wintools">
                 <li class="dropdown">
@@ -319,6 +321,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                 <li><a href="" class="winBtn winBtnClose" data-q="close"><i></i></a></li>
             </ul>    
         </div>
+    <div class="header" style="-webkit-app-region: drag">
     </div>
     <div class="bodyer">
         <ul class="menuer hd clearfix animation act_menu">

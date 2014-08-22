@@ -24,6 +24,8 @@
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
 <script type="text/javascript">
+var did;
+var cid;
 
 function doSearch(){
   var a=$('form[name=form1]').serialize();
@@ -43,7 +45,11 @@ function doSearch(){
 $(document).ready(function() {
     
     $(document).find('[data-toggle="tooltip"]').tooltip();
-        doSearch();
+    did = getParam('did');
+    cid = getParam('cid');
+    $('#did').val(did);
+    $('#cid').val(cid);
+    doSearch();
 });
 $(window).resize(function() {      //类别
 });
@@ -53,8 +59,9 @@ $(window).resize(function() {      //类别
 <div class="html list title addSide">
     <div class="header">
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
-    <input type="hidden" class="userInput" name="xpath" value="">
     <input type="hidden" class="hidden" name="pageInput" value="">
+    <input type="hidden" class="hidden" name="cid" value="" id="cid">
+    <input type="hidden" class="hidden" name="did" value="" id="did">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
      
       <div class="input-group" style="width: 103px;">

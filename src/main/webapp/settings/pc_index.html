@@ -38,11 +38,6 @@ function doSearch(){
     }
   });
 }
-function getSideH(){
-  var htmls=$('.html'),
-  sides=htmls.find('.sideCont');
-  return sides.css('top');
-}
 function getSider(id){
     $.get('/v/settings/pc_side_company.html', function(data) {
         var sideTop=parseInt(getSideH())*-1+6;
@@ -75,15 +70,7 @@ $(document).ready(function() {
 // 加载侧边
     getSider();
 // 列表内容
-    $.get('/c/config/getQueryOptions', function(data) {
-        queryOptions=JSON.parse(data);
-        // buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
-        // buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
-        // buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
-        // buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-        // buildHtmlWithJsonArray("id_zhuangtai",queryOptions['zhuangtai'],true);
-        doSearch();
-    });
+    doSearch();
 // 
     $('.id_House_list').on('click', 'a', function(event) {
         var Thi=$(this),
@@ -94,8 +81,34 @@ $(document).ready(function() {
         $('#menuTop').html(data);
     });
 });
-$(window).resize(function() {      //类别
-});
+
+function delPC(id){
+  YW.ajax({
+    type: 'POST',
+    url: '/c/pc/delete?id='+id,
+    success: function(data){
+        doSearch();
+        alert('删除成功');
+    }
+  });
+}
+function shenhePC(id){
+  YW.ajax({
+    type: 'POST',
+    url: '/c/pc/shenhe?id='+id,
+    success: function(data){
+        doSearch();
+    }
+  });
+}
+
+function getShenHeText(lock){
+  if(lock==1){
+    return "已审核";
+  }else{
+    return "未审核";
+  }
+}
 </script>
 <style type="text/css">
   .div1 {
@@ -115,7 +128,7 @@ $(window).resize(function() {      //类别
 <body>
 <div class="html list title addSide">
     <form name="form1" style="display:none">
-      <input type="hidden" id="cid" name="cid" />
+      <input type="hidden" id="cid" name="cid" value="$${cid}"/>
       <input type="hidden" id="did" name="did" />
     </form>
     <div class="header">
@@ -127,6 +140,7 @@ $(window).resize(function() {      //类别
   <table class="table table-nopadding TableH  mainCont" >
     <tr>
       <th>电脑名称</th>
+      <th>分公司</th>
       <th>机器码</th>
       <th>申请时间</th>
       <th>最后登录时间</th>
@@ -145,14 +159,15 @@ $(window).resize(function() {      //类别
     <tbody>
     <tr data-hid="${id}" style="display:none;" class="id_House_list">
       <td>${pcname}</td>
+      <td>${dname}</td>
       <td><div class="div1">${uuid}</div></td>
       <td>${addtime}</td>
       <td>${lasttime}</td>
       <td>${ip}</td>
       <td>${beizhu}</td>
       <td>
-        <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">审</a>
-        <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">删</a>
+        <a href="##" class="del" data-hid="${id}" data-rel="del" runscript="true" onclick="shenhePC(${id})" >getShenHeText(${lock})</a>
+        <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="delPC(${id})">删</a>
       </td>
     </tr>
     </tbody>

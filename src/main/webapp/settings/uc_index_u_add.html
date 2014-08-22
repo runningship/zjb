@@ -54,6 +54,11 @@ $(document).ready(function() {
       },{
           name: '取消'
       });
+  var did = getParam('id');
+  if(did==null || did==""){
+    alert("未指明的分类");
+  }
+  $('#did').val(did);
 });
 
 </script>
@@ -79,7 +84,7 @@ $(document).ready(function() {
                 <div class="form-group">
                     <label class="col-xs-3 control-label">所属分公司:</label>
                     <div class="col-xs-8 form_menu_box" >
-                        <select class="form-control" name="did">
+                        <select class="form-control" name="did" id="did">
                             <option class="deptList" value="${id}">${namea}</option>
                         </select>
                     </div>
@@ -110,7 +115,7 @@ $(document).ready(function() {
                     <div class="col-xs-8">
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-primary active">
-                                <input type="radio" value="1" name="lock" autocomplete="off" checked> 开启
+                                <input type="radio" value="1" name="lock" autocomplete="off"> 开启
                             </label>
                             <label class="btn btn-primary">
                                 <input type="radio" value="0" name="lock" autocomplete="off"> 锁定

@@ -44,24 +44,32 @@ function doSearch(){
     }
   });
 }
-function getSider(id){
-    if(id){
-        $.get('/v/settings/uc_side_company.html?id='+id, function(data) {
-        $('#sideCont').html(data)
-        });
-    }else{
-        $.get('/v/settings/uc_side_company.html?id=290464', function(data) {
-            var sideTop=parseInt(getSideH())*-1+6;
-            $('#sideCont').html(data).find('.sideHead').css({top:sideTop});
-            var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+1;
-            $('#sideCont').css({'padding-top':sideHeadHeight})
+function getSider(){
+    $.get('/v/settings/uc_side_company.html', function(data) {
+        var sideTop=parseInt(getSideH())*-1+6;
+        $('#sideCont').html(data).find('.sideHead').css({top:sideTop});
+        var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+1;
+        $('#sideCont').css({'padding-top':sideHeadHeight})
 
-        });
-    }
+    });
 }
 
 function uc_edit(id){
   art.dialog.open('/v/settings/user_edit.html?id='+id)
+}
+
+function uc_delete(id){
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+      YW.ajax({
+        type: 'POST',
+        url: '/c/user/delete?id='+id,
+        data:'',
+        success: function(data){
+            doSearch();
+            alert('删除成功');
+        }
+      });
+  },function(){},'warning');
 }
 
 $(document).ready(function() {
@@ -119,7 +127,7 @@ $(window).resize(function() {      //类别
             </ul>
         </div>
   <form class="form-horizontal form1 hidden" onsubmit="doSearch();return false;" role="form" name="form1">
-    <input type="hidden" name="cid" id="cid" value="">
+    <input type="hidden" name="cid" id="cid" value="$${cid}">
     <input type="hidden" name="did" id="did" value="">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix">
@@ -157,8 +165,8 @@ $(window).resize(function() {      //类别
             <td>${lasttime}</td>
             <td>${ip}</td>
             <td>
-              <a auth="$${authParent}_edit" href="#" class="btns" data-type="edit" onclick="uc_edit(${uid})">编辑</a>
-              <a auth="$${authParent}_del" href="#" class="btns" data-type="del">离职</a>
+              <a href="#" class="btns" data-type="edit" onclick="uc_edit(${uid})">编辑</a>
+              <a href="#" class="btns" data-type="del" onclick="uc_delete(${uid})">删除</a>
             </td>
           </tr>
           </tbody>

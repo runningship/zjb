@@ -35,6 +35,7 @@ public class GroupService {
 		json.put("pId", group.cid);
 		json.put("type", "group");
 		json.put("name", group.name);
+		json.put("icon", "/style/images/icon_lock_current.png");
 		mv.data = json;
 		return mv;
 	}

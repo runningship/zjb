@@ -63,10 +63,11 @@ public class Role {
 	}
 
 	private void merge(List<RoleAuthority> list, String fy) {
-		String[] arr = fy.split("|1");
+		String[] arr = fy.split("\\|1");
 		for(String item : arr){
-			item = item.replace("", "");
+			item = item.replace(",", "");
 			RoleAuthority ra = new RoleAuthority();
+			ra.name = item;
 			if(!list.contains(ra)){
 				list.add(ra);
 			}

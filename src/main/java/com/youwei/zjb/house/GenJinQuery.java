@@ -15,4 +15,8 @@ public class GenJinQuery{
 	
 	public Integer chuzu;
 	
+	public Integer cid;
+	
+	public Integer did;
+	
 }

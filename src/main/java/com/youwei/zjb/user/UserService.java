@@ -61,13 +61,13 @@ public class UserService {
 	}
 	
 	
-	@WebMethod
 	public ModelAndView authorities(){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
 		mv.data.put("authorities", JSONHelper.toJSONArray(user.getRole().Authorities()));
 		return mv;
 	}
+	
 	@WebMethod
 	public ModelAndView allRoles(){
 		ModelAndView mv = new ModelAndView();
@@ -133,11 +133,13 @@ public class UserService {
 		
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
-		po.pwd = SecurityHelper.Md5(user.pwd);
+		if(StringUtils.isNotEmpty(user.pwd)){
+			po.pwd = SecurityHelper.Md5(user.pwd);
+		}
 		po.tel = user.tel;
 		po.did = user.did;
 		po.roleId = user.roleId;
-		po.sh = user.sh;
+		po.lock = user.lock;
 		dao.saveOrUpdate(po);
 		return mv;
 	}
@@ -148,6 +150,16 @@ public class UserService {
 		User po = dao.get(User.class, id);
 		mv.data = JSONHelper.toJSON(po);
 		mv.data.remove("pwd");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView delete(int id){
+		ModelAndView mv = new ModelAndView();
+		User po = dao.get(User.class, id);
+		if(po!=null){
+			dao.delete(po);
+		}
 		return mv;
 	}
 	
@@ -272,13 +284,10 @@ public class UserService {
 		if(!po.pwd.equals(SecurityHelper.Md5(user.pwd))){
 			throw new GException(PlatformExceptionType.BusinessException, "密码不正确");
 		}
+		PC pcpo= null;
 		if(!"8753".equals(pc.debug)){
-			if(!SecurityHelper.validate(pc)){
-				LogUtil.info("未授权的机器,pc="+BeanUtil.toString(pc)+",user="+BeanUtil.toString(user));
-				throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权");
-			}
+			pcpo = SecurityHelper.validate(pc);
 		}
-		PC pcpo = dao.getUniqueByParams(PC.class, new String[]{"did" , "uuid"}, new Object[]{ user.did , pc.uuid});
 		if(pcpo!=null){
 			pcpo.lasttime = new Date();
 			pcpo.lastip = ThreadSession.getIp();

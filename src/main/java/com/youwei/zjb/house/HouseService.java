@@ -219,7 +219,7 @@ public class HouseService {
 			hql = new StringBuilder(" select h from  House h  ,User u where h.uid=u.id and u.id is not null and u.orgpath like ? ");
 			params.add(query.xpath+"%");
 		}else{
-			hql = new StringBuilder(" select h  from House  h where 1=1 ");
+			hql = new StringBuilder(" select h  from House  h where 1=1");
 		}
 		
 		if(StringUtils.isNotEmpty(query.ztai)){

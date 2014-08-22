@@ -90,7 +90,8 @@ function WinMaxRev(){/*最大化*/
 	}
 }
 function WinClose(){/*退出*/
-    hex.close();
+//    hex.close();
+	require("nw.gui").Window.get().close();
  /* YW.ajax({
     type: 'POST',
     url: '/zb/c/user/logout',
@@ -133,9 +134,14 @@ function WinBoxBorder(){
 }
 //计算内页侧边标题高度等
 function getSideH(){
-  var htmls=$('.html'),
+  var htmls=$('body>.html'),
   sides=htmls.find('.sideCont');
   return sides.css('top');
+}
+function getHeadH(){
+  var htmls=$('body>.html'),
+  sides=htmls.find('.header').innerHeight();
+  return sides;
 }
 // 列表标题与内容宽度保持一致
 function tableFix(TableH,TableB){
@@ -228,6 +234,11 @@ function aBtnNavFun(a){
         $(this).addClass('acurr');
     });
   }
+}
+
+function menuSetCurr(This){
+    This.parent().find('li').removeClass('curr');
+    This.addClass('curr')
 }
 function menuTopFun(){
     var acts=getParam('act'),

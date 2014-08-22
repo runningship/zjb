@@ -28,6 +28,9 @@ var queryOptions;
 try{
 }catch(e){}
 
+var houseGJbox,/*houseSee / houseGJ 的*/
+chuzu=getParam('chuzus');
+
 function doSearch(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
@@ -50,31 +53,90 @@ function getSider(id){
             $('#sideCont').html(data);
             $('#sideCont').css({top:sideTop});
             var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+3;
-            $('#sideCont').css({'padding-top':sideHeadHeight})
+            $('#sideCont').css({'padding-top':sideHeadHeight});
+            $('.sideHead').css({top:getHeadH()+sideTop+1});
         });
     }else{
     }
 
 }
 
-$(document).ready(function() {
-    $(document).on('click', '.tbtn', function(event) {
-        var Thi=$(this);
-        var ThiQ=Thi.data('q');
-        if(ThiQ=='menu'){
+function sideBtnFun(){
 
-        }else if(ThiQ=='min'){
-            WinMin();
-        }else if(ThiQ=='max'){
-            WinMax();
-        }else if(ThiQ=='rev'){
-            WinRevert();
-        }else if(ThiQ=='close'){
-            WinClose();
-        }else if(ThiQ=='tab1'){
+    $('.sideCont').on('click', '.btns', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var Thi=$(this),
+        ThiType=Thi.data('type');
+        if(ThiType=='add_company'){
         }
         return false;
     });
+    $('.sideCont').on('click', '.btns', function(event) {
+        var Thi=$(this),
+        ThiHid=Thi.data('hid'),
+        ThiType=Thi.data('type');
+        if(ThiType=='addGenjin'){
+            if(houseGJbox)houseGJbox.close();
+            houseGJbox=art.dialog({
+                follow: document.getElementById('addGenjinBtn'),
+                content: '加载中...',
+                title:'添加跟进',
+                left:20,
+                id:'houseGenjinBox',
+                width:'250px',
+                padding:'0'
+            });
+            // jQuery ajax   
+            $.ajax({
+                url: '/house/house_genjin_add.html',
+                success: function (data) {
+                    houseGJbox.content(data);
+                },
+                cache: false
+            });
+        }else if(ThiType=='fav'){
+            var ThiIsFav=Thi.attr('fav'),
+            url,param={
+                houseId:$('#dimHouseId').text(),
+                chuzu:chuzu
+            }
+            if(ThiIsFav==1){
+                url='add';
+                alertStr="收藏成功";
+                dimStr='<i class="iconfont">&#xe62e;</i> 已收藏';
+                Thi.attr('fav',0).attr('title','已收藏');
+            }else{
+                url='delete';
+                alertStr="已取消收藏";
+                dimStr='<i class="iconfont">&#xe648;</i> 收藏';
+                Thi.attr('fav',1).attr('title','点此收藏');
+            }
+            YW.ajax({
+                type: 'POST',
+                url: '/c/house/fav/'+url,
+                data:param,
+                success: function(data){
+                    //var json = JSON.parse(data);
+                    alert(alertStr);
+                    Thi.html(dimStr);
+                },complete:function(){
+                    
+                }
+            });
+        }else if(ThiType=='map'){
+            art.dialog.open('/house/house_see_map.html',{id:'seemap',height:400,width:900});
+        }else if(ThiType=='copy'){
+            alert('不给复制');
+        }else{
+            return false;
+        }
+    });
+}
+
+$(document).ready(function() {
+// 加载侧边按钮功能
+    sideBtnFun();
 // 加载侧边
     getSider('');
 //添加提示框
@@ -97,6 +159,7 @@ $(document).ready(function() {
     $('.TableB').on('click', 'tr', function(event) {
         var Thi=$(this),
         ThiHid=Thi.data('hid');
+        if(houseGJbox)houseGJbox.close();
         getSider(ThiHid);
         // Thi.toggleClass('selected');
         return false;
@@ -112,17 +175,6 @@ $(window).resize(function() {      //类别
   .selected{
     background-color: blue;
   }
-  .btn_group{ margin: 0;}
-  .btn_group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
-      border-bottom-left-radius: 0;
-  }
-  .btn_group > .btn:last-child:not(:first-child), .btn_group > .dropdown-toggle:not(:first-child) {
-border-bottom-right-radius: 0;
-}
-  .btn_group .btn{ width: 80.6px;}
-  .form_group { margin: 0; padding: 0;}
-  .form_group textarea{ border-radius: 0;}
-  .form_group .btn{ border-top-left-radius: 0; border-top-right-radius: 0;}
 </style>
 </head>
 <body>
@@ -134,6 +186,9 @@ border-bottom-right-radius: 0;
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" class="userInput" name="xpath" value="">
     <input type="hidden" class="hidden" name="pageInput" value="">
+    <div class="form-group clearfix" style="background:#FFF; width:980px;">
+      <div class="btn-group btn-sm"></div>
+    </div>
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
       <div class="btn-group btn-sm">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right: 11px;padding-left: 10px;">
@@ -162,7 +217,7 @@ border-bottom-right-radius: 0;
       </div>
       <div class="input-group input-group-too" style="width:130px;">
         <input type="text" class="form-control input-sm" name="dhao" placeholder="栋号">
-        <span class="input-group-addon">#</span>
+        <span class="input-group-addon">-</span>
         <input type="text" class="form-control input-sm" name="fhao" placeholder="房号">
       </div>
       <div class="btn-group btn-sm">
@@ -273,7 +328,7 @@ border-bottom-right-radius: 0;
       </td>
       <td>${ztai}</td>
       <td>${quyu}</td>
-      <td>${area} ${dhao}#${fhao}</td>
+      <td>${area} ${dhao}-${fhao}</td>
       <td>${lxing}</td>
       <td>${hxf}-${hxt}-${hxw}</td>
       <td>${mji}</td>
@@ -288,9 +343,7 @@ border-bottom-right-radius: 0;
         </div>
     </div>
     <div class="footer">
-        <div class="maxHW mainCont ymx_page foot_page_box">
-
-        </div>
+        <div class="maxHW mainCont ymx_page foot_page_box"></div>
     </div>
 </div>
 </body>

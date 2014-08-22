@@ -33,7 +33,7 @@ function buildHtmlWithJsonArray(id,json,removeTemplate,remainItems){
         // }
     });
 
-    var runscripts = subCatagory.find('.runscript');
+    var runscripts = subCatagory.find('[runscript=true]');
     runscripts.each(function(index,obj){
         // if(index>0){
             var val="";
@@ -172,6 +172,9 @@ function fillData(data){
 //读取
 function loadConfigAsJSON(){
     var fs=require("fs");
+    if(!fs.existsSync("config.data")){
+        fs.writeFileSync("config.data", "{}", 'utf8')
+    }
     var data=fs.readFileSync("config.data","utf-8");
     var json = null;
     try{

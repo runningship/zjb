@@ -28,6 +28,9 @@ var queryOptions;
 try{
 }catch(e){}
 
+var houseGJbox,/*houseSee / houseGJ 的*/
+chuzu=getParam('chuzus');
+
 function doSearch(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
@@ -37,39 +40,105 @@ function doSearch(){
     success: function(data){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
+        Page.setPageInfo(houseData['page']);
         setTableFix();
     }
   });
 }
 
-function houseSee(id){
-  $.get('/v/house/houseSee_rent.html?id='+id, function(data) {
-    $('#houseCont').html(data)
-  });
+function getSider(id){
+    if(id){
+        $.get('/v/house/houseSee_rent.html?id='+id, function(data) {
+            var sideTop=parseInt(getSideH());
+            $('#sideCont').html(data);
+            $('#sideCont').css({top:sideTop});
+            var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+3;
+            $('#sideCont').css({'padding-top':sideHeadHeight})
+        });
+    }else{
+    }
+
 }
 
-$(document).ready(function() {
-    $(document).on('click', '.tbtn', function(event) {
-        var Thi=$(this);
-        var ThiQ=Thi.data('q');
-        if(ThiQ=='menu'){
+function sideBtnFun(){
 
-        }else if(ThiQ=='min'){
-            WinMin();
-        }else if(ThiQ=='max'){
-            WinMax();
-        }else if(ThiQ=='rev'){
-            WinRevert();
-        }else if(ThiQ=='close'){
-            WinClose();
-        }else if(ThiQ=='tab1'){
+    $('.sideCont').on('click', '.btns', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var Thi=$(this),
+        ThiType=Thi.data('type');
+        if(ThiType=='add_company'){
         }
         return false;
     });
-    $.get('/v/house/houseSee.html?id=232189', function(data) {
-        $('#houseCont').html(data);
+    $('.sideCont').on('click', '.btns', function(event) {
+        var Thi=$(this),
+        ThiHid=Thi.data('hid'),
+        ThiType=Thi.data('type');
+        if(ThiType=='addGenjin'){
+            if(houseGJbox)houseGJbox.close();
+            houseGJbox=art.dialog({
+                follow: document.getElementById('addGenjinBtn'),
+                content: '加载中...',
+                title:'添加跟进',
+                left:20,
+                id:'houseGenjinBox',
+                width:'250px',
+                padding:'0'
+            });
+            // jQuery ajax   
+            $.ajax({
+                url: '/house/house_genjin_add.html',
+                success: function (data) {
+                    houseGJbox.content(data);
+                },
+                cache: false
+            });
+        }else if(ThiType=='fav'){
+            var ThiIsFav=Thi.attr('fav'),
+            url,param={
+                houseId:$('#dimHouseId').text(),
+                chuzu:chuzu
+            }
+            if(ThiIsFav==1){
+                url='add';
+                alertStr="收藏成功";
+                dimStr='<i class="iconfont">&#xe62e;</i> 已收藏';
+                Thi.attr('fav',0).attr('title','已收藏');
+            }else{
+                url='delete';
+                alertStr="已取消收藏";
+                dimStr='<i class="iconfont">&#xe648;</i> 收藏';
+                Thi.attr('fav',1).attr('title','点此收藏');
+            }
+            YW.ajax({
+                type: 'POST',
+                url: '/c/house/fav/'+url,
+                data:param,
+                success: function(data){
+                    //var json = JSON.parse(data);
+                    alert(alertStr);
+                    Thi.html(dimStr);
+                },complete:function(){
+                    
+                }
+            });
+        }else if(ThiType=='map'){
+            art.dialog.open('/house/house_see_map.html',{id:'seemap',height:400,width:900});
+        }else if(ThiType=='copy'){
+            alert('不给复制');
+        }else{
+            return false;
+        }
     });
-    //添加提示框
+}
+
+$(document).ready(function() {
+// 加载侧边按钮功能
+    sideBtnFun();
+// 加载侧边
+    getSider('');
+//添加提示框
     $(document).find('[data-toggle="tooltip"]').tooltip();
     $.get('/c/config/getQueryOptions', function(data) {
         queryOptions=JSON.parse(data);
@@ -79,13 +148,20 @@ $(document).ready(function() {
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
         buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_rent'],true , true);
         buildHtmlWithJsonArray("id_fangshi",queryOptions['rent_type'],true , true);
-        
+        Page.Init();
         doSearch();
     });
     $('.id_House_list').on('click', 'a', function(event) {
         var Thi=$(this),
         rel=Thi.data('rel'),
         this_hid=Thi.data('hid');
+    });
+    $('.TableB').on('click', 'tr', function(event) {
+        var Thi=$(this),
+        ThiHid=Thi.data('hid');
+        getSider(ThiHid);
+        // Thi.toggleClass('selected');
+        return false;
     });
     $.get('menuTop.html', function(data) {
         $('#menuTop').html(data);
@@ -103,6 +179,7 @@ $(window).resize(function() {      //类别
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" class="userInput" name="xpath" value="">
+    <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
       <div class="btn-group btn-sm">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right: 11px;padding-left: 10px;">
@@ -226,12 +303,12 @@ $(window).resize(function() {      //类别
 
     </div>
     <div class="bodyer mainCont">
-  <div class="sideCont" id="houseCont"></div>
+  <div class="sideCont" id="sideCont"></div>
         <div class="maxHW" style="min-width: 700px;">
 
   <table class="table table-hover table-striped table-nopadding TableB" >
     <tbody>
-    <tr data-hid="${id}" style="display:none;" class="id_House_list" onclick="houseSee(${id});return false;">
+    <tr data-hid="${id}" style="display:none;" class="id_House_list">
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td>
         <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">审</a>
@@ -240,7 +317,7 @@ $(window).resize(function() {      //类别
       </td>
       <td>${ztai}</td>
       <td>${quyu}</td>
-      <td>${area} ${dhao}#${fhao}</td>
+      <td>${area} ${dhao}-${fhao}</td>
       <td>${lxing}</td>
       <td>${hxf}-${hxt}-${hxw}</td>
       <td>${mji}</td>
@@ -253,21 +330,8 @@ $(window).resize(function() {      //类别
   </table>
         </div>
     </div>
-<div class="footer foot_page_box"></div>
     <div class="footer">
-        <div class="maxHW mainCont">
-
-<ul class="pagination ymx_page">
-  <li><a href="#">&laquo;</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#">&raquo;</a></li>
-</ul>
-
-        </div>
+        <div class="maxHW mainCont ymx_page foot_page_box"></div>
     </div>
 </div>
 </body>

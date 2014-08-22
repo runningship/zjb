@@ -49,8 +49,11 @@ function getContent(){
       $('#lname').val(json['lname']);
       $('#uname').val(json['uname']);
       $('#beizhu').val(json['beizhu']);
-      $('#tel').val(json['tel']);
-      buildHtmlWithJsonArray("id_dname",json['role']['dname'],true); 
+      $('#tel').val(json['tel']); 
+      $('.btn-primary').removeClass('active');
+      var yy = $('input[name=lock][value='+json['lock']+']').parent();
+      // $('input[name=share][value='+json['comp']['share']+']').attr('checked','checked');
+      yy.addClass('active');
     }
   });
 }
@@ -61,7 +64,7 @@ $(document).ready(function() {
     form1=$('.form1');
     if (!api) return;
     // 操作对话框
-    api.title('部门修改')
+    api.title('用户修改')
     // 自定义按钮
       .button({
           name: '保存',
@@ -94,7 +97,13 @@ $(document).ready(function() {
                 <div class="form-group">
                     <label class="col-xs-3 control-label">登陆账号:</label>
                     <div class="col-xs-8">
-                        <input  class="form-control" name="lname" value="" id="lname" placeholder="">
+                        <input  class="form-control" name="lname" value="" id="lname" placeholder="" readonly="readonly">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">登陆密码:</label>
+                    <div class="col-xs-8">
+                        <input  class="form-control" name="pwd" value=""  placeholder="登录密码(留空为不修改)" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -103,18 +112,22 @@ $(document).ready(function() {
                         <input type="text" class="form-control" name="uname" value="" id="uname" placeholder="">
                     </div>
                 </div>
-                <div class="input-group width:100px">
-                  <span class="input-group-addon" style="padding:5px;">所属分公司:</span>
-                  <select class="form-control" id="id_dname" name="dname">
-                    <option value="${code}">${name}</option>
-                  </select>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">所属分公司:</label>
+                    <div class="col-xs-8 form_menu_box" >
+                        <select class="form-control" name="did">
+                            <option class="deptList" value="${id}">${namea}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="input-group width:80px hidden">
-                  <span class="input-group-addon" style="padding:8px;">职位</span>
-                  <select class="form-control" id="id_dname" name="dname">
-                    <option value="${code}">${name}</option>
-                  </select>
-                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">职务:</label>
+                    <div class="col-xs-8 form_menu_box" >
+                        <select class="form-control" name="roleId">
+                            <option class="roleList" value="${id}">${title}</option>
+                        </select>
+                    </div>
+                </div> 
                 <div class="form-group">
                     <label class="col-xs-3 control-label">电话:</label>
                     <div class="col-xs-8">
@@ -122,26 +135,17 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">备注:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="beizhu" id="beizhu" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group hidden">
                     <label class="col-xs-3 control-label">锁定:</label>
                     <div class="col-xs-8">
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-primary active">
-                                <input type="radio" value="1" name="sh" id="sh" autocomplete="off" checked> 允许
+                                <input type="radio" value="1" name="lock" autocomplete="off"> 开启
                             </label>
                             <label class="btn btn-primary">
-                                <input type="radio" value="0" name="sh" id="sh" autocomplete="off"> 禁止所有帐号登陆
+                                <input type="radio" value="0" name="lock" autocomplete="off"> 锁定
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="form-group hidden">
-                    <button type="button" class="btn btn-primary btn-block btn_submit" tabindex="12"><span class="ladda-label">登　录</span></button>
                 </div>
             </form>
 

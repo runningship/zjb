@@ -29,7 +29,7 @@ var setting = {
 
 YW.ajax({
   type: 'POST',
-  url: '/c/dept/getDeptTree?cid=1',
+  url: '/c/dept/getDeptTree?cid=$${cid}',
   data:'',
   success: function(data){
       var result=JSON.parse(data);
@@ -62,6 +62,12 @@ function addNode(data){
   }else{
     treeObj.addNodes(node, newNodeData);
   }
+}
+
+function updateNode(namea){
+  node.name= namea;
+  var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+  treeObj.updateNode(node);
 }
 
 function OnRightClick(event, treeId, treeNode) {
@@ -107,13 +113,49 @@ function addDiyDom(treeId, treeNode) {
     $("#" + treeNode.tId + "_ico").remove();  
   }
   
-  // $("#" + treeNode.tId).css('display','inline');
   var aObj = $("#" + treeNode.tId + "_a");
+  aObj.css('display','inline');
   if(treeNode.cnum!=null){
-    var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
-    aObj.prepend(editStr);  
+    var cnumStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+    aObj.prepend(cnumStr);  
   }
-  
+  var color="green";
+  if(treeNode.sh==0 || treeNode.sh==undefined){
+    color="red";
+  }
+  if(treeNode.type!="group"){
+    var lockStr = '<a id="'+treeNode.tId+'_sh_a" onClick="shenhe(\''+treeNode.tId+'\')" style="float:right;font-size:14px;color:'+color+'" class="icon iconfont">&#xe64e;</a>';
+    aObj.after(lockStr);
+  }
+}
+
+function shenhe(id){
+  var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+  var treeNode = treeObj.getNodeByTId(id);
+  var str = "确定要开通["+treeNode.name+"]吗?";
+  if(treeNode.sh==1){
+    str = "确定要锁定["+treeNode.name+"]吗?";
+  }
+  art.dialog.confirm(str, function () {
+    YW.ajax({
+      type: 'POST',
+      url: '/c/dept/toggleShenhe?id='+treeNode.id,
+      success: function(data){
+         if(treeNode.sh==1){
+            //开通-->锁定
+            treeNode.sh=0;
+            $("#"+id+"_sh_a").css('color','red');
+          }else{
+            //锁定--开通
+            treeNode.sh=1;
+            $("#"+id+"_sh_a").css('color','green');
+          }
+      }
+    });
+      
+  },function(){
+    //cancel
+  },'warning');
 }
 </script>
 
@@ -134,9 +176,9 @@ function updateGroup(val){
 
 function updateDept(){
   if(node.type=='comp'){
-    art.dialog.open('/settings/uc_index_c_edit.html?cid='+node.id);
+    art.dialog.open('/v/settings/uc_index_c_edit.html?cid='+node.id);
   }else{
-    art.dialog.open('/settings/uc_index_d_edit.html?cid='+node.id);
+    art.dialog.open('/v/settings/uc_index_d_edit.html?cid='+node.id);
   }
 }
 
@@ -149,11 +191,20 @@ function delNode(){
       success: function(data){
           var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
           treeObj.removeNode(node);
-          alert('修改成功');
+          alert('成功删除分组: '+node.name);
       }
     });
   }else{
-
+    YW.ajax({
+      type: 'POST',
+      url: '/c/dept/delete',
+      data:'deptId='+node.id,
+      success: function(data){
+          var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+          treeObj.removeNode(node);
+          alert('成功删除分公司: '+node.name);
+      }
+    });
   }
 }
 
@@ -165,7 +216,7 @@ $(document).ready(function() {
         var Thi=$(this),
         ThiType=Thi.data('type');
         if(ThiType=='add_company'){
-            art.dialog.open('/settings/uc_index_c_add.html');
+            art.dialog.open('/v/settings/uc_index_c_add.html');
         }
         return false;
     });
@@ -176,9 +227,42 @@ $(document).ready(function() {
         ThiUrl=Thi.attr('href'),
         ThiType=Thi.data('type');
         if(ThiType=='seeRecords'){
-            blockAlert(id)
+              if(node.type=='comp'){
+                art.dialog.open('/v/settings/sys_record.html?cid='+node.id,{
+                    padding:0,
+                    resize:true,
+                    lock:1,
+                    height:700,
+                    width:1000
+                  });
+                }else{
+                  art.dialog.open('/v/settings/sys_record.html?did='+node.id,{
+                    padding:0,
+                    resize:true,
+                    lock:1,
+                    height:700,
+                    width:1000
+                  });
+                }
+            return false;
         }else if(ThiType=='seeGenjin'){
-            art.dialog.open(ThiUrl);
+              if(node.type=='comp'){
+                art.dialog.open('/v/settings/genjin.html?cid='+node.id,{
+                    padding:0,
+                    resize:true,
+                    lock:1,
+                    height:700,
+                    width:1000
+                  });
+                }else{
+                  art.dialog.open('/v/settings/dgenjin.html?did='+node.id,{
+                    padding:0,
+                    resize:true,
+                    lock:1,
+                    height:700,
+                    width:1000
+                  });
+                }
             return false;
         }else if(ThiType=='addGroup'){
             art.dialog.prompt('新的分组名称', function (val) {
@@ -212,10 +296,12 @@ $(document).ready(function() {
         }else if(ThiType=='delThis'){
             art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
                 delNode();
+            },function(){
+              //cancel
             },'warning');
             return false;
         }else if(ThiType=='adddept'){
-          art.dialog.open('/settings/uc_index_d_add.html?cid='+node.id);
+          art.dialog.open('/v/settings/uc_index_d_add.html?cid='+node.id);
         }else{
             return false;
         }

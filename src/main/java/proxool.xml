@@ -4,7 +4,7 @@
 <!-- -->
 <proxool>  
     <alias>mySqlProxool</alias>  
-    <driver-url>jdbc:sqlserver://localhost;DatabaseName=house_zjb_data</driver-url>  
+    <driver-url>jdbc:sqlserver://localhost;DatabaseName=house_zjb5_data</driver-url>  
     <driver-class>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver-class>  
     <driver-properties>  
         <property name="user" value="sa"/>  

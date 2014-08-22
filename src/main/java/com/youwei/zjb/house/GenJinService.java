@@ -101,6 +101,16 @@ public class GenJinService {
 			params.add(query.chuzu);
 		}
 		
+		if(query.cid!=null){
+			hql.append(" and gj.cid=? ");
+			params.add(query.cid);
+		}
+		
+		if(query.did!=null){
+			hql.append(" and gj.did=? ");
+			params.add(query.did);
+		}
+		
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeStart, DateSeparator.After, params));
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeEnd, DateSeparator.Before, params));
 		

@@ -19,7 +19,7 @@ var id;
 
 YW.ajax({
   type: 'POST',
-  url: '/c/dept/getDeptTree?cid=1',
+  url: '/c/dept/getDeptTree?cid=$${cid}',
   data:'',
   success: function(data){
       var result=JSON.parse(data);
