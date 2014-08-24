@@ -37,7 +37,7 @@ function doSearch(){
     type: 'POST',
     url: '/c/house/listAll',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);

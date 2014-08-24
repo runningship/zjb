@@ -142,7 +142,9 @@ YW={
             }
         },
         success:function(data){
-            alert('操作成功');
+        	if(data.responseText!=undefined && data.responseText.indexOf('relogin')!=-1){
+        		window.parent.location='/login/index.html';
+        	}
         }
     },
     ajax:function(options){
@@ -156,8 +158,11 @@ YW={
             options.error = YW.options.error;
         }
         
-        if(options.success==undefined){
-            options.success = YW.options.success;
+        if(options.mysuccess!=undefined){
+            options.success = function(data){
+            	YW.options.success(data);
+            	options.mysuccess(data);
+            };
         }
         $.ajax(options);
     }

@@ -163,7 +163,7 @@ public class GrandServlet extends HttpServlet{
 		}
 		for(CtMethod cm : cc.getDeclaredMethods()){
 			if(cm.getName().equals(method)){
-				LogUtil.info("start to build parameters for "+manager.getClass().getName()+"."+method);
+//				LogUtil.info("start to build parameters for "+manager.getClass().getName()+"."+method);
 				params = ServletHelper.buildParamters(cm , req);
 			}
 		}
