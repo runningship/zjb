@@ -29,15 +29,25 @@ try{
 }catch(e){}
 
 var houseGJbox,/*houseSee / houseGJ 的*/
-chuzu=getParam('chuzus');
-
+chuzu=getParam('chuzus'),
+flags=getParam('flag'),
+URL_ajax_house_list;
+if(flags=='favShou' || flags==''){
+    URL_ajax_house_list='/c/house/listAll'
+}else if(flags=='favShou'){
+    URL_ajax_house_list='/c/house/listAll'
+}else if(flags=='favShou'){
+    URL_ajax_house_list='/c/house/listAll'
+}else{
+    URL_ajax_house_list='/c/house/listAll'
+}
 function doSearch(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/house/listAll',
+    url: URL_ajax_house_list,
     data:a,
-    mysuccess: function(data){
+    success: function(data){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);

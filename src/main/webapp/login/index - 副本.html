@@ -62,14 +62,6 @@ function getSysData(callback){
     }
     
 }
-function isFocus(){
-    if(!$('#idName').val()){
-        $('#idName').focus();
-        return false;
-    }
-    $('#idPassword').focus();
-    return false;
-}
 function setDomSize(){
     var domW=$(window).width(),
     domW3=parseInt(domW*3),
@@ -86,51 +78,22 @@ function ActLnane(){
     actInput=actBox.find('.form-control'),
     actList=actBox.find('.form_menu_list'),
     getLnameJSON=loadConfigAsJSON(),
-    getOLnames=getLnameJSON["outAccount"],
-    getLnames=getLnameJSON["account"],
-    actListIndex=-1;
-    if (getOLnames!=undefined) {
-        actInput.val(getOLnames);isFocus();
-    }
+    getLnames=getLnameJSON["account"];
     if (getLnames!=undefined&&getLnames.length>0) {
         var htmls='';
         $.each(getLnames, function(index, val) {
-            htmls=htmls + '<li><a href="#"><b></b><span>'+val+'</span><a></li>';
+            htmls=htmls + '<li><a href="#"><b>X</b><span>'+val+'</span><a></li>';
         });
         var actListOl=actList.find('ol').html(htmls);
     };
-    if (getLnames!=undefined&&getLnames.length>1) {
-        actInput.on('focusin', actInput, function(event) {
-            actList.show(300);
-        }).on('focusout', actInput, function(event) {
-            var thiTimes=setTimeout(function(){
-                actList.hide(100);
-                actListIndex=-1;
-                actList.find('li').removeClass('curr');
-                clearTimeout(thiTimes);
-            },100)
-        }).on('keydown', function(event) {
-            var Thi=$(this),
-            ThiVal=Thi.val(),
-            ThiLi=actList.find('li');
-            if(event.keyCode==38 || event.keyCode==40){
-                if(event.keyCode==38){
-                    actListIndex--;
-                }else if(event.keyCode==40){
-                    actListIndex++;
-                }else{return false;}
-                if(actListIndex>=ThiLi.length){actListIndex--;}
-                else if(actListIndex<0){actListIndex=0;}
-                Thi.val(ThiLi.eq(actListIndex).text())
-                ThiLi.removeClass('curr').eq(actListIndex).addClass('curr');
-            }
-            if(event.keyCode==13){return false};
-            if(event.keyCode==9){return true};
-        }).on('keyup', function(event) {
-            //var Thi=$(this),
-            //ThiVal=this.val();
-        });
-    };
+    actInput.on('focusin', actInput, function(event) {
+        actList.show(300);
+    }).on('focusout', actInput, function(event) {
+        var thiTimes=setTimeout(function(){
+            actList.hide(100);
+            clearTimeout(thiTimes);
+        },100)
+    });
     actList.on('click', 'a,span', function(event) {
         var a=$(this),
         aTxt=a.text();
@@ -168,18 +131,15 @@ function hetKeyAct(){
     }); 
     $('#idName').keydown(function(event) {
         if(event.keyCode==13){  
-            //if(!$('#idPassword').val()){
+            if(!$('#idPassword').val()){
                 $('#idPassword').focus();
-            //}else{
-            //    $('.btn_submit').click();
-            //}
-            return false; //屏蔽回车键    
+            }else{
+                $('.btn_submit').click();
+            }
+            return false; //屏蔽退格删除键    
         } 
         if(event.keyCode==8){  
             return true; //屏蔽退格删除键    
-        } 
-        if(event.keyCode==9){  
-            return true; //屏蔽退tab键    
         } 
     }).focus();
     $('#idPassword').keydown(function(event) {
@@ -190,24 +150,17 @@ function hetKeyAct(){
         if(event.keyCode==8){  
             return true; //屏蔽退格删除键    
         } 
-        if(event.keyCode==9){  
-            return true; //屏蔽退tab键    
-        } 
     })
-    $('.btn_submit').keydown(function(event) {
-        if(event.keyCode==9){  
-            return false; //屏蔽F5刷新键   
-        }
-        if ((event.keyCode==9)&&(event.keyCode==16)){   
-           event.returnValue=true;   
-           return true;  
-       }   
-    }) 
+}
+function isFocus(){
+    if(!$('#idName').val()){
+        $('#idName').focus();
+        return false;
+    }
+    $('#idPassword').focus();
+    return false;
 }
 $(document).ready(function() {
-// 设置登陆帐号
-    ActLnane();
-// 回车等快捷键功能
     hetKeyAct();
 // 添加winBox边框
     WinBoxBorder();
@@ -289,6 +242,8 @@ $(document).ready(function() {
     },1300);
 // 按钮加载中状态
     Ladda.bind( 'button', { timeout: 2000 } );
+// 设置登陆帐号
+    ActLnane();
 });
 $(document).on('click', '.act_menu a', function(event) {
     var Thi=$(this),
@@ -346,12 +301,12 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
 </head>
 <body>
 <div class="html login">
-    <div class="header titlebar">
-        <div class="wintool nobar">
+    <div class="header" style="-webkit-app-region: drag;">
+        <div class="wintool" style="-webkit-app-region: no-drag;">
             <ul class="wintools">
                 <li class="dropdown">
-                    <a href="" class="winBtn winBtnText" data-toggle="dropdown">在线客服</a>
-                    <ul class="dropdown-menu dropdown-menu-right nobar" role="menu">
+                    <a href="" class="winBtn winBtnText" data-toggle="dropdown" style="-webkit-app-region:no-drag;">在线客服</a>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
                         <li><a href="#">客服电话：0551-65314555</a></li>
                         <li class="divider"></li>
                         <li><a href="http://wpa.qq.com/msgrd?v=3&uin=9129588&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：9129588</a></li>

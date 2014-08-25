@@ -62,6 +62,9 @@ font-style:normal;
 .bs-callout-success {border-left-color:#5cb85c}
 .bs-callout-success h4{color:#5cb85c}
 
+.titlebar{-webkit-app-region:drag;}
+.nobar{-webkit-app-region:no-drag;}
+
 /* bootstrap 样式修改 */
 .miniwidth{white-space:nowrap;word-break: keep-all; text-align:center;}
 table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
@@ -115,6 +118,8 @@ border-bottom-right-radius: 0;
 .form-group .form_menu_list{ position: absolute; z-index: 99; left:15px; right: 16px;  display:none;overflow-y: auto; max-height: 120px; background-color: #FFF; border:1px solid #09F; border-radius: 5px; box-shadow: 0 0 10px #09F; border-top:none;}
 .form-group .form_menu_list ul{ padding:0;margin:0;}
 .form-group .form_menu_list a{ height: 100%; width: 100%; display: block;}
+
+.dropdown-menu{white-space:nowrap;word-break: keep-all;min-width:initial;}
 
 ul.pagination.ymx_page{ margin:0;height: 34px;display: block;}
 ul.pagination.ymx_page > li > a{ border-top: none; border-bottom: none;}
@@ -194,6 +199,7 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .login #idNameBox .form_menu_list a:hover b{ background-color: #EEE;}
 .login #idNameBox .form_menu_list a span{ padding: 5px 0; display: block;}
 .login #idNameBox .form_menu_list a b{ display: none; float: right; padding: 0 5px; color: #09f;}
+.login #idNameBox .form_menu_list .curr a{ font-weight: bold; background-color: #09F; color: #FFF;}
 /*  动画 */
 .login .bodyer{  }
 .login .bodyer .mainer{ padding:10px; overflow:hidden; position:relative; background-color:rgba(255,255,255,1); }
@@ -321,15 +327,17 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 
 .menuLi i.font_icon{ font-family:"微软雅黑","mrciosoft yaei" !important; font-size: 14px; font-weight: bold; border:2px solid #333; padding:0 3px;vertical-align: top; border-radius: 6px}
 .menuLi{ margin:0; padding-left: 10px; }
-.menuLi li{ float: left; margin:0 5px }
-.menuLi li.curr {}
-.menuLi li i{ vertical-align: middle;}
-.menuLi li a{ font-size: 16px; padding:5px 8px; border:1px solid #FFF;}
-.menuLi li a:hover,.menuLi li a.hover{ color: #09F; border-bottom: 3px solid #E0E0E0;}
-.menuLi li.hover a { color: #09F;}
-.menuLi li a:hover i,.menuLi li.hover a i{ color: #09F; border-color:#09F;}
-.menuLi li.curr a { color: #09F; border-bottom: 3px solid #E0E0E0;}
-.menuLi li.curr a i{ color: #09F; border-color:#09F;}
+.menuLi>li{ float: left; margin:0 5px }
+.menuLi>li.curr {}
+.menuLi>li>i{ vertical-align: middle;}
+.menuLi>li>a{ font-size: 16px; padding:5px 8px; border:1px solid #FFF;}
+.menuLi>li li a{display: block;}
+.menuLi>li>a:hover,.menuLi>li a.hover{ color: #09F; border-bottom: 3px solid #E0E0E0;}
+.menuLi>li.hover>a { color: #09F;}
+.menuLi>li>a:hover>i,.menuLi>li.hover>a>i{ color: #09F; border-color:#09F;}
+.menuLi>li.curr>a>{ color: #09F; border-bottom: 3px solid #E0E0E0;}
+.menuLi>li.curr>a>i{ color: #09F; border-color:#09F;}
+.menuLi.btn-group.open .dropdown-toggle{box-shadow:none;}
 
 .list .form1{ padding: 5px 5px 0; }
 .list .TableH{ border-bottom:1px solid #eee;}

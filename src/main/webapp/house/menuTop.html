@@ -1,7 +1,15 @@
                 <li class="act_shou hover"><a href="house.html?act=shou&chuzus=0" data-type="url"><i class="icon iconfont font_icon">售</i> 出售</a></li>
                 <li class="act_zu hover"><a href="house_rent.html?act=zu&chuzus=1" data-type="url"><i class="icon iconfont font_icon">租</i> 出租</a></li>
                 <li class="act_add hover"><a href="/v/house/house_add.html?act=add" data-type="dialog"><i class="icon iconfont font_icon">+</i> 登记</a></li>
-                <li class="act_my hover"><a href="house.html?act=my" data-type="url"><i class="icon iconfont font_icon">我</i> 我的</a></li>
+                <li class="act_my hover btn-group">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon iconfont font_icon">我</i> 我的</a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><label><a href="house_my.html?act=my&flag=favShou" data-type="url">我收藏的出售</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=favZu" data-type="url">我收藏的出租</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=addFavShou" data-type="url">我发布的出售</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=addFavZu" data-type="url">我发布的出租</a></label>
+                    </ul>
+                </li>
 <script type="text/javascript">
 $(document).ready(function() {
     menuTopFun();/* 顶部自动选中 */
@@ -19,6 +27,10 @@ $(document).ready(function() {
         }else{
             return false;
         }
-    });
+    })
+    $('.menuLi').find('.dropdown-toggle').parents('.btn-group').hover(function() {
+        var Thi=$(this);
+        Thi.addClass('open');
+    })
 });
 </script>

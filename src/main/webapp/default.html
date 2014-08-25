@@ -117,7 +117,7 @@ WinBoxBorder();
 $('.menuSide').find('.curr a').click();
 });
 $(window).resize(function() {
-    setDomSize();
+//    setDomSize();
 });
 
 
@@ -153,13 +153,15 @@ $(window).resize(function() {
         <div class="righter td title">
             <div class="table">
                 <div class="tr thead title">
-                    <div class="maxHW title"></div>
-                    <div class="wintool title">
+                    <div class="maxHW title titlebar"></div>
+                    <div class="wintool title nobar">
                         <ul class="wintools">
                             <li class="dropdown">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">切换账号</a></li>
+                                    <li><a href="#">检查更新</a></li>
+                                    <li><a href="#">建议反馈</a></li>
                                 </ul>
                             </li>
                             <li><a href="" class="winBtn black winBtnMin" data-q="min"><i></i></a></li>

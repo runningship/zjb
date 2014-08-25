@@ -160,6 +160,7 @@ function setTableFix(){
 }
 //页面加载完之后执行的脚本
 $(document).ready(function() {
+$('a').attr('draggable','false');
   //页面侧边动作
   //aBtnNavFun('.aNavBtn');
   //设置表格标题宽度
