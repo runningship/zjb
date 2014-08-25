@@ -51,8 +51,10 @@ function goto_marTop(ThiGoto,callback){
     $('.winBox').animate({'margin-top':ThiGoto}, 600,callback);
 }
 function hetKeyAct(){
-    $(document).keydown(function(event){  
-//    alert(event.keyCode)
+/*    $(document).keydown(function(event){  
+
+
+    alert(event.keyCode)
         if ((event.altKey)&&   
           ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
            (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
@@ -69,12 +71,15 @@ function hetKeyAct(){
         if((event.ctrlKey) && (event.keyCode==82)){  
             return false; //屏蔽alt+R   
         }  
-    }); 
+    }); */
     $('#authCode').keydown(function(event) {
+        if(event.keyCode==8){  
+            return true; //屏蔽退格删除键
+        }
         if(event.keyCode==13){  
             $(this).parents('li').find('.apage').click();
             return false; //屏蔽退格删除键    
-        } 
+        }
         
     }).focus();
     $('select[name=fendian]').keydown(function(event) {

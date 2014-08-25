@@ -56,10 +56,10 @@ function getContent(){
       $('#tel').val(json['comp']['tel']);
       $('.btn-primary').removeClass('active');
       var xx = $('input[name=share][value='+json['comp']['share']+']').parent();
-      // $('input[name=share][value='+json['comp']['share']+']').attr('checked','checked');
+      $('input[name=share][value='+json['comp']['share']+']').attr('checked','checked');
       xx.addClass('active');
       var yy = $('input[name=sh][value='+json['comp']['sh']+']').parent();
-      // $('input[name=share][value='+json['comp']['share']+']').attr('checked','checked');
+      $('input[name=sh][value='+json['comp']['sh']+']').attr('checked','checked');
       yy.addClass('active');
     }
   });

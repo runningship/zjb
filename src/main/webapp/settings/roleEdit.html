@@ -28,14 +28,12 @@ function submits(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/dept/update',
+    url: '/c/sys/updateRole',
     data:a,
     success: function(data){
-      console.log(1);
-      art.dialog.close();
+        art.dialog.close();
         art.dialog.opener.updateNode($('#namea').val());
         alert('修改成功');
-        
     }
   });
 }
@@ -43,20 +41,13 @@ function submits(){
 function getContent(){
   YW.ajax({
     type: 'get',
-    url: '/c/dept/get?id='+id,
+    url: '/c/sys/getRole?roleId='+id,
     data:'',
     success: function(result){
-      var json = JSON.parse(result);
-      $('#id').val(json['comp']['id']);
-      $('#idCname').val(json['comp']['idCname']);
-      $('#namea').val(json['comp']['namea']);
-      $('#lxr').val(json['comp']['lxr']);
-      $('#beizhu').val(json['comp']['beizhu']);
-      $('#tel').val(json['comp']['tel']);
-      $('.btn-primary').removeClass('active');
-      var yy = $('input[name=sh][value='+json['comp']['sh']+']').parent();
-      $('input[name=sh][value='+json['comp']['sh']+']').attr('checked','checked');
-      yy.addClass('active');
+      var json = JSON.parse(result)['role'];
+      $('#title').val(json['title']);
+      $('#id').val(json['id']);
+      $('#cont').val(json['cont']);
     }
   });
 }
@@ -80,7 +71,7 @@ $(document).ready(function() {
       });
     $('#idCname').focus();
 
-  id = getParam('cid');
+   id = getParam('id');
   if(id==null || id==""){
     alert("未指明的分类");
   }
@@ -98,40 +89,15 @@ $(document).ready(function() {
                     <input type="hidden" name="id" id="id">
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">公司名称:</label>
+                    <label class="col-xs-3 control-label">职务名称:</label>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="namea" value="" id="namea" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">联系人:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="lxr" id="lxr" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">电话:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="tel" id="tel" placeholder="">
+                        <input type="text" class="form-control" name="title" value="" id="title" placeholder="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label">备注:</label>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="beizhu" id="beizhu" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">锁定:</label>
-                    <div class="col-xs-8">
-                        <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary active">
-                                <input type="radio" value="1" name="sh" id="sh" autocomplete="off" checked> 允许
-                            </label>
-                            <label class="btn btn-primary">
-                                <input type="radio" value="0" name="sh" id="sh" autocomplete="off"> 禁止所有帐号登陆
-                            </label>
-                        </div>
+                        <input type="text" class="form-control" name="cont" id="cont" placeholder="">
                     </div>
                 </div>
                 <div class="form-group hidden">

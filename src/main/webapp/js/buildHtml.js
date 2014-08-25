@@ -176,7 +176,14 @@ function fillData(data){
 
 //读取
 function loadConfigAsJSON(){
-    var fs=require("fs");
+
+    var fs=null;
+    try{
+        fs=require("fs");    
+    }catch(e){
+        return JSON.parse("{}");
+    }
+    
     if(!fs.existsSync("config.data")){
         fs.writeFileSync("config.data", "{}", 'utf8')
     }
@@ -211,6 +218,9 @@ function appendConfig(key, val){
         json[key]=arr;
     }
     if(arr.indexOf(val)==-1){
+        arr.push(val);
+    }else{
+        arr.splice(arr.indexOf(val),1)
         arr.push(val);
     }
 

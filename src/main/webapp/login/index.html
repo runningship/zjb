@@ -29,13 +29,14 @@
 <script type="text/javascript" src="/js/sysinfo.js"></script>
 <script type="text/javascript">
 try{
+    gui.App.clearCache();
     // hex.deleteSystemCommand(hex.SIZE);
     // hex.formMoving=test;
     // alert(hex.formMoving);
     // alert(hex.enableSystemCommand(hex.SIZE,false));
     // alert(hex.enableSystemCommand(hex.SIZE,true));
     // alert(hex.insertSystemCommand(hex.SIZE));
-    hex.sizeTo(692,660);
+    // hex.sizeTo(692,660);
     // hex.maximize();
 }catch(e){
     console.log(e);
@@ -86,20 +87,22 @@ function ActLnane(){
     actInput=actBox.find('.form-control'),
     actList=actBox.find('.form_menu_list'),
     getLnameJSON=loadConfigAsJSON(),
-    getOLnames=getLnameJSON["outAccount"],
     getLnames=getLnameJSON["account"],
     actListIndex=-1;
-    if (getOLnames!=undefined) {
-        actInput.val(getOLnames);isFocus();
-    }
     if (getLnames!=undefined&&getLnames.length>0) {
-        var htmls='';
-        $.each(getLnames, function(index, val) {
-            htmls=htmls + '<li><a href="#"><b></b><span>'+val+'</span><a></li>';
-        });
-        var actListOl=actList.find('ol').html(htmls);
+    /* 登陆帐号设置和帐号下拉设置 */
+        var Lindex=getLnames.length-1;
+        actInput.val(getLnames[Lindex]);isFocus();
+        if (getLnames.length>0){
+            var htmls='';
+            $.each(getLnames, function(index, val) {
+                htmls='<li><a href="#"><b></b><span>'+val+'</span><a></li>'+htmls;
+            });
+            var actListOl=actList.find('ol').html(htmls);
+        }
     };
     if (getLnames!=undefined&&getLnames.length>1) {
+    /* 登陆帐号操作 */
         actInput.on('focusin', actInput, function(event) {
             actList.show(300);
         }).on('focusout', actInput, function(event) {
@@ -136,7 +139,7 @@ function ActLnane(){
         aTxt=a.text();
         if(aTxt){
             actInput.val(aTxt);
-            actList.hide(100);
+            actList.hide(200);
         }
         return false;
     }).on('click', 'a span', function(event) {
@@ -147,25 +150,7 @@ function ActLnane(){
     });
 }
 function hetKeyAct(){
-    $(document).keydown(function(event){  
-//    alert(event.keyCode)
- /*       if ((event.altKey)&&   
-          ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
-           (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
-       {   
-           event.returnValue=false;   
-           return false;  
-       }   
-        if(event.keyCode==8){  
-            return false; //屏蔽退格删除键    
-        }  
-        if(event.keyCode==9){  
-            return false; //屏蔽F5刷新键   
-        }  
-        if((event.ctrlKey) && (event.keyCode==82)){  
-            return false; //屏蔽alt+R   
-        }  */
-    }); 
+    /* 按键处理 */
     $('#idName').keydown(function(event) {
         if(event.keyCode==13){  
             //if(!$('#idPassword').val()){
@@ -262,7 +247,7 @@ $(document).ready(function() {
                         window.location="../default.html";
                     },complete:function(){
                         l.stop();
-                    }
+                    },beforeSend:function(){}
                 });
             });
             
@@ -354,13 +339,13 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                     <ul class="dropdown-menu dropdown-menu-right nobar" role="menu">
                         <li><a href="#">客服电话：0551-65314555</a></li>
                         <li class="divider"></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=9129588&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：9129588</a></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958811&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：912958811</a></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958822&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：912958822</a></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958833&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：912958833</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=9129588&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：9129588</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958811&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：912958811</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958822&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：912958822</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958833&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：912958833</a></li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="iconfont">&#xe615</i> 在线反馈</a></li>
-                        <li><a href="http://www.zhongjiebao.com/" class="btn" data-type="url"><i class="iconfont">&#xf0029</i> 登录官网</a></li>
+                        <li><a href="#"><i class="iconfont iconfontbold">&#xe633;</i> 在线反馈</a></li>
+                        <li><a href="http://www.zhongjiebao.com/" class="btn" data-type="url"><i class="iconfont">&#xe60f;</i> 登录官网</a></li>
                     </ul>
                 </li>
                 <li><a href="" class="winBtn winBtnClose" data-q="close"><i></i></a></li>

@@ -14,7 +14,8 @@ var node;
 var setting = {
   view: {
     showIcon: true,
-    addDiyDom: addDiyDom
+    addDiyDom: addDiyDom,
+    showLine:false
   },
   data: {
     simpleData: {
@@ -182,6 +183,12 @@ function updateDept(){
   }
 }
 
+function moveTo(targetId){
+  console.log('move node...');
+  var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+  var target = treeObj.getNodeByParam("id",targetId,null);
+  treeObj.moveNode(target,node,"inner",false);
+}
 function delNode(){
   if(node.type=='group'){
     YW.ajax({
@@ -282,7 +289,7 @@ $(document).ready(function() {
         }else if(ThiType=='addUser'){
           art.dialog.open('/v/settings/uc_index_u_add.html?id='+node.id);
         }else if(ThiType=='moveTo'){
-            art.dialog.open(ThiUrl);
+            art.dialog.open('/v/settings/uc_set_group.html?did='+node.id);
             return false;
         }else if(ThiType=='editThis'){
             if(node.type=='group'){

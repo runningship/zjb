@@ -77,7 +77,7 @@ public class ServletHelper {
         		if("int".equals(typeName) || "java.lang.Integer".equals(typeName)){
         			if(pval==null || pval.length==0){
         				if("int".equals(typeName)){
-        					throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");
+        					throw new GException(PlatformExceptionType.ParameterMissingError,paramName,"parameter "+paramName+" is missing");
         				}else{
         					obj=null;
         				}
@@ -86,22 +86,22 @@ public class ServletHelper {
         			}
         		}else if("long".equals(typeName) || "java.lang.Long".equals(typeName)){
         			if(pval==null || pval.length==0){
-        				throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");
+        				throw new GException(PlatformExceptionType.ParameterMissingError, paramName,"parameter "+paramName+" is missing");
         			}
         			obj = Long.valueOf(pval[0]);
         		}else if("float".equals(typeName) || "java.lang.Float".equals(typeName)){
         			if(pval==null || pval.length==0){
-        				throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");
+        				throw new GException(PlatformExceptionType.ParameterMissingError,paramName,"parameter "+paramName+" is missing");
         			}
         			obj = Float.valueOf(pval[0]);
         		}else if("double".equals(typeName) || "java.lang.Double".equals(typeName)){
         			if(pval==null || pval.length==0){
-        				throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");
+        				throw new GException(PlatformExceptionType.ParameterMissingError,paramName,"parameter "+paramName+" is missing");
         			}
         			obj = Double.valueOf(pval[0]);
         		}else if("char".equals(typeName) || "java.lang.Character".equals(typeName)){
         			if(pval==null || pval.length==0){
-        				throw new GException(PlatformExceptionType.ParameterMissingError,"parameter "+paramName+" is missing");
+        				throw new GException(PlatformExceptionType.ParameterMissingError,paramName,"parameter "+paramName+" is missing");
         			}
         			obj = String.valueOf(pval[0]).charAt(0);
         		}else if("java.lang.String".equals(typeName)){

@@ -50,9 +50,10 @@ function getContent(){
       $('#uname').val(json['uname']);
       $('#beizhu').val(json['beizhu']);
       $('#tel').val(json['tel']); 
+      $('#did').val(json['did']);
       $('.btn-primary').removeClass('active');
       var yy = $('input[name=lock][value='+json['lock']+']').parent();
-      // $('input[name=share][value='+json['comp']['share']+']').attr('checked','checked');
+      $('input[name=lock][value='+json['lock']+']').attr('checked','checked');
       yy.addClass('active');
     }
   });
@@ -115,8 +116,8 @@ $(document).ready(function() {
                 <div class="form-group">
                     <label class="col-xs-3 control-label">所属分公司:</label>
                     <div class="col-xs-8 form_menu_box" >
-                        <select class="form-control" name="did">
-                            <option class="deptList" value="${id}">${namea}</option>
+                        <select class="form-control" name="did" id="did">
+                            <option class="deptList" value="${id}" >${namea}</option>
                         </select>
                     </div>
                 </div>

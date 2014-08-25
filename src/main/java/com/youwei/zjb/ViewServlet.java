@@ -73,7 +73,7 @@ public class ViewServlet extends HttpServlet{
 		if(user!=null){
 			html = html.replace("$${userId}", user.id.toString());
 			html = html.replace("$${cid}", user.cid.toString());
-			html = html.replace("$${myName}", user.uname);
+			html = html.replace("$${myName}", String.valueOf(user.uname));
 			html = html.replace("$${myTel}", user.tel==null? "": user.tel);
 			
 			String authParent = req.getParameter("authParent");

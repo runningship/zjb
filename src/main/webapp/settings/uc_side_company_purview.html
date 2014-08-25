@@ -13,7 +13,8 @@ var id;
     var setting = {
       view: {
         showIcon: false,
-        addDiyDom: addDiyDom
+        addDiyDom: addDiyDom,
+        showLine:false
       },
       data: {
         simpleData: {
@@ -51,14 +52,16 @@ function OnRightClick(event, treeId, treeNode) {
     return;
   }
   id = treeNode.id;
-  showRMenu(treeNode.type, event.clientX, event.clientY);
+  showRMenu(treeNode.type, event.clientX, event.target.offsetTop+70);
 }
 function showRMenu(type, x, y) {
   $("#rMenu a").show();
   y=y-30;
-  if(type!="comp"){
-  }
-  if(type=="comp"){
+  if(type == "comp"){
+    $('#editThis').hide();
+    $('#delThis').hide();
+  }if(type == "role"){
+    $('#add_role').hide();
   }
   
   rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
@@ -82,6 +85,24 @@ function addDiyDom(treeId, treeNode) {
   }
   
 }
+function addRole(){
+    dialog_see=art.dialog.open('v/settings/roleAdd.html?&cid='+id,{
+      id:'roleAdd',
+      title:'查看房源详情',
+      height:100,
+      width:500
+    })
+
+}
+function editRole(){
+    dialog_see=art.dialog.open('v/settings/roleEdit.html?&id='+id,{
+      id:'roleEdit',
+      title:'查看房源详情',
+      height:100,
+      width:500
+    })
+
+}
 </script>
 
 <script type="text/javascript">
@@ -92,10 +113,6 @@ $(document).ready(function() {
         /* Act on the event */
         var Thi=$(this),
         ThiType=Thi.data('type');
-        if(ThiType=='add_company'){
-            art.dialog.open('/v/settings/uc_index_c_add.html');
-        }
-        return false;
     });
     $('#rMenu').on('click', 'a', function(event) {
         var Thi=$(this),
@@ -103,17 +120,7 @@ $(document).ready(function() {
         ThiLi=Thi.parents('li'),
         ThiUrl=Thi.attr('href'),
         ThiType=Thi.data('type');
-        if(ThiType=='seeRecords'){
-            blockAlert(id)
-        }else if(ThiType=='seeGenjin'){
-            art.dialog.open(ThiUrl);
-            return false;
-        }else if(ThiType=='editThis'){
-            art.dialog.prompt('修改名称', function (val) {
-                art.dialog.tips(val);
-            }, '');
-            return false;
-        }else if(ThiType=='delThis'){
+        if(ThiType=='delThis'){
             art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
                 art.dialog.tips('执行确定操作');
             }, function () {
@@ -158,8 +165,8 @@ $(document).ready(function() {
 </div>
 
 <div id="rMenu" class="list-group">
-  <a href="#" data-type="add_role" class="list-group-item">添加职务</a>
-  <a href="#" data-type="editThis" class="list-group-item">编辑</a>
-  <a href="#" data-type="delThis" class="list-group-item">删除</a>
+  <a href="#" data-type="add_role" id="add_role" class="list-group-item" onclick="addRole();">添加职务</a>
+  <a href="#" data-type="editThis" id="editThis" type="zw" class="list-group-item" onclick="editRole();">编辑</a>
+  <a href="#" data-type="delThis" id="delThis" type="zw" class="list-group-item">删除</a>
 
 </div>

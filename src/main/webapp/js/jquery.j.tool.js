@@ -39,7 +39,7 @@ document.onselectstart = function (event){
 	} 
 }
 $(document).keydown(function(event){  
-//alert(event.keyCode)
+//alert('a'+event.keyCode)
     if ((event.altKey)&&   
       ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
        (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
@@ -48,7 +48,32 @@ $(document).keydown(function(event){
        return false;  
    }   
     if(event.keyCode==8){  
-       // return false; //屏蔽退格删除键    
+      if(window.event){
+        event = window.event;
+      }try{
+        var the = event.srcElement;
+        if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect")){
+          //alert(the.getAttribute("selectstart"))
+          return false;
+        }
+        return true;
+      }catch (e){
+        return false; 
+      }   
+    }  
+    if(event.keyCode==9){  
+      if(window.event){
+        event = window.event;
+      }try{
+        var the = event.srcElement;
+        if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect")){
+          //alert(the.getAttribute("selectstart"))
+          return false;
+        }
+        return true;
+      }catch (e){
+        return false; 
+      }  
     }  
     if(event.keyCode=="116"){  
         return false; //屏蔽F5刷新键   
@@ -59,27 +84,50 @@ $(document).keydown(function(event){
 }); 
 
 //窗口调用的公共函数
+try{
+var gui = require('nw.gui');
+var win = gui.Window.get();
+var winMaxHeight,winMaxWidth;
+}catch (e){}
+function WinMaxOrRev(a){
+  if(a=='0'){
+    winMaxNone='none';
+    winRevertNone='inline-block';
+  }else{
+    winMaxNone='inline-block';
+    winRevertNone='none';
+  }
+  if($('.winBtnMax').length>0){
+    $('.winBtnMax').css('display',winMaxNone);
+  }
+  if($('.winBtnRevert').length>0){
+    $('.winBtnRevert').css('display',winRevertNone);
+  }
+}
 function WinMin(){/*最小化*/
-	hex.minimize();
+	win.minimize();
 }
 function WinMax(){/*最大化*/
-	hex.maximize()
-	if($('.winBtnMax').length>0){
-		$('.winBtnMax').css('display','none');
-	}
-	if($('.winBtnRevert').length>0){
-		$('.winBtnRevert').css('display','inline-block');
-	}
+  if(process.platform === 'win32' && parseFloat(require('os').release(), 10) > 6.1) {
+    win.setMaximumSize(screen.availWidth + 15, screen.availHeight + 15);
+  }
+	win.maximize();
+  winMaxHeight=win.height;
+  winMaxWidth=win.width;
+	WinMaxOrRev(0);
 }
 function WinRevert(){/*恢复*/
-	hex.restore();
-    if(hex.getSize().width==692){
-        hex.sizeTo(1022,hex.getSize().height);
-    }
+	win.restore();
+  if(win.width<692){
+    win.resizeTo(692,win.height);
+  }
+  WinMaxOrRev(1);
 //    alert(hex.getSize().height)
 //hex.sizeTo(1022,660);
-	$('.winBtnMax').css('display','inline-block');
-	$('.winBtnRevert').css('display','none');
+//window.resizeTo(window.screen.width, window.screen.height);
+/*var gui = require('nw.gui');
+  var win = gui.Window.get();
+  win.maximize();*/
 }
 function WinMaxRev(){/*最大化*/
 //alert(hex.formState)
@@ -91,7 +139,7 @@ function WinMaxRev(){/*最大化*/
 }
 function WinClose(){/*退出*/
 //    hex.close();
-	require("nw.gui").Window.get().close();
+	win.close();
  /* YW.ajax({
     type: 'POST',
     url: '/zb/c/user/logout',
@@ -197,7 +245,11 @@ $('a').attr('draggable','false');
       },500);
     });
   } 
-});
+}).resize(function(event) {
+  /* Act on the event */
+  WinMaxOrRev(0);
+  alert(0)
+});;
 
 
 function getEnumTexts(category,code){

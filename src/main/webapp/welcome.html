@@ -43,22 +43,7 @@ function getCityBox(){
         });
 }
 $(document).ready(function() {
-    $(document).on('click', '.tbtn', function(event) {
-        var Thi=$(this),
-        ThiQ=Thi.data('q');
-        if(ThiQ=='menu'){
-
-        }else if(ThiQ=='min'){
-            WinMin();
-        }else if(ThiQ=='max'){
-            WinMax();
-        }else if(ThiQ=='rev'){
-            WinRevert();
-        }else if(ThiQ=='close'){
-            WinClose();
-        }
-        return false;
-    }).on('click', '.jbtn', function(event) {
+    $(document).on('click', '.jbtn', function(event) {
         var Thi=$(this),
         ThiVal=Thi.data('val'),
         ThiTxt=Thi.text();
@@ -93,13 +78,13 @@ $(document).ready(function() {
     <div class="tr">
         <div class="td tbody">
             <ul>
-                <li class="set_citys">
+                <li class="set_citys nobar">
                     <a href="" class="a_demo_one jbtn" data-val="${domain}">${name}</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="wintool">
+    <div class="wintool nobar">
         <ul class="wintools">
             <li><a href="" class="winBtn winBtnClose" data-q="close"><i></i></a></li>
         </ul>    

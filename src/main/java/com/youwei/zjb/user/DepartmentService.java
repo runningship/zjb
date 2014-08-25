@@ -8,6 +8,7 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
@@ -36,6 +37,13 @@ public class DepartmentService {
 		po = dao.getUniqueByKeyValue(Department.class, "namea", dept.namea);
 		if(po!=null){
 			throw new GException(PlatformExceptionType.BusinessException, "公司名称重复");
+		}
+		if(dept.fid==0 && StringUtils.isEmpty(dept.authCode)){
+			throw new GException(PlatformExceptionType.BusinessException, "请先填写授权码");
+		}
+		po = dao.getUniqueByKeyValue(Department.class, "authCode", dept.authCode);
+		if(po!=null){
+			throw new GException(PlatformExceptionType.BusinessException, "授权码重复");
 		}
 		dept.addtime = new Date();
 		dao.saveOrUpdate(dept);

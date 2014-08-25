@@ -42,10 +42,15 @@ public class GroupService {
 	
 	@WebMethod
 	public ModelAndView set(int did , int gid){
+		if(gid==0){
+			throw new GException(PlatformExceptionType.BusinessException, "请先选择分组");
+		}
 		Department dept = dao.get(Department.class, did);
 		dept.dgroup = gid;
 		dao.saveOrUpdate(dept);
-		return new ModelAndView();
+		ModelAndView mv =new ModelAndView();
+		mv.data.put("targetId", String.valueOf(gid));
+		return mv;
 	}
 	
 	@WebMethod

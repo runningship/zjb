@@ -21,10 +21,12 @@ public class uc_index_c_add extends page{
 		if(!list.isEmpty()){
 			count = Integer.valueOf(list.get(0).get("maxCnum").toString());
 		}
+		count++;
 		String pattern="000";
 		 java.text.DecimalFormat df = new java.text.DecimalFormat(pattern);
 		String cnum = df.format(count);
 		html = html.replace("$${cnum}", cnum);
+		html = html.replace("$${authCode}", String.valueOf(System.currentTimeMillis()));
 		return Jsoup.parse(html);
 	}
 }

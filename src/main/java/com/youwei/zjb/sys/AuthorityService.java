@@ -34,6 +34,7 @@ public class AuthorityService {
 	
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
+	//为了排除页面cid和roleid冲突
 	private static final int cidOffset = 1000000;
 	@Transactional
 	@WebMethod
@@ -54,6 +55,7 @@ public class AuthorityService {
 	@WebMethod
 	public ModelAndView addRole(Role role){
 		ModelAndView mv = new ModelAndView();
+		role.cid-=cidOffset;
 		role.flag = 1;
 		role.sh = 1;
 		dao.saveOrUpdate(role);
@@ -142,12 +144,12 @@ public class AuthorityService {
 		try {
 			String text = FileUtils.readFileToString(new File(ThreadSession.getHttpSession().getServletContext().getRealPath("/")+File.separator+"menus.json"), "utf8");
 			JSONArray jarr = JSONArray.fromObject(text);
-			List<RoleAuthority> list = dao.listByParams(RoleAuthority.class, new String[]{"roleId","type"}, new Object[]{ roleId ,"menu"});
-			for(RoleAuthority ra : list){
+			Role role = dao.get(Role.class, roleId);
+			
+			for(RoleAuthority ra : role.Authorities()){
 				setSelected(ra ,jarr);
 			}
-			mv.data.put("result", 0);
-			mv.data.put("data", jarr.toString());
+			mv.data.put("modules", jarr.toString());
 			return mv;
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -156,12 +158,10 @@ public class AuthorityService {
 	}
 	
 	private void setSelected(RoleAuthority ra, JSONArray jarr) {
-		JSONObject state = new JSONObject();
-		state.put("selected", true);
 		for(int i=0;i<jarr.size();i++){
 			JSONObject jobj = jarr.getJSONObject(i);
 			if(jobj.getString("name").equals(ra.name)){
-				jobj.put("state", state);
+				jobj.put("checked", "checked");
 				return;
 			}
 			if(jobj.containsKey("children")){
