@@ -53,6 +53,9 @@ public class Role {
 	public List<RoleAuthority> Authorities(){
 		List<RoleAuthority> list = SimpDaoTool.getGlobalCommonDaoService().listByParams(RoleAuthority.class, new String[]{"roleId"}, new Object[]{id});
 		Purview purview = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(Purview.class, "unid", id);
+		if(purview==null){
+			return list;
+		}
 		if(StringUtils.isNotEmpty(purview.fy)){
 			merge(list, purview.fy);
 		}

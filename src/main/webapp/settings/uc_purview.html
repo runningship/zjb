@@ -26,7 +26,7 @@
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/zTree_v3/js/jquery.ztree.all-3.5.js"></script>
 <script type="text/javascript">
-
+var roleId=1;
 function getSider(id){
     $.get('/v/settings/uc_side_company_purview.html', function(data) {
         var sideTop=parseInt(getSideH())*-1+6;
@@ -72,16 +72,29 @@ function buildAuthorities(modules){
   }
 }
 
-$(document).ready(function() {
-    getSider();
-    YW.ajax({
+function setAuthority(input){
+  YW.ajax({
+    type: 'get',
+    url: '/c/sys/update?roleId='+roleId+'&name='+input.name+'&value='+input.checked,
+    success: function(data){
+      // alert('设置成功');
+    }
+  });
+}
+
+function loadAuthorites(){
+  YW.ajax({
       type: 'get',
-      url: '/c/sys/getRoleMenus?roleId=10',
+      url: '/c/sys/getRoleMenus?roleId='+roleId,
       success: function(data){
         var json = JSON.parse(data);
         buildAuthorities(json['modules']);
       }
     });
+}
+$(document).ready(function() {
+    getSider();
+    loadAuthorites();
     $('.id_purview_list').on('click', 'a', function(event) {
         var Thi=$(this),
         rel=Thi.data('rel'),
@@ -119,16 +132,16 @@ $(document).ready(function() {
     <tr data-hid="${id}" style="display:;" class="id_purview_list auth_first">
       <td class="purview_title">
         <ul class="purview_list">
-          <li><label><input type="checkbox" value="${name}">  ${text}</label></li>
+          <li><label>${text}</label></li>
         </ul>
       </td>
       <td>
         <ul class="purview_cont clearfix">
           <li class="auth_second_${rowIndex} clearfix">
               <dl class="purview_conts clearfix">
-                <dt><label><input class="auth_second_tmp" type="checkbox" name="" value=""> <span class="auth_second_tmp"></label></dt>
+                <dt><label><span class="auth_second_tmp"></label></dt>
                 <dd>
-                  <label class="auth_third_${rowIndex}"><input class="auth_third_tmp" type="checkbox" name="" value=""> <span class="auth_third_tmp"></span></label>
+                  <label class="auth_third_${rowIndex}"><input onclick="setAuthority(this)" class="auth_third_tmp" type="checkbox" name="" value=""> <span class="auth_third_tmp"></span></label>
                 </dd>
               </dl>
           </li>

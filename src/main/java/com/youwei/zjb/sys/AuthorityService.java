@@ -20,7 +20,9 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
+import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.entity.Purview;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.user.entity.Department;
@@ -38,13 +40,26 @@ public class AuthorityService {
 	private static final int cidOffset = 1000000;
 	@Transactional
 	@WebMethod
-	public ModelAndView update(int roleId,String authData){
-		if(StringUtils.isEmpty(authData)){
-			throw new GException(PlatformExceptionType.BusinessException, "数据不能为空");
+	public ModelAndView update(int roleId,String name , String value){
+		Purview purview = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(Purview.class, "unid", roleId);
+		if("true".equals(value)){
+			RoleAuthority ra = new RoleAuthority();
+			ra.name = name;
+			ra.roleId = roleId;
+			dao.saveOrUpdate(ra);
+		}else{
+			dao.execute("delete from RoleAuthority where roleId=? and name=?", roleId , name);
+			//更新旧表
+			if(purview!=null){
+				if(purview.fy!=null && purview.fy.contains(name)){
+					purview.fy = purview.fy.replace(name+"|1,", "");
+					purview.fy = purview.fy.replace(name+"|1", "");
+				}else if(purview.sz!=null && purview.sz.contains(name)){
+					purview.sz = purview.sz.replace(name+"|1,", "");
+					purview.sz = purview.sz.replace(name+"|1", "");
+				}
+			}
 		}
-		JSONArray json = JSONArray.fromObject(authData);
-		dao.execute("delete from RoleAuthority where roleId=?", roleId);
-		addChildren(roleId , json);
 		User user = ThreadSession.getUser();
 		Role role = dao.get(Role.class, roleId);
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了职务["+role.title+"]的权限";

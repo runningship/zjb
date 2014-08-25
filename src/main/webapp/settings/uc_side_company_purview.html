@@ -40,7 +40,8 @@ var id;
 
 function onClick(event, treeId, treeNode, clickFlag) {
   console.log(treeNode);
-  
+  roleId = treeNode.id;
+  loadAuthorites();
 } 
 
 function OnRightClick(event, treeId, treeNode) {
