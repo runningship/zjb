@@ -47,7 +47,7 @@ $(document).ready(function() {
         }else if(ThiQ=='rev'){
             WinRevert();
         }else if(ThiQ=='close'){
-            WinClose();
+            quit();
         }else if(ThiQ=='tab1'){
         }
         return false;
@@ -55,6 +55,7 @@ $(document).ready(function() {
     $(".bodyer").slide({ effect:"left",trigger:"click" });
     setDomSize();
 });
+
 $(window).resize(function() {
     setDomSize();
 });

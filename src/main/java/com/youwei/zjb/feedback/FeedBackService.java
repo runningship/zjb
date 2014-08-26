@@ -15,7 +15,9 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.feedback.entity.ErrorReport;
 import com.youwei.zjb.feedback.entity.FeedBack;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/feedback/")
@@ -42,6 +44,21 @@ public class FeedBackService {
 		fb.addtime = new Date();
 		fb.userId = ThreadSession.getUser().id;
 		dao.saveOrUpdate(fb);
+		return new ModelAndView();
+	}
+	
+	@WebMethod
+	public ModelAndView reportError(String stack){
+		System.out.println(stack);
+		User u = ThreadSession.getUser();
+		ErrorReport err = new ErrorReport();
+		err.stack = stack;
+		if(u!=null){
+			err.uid=u.id;
+			err.did = u.did;
+			err.cid = u.cid;
+		}
+		dao.saveOrUpdate(err);
 		return new ModelAndView();
 	}
 	

@@ -203,7 +203,15 @@ public class HouseService {
 	}
 	
 	@WebMethod
-	public ModelAndView listMy(HouseQuery query ,Page<House> page){
+	public ModelAndView listMyFav(HouseQuery query ,Page<House> page){
+		User user = ThreadSession.getUser();
+		String favStr = "@"+user.id+"|";
+		query.favStr = favStr;
+		return listAll(query ,page);
+	}
+	
+	@WebMethod
+	public ModelAndView listMyAdd(HouseQuery query ,Page<House> page){
 		User user = ThreadSession.getUser();
 		query.userid = user.id;
 		return listAll(query ,page);
@@ -232,10 +240,18 @@ public class HouseService {
 		}
 		
 		if(StringUtils.isNotEmpty(query.search)){
-			hql.append(" and (h.area like ? or h.address like ? or h.tel like ?)");
+			hql.append(" and (h.area like ? or h.address like ? or h.tel like ?");
 			params.add("%"+query.search+"%");
 			params.add("%"+query.search+"%");
 			params.add("%"+query.search+"%");
+			try{
+				int id = Integer.valueOf(query.search);
+				hql.append(" or h.id=? ");
+				params.add(id);
+			}catch(Exception ex){
+				
+			}
+			hql.append(")");
 		}
 		
 		if(StringUtils.isNotEmpty(query.dhao)){
@@ -246,7 +262,10 @@ public class HouseService {
 			hql.append(" and h.fhao like ? ");
 			params.add("%"+query.fhao+"%");
 		}
-		
+		if(StringUtils.isNotEmpty(query.favStr)){
+			hql.append(" and h.fav like ? ");
+			params.add("%"+query.favStr+"%");
+		}
 		if(query.id!=null){
 			hql.append(" and h.id = ?");
 			params.add(query.id);

@@ -241,7 +241,7 @@ $('a').attr('draggable','false');
         }else if(ThiQ=='rev'){
             WinRevert();
         }else if(ThiQ=='close'){
-            WinClose();
+            quit();
         }
         return false;
     });
@@ -480,3 +480,14 @@ function jajax(url,param,asyncs){
 }
 
 
+function quit(){
+  art.dialog.confirm('退出系统？', function () {
+      $.ajax({
+        type: 'get',
+        url: '/c/user/logout',
+        success: function(data){
+          WinClose();
+        }
+      });
+  },function(){},'warning');
+}

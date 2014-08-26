@@ -22,11 +22,6 @@ public class TestFavoriteService {
 		StartUpListener.initDataSource();
 	}
 	
-	@Test
-	public void testAdd(){
-		service.add(169);
-	}
-	
 	private void printResult(List<House> list){
 		for(House h : list){
 			System.out.println(BeanUtil.toString(h));

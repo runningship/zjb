@@ -58,6 +58,7 @@ public class GroupService {
 		DeptGroup group = dao.get(DeptGroup.class, id);
 		if(group!=null){
 			dao.delete(group);
+			dao.execute("update Department set dgroup=null where dgroup=?", group.id);
 		}
 		return new ModelAndView();
 	}

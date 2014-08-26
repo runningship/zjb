@@ -33,6 +33,7 @@ public class SessionFilter implements Filter{
 		excludes.add("/start.html");
 		excludes.add("/c/city/list");
 		excludes.add("/v/pay/return_url.html");
+		excludes.add("/c/feedback/reportError");
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

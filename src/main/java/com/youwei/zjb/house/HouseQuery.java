@@ -34,7 +34,7 @@ public class HouseQuery{
 	public String yearStart;
 	public String yearEnd;
 	public Integer fangshi;
-	
+	public String favStr;
 	// for phone client
 	//current page number
 	public String quyu;

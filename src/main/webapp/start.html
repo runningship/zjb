@@ -19,14 +19,15 @@
 window.onload=function() {
     var json = loadConfigAsJSON();
     // blockAlert(JSON.stringify(json));
+    var win =require("nw.gui").Window.get();
     loadHardwareInfo(function(pcinfo){
         pcinfo = JSON.stringify(pcinfo);
         pcinfo = encodeURI(pcinfo);
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市
-            window.location="http://192.168.1.125:8081/welcome.html?pcinfo="+pcinfo;
+            window.location="http://localhost:8081/welcome.html?pcinfo="+pcinfo;
         }else{
-            window.location="http://192.168.1.125:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
+            window.location="http://localhost:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
         }
     }); 
     // var inTime=setTimeout(function(){

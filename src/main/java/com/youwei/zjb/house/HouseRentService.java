@@ -124,7 +124,15 @@ public class HouseRentService {
 	}
 	
 	@WebMethod
-	public ModelAndView listMy(HouseQuery query ,Page<HouseRent> page){
+	public ModelAndView listMyFav(HouseQuery query ,Page<HouseRent> page){
+		User user = ThreadSession.getUser();
+		String favStr = "@"+user.id+"|";
+		query.favStr = favStr;
+		return listAll(query ,page);
+	}
+	
+	@WebMethod
+	public ModelAndView listMyAdd(HouseQuery query ,Page<HouseRent> page){
 		User user = ThreadSession.getUser();
 		query.userid = user.id;
 		return listAll(query ,page);
@@ -161,7 +169,10 @@ public class HouseRentService {
 			hql.append(" and h.fhao like ? ");
 			params.add("%"+query.fhao+"%");
 		}
-		
+		if(StringUtils.isNotEmpty(query.favStr)){
+			hql.append(" and h.fav like ? ");
+			params.add("%"+query.favStr+"%");
+		}
 		if(query.id!=null){
 			hql.append(" and h.id = ?");
 			params.add(query.id);

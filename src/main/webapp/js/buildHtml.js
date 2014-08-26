@@ -231,7 +231,25 @@ function readFile(file){
     var fs=require("fs");
     return fs.readFileSync(file,"utf-8");
 }
+try{
+    process.on("uncaughtException", function(e) {
+        var r=confirm("抱歉,好像有点问题,发送错误报告?");
+        if (r==true){
+            reportError(e.stack);
+        }
+    }); 
+}catch(e){
 
-// process.on("uncaughtException", function(err) { 
-//     alert("error: " + err); 
-// });
+}
+
+function reportError(stack){
+    $.ajax({
+        type: 'post',
+        url: '/c/feedback/reportError',
+        data:'stack='+stack,
+        success: function(data){
+          blockAlert('感谢您的反馈，我们将竭力做的更好.');
+        }
+    });
+}
+

@@ -48,7 +48,9 @@ function doSearch(callback){
 }
 function doSearchAndSelectFirst(){
   doSearch(function(){
-    getSider(houseData.page.data[0].id);
+    if(houseData.page.data.length>0){
+      getSider(houseData.page.data[0].id);
+    }
   });
 }
 function getSider(id){
@@ -106,12 +108,12 @@ function sideBtnFun(){
                 chuzu:chuzu
             }
             if(ThiIsFav==1){
-                url='add';
+                url='addRent';
                 alertStr="收藏成功";
                 dimStr='<i class="iconfont">&#xe62e;</i> 已收藏';
                 Thi.attr('fav',0).attr('title','已收藏');
             }else{
-                url='delete';
+                url='deleteRent';
                 alertStr="已取消收藏";
                 dimStr='<i class="iconfont">&#xe648;</i> 收藏';
                 Thi.attr('fav',1).attr('title','点此收藏');
