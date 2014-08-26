@@ -26,6 +26,7 @@
 <script type="text/javascript">
 var did;
 var cid;
+var id;
 
 function doSearch(){
   var a=$('form[name=form1]').serialize();
@@ -42,18 +43,65 @@ function doSearch(){
   });
 }
 
+function getShenHeText(lock){
+  if(lock==1){
+    return "审";
+  }else{
+    return "未";
+  }
+}
+
+function shenheGj(id , obj){
+  YW.ajax({
+    type: 'POST',
+    url: '/c/genjin/toggleShenHe?id='+id,
+    success: function(data){
+        var json = JSON.parse(data);
+        if(json.sh==1){
+          $(obj).text('审');
+          $(obj).css('color','green');
+        }else{
+          $(obj).text('未');
+          $(obj).css('color','red');
+        }
+    }
+  });
+}
+
+function deletegenjin(id){
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+    YW.ajax({
+      type: 'POST',
+      url: '/c/genjin/delete?id='+id,
+      success: function(data){
+        doSearch();
+          alert('删除成功');
+      }
+    });
+  },function(){},'warning');
+}
+
 $(document).ready(function() {
     
     $(document).find('[data-toggle="tooltip"]').tooltip();
+    api = art.dialog.open.api,  //      art.dialog.open扩展方法
+    form1=$('.form1');
+    if (!api) return;
+    // 操作对话框
+    api.title('跟进列表')
     did = getParam('did');
     cid = getParam('cid');
     $('#did').val(did);
     $('#cid').val(cid);
+    Page.Init();
     doSearch();
 });
-$(window).resize(function() {      //类别
-});
+
 </script>
+<style type="text/css">
+.shenhe_0{color:red;}
+.shenhe_1{color:green;}
+</style>
 </head>
 <body>
 <div class="html list title addSide">
@@ -62,6 +110,7 @@ $(window).resize(function() {      //类别
     <input type="hidden" class="hidden" name="pageInput" value="">
     <input type="hidden" class="hidden" name="cid" value="" id="cid">
     <input type="hidden" class="hidden" name="did" value="" id="did">
+    <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
      
       <div class="input-group" style="width: 103px;">
@@ -80,7 +129,7 @@ $(window).resize(function() {      //类别
 
     <div class="form-group clearfix">
       <div class="input-group" style="width:400px">
-        <span class="input-group-addon" style="padding:8px;">操作时间</span>
+        <span class="input-group-addon">操作时间</span>
         <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:150px;border-radius:0;">
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:150px">
       </div>
@@ -132,8 +181,8 @@ $(window).resize(function() {      //类别
     <tr data-hid="${id}" style="display:none;" class="id_House_list" >
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td>
-        <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">审</a>
-        <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">删</a>
+        <a href="##" class="del shenhe_${sh}" runscript="true" data-hid="${id}" data-rel="del" onclick="shenheGj(${id},this)">getShenHeText(${sh})</a>
+        <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="deletegenjin(${id})">删</a>
       </td>
       <td>${houseId}</td>
       <td>${ztai}</td>

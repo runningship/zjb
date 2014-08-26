@@ -5,10 +5,7 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.house.ChaoXiang;
-import com.youwei.zjb.house.DateType;
 import com.youwei.zjb.house.FangXing;
-import com.youwei.zjb.house.HouseAttribute;
-import com.youwei.zjb.house.HouseType;
 import com.youwei.zjb.house.LouXing;
 import com.youwei.zjb.house.QuYu;
 import com.youwei.zjb.house.RentState;
@@ -24,10 +21,10 @@ public class ConfigService {
 	public ModelAndView getQueryOptions(){
 		ModelAndView mv = new ModelAndView();
 		mv.data.put("chaoxiang", ChaoXiang.toJsonArray());
-		mv.data.put("datetype", DateType.toJsonArray());
+//		mv.data.put("datetype", DateType.toJsonArray());
 		mv.data.put("fxing", FangXing.toJsonArray());
-		mv.data.put("xingzhi", HouseAttribute.toJsonArray());
-		mv.data.put("leibie", HouseType.toJsonArray());
+//		mv.data.put("xingzhi", HouseAttribute.toJsonArray());
+//		mv.data.put("leibie", HouseType.toJsonArray());
 		mv.data.put("lxing", LouXing.toJsonArray());
 		mv.data.put("quyu", QuYu.toJsonArray());
 		mv.data.put("ztai_sell", SellState.toJsonArray());

@@ -34,7 +34,9 @@ public class houseSee extends AbstractSee {
 		JSONObject json = JSONHelper.toJSON(h);
 		Department dept = dao.get(Department.class, h.did);
 		User user = dao.get(User.class, h.uid);
-		json.put("fbr", user.uname);
+		json.put("fbr", user.uname==null ? "":user.uname);
+		json.put("ywy", h.forlxr==null ? "":h.forlxr);
+		json.put("fortel", h.fortel==null ? "":h.fortel);
 		json.put("dname", dept.namea);
 		json.put("ztai", SellState.parse(h.ztai));
 		String favStr = "@"+ThreadSession.getUser().id+"|";

@@ -25,27 +25,32 @@
 <script type="text/javascript" src="/js/pagination.js"></script>
 <script type="text/javascript">
 var queryOptions;
-try{
-}catch(e){}
-
 var houseGJbox,/*houseSee / houseGJ 的*/
 chuzu=getParam('chuzus');
-
-function doSearch(){
+var houseData;
+function doSearch(callback){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
     url: '/c/house/listAll',
     data:a,
     mysuccess: function(data){
-        var houseData=JSON.parse(data);
+        houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
         setTableFix();
+        if(callback){
+          callback();
+        }
     }
   });
 }
 
+function doSearchAndSelectFirst(){
+  doSearch(function(){
+    getSider(houseData.page.data[0].id);
+  });
+}
 function getSider(id){
     if(id){
         $.get('/v/house/houseSee.html?id='+id, function(data) {
@@ -59,6 +64,48 @@ function getSider(id){
     }else{
     }
 
+}
+
+function getShenHeText(lock){
+  if(lock==1){
+    return "审";
+  }else{
+    return "未";
+  }
+}
+
+function shenheFy(id , obj){
+  YW.ajax({
+    type: 'POST',
+    url: '/c/house/toggleShenHe?id='+id,
+    success: function(data){
+        var json = JSON.parse(data);
+        if(json.sh==1){
+          $(obj).text('审');
+          $(obj).css('color','green');
+        }else{
+          $(obj).text('未');
+          $(obj).css('color','red');
+        }
+    }
+  });
+}
+
+function houseEdit(id){
+  art.dialog.open("/house/house_edit.html?id="+id)
+}
+
+function deletehouse(id){
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+  YW.ajax({
+    type: 'POST',
+    url: '/c/house/physicalDelete?id='+id,
+    success: function(data){
+      doSearch();
+      alert('删除成功');
+    }
+  });
+  },function(){},'warning');
 }
 
 function sideBtnFun(){
@@ -138,7 +185,7 @@ $(document).ready(function() {
 // 加载侧边按钮功能
     sideBtnFun();
 // 加载侧边
-    getSider('');
+    
 //添加提示框
     $(document).find('[data-toggle="tooltip"]').tooltip();
     $.get('/c/config/getQueryOptions', function(data) {
@@ -149,7 +196,7 @@ $(document).ready(function() {
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
         buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
         Page.Init();
-        doSearch();
+        doSearchAndSelectFirst();
     });
     $('.id_House_list').on('click', 'a', function(event) {
         var Thi=$(this),
@@ -175,6 +222,9 @@ $(window).resize(function() {      //类别
   .selected{
     background-color: blue;
   }
+
+.shenhe_0{color:red;}
+.shenhe_1{color:green;}
 </style>
 </head>
 <body>
@@ -192,9 +242,9 @@ $(window).resize(function() {      //类别
           综合 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" name="ztai" value="1"> 所有</label>
-          <li><label><input type="radio" name="ztai" value="3"> 公司</label>
-          <li><label><input type="radio" name="ztai" value="7"> 共享</label>
+          <li><label><input type="radio" name="" value="1" checked> 所有</label>
+          <li><label><input type="radio" name="" value="3"> 公司</label>
+          <li><label><input type="radio" name="" value="7"> 共享</label>
         </ul>
       </div>
       <div class="btn-group btn-sm">
@@ -202,7 +252,7 @@ $(window).resize(function() {      //类别
           状态 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" name="ztai" value=""> 所有</label>
+          <li><label><input type="radio" name="ztai" value="" checked> 所有</label>
           <li class="id_zhuangtai"><label><input type="radio" name="ztai" value="${code}"> ${name}</label>
         </ul>
       </div>
@@ -319,9 +369,9 @@ $(window).resize(function() {      //类别
     <tr data-hid="${id}" style="display:none;" class="id_House_list" >
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td>
-        <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">审</a>
-        <a auth="$${authParent}_edit" href="#" class="edit" data-hid="${id}" data-rel="edit">改</a>
-        <a auth="$${authParent}_del" href="##" class="del" data-hid="${id}" data-rel="del">删</a>
+        <a href="##" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
+        <a href="#" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
+        <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
       </td>
       <td>${ztai}</td>
       <td>${quyu}</td>

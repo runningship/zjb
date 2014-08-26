@@ -14,20 +14,31 @@
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/js/jquery.j.tool.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
+<script type="text/javascript" src="/js/sysinfo.js"></script>
 <script type="text/javascript">
 window.onload=function() {
-    
     var json = loadConfigAsJSON();
-    var inTime=setTimeout(function(){
-
+    // blockAlert(JSON.stringify(json));
+    loadHardwareInfo(function(pcinfo){
+        pcinfo = JSON.stringify(pcinfo);
+        pcinfo = encodeURI(pcinfo);
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市
-            window.location="http://192.168.1.125:8081/welcome.html";
+            window.location="http://192.168.1.125:8081/welcome.html?pcinfo="+pcinfo;
         }else{
-            window.location="http://192.168.1.125:8081/login/?cityName="+json.cityName+"&domain="+json.domain;
+            window.location="http://192.168.1.125:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
         }
-        clearTimeout(inTime);
-    },2300);
+    }); 
+    // var inTime=setTimeout(function(){
+
+    //     if(json.domain==null || json.domain==undefined || json.domain==""){
+    //         //留在当前页面，选择城市
+    //         window.location="http://192.168.1.125:8081/welcome.html?pcinfo="+pcinfo;
+    //     }else{
+    //         window.location="http://192.168.1.125:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
+    //     }
+    //     clearTimeout(inTime);
+    // },2300);
 };
 </script>
 </head>

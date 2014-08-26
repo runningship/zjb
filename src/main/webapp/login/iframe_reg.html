@@ -173,44 +173,42 @@ function btnAction(){
                     return false;
                 }
 
-                window.parent.getSysData(function(json){
-                    param=json;
-                    param.authCode=getCode;
-                    param.did=getDid[0];
-                    YW.ajax({
-                        type: 'POST',
-                        async:false,
-                        url: '/c/pc/add',
-                        data:param,
-                        success: function(data){
-                            $('.view_fendian').text(getDname);
-                            l.stop();
-                            goto_marTop(winBoxHeight,function(){$('.getologin').focus();});
-                            putConfig('dmain', domains);
-                            putConfig('cityName', cityNames);
-                        },error:function(e){
-                            var msg=JSON.parse(e.responseText)
-                            art.dialog({
-                                content:msg.msg,
-                                ok:function(){
-                                    this.close();
-                                },
-                                okVal:'前去登陆',
-                                close:function(){
-                                    goto_marTop(0,function(){});
-                                    parent.onClickNav(0);
-                                    parent.isFocus();
-                                }
-                            })
-                            l.stop();
-                        },complete:function(){
-                            $('#authCode').val('');
-                            $('select[name=fendian]').empty();
-                            $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
-                        }
-                    });
+                param=window.parent.pcinfo;
+                param.authCode=getCode;
+                param.did=getDid[0];
+                YW.ajax({
+                    type: 'POST',
+                    async:false,
+                    url: '/c/pc/add',
+                    data:param,
+                    success: function(data){
+                        $('.view_fendian').text(getDname);
+                        l.stop();
+                        goto_marTop(winBoxHeight,function(){$('.getologin').focus();});
+                        window.parent.putConfig('domain', domains);
+                        window.parent.putConfig('cityName', cityNames);
+                    },error:function(e){
+                        var msg=JSON.parse(e.responseText)
+                        art.dialog({
+                            content:msg.msg,
+                            ok:function(){
+                                this.close();
+                            },
+                            okVal:'前去登陆',
+                            close:function(){
+                                goto_marTop(0,function(){});
+                                parent.onClickNav(0);
+                                parent.isFocus();
+                            }
+                        })
+                        l.stop();
+                    },complete:function(){
+                        $('#authCode').val('');
+                        $('select[name=fendian]').empty();
+                        $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
+                    }
                 });
-                            return false;
+                return false;
             }else if(ThiFormId==""){
                 var inTime=setTimeout(function(){
                     goto_marTop(0,function(){});
@@ -252,6 +250,8 @@ $(document).ready(function() {
     btnAction();
     // Ladda.bind( 'button', { timeout: 2000 } );
     $('.view_city').text(cityNames);
+
+    parent.dialogClose();
 });
 $(window).resize(function() {
     setDomSize();

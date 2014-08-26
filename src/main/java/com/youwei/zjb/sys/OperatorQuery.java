@@ -16,4 +16,9 @@ public class OperatorQuery{
 	public String ip;
 	
 	public String conts;
+	
+	//机器码
+	public String pcma;
+	
+	public String uname;
 }

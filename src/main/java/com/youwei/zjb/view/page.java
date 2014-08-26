@@ -1,6 +1,7 @@
 package com.youwei.zjb.view;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
 
 import org.jsoup.nodes.Element;
@@ -15,7 +16,8 @@ public class page {
 
 	protected String buildHtmlWithJson(String innerHtml, JSONObject json) {
 		for(Object key : json.keySet()){
-			innerHtml= innerHtml.replace("${"+key+"}", String.valueOf(json.get(key)));
+			Object obj = json.get(key);
+			innerHtml= innerHtml.replace("${"+key+"}", JSONNull.getInstance().equals(obj) ? "" : obj.toString());
 		}
 		return innerHtml;
 	}

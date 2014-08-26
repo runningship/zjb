@@ -18,6 +18,17 @@ public class Charge {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
+	public Integer uid;
+	
+	public Integer did;
+	
+	public Integer cid;
+	
+	public String uname;
+	
+	public String dname;
+	
+	public String cname;
 	public String tradeNo;
 	
 	public String outTradeNo;
@@ -33,11 +44,17 @@ public class Charge {
 	/**
 	 * 1 支付宝,2 微信
 	 */
-	public Integer type;
+	public Integer payType;
+	
+	//pc,phone
+	public String clientType;
 	
 	public Date addtime;
 	
 	public String beizhu;
 	
 	public String status;
+	
+	//1,0
+	public Integer finish;
 }

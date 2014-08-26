@@ -6,15 +6,18 @@
     cursor: pointer;
     list-style: none outside none;
   }
+  
 </style>
 <script type="text/javascript">
 var rMenu;
 var id;
+var node;
     var setting = {
       view: {
         showIcon: false,
         addDiyDom: addDiyDom,
-        showLine:false
+        showLine:false,
+        dblClickExpand: false,
       },
       data: {
         simpleData: {
@@ -39,16 +42,36 @@ var id;
   });
 
 function onClick(event, treeId, treeNode, clickFlag) {
+  node = treeNode;
   console.log(treeNode);
   roleId = treeNode.id;
-  loadAuthorites();
+  if(treeNode.type=='role'){
+    loadAuthorites();  
+  }
+  
+  if(clickFlag!=null){
+    var treeObj = $.fn.zTree.getZTreeObj(treeId);
+    treeObj.expandNode(treeNode);  
+  }
 } 
+
+function addNode(data){
+  var newNodeData = JSON.parse(data);
+  var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+    treeObj.addNodes(node, newNodeData);
+}
+
+function updateNode(title){
+  node.name= title;
+  var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+  treeObj.updateNode(node);
+}
 
 function OnRightClick(event, treeId, treeNode) {
   console.log(treeId);
   var treeObj = $.fn.zTree.getZTreeObj(treeId);
   treeObj.selectNode(treeNode);
-  onClick(event, treeId, treeNode);
+  onClick(event, treeId, treeNode,null);
   if(event.target.tagName!='SPAN'){
     return;
   }
@@ -84,12 +107,25 @@ function addDiyDom(treeId, treeNode) {
     var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
     aObj.prepend(editStr);  
   }
-  
 }
+
+function delNode(){
+    YW.ajax({
+      type: 'POST',
+      url: '/c/sys/deleteRole',
+      data:'roleId='+node.id,
+      success: function(data){
+          var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+          treeObj.removeNode(node);
+          alert('成功删除职务: '+node.name);
+      }
+    });
+}
+
 function addRole(){
     dialog_see=art.dialog.open('v/settings/roleAdd.html?&cid='+id,{
       id:'roleAdd',
-      title:'查看房源详情',
+      title:'添加职务',
       height:100,
       width:500
     })
@@ -98,7 +134,7 @@ function addRole(){
 function editRole(){
     dialog_see=art.dialog.open('v/settings/roleEdit.html?&id='+id,{
       id:'roleEdit',
-      title:'查看房源详情',
+      title:'修改职务',
       height:100,
       width:500
     })
@@ -122,9 +158,9 @@ $(document).ready(function() {
         ThiUrl=Thi.attr('href'),
         ThiType=Thi.data('type');
         if(ThiType=='delThis'){
-            art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
-                art.dialog.tips('执行确定操作');
-            }, function () {
+            art.dialog.confirm('删除职务后不可恢复，确定要删除吗？', function () {
+                delNode();
+            },function(){
                 
             },'warning');
             return false;

@@ -231,3 +231,7 @@ function readFile(file){
     var fs=require("fs");
     return fs.readFileSync(file,"utf-8");
 }
+
+// process.on("uncaughtException", function(err) { 
+//     alert("error: " + err); 
+// });

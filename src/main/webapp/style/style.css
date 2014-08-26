@@ -9,7 +9,7 @@ html{overflow: hidden;}
 body{font:14px "microsoft yahei",Arial,Verdana,Tahoma,"宋体"; background: none;}
 a{text-decoration:none;-webkit-transition:all .3s;}
 a:hover,a:active{text-decoration:none;}
-a,a:hover,a:active,a:visited { color: #333;}
+/*a,a:hover,a:active,a:visited { color: #333;}*/
 .dropdown .dropdown-menu a{ display: block; text-align: left;}
 .br_no{white-space:nowrap;word-break: keep-all;}
 .br_yes{table-layout: fixed;word-break: break-all;word-wrap: break-word;white-space: normal;}
@@ -120,6 +120,12 @@ border-bottom-right-radius: 0;
 .form-group .form_menu_list ul{ padding:0;margin:0;}
 .form-group .form_menu_list a{ height: 100%; width: 100%; display: block;}
 
+.form_label_right .control-label, .form_label_right .radio, .form_label_right .checkbox, .form_label_right .radio-inline, .form_label_right .checkbox-inline {
+padding-top: 7px;margin-top: 0;margin-bottom: 0;text-align: right;}
+.btn-group.open .dropdown-toggle {
+box-shadow:none;
+}
+
 .dropdown-menu{white-space:nowrap;word-break: keep-all;min-width:initial;}
 
 ul.pagination.ymx_page{ margin:0;height: 34px;display: block;}
@@ -195,12 +201,12 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .login .menuer li a i{ position: absolute; bottom: 0px; left:46%; border-color:transparent transparent #FFF transparent;border-style: solid;border-width: 10px;font-size:0;height: 0px;line-height: 0;width: 0px;}
 #menu_animate_block{position: absolute; bottom: 0px; border-color:transparent transparent #FFF transparent;border-style: solid;border-width: 10px;font-size:0;height: 0px;line-height: 0;width: 0px; height: 20px; width: 20px;}
 
-.login #idNameBox .form_menu_list a{ padding: 0px 3px; border-bottom:1px solid #EEE;}
+.login #idNameBox .form_menu_list { border:none; padding:none;}
+.login #idNameBox .form_menu_list a{ border:none; display: block; padding:3px 8px; border-bottom:1px solid #EEE;}
 .login #idNameBox .form_menu_list a:hover{ background-color: #EEE;}
 .login #idNameBox .form_menu_list a:hover b{ background-color: #EEE;}
-.login #idNameBox .form_menu_list a span{ padding: 5px 0; display: block;}
-.login #idNameBox .form_menu_list a b{ display: none; float: right; padding: 0 5px; color: #09f;}
-.login #idNameBox .form_menu_list .curr a{ font-weight: bold; background-color: #09F; color: #FFF;}
+.login #idNameBox .form_menu_list b{ display: none; float: right; padding: 0 5px; color: #09f;}
+.login #idNameBox .form_menu_list a.curr { font-weight: bold; background-color: #09F; color: #FFF;}
 /*  动画 */
 .login .bodyer{  }
 .login .bodyer .mainer{ padding:10px; overflow:hidden; position:relative; background-color:rgba(255,255,255,1); }

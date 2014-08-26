@@ -6,7 +6,7 @@
 <span>订单: </span><input name="subject" readonly="true" value="test"/>
 </div>
 <div>
-<span>订单号: </span><input name="out_trade_no" />
+<span>订单号: </span><input name="out_trade_no" value="$${trade_no}" />
 </div>
 <div>
 <span>金额: </span><input name="total_fee"/>
@@ -14,8 +14,8 @@
 <div>
 <span>备注描述: </span><input name="body" />
 </div>
-<input name="return_url" type="hidden" value="http://192.168.1.125:8081/zjb/v/pay/return_url.html" />
-<input name="notify_url" type="hidden" value="http://192.168.1.125:8081/zjb/v/pay/return_url.html" />
+<input name="return_url" type="hidden" value="http://192.168.1.125:8081/v/pay/return_url.html" />
+<input name="notify_url" type="hidden" value="http://192.168.1.125:8081/v/pay/return_url.html" />
 <input name="show_url" type="hidden" value="" />
 <input type="submit" value="确认">
 </form>

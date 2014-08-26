@@ -3,6 +3,7 @@ package com.youwei.zjb.house;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+//户型
 public enum FangXing {
 
 	房1厅0卫0("1房0厅0卫",1,0,0),

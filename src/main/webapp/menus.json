@@ -63,6 +63,35 @@
 		"text":"组织架构",
 		"type":"virtual",
 		"children":[{
+			"name":"sz_dian_on",
+			"text":"开启店面权限",
+			"type":"menu"
+		},{
+			"name":"sz_dian_add",
+			"text":"添加店面",
+			"type":"menu"
+		},{
+			"name":"sz_dian_see",
+			"text":"查看店面",
+			"type":"menu"
+		},{
+			"name":"sz_dian_edit",
+			"text":"修改店面",
+			"type":"menu"
+		},{
+			"name":"sz_dian_suo",
+			"text":"锁定店面",
+			"type":"menu"
+		},{
+			"name":"sz_dian_del",
+			"text":"删除店面",
+			"type":"menu"
+		}]
+	},{
+		"name":"sz_jiagou_on",
+		"text":"人事",
+		"type":"virtual",
+		"children":[{
 			"name":"sz_user_see",
 			"text":"查看用户列表",
 			"type":"menu"
@@ -82,32 +111,16 @@
 			"name":"sz_user_del",
 			"text":"删除用户(永久)",
 			"type":"menu"
-		},{
-			"name":"sz_dian_add",
-			"text":"添加店面",
-			"type":"menu"
-		},{
-			"name":"sz_dian_see",
-			"text":"查看店面",
-			"type":"menu"
-		},{
-			"name":"sz_dian_edit",
-			"text":"修改店面",
-			"type":"menu"
-		},{
-			"name":"sz_dian_suo",
-			"text":"审核店面",
-			"type":"menu"
-		},{
-			"name":"sz_dian_del",
-			"text":"删除店面",
-			"type":"menu"
 		}]
 	},{
-		"name":"sz_unit_on",
+		"name":"sz_unit",
 		"text":"职务权限",
 		"type":"virtual",
 		"children":[{
+			"name":"sz_unit_on",
+			"text":"开启职务权限",
+			"type":"menu"
+		},{
 			"name":"sz_unit_see",
 			"text":"查看",
 			"type":"menu"
@@ -125,10 +138,14 @@
 			"type":"menu"
 		}]
 	},{
-		"name":"sz_pc_on",
+		"name":"sz_pc",
 		"text":"电脑授权",
 		"type":"virtual",
 		"children":[{
+			"name":"sz_pc_on",
+			"text":"开启电脑授权",
+			"type":"menu"
+		},{
 			"name":"sz_pc_see",
 			"text":"查看",
 			"type":"menu"

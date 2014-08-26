@@ -22,6 +22,7 @@
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript">
 var getCityTime;
+var pcinfo = getParam('pcinfo');
 function getCitys(){
     $.post('/c/city/list', function(data, textStatus, xhr) {
         var  json = JSON.parse(data);
@@ -47,9 +48,11 @@ $(document).ready(function() {
         var Thi=$(this),
         ThiVal=Thi.data('val'),
         ThiTxt=Thi.text();
-        //blockAlert(ThiVal);
+        // blockAlert(ThiVal);
         if(ThiVal){
-            window.location='/login/?cityName='+ThiTxt+'&domain='+ThiVal+'&goto=1';
+            putConfig("domain",ThiVal);
+            putConfig("cityName",ThiTxt);
+            window.location='/login/?cityName='+ThiTxt+'&domain='+ThiVal+'&goto=1&pcinfo='+pcinfo;
         }
         return false;
     });

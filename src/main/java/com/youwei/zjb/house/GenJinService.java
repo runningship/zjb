@@ -63,19 +63,21 @@ public class GenJinService {
 	}
 	
 	@WebMethod
-	public ModelAndView review(Integer id, Integer sh){
+	public ModelAndView toggleShenHe(Integer id){
 		ModelAndView mv = new ModelAndView();
 		if(id!=null){
-			if(sh!=0 && sh!=1){
-				throw new GException(PlatformExceptionType.BusinessException, "无效的参数");
-			}
 			GenJin po = dao.get(GenJin.class, id);
 			if(po!=null){
-				po.sh = sh;
+				if(po.sh==1){
+					po.sh=0;
+				}else{
+					po.sh=1;
+				}
 				dao.saveOrUpdate(po);
+				mv.data.put("sh", po.sh);
 			}
 		}
-		mv.data.put("result", 0);
+		
 		return mv;
 	}
 	

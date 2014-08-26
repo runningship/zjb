@@ -43,7 +43,11 @@ public class return_url {
 		
 		boolean verify_result = AlipayNotify.verify(params);
 		if(verify_result){//验证成功
-			Charge charge = new Charge();
+			Charge charge = dao.getUniqueByKeyValue(Charge.class, "tradeNo", params.get("out_trade_no"));
+			if(charge==null){
+				LogUtil.warning("处理充值异常,"+params);
+				charge = new Charge();
+			}
 			try {
 				charge.addtime = DataHelper.sdf.parse(params.get("notify_time"));
 			} catch (Exception e) {
@@ -54,13 +58,15 @@ public class return_url {
 			charge.outTradeNo = params.get("trade_no");
 			charge.buyerId=0;
 			charge.buyerAccount= params.get("buyer_email");
+			charge.feeStr = params.get("total_fee");
 			try{
 				charge.fee = Float.valueOf(params.get("total_fee"));
 			}catch(Exception ex){
-				charge.feeStr = params.get("total_fee");
 			}
-			charge.type=1;
+			charge.payType=1;
+			charge.clientType="pc";
 			charge.status = params.get("trade_status");
+			charge.finish=1;
 			dao.saveOrUpdate(charge);
 		}else{
 			//该页面可做页面美工编辑
@@ -68,7 +74,7 @@ public class return_url {
 			//转到错误页面
 		}
 		String html = doc.html();
-		
+		html= html.replace("$${total_fee}", params.get("total_fee"));
 		return  Jsoup.parse(html);
 	}
 }

@@ -41,6 +41,9 @@ public class AuthorityService {
 	@Transactional
 	@WebMethod
 	public ModelAndView update(int roleId,String name , String value){
+		if(roleId==-1){
+			return new ModelAndView();
+		}
 		Purview purview = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(Purview.class, "unid", roleId);
 		if("true".equals(value)){
 			RoleAuthority ra = new RoleAuthority();
@@ -77,7 +80,10 @@ public class AuthorityService {
 		User user = ThreadSession.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 添加了职务["+role.title+"]";
 		operService.add(OperatorType.权限记录, operConts);
-		mv.data.put("msg", "添加成功");
+		mv.data.put("name",role.title);
+		mv.data.put("pId", role.cid+cidOffset);
+		mv.data.put("type", "role");
+		mv.data.put("id", role.id);
 		return mv;
 	}
 	
@@ -160,9 +166,10 @@ public class AuthorityService {
 			String text = FileUtils.readFileToString(new File(ThreadSession.getHttpSession().getServletContext().getRealPath("/")+File.separator+"menus.json"), "utf8");
 			JSONArray jarr = JSONArray.fromObject(text);
 			Role role = dao.get(Role.class, roleId);
-			
-			for(RoleAuthority ra : role.Authorities()){
-				setSelected(ra ,jarr);
+			if(role!=null){
+				for(RoleAuthority ra : role.Authorities()){
+					setSelected(ra ,jarr);
+				}
 			}
 			mv.data.put("modules", jarr.toString());
 			return mv;
@@ -215,6 +222,11 @@ public class AuthorityService {
 		}
 		role.title = title;
 		dao.saveOrUpdate(role);
-		return new ModelAndView();
+		ModelAndView mv = new ModelAndView();
+		mv.data.put("name",role.title);
+		mv.data.put("pId", role.cid+cidOffset);
+		mv.data.put("type", "role");
+		mv.data.put("id", role.id);
+		return mv;
 	}
 }

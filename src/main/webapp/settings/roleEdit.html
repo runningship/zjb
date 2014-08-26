@@ -32,7 +32,7 @@ function submits(){
     data:a,
     success: function(data){
         art.dialog.close();
-        art.dialog.opener.updateNode($('#namea').val());
+        art.dialog.opener.updateNode($('#title').val());
         alert('修改成功');
     }
   });
@@ -58,7 +58,7 @@ $(document).ready(function() {
     form1=$('.form1');
     if (!api) return;
     // 操作对话框
-    api.title('部门修改')
+    api.title('修改职务')
     // 自定义按钮
       .button({
           name: '保存',

@@ -1,5 +1,6 @@
 package com.youwei.zjb.view.pay;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.youwei.zjb.SimpDaoTool;
+import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.user.entity.Charge;
+import com.youwei.zjb.user.entity.Department;
+import com.youwei.zjb.user.entity.User;
 
 public class submit {
 
@@ -57,6 +64,23 @@ public class submit {
 		for(String key : sPara.keySet()){
 			html = html.replace("$${"+key+"}", sPara.get(key));
 		}
+		
+		User user = ThreadSession.getUser();
+		Department dept = user.Department();
+		Department comp = dept.Company();
+		Charge charge = new Charge();
+		charge.uid = user.id;
+		charge.uname = user.uname;
+		charge.did = dept.id;
+		charge.dname = dept.namea;
+		charge.cid = comp.id;
+		charge.cname = comp.namea;
+		charge.tradeNo = sParaTemp.get("out_trade_no");
+		charge.fee = Float.valueOf(sParaTemp.get("total_fee"));
+		charge.payType = 1;
+		charge.addtime = new Date();
+		charge.finish = 0;
+		SimpDaoTool.getGlobalCommonDaoService().saveOrUpdate(charge);
 		return  Jsoup.parse(html);
 	}
 	

@@ -104,27 +104,6 @@ public class UserService {
 	}
 	
 	@WebMethod
-	public ModelAndView resetPwd(Integer userId, String newPwd, String newPwdRepeat){
-		ModelAndView mv = new ModelAndView();
-		if(StringUtils.isEmpty(newPwd)){
-			throw new GException(PlatformExceptionType.BusinessException, "新密码不能为空");
-		}
-		if(newPwd.length()<6 || newPwd.length()>20){
-			throw new GException(PlatformExceptionType.BusinessException, "密码长度应为6-20位");
-		}
-		if(StringUtils.isEmpty(newPwdRepeat)){
-			throw new GException(PlatformExceptionType.BusinessException, "重复新密码不能为空");
-		}
-		if(!newPwd.equals(newPwdRepeat)){
-			throw new GException(PlatformExceptionType.BusinessException, "两次输入的新密码不一样");
-		}
-		User po = dao.get(User.class, userId);
-		po.pwd = SecurityHelper.Md5(newPwd);
-		dao.saveOrUpdate(po);
-		return mv;
-	}
-	
-	@WebMethod
 	public ModelAndView update(User user){
 		ModelAndView mv = new ModelAndView();
 		if(StringUtils.isEmpty(user.uname)){

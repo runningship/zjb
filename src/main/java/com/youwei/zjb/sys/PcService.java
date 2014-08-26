@@ -45,7 +45,7 @@ public class PcService {
 		if(comp==null){
 			throw new GException(PlatformExceptionType.BusinessException, "授权码不正确,请联系系统管理员");
 		}
-		long pcCount = dao.countHql("from PC where cid=?", comp.id);
+		long pcCount = dao.countHql("select count(*) from PC where cid=?", comp.id);
 		if(pcCount>=comp.pcnum){
 			throw new GException(PlatformExceptionType.BusinessException, "已经授权的机器数量超过预定额度");
 		}

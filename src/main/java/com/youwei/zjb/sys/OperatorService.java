@@ -77,6 +77,14 @@ public class OperatorService {
 			hql.append(" and ip like ? ");
 			params.add("%"+query.ip+"%");
 		}
+		if(StringUtils.isNotEmpty(query.pcma)){
+			hql.append(" and pcma like ? ");
+			params.add("%"+query.pcma+"%");
+		}
+		if(StringUtils.isNotEmpty(query.uname)){
+			hql.append(" and uname like ? ");
+			params.add("%"+query.uname+"%");
+		}
 		if(StringUtils.isNotEmpty(query.conts)){
 			hql.append(" and conts like ? ");
 			params.add("%"+query.conts+"%");

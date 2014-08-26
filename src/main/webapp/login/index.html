@@ -45,24 +45,28 @@ var debug=getParam('debug'),
 domains=getParam('domain'),
 cityNames=decodeURI(getParam('cityName')),
 gotos=getParam('goto');
-//blockAlert(window.location.href);
+var pcinfo = getParam('pcinfo');
+pcinfo = decodeURIComponent(pcinfo.replace(/\+/g,  " "));
+try{
+    if(debug){
+        pcinfo = JSON.parse('{}');
+        pcinfo.debug = debug;
+    }else{
+        pcinfo = JSON.parse(pcinfo);    
+    }
+}catch(e){
+
+}
+
+function dialogClose(){
+    art.dialog.close();
+}
 function onClickNav(index){
+alert($('#iframe').attr('src'))
     if(!index){index=0}
     $('.act_menu').find('li').eq(index).find('a').click();
 }
 
-function getSysData(callback){
-    if(debug){
-        var xx = JSON.parse('{}');
-        xx.debug = debug;
-        callback(xx);
-    }else{
-        loadHardwareInfo(function(json){
-            callback(json);
-        });    
-    }
-    
-}
 function isFocus(){
     if(!$('#idName').val()){
         $('#idName').focus();
@@ -96,9 +100,10 @@ function ActLnane(){
         if (getLnames.length>0){
             var htmls='';
             $.each(getLnames, function(index, val) {
-                htmls='<li><a href="#"><b></b><span>'+val+'</span><a></li>'+htmls;
+                actList.prepend('<a href="#">'+val+'</a>')
+                //htmls='<a href="#">'+val+'<a>'+htmls;
             });
-            var actListOl=actList.find('ol').html(htmls);
+            //var actListOl=actList.html(htmls);
         }
     };
     if (getLnames!=undefined&&getLnames.length>1) {
@@ -107,15 +112,15 @@ function ActLnane(){
             actList.show(300);
         }).on('focusout', actInput, function(event) {
             var thiTimes=setTimeout(function(){
-                actList.hide(100);
+                actList.hide(200);
                 actListIndex=-1;
-                actList.find('li').removeClass('curr');
+                actList.find('a').removeClass('curr');
                 clearTimeout(thiTimes);
-            },100)
+            },300)
         }).on('keydown', function(event) {
             var Thi=$(this),
             ThiVal=Thi.val(),
-            ThiLi=actList.find('li');
+            ThiLi=actList.find('a');
             if(event.keyCode==38 || event.keyCode==40){
                 if(event.keyCode==38){
                     actListIndex--;
@@ -129,23 +134,16 @@ function ActLnane(){
             }
             if(event.keyCode==13){return false};
             if(event.keyCode==9){return true};
-        }).on('keyup', function(event) {
-            //var Thi=$(this),
-            //ThiVal=this.val();
         });
     };
-    actList.on('click', 'a,span', function(event) {
+    actList.on('click', 'a', function(event) {
         var a=$(this),
         aTxt=a.text();
         if(aTxt){
             actInput.val(aTxt);
-            actList.hide(200);
+            //actList.hide(200);
         }
-        return false;
-    }).on('click', 'a span', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-
+        //blockAlert(a.html())
         return false;
     });
 }
@@ -202,7 +200,7 @@ $(document).ready(function() {
         var ThiType=Thi.data('type');
         if(ThiType=='url'&&ThiType!='#'){
             var ThiUrl=Thi.attr('href');
-            if(ThiUrl){hex.openExternal(ThiUrl)}
+            if(ThiUrl){shell.openExternal(ThiUrl)}
         }else if(ThiType=='wangjimima'){
             art.dialog({
                 id:'tips',
@@ -223,32 +221,32 @@ $(document).ready(function() {
             if(!$('#idName').val()){
                 l.stop();
                 alert('帐号不能为空');
+                $('#idName').focus();
                 return false;
             }
             if(!$('#idPassword').val()){
                 l.stop();
                 alert('密码不能为空');
+                $('#idPassword').focus();
                 return false;
             }
-            getSysData(function(json){
-                json.lname=$('#idName').val();
-                json.pwd=$('#idPassword').val();
+            pcinfo.lname=$('#idName').val();
+            pcinfo.pwd=$('#idPassword').val();
 
-                YW.ajax({
-                    type: 'POST',
-                    url: '/c/user/login',
-                    data:json,
-                    success: function(data){
-                        if(!debug){
-                            putConfig('domain', domains);
-                            putConfig('cityName', cityNames);
-                            appendConfig('account', json.lname);
-                        }
-                        window.location="../default.html";
-                    },complete:function(){
-                        l.stop();
-                    },beforeSend:function(){}
-                });
+            YW.ajax({
+                type: 'POST',
+                url: '/c/user/login',
+                data:pcinfo,
+                success: function(data){
+                    if(!debug){
+                        putConfig('domain', domains);
+                        putConfig('cityName', cityNames);
+                        appendConfig('account', pcinfo.lname);
+                    }
+                    window.location="/v/home.html";
+                },complete:function(){
+                    l.stop();
+                },beforeSend:function(){}
             });
             
             
@@ -261,12 +259,12 @@ $(document).ready(function() {
     setDomSize();
 // 设置页面参数
     $('#idCity').val(cityNames);
-    $('#iframe').attr('src','iframe_reg.html?cityName='+cityNames+'&domain='+domains);
+    
 // 设置默认显示页面
     var inTime=setTimeout(function(){
+        //alert(gotos)
         if(gotos==1){
             onClickNav(1);
-            $("#iframe").contents().find('#authCode').focus();
         }else{
             isFocus();
         }
@@ -282,12 +280,22 @@ $(document).on('click', '.act_menu a', function(event) {
     ThiPliIndex=Thi.parents('li').index();
     Thi.parent().addClass('curr');
     ThiPli.removeClass('curr');
-    var inTime=setTimeout(function(){
-    if(ThiPliIndex==0){
-        isFocus();
-    }else if(ThiPliIndex==1){
-        $("#iframe").contents().find('#authCode').focus();
+    if(ThiPliIndex==1 && $('#iframe').attr('src')==''){
+        art.dialog({id:'winArtDialog',title:false,
+            content:'注册信息加载中...',
+            top:'50%',
+            time:100
+        })
     }
+    var inTime=setTimeout(function(){
+        if(ThiPliIndex==0){
+            isFocus();
+        }else if(ThiPliIndex==1){
+            if($('#iframe').attr('src')==''){
+                $('#iframe').attr('src','iframe_reg.html?cityName='+cityNames+'&domain='+domains);
+                $("#iframe").contents().find('#authCode').focus();
+            }
+        }
         clearTimeout(inTime);
     },600);
 });
@@ -376,7 +384,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                                     <label for="idName" class="col-xs-2 control-label">账号:</label>
                                     <div class="col-xs-8 form_menu_box" id="idNameBox">
                                         <input type="text" class="form-control" id="idName" tabindex="10" placeholder="">
-                                        <div class="form_menu_list"><ol></ol></div>
+                                        <div class="form_menu_list"></div>
                                     </div>
                                     <a class="col-xs-2 btn btn-link" data-type="wangjizhanghao">忘记帐号？</a>
                                 </div>
@@ -402,7 +410,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
             </ul>
             <ul>
                 <li>
-                    <iframe src="iframe_reg.html?cityName=合肥市" id="iframe" name="iframe" width="100%" height="100%" scrolling="no" marginheight="0" frameborder="0"></iframe>
+                    <iframe src="" id="iframe" name="iframe" width="100%" height="100%" scrolling="no" marginheight="0" frameborder="0"></iframe>
                 </li>
             </ul>
             <ul>

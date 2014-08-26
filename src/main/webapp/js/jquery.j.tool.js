@@ -47,7 +47,7 @@ $(document).keydown(function(event){
        event.returnValue=false;   
        return false;  
    }   
-    if(event.keyCode==8){  
+    if(event.keyCode==8){   //
       if(window.event){
         event = window.event;
       }try{
@@ -66,11 +66,10 @@ $(document).keydown(function(event){
         event = window.event;
       }try{
         var the = event.srcElement;
-        if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect")){
-          //alert(the.getAttribute("selectstart"))
-          return false;
+        if (the.tagName.toLowerCase() == "select" || the.tagName.toLowerCase() == "textarea" || the.tagName.toLowerCase() == "input"){
+          return true;
         }
-        return true;
+        return false;
       }catch (e){
         return false; 
       }  
@@ -87,6 +86,7 @@ $(document).keydown(function(event){
 try{
 var gui = require('nw.gui');
 var win = gui.Window.get();
+var shell = gui.Shell;
 var winMaxHeight,winMaxWidth;
 }catch (e){}
 function WinMaxOrRev(a){
@@ -206,6 +206,21 @@ function setTableFix(){
 	}
 //    blockAlert(TableB.html())
 }
+
+  //改善btn-group的操作感受
+    var btn_group_time=null;
+    $(document).on('hide.bs.dropdown','.btn-group', function () {
+      return false;
+    }).on('show.bs.dropdown','.btn-group', function () {
+      $(".btn-group:not(this)").removeClass('open');
+    }).on('mousemove','.btn-group', function(event) {
+      clearTimeout(btn_group_time);
+    }).on('mouseout','.btn-group', function () {
+      btn_group_time=setTimeout(function(){
+        $(".btn-group").removeClass('open');
+      },500);
+    });
+
 //页面加载完之后执行的脚本
 $(document).ready(function() {
 $('a').attr('draggable','false');
@@ -230,21 +245,6 @@ $('a').attr('draggable','false');
         }
         return false;
     });
-  //改善btn-group的操作感受
-  if($('.btn-group').length>0){
-    var btn_group_time=null;
-    $('.btn-group').on('hide.bs.dropdown', function () {
-      return false;
-    }).on('show.bs.dropdown', function () {
-      $(".btn-group:not(this)").removeClass('open');
-    }).on('mousemove', function(event) {
-      clearTimeout(btn_group_time);
-    }).on('mouseout', function () {
-      btn_group_time=setTimeout(function(){
-        $(".btn-group").removeClass('open');
-      },500);
-    });
-  } 
 }).resize(function(event) {
   /* Act on the event */
   WinMaxOrRev(0);

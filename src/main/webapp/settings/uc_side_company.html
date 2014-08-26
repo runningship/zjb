@@ -15,7 +15,8 @@ var setting = {
   view: {
     showIcon: true,
     addDiyDom: addDiyDom,
-    showLine:false
+    showLine:false,
+    dblClickExpand: false,
   },
   data: {
     simpleData: {
@@ -41,7 +42,12 @@ YW.ajax({
 
 function onClick(event, treeId, treeNode, clickFlag) {
   node = treeNode;
-  console.log(treeNode);
+  console.log(clickFlag);
+  if(clickFlag!=null){
+    var treeObj = $.fn.zTree.getZTreeObj(treeId);
+    treeObj.expandNode(treeNode);
+  }
+  
   $('#cid').val("");
   $('#did').val("");
   if(treeNode.type=="comp"){
@@ -72,10 +78,9 @@ function updateNode(namea){
 }
 
 function OnRightClick(event, treeId, treeNode) {
-  console.log(treeId);
   var treeObj = $.fn.zTree.getZTreeObj(treeId);
   treeObj.selectNode(treeNode);
-  onClick(event, treeId, treeNode);
+  onClick(event, treeId, treeNode,null);
   if(event.target.tagName!='SPAN'){
     return;
   }
@@ -253,23 +258,19 @@ $(document).ready(function() {
                 }
             return false;
         }else if(ThiType=='seeGenjin'){
-              if(node.type=='comp'){
-                art.dialog.open('/v/settings/genjin.html?cid='+node.id,{
-                    padding:0,
-                    resize:true,
-                    lock:1,
-                    height:700,
-                    width:1000
-                  });
-                }else{
-                  art.dialog.open('/v/settings/dgenjin.html?did='+node.id,{
-                    padding:0,
-                    resize:true,
-                    lock:1,
-                    height:700,
-                    width:1000
-                  });
-                }
+          var url="";
+          if(node.type=='comp'){
+              url = '/v/settings/genjin.html?cid='+node.id;
+          }else{
+            url = '/v/settings/genjin.html?did='+node.id;
+          }
+          art.dialog.open(url,{
+            padding:0,
+            resize:true,
+            lock:1,
+            height:700,
+            width:1000
+          });
             return false;
         }else if(ThiType=='addGroup'){
             art.dialog.prompt('新的分组名称', function (val) {
