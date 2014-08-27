@@ -13,7 +13,7 @@ var id;
 var node;
 var setting = {
   view: {
-    showIcon: true,
+    showIcon: false,
     addDiyDom: addDiyDom,
     showLine:false,
     dblClickExpand: false,
@@ -95,13 +95,25 @@ function showRMenu(type, x, y) {
     $('#m_add_group').hide();
     $('#m_add_dept').hide();
   }
+  if(type=="comp"){
+    $('#m_del_group').hide();
+    $('#m_del_dept').hide();
+    $('#m_edit_group').hide();
+    $('#m_edit_dept').hide();
+  }
   if(type!="dept"){
     $('#m_move_to').hide();
+  }
+  if(type=="dept"){
+    $('#m_del_group').hide();
+    $('#m_edit_group').hide();
   }
   if(type=="group"){
     $('#m_list_records').hide();
     $('#m_list_genjin').hide();
     $('#m_add_user').hide();
+    $('#m_del_dept').hide();
+    $('#m_edit_dept').hide();
   }
   rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
   $("body").bind("mousedown", onBodyMouseDown);
@@ -121,8 +133,9 @@ function addDiyDom(treeId, treeNode) {
   
   var aObj = $("#" + treeNode.tId + "_a");
   aObj.css('display','inline');
+  console.log(treeNode.cnum);
   if(treeNode.cnum!=null){
-    var cnumStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+    var cnumStr = "<span >"+ treeNode.cnum +" </span>";
     aObj.prepend(cnumStr);  
   }
   var color="green";
@@ -130,7 +143,7 @@ function addDiyDom(treeId, treeNode) {
     color="red";
   }
   if(treeNode.type!="group"){
-    var lockStr = '<a id="'+treeNode.tId+'_sh_a" onClick="shenhe(\''+treeNode.tId+'\')" style="float:right;font-size:14px;color:'+color+'" class="icon iconfont">&#xe64e;</a>';
+    var lockStr = '<span id="'+treeNode.tId+'_sh_a" onClick="shenhe(\''+treeNode.tId+'\')" class="icon iconfont icon_sh icon_wsh">&#xe64e;</span>';
     aObj.after(lockStr);
   }
 }
@@ -229,6 +242,11 @@ $(document).ready(function() {
         ThiType=Thi.data('type');
         if(ThiType=='add_company'){
             art.dialog.open('/v/settings/uc_index_c_add.html');
+        }else if(ThiType=='popover'){
+            var popoverTime=setTimeout(function(){
+                $('.input_search').focus();
+                clearTimeout(popoverTime);
+            },100)
         }
         return false;
     });
@@ -315,10 +333,48 @@ $(document).ready(function() {
         }
     });
 
+    $('[data-toggle=popover]').popover({
+        html:true,
+        container:'body',
+        placement:'top'
+    });
+});
+function getSearch(val){
+  //alert($('.jtree').html())
+  var input = val;  //记录输入的商家名
+  var tds = $('.jtree>li>a');  //取商家名那一列
+  if(tds.length<1){
+      //blockAlert(0)
+      //art.dialog.tips('搜不到任何数据...','warning')
+      return false;
+  }else{
+    for(var i = 0; i < tds.length; i++){
+      var td = $(tds[i]).eq(0);
+  //  blockAlert( input +'|'+ td.html() +'|'+ td.parent().html() +'|'+ td.html().indexOf(input))
+  //    alert(td.attr('rev').indexOf(input))
+      if(td.text().indexOf(input) >= 0){ //如果商家名这列总某行内容不包含输入的商家名
+        td.parent().show();
+      }else{
+        td.parent().hide();  //隐藏这行
+      }
+    }
+  }
+}
+$(document).on('keyup','.input_search', function(event) {
+    //blockAlert(event.keyCode)
+    if(event.keyCode==27){
+        $('[data-toggle=popover]').popover('hide');return false;
+    }
+    var Thi=$(this),
+    ThiVal=Thi.val();
+    if(event.keyCode==13){
+        getSearch(ThiVal);
+    }
+    return false;
 });
 </script>
 <div class="sideHead">
-    分公司列表
+    组织架构
 </div>
 
 <table class="table table-nopadding side_table" width="100%">
@@ -326,7 +382,7 @@ $(document).ready(function() {
     <tr class="list">
       <td>
         <div class="zTreeDemoBackground left">
-          <ul id="treeDemo" class="ztree"></ul>
+          <ul id="treeDemo" class="ztree jtree"></ul>
         </div>
       </td>
     </tr>
@@ -336,18 +392,21 @@ $(document).ready(function() {
 <div class="sideFoot">
   <ul>
     <li>
-      <a href="" data-toggle="tooltip" title="添加公司" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加公司</a>
+      <a href="" data-toggle="tooltip" id="add_company" title="添加公司" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加公司</a>
+      <a href="" title="搜索数据" class="btns" id="search" data-type="popover" data-toggle="popover" data-content='<input type="text" class="form-control input_search" placeholder="公司代码\公司名\等" name="" value="" style="min-width:250px;">' autofocus="autofocus"><i class="glyphicon glyphicon-plus"></i>搜索</a>
     </li>
   </ul>
 </div>
 
 <div id="rMenu" class="list-group">
-  <a href="#" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看记录</a>
-  <a href="#" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
-  <a href="#" id="m_add_group" data-type="addGroup" class="list-group-item" onclick="">添加分组</a>
-  <a href="#" id="m_add_user" data-type="addUser" class="list-group-item" onclick="">添加用户</a>
-  <a href="#" id="m_add_dept" data-type="adddept" class="list-group-item" onclick="">添加分公司</a>
-  <a href="#" id="m_move_to" data-type="moveTo" class="list-group-item">移动至</a>
-  <a href="#" data-type="editThis" class="list-group-item">编辑</a>
-  <a href="#" data-type="delThis" class="list-group-item">删除</a>
+  <a href="#" auth="sz_record_on" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看操作记录</a>
+  <a href="#" auth="sz_genjin_on" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
+  <a href="#" auth="sz_group_add" id="m_add_group" data-type="addGroup" class="list-group-item" >添加分组</a>
+  <a href="#" auth="sz_user_add" id="m_add_user" data-type="addUser" class="list-group-item" >添加用户</a>
+  <a href="#" auth="sz_dian_add" id="m_add_dept" data-type="adddept" class="list-group-item" >添加店面</a>
+  <a href="#" auth="sz_group_set" id="m_move_to" data-type="moveTo" class="list-group-item">移动至</a>
+  <a href="#" auth="sz_dian_edit" data-type="editThis" id="m_edit_dept" class="list-group-item">修改店面</a>
+  <a href="#" auth="sz_group_edit" data-type="editThis" id="m_edit_group" class="list-group-item">修改分组</a>
+  <a href="#" auth="sz_dian_del" data-type="delThis" id="m_del_dept" class="list-group-item">删除店面</a>
+  <a href="#" auth="sz_group_del" data-type="delThis" id="m_del_group" class="list-group-item">删除分组</a>
 </div>

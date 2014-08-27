@@ -232,10 +232,13 @@ function readFile(file){
     return fs.readFileSync(file,"utf-8");
 }
 try{
+    var lastErrMsg="";
     process.on("uncaughtException", function(e) {
-        var r=confirm("抱歉,好像有点问题,发送错误报告?");
-        if (r==true){
+        if(lastErrMsg != e.message){
             reportError(e.stack);
+            lastErrMsg=e.message;
+        }else{
+            console.log(e);
         }
     }); 
 }catch(e){
@@ -248,7 +251,6 @@ function reportError(stack){
         url: '/c/feedback/reportError',
         data:'stack='+stack,
         success: function(data){
-          blockAlert('感谢您的反馈，我们将竭力做的更好.');
         }
     });
 }

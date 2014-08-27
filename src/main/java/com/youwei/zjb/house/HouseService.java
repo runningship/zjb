@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.BeanUtil;
@@ -19,6 +20,7 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.DateSeparator;
+import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.GenJin;
@@ -38,7 +40,7 @@ public class HouseService {
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
 	@WebMethod
-	public ModelAndView add(House house){
+	public ModelAndView add(House house , String fxing){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
@@ -47,16 +49,38 @@ public class HouseService {
 			mv.data.put("msg", "同一个房源已经存在");
 			mv.data.put("result", 2);
 		}else{
+			
+			if(house.mji==null){
+				throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+			}
+			if(house.zceng==null){
+				throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
+			}
+			if(house.fhao==null){
+				throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+			}
+			if(house.zjia==null){
+				throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+			}
 			house.isdel = 0;
 			house.dateadd = new Date();
 			house.uid = user.id;
+			house.cid = user.cid;
 			house.did = user.did;
-			if(house.zjia ==null){
-				house.zjia=0f;
-			}
+			house.sh = 0;
+			FangXing fx = FangXing.valueOf(fxing);
 			if(house.mji!=null && house.mji!=0){
 				int jiage = (int) (house.zjia*10000/house.mji);
 				house.djia = (float) jiage;
+			}
+			if(house.seeFH==null){
+				house.seeFH=0;
+			}
+			if(house.seeHM==null){
+				house.seeHM=0;
+			}
+			if(house.seeGX==null){
+				house.seeGX=0;
 			}
 			dao.saveOrUpdate(house);
 			mv.data.put("msg", "发布成功");
@@ -233,7 +257,17 @@ public class HouseService {
 		}else{
 			hql = new StringBuilder(" select h  from House  h where 1=1");
 		}
-		
+		User u = ThreadSession.getUser();
+		if("all".equals(query.scope)){
+			hql.append(" and (h.cid=? or h.seeGX=?) ");
+			params.add(u.cid);
+			params.add(1);
+		}else if("seeGX".equals(query.scope)){
+			hql.append(" and h.seeGX=1 ");
+		}else if("comp".equals(query.scope)){
+			hql.append(" and h.cid=? ");
+			params.add(u.cid);
+		}
 		if(StringUtils.isNotEmpty(query.ztai)){
 			hql.append(" and h.ztai like ? ");
 			params.add(query.ztai);

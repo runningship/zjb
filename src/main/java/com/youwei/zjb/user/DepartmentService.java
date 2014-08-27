@@ -164,7 +164,7 @@ public class DepartmentService {
 				JSONObject json = new JSONObject();
 				json.put("id",g.id);
 				json.put("type", "group");
-				json.put("icon", "/style/images/icon_lock_current.png");
+//				json.put("icon", "/style/images/icon_lock_current.png");
 				if(g.pid!=null){
 					json.put("pId", g.pid);
 				}else{
@@ -190,6 +190,7 @@ public class DepartmentService {
 					json.put("pId", 0);
 					json.put("open", true);
 					json.put("type", "comp");
+					json.put("cnum", dept.cnum);
 				}else{
 					if(dept.dgroup!=null){
 						json.put("pId", dept.dgroup);
@@ -210,7 +211,7 @@ public class DepartmentService {
 					json.put("pId", g.pid);
 				}
 				json.put("type", "group");
-				json.put("icon", "/style/images/icon_lock_current.png");
+//				json.put("icon", "/style/images/icon_lock_current.png");
 				json.put("name", g.name);
 				result.add(json);
 			}

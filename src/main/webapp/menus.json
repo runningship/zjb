@@ -55,24 +55,16 @@
 		}]
 	}]
 },{
-	"name":"sz",
+	"name":"sz_on",
 	"type":"module",
 	"text":"后台管理",
 	"children":[{
 		"name":"sz_jiagou_on",
-		"text":"组织架构",
+		"text":"成员管理",
 		"type":"virtual",
 		"children":[{
-			"name":"sz_dian_on",
-			"text":"开启店面权限",
-			"type":"menu"
-		},{
 			"name":"sz_dian_add",
 			"text":"添加店面",
-			"type":"menu"
-		},{
-			"name":"sz_dian_see",
-			"text":"查看店面",
 			"type":"menu"
 		},{
 			"name":"sz_dian_edit",
@@ -86,14 +78,21 @@
 			"name":"sz_dian_del",
 			"text":"删除店面",
 			"type":"menu"
-		}]
-	},{
-		"name":"sz_jiagou_on",
-		"text":"人事",
-		"type":"virtual",
-		"children":[{
-			"name":"sz_user_see",
-			"text":"查看用户列表",
+		},{
+			"name":"sz_group_add",
+			"text":"添加分组",
+			"type":"menu"
+		},{
+			"name":"sz_group_edit",
+			"text":"修改分组",
+			"type":"menu"
+		},{
+			"name":"sz_group_del",
+			"text":"删除分组",
+			"type":"menu"
+		},{
+			"name":"sz_group_set",
+			"text":"调整店面分组",
 			"type":"menu"
 		},{
 			"name":"sz_user_add",
@@ -121,16 +120,16 @@
 			"text":"开启职务权限",
 			"type":"menu"
 		},{
-			"name":"sz_unit_see",
-			"text":"查看",
-			"type":"menu"
-		},{
 			"name":"sz_unit_edit",
 			"text":"修改",
 			"type":"menu"
 		},{
 			"name":"sz_unit_add",
 			"text":"添加",
+			"type":"menu"
+		},{
+			"name":"sz_unit_shouquan",
+			"text":"授权",
 			"type":"menu"
 		},{
 			"name":"sz_unit_del",
@@ -144,14 +143,6 @@
 		"children":[{
 			"name":"sz_pc_on",
 			"text":"开启电脑授权",
-			"type":"menu"
-		},{
-			"name":"sz_pc_see",
-			"text":"查看",
-			"type":"menu"
-		},{
-			"name":"sz_pc_edit",
-			"text":"修改",
 			"type":"menu"
 		},{
 			"name":"sz_pc_sh",
@@ -171,8 +162,8 @@
 			"text":"查看操作记录",
 			"type":"menu"
 		},{
-			"name":"sz_record_pc_on",
-			"text":"查看授权记录",
+			"name":"sz_genjin_on",
+			"text":"查看跟进",
 			"type":"menu"
 		}]
 	}]

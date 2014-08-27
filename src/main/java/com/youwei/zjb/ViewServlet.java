@@ -71,41 +71,45 @@ public class ViewServlet extends HttpServlet{
 		///
 		doc = Jsoup.parse(html);
 		if(user!=null){
+			//总管理员不受影响
+			if(user.id!=1){
+				String authParent = req.getParameter("authParent");
+				Role role = user.getRole();
+				List<RoleAuthority> authList = new ArrayList<RoleAuthority>();
+				if(role!=null){
+					authList = role.Authorities();
+				}
+				Elements list = doc.getElementsByAttribute("auth");
+				for(Element e : list){
+					String target = e.attr("auth");
+					if(StringUtils.isEmpty(target)){
+						continue;
+					}
+					if(authParent!=null){
+						target = target.replace("$${authParent}", authParent);
+					}
+					boolean auth = false;
+					for(RoleAuthority ra : authList){
+						if(ra.name.equals(target)){
+							auth = true;
+							break;
+						}
+					}
+					if(auth==false){
+						e.remove();
+					}
+				}
+				html = doc.html();
+			}
 			html = html.replace("$${userId}", user.id.toString());
 			html = html.replace("$${cid}", user.cid.toString());
 			html = html.replace("$${myName}", String.valueOf(user.uname));
 			html = html.replace("$${myTel}", user.tel==null? "": user.tel);
-			
-			String authParent = req.getParameter("authParent");
-			Role role = user.getRole();
-			List<RoleAuthority> authList = new ArrayList<RoleAuthority>();
-			if(role!=null){
-				authList = role.Authorities();
-			}
-			Elements list = doc.getElementsByAttribute("auth");
-			for(Element e : list){
-				String target = e.attr("auth");
-				if(StringUtils.isEmpty(target)){
-					continue;
-				}
-				if(authParent!=null){
-					target = target.replace("$${authParent}", authParent);
-				}
-				boolean auth = false;
-				for(RoleAuthority ra : authList){
-					if(ra.name.equals(target)){
-						auth = true;
-						break;
-					}
-				}
-				if(auth==false){
-					e.remove();
-				}
-			}
+			doc = Jsoup.parse(html);
 		}else{
 			LogUtil.log(Level.ERROR, "user session is null", null);
 		}
-		doc = Jsoup.parse(html);
+		
 		clazz = "com.youwei.zjb.view"+clazz;
 		try {
 			Class<?> pageClass = Class.forName(clazz);

@@ -59,7 +59,10 @@ try{
 }
 
 function dialogClose(){
-    art.dialog.close();
+    var list = art.dialog.list;
+    for (var i in list) {
+        list[i].close();
+    };
 }
 function onClickNav(index){
 alert($('#iframe').attr('src'))

@@ -91,6 +91,15 @@ if (id!='') {
     getContent();
 };
 $(document).ready(function() {
+    $.get('/c/config/getQueryOptions', function(data) {
+        queryOptions=JSON.parse(data);
+        buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
+        buildHtmlWithJsonArray("id_hxing",queryOptions['fxing'],true);
+        buildHtmlWithJsonArray("id_zxiu",queryOptions['zhuangxiu'],true);
+        buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
+        buildHtmlWithJsonArray("id_ztai",queryOptions['ztai_sell'],true, true);
+        //doSearchAndSelectFirst();
+    });
 });
 </script>
 </head>
@@ -171,47 +180,42 @@ $(document).ready(function() {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="idCnum" class="col-xs-4 control-label">状态:</label>
+                            <label for="ztai" class="col-xs-4 control-label">状态:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" type="tabs">
-                                    <option value="">Default select</option>
-                                    <option value="">Default select</option>
+                                <select class="form-control" name="ztai" id="id_ztai" type="tabs">
+                                    <option class="id_ztai" value="${name}">${name}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="idCnum" class="col-xs-4 control-label">区域:</label>
+                            <label for="quyu" class="col-xs-4 control-label">区域:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" type="tabs">
-                                    <option value="">Default select</option>
-                                    <option value="">Default select</option>
+                                <select class="form-control" name="quyu" id="id_quyu" type="tabs">
+                                    <option class="id_quyu" value="${name}">${name}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="idCnum" class="col-xs-4 control-label">楼型:</label>
+                            <label for="lxing" class="col-xs-4 control-label">楼型:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" type="tabs">
-                                    <option value="">Default select</option>
-                                    <option value="">Default select</option>
+                                <select class="form-control" name="lxing" id="id_lxing" type="tabs">
+                                    <option class="id_lxing" value="${name}">${name}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="idCnum" class="col-xs-4 control-label">户型:</label>
+                            <label for="hxing" class="col-xs-4 control-label">户型:</label>
                             <div class="col-xs-8">
-                                <select class="form-control onselect">
-                                    <option value="">Default select</option>
-                                    <option value="">Default select</option>
+                                <select class="form-control" name="hxing" id="id_hxing" type="tabs">
+                                    <option class="id_hxing" value="${name}">${name}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="idCnum" class="col-xs-4 control-label">装潢:</label>
+                            <label for="zxiu" class="col-xs-4 control-label" type="tabs">装潢:</label>
                             <div class="col-xs-8">
-                                <select class="form-control onselect">
-                                    <option value="">Default select</option>
-                                    <option value="">Default select</option>
+                                <select class="form-control" name="zxiu" id="id_zxiu">
+                                    <option class="id_zxiu" value="${name}">${name}</option>
                                 </select>
                             </div>
                         </div>

@@ -172,6 +172,25 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .winBoxBorder.winBoxBorderR{ border-right-width: 1px; left: auto;}
 .winBoxBorder.winBoxBorderB{ border-bottom-width: 1px; top: auto;}
 .winBoxBorder.winBoxBorderL{ border-left-width: 1px; right: auto;}
+/* ztree样式 */
+ul.jtree { padding: 0;}
+ul.jtree li a:link, ul.jtree li a:visited, ul.jtree li a:hover, ul.jtree li a:active{text-decoration:none;}
+
+ul.jtree  li,
+ul.jtree  li  a{ min-height: 26px; line-height: 26px;}
+ul.jtree  li{border-bottom: 0px solid #EEE; position: relative;}
+ul.jtree  li  a{ position: absolute; top: 0; right: 20px; bottom: 0; left: 20px; padding-left: 5px; text-decoration:none;}
+ul.jtree  li  a.curSelectedNode{ border:none; background-color:#09F; color: #FFF;}
+ul.jtree  li  a.curSelectedNode>span{ color:#FFF;}
+ul.jtree  li .icon.iconfont{ position: absolute; right: 0; left: auto; font-size: 16px; color: #DDD; }
+ul.jtree  li .icon.icon_sh:hover{ color: #666;}
+ul.jtree  li .icon.icon_wsh{ color: #F00;}
+ul.ztree li span.button.noline_docu,
+ul.jtree li span.button.noline_open,
+ul.jtree li span.button.noline_close{ background-image: url('images/icon_ymxjt.png');background-repeat: no-repeat; height: 11px;}
+ul.jtree li span.button.noline_open{ background-position: 5px -10px;}
+ul.jtree li span.button.noline_close,
+ul.ztree li span.button.noline_docu{ background-position: 5px 0;}
 
 /* 登陆页与主页共用样式 */
 .login a,
@@ -297,7 +316,7 @@ padding: 5px 0;
 .list .footer{ height: 30px; }
 .border_bottom{ position: absolute; right: 0; bottom: 0; left: 0; border-bottom: 1px solid #EEE;}
 
-.list .header .maxHW{ border-bottom: 1px solid #ddd;}
+.list .header .maxHW{ border-bottom: 2px solid #278ADD;}
 .list .bodyer .maxHW{ overflow: hidden; overflow-y: auto; background-color: rgba(255,255,255,1); }
 .list .footer .maxHW{ border-top: 1px solid #ccc;}
 
@@ -316,7 +335,7 @@ padding: 5px 0;
 .list.addSide .bodyer .sideCont .sideHead,
 .list.addSide .bodyer .sideCont .sideFoot{ position: fixed; bottom: 0;width: 268px;
 height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #DDD;}
-.list.addSide .bodyer .sideCont .sideHead{top:143px;height: 31px; line-height: 31px; border:0;border-bottom: 1px solid #EEE; font-size: 14px; text-align: center; font-weight: bold; background-color: #E0EFFF;}
+.list.addSide .bodyer .sideCont .sideHead{top:143px;height: 31px; line-height: 31px; border:0;border-bottom: 1px solid #EEE; font-size: 14px; text-align: center; font-weight: bold; background-color: #E0EFFF;z-index: 9;}
 .list.addSide .bodyer .sideCont .sideFoot, 
 .list.addSide .bodyer .sideCont .sideFoot ul,
 .list.addSide .bodyer .sideCont .sideFoot ul li,

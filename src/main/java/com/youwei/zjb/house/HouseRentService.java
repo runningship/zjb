@@ -148,7 +148,17 @@ public class HouseRentService {
 		}else{
 			hql = new StringBuilder(" select h  from HouseRent  h where 1=1 ");
 		}
-		
+		User u = ThreadSession.getUser();
+		if("all".equals(query.scope)){
+			hql.append(" and (h.cid=? or h.seeGX=?) ");
+			params.add(u.cid);
+			params.add(1);
+		}else if("seeGX".equals(query.scope)){
+			hql.append(" and h.seeGX=1 ");
+		}else if("comp".equals(query.scope)){
+			hql.append(" and h.cid=? ");
+			params.add(u.cid);
+		}
 		if(StringUtils.isNotEmpty(query.ztai)){
 			hql.append(" and h.ztai = ? ");
 			params.add(query.ztai);
@@ -284,7 +294,6 @@ public class HouseRentService {
 		
 		page = service.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
 		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern());
 		fixEnumValue(jpage);
 		mv.data.put("page", jpage);
@@ -296,7 +305,7 @@ public class HouseRentService {
 		for(int i=0;i<results.size();i++){
 			JSONObject obj = results.getJSONObject(i);
 			String key = (String)obj.get("ztai");
-			SellState state = SellState.parse(key);
+			RentState state = RentState.parse(key);
 			if(state!=null){
 				obj.put("ztai", state.toString());
 			}

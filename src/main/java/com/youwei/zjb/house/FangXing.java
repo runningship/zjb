@@ -1,5 +1,7 @@
 package com.youwei.zjb.house;
 
+import org.bc.sdak.utils.LogUtil;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -53,4 +55,5 @@ public enum FangXing {
 		}
 		return arr;
 	}
+	
 }

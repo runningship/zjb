@@ -219,10 +219,21 @@ public class UserService {
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		hql.append("select u.lname as lname, u.uname as uname,u.id as uid ,u.tel as tel,d.namea as dname, u.lasttime as lasttime ,u.ip as ip "
-				+ "from User  u, Department d where d.id = u.did ");
+		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel,d.namea as dname, u.lasttime as lasttime ,u.ip as ip  "
+				+ "from User  u ,Department d  where d.id = u.did");
 		fillQuery(query,hql,params);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
+		for(Map map : page.getResult()){
+			Object roleId = map.get("roleId");
+			String title = "";
+			if(roleId!=null){
+				Role role = dao.get(Role.class, Integer.valueOf(roleId.toString()));
+				if(role!=null){
+					title=role.title;
+				}
+			}
+			map.put("role", title);
+		}
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
 		return mv;
 	}

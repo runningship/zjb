@@ -128,7 +128,7 @@ public class House {
 	public Date dategenjin;
 	
 	public Date dategjlock;
-
+	
 	/**
 	 * 收藏此房源的人
 	 */
@@ -145,10 +145,19 @@ public class House {
 	 */
 	public Integer sh;
 	
+	/**
+	 * 共享该房源
+	 */
 	public Integer seeGX;
 	
+	/**
+	 * 是否可以看房主号码
+	 */
 	public Integer seeHM;
 	
+	/**
+	 * 是否可以看房号
+	 */
 	public Integer seeFH;
 
 	public Integer isdel;

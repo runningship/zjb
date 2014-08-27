@@ -25,9 +25,9 @@ window.onload=function() {
         pcinfo = encodeURI(pcinfo);
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市
-            window.location="http://localhost:8081/welcome.html?pcinfo="+pcinfo;
+            window.location="http://$${domainName}:8081/welcome.html?pcinfo="+pcinfo;
         }else{
-            window.location="http://localhost:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
+            window.location="http://$${domainName}:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
         }
     }); 
     // var inTime=setTimeout(function(){
@@ -87,7 +87,7 @@ vertical-align: middle;
     <div class="tr">
         <div class="td tbody">
             <div class="loginBox">
-                <img src="logo_max.png" alt="">
+                <img src="/logo_max.png" alt="">
                 <p>专　注　服　务　房　产　公　司</p>
             </div>
         </div>

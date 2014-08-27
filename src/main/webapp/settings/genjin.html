@@ -23,6 +23,7 @@
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
+<script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 var did;
 var cid;
@@ -181,8 +182,8 @@ $(document).ready(function() {
     <tr data-hid="${id}" style="display:none;" class="id_House_list" >
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td>
-        <a href="##" class="del shenhe_${sh}" runscript="true" data-hid="${id}" data-rel="del" onclick="shenheGj(${id},this)">getShenHeText(${sh})</a>
-        <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="deletegenjin(${id})">删</a>
+        <a href="##" auth="gj_sh" class="del shenhe_${sh}" runscript="true" data-hid="${id}" data-rel="del" onclick="shenheGj(${id},this)">getShenHeText(${sh})</a>
+        <a href="##" auth="gj_dels" class="del" data-hid="${id}" data-rel="del" onclick="deletegenjin(${id})">删</a>
       </td>
       <td>${houseId}</td>
       <td>${ztai}</td>

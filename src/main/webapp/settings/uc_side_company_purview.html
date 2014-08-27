@@ -32,7 +32,7 @@ var node;
 
   YW.ajax({
     type: 'POST',
-    url: '/c/sys/rolesList?cid=1',
+    url: '/c/sys/rolesList?cid=$${cid}',
     data:'',
     success: function(data){
         var result=JSON.parse(data);
@@ -45,15 +45,16 @@ function onClick(event, treeId, treeNode, clickFlag) {
   node = treeNode;
   console.log(treeNode);
   roleId = treeNode.id;
-  if(treeNode.type=='role'){
-    loadAuthorites();  
-  }
   
   if(clickFlag!=null){
     var treeObj = $.fn.zTree.getZTreeObj(treeId);
-    treeObj.expandNode(treeNode);  
+    treeObj.expandNode(treeNode);
+    if(treeNode.type=='role'){
+      loadAuthorites();  
+    }
   }
-} 
+}
+
 
 function addNode(data){
   var newNodeData = JSON.parse(data);
@@ -103,10 +104,10 @@ function addDiyDom(treeId, treeNode) {
   $("#" + treeNode.tId + "_ico").remove();
   // $("#" + treeNode.tId).css('display','inline');
   var aObj = $("#" + treeNode.tId + "_a");
-  if(treeNode.cnum!=null){
-    var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
-    aObj.prepend(editStr);  
-  }
+  // if(treeNode.cnum!=null){
+  //   var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+  //   aObj.prepend(editStr);  
+  // }
 }
 
 function delNode(){
@@ -123,7 +124,7 @@ function delNode(){
 }
 
 function addRole(){
-    dialog_see=art.dialog.open('v/settings/roleAdd.html?&cid='+id,{
+    dialog_see=art.dialog.open('/v/settings/roleAdd.html?&cid='+id,{
       id:'roleAdd',
       title:'添加职务',
       height:100,
@@ -132,7 +133,7 @@ function addRole(){
 
 }
 function editRole(){
-    dialog_see=art.dialog.open('v/settings/roleEdit.html?&id='+id,{
+    dialog_see=art.dialog.open('/v/settings/roleEdit.html?&id='+id,{
       id:'roleEdit',
       title:'修改职务',
       height:100,
@@ -186,7 +187,7 @@ $(document).ready(function() {
     <tr class="list">
       <td>
         <div class="zTreeDemoBackground left">
-          <ul id="treeDemo" class="ztree"></ul>
+          <ul id="treeDemo" class="ztree jtree"></ul>
         </div>
       </td>
     </tr>
@@ -202,8 +203,8 @@ $(document).ready(function() {
 </div>
 
 <div id="rMenu" class="list-group">
-  <a href="#" data-type="add_role" id="add_role" class="list-group-item" onclick="addRole();">添加职务</a>
-  <a href="#" data-type="editThis" id="editThis" type="zw" class="list-group-item" onclick="editRole();">编辑</a>
-  <a href="#" data-type="delThis" id="delThis" type="zw" class="list-group-item">删除</a>
+  <a href="#" auth="sz_unit_add" data-type="add_role" id="add_role" class="list-group-item" onclick="addRole();">添加职务</a>
+  <a href="#" auth="sz_unit_edit" data-type="editThis" id="editThis" type="zw" class="list-group-item" onclick="editRole();">修改</a>
+  <a href="#" auth="sz_unit_del" data-type="delThis" id="delThis" type="zw" class="list-group-item">删除</a>
 
 </div>

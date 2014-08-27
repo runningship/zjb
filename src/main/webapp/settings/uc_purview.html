@@ -59,6 +59,9 @@ function buildAuthorities(modules){
   tmps.text('${text}');
   for(var i=0; i<modules.length;i++){
     var module = modules[i];
+    if(module['checked']=='checked'){
+      $('[name='+module.name+']').attr('checked','checked');
+    }
     for(var j=0;j<module.children.length;j++){
       var subModule = module.children[j];
       buildHtmlWithJsonArray("auth_third_"+i+"_"+j,subModule.children);
@@ -85,7 +88,7 @@ function setAuthority(input){
 function loadAuthorites(){
   YW.ajax({
       type: 'get',
-      url: '/c/sys/getRoleMenus?roleId='+roleId,
+      url: '/c/sys/getRoleMenus?roleId='+roleId+'&authName=sz_unit_shouquan',
       success: function(data){
         var json = JSON.parse(data);
         buildAuthorities(json['modules']);
@@ -94,7 +97,7 @@ function loadAuthorites(){
 }
 $(document).ready(function() {
     getSider();
-    loadAuthorites();
+    // loadAuthorites();
     $('.id_purview_list').on('click', 'a', function(event) {
         var Thi=$(this),
         rel=Thi.data('rel'),
@@ -126,36 +129,34 @@ $(document).ready(function() {
     <div class="bodyer mainCont">
   <div class="sideCont" id="sideCont"></div>
         <div class="maxHW" style="min-width: 700px;">
-
-  <table class="table table-hover table-striped table-nopadding TableB" >
-    <tbody>
-    <tr data-hid="${id}" style="display:;" class="id_purview_list auth_first">
-      <td class="purview_title">
-        <ul class="purview_list">
-          <li><label>${text}</label></li>
-        </ul>
-      </td>
-      <td>
-        <ul class="purview_cont clearfix">
-          <li class="auth_second_${rowIndex} clearfix">
-              <dl class="purview_conts clearfix">
-                <dt><label><span class="auth_second_tmp"></label></dt>
-                <dd>
-                  <label class="auth_third_${rowIndex}"><input onclick="setAuthority(this)" class="auth_third_tmp" type="checkbox" name="" value=""> <span class="auth_third_tmp"></span></label>
-                </dd>
-              </dl>
-          </li>
-          
-        </ul>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+          <table class="table table-hover table-striped table-nopadding TableB" >
+            <tbody>
+            <tr data-hid="${id}" style="display:none;" class="id_purview_list auth_first">
+              <td class="purview_title">
+                <ul class="purview_list">
+                  <li><input onclick="setAuthority(this)" type="checkbox" name="${name}"><label>${text}</label></li>
+                </ul>
+              </td>
+              <td>
+                <ul class="purview_cont clearfix">
+                  <li class="auth_second_${rowIndex} clearfix">
+                      <dl class="purview_conts clearfix">
+                        <dt><label><span class="auth_second_tmp"></label></dt>
+                        <dd>
+                          <label class="auth_third_${rowIndex}"><input onclick="setAuthority(this)" class="auth_third_tmp" type="checkbox" name="" value=""> <span class="auth_third_tmp"></span></label>
+                        </dd>
+                      </dl>
+                  </li>
+                  
+                </ul>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
     </div>
     <div class="footer">
         <div class="maxHW mainCont">
-1
         </div>
     </div>
 </div>

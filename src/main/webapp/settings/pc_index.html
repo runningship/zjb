@@ -166,8 +166,8 @@ function getShenHeText(lock){
       <td>${ip}</td>
       <td>${beizhu}</td>
       <td>
-        <a href="##" class="del" data-hid="${id}" data-rel="del" runscript="true" onclick="shenhePC(${id})" >getShenHeText(${lock})</a>
-        <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="delPC(${id})">删</a>
+        <a href="##" auth="sz_pc_sh" class="del" data-hid="${id}" data-rel="del" runscript="true" onclick="shenhePC(${id})" >getShenHeText(${lock})</a>
+        <a href="##" auth="sz_pc_del" class="del" data-hid="${id}" data-rel="del" onclick="delPC(${id})">删</a>
       </td>
     </tr>
     </tbody>

@@ -23,7 +23,7 @@ public class home {
 		html = html.replace("$${cname}", comp.namea);
 		Role role = u.getRole();
 		html = html.replace("$${role}", role==null?"":role.title);
-		html = html.replace("$${tel}", u.tel);
+		html = html.replace("$${tel}", u.tel==null? "" : u.tel);
 		return Jsoup.parse(html);
 	}
 }

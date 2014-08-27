@@ -145,7 +145,7 @@ public class ServletHelper {
 			if(!data.containsKey(pname)){
 				Column column = f.getAnnotation(Column.class);
 				if(column!=null && column.nullable()==false){
-					throw new GException(PlatformExceptionType.ParameterMissingError,pname,"");
+					throw new GException(PlatformExceptionType.ParameterMissingError,pname,pname+"不能为空");
 				}
 			}
 			f.setAccessible(true);

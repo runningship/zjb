@@ -25,6 +25,7 @@ import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.entity.Purview;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
+import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
@@ -92,12 +93,9 @@ public class AuthorityService {
 	public ModelAndView deleteRole(int roleId){
 		ModelAndView mv = new ModelAndView();
 		Role po = dao.get(Role.class,roleId);
-		long count = dao.countHqlResult("from User where roleId=?", roleId);
-		if(count>0){
-			throw new GException(PlatformExceptionType.BusinessException, "请先删除该职务下的用户，该职务下目前有"+count+"个用户");
-		}
 		if(po!=null){
 			dao.delete(po);
+			dao.execute("delete from RoleAuthority where roleId=?", roleId);
 			dao.execute("update User u set u.roleId=? where u.roleId=?", 0,roleId);
 		}
 		User user = ThreadSession.getUser();
@@ -146,6 +144,7 @@ public class AuthorityService {
 		comp.put("type", "comp");
 		comp.put("name", dept.namea);
 		comp.put("pId",0);
+		comp.put("open", true);
 		result.add(comp);
 		for(Role role : list){
 			JSONObject json = new JSONObject();
@@ -160,8 +159,11 @@ public class AuthorityService {
 	}
 	
 	@WebMethod
-	public ModelAndView getRoleMenus(int roleId){
+	public ModelAndView getRoleMenus(int roleId , String authName){
 		ModelAndView mv = new ModelAndView();
+//		if(!UserHelper.hasAuthority(ThreadSession.getUser(), authName)){
+//			throw new GException(PlatformExceptionType.BusinessException, "您没有权限对职务进行授权");
+//		}
 		try {
 			String text = FileUtils.readFileToString(new File(ThreadSession.getHttpSession().getServletContext().getRealPath("/")+File.separator+"menus.json"), "utf8");
 			JSONArray jarr = JSONArray.fromObject(text);

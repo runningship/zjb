@@ -41,7 +41,6 @@ public class HouseRent {
 	/**
 	 * 楼栋号
 	 */
-	@Column(nullable=false)
 	public String dhao;
 
 	/**
@@ -55,7 +54,6 @@ public class HouseRent {
 	/**
 	 * 楼层
 	 */
-	@Column(nullable=false)
 	public Integer lceng;
 
 	/**
