@@ -29,7 +29,7 @@ function submits(){
     type: 'POST',
     url: '/c/sys/addRole',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         art.dialog.close();
         art.dialog.opener.addNode(data);
         alert('添加成功');

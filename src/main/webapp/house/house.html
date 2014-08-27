@@ -81,7 +81,7 @@ function shenheFy(id , obj){
   YW.ajax({
     type: 'POST',
     url: '/c/house/toggleShenHe?id='+id,
-    success: function(data){
+    mysuccess: function(data){
         var json = JSON.parse(data);
         if(json.sh==1){
           $(obj).text('审');
@@ -103,7 +103,7 @@ function deletehouse(id){
   YW.ajax({
     type: 'POST',
     url: '/c/house/physicalDelete?id='+id,
-    success: function(data){
+    mysuccess: function(data){
       doSearch();
       alert('删除成功');
     }
@@ -140,7 +140,7 @@ function sideBtnFun(){
             // jQuery ajax   
             $.ajax({
                 url: '/house/house_genjin_add.html',
-                success: function (data) {
+                mysuccess: function (data) {
                     houseGJbox.content(data);
                 },
                 cache: false
@@ -166,7 +166,7 @@ function sideBtnFun(){
                 type: 'POST',
                 url: '/c/house/fav/'+url,
                 data:param,
-                success: function(data){
+                mysuccess: function(data){
                     //var json = JSON.parse(data);
                     alert(alertStr);
                     Thi.html(dimStr);

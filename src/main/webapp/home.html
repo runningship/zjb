@@ -136,7 +136,7 @@ function relogin(){
       $.ajax({
         type: 'get',
         url: '/c/user/logout',
-        success: function(data){
+        mysuccess: function(data){
           window.location="/start.html";
         }
       });

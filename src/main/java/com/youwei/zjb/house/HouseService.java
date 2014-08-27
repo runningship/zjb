@@ -27,6 +27,7 @@ import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
+import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
@@ -40,8 +41,14 @@ public class HouseService {
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
 	@WebMethod
-	public ModelAndView add(House house , String fxing){
+	public ModelAndView add(House house , String hxing){
 		ModelAndView mv = new ModelAndView();
+		if(house.fhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+		}
+		if(house.dhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
+		}
 		User user = ThreadSession.getUser();
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
 		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
@@ -56,11 +63,14 @@ public class HouseService {
 			if(house.zceng==null){
 				throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
 			}
-			if(house.fhao==null){
-				throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
-			}
+			
 			if(house.zjia==null){
 				throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+			}
+			if(house.seeGX==null || house.seeGX==0){
+				if(UserHelper.getUserWithAuthority("fy_sh").isEmpty()){
+					throw new GException(PlatformExceptionType.BusinessException,"由于贵公司没有设置房源审核权限，请选择发布至共享房源,由中介宝审核。");
+				}
 			}
 			house.isdel = 0;
 			house.dateadd = new Date();
@@ -68,7 +78,10 @@ public class HouseService {
 			house.cid = user.cid;
 			house.did = user.did;
 			house.sh = 0;
-			FangXing fx = FangXing.valueOf(fxing);
+			FangXing fx = FangXing.parse(hxing);
+			house.hxf = fx.getHxf();
+			house.hxt = fx.getHxt();
+			house.hxw = fx.getHxw();
 			if(house.mji!=null && house.mji!=0){
 				int jiage = (int) (house.zjia*10000/house.mji);
 				house.djia = (float) jiage;

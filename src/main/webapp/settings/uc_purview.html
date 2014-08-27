@@ -79,7 +79,7 @@ function setAuthority(input){
   YW.ajax({
     type: 'get',
     url: '/c/sys/update?roleId='+roleId+'&name='+input.name+'&value='+input.checked,
-    success: function(data){
+    mysuccess: function(data){
       // alert('设置成功');
     }
   });
@@ -89,7 +89,7 @@ function loadAuthorites(){
   YW.ajax({
       type: 'get',
       url: '/c/sys/getRoleMenus?roleId='+roleId+'&authName=sz_unit_shouquan',
-      success: function(data){
+      mysuccess: function(data){
         var json = JSON.parse(data);
         buildAuthorities(json['modules']);
       }

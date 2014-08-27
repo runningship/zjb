@@ -30,7 +30,7 @@ function submits(){
     type: 'POST',
     url: '/c/dept/update',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
       console.log(1);
       art.dialog.close();
         art.dialog.opener.updateNode($('#namea').val());
@@ -45,7 +45,7 @@ function getContent(){
     type: 'get',
     url: '/c/dept/get?id='+id,
     data:'',
-    success: function(result){
+    mysuccess: function(result){
       var json = JSON.parse(result);
       $('#id').val(json['comp']['id']);
       $('#idCname').val(json['comp']['idCname']);

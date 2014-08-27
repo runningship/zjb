@@ -35,7 +35,7 @@ function getArea(search){
     type: 'post',
     url: url,
     data:param,
-    success: function(data){
+    mysuccess: function(data){
       var getAreas=JSON.parse(data);
       dataArr = getAreas['page']['data'];
       buildHtmlWithJsonArray("id_House_list",dataArr);

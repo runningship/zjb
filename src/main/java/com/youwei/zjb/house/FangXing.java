@@ -56,4 +56,12 @@ public enum FangXing {
 		return arr;
 	}
 	
+	public static FangXing parse(String name){
+		for(FangXing fx : FangXing.values()){
+			if(fx.name.equals(name)){
+				return fx;
+			}
+		}
+		return null;
+	}
 }

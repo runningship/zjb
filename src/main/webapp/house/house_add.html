@@ -31,8 +31,9 @@ function save(){
     type: 'POST',
     url: '/c/house/add',
     data:a,
-    success: function(data){
-        
+    mysuccess: function(data){
+        art.dialog.close();
+        alert('发布成功');
     }
   });
 }
@@ -86,13 +87,13 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="area" class="col-xs-4 control-label">楼盘名称:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="area" id="area" placeholder="">
+                                <input type="text" class="form-control" value="" desc="楼盘名称" name="area" id="area" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="address" class="col-xs-4 control-label">楼盘地址:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="address" id="address" placeholder="">
+                                <input type="text" class="form-control" value="" desc="楼盘地址" name="address" id="address" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -225,10 +226,10 @@ $(document).ready(function() {
                                     <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off"> 发布至共享平台
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="0" name="seeFH" autocomplete="off" checked> 显示房号栋号
+                                    <input type="checkbox" value="1" name="seeFH" autocomplete="off" checked> 显示房号栋号
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="0" name="seeHM" autocomplete="off" checked> 显示房主号码
+                                    <input type="checkbox" value="1" name="seeHM" autocomplete="off" checked> 显示房主号码
                                 </label>
                             </div>
                         </div>

@@ -29,7 +29,7 @@ function submits(){
     type: 'POST',
     url: '/c/dept/group/set',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
       var json = JSON.parse(data);
         art.dialog.close();
         art.dialog.opener.moveTo(json['targetId']);

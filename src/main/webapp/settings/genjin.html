@@ -35,7 +35,7 @@ function doSearch(){
     type: 'POST',
     url: '/c/genjin/list',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
@@ -56,7 +56,7 @@ function shenheGj(id , obj){
   YW.ajax({
     type: 'POST',
     url: '/c/genjin/toggleShenHe?id='+id,
-    success: function(data){
+    mysuccess: function(data){
         var json = JSON.parse(data);
         if(json.sh==1){
           $(obj).text('审');
@@ -74,7 +74,7 @@ function deletegenjin(id){
     YW.ajax({
       type: 'POST',
       url: '/c/genjin/delete?id='+id,
-      success: function(data){
+      mysuccess: function(data){
         doSearch();
           alert('删除成功');
       }

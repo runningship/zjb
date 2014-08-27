@@ -31,7 +31,7 @@ function submits(){
     type: 'POST',
     url: '/c/house/listAll',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
     }
@@ -43,7 +43,7 @@ function getContent(){
     type: 'get',
     url: '/c/house/get?id='+id,
     data:'',
-    success: function(result){
+    mysuccess: function(result){
       var json = JSON.parse(result);
       $('#id').val(json['id']);
       $('#area').val(json['area']);

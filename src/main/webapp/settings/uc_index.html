@@ -36,7 +36,7 @@ function doSearch(){
     type: 'POST',
     url: '/c/user/list',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
@@ -64,7 +64,7 @@ function uc_delete(id){
         type: 'POST',
         url: '/c/user/delete?id='+id,
         data:'',
-        success: function(data){
+        mysuccess: function(data){
             doSearch();
             alert('删除成功');
         }

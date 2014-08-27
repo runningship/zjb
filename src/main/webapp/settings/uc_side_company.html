@@ -33,7 +33,7 @@ YW.ajax({
   type: 'POST',
   url: '/c/dept/getDeptTree?cid=$${cid}',
   data:'',
-  success: function(data){
+  mysuccess: function(data){
       var result=JSON.parse(data);
       $.fn.zTree.init($("#treeDemo"), setting, result.result);
       rMenu = $("#rMenu");
@@ -86,11 +86,11 @@ function OnRightClick(event, treeId, treeNode) {
   }
   id = treeNode.id;
   // blockAlert(event.target.offsetTop);
-  showRMenu(treeNode.type, event.clientX, event.target.offsetTop+70);
+  showRMenu(treeNode.type, event.clientX, event.target.parentElement.parentElement.offsetTop+10);
+  // showRMenu(treeNode.type, event.clientX, event.clientY);
 }
 function showRMenu(type, x, y) {
   $("#rMenu a").show();
-  y=y-30;
   if(type!="comp"){
     $('#m_add_group').hide();
     $('#m_add_dept').hide();
@@ -159,7 +159,7 @@ function shenhe(id){
     YW.ajax({
       type: 'POST',
       url: '/c/dept/toggleShenhe?id='+treeNode.id,
-      success: function(data){
+      mysuccess: function(data){
          if(treeNode.sh==1){
             //开通-->锁定
             treeNode.sh=0;
@@ -184,7 +184,7 @@ function updateGroup(val){
     type: 'POST',
     url: '/c/dept/group/updateName',
     data:'name='+val+'&id='+node.id,
-    success: function(data){
+    mysuccess: function(data){
         alert('修改成功');
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         node.name =val;
@@ -213,7 +213,7 @@ function delNode(){
       type: 'POST',
       url: '/c/dept/group/delete',
       data:'id='+node.id,
-      success: function(data){
+      mysuccess: function(data){
           var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
           treeObj.removeNode(node);
           alert('成功删除分组: '+node.name);
@@ -224,7 +224,7 @@ function delNode(){
       type: 'POST',
       url: '/c/dept/delete',
       data:'deptId='+node.id,
-      success: function(data){
+      mysuccess: function(data){
           var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
           treeObj.removeNode(node);
           alert('成功删除分公司: '+node.name);
@@ -296,7 +296,7 @@ $(document).ready(function() {
                   type: 'POST',
                   url: '/c/dept/group/add',
                   data:'name='+val+'&cid='+node.id,
-                  success: function(data){
+                  mysuccess: function(data){
                       var newNodeData = JSON.parse(data);
                       var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
                       treeObj.addNodes(node, newNodeData);
@@ -398,7 +398,7 @@ $(document).on('keyup','.input_search', function(event) {
   </ul>
 </div>
 
-<div id="rMenu" class="list-group">
+<div id="rMenu" class="list-group" style="position:absolute">
   <a href="#" auth="sz_record_on" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看操作记录</a>
   <a href="#" auth="sz_genjin_on" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
   <a href="#" auth="sz_group_add" id="m_add_group" data-type="addGroup" class="list-group-item" >添加分组</a>

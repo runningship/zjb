@@ -22,7 +22,7 @@ YW.ajax({
   type: 'POST',
   url: '/c/dept/getDeptTree?cid=$${cid}',
   data:'',
-  success: function(data){
+  mysuccess: function(data){
       var result=JSON.parse(data);
       $.fn.zTree.init($("#treeDemo"), setting, result.result);
       rMenu = $("#rMenu");

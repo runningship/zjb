@@ -34,7 +34,7 @@ var node;
     type: 'POST',
     url: '/c/sys/rolesList?cid=$${cid}',
     data:'',
-    success: function(data){
+    mysuccess: function(data){
         var result=JSON.parse(data);
         $.fn.zTree.init($("#treeDemo"), setting, result.result);
         rMenu = $("#rMenu");
@@ -77,11 +77,10 @@ function OnRightClick(event, treeId, treeNode) {
     return;
   }
   id = treeNode.id;
-  showRMenu(treeNode.type, event.clientX, event.target.offsetTop+70);
+  showRMenu(treeNode.type, event.clientX, event.target.parentElement.parentElement.offsetTop+10);
 }
 function showRMenu(type, x, y) {
   $("#rMenu a").show();
-  y=y-30;
   if(type == "comp"){
     $('#editThis').hide();
     $('#delThis').hide();
@@ -115,7 +114,7 @@ function delNode(){
       type: 'POST',
       url: '/c/sys/deleteRole',
       data:'roleId='+node.id,
-      success: function(data){
+      mysuccess: function(data){
           var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
           treeObj.removeNode(node);
           alert('成功删除职务: '+node.name);

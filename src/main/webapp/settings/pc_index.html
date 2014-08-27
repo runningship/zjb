@@ -31,7 +31,7 @@ function doSearch(){
     type: 'POST',
     url: '/c/pc/list',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         setTableFix();
@@ -86,7 +86,7 @@ function delPC(id){
   YW.ajax({
     type: 'POST',
     url: '/c/pc/delete?id='+id,
-    success: function(data){
+    mysuccess: function(data){
         doSearch();
         alert('删除成功');
     }
@@ -96,7 +96,7 @@ function shenhePC(id){
   YW.ajax({
     type: 'POST',
     url: '/c/pc/shenhe?id='+id,
-    success: function(data){
+    mysuccess: function(data){
         doSearch();
     }
   });

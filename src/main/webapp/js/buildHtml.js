@@ -97,10 +97,10 @@ window.alert = function(data){
 YW={
     options:{
         beforeSend: function(XMLHttpRequest){
-              $(document.body).append('<img src="/style/images/ajax-loading.gif" style="display:block;margin-left:auto;margin-right:auto;" id="loading" />');
+            // $(window.parent.document.body).append('<img src="/style/images/ajax-loading.gif" style="display:block;position:absolute;margin-left:auto;margin-right:auto;" id="loading" />');
         },
         complete: function(XMLHttpRequest, textStatus){
-          $('#loading').remove();
+            // $('#loading').remove();
         },
         error: function(data){
             if(data.status==500){

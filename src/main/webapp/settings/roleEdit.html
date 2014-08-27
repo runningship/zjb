@@ -30,7 +30,7 @@ function submits(){
     type: 'POST',
     url: '/c/sys/updateRole',
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         art.dialog.close();
         art.dialog.opener.updateNode($('#title').val());
         alert('修改成功');
@@ -43,7 +43,7 @@ function getContent(){
     type: 'get',
     url: '/c/sys/getRole?roleId='+id,
     data:'',
-    success: function(result){
+    mysuccess: function(result){
       var json = JSON.parse(result)['role'];
       $('#title').val(json['title']);
       $('#id').val(json['id']);

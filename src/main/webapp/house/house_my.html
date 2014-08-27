@@ -46,7 +46,7 @@ function doSearch(callback){
     type: 'POST',
     url: URL_ajax_house_list,
     data:a,
-    success: function(data){
+    mysuccess: function(data){
         houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
@@ -115,7 +115,7 @@ function sideBtnFun(){
             // jQuery ajax   
             $.ajax({
                 url: '/house/house_genjin_add.html',
-                success: function (data) {
+                mysuccess: function (data) {
                     houseGJbox.content(data);
                 },
                 cache: false
@@ -141,7 +141,7 @@ function sideBtnFun(){
                 type: 'POST',
                 url: '/c/house/fav/'+url,
                 data:param,
-                success: function(data){
+                mysuccess: function(data){
                     //var json = JSON.parse(data);
                     alert(alertStr);
                     Thi.html(dimStr);
