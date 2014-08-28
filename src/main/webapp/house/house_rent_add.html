@@ -29,7 +29,7 @@ function save(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/house/add',
+    url: '/c/house/rent/add',
     data:a,
     mysuccess: function(data){
         art.dialog.close();
@@ -62,7 +62,6 @@ if(getParam('chuzu')=='0' || getParam('chuzu')==''){
 // 出租的信息
     api.title('登记出租房源')
 }
-// autocomplete 必加
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a'),
     ThiAH=ThiA.eq(index);
@@ -76,14 +75,14 @@ $(document).ready(function() {
 // autocomplete
     autoComplete($('#area'))
     
-//添加提示框
     $.get('/c/config/getQueryOptions', function(data) {
         queryOptions=JSON.parse(data);
+        buildHtmlWithJsonArray("id_rent_type",queryOptions['rent_type'],true, true);
         buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
         buildHtmlWithJsonArray("id_hxing",queryOptions['fxing'],true);
         buildHtmlWithJsonArray("id_zxiu",queryOptions['zhuangxiu'],true);
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-        buildHtmlWithJsonArray("id_ztai",queryOptions['ztai_sell'],true, true);
+        buildHtmlWithJsonArray("id_ztai",queryOptions['ztai_rent'],true, true);
         //doSearchAndSelectFirst();
     });
 });
@@ -129,7 +128,7 @@ $(document).ready(function() {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="mji" class="col-xs-4 control-label">面积总价:</label>
+                            <label for="mji" class="col-xs-4 control-label">面积租金:</label>
                             <div class="col-xs-4">
                                 <input type="text" class="form-control" value="" desc="面积" name="mji" id="mji" placeholder="">
                             </div>
@@ -159,16 +158,18 @@ $(document).ready(function() {
                     </div>
                     <div class="col-xs-6">
 
-                        <div class="form-group" style=" visibility: hidden">
-                            <label for="nulls" class="col-xs-4 control-label">隐藏占位:</label>
+                        <div class="form-group">
+                            <label for="rent_type" class="col-xs-4 control-label">方式:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="" id="nulls" placeholder="">
+                                <select class="form-control" name="fangshi" id="id_rent_type" type="tabs">
+                                    <option class="id_rent_type" value="${code}">${name}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ztai" class="col-xs-4 control-label">状态:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="ztai" id="ztai" type="tabs">
+                                <select class="form-control" name="ztai" id="id_ztai" type="tabs">
                                     <option class="id_ztai" value="${code}">${name}</option>
                                 </select>
                             </div>
@@ -237,13 +238,13 @@ $(document).ready(function() {
                             <label for="seeGX" class="col-xs-2 control-label">权限:</label>
                             <div class="col-xs-10">
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="0" name="seeGX" id="seeGX" autocomplete="off"> 发布至共享平台
+                                    <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off"> 发布至共享平台
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" checked> 显示房号栋号
+                                    <input type="checkbox" value="1" name="seeFH" autocomplete="off" checked> 显示房号栋号
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" checked> 显示房主号码
+                                    <input type="checkbox" value="1" name="seeHM" autocomplete="off" checked> 显示房主号码
                                 </label>
                             </div>
                         </div>

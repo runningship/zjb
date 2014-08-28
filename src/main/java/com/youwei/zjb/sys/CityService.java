@@ -7,6 +7,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.sys.entity.City;
 import com.youwei.zjb.util.JSONHelper;
 
@@ -20,7 +21,7 @@ public class CityService {
 		City hf = new City();
 		hf.id=1;
 		hf.name="合肥";
-		hf.domain = "hf";
+		hf.domain = ConfigCache.get("domainName", "192.168.1.125");
 		City nj = new City();
 		nj.id=2;
 		nj.name = "南京";

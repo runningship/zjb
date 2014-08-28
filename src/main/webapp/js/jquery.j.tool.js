@@ -137,9 +137,9 @@ function WinMaxRev(){/*最大化*/
 		WinRevert();
 	}
 }
-function WinClose(){/*退出*/
+function WinClose(force){/*退出*/
 //    hex.close();
-	win.close();
+  win.close(force);	
  /* YW.ajax({
     type: 'POST',
     url: '/zb/c/user/logout',
@@ -155,21 +155,21 @@ function WinClose(){/*退出*/
 }
 
 //根据titile可拖动窗口
-document.addEventListener('mousemove', function (e) {
-    if (e.target.classList.contains('title')) {
-        try{
-            hex.setAsTitleBarAreas(e.clientX, e.clientY);
-            // hex.setAsSystemMenuIconAreas(e.clientX, e.clientY);
-        }catch(e){}
-    } else {
-        try{
-            hex.setAsTitleBarAreas(-1, -1);
-            hex.setAsNonBorderAreas(-1, -1);
-        }catch(e){}
-    }
-}, false);
-try{
-}catch(e){}
+// document.addEventListener('mousemove', function (e) {
+//     if (e.target.classList.contains('title')) {
+//         try{
+//             hex.setAsTitleBarAreas(e.clientX, e.clientY);
+//             // hex.setAsSystemMenuIconAreas(e.clientX, e.clientY);
+//         }catch(e){}
+//     } else {
+//         try{
+//             hex.setAsTitleBarAreas(-1, -1);
+//             hex.setAsNonBorderAreas(-1, -1);
+//         }catch(e){}
+//     }
+// }, false);
+// try{
+// }catch(e){}
 
 //添加边框线条
 function WinBoxBorder(){
@@ -241,7 +241,12 @@ $('a').attr('draggable','false');
         }else if(ThiQ=='rev'){
             WinRevert();
         }else if(ThiQ=='close'){
-            quit();
+        	if(Thi.attr('close')=='force'){
+        		WinClose(true);
+        	}else{
+        		quit();
+        	}
+            
         }
         return false;
     });
@@ -261,6 +266,89 @@ function getEnumTexts(category,code){
   }
 }
 
+
+/**
+ * 添加 autoComplete 功能
+ * autoComplete($('#input的class或id'))
+ * 需在页面script中添加以下段落
+  function setSearchValue(index){
+      var ThiA=$('#autoCompleteBox').find('a');
+      ThiA.removeClass('hover');
+      var Vals=ThiA.eq(index).addClass('hover').attr('title');
+      $('#search').val(Vals);
+  }
+ * setSearchValue(当前选中的行)
+ */
+function autoComplete(id){
+    $(document).find('body').prepend('<div id="autoCompleteBox" class="autocomplete"></div>');
+    var Thi=id,
+    oldVal,ThiMaxLen=0,ThiCurrIndex=-1,
+    ThiWidth=Thi.innerWidth(),
+    ThiHeight=Thi.innerHeight()+1,
+    ThiOptTop=Thi.offset().top+ThiHeight,
+    ThiOptLeft=Thi.offset().left,
+    autocomplete=$('#autoCompleteBox');
+    autocomplete.width(ThiWidth).css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
+    Thi.on('keyup',function(event) {
+        var This=$(this),
+        ThisVal=This.val(),
+        param={search:ThisVal};
+        ThiOptTop=Thi.offset().top+ThiHeight,
+        ThiOptLeft=Thi.offset().left,
+        autocomplete.css({'top':ThiOptTop,'left':ThiOptLeft});
+        //alert(event.keyCode)
+        if(event.keyCode=='27'){
+            autocomplete.hide();
+            return false;
+        }else if(event.keyCode=='38'){
+            if(ThiCurrIndex<=0){
+                ThiCurrIndex=0;
+            }else{
+                ThiCurrIndex--;
+            }
+            setSearchValue(ThiCurrIndex);
+            //alert(ThiCurrIndex+'|'+ThiMaxLen+'|'+autocomplete.find('a').eq(ThiCurrIndex).attr('title'))
+            return false;
+        }else if(event.keyCode=='40'){
+            if(ThiCurrIndex>=ThiMaxLen-1){
+                ThiCurrIndex=ThiMaxLen-1;
+            }else{
+                ThiCurrIndex++;
+            }
+            setSearchValue(ThiCurrIndex);
+            //alert(ThiCurrIndex+'|'+ThiMaxLen+'|'+autocomplete.find('a').eq(ThiCurrIndex).attr('title'))
+            return false;
+        }
+        if(oldVal!=ThisVal){
+            oldVal=ThisVal;
+            YW.ajax({
+                type: 'POST',
+                url: '/c/areas/prompt',
+                data:param,
+                success: function(data){
+                    var d=JSON.parse(data);
+                    autocomplete.html('');
+                    $.each(d['houses'], function(index, val) {
+                        autocomplete.prepend('<a href="#" title="'+val.area+'" data-address="'+val.address+'" data-quyu="'+val.quyu+'" ><i>'+val.quyu+'</i><b>'+val.area+'</b>'+val.address+'</a>');
+                    });
+                    ThiMaxLen=d['houses'].length
+                    if(ThiMaxLen>0){
+                        autocomplete.show()
+                    }else{
+                        autocomplete.hide()
+                    }
+                },complete:function(){
+                    
+                },beforeSend:function(){}
+            });
+        }
+    }).on('focusin',function(event) {
+        if(autocomplete.html()){autocomplete.show();}
+    }).on('focusout',function(event) {
+        ThiCurrIndex=0;
+        autocomplete.hide();
+    });
+}
 
 
 
@@ -303,6 +391,7 @@ function menuTopFun(){
     }else{
         menuBLi.eq(0).addClass('curr')
     }
+    menuBLi.addClass('nobar');
 }
 
 // 获取归属地信息
@@ -486,7 +575,7 @@ function quit(){
         type: 'get',
         url: '/c/user/logout',
         success: function(data){
-          WinClose();
+          WinClose(true);
         }
       });
   },function(){},'warning');

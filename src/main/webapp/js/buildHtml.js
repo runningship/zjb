@@ -235,6 +235,7 @@ try{
     var lastErrMsg="";
     process.on("uncaughtException", function(e) {
         if(lastErrMsg != e.message){
+            console.log(lastErrMsg+"="+e.message);
             reportError(e.stack);
             lastErrMsg=e.message;
         }else{

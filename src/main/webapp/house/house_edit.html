@@ -25,15 +25,16 @@
 <script type="text/javascript">
 var id;
 var queryOptions;
-function submits(){
+function save(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/house/listAll',
+    url: '/c/house/update',
     data:a,
     mysuccess: function(data){
-        var houseData=JSON.parse(data);
-        buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
+        art.dialog.close();
+        art.dialog.opener.doSearchAndSelectFirst();
+        alert('修改成功');
     }
   });
 }
@@ -60,10 +61,19 @@ function getContent(){
       $('#zceng').val(json['zceng']);
       $('#lceng').val(json['lceng']);
       $('#beizhu').val(json['beizhu']);
-      $('.btn-primary').removeClass('active');
-      var yy = $('input[name=sh][value='+json['sh']+']').parent();
-      $('input[name=sh][value='+json['sh']+']').attr('checked','checked');
-      yy.addClass('active');
+      $('#id_quyu').val(json['quyu']);
+      $('#id_ztai').val(json['ztai']);
+      $('#id_lxing').val(json['lxing']);
+      $('#id_hxing').val(json['hxing']);
+      $('#id_fxing').val(json['fxing']);
+      $('#id_zxiu').val(json['zxiu']);
+      $('#seeGX').val(json['seeGX']);
+      $('#seeFH').val(json['seeFH']);
+      $('#seeHM').val(json['seeHM']);
+      // $('.btn-primary').removeClass('active');
+      // var yy = $('input[name=sh][value='+json['sh']+']').parent();
+      // $('input[name=sh][value='+json['sh']+']').attr('checked','checked');
+      // yy.addClass('active');
     }
   });
 }
@@ -79,7 +89,7 @@ if (!api) return;
     .button({
       name: '保存',
       callback: function () {
-        form1.submit();
+        save();
         return false;
       },focus: true
     },{
@@ -90,7 +100,19 @@ if (id!='') {
     api.title('修改房源')
     getContent();
 };
+function setSearchValue(index){
+    var ThiA=$('#autoCompleteBox').find('a'),
+    ThiAH=ThiA.eq(index);
+    ThiA.removeClass('hover');
+    var Vals=ThiAH.addClass('hover').attr('title');
+    $('#area').val(Vals);
+    $('#address').val(ThiAH.data('address'));
+    $('#quyu option[value="'+ThiAH.data('quyu')+'"]').attr('selected',true);
+}
 $(document).ready(function() {
+// autocomplete
+    autoComplete($('#area'))
+    
     $.get('/c/config/getQueryOptions', function(data) {
         queryOptions=JSON.parse(data);
         buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
@@ -99,6 +121,7 @@ $(document).ready(function() {
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
         buildHtmlWithJsonArray("id_ztai",queryOptions['ztai_sell'],true, true);
         //doSearchAndSelectFirst();
+        getContent();
     });
 });
 </script>
@@ -108,7 +131,8 @@ $(document).ready(function() {
     <div class="bodyer mainCont">
         <div class="maxHW">
 
-            <form class="form-horizontal form_label_right form1" role="form" onsubmit="submits();return false;">
+            <form class="form-horizontal form_label_right form1" name="form1" role="form" onsubmit="submits();return false;">
+                <input type="hidden" name="id" id="id"/>
                 <div class="row">
                     <div class="col-xs-6">
 
@@ -174,16 +198,16 @@ $(document).ready(function() {
                     <div class="col-xs-6">
 
                         <div class="form-group" style=" visibility: hidden">
-                            <label for="idCnum" class="col-xs-4 control-label">隐藏占位:</label>
+                            <label for="nulls" class="col-xs-4 control-label">隐藏占位:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="area" id="idCnum" placeholder="">
+                                <input type="text" class="form-control" value="" id="nulls" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ztai" class="col-xs-4 control-label">状态:</label>
                             <div class="col-xs-8">
                                 <select class="form-control" name="ztai" id="id_ztai" type="tabs">
-                                    <option class="id_ztai" value="${name}">${name}</option>
+                                    <option class="id_ztai" value="${code}">${name}</option>
                                 </select>
                             </div>
                         </div>
@@ -251,13 +275,13 @@ $(document).ready(function() {
                             <label for="idCnum" class="col-xs-2 control-label">权限:</label>
                             <div class="col-xs-10">
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="share" autocomplete="off"> 发布至共享平台
+                                    <input type="checkbox" value="0" name="seeGX" id="seeGX" autocomplete="off"> 发布至共享平台
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="0" name="share" autocomplete="off" checked> 显示房号栋号
+                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" checked> 显示房号栋号
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="0" name="share" autocomplete="off" checked> 显示房主号码
+                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" checked> 显示房主号码
                                 </label>
                             </div>
                         </div>

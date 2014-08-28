@@ -103,10 +103,10 @@ function addDiyDom(treeId, treeNode) {
   $("#" + treeNode.tId + "_ico").remove();
   // $("#" + treeNode.tId).css('display','inline');
   var aObj = $("#" + treeNode.tId + "_a");
-  // if(treeNode.cnum!=null){
-  //   var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
-  //   aObj.prepend(editStr);  
-  // }
+  if(treeNode.cnum!=null){
+    var editStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+    aObj.prepend(editStr);  
+  }
 }
 
 function delNode(){
@@ -202,8 +202,8 @@ $(document).ready(function() {
 </div>
 
 <div id="rMenu" class="list-group">
-  <a href="#" auth="sz_unit_add" data-type="add_role" id="add_role" class="list-group-item" onclick="addRole();">添加职务</a>
-  <a href="#" auth="sz_unit_edit" data-type="editThis" id="editThis" type="zw" class="list-group-item" onclick="editRole();">修改</a>
-  <a href="#" auth="sz_unit_del" data-type="delThis" id="delThis" type="zw" class="list-group-item">删除</a>
+  <a href="javascript:void(0)" auth="sz_unit_add" data-type="add_role" id="add_role" class="list-group-item" onclick="addRole();">添加职务</a>
+  <a href="javascript:void(0)" auth="sz_unit_edit" data-type="editThis" id="editThis" type="zw" class="list-group-item" onclick="editRole();">修改</a>
+  <a href="javascript:void(0)" auth="sz_unit_del" data-type="delThis" id="delThis" type="zw" class="list-group-item">删除</a>
 
 </div>

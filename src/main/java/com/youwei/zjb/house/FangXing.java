@@ -64,4 +64,17 @@ public enum FangXing {
 		}
 		return null;
 	}
+	
+	public static FangXing parse(int  f , int t , int w){
+		for(FangXing fx : FangXing.values()){
+			if(fx.hxf==f && fx.hxt==t && fx.hxw==w){
+				return fx;
+			}
+		}
+		return null;
+	}
+
+	public String getName() {
+		return name;
+	}
 }

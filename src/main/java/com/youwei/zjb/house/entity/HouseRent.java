@@ -90,7 +90,7 @@ public class HouseRent {
 	public Float mji;
 
 	/**
-	 * 总价(单位万)
+	 * 租金
 	 */
 	public Float zjia;
 

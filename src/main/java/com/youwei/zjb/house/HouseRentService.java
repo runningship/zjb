@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
@@ -16,6 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.DateSeparator;
+import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
@@ -34,9 +36,15 @@ public class HouseRentService {
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
 	@WebMethod
-	public ModelAndView add(HouseRent house){
+	public ModelAndView add(HouseRent house , String hxing){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
+		if(house.mji==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+		}
+		if(house.zjia==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","租金不能为空");
+		}
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
 		House po = service.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
 		if(po!=null){
@@ -47,12 +55,20 @@ public class HouseRentService {
 			house.dateadd = new Date();
 			house.uid = user.id;
 			house.did = user.did;
-			if(house.zjia ==null){
-				house.zjia=0f;
+			house.cid = user.cid;
+			house.sh = 0;
+			FangXing fx = FangXing.parse(hxing);
+			house.hxf = fx.getHxf();
+			house.hxt = fx.getHxt();
+			house.hxw = fx.getHxw();
+			if(house.seeFH==null){
+				house.seeFH=0;
 			}
-			if(house.mji!=null && house.mji!=0){
-				int jiage = (int) (house.zjia*10000/house.mji);
-				house.djia = (float) jiage;
+			if(house.seeHM==null){
+				house.seeHM=0;
+			}
+			if(house.seeGX==null){
+				house.seeGX=0;
 			}
 			service.saveOrUpdate(house);
 			mv.data.put("msg", "发布成功");
@@ -65,17 +81,36 @@ public class HouseRentService {
 	}
 	
 	@WebMethod
-	public ModelAndView update(HouseRent house){
+	public ModelAndView update(HouseRent house , String hxing){
 		ModelAndView mv = new ModelAndView();
 		HouseRent po = service.get(HouseRent.class, house.id);
-		house.isdel = po.isdel;
-		house.dateadd = po.dateadd;
-		house.uid = po.uid;
-		house.did = po.did;
-		if(house.mji!=null && house.mji!=0){
-			int jiage = (int) (house.zjia*10000/house.mji);
-			house.djia = (float) jiage;
-		}
+		po.area = house.area;
+		po.address = house.address;
+		po.ztai = house.ztai;
+		po.dhao = house.dhao;
+		po.fhao = house.fhao;
+		po.quyu= house.quyu;
+		po.lceng = house.lceng;
+		po.zceng = house.zceng;
+		po.lxing = house.lxing;
+		po.mji = house.mji;
+		po.zjia =house.zjia;
+		po.fangshi = house.fangshi;
+		FangXing fx = FangXing.parse(hxing);
+		house.hxf = fx.getHxf();
+		house.hxt = fx.getHxt();
+		house.hxw = fx.getHxw();
+		po.dateyear = house.dateyear;
+		po.zxiu = house.zxiu;
+		po.tel = house.tel;
+		po.lxr = house.lxr;
+		po.forlxr = house.forlxr;
+		po.fortel = house.fortel;
+		po.beizhu = house.beizhu;
+		po.seeFH = house.seeFH;
+		po.seeGX	= house.seeGX;
+		po.seeHM = house.seeHM;
+		
 		service.saveOrUpdate(house);
 		User user = ThreadSession.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
@@ -85,26 +120,13 @@ public class HouseRentService {
 		return mv;
 	}
 	
-	
 	@WebMethod
-	public ModelAndView physicalDeleteBatch(List<Object> ids){
-		List<Integer> params = new ArrayList<Integer>();
+	public ModelAndView get(Integer id){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("result", 0);
-		if(ids.isEmpty()){
-			return mv;
-		}
-		StringBuilder hql = new StringBuilder("delete from HouseRent where id in (-1");
-		StringBuilder gjHql = new StringBuilder("delete from GenJin where hid in (-1");
-		for(Object id : ids){
-			hql.append(",").append("?");
-			gjHql.append(",").append("?");
-			params.add(Integer.valueOf(id.toString()));
-		}
-		hql.append(")");
-		gjHql.append(")");
-		service.execute(hql.toString(), params.toArray());
-		service.execute(gjHql.toString(), params.toArray());
+		HouseRent po = service.get(HouseRent.class, id);
+		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
+		mv.data = JSONHelper.toJSON(po);
+		mv.data.put("hxing", fxing.getName());
 		return mv;
 	}
 	
@@ -165,10 +187,18 @@ public class HouseRentService {
 		}
 		
 		if(StringUtils.isNotEmpty(query.search)){
-			hql.append(" and (h.area like ? or h.address like ? or h.tel like ?)");
+			hql.append(" and (h.area like ? or h.address like ? or h.tel like ?");
 			params.add("%"+query.search+"%");
 			params.add("%"+query.search+"%");
 			params.add("%"+query.search+"%");
+			try{
+				int id = Integer.valueOf(query.search);
+				hql.append(" or h.id=? ");
+				params.add(id);
+			}catch(Exception ex){
+				
+			}
+			hql.append(")");
 		}
 		
 		if(StringUtils.isNotEmpty(query.dhao)){
@@ -282,6 +312,14 @@ public class HouseRentService {
 			hql.append(" and h.djia<= ? ");
 			params.add(query.djiaEnd);
 		}
+		if(query.yearStart!=null){
+			hql.append(" and h.dateyear>= ? ");
+			params.add(query.yearEnd);
+		}
+		if(query.yearStart!=null){
+			hql.append(" and h.dateyear<= ? ");
+			params.add(query.yearEnd);
+		}
 		
 		if(query.userid!=null){
 			hql.append(" and h.uid= ? ");
@@ -297,6 +335,24 @@ public class HouseRentService {
 		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern());
 		fixEnumValue(jpage);
 		mv.data.put("page", jpage);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView toggleShenHe(Integer id){
+		ModelAndView mv = new ModelAndView();
+		if(id!=null){
+			HouseRent po = service.get(HouseRent.class, id);
+			if(po!=null){
+				if(po.sh==1){
+					po.sh=0;
+				}else{
+					po.sh=1;
+				}
+				service.saveOrUpdate(po);
+				mv.data.put("sh", po.sh);
+			}
+		}
 		return mv;
 	}
 	

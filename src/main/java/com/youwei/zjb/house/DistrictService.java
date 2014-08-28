@@ -2,6 +2,7 @@ package com.youwei.zjb.house;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 
@@ -84,5 +85,15 @@ public class DistrictService {
 		return mv;
 	}
 	
-	
+	@WebMethod
+	public ModelAndView prompt(Page<Map> page , String search){
+		ModelAndView mv = new ModelAndView();
+		String hql = "";
+		hql = "select distinct(h.name) as area , h.address as address , h.quyu as quyu from District h where h.name like ? or h.address like ?";
+		page.setPageSize(30);
+		search = "%"+search+"%";
+		page= service.findPage(page, hql, true, new Object[]{search , search});
+		mv.data.put("houses",JSONHelper.toJSONArray(page.getResult()));
+		return mv;
+	}
 }

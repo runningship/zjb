@@ -51,6 +51,7 @@ function getContent(){
       $('#beizhu').val(json['beizhu']);
       $('#tel').val(json['tel']); 
       $('#did').val(json['did']);
+      $('#roleId').val(json['roleId']);
       $('.btn-primary').removeClass('active');
       var yy = $('input[name=lock][value='+json['lock']+']').parent();
       $('input[name=lock][value='+json['lock']+']').attr('checked','checked');
@@ -124,7 +125,7 @@ $(document).ready(function() {
                 <div class="form-group">
                     <label class="col-xs-3 control-label">职务:</label>
                     <div class="col-xs-8 form_menu_box" >
-                        <select class="form-control" name="roleId">
+                        <select class="form-control" id="roleId" name="roleId">
                             <option class="roleList" value="${id}">${title}</option>
                         </select>
                     </div>

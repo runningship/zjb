@@ -24,6 +24,7 @@
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
 <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
+<script type='text/javascript' src='/js/autocomplete/jquery.autocomplete.js'></script>
 <script type="text/javascript">
 var queryOptions;
 var houseGJbox,/*houseSee / houseGJ 的*/
@@ -112,16 +113,6 @@ function deletehouse(id){
 }
 
 function sideBtnFun(){
-
-    $('.sideCont').on('click', '.btns', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        var Thi=$(this),
-        ThiType=Thi.data('type');
-        if(ThiType=='add_company'){
-        }
-        return false;
-    });
     $('.sideCont').on('click', '.btns', function(event) {
         var Thi=$(this),
         ThiHid=Thi.data('hid'),
@@ -138,12 +129,12 @@ function sideBtnFun(){
                 padding:'0'
             });
             // jQuery ajax   
-            $.ajax({
-                url: '/house/house_genjin_add.html',
+            YW.ajax({
+                url: '/v/house/house_genjin_add.html',
                 mysuccess: function (data) {
+                    //blockAlert(data)
                     houseGJbox.content(data);
-                },
-                cache: false
+                },cache: false
             });
         }else if(ThiType=='fav'){
             var ThiIsFav=Thi.attr('fav'),
@@ -174,17 +165,28 @@ function sideBtnFun(){
                     
                 }
             });
+            return false;
         }else if(ThiType=='map'){
             art.dialog.open('/house/house_see_map.html',{id:'seemap',height:400,width:900});
+            return false;
         }else if(ThiType=='copy'){
             alert('不给复制');
+            return false;
         }else{
             return false;
         }
     });
 }
-
+// autocomplete 必加
+function setSearchValue(index){
+    var ThiA=$('#autoCompleteBox').find('a');
+    ThiA.removeClass('hover');
+    var Vals=ThiA.eq(index).addClass('hover').attr('title');
+    $('#search').val(Vals);
+}
 $(document).ready(function() {
+// autocomplete
+    autoComplete($('#search'))
 // 加载侧边按钮功能
     sideBtnFun();
 // 加载侧边
@@ -231,10 +233,10 @@ $(window).resize(function() {      //类别
 </style>
 </head>
 <body>
-<div class="html list title addSide">
+<div class="html list addSide">
     <div class="header">
-        <div class="maxHW title">
-            <ul class="menuLi clearfix title" id="menuTop"></ul>
+        <div class="maxHW ">
+            <ul class="menuLi clearfix titlebar" id="menuTop"></ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" class="userInput" name="xpath" value="">
@@ -256,14 +258,13 @@ $(window).resize(function() {      //类别
         </button>
         <ul class="dropdown-menu" role="menu">
           <li onclick="doSearch();"><label><input type="radio" name="ztai" value="" checked> 所有</label>
-          <li class="id_zhuangtai"><label><input type="radio" name="ztai" value="${code}"  onclick="doSearch();"> ${name}</label>
+          <li class="id_zhuangtai"  onclick="doSearch();"><label><input type="radio" name="ztai" value="${code}"> ${name}</label>
         </ul>
       </div>
       <div class="input-group input-group-max" style="width: 265px;">
         <span class="input-group-addon">智能</span>
         <!-- <input type="hidden" class="form-control input-sm" name="Address" id="Address"> -->
-        <input type="text" class="form-control input-sm" name="search" id="search"  onkeyup="keyupdeal(event);" onkeydown="keydowndeal(event);" onclick="keyupdeal(event);" autocomplete="off" placeholder="楼盘/路段/电话/编号">
-          <div id="suggest" style="position:absolute;height:400px;overflow-y:auto;z-index: 100;display:none"></div>
+        <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
       </div>
       <div class="input-group input-group-too" style="width:130px;">
         <input type="text" class="form-control input-sm" name="dhao" placeholder="栋号">

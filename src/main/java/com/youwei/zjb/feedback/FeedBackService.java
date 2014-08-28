@@ -57,6 +57,7 @@ public class FeedBackService {
 			err.uid=u.id;
 			err.did = u.did;
 			err.cid = u.cid;
+			err.addtime = new Date();
 		}
 		dao.saveOrUpdate(err);
 		return new ModelAndView();

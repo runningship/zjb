@@ -55,10 +55,19 @@
 		}]
 	}]
 },{
-	"name":"sz_on",
+	"name":"sz",
 	"type":"module",
 	"text":"后台管理",
 	"children":[{
+		"name":"sz_action",
+		"text":"后台操作",
+		"type":"virtual",
+		"children":[{
+			"name":"sz_on",
+			"text":"后台设置开关",
+			"type":"menu"
+		}]
+	},{
 		"name":"sz_jiagou_on",
 		"text":"成员管理",
 		"type":"virtual",

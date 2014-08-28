@@ -115,6 +115,7 @@ public class AuthorityService {
 				json.put("id", dept.id+cidOffset);
 				json.put("type", "comp");
 				json.put("name", dept.namea);
+				json.put("cnum", dept.cnum);
 				result.add(json);
 			}
 			List<Role> roles = dao.listByParams(Role.class, "from Role");

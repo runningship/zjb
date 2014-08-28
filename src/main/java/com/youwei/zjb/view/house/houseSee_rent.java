@@ -8,6 +8,7 @@ import org.bc.sdak.CommonDaoService;
 import org.jsoup.nodes.Document;
 
 import com.youwei.zjb.SimpDaoTool;
+import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
@@ -38,8 +39,9 @@ public class houseSee_rent extends AbstractSee{
 		json.put("fortel", h.fortel==null ? "":h.fortel);
 		json.put("dname", dept.namea);
 		json.put("ztai", RentState.parse(h.ztai));
-		json.put("fangshi", RentType.parse(h.fangshi));
-		String favStr = "@"+user.id+"|";
+		RentType fs = RentType.parse(h.fangshi);
+		json.put("fangshi", fs==null ? "": fs.toString());
+		String favStr = "@"+ThreadSession.getUser().id+"|";
 		if(h.fav!=null && h.fav.contains(favStr)){
 			json.put("fav", "1");
 		}else{

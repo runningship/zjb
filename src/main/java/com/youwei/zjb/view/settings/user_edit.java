@@ -29,11 +29,9 @@ public class user_edit extends uc_index_u_add{
 		temp.first().remove();
 		
 		List<Role> roles = dao.listByParams(Role.class, "from Role where cid=?", u.cid);
-		if(roles.isEmpty()){
-			Role r = new Role();
-			r.title="没找到";
-			roles.add(r);
-		}
+		Role r = new Role();
+		r.title="请选择";
+		roles.add(0,r);
 		temp = doc.getElementsByClass("roleList");
 		buildHtmlWithJsonArray(temp.first() , JSONHelper.toJSONArray(roles));
 		temp.first().remove();

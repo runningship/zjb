@@ -59,9 +59,10 @@ function buildAuthorities(modules){
   tmps.text('${text}');
   for(var i=0; i<modules.length;i++){
     var module = modules[i];
-    if(module['checked']=='checked'){
-      $('[name='+module.name+']').attr('checked','checked');
-    }
+    // if(module['checked']=='checked'){
+    //   //选择第一级
+    //   $('[name='+module.name+']').attr('checked','checked');
+    // }
     for(var j=0;j<module.children.length;j++){
       var subModule = module.children[j];
       buildHtmlWithJsonArray("auth_third_"+i+"_"+j,subModule.children);
@@ -77,7 +78,7 @@ function buildAuthorities(modules){
 
 function setAuthority(input){
   YW.ajax({
-    type: 'get',
+    type: 'POST',
     url: '/c/sys/update?roleId='+roleId+'&name='+input.name+'&value='+input.checked,
     mysuccess: function(data){
       // alert('设置成功');
@@ -134,7 +135,7 @@ $(document).ready(function() {
             <tr data-hid="${id}" style="display:none;" class="id_purview_list auth_first">
               <td class="purview_title">
                 <ul class="purview_list">
-                  <li><input onclick="setAuthority(this)" type="checkbox" name="${name}"><label>${text}</label></li>
+                  <li><label>${text}</label></li>
                 </ul>
               </td>
               <td>

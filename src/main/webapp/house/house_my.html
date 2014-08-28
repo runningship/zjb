@@ -28,7 +28,7 @@
 var queryOptions;
 var houseData;
 var houseGJbox,/*houseSee / houseGJ 的*/
-chuzu=getParam('chuzus'),
+chuzu=getParam('chuzu'),
 flags=getParam('flag'),
 URL_ajax_house_list;
 if(flags=='favShou'){
@@ -62,15 +62,17 @@ function getSider(id){
   var url = "";
   if(flags=='favZu' || flags=='addZu'){
     url = '/v/house/houseSee_rent.html?id='+id;
+    // $('div.chushou').remove();
     if(flags=='addZu'){
-    $('td.shc').remove();
-    $('th.shc').remove();
+      $('td.shc').remove();
+      $('th.shc').remove();
     }
   }else{
     url = '/v/house/houseSee.html?id='+id;
+    // $('div.chuzu').remove();
     if(flags=='addShou'){
-    $('td.shc').remove();
-    $('th.shc').remove();
+      $('td.shc').remove();
+      $('th.shc').remove();
     }
   }
   if(id){
@@ -114,7 +116,7 @@ function sideBtnFun(){
             });
             // jQuery ajax   
             $.ajax({
-                url: '/house/house_genjin_add.html',
+                url: '/v/house/house_genjin_add.html',
                 mysuccess: function (data) {
                     houseGJbox.content(data);
                 },
@@ -127,12 +129,20 @@ function sideBtnFun(){
                 chuzu:chuzu
             }
             if(ThiIsFav==1){
-                url='add';
+                if (flags=='favShou'){
+                  url='addSell';
+                }else{
+                  url='addRent';
+                }
                 alertStr="收藏成功";
                 dimStr='<i class="iconfont">&#xe62e;</i> 已收藏';
                 Thi.attr('fav',0).attr('title','已收藏');
             }else{
-                url='delete';
+                if (flags=='favShou'){
+                  url='deleteSell';
+                }else{
+                  url='deleteRent';
+                }
                 alertStr="已取消收藏";
                 dimStr='<i class="iconfont">&#xe648;</i> 收藏';
                 Thi.attr('fav',1).attr('title','点此收藏');
@@ -158,6 +168,29 @@ function sideBtnFun(){
         }
     });
 }
+
+function favDelete(houseId){
+  if (flags=='favShou') {
+  YW.ajax({
+    type: 'POST',
+    url: '/c/house/fav/deleteSell?houseId='+houseId,
+    mysuccess: function(data){
+      doSearchAndSelectFirst();
+    alert('已取消收藏');
+  },complete:function(){}
+});
+}else{
+  YW.ajax({
+    type: 'POST',
+    url: '/c/house/fav/deleteRent?houseId='+houseId,
+    mysuccess: function(data){
+      doSearchAndSelectFirst();
+    alert('已取消收藏');
+  },complete:function(){}
+});
+}
+}
+
 function doSearchAndSelectFirst(){
   doSearch(function(){
     if(houseData.page.data.length>0){
@@ -169,6 +202,11 @@ $(document).ready(function() {
 // 加载侧边按钮功能
     sideBtnFun();
 //添加提示框
+  if (flags=='favZu' ||flags=='addZu') {
+    $('div.chushou').remove();
+  }else {
+    $('div.chuzu').remove();
+  }
     $(document).find('[data-toggle="tooltip"]').tooltip();
     $.get('/c/config/getQueryOptions', function(data) {
         queryOptions=JSON.parse(data);
@@ -176,7 +214,12 @@ $(document).ready(function() {
         buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
         buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
+  if(flags=='favZu' || flags=='addZu'){
+        buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_rent'],true, true);
+        buildHtmlWithJsonArray("id_fangshi",queryOptions['rent_type'],true , true);
+      }else{
         buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
+      }
         Page.Init();
         doSearchAndSelectFirst();
     });
@@ -241,7 +284,7 @@ $(window).resize(function() {      //类别
         <input type="text" class="form-control input-sm" name="search" id="search"  onkeyup="keyupdeal(event);" onkeydown="keydowndeal(event);" onclick="keyupdeal(event);" autocomplete="off" placeholder="楼盘/路段/电话/编号">
           <div id="suggest" style="position:absolute;height:400px;overflow-y:auto;z-index: 100;display:none"></div>
       </div>
-      <div class="input-group input-group-too" style="width:130px;">
+      <div class="input-group input-group-too chushou" style="width:130px;">
         <input type="text" class="form-control input-sm" name="dhao" placeholder="栋号">
         <span class="input-group-addon">-</span>
         <input type="text" class="form-control input-sm" name="fhao" placeholder="房号">
@@ -278,6 +321,15 @@ $(window).resize(function() {      //类别
           <li class="id_zhuangxiu"><label><input type="checkbox" name="zxiu" value="${name}" /> ${name}</label></li>
         </ul>
       </div>
+      <div class="btn-group btn-sm chuzu">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 11px;padding-left: 11px;">
+          方式<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><label><input type="radio" name="fangshi" value="" checked="checked" /> 不限</label></li>
+          <li class="id_fangshi" style="display:none"><label><input type="radio" name="fangshi" value="${code}" /> ${name}</label></li>
+        </ul>
+      </div>
     </div>
 
     <div class="form-group clearfix" style="line-height: 30px;">
@@ -286,15 +338,20 @@ $(window).resize(function() {      //类别
         <input type="text" class="form-control input-sm" name="mjiStart">
         <input type="text" class="form-control input-sm" name="mjiEnd">
       </div>
-      <div class="input-group">
+      <div class="input-group chushou">
         <span class="input-group-addon">总价</span>
         <input type="text" class="form-control input-sm" name="zjiaStart">
         <input type="text" class="form-control input-sm" name="zjiaEnd">
       </div>
-      <div class="input-group">
+      <div class="input-group chushou">
         <span class="input-group-addon">单价</span>
         <input type="text" class="form-control input-sm" name="djiaStart">
         <input type="text" class="form-control input-sm" name="djiaEnd">
+      </div>
+      <div class="input-group chuzu">
+        <span class="input-group-addon">租金</span>
+        <input type="text" class="form-control input-sm" name="zjiaStart">
+        <input type="text" class="form-control input-sm" name="zjiaEnd">
       </div>
       <div class="input-group">
         <span class="input-group-addon">楼层</span>
@@ -348,7 +405,7 @@ $(window).resize(function() {      //类别
     <tr data-hid="${id}" style="display:none;" class="id_House_list" >
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td class="shc">
-        <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="">取消收藏</a>
+        <a href="javascript.void(0)" class="delete" data-hid="${id}" data-rel="del" onclick="favDelete(${id});">取消收藏</a>
       </td>
       <td>${ztai}</td>
       <td>${quyu}</td>

@@ -26,7 +26,6 @@
 <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 var queryOptions;
-
 var houseGJbox,/*houseSee / houseGJ 的*/
 chuzu=getParam('chuzus');
 var houseData;
@@ -65,7 +64,48 @@ function getSider(id){
         });
     }else{
     }
+}
 
+function getShenHeText(lock){
+  if(lock==1){
+    return "审";
+  }else{
+    return "未";
+  }
+}
+
+function shenheFy(id , obj){
+  YW.ajax({
+    type: 'POST',
+    url: '/c/house/rent/toggleShenHe?id='+id,
+    mysuccess: function(data){
+        var json = JSON.parse(data);
+        if(json.sh==1){
+          $(obj).text('审');
+          $(obj).css('color','green');
+        }else{
+          $(obj).text('未');
+          $(obj).css('color','red');
+        }
+    }
+  });
+}
+
+function houseEdit(id){
+  art.dialog.open("/house/house_rent_edit.html?id="+id)
+}
+
+function deletehouse(id){
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+  YW.ajax({
+    type: 'POST',
+    url: '/c/house/rent/physicalDelete?id='+id,
+    mysuccess: function(data){
+      doSearch();
+      alert('删除成功');
+    }
+  });
+  },function(){},'warning');
 }
 
 function sideBtnFun(){
@@ -96,7 +136,7 @@ function sideBtnFun(){
             });
             // jQuery ajax   
             $.ajax({
-                url: '/house/house_genjin_add.html',
+                url: '/v/house/house_genjin_add.html',
                 mysuccess: function (data) {
                     houseGJbox.content(data);
                 },
@@ -140,9 +180,43 @@ function sideBtnFun(){
         }
     });
 }
-
+function autoComplete(id){
+    $(document).find('body').prepend('<div id="autoCompleteBox" class="autocomplete"></div>');
+    var Thi=id,
+    oldVal,
+    ThiOptTop=Thi.offset().top,
+    ThiOptLeft=Thi.offset().left,
+    ThiWidth=Thi.width(),
+    autocomplete=$('#autoCompleteBox');
+    autocomplete.width(ThiWidth).css({'position':'absolute','top':ThiOptTop,'left':ThiOptLeft,'z-index':'999','max-height':'180px','overflow':'auto'});
+    Thi.on('keyup',function(event) {
+        var Thi=$(this),
+        ThiVal=Thi.val(),
+        param={
+            search:ThiVal
+        }
+        if(oldVal!=ThiVal){
+            oldVal=ThiVal;
+            YW.ajax({
+                type: 'POST',
+                url: '/c/areas/prompt',
+                data:param,
+                success: function(data){
+                    var d=JSON.parse(data);
+                    autocomplete.html('');
+                    $.each(d['houses'], function(index, val) {
+                        autocomplete.prepend('<a href="#" title="'+val.area+'">'+val.area+'<i>'+val.area+'</i><b>'+val.area+'</b></a>');
+                    });
+                },complete:function(){
+                    
+                },beforeSend:function(){}
+            });
+        }
+    });
+}
 $(document).ready(function() {
 // 加载侧边按钮功能
+    autoComplete($('#search'))
     sideBtnFun();
 //添加提示框
     $(document).find('[data-toggle="tooltip"]').tooltip();
@@ -176,6 +250,14 @@ $(document).ready(function() {
 $(window).resize(function() {      //类别
 });
 </script>
+<style type="text/css">
+  .selected{
+    background-color: blue;
+  }
+
+.shenhe_0{color:red;}
+.shenhe_1{color:green;}
+</style>
 </head>
 <body>
 <div class="html list title addSide">
@@ -202,8 +284,8 @@ $(window).resize(function() {      //类别
           状态 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" name="ztai" value="" checked> 所有</label>
-          <li class="id_zhuangtai"><label><input type="radio" name="ztai" value="${code}"> ${name}</label>
+          <li onclick="doSearch();"><label><input type="radio" name="ztai" value="" checked> 所有</label>
+          <li class="id_zhuangtai"  onclick="doSearch();"><label><input type="radio" name="ztai" value="${code}"> ${name}</label>
         </ul>
       </div>
       <div class="input-group input-group-max" style="width: 265px;">
@@ -317,9 +399,9 @@ $(window).resize(function() {      //类别
     <tr data-hid="${id}" style="display:none;" class="id_House_list">
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td style="width:50px;">
-        <a auth="fy_sh" href="##" class="del" data-hid="${id}" data-rel="del">审</a>
-        <a auth="fy_edit" href="#" class="edit" data-hid="${id}" data-rel="edit">改</a>
-        <a auth="fy_del" href="##" class="del" data-hid="${id}" data-rel="del">删</a>
+        <a href="##" auth="fy_sh" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
+        <a href="#" auth="fy_edit" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
+        <a href="##" auth="fy_del" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
       </td>
       <td>${ztai}</td>
       <td>${quyu}</td>

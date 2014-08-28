@@ -192,6 +192,17 @@ ul.jtree li span.button.noline_open{ background-position: 5px -10px;}
 ul.jtree li span.button.noline_close,
 ul.ztree li span.button.noline_docu{ background-position: 5px 0;}
 
+.autocomplete{position:absolute;z-index: 999; max-height: 330px; overflow: auto; box-shadow:0 0 5px #09f; border:1px solid #09F; border-top:none; background: #FFF; display: none; }
+.autocomplete a{ display: block; height: 26px; line-height: 26px; border-bottom: 1px solid #EEE; padding: 0 5px; overflow: hidden;  color:#999;}
+.autocomplete a b{ float: left; color: #09F; padding-right: 5px;}
+.autocomplete a i{ float: right; color:#999;}
+.autocomplete a:hover,
+.autocomplete a.hover{ background:#09f; color: #EEF;}
+.autocomplete a:hover b,
+.autocomplete a.hover b,
+.autocomplete a:hover i,
+.autocomplete a.hover i{color: #FFF;}
+
 /* 登陆页与主页共用样式 */
 .login a,
 .login a:hover,
@@ -354,7 +365,7 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .menuLi i.font_icon{ font-family:"微软雅黑","mrciosoft yaei" !important; font-size: 14px; font-weight: bold; border:2px solid #333; padding:0 3px;vertical-align: top; border-radius: 6px}
 .menuLi{ margin:0; padding-left: 10px; }
 .menuLi>li{ float: left; margin:0 5px }
-.menuLi>li.curr {}
+.menuLi>li.curr>a { border-bottom: 3px solid #278ADD;}
 .menuLi>li>i{ vertical-align: middle;}
 .menuLi>li>a{ font-size: 16px; padding:5px 8px; border:1px solid #FFF;}
 .menuLi>li li a{display: block;}

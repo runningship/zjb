@@ -18,16 +18,16 @@
 <script type="text/javascript">
 window.onload=function() {
     var json = loadConfigAsJSON();
-    // blockAlert(JSON.stringify(json));
-    var win =require("nw.gui").Window.get();
+
     loadHardwareInfo(function(pcinfo){
         pcinfo = JSON.stringify(pcinfo);
         pcinfo = encodeURI(pcinfo);
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市
-            window.location="http://$${domainName}:8081/welcome.html?pcinfo="+pcinfo;
+            window.location="/welcome.html?pcinfo="+pcinfo;
         }else{
-            window.location="http://$${domainName}:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
+            // window.location="http://"+json.domain+":8081/login/index.html?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
+            window.location="http://"+json.domain+":8081/login/index.html?&pcinfo="+pcinfo;
         }
     }); 
     // var inTime=setTimeout(function(){
@@ -87,7 +87,7 @@ vertical-align: middle;
     <div class="tr">
         <div class="td tbody">
             <div class="loginBox">
-                <img src="/logo_max.png" alt="">
+                <img src="/style/images/logo_max.png" alt="">
                 <p>专　注　服　务　房　产　公　司</p>
             </div>
         </div>

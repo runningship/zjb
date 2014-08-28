@@ -23,20 +23,13 @@
 <script src="/js/jquery.j.tool.js" type="text/javascript"></script>
 <script src="/js/jquery.SuperSlide.2.1.1.source.js" type="text/javascript"></script>
 <link href="/js/Ladda/ladda-themeless.min.css" rel="stylesheet">
-<script src="/js/Ladda/spin.min.js" type="text/javascript"></script>
-<script src="/js/Ladda/ladda.min.js" type="text/javascript"></script>
+<script src="/js/Ladda/spin.min.js" type="text/javascript" async="async"></script>
+<script src="/js/Ladda/ladda.min.js" type="text/javascript" async="async"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" src="/js/sysinfo.js"></script>
 <script type="text/javascript">
 try{
-    // hex.deleteSystemCommand(hex.SIZE);
-    // hex.formMoving=test;
-    // alert(hex.formMoving);
-    // alert(hex.enableSystemCommand(hex.SIZE,false));
-    // alert(hex.enableSystemCommand(hex.SIZE,true));
-    // alert(hex.insertSystemCommand(hex.SIZE));
-    hex.sizeTo(692,660);
-    // hex.maximize();
+    gui.App.clearCache();
 }catch(e){
     console.log(e);
 }
@@ -44,23 +37,44 @@ var debug=getParam('debug'),
 domains=getParam('domain'),
 cityNames=decodeURI(getParam('cityName')),
 gotos=getParam('goto');
-//blockAlert(window.location.href);
+var pcinfo = getParam('pcinfo');
+try{
+    if(debug){
+        pcinfo = JSON.parse('{}');
+        pcinfo.debug = debug;
+    }else{
+        if(pcinfo==undefined || pcinfo==null){
+            loadHardwareInfo(function(data){
+                pcinfo = JSON.parse(data);
+            });
+        }else{
+            pcinfo = decodeURIComponent(pcinfo.replace(/\+/g,  " "));
+            pcinfo = JSON.parse(pcinfo);
+        }
+    }
+}catch(e){
+
+}
+
+function dialogClose(){
+    var list = art.dialog.list;
+    for (var i in list) {
+        list[i].close();
+    };
+}
 function onClickNav(index){
+alert($('#iframe').attr('src'))
     if(!index){index=0}
     $('.act_menu').find('li').eq(index).find('a').click();
 }
 
-function getSysData(callback){
-    if(debug){
-        var xx = JSON.parse('{}');
-        xx.debug = debug;
-        callback(xx);
-    }else{
-        loadHardwareInfo(function(json){
-            callback(json);
-        });    
+function isFocus(){
+    if(!$('#idName').val()){
+        $('#idName').focus();
+        return false;
     }
-    
+    $('#idPassword').focus();
+    return false;
 }
 function setDomSize(){
     var domW=$(window).width(),
@@ -78,68 +92,78 @@ function ActLnane(){
     actInput=actBox.find('.form-control'),
     actList=actBox.find('.form_menu_list'),
     getLnameJSON=loadConfigAsJSON(),
-    getLnames=getLnameJSON["account"];
+    getLnames=getLnameJSON["account"],
+    actListIndex=-1;
     if (getLnames!=undefined&&getLnames.length>0) {
-        var htmls='';
-        $.each(getLnames, function(index, val) {
-            htmls=htmls + '<li><a href="#"><b>X</b><span>'+val+'</span><a></li>';
-        });
-        var actListOl=actList.find('ol').html(htmls);
+    /* 登陆帐号设置和帐号下拉设置 */
+        var Lindex=getLnames.length-1;
+        actInput.val(getLnames[Lindex]);isFocus();
+        if (getLnames.length>0){
+            var htmls='';
+            $.each(getLnames, function(index, val) {
+                actList.prepend('<a href="#">'+val+'</a>')
+                //htmls='<a href="#">'+val+'<a>'+htmls;
+            });
+            //var actListOl=actList.html(htmls);
+        }
     };
-    actInput.on('focusin', actInput, function(event) {
-        actList.show(300);
-    }).on('focusout', actInput, function(event) {
-        var thiTimes=setTimeout(function(){
-            actList.hide(100);
-            clearTimeout(thiTimes);
-        },100)
-    });
-    actList.on('click', 'a,span', function(event) {
+    if (getLnames!=undefined&&getLnames.length>1) {
+    /* 登陆帐号操作 */
+        actInput.on('focusin', actInput, function(event) {
+            actList.show(300);
+        }).on('focusout', actInput, function(event) {
+            var thiTimes=setTimeout(function(){
+                actList.hide(200);
+                actListIndex=-1;
+                actList.find('a').removeClass('curr');
+                clearTimeout(thiTimes);
+            },300)
+        }).on('keydown', function(event) {
+            var Thi=$(this),
+            ThiVal=Thi.val(),
+            ThiLi=actList.find('a');
+            if(event.keyCode==38 || event.keyCode==40){
+                if(event.keyCode==38){
+                    actListIndex--;
+                }else if(event.keyCode==40){
+                    actListIndex++;
+                }else{return false;}
+                if(actListIndex>=ThiLi.length){actListIndex--;}
+                else if(actListIndex<0){actListIndex=0;}
+                Thi.val(ThiLi.eq(actListIndex).text())
+                ThiLi.removeClass('curr').eq(actListIndex).addClass('curr');
+            }
+            if(event.keyCode==13){return false};
+            if(event.keyCode==9){return true};
+        });
+    };
+    actList.on('click', 'a', function(event) {
         var a=$(this),
         aTxt=a.text();
         if(aTxt){
             actInput.val(aTxt);
-            actList.hide(100);
+            //actList.hide(200);
         }
-        return false;
-    }).on('click', 'a span', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-
+        //blockAlert(a.html())
         return false;
     });
 }
 function hetKeyAct(){
-    $(document).keydown(function(event){  
-//    alert(event.keyCode)
- /*       if ((event.altKey)&&   
-          ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
-           (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
-       {   
-           event.returnValue=false;   
-           return false;  
-       }   
-        if(event.keyCode==8){  
-            return false; //屏蔽退格删除键    
-        }  
-        if(event.keyCode==9){  
-            return false; //屏蔽F5刷新键   
-        }  
-        if((event.ctrlKey) && (event.keyCode==82)){  
-            return false; //屏蔽alt+R   
-        }  */
-    }); 
+    /* 按键处理 */
     $('#idName').keydown(function(event) {
         if(event.keyCode==13){  
-            if(!$('#idPassword').val()){
+            //if(!$('#idPassword').val()){
                 $('#idPassword').focus();
-            }else{
-                $('.btn_submit').click();
-            }
-            return false; //屏蔽退格删除键    
+            //}else{
+            //    $('.btn_submit').click();
+            //}
+            return false; //屏蔽回车键    
         } 
         if(event.keyCode==8){  
             return true; //屏蔽退格删除键    
+        } 
+        if(event.keyCode==9){  
+            return true; //屏蔽退tab键    
         } 
     }).focus();
     $('#idPassword').keydown(function(event) {
@@ -150,17 +174,24 @@ function hetKeyAct(){
         if(event.keyCode==8){  
             return true; //屏蔽退格删除键    
         } 
+        if(event.keyCode==9){  
+            return true; //屏蔽退tab键    
+        } 
     })
-}
-function isFocus(){
-    if(!$('#idName').val()){
-        $('#idName').focus();
-        return false;
-    }
-    $('#idPassword').focus();
-    return false;
+    $('.btn_submit').keydown(function(event) {
+        if(event.keyCode==9){  
+            return false; //屏蔽F5刷新键   
+        }
+        if ((event.keyCode==9)&&(event.keyCode==16)){   
+           event.returnValue=true;   
+           return true;  
+       }   
+    }) 
 }
 $(document).ready(function() {
+// 设置登陆帐号
+    ActLnane();
+// 回车等快捷键功能
     hetKeyAct();
 // 添加winBox边框
     WinBoxBorder();
@@ -170,7 +201,7 @@ $(document).ready(function() {
         var ThiType=Thi.data('type');
         if(ThiType=='url'&&ThiType!='#'){
             var ThiUrl=Thi.attr('href');
-            if(ThiUrl){hex.openExternal(ThiUrl)}
+            if(ThiUrl){shell.openExternal(ThiUrl)}
         }else if(ThiType=='wangjimima'){
             art.dialog({
                 id:'tips',
@@ -191,32 +222,32 @@ $(document).ready(function() {
             if(!$('#idName').val()){
                 l.stop();
                 alert('帐号不能为空');
+                $('#idName').focus();
                 return false;
             }
             if(!$('#idPassword').val()){
                 l.stop();
                 alert('密码不能为空');
+                $('#idPassword').focus();
                 return false;
             }
-            getSysData(function(json){
-                json.lname=$('#idName').val();
-                json.pwd=$('#idPassword').val();
+            pcinfo.lname=$('#idName').val();
+            pcinfo.pwd=$('#idPassword').val();
 
-                YW.ajax({
-                    type: 'POST',
-                    url: '/c/user/login',
-                    data:json,
-                    success: function(data){
-                        if(!debug){
-                            putConfig('domain', domains);
-                            putConfig('cityName', cityNames);
-                            appendConfig('account', json.lname);
-                        }
-                        window.location="../default.html";
-                    },complete:function(){
-                        l.stop();
+            YW.ajax({
+                type: 'POST',
+                url: '/c/user/login',
+                data:pcinfo,
+                success: function(data){
+                    if(!debug){
+                        putConfig('domain', domains);
+                        putConfig('cityName', cityNames);
+                        appendConfig('account', pcinfo.lname);
                     }
-                });
+                    window.location="/v/home.html";
+                },complete:function(){
+                    l.stop();
+                },beforeSend:function(){}
             });
             
             
@@ -229,21 +260,24 @@ $(document).ready(function() {
     setDomSize();
 // 设置页面参数
     $('#idCity').val(cityNames);
-    $('#iframe').attr('src','iframe_reg.html?cityName='+cityNames+'&domain='+domains);
+    
 // 设置默认显示页面
     var inTime=setTimeout(function(){
+        //alert(gotos)
         if(gotos==1){
             onClickNav(1);
-            $("#iframe").contents().find('#authCode').focus();
         }else{
             isFocus();
         }
         clearTimeout(inTime);
     },1300);
 // 按钮加载中状态
-    Ladda.bind( 'button', { timeout: 2000 } );
-// 设置登陆帐号
-    ActLnane();
+    try{
+        Ladda.bind( 'button', { timeout: 2000 } );
+    }catch(e){
+        console.log(e);
+    }
+    
 });
 $(document).on('click', '.act_menu a', function(event) {
     var Thi=$(this),
@@ -252,12 +286,22 @@ $(document).on('click', '.act_menu a', function(event) {
     ThiPliIndex=Thi.parents('li').index();
     Thi.parent().addClass('curr');
     ThiPli.removeClass('curr');
-    var inTime=setTimeout(function(){
-    if(ThiPliIndex==0){
-        isFocus();
-    }else if(ThiPliIndex==1){
-        $("#iframe").contents().find('#authCode').focus();
+    if(ThiPliIndex==1 && $('#iframe').attr('src')==''){
+        art.dialog({id:'winArtDialog',title:false,
+            content:'注册信息加载中...',
+            top:'50%',
+            time:100
+        })
     }
+    var inTime=setTimeout(function(){
+        if(ThiPliIndex==0){
+            isFocus();
+        }else if(ThiPliIndex==1){
+            if($('#iframe').attr('src')==''){
+                $('#iframe').attr('src','iframe_reg.html?cityName='+cityNames+'&domain='+domains);
+                $("#iframe").contents().find('#authCode').focus();
+            }
+        }
         clearTimeout(inTime);
     },600);
 });
@@ -301,24 +345,24 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
 </head>
 <body>
 <div class="html login">
-    <div class="header" style="-webkit-app-region: drag;">
-        <div class="wintool" style="-webkit-app-region: no-drag;">
+    <div class="header titlebar">
+        <div class="wintool nobar">
             <ul class="wintools">
                 <li class="dropdown">
-                    <a href="" class="winBtn winBtnText" data-toggle="dropdown" style="-webkit-app-region:no-drag;">在线客服</a>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <a href="" class="winBtn winBtnText" data-toggle="dropdown">在线客服</a>
+                    <ul class="dropdown-menu dropdown-menu-right nobar" role="menu">
                         <li><a href="#">客服电话：0551-65314555</a></li>
                         <li class="divider"></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=9129588&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：9129588</a></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958811&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：912958811</a></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958822&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：912958822</a></li>
-                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958833&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe64f</i> 客服QQ：912958833</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=9129588&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：9129588</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958811&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：912958811</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958822&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：912958822</a></li>
+                        <li><a href="http://wpa.qq.com/msgrd?v=3&uin=912958833&site=qq&menu=yes" class="btn" data-type="url"><i class="iconfont">&#xe60d;</i> 客服QQ：912958833</a></li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="iconfont">&#xe615</i> 在线反馈</a></li>
-                        <li><a href="http://www.zhongjiebao.com/" class="btn" data-type="url"><i class="iconfont">&#xf0029</i> 登录官网</a></li>
+                        <!-- <li><a href="#"><i class="iconfont iconfontbold">&#xe633;</i> 在线反馈</a></li> -->
+                        <li><a href="http://www.zhongjiebao.com/" class="btn" data-type="url"><i class="iconfont">&#xe60f;</i> 登录官网</a></li>
                     </ul>
                 </li>
-                <li><a href="" class="winBtn winBtnClose" data-q="close"><i></i></a></li>
+                <li><a href="javascript:void(0)" close="force" class="winBtn winBtnClose" data-q="close"><i></i></a></li>
             </ul>    
         </div>
     </div>
@@ -346,7 +390,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                                     <label for="idName" class="col-xs-2 control-label">账号:</label>
                                     <div class="col-xs-8 form_menu_box" id="idNameBox">
                                         <input type="text" class="form-control" id="idName" tabindex="10" placeholder="">
-                                        <div class="form_menu_list"><ol></ol></div>
+                                        <div class="form_menu_list"></div>
                                     </div>
                                     <a class="col-xs-2 btn btn-link" data-type="wangjizhanghao">忘记帐号？</a>
                                 </div>
@@ -372,7 +416,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
             </ul>
             <ul>
                 <li>
-                    <iframe src="iframe_reg.html?cityName=合肥市" id="iframe" name="iframe" width="100%" height="100%" scrolling="no" marginheight="0" frameborder="0"></iframe>
+                    <iframe src="" id="iframe" name="iframe" width="100%" height="100%" scrolling="no" marginheight="0" frameborder="0"></iframe>
                 </li>
             </ul>
             <ul>

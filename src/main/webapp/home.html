@@ -84,7 +84,10 @@ var iframeBox=$('#iframeBox'),
 }
 $(document).ready(function() {
 try{
-  WinMax();
+    WinMax();
+    gui.Window.get().on('close', function() {
+        quit();
+    });
 }catch(e){
 	console.error(e);
 }
@@ -128,7 +131,7 @@ function resetPwd(){
 }
 
 function fankui(){
-  art.dialog.open('/v/fankui.html');
+  art.dialog.open('/v/plugin/fankui.html');
 }
 
 function relogin(){
@@ -136,8 +139,8 @@ function relogin(){
       $.ajax({
         type: 'get',
         url: '/c/user/logout',
-        mysuccess: function(data){
-          window.location="/start.html";
+        success: function(data){
+          window.location="/login/index.html";
         }
       });
   },function(){},'warning');
@@ -156,12 +159,12 @@ function relogin(){
                 <div class="tr tbody">
                     <ul class="menuSide">
                         <li class="curr"><a href="/v/house/house.html" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span>房源</span></a></li>
-                        <li><a href="http://www.jacall.net/" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span>客源</span></a></li>
-                        <li><a href="http://www.lvdong.cc/" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span>业务</span></a></li>
-                        <li><a href="" class="ibtn" data-type="url" data-id="hetong" data-toggle="tooltip" data-placement="right" title="合同"><i class="iconfont">&#xe614;</i><span>合同</span></a></li>
-                        <li><a href="http://www.baidu.com/" class="ibtn" data-type="url" data-id="caiwu" data-toggle="tooltip" data-placement="right" title="财务"><i class="iconfont">&#xe613;</i><span>财务</span></a></li>
-                        <li><a href="http://www.ah54.cn/" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
-                        <li auth="sz" class=" positionBottom"><a href="/v/settings/uc_index.html" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
+                        <li><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span>客源</span></a></li>
+                        <li auth="yw_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span>业务</span></a></li>
+                        <li auth="ht_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="hetong" data-toggle="tooltip" data-placement="right" title="合同"><i class="iconfont">&#xe614;</i><span>合同</span></a></li>
+                        <li auth="cw_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="caiwu" data-toggle="tooltip" data-placement="right" title="财务"><i class="iconfont">&#xe613;</i><span>财务</span></a></li>
+                        <li auth="oa_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
+                        <li auth="sz_on" class=" positionBottom"><a href="/v/settings/uc_index.html" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                     </ul>
                 </div>
 <!--                 <div class="tr tfoot">
