@@ -3,6 +3,7 @@ package com.youwei.zjb.util;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +23,14 @@ public class HqlHelper {
 		}
 		try {
 			Date date = sdf.parse(dateStr);
-			params.add(date);
 			if(sep==DateSeparator.Before){
-				return " and " + fieldName + " <= ? ";
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(date.getTime());
+				cal.add(Calendar.DAY_OF_YEAR, 1);
+				params.add(cal.getTime());
+				return " and " + fieldName + " < ? ";
 			}else{
+				params.add(date);
 				return " and " + fieldName + " >= ? ";
 			}
 		} catch (ParseException e) {

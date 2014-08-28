@@ -351,9 +351,9 @@ public class HouseService {
 		}
 		if(query.yearStart!=null){
 			hql.append(" and h.dateyear>= ? ");
-			params.add(query.yearEnd);
+			params.add(query.yearStart);
 		}
-		if(query.yearStart!=null){
+		if(query.yearEnd!=null){
 			hql.append(" and h.dateyear<= ? ");
 			params.add(query.yearEnd);
 		}
