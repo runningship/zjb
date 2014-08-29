@@ -13,6 +13,7 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -126,6 +127,15 @@ public class HouseService {
 		po.lxr = house.lxr;
 		po.forlxr = house.forlxr;
 		po.fortel = house.fortel;
+		if(house.seeFH==null){
+			house.seeFH=0;
+		}
+		if(house.seeGX==null){
+			house.seeGX=0;
+		}
+		if(house.seeHM==null){
+			house.seeHM=0;
+		}
 		po.beizhu = house.beizhu;
 		po.seeFH = house.seeFH;
 		po.seeGX	= house.seeGX;
@@ -189,7 +199,11 @@ public class HouseService {
 		House po = dao.get(House.class, id);
 		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
 		mv.data = JSONHelper.toJSON(po);
-		mv.data.put("hxing", fxing.getName());
+		if(fxing!=null){
+			mv.data.put("hxing", fxing.getName());
+		}else{
+			LogUtil.warning("房源的户型信息错误,hid="+id);
+		}
 		return mv;
 	}
 	
@@ -255,18 +269,29 @@ public class HouseService {
 		}
 		
 		if(StringUtils.isNotEmpty(query.search)){
-			hql.append(" and (h.area like ? or h.address like ? or h.tel like ?");
-			params.add("%"+query.search+"%");
-			params.add("%"+query.search+"%");
-			params.add("%"+query.search+"%");
-			try{
-				int id = Integer.valueOf(query.search);
-				hql.append(" or h.id=? ");
-				params.add(id);
-			}catch(Exception ex){
-				
+			query.search = query.search.replace(" ", "");
+			if(StringUtils.isNotEmpty(query.search)){
+				hql.append(" and (h.area like ? or h.address like ? or h.tel like ?");
+				params.add("%"+query.search+"%");
+				params.add("%"+query.search+"%");
+				params.add("%"+query.search+"%");
+				try{
+					int id = Integer.valueOf(query.search);
+					hql.append(" or h.id=? ");
+					params.add(id);
+				}catch(Exception ex){
+					
+				}
+				hql.append(")");
 			}
-			hql.append(")");
+			
+//			try{
+//				int id = Integer.valueOf(query.search);
+//				hql.append(" or h.id=? ");
+//				params.add(id);
+//			}catch(Exception ex){
+//				
+//			}
 		}
 		
 		if(StringUtils.isNotEmpty(query.dhao)){
@@ -281,10 +306,10 @@ public class HouseService {
 			hql.append(" and h.fav like ? ");
 			params.add("%"+query.favStr+"%");
 		}
-		if(query.id!=null){
-			hql.append(" and h.id = ?");
-			params.add(query.id);
-		}
+//		if(query.id!=null){
+//			hql.append(" and h.id = ?");
+//			params.add(query.id);
+//		}
 		
 		if(query.quyus!=null){
 			hql.append(" and ( ");
@@ -388,6 +413,11 @@ public class HouseService {
 		if(query.userid!=null){
 			hql.append(" and h.uid= ? ");
 			params.add(query.userid);
+		}
+		
+		if(query.sh!=null){
+			hql.append(" and h.sh= ? ");
+			params.add(query.sh);
 		}
 
 		page.orderBy = "h.dateadd";

@@ -24,7 +24,7 @@ public abstract class AbstractSee extends page{
 		CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 		JSONObject json = getData(Integer.valueOf(id));
 		if(json==null){
-			html="数据不存在";
+			html="404";
 			return Jsoup.parse(html);
 		}else{
 			Elements nrlist = doc.getElementsByClass("neirong");
@@ -47,7 +47,7 @@ public abstract class AbstractSee extends page{
 		html = doc.html();
 		Object seeFH = json.get("seeFH");
 		if(Integer.valueOf(1).equals(seeFH)){
-			html = html.replace("${fdhao}", json.getString("fhao")+"-"+ json.getString("fhao"));
+			html = html.replace("${fdhao}", json.getString("dhao")+"-"+ json.getString("fhao"));
 		}else{
 			html = html.replace("${fdhao}","");
 		}

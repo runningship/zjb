@@ -73,7 +73,7 @@ public class ViewServlet extends HttpServlet{
 		if(user!=null){
 			//总管理员不受影响
 			if(user.id!=1){
-				String authParent = req.getParameter("authParent");
+//				String authParent = req.getParameter("authParent");
 				Role role = user.getRole();
 				List<RoleAuthority> authList = new ArrayList<RoleAuthority>();
 				if(role!=null){
@@ -85,15 +85,24 @@ public class ViewServlet extends HttpServlet{
 					if(StringUtils.isEmpty(target)){
 						continue;
 					}
-					if(authParent!=null){
-						target = target.replace("$${authParent}", authParent);
-					}
+//					if(authParent!=null){
+//						target = target.replace("$${authParent}", authParent);
+//					}
 					boolean auth = false;
 					for(RoleAuthority ra : authList){
-						if(ra.name.equals(target)){
-							auth = true;
-							break;
+						if(target.contains("|")){
+							//或操作
+							if(target.contains(ra.name)){
+								auth = true;
+								break;
+							}
+						}else{
+							if(ra.name.equals(target)){
+								auth = true;
+								break;
+							}
 						}
+						
 					}
 					if(auth==false){
 						e.remove();

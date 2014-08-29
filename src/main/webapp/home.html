@@ -133,15 +133,19 @@ function resetPwd(){
 function fankui(){
   art.dialog.open('/v/plugin/fankui.html');
 }
+function pay(){
+  art.dialog.open('/v/pay/order.html');
+}
 
 function relogin(){
   art.dialog.confirm('退出并重新登录？', function () {
       $.ajax({
-        type: 'get',
-        url: '/c/user/logout',
-        success: function(data){
-          window.location="/login/index.html";
-        }
+            type: 'get',
+            url: '/c/user/logout',
+            success: function(data){
+                gui.App.clearCache();
+                window.location="/login/login.html";
+            }
       });
   },function(){},'warning');
 }
@@ -183,14 +187,16 @@ function relogin(){
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="javascript:void(0)">姓名: $${uname}</a></li>
-                                    <li><a href="javascript:void(0)">账号: $${lname}</a></li>
-                                    <li><a href="javascript:void(0)">$${cname}-$${dname}</a></li>
-                                    <li><a href="javascript:void(0)">职务: $${role}</a></li>
-                                    <li><a href="javascript:void(0)">电话: $${tel}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe601;</i> 姓名: $${uname}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe61f;</i> 账号: $${lname}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe61f;</i> $${cname}-$${dname}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe61f;</i> 职务: $${role}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe61f;</i> 电话: $${tel}</a></li>
+                                    <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="resetPwd();">修改密码</a></li>
                                     <li><a href="javascript:void(0)" onclick="fankui();">建议反馈</a></li>
                                     <li><a href="javascript:void(0)" onclick="relogin();">重新登录</a></li>
+                                    <!-- <li><a href="javascript:void(0)" onclick="pay();">在线付费</a></li> -->
                                 </ul>
                             </li>
                             <li><a href="" class="winBtn black winBtnMin" data-q="min"><i></i></a></li>

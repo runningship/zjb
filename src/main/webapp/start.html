@@ -16,6 +16,16 @@
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" src="/js/sysinfo.js"></script>
 <script type="text/javascript">
+try{
+    win.restore();
+}catch(e){
+    console.log(e);
+}
+try{
+    win.resizeTo(692,660);
+}catch(e){
+    console.log(e);
+}
 window.onload=function() {
     var json = loadConfigAsJSON();
 
@@ -29,17 +39,7 @@ window.onload=function() {
             // window.location="http://"+json.domain+":8081/login/index.html?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
             window.location="http://"+json.domain+":8081/login/index.html?&pcinfo="+pcinfo;
         }
-    }); 
-    // var inTime=setTimeout(function(){
-
-    //     if(json.domain==null || json.domain==undefined || json.domain==""){
-    //         //留在当前页面，选择城市
-    //         window.location="http://192.168.1.125:8081/welcome.html?pcinfo="+pcinfo;
-    //     }else{
-    //         window.location="http://192.168.1.125:8081/login/?cityName="+json.cityName+"&domain="+json.domain+"&pcinfo="+pcinfo;
-    //     }
-    //     clearTimeout(inTime);
-    // },2300);
+    });
 };
 </script>
 </head>
@@ -93,7 +93,7 @@ vertical-align: middle;
         </div>
     <div class="wintool">
         <ul class="wintools">
-            <li><a href="" class="winBtn winBtnClose" data-q="close"><i></i></a></li>
+            <li><a href="javascript:void(0)" class="winBtn winBtnClose" close="force" data-q="close"><i></i></a></li>
         </ul>    
     </div>
     </div>

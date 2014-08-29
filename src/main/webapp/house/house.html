@@ -136,6 +136,7 @@ function sideBtnFun(){
                     houseGJbox.content(data);
                 },cache: false
             });
+            return false;
         }else if(ThiType=='fav'){
             var ThiIsFav=Thi.attr('fav'),
             url,param={
@@ -177,6 +178,15 @@ function sideBtnFun(){
         }
     });
 }
+//文档按钮功能区
+$(document).on('click', '.zbtns', function(event) {
+    var Thi=$(this),
+    ThiType=Thi.data('type');
+    if(ThiType=='qingkong'){
+//art.dialog.tips(window.location.pathname +'<br/>'+ window.location.href +'<br/>'+ window.location.port +'<br/>'+ window.location.protocol +'<br/>'+ window.location.hash +'<br/>'+ window.location.host +'<br/>'+ window.location.search,30);
+        window.location.href=window.location.pathname+window.location.search;
+    }
+});
 // autocomplete 必加
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a');
@@ -239,7 +249,7 @@ $(window).resize(function() {      //类别
             <ul class="menuLi clearfix titlebar" id="menuTop"></ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
-    <input type="hidden" class="userInput" name="xpath" value="">
+    <input type="hidden" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
       <div class="btn-group btn-sm">
@@ -263,7 +273,6 @@ $(window).resize(function() {      //类别
       </div>
       <div class="input-group input-group-max" style="width: 265px;">
         <span class="input-group-addon">智能</span>
-        <!-- <input type="hidden" class="form-control input-sm" name="Address" id="Address"> -->
         <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
       </div>
       <div class="input-group input-group-too" style="width:130px;">
@@ -337,10 +346,10 @@ $(window).resize(function() {      //类别
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索</button>
+        <button type="submit" class="btn btn-sms btn-primary btn_subnmit" data-type="submit">搜索</button>
       </div><br>
       <div class="btn-group">
-        <button type="button" class="btn btn-sms" data-type="qingkong" onclick="window.location.href='house_list.html?nav='getParamS">清空</button>
+        <button type="button" class="btn btn-sms zbtns" data-type="qingkong">清空</button>
       </div>
     </div>
   </form>
@@ -348,7 +357,7 @@ $(window).resize(function() {      //类别
   <table class="table table-nopadding TableH  mainCont" >
     <tr>
       <th>编号</th>
-      <th>操作</th>
+      <th auth="fy_sh|fy_edit|fy_del">操作</th>
       <th>状态</th>
       <th>区域</th>
       <th>楼盘名称</th>
@@ -372,7 +381,7 @@ $(window).resize(function() {      //类别
     <tbody>
     <tr data-hid="${id}" style="display:none;" class="id_House_list" >
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
-      <td style="width:50px;">
+      <td style="width:50px;" auth="fy_sh|fy_edit|fy_del">
         <a href="##" auth="fy_sh" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
         <a href="#" auth="fy_edit" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
         <a href="##" auth="fy_del" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>

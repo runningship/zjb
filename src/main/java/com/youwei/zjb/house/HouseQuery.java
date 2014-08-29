@@ -36,6 +36,7 @@ public class HouseQuery{
 	public Integer fangshi;
 	public String favStr;
 	public String scope="";
+	public Integer sh;
 	
 	// for phone client
 	//current page number

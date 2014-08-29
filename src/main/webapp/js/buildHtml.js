@@ -183,7 +183,6 @@ function loadConfigAsJSON(){
     }catch(e){
         return JSON.parse("{}");
     }
-    
     if(!fs.existsSync("config.data")){
         fs.writeFileSync("config.data", "{}", 'utf8')
     }

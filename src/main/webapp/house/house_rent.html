@@ -60,7 +60,7 @@ function getSider(id){
             $('#sideCont').html(data);
             $('#sideCont').css({top:sideTop});
             var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+3;
-            $('#sideCont').css({'padding-top':sideHeadHeight})
+            $('#sideCont').css({'padding-top':sideHeadHeight});
         });
     }else{
     }
@@ -135,13 +135,14 @@ function sideBtnFun(){
                 padding:'0'
             });
             // jQuery ajax   
-            $.ajax({
+            YW.ajax({
                 url: '/v/house/house_genjin_add.html',
                 mysuccess: function (data) {
                     houseGJbox.content(data);
                 },
                 cache: false
             });
+            return false;
         }else if(ThiType=='fav'){
             var ThiIsFav=Thi.attr('fav'),
             url,param={
@@ -171,52 +172,37 @@ function sideBtnFun(){
                     
                 }
             });
+            return false;
         }else if(ThiType=='map'){
             art.dialog.open('/house/house_see_map.html',{id:'seemap',height:400,width:900});
+            return false;
         }else if(ThiType=='copy'){
             alert('不给复制');
+            return false;
         }else{
             return false;
         }
     });
 }
-function autoComplete(id){
-    $(document).find('body').prepend('<div id="autoCompleteBox" class="autocomplete"></div>');
-    var Thi=id,
-    oldVal,
-    ThiOptTop=Thi.offset().top,
-    ThiOptLeft=Thi.offset().left,
-    ThiWidth=Thi.width(),
-    autocomplete=$('#autoCompleteBox');
-    autocomplete.width(ThiWidth).css({'position':'absolute','top':ThiOptTop,'left':ThiOptLeft,'z-index':'999','max-height':'180px','overflow':'auto'});
-    Thi.on('keyup',function(event) {
-        var Thi=$(this),
-        ThiVal=Thi.val(),
-        param={
-            search:ThiVal
-        }
-        if(oldVal!=ThiVal){
-            oldVal=ThiVal;
-            YW.ajax({
-                type: 'POST',
-                url: '/c/areas/prompt',
-                data:param,
-                success: function(data){
-                    var d=JSON.parse(data);
-                    autocomplete.html('');
-                    $.each(d['houses'], function(index, val) {
-                        autocomplete.prepend('<a href="#" title="'+val.area+'">'+val.area+'<i>'+val.area+'</i><b>'+val.area+'</b></a>');
-                    });
-                },complete:function(){
-                    
-                },beforeSend:function(){}
-            });
-        }
-    });
+//文档按钮功能区
+$(document).on('click', '.zbtns', function(event) {
+    var Thi=$(this),
+    ThiType=Thi.data('type');
+    if(ThiType=='qingkong'){
+        window.location.href=window.location.pathname+window.location.search;
+    }
+});
+// autocomplete 必加
+function setSearchValue(index){
+    var ThiA=$('#autoCompleteBox').find('a');
+    ThiA.removeClass('hover');
+    var Vals=ThiA.eq(index).addClass('hover').attr('title');
+    $('#search').val(Vals);
 }
 $(document).ready(function() {
-// 加载侧边按钮功能
+// autocomplete
     autoComplete($('#search'))
+// 加载侧边按钮功能
     sideBtnFun();
 //添加提示框
     $(document).find('[data-toggle="tooltip"]').tooltip();
@@ -266,7 +252,7 @@ $(window).resize(function() {      //类别
             <ul class="menuLi clearfix title" id="menuTop"></ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
-    <input type="hidden" class="userInput" name="xpath" value="">
+    <input type="hidden" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
       <div class="btn-group btn-sm">
@@ -290,9 +276,7 @@ $(window).resize(function() {      //类别
       </div>
       <div class="input-group input-group-max" style="width: 265px;">
         <span class="input-group-addon">智能</span>
-        <!-- <input type="hidden" class="form-control input-sm" name="Address" id="Address"> -->
-        <input type="text" class="form-control input-sm" name="search" id="search"  onkeyup="keyupdeal(event);" onkeydown="keydowndeal(event);" onclick="keyupdeal(event);" autocomplete="off" placeholder="楼盘/路段/电话/编号">
-          <div id="suggest" style="position:absolute;height:400px;overflow-y:auto;z-index: 100;display:none"></div>
+        <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
       </div>
       <div class="btn-group btn-sm">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 11px;padding-left: 11px;">
@@ -367,7 +351,7 @@ $(window).resize(function() {      //类别
         <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索</button>
       </div><br>
       <div class="btn-group">
-        <button type="button" class="btn btn-sms" data-type="qingkong" onclick="window.location.href='house_list.html?nav='getParamS">清空</button>
+        <button type="button" class="btn btn-sms zbtns" data-type="qingkong">清空</button>
       </div>
     </div>
   </form>
@@ -375,7 +359,7 @@ $(window).resize(function() {      //类别
   <table class="table table-nopadding TableH  mainCont" >
     <tr>
       <th>编号</th>
-      <th>操作</th>
+      <th auth="fy_sh|fy_edit|fy_del">操作</th>
       <th>状态</th>
       <th>区域</th>
       <th>楼盘名称</th>
@@ -398,7 +382,7 @@ $(window).resize(function() {      //类别
     <tbody>
     <tr data-hid="${id}" style="display:none;" class="id_House_list">
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
-      <td style="width:50px;">
+      <td style="width:50px;" auth="fy_sh|fy_edit|fy_del">
         <a href="##" auth="fy_sh" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
         <a href="#" auth="fy_edit" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
         <a href="##" auth="fy_del" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>

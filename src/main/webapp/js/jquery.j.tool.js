@@ -196,7 +196,6 @@ function tableFix(TableH,TableB){
   for(var i=0;i<=TableB.find('td:last').index();i++){
     TableH.find('th').eq(i).width(TableB.find('tr').eq(2).find('td').eq(i).width());
   }
-//  blockAlert(TableB.find('tr').eq(2).html());
 }
 function setTableFix(){
 	var TableH=$('.TableH'),
@@ -204,7 +203,13 @@ function setTableFix(){
 	if(TableH&&TableB){
 		tableFix(TableH,TableB);
 	}
-//    blockAlert(TableB.html())
+}
+// 
+function tableHover(){
+    $(document).find('.table-hover').on('click', 'tr', function(event) {
+        $(this).parents('table').find('tr').removeClass('cursor');
+        $(this).addClass('cursor').addClass('curr');
+    });
 }
 
   //改善btn-group的操作感受
@@ -223,6 +228,9 @@ function setTableFix(){
 
 //页面加载完之后执行的脚本
 $(document).ready(function() {
+// 增加class为table-hover的表格点击行换色
+tableHover();
+// 所有A标签添加禁止拖拽
 $('a').attr('draggable','false');
   //页面侧边动作
   //aBtnNavFun('.aNavBtn');
@@ -289,7 +297,17 @@ function autoComplete(id){
     ThiOptLeft=Thi.offset().left,
     autocomplete=$('#autoCompleteBox');
     autocomplete.width(ThiWidth).css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
-    Thi.on('keyup',function(event) {
+    autocomplete.on('click','a',function(event) {
+       var This=$(this),
+       ThisIndex=This.index(),
+       ThisArea=This.attr('title'),
+       ThisAddress=This.data('address'),
+       ThisQuyu=This.data('quyu');
+       setSearchValue(ThisIndex);
+       return false;
+    });
+    Thi.on('keydown',function(event) {
+    }).on('keyup',function(event) {
         var This=$(this),
         ThisVal=This.val(),
         param={search:ThisVal};
@@ -346,7 +364,10 @@ function autoComplete(id){
         if(autocomplete.html()){autocomplete.show();}
     }).on('focusout',function(event) {
         ThiCurrIndex=0;
-        autocomplete.hide();
+        var autocompleteTime=setTimeout(function(){
+            autocomplete.hide();
+            clearTimeout(autocompleteTime);
+        },200);
     });
 }
 

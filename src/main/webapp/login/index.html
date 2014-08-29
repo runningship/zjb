@@ -29,7 +29,11 @@
 <script type="text/javascript">
 try{
     win.restore();
-    win.resizeTo(892,660);
+}catch(e){
+    console.log(e);
+}
+try{
+    win.resizeTo(692,660);
     gui.App.clearCache();
 }catch(e){
     console.log(e);
@@ -65,7 +69,6 @@ function dialogClose(){
     };
 }
 function onClickNav(index){
-alert($('#iframe').attr('src'))
     if(!index){index=0}
     $('.act_menu').find('li').eq(index).find('a').click();
 }
@@ -78,16 +81,34 @@ function isFocus(){
     $('#idPassword').focus();
     return false;
 }
+
 function setDomSize(){
     var domW=$(window).width(),
     domW3=parseInt(domW*3),
-    bodyer=$('.bodyer')
-    bodyerH=bodyer.height(),
-    menuerH=bodyer.find('.menuer').height(),
-    mainer=bodyer.find('.mainer')
-    mainerH=bodyerH-menuerH;
+    bodyer=$('body'),
+    header=bodyer.find('.header'),
+    menuer=bodyer.find('.menuer'),
+    footer=bodyer.find('.footer'),
+    bodyerH=bodyer.innerHeight(),
+    headerH=header.innerHeight(),
+    menuerH=menuer.innerHeight(),
+    footerH=footer.innerHeight(),
+    mainerH=bodyerH-headerH-menuerH-footerH;
     $(document).find('.tempWrap').width(domW+'px').find('.bd').width(domW3+'px').height(mainerH+'px').find('ul').width(domW+'px').height(mainerH+'px');
     slideW=domW;
+//    art.dialog.tips('<br>dom:bodyerH:'+bodyerH+'<br>menuerH:'+menuerH+'<br>mainerH:'+mainerH+'<br>tempWrap:width:'+domW+'<br>bd:width:'+domW3+'|height:'+mainerH+'<br>ul:width:'+domW+'|height:'+mainerH,30);
+    var menuOnIndex=menuer.find('.on').index(),
+    mainUlLeft=0;
+    if(menuOnIndex>0){
+        mainUlLeft=domW*(menuOnIndex);
+        $(document).find('.bd').css({'left':-mainUlLeft});
+    }
+/**/
+    var menuOn=menuer.find('.on')
+    menuOnPLi=menuer.children('li'),
+    menuOnPLiW=menuOnPLi.innerWidth(),
+    menuOnLeft=menuOn.position().left;
+    menuerBoxCurr(menuer.children('#menu_animate_block'),menuOnLeft+(menuOnPLiW/2-10));
 }
 function ActLnane(){
     var actBox=$('#idNameBox'),
@@ -290,7 +311,7 @@ $(document).on('click', '.act_menu a', function(event) {
     ThiPli.removeClass('curr');
     if(ThiPliIndex==1 && $('#iframe').attr('src')==''){
         art.dialog({id:'winArtDialog',title:false,
-            content:'注册信息加载中...',
+            content:'注册页面加载中...',
             top:'50%',
             time:100
         })
@@ -313,8 +334,12 @@ $(window).resize(function(e) {
     // e.stopPropagation();
     //hex.sizeTo(692,660);
     // setDomSize();
+// 设置页面尺寸
+    setDomSize();
 });
-
+function menuerBoxCurr(menuerBoxI,leftNum){
+    menuerBoxI.stop().animate({left:leftNum},300);
+}
 $(function(){
 var menuerBox=$('.menuer'),
 menuerBoxW=menuerBox.innerWidth(),
@@ -332,6 +357,7 @@ menuerBox.on('click', 'a', function(event) {
     ThiPLiW=ThiPLi.innerWidth(),
     ThiLeft=Thi.position().left;
     menuerBoxI.stop().animate({left: ThiLeft+(ThiPLiW/2-10)},300);
+    //menuerBoxCurr(menuerBoxI,ThiLeft+(ThiPLiW/2-10));
 })
 
 var menuerBoxOn=menuerBox.find('a').parents('.on'),
@@ -343,6 +369,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
 
 // addTitlebar("top-titlebar", "", "");
 }); 
+
 </script>
 </head>
 <body>
@@ -383,7 +410,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                         <div class="col-xs-8">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label for="idCity" class="col-xs-2 control-label">城市:</label>
+                                    <label for="idCity" class="col-xs-2 control-label" onclick="setDomSize();">城市:</label>
                                     <div class="col-xs-8">
                                         <input type="text" class="form-control" value="" id="idCity" placeholder="" readonly>
                                     </div>

@@ -7,6 +7,7 @@ var id;
       showIcon: false,
       addDiyDom: addDiyDom,
       showLine:false,
+      dblClickExpand: false,
     },
     data: {
       simpleData: {
@@ -35,7 +36,7 @@ function addDiyDom(treeId, treeNode) {
   var aObj = $("#" + treeNode.tId + "_a");
   aObj.css('display','inline');
   if(treeNode.cnum!=null){
-    var cnumStr = "<span style='color:#09f;margin-right:0px;'>"+ treeNode.cnum +" </span>";
+    var cnumStr = "<span>"+ treeNode.cnum +" </span>";
     aObj.prepend(cnumStr);  
   }
   // var color="";
@@ -50,6 +51,10 @@ function addDiyDom(treeId, treeNode) {
 
 function onClick(event, treeId, treeNode, clickFlag) {
   console.log(treeNode);
+  if(clickFlag!=null){
+    var treeObj = $.fn.zTree.getZTreeObj(treeId);
+    treeObj.expandNode(treeNode);
+  }
   $('#cid').val("");
   $('#did').val("");
   if(treeNode.type=="comp"){

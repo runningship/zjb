@@ -67,9 +67,18 @@ function getContent(){
       $('#id_hxing').val(json['hxing']);
       $('#id_fxing').val(json['fxing']);
       $('#id_zxiu').val(json['zxiu']);
-      $('#seeGX').val(json['seeGX']);
-      $('#seeFH').val(json['seeFH']);
-      $('#seeHM').val(json['seeHM']);
+      if(json['seeGX']==1){
+        $('#seeGX').attr('checked','checked');
+      }
+      if(json['seeFH']==1){
+        $('#seeFH').attr('checked','checked');
+      }
+      if(json['seeHM']==1){
+        $('#seeHM').attr('checked','checked');
+      }
+      // $('#seeGX').val(json['seeGX']);
+      // $('#seeFH').val(json['seeFH']);
+      // $('#seeHM').val(json['seeHM']);
       // $('.btn-primary').removeClass('active');
       // var yy = $('input[name=sh][value='+json['sh']+']').parent();
       // $('input[name=sh][value='+json['sh']+']').attr('checked','checked');
@@ -275,13 +284,13 @@ $(document).ready(function() {
                             <label for="idCnum" class="col-xs-2 control-label">权限:</label>
                             <div class="col-xs-10">
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="0" name="seeGX" id="seeGX" autocomplete="off"> 发布至共享平台
+                                    <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off" > 发布至共享平台
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" checked> 显示房号栋号
+                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" > 显示房号栋号
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" checked> 显示房主号码
+                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" > 显示房主号码
                                 </label>
                             </div>
                         </div>

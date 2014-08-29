@@ -107,6 +107,7 @@ function showRMenu(type, x, y) {
   if(type=="dept"){
     $('#m_del_group').hide();
     $('#m_edit_group').hide();
+    $('#m_edit_comp').hide();
   }
   if(type=="group"){
     $('#m_list_records').hide();
@@ -406,6 +407,7 @@ $(document).on('keyup','.input_search', function(event) {
   <a href="javascript:void(0)" auth="sz_dian_add" id="m_add_dept" data-type="adddept" class="list-group-item" >添加店面</a>
   <a href="javascript:void(0)" auth="sz_group_set" id="m_move_to" data-type="moveTo" class="list-group-item">移动至</a>
   <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_dept" class="list-group-item">修改店面</a>
+  <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_comp" class="list-group-item">修改公司</a>
   <a href="javascript:void(0)" auth="sz_group_edit" data-type="editThis" id="m_edit_group" class="list-group-item">修改分组</a>
   <a href="javascript:void(0)" auth="sz_dian_del" data-type="delThis" id="m_del_dept" class="list-group-item">删除店面</a>
   <a href="javascript:void(0)" auth="sz_group_del" data-type="delThis" id="m_del_group" class="list-group-item">删除分组</a>

@@ -65,7 +65,55 @@ font-style:normal;
 
 .titlebar{-webkit-app-region:drag;}
 .nobar{-webkit-app-region:no-drag;}
+/* 列表点击之后变色
+// 这里是几份测试数据
+1 67B8FD
+2 4AABFD
+3 39A4FD
+4 278ADD
 
+1 E9E9E9
+2 E0E0E0
+3 CCCCCC
+4 67B8FD
+
+1 E9E9E9
+2 E0E0E0
+3 CCCCCC
+4 67B8FD
+*/
+.table-hover > thead > tr > th,
+.table-hover > tbody > tr > th,
+.table-hover > tfoot > tr > th,
+.table-hover > thead > tr.curr > td,
+.table-hover > tbody > tr.curr > td,
+.table-hover > tfoot > tr.curr > td{
+    color:#999;
+}
+.table-striped > tbody > tr.curr:nth-child(odd) > td,
+.table-striped > tbody > tr.curr:nth-child(odd) > th {
+    color:#999;
+}
+.table-hover > tbody > tr.curr:hover > td,
+.table-hover > tbody > tr.curr:hover > th{
+    color:#999;
+}
+.table-hover > thead > tr > th,
+.table-hover > tbody > tr > th,
+.table-hover > tfoot > tr > th,
+.table-hover > thead > tr.cursor > td,
+.table-hover > tbody > tr.cursor > td,
+.table-hover > tfoot > tr.cursor > td{
+ background:#90CDFF; color:#000;
+}
+.table-striped > tbody > tr.cursor:nth-child(odd) > td,
+.table-striped > tbody > tr.cursor:nth-child(odd) > th {
+background-color: #6FBEFF; color:#000;
+}
+.table-hover > tbody > tr.cursor:hover > td,
+.table-hover > tbody > tr.cursor:hover > th{
+background-color: #6FBEFF; color:#000;
+}
 /* bootstrap 样式修改 */
 .miniwidth{white-space:nowrap;word-break: keep-all; text-align:center;}
 table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
@@ -148,6 +196,8 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .html .wintools>li{ float: left; }
 .html .wintools .winBtn{ display: inline-block; height: 26px; width: 30px; line-height:26px;-webkit-transition:all .3s;}
 .html .wintools .winBtn i{ display: inline-block; height: 100%; width: 100%; background:url(images/winBtn.png) no-repeat left top;}
+.html .wintools ul a { padding:3px 10px;}
+.html .wintools ul a i{font-size: 20px;}
 .html .wintools .winBtn.winBtnMenu i{background-position: -10px  3px }
 .html .wintools .winBtn.winBtnMin i{background-position:-60px  3px }
 .html .wintools .winBtn.winBtnMax i{background-position:-110px  3px }
@@ -300,8 +350,8 @@ padding: 5px 0;
 .default .righter>.table .thead{ height: 27px;}
 
 .default .logo{ display: inline-block; margin:5px 0 0 5px; height: 40px; width: 40px; background: #FFF url('images/logo.png') no-repeat center; background-size: 100% 100%; border-radius: 3px; box-shadow: 0 0 5px #666;}
-.default .iconfont{ width: 100%; display: inline-block; text-align: center; line-height: 20px; font-size: 24px;}
 .default .menuSide { position: relative; height: 100%;}
+.default .menuSide .iconfont{ width: 100%; display: inline-block; text-align: center; line-height: 20px; font-size: 24px;}
 .default .menuSide li,
 .default .menuSideTool li { position: relative; padding:10px 0; text-align: center;-webkit-transition:all .3s; text-shadow: 0 0 10px #555;}
 .default .menuSide li a,
@@ -331,14 +381,14 @@ padding: 5px 0;
 .list .bodyer .maxHW{ overflow: hidden; overflow-y: auto; background-color: rgba(255,255,255,1); }
 .list .footer .maxHW{ border-top: 1px solid #ccc;}
 
-.list.addSide .bodyer .sideCont{ position: absolute; top: -32px; left: 0; z-index: 90; width: 270px; bottom: -35px; background-color: #FFF; border-color: #DDD; border-style: solid; border-top-width: 1px; border-right-width: 2px; overflow: hidden; overflow-y: auto; font-size: 12px;font-family:"microsoft yahei"}
+.list.addSide .bodyer .sideCont{ position: absolute; top: -32px; left: 0; z-index: 90; width: 270px; bottom: -35px; background-color: #F9F9F9; border-color: #DDD; border-style: solid; border-top-width: 1px; border-right-width: 2px; overflow: hidden; overflow-y: auto; font-size: 12px;font-family:"microsoft yahei";}
 .list.addSide .bodyer .sideCont { padding-bottom: 36px; padding-top: 36px;}
 .list.addSide .bodyer .sideCont .biaoti{ color: #999; width: 50px; text-indent: 5px;}
 .list.addSide .bodyer .sideCont .biaotiMax{ width: 78px;}
 .list.addSide .bodyer .sideCont .neirong{ text-align: left;}
 .list.addSide .bodyer .sideCont .biaoti,
-.list.addSide .bodyer .sideCont .neirong{ padding:5px 0;}
-.list.addSide .bodyer .sideCont h2{ font-size: 14px; font-weight: bold; height: 31px; line-height: 31px; text-indent: 10px; background-color: #FFF; border-top: 1px solid #DDD; border-bottom: 0px solid #DDD; margin:0; text-align: center;  background-color: #E0EFFF;}
+.list.addSide .bodyer .sideCont .neirong{ padding:7px 0; border-bottom: 1px solid #DDD;}
+.list.addSide .bodyer .sideCont h2{ font-size: 14px; font-weight: bold; height: 31px; line-height: 31px; text-indent: 10px; background-color: #FFF; border-top: 1px solid #DDD; border-bottom: 1px solid #DDD; margin:0; text-align: center;  background-color: #EEE;}
 .list.addSide .bodyer .sideCont th{padding: 0; border:0;}
 .list.addSide .bodyer .sideCont .see_house_genjin { margin-top: 10px;}
 .list.addSide .bodyer .sideCont .see_house_genjin td p{ color: #999;}
@@ -346,7 +396,7 @@ padding: 5px 0;
 .list.addSide .bodyer .sideCont .sideHead,
 .list.addSide .bodyer .sideCont .sideFoot{ position: fixed; bottom: 0;width: 268px;
 height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #DDD;}
-.list.addSide .bodyer .sideCont .sideHead{top:143px;height: 31px; line-height: 31px; border:0;border-bottom: 1px solid #EEE; font-size: 14px; text-align: center; font-weight: bold; background-color: #E0EFFF;z-index: 9;}
+.list.addSide .bodyer .sideCont .sideHead{top:143px;height: 32px; line-height: 32px; border:0;border-bottom: 1px solid #DDD; font-size: 14px; text-align: center; font-weight: bold; background-color: #E0EFFF;z-index: 9;}
 .list.addSide .bodyer .sideCont .sideFoot, 
 .list.addSide .bodyer .sideCont .sideFoot ul,
 .list.addSide .bodyer .sideCont .sideFoot ul li,

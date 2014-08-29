@@ -107,6 +107,15 @@ public class HouseRentService {
 		po.forlxr = house.forlxr;
 		po.fortel = house.fortel;
 		po.beizhu = house.beizhu;
+		if(house.seeFH==null){
+			house.seeFH=0;
+		}
+		if(house.seeGX==null){
+			house.seeGX=0;
+		}
+		if(house.seeHM==null){
+			house.seeHM=0;
+		}
 		po.seeFH = house.seeFH;
 		po.seeGX	= house.seeGX;
 		po.seeHM = house.seeHM;
@@ -213,9 +222,14 @@ public class HouseRentService {
 			hql.append(" and h.fav like ? ");
 			params.add("%"+query.favStr+"%");
 		}
-		if(query.id!=null){
-			hql.append(" and h.id = ?");
-			params.add(query.id);
+//		if(query.id!=null){
+//			hql.append(" and h.id = ?");
+//			params.add(query.id);
+//		}
+		
+		if(query.sh!=null){
+			hql.append(" and h.sh = ?");
+			params.add(query.sh);
 		}
 		
 		if(query.quyus!=null){
