@@ -196,7 +196,13 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .html .wintools>li{ float: left; }
 .html .wintools .winBtn{ display: inline-block; height: 26px; width: 30px; line-height:26px;-webkit-transition:all .3s;}
 .html .wintools .winBtn i{ display: inline-block; height: 100%; width: 100%; background:url(images/winBtn.png) no-repeat left top;}
-.html .wintools ul a { padding:3px 10px;}
+.html .wintools ul.dropdown-menu > li > a { padding:3px 10px;}
+.html .wintools ul.dropdown-menu > li > a:hover,
+.html .wintools ul.dropdown-menu > li > a:focus {
+color: #FFF;
+text-decoration: none;
+background-color: #09F;
+}
 .html .wintools ul a i{font-size: 20px;}
 .html .wintools .winBtn.winBtnMenu i{background-position: -10px  3px }
 .html .wintools .winBtn.winBtnMin i{background-position:-60px  3px }
@@ -309,7 +315,7 @@ map area:hover{ border:10px solid #000;}
 -moz-animation: flipInX 1s .2s ease both;
 }
 @-webkit-keyframes flipInX{
-0%{-webkit-transform:perspective(400px) rotateX(90deg);
+0%{-webkit-transform:perspective(400px) rotateX(20deg);
 opacity:0}
 40%{-webkit-transform:perspective(400px) rotateX(-10deg)}
 70%{-webkit-transform:perspective(400px) rotateX(10deg)}
@@ -317,7 +323,7 @@ opacity:0}
 opacity:1}
 }
 @-moz-keyframes flipInX{
-0%{-moz-transform:perspective(400px) rotateX(90deg);
+0%{-moz-transform:perspective(400px) rotateX(20deg);
 opacity:0}
 40%{-moz-transform:perspective(400px) rotateX(-10deg)}
 70%{-moz-transform:perspective(400px) rotateX(10deg)}

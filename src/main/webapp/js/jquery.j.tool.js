@@ -591,6 +591,7 @@ function jajax(url,param,asyncs){
 
 
 function quit(){
+  win.focus();
   art.dialog.confirm('退出系统？', function () {
       $.ajax({
         type: 'get',

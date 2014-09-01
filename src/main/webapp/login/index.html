@@ -219,7 +219,14 @@ $(document).ready(function() {
 // 添加winBox边框
     WinBoxBorder();
 // 按钮功能区
-    $(document).on('click', '.btn', function(event) {
+    $(document).on('click', '.menuBtn', function(event) {
+        var Thi=$(this);
+        var ThiType=Thi.data('type');
+        if(ThiType=='url'&&ThiType!='#'){
+            var ThiUrl=Thi.attr('href');
+            if(ThiUrl){shell.openExternal(ThiUrl)}
+        }
+    }).on('click', '.btn', function(event) {
         var Thi=$(this);
         var ThiType=Thi.data('type');
         if(ThiType=='url'&&ThiType!='#'){
