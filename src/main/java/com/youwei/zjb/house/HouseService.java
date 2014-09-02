@@ -38,6 +38,18 @@ public class HouseService {
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
 	@WebMethod
+	public ModelAndView exist(String area, String dhao , String fhao){
+		ModelAndView mv = new ModelAndView();
+		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{area,dhao,fhao});
+		if(po==null){
+			mv.data.put("exist", "0");
+		}else{
+			mv.data.put("exist", "1");
+			mv.data.put("hid", po.id);
+		}
+		return mv;
+	}
+	@WebMethod
 	public ModelAndView add(House house , String hxing){
 		ModelAndView mv = new ModelAndView();
 		if(house.fhao==null){
@@ -50,8 +62,7 @@ public class HouseService {
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
 		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
 		if(po!=null){
-			mv.data.put("msg", "同一个房源已经存在");
-			mv.data.put("result", 2);
+			throw new GException(PlatformExceptionType.BusinessException,"存在栋号，房号相同的房源,编号为"+po.id);
 		}else{
 			
 			if(house.mji==null){
@@ -423,6 +434,7 @@ public class HouseService {
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
 		page.setPageSize(20);
+		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
 		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern());

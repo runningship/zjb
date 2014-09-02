@@ -76,16 +76,20 @@ public class PGenjinService {
 		}
 		boolean delete=false;
 		long count = dao.countHql("select count(distinct cid) from GenJin where hid=? and sh=1 and addtime>? and chuzu=0 and flag=? ", h.id, lockdate , type);
-		if(String.valueOf(SellState.在售.getCode()).equals(h.ztai)){
+		if(String.valueOf(SellState.在售.getCodeString()).equals(h.ztai)){
 			if(SellState.已售.getCode()==type || SellState.停售.getCode()==type){
 				if(count>=5){
 					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
 					dao.saveOrUpdate(h);
+				}else{
+					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 				}
+			}else{
+				gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 			}
-		}else if(String.valueOf(SellState.已售.getCode()).equals(h.ztai)){
+		}else if(String.valueOf(SellState.已售.getCodeString()).equals(h.ztai)){
 			if(count>=2){
 				if(type==SellState.已售.getCode()){
 					dao.delete(h);
@@ -98,7 +102,7 @@ public class PGenjinService {
 					
 				}
 			}
-		}else if(String.valueOf(SellState.停售.getCode()).equals(h.ztai)){
+		}else if(String.valueOf(SellState.停售.getCodeString()).equals(h.ztai)){
 			if(count>=2){
 				if(type==SellState.停售.getCode()){
 					dao.delete(h);

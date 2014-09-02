@@ -245,6 +245,7 @@ public class UserService {
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException, "用户名不存在");
 		}
+		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
 		return new ModelAndView();
 	}
 	

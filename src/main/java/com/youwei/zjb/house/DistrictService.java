@@ -51,6 +51,14 @@ public class DistrictService {
 	}
 	
 	@WebMethod
+	public ModelAndView getMapInfo(String area){
+		ModelAndView mv = new ModelAndView();
+		List<District> areas = service.listByParams(District.class, "from District where name like ?", "%"+area+"%");
+		mv.data.put("areas", JSONHelper.toJSONArray(areas));
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView list(String search , Page<District> page){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder("from District where 1=1 ");

@@ -33,13 +33,15 @@ public class GenJinService {
 	public ModelAndView add(GenJin gj){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSession.getUser();
-		if(gj.chuzu==0){
+		if(gj.chuzu==null || gj.chuzu==0){
 			PGenjinService ps = new PGenjinService();
 			mv = ps.add(user.id, gj.hid, gj.flag, gj.conts);
 			mv.encodeReturnText=false;
 			return mv;
 		}else{
 			gj.uid = user.id;
+			gj.did = user.did;
+			gj.cid = user.cid;
 			gj.addtime = new Date();
 			HouseRent hr = dao.get(HouseRent.class, gj.hid);
 			gj.ztai = RentState.parse(hr.ztai)+"-"+RentState.parse(String.valueOf(gj.flag));

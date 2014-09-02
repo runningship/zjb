@@ -93,8 +93,8 @@ $(window).resize(function() {      //类别
       </div>
       <div class="input-group" style="width:400px">
         <span class="input-group-addon">操作时间</span>
-        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:150px;border-radius:0;">
-        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:150px">
+        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:150px;border-radius:0;">
+        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:150px">
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索提交</button>

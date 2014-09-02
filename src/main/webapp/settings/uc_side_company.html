@@ -1,5 +1,5 @@
 <style type="text/css">
-  div#rMenu {position:absolute; visibility:hidden; top:0;width:150px; text-align: left;padding: 2px;}
+  div#rMenu {position:absolute; top:0;width:150px; text-align: left;padding: 2px;}
   div#rMenu ul li{
     margin: 5px 0;
     padding: 0 15px;
@@ -86,8 +86,12 @@ function OnRightClick(event, treeId, treeNode) {
   }
   id = treeNode.id;
   // blockAlert(event.target.offsetTop);
-  showRMenu(treeNode.type, event.clientX, event.target.parentElement.parentElement.offsetTop+10);
-  // showRMenu(treeNode.type, event.clientX, event.clientY);
+  // showRMenu(treeNode.type, event.clientX, event.target.parentElement.parentElement.offsetTop+10);
+  var Y = event.clientY;
+  // if(Y+250>$('#sideCont')[0].clientHeight){
+  //   Y-=250;
+  // }
+  showRMenu(treeNode.type, event.clientX, Y);
 }
 function showRMenu(type, x, y) {
   $("#rMenu a").show();
@@ -116,7 +120,11 @@ function showRMenu(type, x, y) {
     $('#m_del_dept').hide();
     $('#m_edit_dept').hide();
   }
-  rMenu.css({"top":y+"px", "left":x+"px", "visibility":"visible"});
+  var menuHeight = rMenu[0].clientHeight;
+  if(y+menuHeight>$('#sideCont')[0].clientHeight){
+    y-=menuHeight;
+  }
+  rMenu.css({"top":y+"px", "left":x+"px", "display":"block" , "visibility":"visible"});
   $("body").bind("mousedown", onBodyMouseDown);
 }
 function hideRMenu() {
@@ -263,7 +271,7 @@ $(document).ready(function() {
                     padding:0,
                     resize:true,
                     lock:1,
-                    height:700,
+                    height:600,
                     width:1000
                   });
                 }else{
@@ -271,7 +279,7 @@ $(document).ready(function() {
                     padding:0,
                     resize:true,
                     lock:1,
-                    height:700,
+                    height:600,
                     width:1000
                   });
                 }
@@ -287,7 +295,7 @@ $(document).ready(function() {
             padding:0,
             resize:true,
             lock:1,
-            height:700,
+            height:600,
             width:1000
           });
             return false;
@@ -399,16 +407,3 @@ $(document).on('keyup','.input_search', function(event) {
   </ul>
 </div>
 
-<div id="rMenu" class="list-group" style="position:absolute">
-  <a href="javascript:void(0)" auth="sz_record_on" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看操作记录</a>
-  <a href="javascript:void(0)" auth="sz_genjin_on" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
-  <a href="javascript:void(0)" auth="sz_group_add" id="m_add_group" data-type="addGroup" class="list-group-item" >添加分组</a>
-  <a href="javascript:void(0)" auth="sz_user_add" id="m_add_user" data-type="addUser" class="list-group-item" >添加用户</a>
-  <a href="javascript:void(0)" auth="sz_dian_add" id="m_add_dept" data-type="adddept" class="list-group-item" >添加店面</a>
-  <a href="javascript:void(0)" auth="sz_group_set" id="m_move_to" data-type="moveTo" class="list-group-item">移动至</a>
-  <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_dept" class="list-group-item">修改店面</a>
-  <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_comp" class="list-group-item">修改公司</a>
-  <a href="javascript:void(0)" auth="sz_group_edit" data-type="editThis" id="m_edit_group" class="list-group-item">修改分组</a>
-  <a href="javascript:void(0)" auth="sz_dian_del" data-type="delThis" id="m_del_dept" class="list-group-item">删除店面</a>
-  <a href="javascript:void(0)" auth="sz_group_del" data-type="delThis" id="m_del_group" class="list-group-item">删除分组</a>
-</div>

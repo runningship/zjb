@@ -55,6 +55,85 @@
 		}]
 	}]
 },{
+	"name":"ky",
+	"type":"module",
+	"text":"客源管理",
+	"children":[{
+		"name":"fy_module",
+		"text":"客源",
+		"type":"virtual",
+		"children":[{
+			"name":"ky_on",
+			"text":"开启客源功能",
+			"type":"menu"
+		}]
+	},{
+		"name":"ky_gj",
+		"text":"跟进",
+		"type":"virtual",
+		"children":[{
+			"name":"gj_add",
+			"text":"添加",
+			"type":"menu"
+		}]
+	}]
+},{
+	"name":"yw",
+	"type":"module",
+	"text":"业务管理",
+	"children":[{
+		"name":"yw_module",
+		"text":"业务",
+		"type":"virtual",
+		"children":[{
+			"name":"yw_on",
+			"text":"开启业务功能",
+			"type":"menu"
+		}]
+	}]
+},{
+	"name":"ht",
+	"type":"module",
+	"text":"合同管理",
+	"children":[{
+		"name":"ht_module",
+		"text":"合同",
+		"type":"virtual",
+		"children":[{
+			"name":"ht_on",
+			"text":"开启合同功能",
+			"type":"menu"
+		}]
+	}]
+},{
+	"name":"cw",
+	"type":"module",
+	"text":"财务管理",
+	"children":[{
+		"name":"cw_module",
+		"text":"财务",
+		"type":"virtual",
+		"children":[{
+			"name":"cw_on",
+			"text":"开启财务功能",
+			"type":"menu"
+		}]
+	}]
+},{
+	"name":"oa",
+	"type":"module",
+	"text":"OA管理",
+	"children":[{
+		"name":"oa_module",
+		"text":"客源",
+		"type":"virtual",
+		"children":[{
+			"name":"oa_on",
+			"text":"开启OA功能",
+			"type":"menu"
+		}]
+	}]
+},{
 	"name":"sz",
 	"type":"module",
 	"text":"后台管理",

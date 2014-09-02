@@ -19,6 +19,7 @@
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript">
 var area=getParam('area');
+area = decodeURIComponent(area.replace(/\+/g,  " "));
 var lngs="",
 lats="",
 areas = "",
@@ -29,40 +30,6 @@ areas = "华府俊园",
 contall = "华府俊园de dizhi ";
 var map;
 
-function getArea(search){
-  var param=search,url='/c/areas/list';
-  YW.ajax({
-    type: 'post',
-    url: url,
-    data:param,
-    mysuccess: function(data){
-      var getAreas=JSON.parse(data);
-      dataArr = getAreas['page']['data'];
-      buildHtmlWithJsonArray("id_House_list",dataArr);
-
-      $.each(dataArr, function(index, obj) {
-        if(obj.maplng || obj.maplat){
-          addMarker(obj.maplng, obj.maplat,obj.name,obj.address);
-        }
-      });
-
-      $('#id_House_list').find('tr').each(function(index, el) {
-        var Thi=$(this),
-        ThiLng=Thi.data('lng'),
-        ThiLat=Thi.data('lat')
-
-        if(ThiLat || ThiLng){
-          Thi.data('nulls', '1')
-        }else{
-          Thi.data('nulls', '0')
-          Thi.addClass('class_name')
-        }
-        
-      });
-    }
-  })
-
-}
 
     //创建和初始化地图函数：
     function initMap(){
@@ -109,7 +76,7 @@ function addMarker(lngs,lats,title,contall){
     height: 60,     // 信息窗口高度
     title : title , // 信息窗口标题
     enableMessage:true,//设置允许信息窗发送短息
-    message:"众邦手机地图："
+    message:"手机地图："
   }
   var point = new BMap.Point(lngs,lats);
   var marker = new BMap.Marker(point);
@@ -157,9 +124,43 @@ function addMarker_nothing(lngs,lats,contall){
 function other(){
   
 }
+
+function getArea(search){
+  var param=search,
+  url='/c/areas/getMapInfo';
+  YW.ajax({
+    type: 'post',
+    url: url,
+    data:param,
+    mysuccess: function(data){
+      var getAreas=JSON.parse(data);
+      dataArr = getAreas['areas'];
+      buildHtmlWithJsonArray("id_House_list",dataArr);
+      $.each(dataArr, function(index, obj) {
+        if(obj.maplng || obj.maplat){
+          addMarker(obj.maplng, obj.maplat,obj.name,obj.address);
+        }
+      });
+      $('#id_House_list').find('tr').each(function(index, el) {
+        var Thi=$(this),
+        ThiLng=Thi.data('lng'),
+        ThiLat=Thi.data('lat');
+
+        if(ThiLat || ThiLng){
+          Thi.data('nulls', '1')
+        }else{
+          Thi.data('nulls', '0')
+          Thi.addClass('class_name')
+        }
+        
+      });
+    }
+  })
+
+}
   
 function BtnAreaList(){
-  $(document).on('click', '#id_House_list tr', function(event) {
+  $(document).on('click', 'tr', function(event) {
     var Thi=$(this),
     ThiI=Thi.index(),
     ThiArea=Thi.data('area'),
@@ -172,6 +173,9 @@ function BtnAreaList(){
       map.panTo(new BMap.Point(ThiLng,ThiLat));
 //    searchInfoWindow.open(map); //在marker上打开检索信息串口
 //    map.setCenter(new BMap.Point(ThiLat,ThiLng));
+  //   var allOverlay = map.getOverlays();
+  //       map.removeOverlay(allOverlay[1]);
+         return false;
     }else{
       alert('坐标为空')
     }
@@ -179,39 +183,42 @@ function BtnAreaList(){
 }
 $(function(){
 
-var parent = art.dialog.parent,       // 父页面window对象
-api = art.dialog.open.api,  //      art.dialog.open扩展方法
-form1=$('.form1');
-if (!api) return;
-// 操作对话框
-api.title('地图查看')
-// 自定义按钮
-  .button({
-      name: '保存',
-      callback: function () {
-        form1.submit();
-        return false;
-      },focus: true
-  },{
-      name: '取消'
-  });
+/**/
+try{
+  var parent = art.dialog.parent,       // 父页面window对象
+  api = art.dialog.open.api,  //      art.dialog.open扩展方法
+  form1=$('.form1');
+  if (!api) return;
+  // 操作对话框
+  api.title('地图查看')
+  // 自定义按钮
+    .button({
+        name: '保存',
+        callback: function () {
+          form1.submit();
+          return false;
+        },focus: true
+    },{
+        name: '取消'
+    });
+}catch(e){
 
+}
 
     initMap();//创建和初始化地图
   if(area){
-    var search={search:area}
+    var search={area:area}
     getArea(search);
   }
 //  onSubmit_Form();
   BtnAreaList()
 });
-
 </script>
 <style type="text/css">
   #mapIn{position:absolute;right:12px;top:50px;height:90%;background-color:white;}
   .input-group, .btn-group {float: none;margin-bottom: 5px;}
-  #mapDiv{ height: 100%; position: relative;}
-  #map{ height: 100%;}
+  #mapDiv{ height: 400px; width:800px; position: relative;}
+  #map{ height: 100%; margin-right: 200px;}
   div.mapInfo{ position: absolute; top: 0px; right: 0px; bottom: 0px;overflow:none; overflow-y: auto;  z-index: 9999; background-color: #FFF; box-shadow: 0px 0px 5px #000; width: 200px;}
   #loading{ display: none;;}
 </style>
@@ -221,8 +228,8 @@ api.title('地图查看')
     <div id="map"></div>
     <div id="mapIn info" class="mapInfo">
       <table class="table table-hover table_bodyer" >
-        <tbody id="id_House_list">
-        <tr data-id="${id}" data-quyu="${quyu}" data-area="${name}" data-luduan="${address}" data-short="${pyShort}" data-pinyin="${pinyin}" data-lat="${maplat}" data-lng="${maplng}">
+        <tbody>
+        <tr class="id_House_list" data-id="${id}" data-quyu="${quyu}" data-area="${name}" data-luduan="${address}" data-short="${pyShort}" data-pinyin="${pinyin}" data-lat="${maplat}" data-lng="${maplng}">
           <td>${name} <span class="label label-info">${quyu}</span><div style="color:#999;">${address}</div></td>
         </tr>
         </tbody>

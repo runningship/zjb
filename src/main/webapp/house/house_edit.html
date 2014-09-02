@@ -25,6 +25,7 @@
 <script type="text/javascript">
 var id;
 var queryOptions;
+id =getParam('id');
 function save(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
@@ -86,14 +87,12 @@ function getContent(){
     }
   });
 }
-
+var apiTitle;
 var parent = art.dialog.parent,       // 父页面window对象
 api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('.form1');
 if (!api) return;
-// 操作对话框
     api.title('添加房源')
-    .size(600, 500)
 // 自定义按钮
     .button({
       name: '保存',
@@ -104,11 +103,11 @@ if (!api) return;
     },{
       name: '取消'
     });
-id =getParam('id')
 if (id!='') {
-    api.title('修改房源')
+    apiTitle='修改房源';
     getContent();
 };
+api.title(apiTitle);
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a'),
     ThiAH=ThiA.eq(index);
@@ -118,6 +117,20 @@ function setSearchValue(index){
     $('#address').val(ThiAH.data('address'));
     $('#quyu option[value="'+ThiAH.data('quyu')+'"]').attr('selected',true);
 }
+$(document).on('keydown', function(event) {
+    //alert(event.keyCode)
+    if(event.ctrlKey&&event.keyCode==13){
+        save();
+    }
+}).on('blur', '#area,#dhao,#fhao', function(event) {
+    var blurTime=setTimeout(function(){
+        getHouseToo();
+    },100);
+}).on('focusin', '#area,#dhao,#fhao', function(event) {
+    getHouseToo();
+}).on('focusout', '#area,#dhao,#fhao', function(event) {
+    getHouseToo();
+});
 $(document).ready(function() {
 // autocomplete
     autoComplete($('#area'))

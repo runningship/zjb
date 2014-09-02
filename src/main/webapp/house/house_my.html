@@ -63,17 +63,17 @@ function getSider(id){
   if(flags=='favZu' || flags=='addZu'){
     url = '/v/house/houseSee_rent.html?id='+id;
     // $('div.chushou').remove();
-    if(flags=='addZu'){
-      $('td.shc').remove();
-      $('th.shc').remove();
-    }
+    // if(flags=='addZu'){
+    //   $('td.shc').remove();
+    //   $('th.shc').remove();
+    // }
   }else{
     url = '/v/house/houseSee.html?id='+id;
     // $('div.chuzu').remove();
-    if(flags=='addShou'){
-      $('td.shc').remove();
-      $('th.shc').remove();
-    }
+    // if(flags=='addShou'){
+    //   $('td.shc').remove();
+    //   $('th.shc').remove();
+    // }
   }
   if(id){
     $.get(url, function(data) {
@@ -170,27 +170,33 @@ function sideBtnFun(){
 }
 
 function favDelete(houseId){
-  if (flags=='favShou') {
-  YW.ajax({
-    type: 'POST',
-    url: '/c/house/fav/deleteSell?houseId='+houseId,
-    mysuccess: function(data){
-      doSearchAndSelectFirst();
-    alert('已取消收藏');
-  },complete:function(){}
-});
-}else{
-  YW.ajax({
-    type: 'POST',
-    url: '/c/house/fav/deleteRent?houseId='+houseId,
-    mysuccess: function(data){
-      doSearchAndSelectFirst();
-    alert('已取消收藏');
-  },complete:function(){}
-});
+  if(flags=='favShou') {
+    YW.ajax({
+        type: 'POST',
+        url: '/c/house/fav/deleteSell?houseId='+houseId,
+        mysuccess: function(data){
+          doSearchAndSelectFirst();
+        alert('已取消收藏');
+      },complete:function(){}
+    });
+  }else{
+    YW.ajax({
+        type: 'POST',
+        url: '/c/house/fav/deleteRent?houseId='+houseId,
+        mysuccess: function(data){
+          doSearchAndSelectFirst();
+        alert('已取消收藏');
+      },complete:function(){}
+    });
+  }
 }
+function getShenHeText(lock){
+  if(lock==1){
+    return "审";
+  }else{
+    return "未";
+  }
 }
-
 function doSearchAndSelectFirst(){
   doSearch(function(){
     if(houseData.page.data.length>0){
@@ -221,8 +227,16 @@ $(document).ready(function() {
 //添加提示框
     if (flags=='favZu' ||flags=='addZu') {
       $('div.chushou').remove();
+      if(flags=='addZu'){
+        $('td.shc').remove();
+        $('th.shc').remove();
+      }
     }else {
       $('div.chuzu').remove();
+      if(flags=='addShou'){
+        $('td.shc').remove();
+        $('th.shc').remove();
+      }
     }
     $(document).find('[data-toggle="tooltip"]').tooltip();
     $.get('/c/config/getQueryOptions', function(data) {
@@ -253,24 +267,51 @@ $(document).ready(function() {
         // Thi.toggleClass('selected');
         return false;
     });
-    $.get('menuTop.html', function(data) {
-        $('#menuTop').html(data);
-    });
+    // $.get('menuTop.html', function(data) {
+    //     $('#menuTop').html(data);
+    // });
 });
 $(window).resize(function() {      //类别
 });
 </script>
 <style type="text/css">
-  .selected{
-    background-color: blue;
-  }
+.selected{
+  background-color: blue;
+}
+.shenhe_0{color:red;}
+.shenhe_1{color:green;}
+.ztai_已售{color:red;}
+.ztai_在售{color:blue;}
+.ztai_停售{color:orange;}
+.ztai_已租{color:red;}
+.ztai_在租{color:blue;}
+.ztai_停租{color:orange;}
 </style>
 </head>
 <body>
 <div class="html list title addSide">
     <div class="header">
         <div class="maxHW title">
-            <ul class="menuLi clearfix title" id="menuTop"></ul>
+            <ul class="menuLi clearfix title" id="menuTop">
+                <li class="act_shou hover"><a href="/v/house/house.html?act=shou&chuzus=0" data-type="url"><i class="icon iconfont font_icon">售</i> 出售</a></li>
+                <li class="act_zu hover"><a href="/v/house/house_rent.html?act=zu&chuzus=1" data-type="url"><i class="icon iconfont font_icon">租</i> 出租</a></li>
+                <li class="act_add hover btn-group">
+                    <a href="/v/house/house_add.html?act=add&chuzu=0" data-type="dialog" class="dropdown-toggle" data-toggle="dropdown"><i class="icon iconfont font_icon">+</i> 登记<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><label><a href="/v/house/house_add.html?act=add&chuzu=0" data-type="dialog">登记出售房源</a></label>
+                        <li><label><a href="/v/house/house_rent_add.html?act=add&chuzu=1" data-type="dialog">登记出租房源</a></label>
+                    </ul>
+                </li>
+                <li class="act_my hover btn-group">
+                    <a href="house_my.html?act=my&flag=favShou&chuzus=0" data-type="url"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon iconfont font_icon">我</i> 我的<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><label><a href="house_my.html?act=my&flag=favShou&chuzus=0" data-type="url">我收藏的出售</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=favZu&chuzus=1" data-type="url">我收藏的出租</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=addShou&chuzus=0" data-type="url">我发布的出售</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=addZu&chuzus=1" data-type="url">我发布的出租</a></label>
+                    </ul>
+                </li>
+            </ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" class="userInput" name="xpath" value="">
@@ -380,8 +421,8 @@ $(window).resize(function() {      //类别
       </div>
       <div class="input-group">
         <span class="input-group-addon" style="padding:8px;">发布<br/>日期</span>
-        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})">
-        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'idTimes\')}'})">
+        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})">
+        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索</button>
@@ -397,6 +438,7 @@ $(window).resize(function() {      //类别
       <th>编号</th>
       <th class="shc">操作</th>
       <th>状态</th>
+      <th>审核</th>
       <th>区域</th>
       <th>楼盘名称</th>
       <th>楼型</th>
@@ -422,7 +464,8 @@ $(window).resize(function() {      //类别
       <td class="shc">
         <a href="javascript.void(0)" class="delete" data-hid="${id}" data-rel="del" onclick="favDelete(${id});">取消收藏</a>
       </td>
-      <td>${ztai}</td>
+      <td class="ztai_${ztai}">${ztai}</td>
+      <td runscript="true" class="shenhe_${sh}">getShenHeText(${sh})</td>
       <td>${quyu}</td>
       <td>${area} ${dhao}-${fhao}</td>
       <td>${lxing}</td>

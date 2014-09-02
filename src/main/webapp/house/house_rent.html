@@ -229,9 +229,6 @@ $(document).ready(function() {
         // Thi.toggleClass('selected');
         return false;
     });
-    $.get('menuTop.html', function(data) {
-        $('#menuTop').html(data);
-    });
 });
 $(window).resize(function() {      //类别
 });
@@ -243,13 +240,35 @@ $(window).resize(function() {      //类别
 
 .shenhe_0{color:red;}
 .shenhe_1{color:green;}
+.ztai_已租{color:red;}
+.ztai_在租{color:blue;}
+.ztai_停租{color:orange;}
 </style>
 </head>
 <body>
 <div class="html list title addSide">
     <div class="header">
         <div class="maxHW title">
-            <ul class="menuLi clearfix title" id="menuTop"></ul>
+            <ul class="menuLi clearfix title" id="menuTop">
+                <li class="act_shou hover"><a href="/v/house/house.html?act=shou&chuzus=0" data-type="url"><i class="icon iconfont font_icon">售</i> 出售</a></li>
+                <li class="act_zu hover"><a href="/v/house/house_rent.html?act=zu&chuzus=1" data-type="url"><i class="icon iconfont font_icon">租</i> 出租</a></li>
+                <li class="act_add hover btn-group">
+                    <a href="/v/house/house_add.html?act=add&chuzu=0" data-type="dialog" class="dropdown-toggle" data-toggle="dropdown"><i class="icon iconfont font_icon">+</i> 登记<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><label><a href="/v/house/house_add.html?act=add&chuzu=0" data-type="dialog">登记出售房源</a></label>
+                        <li><label><a href="/v/house/house_rent_add.html?act=add&chuzu=1" data-type="dialog">登记出租房源</a></label>
+                    </ul>
+                </li>
+                <li class="act_my hover btn-group">
+                    <a href="house_my.html?act=my&flag=favShou&chuzus=0" data-type="url"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon iconfont font_icon">我</i> 我的<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><label><a href="house_my.html?act=my&flag=favShou&chuzus=0" data-type="url">我收藏的出售</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=favZu&chuzus=1" data-type="url">我收藏的出租</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=addShou&chuzus=0" data-type="url">我发布的出售</a></label>
+                        <li><label><a href="house_my.html?act=my&flag=addZu&chuzus=1" data-type="url">我发布的出租</a></label>
+                    </ul>
+                </li>
+            </ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" name="sh" value="$${sh}">
@@ -344,8 +363,8 @@ $(window).resize(function() {      //类别
       </div>
       <div class="input-group">
         <span class="input-group-addon" style="padding:8px;">发布<br/>日期</span>
-        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})">
-        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'idTimes\')}'})">
+        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})">
+        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索</button>
@@ -387,7 +406,7 @@ $(window).resize(function() {      //类别
         <a href="#" auth="fy_edit" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
         <a href="##" auth="fy_del" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
       </td>
-      <td>${ztai}</td>
+      <td class="ztai_${ztai}">${ztai}</td>
       <td>${quyu}</td>
       <td>${area} ${dhao}-${fhao}</td>
       <td>${lxing}</td>

@@ -38,7 +38,7 @@ function save(){
     }
   });
 }
-
+var apiTitle;
 var parent = art.dialog.parent,       // 父页面window对象
 api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('.form1');
@@ -57,11 +57,12 @@ if (!api) return;
       name: '取消'
     });
 if(getParam('chuzu')=='0' || getParam('chuzu')==''){
-    api.title('登记出售房源')
+    apiTitle='登记出售房源';
 }else{
 // 出租的信息
-    api.title('登记出租房源')
+    apiTitle='登记出租房源';
 }
+api.title(apiTitle);
 // autocomplete 必加
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a'),
@@ -72,6 +73,20 @@ function setSearchValue(index){
     $('#address').val(ThiAH.data('address'));
     $('#quyu option[value="'+ThiAH.data('quyu')+'"]').attr('selected',true);
 }
+$(document).on('keydown', function(event) {
+    //alert(event.keyCode)
+    if(event.ctrlKey&&event.keyCode==13){
+        save();
+    }
+}).on('blur', '#area,#dhao,#fhao', function(event) {
+    var blurTime=setTimeout(function(){
+        getHouseToo();
+    },100);
+}).on('focusin', '#area,#dhao,#fhao', function(event) {
+    getHouseToo();
+}).on('focusout', '#area,#dhao,#fhao', function(event) {
+    getHouseToo();
+});
 $(document).ready(function() {
 // autocomplete
     autoComplete($('#area'))
@@ -94,65 +109,65 @@ $(document).ready(function() {
     <div class="bodyer mainCont">
         <div class="maxHW">
 
-            <form class="form-horizontal form_label_right form1" name="form1" role="form" onsubmit="submits();return false;">
+            <form class="form-horizontal form_label_right form1" name="form1" role="form" onsubmit="save();">
                 <div class="row">
                     <div class="col-xs-6">
 
                         <div class="form-group">
                             <label for="area" class="col-xs-4 control-label">楼盘名称:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" desc="楼盘名称" name="area" id="area" placeholder="" autofocus="autofocus">
+                                <input type="text" class="form-control" value="" desc="楼盘名称" name="area" id="area" placeholder="楼盘名称" tabindex="10" autofocus="autofocus">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="address" class="col-xs-4 control-label">楼盘地址:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" desc="楼盘地址" name="address" id="address" placeholder="">
+                                <input type="text" class="form-control" value="" desc="楼盘地址" name="address" id="address" placeholder="楼盘地址" tabindex="10">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dhao" class="col-xs-4 control-label">栋号房号:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="" name="dhao" desc="栋号" id="dhao" placeholder="">
+                                <input type="text" class="form-control" value="" name="dhao" desc="栋号" id="dhao" placeholder="栋号" tabindex="10">
                             </div>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="" name="fhao" desc="房号" id="fhao" placeholder="">
+                                <input type="text" class="form-control" value="" name="fhao" desc="房号" id="fhao" placeholder="房号" tabindex="10">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="lceng" class="col-xs-4 control-label">楼层总层:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="" name="lceng" desc="楼层" id="lceng" placeholder="">
+                                <input type="text" class="form-control" value="" name="lceng" desc="楼层" id="lceng" placeholder="楼层" tabindex="10">
                             </div>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="" name="zceng" desc="总层" id="zceng" placeholder="">
+                                <input type="text" class="form-control" value="" name="zceng" desc="总层" id="zceng" placeholder="总层" tabindex="10">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mji" class="col-xs-4 control-label">面积总价:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="" desc="面积" name="mji" id="mji" placeholder="">
+                                <input type="text" class="form-control" value="" desc="面积" name="mji" id="mji" placeholder="面积" tabindex="10">
                             </div>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="" desc="总价" name="zjia" id="zjia" placeholder="">
+                                <input type="text" class="form-control" value="" desc="总价" name="zjia" id="zjia" placeholder="总价" tabindex="10">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dateyear" class="col-xs-4 control-label">建筑年代:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="dateyear" id="dateyear" placeholder="">
+                                <input type="text" class="form-control" value="" name="dateyear" id="dateyear" placeholder="建筑年代" tabindex="10">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="lxr" class="col-xs-4 control-label">房主姓名:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="lxr" id="lxr" placeholder="">
+                                <input type="text" class="form-control" value="" name="lxr" id="lxr" placeholder="房主姓名" tabindex="11">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="forlxr" class="col-xs-4 control-label">业务人员:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="$${forlxr}" name="forlxr" id="forlxr" placeholder="">
+                                <input type="text" class="form-control" value="$${forlxr}" name="forlxr" id="forlxr" placeholder="业务员姓名" tabindex="12">
                             </div>
                         </div>
 
@@ -168,7 +183,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="ztai" class="col-xs-4 control-label">状态:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="ztai" id="ztai" type="tabs">
+                                <select class="form-control" name="ztai" id="ztai" type="tabs" tabindex="10">
                                     <option class="id_ztai" value="${code}">${name}</option>
                                 </select>
                             </div>
@@ -176,7 +191,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="quyu" class="col-xs-4 control-label">区域:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="quyu" id="quyu" type="tabs">
+                                <select class="form-control" name="quyu" id="quyu" type="tabs" tabindex="10">
                                     <option class="id_quyu" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -184,7 +199,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="lxing" class="col-xs-4 control-label">楼型:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="lxing" id="lxing" type="tabs">
+                                <select class="form-control" name="lxing" id="lxing" type="tabs" tabindex="10">
                                     <option class="id_lxing" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -192,7 +207,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="hxing" class="col-xs-4 control-label">户型:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="hxing" id="hxing" type="tabs">
+                                <select class="form-control" name="hxing" id="hxing" type="tabs" tabindex="10">
                                     <option class="id_hxing" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -200,7 +215,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="zxiu" class="col-xs-4 control-label" type="tabs">装潢:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="zxiu" id="zxiu">
+                                <select class="form-control" name="zxiu" id="zxiu" tabindex="10">
                                     <option class="id_zxiu" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -208,13 +223,13 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="tel" class="col-xs-4 control-label">房主号码:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="tel" id="tel" placeholder="">
+                                <input type="text" class="form-control" value="" name="tel" id="tel" placeholder="房主号码" tabindex="11">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="fortel" class="col-xs-4 control-label">业务号码:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="$${fortel}" name="fortel" id="fortel" placeholder="">
+                                <input type="text" class="form-control" value="$${fortel}" name="fortel" id="fortel" placeholder="业务员号码" tabindex="12">
                             </div>
                         </div>
 
@@ -226,7 +241,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="beizhu" class="col-xs-2 control-label">备注:</label>
                             <div class="col-xs-10">
-                                <textarea class="form-control" rows="3" name="beizhu" id="beizhu"></textarea>
+                                <textarea class="form-control" rows="3" name="beizhu" id="beizhu" placeholder="备注" tabindex="12"></textarea>
                             </div>
                         </div>
 
@@ -237,13 +252,13 @@ $(document).ready(function() {
                             <label for="seeGX" class="col-xs-2 control-label">权限:</label>
                             <div class="col-xs-10">
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off"> 发布至共享平台
+                                    <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off" tabindex="12"> 发布至共享平台
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" checked> 显示房号栋号
+                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" tabindex="12" checked> 显示房号栋号
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" checked> 显示房主号码
+                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" tabindex="12" checked> 显示房主号码
                                 </label>
                             </div>
                         </div>
@@ -254,7 +269,7 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="form-group hidden">
-                    <button type="button" class="btn btn-primary btn-block btn_submit" tabindex="12"><span class="ladda-label">登　录</span></button>
+                    <button type="button" class="btn btn-primary btn-block btn_submit" tabindex="12"><span class="ladda-label">提交</span></button>
                 </div>
             </form>
 

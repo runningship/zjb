@@ -67,3 +67,5 @@ button.aui_state_highlight:active { border-color:#1c6a9e; filter: progid:DXImage
 .aui_state_noTitle .aui_close:hover { background:#F00; color:#FFF; }
 .aui_state_noTitle .aui_close:active { box-shadow: none; }
 .aui_state_noTitle .aui_n { height:0;}
+
+.aui_n,.aui_header,.aui_titleBar,.aui_title,.aui_close,.aui_dialog,.aui_border{-webkit-app-region:no-drag;}

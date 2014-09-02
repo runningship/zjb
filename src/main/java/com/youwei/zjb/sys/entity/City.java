@@ -14,6 +14,8 @@ public class City {
 	
 	public String name;
 	
+	public String py;
+	
 	public String province;
 	
 	public String domain;

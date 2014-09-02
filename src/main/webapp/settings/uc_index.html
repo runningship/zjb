@@ -118,6 +118,7 @@ $(document).ready(function() {
 $(window).resize(function() {      //类别
 });
 </script>
+
 </head>
 <body>
 <div class="html list title addSide">
@@ -176,6 +177,19 @@ $(window).resize(function() {      //类别
     <div class="footer">
         <div class="maxHW mainCont ymx_page foot_page_box"></div>
     </div>
+</div>
+<div id="rMenu" class="list-group" style="position:absolute;z-index:999;display:none">
+  <a href="javascript:void(0)" auth="sz_record_on" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看操作记录</a>
+  <a href="javascript:void(0)" auth="sz_genjin_on" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
+  <a href="javascript:void(0)" auth="sz_group_add" id="m_add_group" data-type="addGroup" class="list-group-item" >添加分组</a>
+  <a href="javascript:void(0)" auth="sz_user_add" id="m_add_user" data-type="addUser" class="list-group-item" >添加用户</a>
+  <a href="javascript:void(0)" auth="sz_dian_add" id="m_add_dept" data-type="adddept" class="list-group-item" >添加店面</a>
+  <a href="javascript:void(0)" auth="sz_group_set" id="m_move_to" data-type="moveTo" class="list-group-item">移动至</a>
+  <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_dept" class="list-group-item">修改店面</a>
+  <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_comp" class="list-group-item">修改公司</a>
+  <a href="javascript:void(0)" auth="sz_group_edit" data-type="editThis" id="m_edit_group" class="list-group-item">修改分组</a>
+  <a href="javascript:void(0)" auth="sz_dian_del" data-type="delThis" id="m_del_dept" class="list-group-item">删除店面</a>
+  <a href="javascript:void(0)" auth="sz_group_del" data-type="delThis" id="m_del_group" class="list-group-item">删除分组</a>
 </div>
 </body>
 </html>

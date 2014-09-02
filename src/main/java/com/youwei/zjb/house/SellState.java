@@ -19,6 +19,10 @@ public enum SellState {
 		return code;
 	}
 	
+	public String getCodeString() {
+		return String.valueOf(code);
+	}
+	
 	public static JSONArray toJsonArray(){
 		JSONArray arr = new JSONArray();
 		for(SellState state : SellState.values()){

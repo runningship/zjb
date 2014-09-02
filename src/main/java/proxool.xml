@@ -10,12 +10,12 @@
         <property name="user" value="sa"/>  
         <property name="password" value="1qaz2wsx"/>  
     </driver-properties>  
-    <house-keeping-test-sql>select CURRENT_DATE</house-keeping-test-sql> 　　  
+    <house-keeping-test-sql>select CURRENT_TIMESTAMP</house-keeping-test-sql> 　　  
     <house-keeping-sleep-time>90000</house-keeping-sleep-time> 　　  
     <simultaneous-build-throttle>20</simultaneous-build-throttle> 　　  
     <maximum-connection-count>30</maximum-connection-count> 　　  
     <minimum-connection-count>1</minimum-connection-count> 　　  
-    <maximum-connection-lifetime>3600000</maximum-connection-lifetime>  
+    <maximum-connection-lifetime>300000</maximum-connection-lifetime>  
 </proxool> 
 
 <!-- <proxool>   -->

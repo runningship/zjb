@@ -27,7 +27,7 @@ public class ConfigService {
 //		mv.data.put("leibie", HouseType.toJsonArray());
 		mv.data.put("lxing", LouXing.toJsonArray());
 		mv.data.put("quyu", QuYu.toJsonArray());
-		mv.data.put("ztai_sell", SellState.toJsonArray());
+		mv.data.put("ztai_sell", SellState.toJsonArray());	
 		mv.data.put("ztai_rent", RentState.toJsonArray());
 		mv.data.put("shenhe", ShenHe.toJsonArray());
 		mv.data.put("zhuangxiu", ZhuangXiu.toJsonArray());

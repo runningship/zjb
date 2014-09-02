@@ -46,13 +46,16 @@ public abstract class AbstractSee extends page{
 		fav.remove();
 		html = doc.html();
 		Object seeFH = json.get("seeFH");
+		Object seeHM = json.get("seeHM");
 		if(Integer.valueOf(1).equals(seeFH)){
 			html = html.replace("${fdhao}", json.getString("dhao")+"-"+ json.getString("fhao"));
 		}else{
 			html = html.replace("${fdhao}","");
 		}
+		html = html.replace("$${seeHM}",seeHM==null? "" : seeHM.toString());
 		html = html.replace("$${lxr}", json.getString("lxr"));
 		html = html.replace("$${tel}", json.getString("tel"));
+		html = html.replace("$${area}", json.getString("area"));
 		return Jsoup.parse(html);
 	}
 

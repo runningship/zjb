@@ -22,11 +22,18 @@ $(document).ready(function() {
         telArr=tel.split(',');
         lxrArr=lxr.split(',');
         var ThiBox=$('.telBox');
+        // blockAlert(ThiBox.attr('seeHM'));
         ThiBox.html('');
         ThiBox.prepend('<a class="btn btn-success btn-xs"></a>');
         var ThiBoxBtn=ThiBox.find('a')
         ThiBoxBtn.css({'display':'block','overflow':'hidden'}).attr('href', '#')
         $('.telBox').find('p:last-child').css({'margin':'0'});
+        if(ThiBox.attr('seeHM')=="0"){
+          ThiBoxBtn.removeClass('btn-success');
+          ThiBoxBtn.addClass('btn-danger');
+          ThiBoxBtn.html('未共享，联系业务员');
+          return false;
+        }
         ThiBoxBtn.html('点此查看房主资料');
         var TelBoxStr='';
         $.each(telArr, function(index, val) {
@@ -217,7 +224,7 @@ $(document).ready(function() {
             <table width="100%">
               <tr>
                 <td class="biaoti">房主：</td>
-                <td class="neirong telBox"></td>
+                <td class="neirong telBox" seeHM="$${seeHM}"></td>
               </tr>
             </table>
           </td>
@@ -257,7 +264,7 @@ $(document).ready(function() {
       <a href="#" data-toggle="tooltip" title="添加跟进" class="btns" data-type="addGenjin" id="addGenjinBtn"><i class="iconfont">&#xe640;</i> 添加跟进</a>
       <a href="#" data-toggle="tooltip" title="收藏房源" class="btns" data-type="fav" fav="1"><i fav="1" class="iconfont">&#xe648;</i> 收藏</a>
       <a href="#" data-toggle="tooltip" title="已收藏房源" class="btns" data-type="fav" fav="0"><i fav="0" class="iconfont">&#xe62e;</i> 已收藏</a>
-      <a href="#" data-toggle="tooltip" title="地图查看" class="btns" data-type="map"><i class="iconfont">&#xe60e;</i> 地图</a>
+      <a href="#" data-toggle="tooltip" title="地图查看" class="btns" data-type="map" data-area="$${area}"><i class="iconfont">&#xe60e;</i> 地图</a>
     </li>
   </ul>
 </div>

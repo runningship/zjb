@@ -90,7 +90,7 @@ var shell = gui.Shell;
 var winMaxHeight,winMaxWidth;
 }catch (e){}
 function WinMaxOrRev(a){
-  if(a=='0'){
+  if(a==0){
     winMaxNone='none';
     winRevertNone='inline-block';
   }else{
@@ -108,6 +108,7 @@ function WinMin(){/*最小化*/
 	win.minimize();
 }
 function WinMax(){/*最大化*/
+//  alert(0)
   if(process.platform === 'win32' && parseFloat(require('os').release(), 10) > 6.1) {
     win.setMaximumSize(screen.availWidth + 15, screen.availHeight + 15);
   }
@@ -117,6 +118,7 @@ function WinMax(){/*最大化*/
 	WinMaxOrRev(0);
 }
 function WinRevert(){/*恢复*/
+//  alert(1)
 	win.restore();
   if(win.width<692){
     win.resizeTo(692,win.height);
@@ -154,23 +156,6 @@ function WinClose(force){/*退出*/
   });*/
 }
 
-//根据titile可拖动窗口
-// document.addEventListener('mousemove', function (e) {
-//     if (e.target.classList.contains('title')) {
-//         try{
-//             hex.setAsTitleBarAreas(e.clientX, e.clientY);
-//             // hex.setAsSystemMenuIconAreas(e.clientX, e.clientY);
-//         }catch(e){}
-//     } else {
-//         try{
-//             hex.setAsTitleBarAreas(-1, -1);
-//             hex.setAsNonBorderAreas(-1, -1);
-//         }catch(e){}
-//     }
-// }, false);
-// try{
-// }catch(e){}
-
 //添加边框线条
 function WinBoxBorder(){
 	var winBorder='<div class="winBoxBorder winBoxBorderT"></div>'+
@@ -194,7 +179,7 @@ function getHeadH(){
 // 列表标题与内容宽度保持一致
 function tableFix(TableH,TableB){
   for(var i=0;i<=TableB.find('td:last').index();i++){
-    TableH.find('th').eq(i).width(TableB.find('tr').eq(2).find('td').eq(i).width());
+    TableH.find('th').eq(i).width(TableB.find('tr').eq(1).find('td').eq(i).width());
   }
 }
 function setTableFix(){
@@ -261,18 +246,39 @@ $('a').attr('draggable','false');
 }).resize(function(event) {
   /* Act on the event */
   WinMaxOrRev(0);
-  alert(0)
-});;
+//  alert(0)
+});
 
 
-function getEnumTexts(category,code){
-  var arr = category;
-  for(var i=0;i<arr.length;i++){
-    if(arr[i]['code']==code){
-      return arr[i]['name'];
-    }
-  }
-}
+
+$(document).ready(function() {
+    menuTopFun();/* 顶部自动选中 */
+    $('.menuLi').on('click', 'a', function(event) {
+        var Thi=$(this),
+        ThiUl=Thi.parents('ul'),
+        ThiLi=Thi.parents('li'),
+        ThiUrl=Thi.attr('href'),
+        ThiType=Thi.data('type');
+        if(ThiType=='url'){
+            menuSetCurr(ThiLi);
+        }else if(ThiType=='dialog'){
+            art.dialog.open(ThiUrl,{id:'addHouse',height:460,width:640});
+            return false;
+        }else{
+            return false;
+        }
+    });
+    var menuLi_time=null;
+    $('.menuLi').find('.dropdown-toggle').parents('.btn-group').hover(function() {
+        var Thi=$(this);
+        menuLi_time=setTimeout(function(){
+            Thi.addClass('open');
+        },200);
+    },function(){
+        clearTimeout(menuLi_time);
+    });
+});
+
 
 
 /**
@@ -371,7 +377,45 @@ function autoComplete(id){
     });
 }
 
-
+/**
+ * 房源重复提示
+ * 仅在出售添加和修改里用
+ */
+function getHouseToo(){
+    var area=$('#area'),
+    dhao=$('#dhao'),
+    fhao=$('#fhao'),
+    areav=area.val(),
+    dhaov=dhao.val(),
+    fhaov=fhao.val();
+    if(!areav || !dhaov || !fhaov){
+        return false;
+    }else{
+        api.title(apiTitle);
+    }
+    var param={
+        area:areav,
+        dhao:dhaov,
+        fhao:fhaov
+    }
+    YW.ajax({
+        type: 'POST',
+        url: '/c/house/exist',
+        data:param,
+        mysuccess: function(data){
+            var jsons=JSON.parse(data);
+            if(jsons['exist']==1){
+                if(jsons['hid']==id){
+                    api.title(apiTitle);
+                }else{
+                    api.title(apiTitle + '　<b style="color:#F00;">房源重复：'+ jsons['hid'] +'</b>');
+                }
+            }else{
+                api.title(apiTitle + '　<b style="color:#090;">无重复</b>');
+            }
+        }
+    });
+}
 
 
 
@@ -576,6 +620,16 @@ function DelCookie(name){
 
 
 
+
+
+function getEnumTexts(category,code){
+  var arr = category;
+  for(var i=0;i<arr.length;i++){
+    if(arr[i]['code']==code){
+      return arr[i]['name'];
+    }
+  }
+}
 /* 封装 */
 function jajax(url,param,asyncs){
     YW.ajax({
