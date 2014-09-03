@@ -32,19 +32,18 @@ $(document).ready(function() {
           ThiBoxBtn.removeClass('btn-success');
           ThiBoxBtn.addClass('btn-danger');
           ThiBoxBtn.html('未共享，联系业务员');
-          return false;
+        }else{
+          ThiBoxBtn.html('点此查看房主资料');
+          var TelBoxStr='';
+          $.each(telArr, function(index, val) {
+          var thiTel=telArr[index],thiLxr='';
+              if(lxrArr.length>index){
+                  thiLxr=lxrArr[index]
+              }
+              TelBoxStr=TelBoxStr+'<p><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" title="百度">&#xe64a;</span></p>';
+          });
         }
-        ThiBoxBtn.html('点此查看房主资料');
-        var TelBoxStr='';
-        $.each(telArr, function(index, val) {
-        var thiTel=telArr[index],thiLxr='';
-            if(lxrArr.length>index){
-                thiLxr=lxrArr[index]
-            }
-            TelBoxStr=TelBoxStr+'<p><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" title="百度">&#xe64a;</span></p>';
-        });
         ThiBox.on('click', 'a', function(event) {
-            event.preventDefault();
             if($(this).find('p').length<1){
                 ThiBoxBtn.html(TelBoxStr);
                 ThiBox.find('p').each(function(index, el) {
