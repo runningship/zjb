@@ -116,7 +116,7 @@ public class ViewServlet extends HttpServlet{
 			html = html.replace("$${myTel}", user.tel==null? "": user.tel);
 			doc = Jsoup.parse(html);
 		}else{
-			LogUtil.log(Level.ERROR, "user session is null", null);
+			LogUtil.log(Level.ERROR, "user session is null with path="+path, null);
 		}
 		
 		clazz = "com.youwei.zjb.view"+clazz;

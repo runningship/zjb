@@ -10,6 +10,7 @@ import org.bc.sdak.utils.LogUtil;
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.sys.entity.PC;
+import com.youwei.zjb.user.entity.User;
 
 public class SecurityHelper {
 
@@ -43,7 +44,7 @@ public class SecurityHelper {
 		}
 	}
 	
-	public static PC validate(PC target){
+	public static PC validate(PC target , User u){
 		
 		if(target.pcname!=null){
 			target.pcname = target.pcname.replace("-", "").toLowerCase();
@@ -57,7 +58,7 @@ public class SecurityHelper {
 		String targetUUID = SecurityHelper.Md5(target.cpu+target.disk)+SecurityHelper.Md5(target.mac);
 		PC pc= SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(PC.class, new String[]{"did" , "uuid"}, new Object[]{target.did , targetUUID});
 		if(pc==null){
-			LogUtil.warning("机器未授权,cpu="+target.cpu+",disk="+target.disk+",mac="+target.mac+",pcname="+target.pcname+",uuid=+"+targetUUID);
+			LogUtil.warning("机器未授权,lname="+u.lname+",cid="+u.cid+",did="+u.did+",cpu="+target.cpu+",disk="+target.disk+",mac="+target.mac+",pcname="+target.pcname+",uuid=+"+targetUUID);
 			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权...");
 		}
 		if(pc.lock==1){

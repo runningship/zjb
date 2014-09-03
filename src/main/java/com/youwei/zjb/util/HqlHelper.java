@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.FetchType;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
+import org.bc.sdak.utils.LogUtil;
 
 import com.youwei.zjb.DateSeparator;
 
@@ -34,7 +36,7 @@ public class HqlHelper {
 				return " and " + fieldName + " >= ? ";
 			}
 		} catch (ParseException e) {
-			//TODO
+			LogUtil.log(Level.WARN, "时间查询错误，dateStr="+dateStr, e);
 			return "";
 		}
 	}

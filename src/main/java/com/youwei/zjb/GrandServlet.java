@@ -2,6 +2,8 @@ package com.youwei.zjb;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javassist.ClassClassPath;
 import javassist.ClassPool;
@@ -31,6 +33,8 @@ public class GrandServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
+	private static Map<String , CtClass>ctMap = new HashMap<String , CtClass>();
+	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -142,25 +146,38 @@ public class GrandServlet extends HttpServlet{
 	private Object[] buildParamForMethod(Object manager,String method, HttpServletRequest req){
 		Object[] params = null;
 		ClassPool pool = ClassPool.getDefault();
-		CtClass cc = null;
-		try {
-			cc = pool.getCtClass(manager.getClass().getName());
-		} catch (NotFoundException e) {
-			pool.appendClassPath(new ClassClassPath(manager.getClass()));
+		CtClass cc = ctMap.get(manager.getClass().getName());
+		if(cc==null){
+			cc = ctMap.get(manager.getClass().getSuperclass().getName());
 		}
 		if(cc==null){
-			//get again
+			String ctcName = manager.getClass().getName();
 			try {
-				cc = pool.getCtClass(manager.getClass().getName());
-			} catch (NotFoundException ex) {
+				cc = pool.getCtClass(ctcName);
+			} catch (NotFoundException e) {
+				pool.appendClassPath(new ClassClassPath(manager.getClass()));
+			}
+			if(cc==null){
+				//get again
 				try {
-					cc = pool.getCtClass(manager.getClass().getSuperclass().getName());
-				} catch (NotFoundException e) {
-					LogUtil.log(Level.WARN, "class not found", ex);
-					return new Object[]{};
+					cc = pool.getCtClass(ctcName);
+				} catch (NotFoundException ex) {
+					try {
+						ctcName = manager.getClass().getSuperclass().getName();
+						cc = pool.getCtClass(ctcName);
+					} catch (NotFoundException e) {
+						LogUtil.log(Level.WARN, "class not found", ex);
+						return new Object[]{};
+					}
 				}
 			}
+			if(cc!=null){
+				ctMap.put(ctcName, cc);
+			}
+		}else{
+			LogUtil.info("we get ctc class from cache");
 		}
+		
 		for(CtMethod cm : cc.getDeclaredMethods()){
 			if(cm.getName().equals(method)){
 //				LogUtil.info("start to build parameters for "+manager.getClass().getName()+"."+method);

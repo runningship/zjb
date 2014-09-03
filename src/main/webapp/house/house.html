@@ -105,7 +105,7 @@ function deletehouse(id){
     type: 'POST',
     url: '/c/house/physicalDelete?id='+id,
     mysuccess: function(data){
-      doSearch();
+      doSearchAndSelectFirst();
       alert('删除成功');
     }
   });
@@ -271,7 +271,7 @@ $(window).resize(function() {      //类别
                 </li>
             </ul>
         </div>
-  <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
+  <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
     <input type="hidden" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
@@ -280,9 +280,9 @@ $(window).resize(function() {      //类别
           综合 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" name="scope" value="all" checked onclick="doSearch();"> 所有</label>
-          <li><label><input type="radio" name="scope" value="comp" onclick="doSearch();"> 公司</label>
-          <li><label><input type="radio" name="scope" value="seeGX" onclick="doSearch();"> 共享</label>
+          <li><label><input type="radio" name="scope" value="all" checked onclick="doSearchAndSelectFirst();"> 所有</label>
+          <li><label><input type="radio" name="scope" value="comp" onclick="doSearchAndSelectFirst();"> 公司</label>
+          <li><label><input type="radio" name="scope" value="seeGX" onclick="doSearchAndSelectFirst();"> 共享</label>
         </ul>
       </div>
       <div class="btn-group btn-sm">
@@ -290,8 +290,8 @@ $(window).resize(function() {      //类别
           状态 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li onclick="doSearch();"><label><input type="radio" name="ztai" value="" checked> 所有</label>
-          <li class="id_zhuangtai"  onclick="doSearch();"><label><input type="radio" name="ztai" value="${code}"> ${name}</label>
+          <li><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="" checked> 所有</label>
+          <li class="id_zhuangtai"  ><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="${code}"> ${name}</label>
         </ul>
       </div>
       <div class="input-group input-group-max" style="width: 265px;">
@@ -411,7 +411,7 @@ $(window).resize(function() {      //类别
       </td>
       <td class="ztai_${ztai}">${ztai}</td>
       <td>${quyu}</td>
-      <td>${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></td>
+      <td class="br_area">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></td>
       <td>${lxing}</td>
       <td>${hxf}-${hxt}-${hxw}</td>
       <td>${mji}</td>
