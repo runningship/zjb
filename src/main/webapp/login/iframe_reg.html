@@ -218,6 +218,9 @@ function btnAction(){
 
             }
         }else if(ThiNext=='p'){
+            $('select[name=fendian]').empty();
+            $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
+            
             for(var i=0;i<=ThiLiIndex;i++){
                LiBoxHeight=+Thi.parents('ul').find('li').eq(i).height()
             }

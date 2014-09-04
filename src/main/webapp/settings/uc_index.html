@@ -73,23 +73,6 @@ function uc_delete(id){
 }
 
 $(document).ready(function() {
-    $(document).on('click', '.tbtn', function(event) {
-        var Thi=$(this);
-        var ThiQ=Thi.data('q');
-        if(ThiQ=='menu'){
-
-        }else if(ThiQ=='min'){
-            WinMin();
-        }else if(ThiQ=='max'){
-            WinMax();
-        }else if(ThiQ=='rev'){
-            WinRevert();
-        }else if(ThiQ=='close'){
-            WinClose();
-        }else if(ThiQ=='tab1'){
-        }
-        return false;
-    });
 // 加载侧边
     getSider();
 // 列表内容
@@ -159,15 +142,16 @@ $(window).resize(function() {      //类别
         <table class="table table-hover table-striped table-nopadding TableB" >
           <tbody>
           <tr data-hid="${id}" style="display:none;" class="id_House_list">
-            <td style="width:100px">${lname}</td>
-            <td style="width:150px">${uname}</td>
-            <td style="width:200px">${tel}</td>
-            <td style="width:100px">${dname}-${role}</td>
-            <td style="width:150px">${lasttime}</td>
-            <td style="width:150px">${ip}</td>
-            <td>
-              <a href="javascript:void(0)" auth="sz_user_edit" class="btns" data-type="edit" onclick="uc_edit(${uid})">编辑</a>
-              <a href="javascript:void(0)" auth="sz_user_del" class="btns" data-type="del" onclick="uc_delete(${uid})">删除</a>
+            <td>${lname}</td>
+            <td>${uname}</td>
+            <td>${tel}</td>
+            <td>${dname}-${role}</td>
+            <td>${lasttime}</td>
+            <td>${ip}</td>
+            <td><span class="btn-group">
+              <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit(${uid})">编辑</a>
+              <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="uc_delete(${uid})">删除</a>
+              </span>
             </td>
           </tr>
           </tbody>
@@ -178,7 +162,7 @@ $(window).resize(function() {      //类别
         <div class="maxHW mainCont ymx_page foot_page_box"></div>
     </div>
 </div>
-<div id="rMenu" class="list-group" style="position:absolute;z-index:999;display:none">
+<div id="rMenu" class="list-group" style="position:absolute;z-index:999;display:none;">
   <a href="javascript:void(0)" auth="sz_record_on" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看操作记录</a>
   <a href="javascript:void(0)" auth="sz_genjin_on" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
   <a href="javascript:void(0)" auth="sz_group_add" id="m_add_group" data-type="addGroup" class="list-group-item" >添加分组</a>

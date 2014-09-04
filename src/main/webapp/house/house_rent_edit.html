@@ -205,6 +205,7 @@ $(document).ready(function() {
                             <div class="col-xs-8">
                                 <select class="form-control" name="rent_type" id="id_rent_type" type="tabs">
                                     <option class="id_rent_type" value="${code}">${name}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -278,18 +279,19 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="idCnum" class="col-xs-2 control-label">权限:</label>
                             <div class="col-xs-10">
-                                <label class="btn btn-primary">
+                            <span class="btn-group">
+                                <label class="btn btn-default">
                                     <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off"> 发布至共享平台
                                 </label>
-                                <label class="btn btn-primary">
+                                <label class="btn btn-default">
                                     <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" > 显示房号栋号
                                 </label>
-                                <label class="btn btn-primary">
+                                <label class="btn btn-default">
                                     <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" > 显示房主号码
                                 </label>
+                            </span>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-xs-offset-0 col-xs-12">
                         <div class="alert alert-info" role="alert" style="margin:0;padding:5px 15px;">★发布至共享平台，除本公司各分店外，其他公司（中介宝用户）也能看到该房源。</div>

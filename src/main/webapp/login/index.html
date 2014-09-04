@@ -33,7 +33,14 @@ try{
     console.log(e);
 }
 try{
+    win.setMinimumSize(692,660);
+    win.setMaximumSize(692,660);
+}catch(e){
+    console.log(e);
+}
+try{
     win.resizeTo(692,660);
+    win.setPosition();
     gui.App.clearCache();
 }catch(e){
     console.log(e);
@@ -329,8 +336,8 @@ $(document).on('click', '.act_menu a', function(event) {
         }else if(ThiPliIndex==1){
             if($('#iframe').attr('src')==''){
                 $('#iframe').attr('src','iframe_reg.html?cityName='+cityNames+'&domain='+domains);
-                $("#iframe").contents().find('#authCode').focus();
             }
+            $("#iframe").contents().find('#authCode').focus();
         }
         clearTimeout(inTime);
     },600);
@@ -376,7 +383,6 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
 
 // addTitlebar("top-titlebar", "", "");
 }); 
-
 </script>
 </head>
 <body>
@@ -417,7 +423,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                         <div class="col-xs-8">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label for="idCity" class="col-xs-2 control-label" onclick="setDomSize();">城市:</label>
+                                    <label for="idCity" class="col-xs-2 control-label">城市:</label>
                                     <div class="col-xs-8">
                                         <input type="text" class="form-control" value="" id="idCity" placeholder="" readonly>
                                     </div>

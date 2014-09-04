@@ -37,6 +37,8 @@ function doSearch(){
         var houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         setTableFix();
+        $('.shenhe-0').addClass('btn-warning');
+        $('.shenhe-1').addClass('btn-primary');
     }
   });
 }
@@ -50,23 +52,6 @@ function getSider(id){
     });
 }
 $(document).ready(function() {
-    $(document).on('click', '.tbtn', function(event) {
-        var Thi=$(this);
-        var ThiQ=Thi.data('q');
-        if(ThiQ=='menu'){
-
-        }else if(ThiQ=='min'){
-            WinMin();
-        }else if(ThiQ=='max'){
-            WinMax();
-        }else if(ThiQ=='rev'){
-            WinRevert();
-        }else if(ThiQ=='close'){
-            WinClose();
-        }else if(ThiQ=='tab1'){
-        }
-        return false;
-    });
 // 加载侧边
     getSider();
 // 列表内容
@@ -126,7 +111,6 @@ function getShenHeText(lock){
     word-break: break-all;
     cursor: pointer;
   }
-  .shenhe-0{color: gray;}
 </style>
 </head>
 <body>
@@ -169,9 +153,10 @@ function getShenHeText(lock){
       <td>${lasttime}</td>
       <td>${ip}</td>
       <td>${beizhu}</td>
-      <td>
-        <a href="##" auth="sz_pc_sh" class="del shenhe-${lock}" data-hid="${id}" data-rel="del" runscript="true" onclick="shenhePC(${id})" >getShenHeText(${lock})</a>
-        <a href="##" auth="sz_pc_del" class="del" data-hid="${id}" data-rel="del" onclick="delPC(${id})">删</a>
+      <td><span class="btn-group">
+        <a href="##" auth="sz_pc_sh" class="btn btn-xs shenhe-${lock}" data-hid="${id}" data-rel="del" runscript="true" onclick="shenhePC(${id})" >getShenHeText(${lock})</a>
+        <a href="##" auth="sz_pc_del" class="btn btn-xs btn-danger del" data-hid="${id}" data-rel="del" onclick="delPC(${id})">删</a>
+        </span>
       </td>
     </tr>
     </tbody>

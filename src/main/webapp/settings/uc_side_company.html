@@ -144,7 +144,7 @@ function addDiyDom(treeId, treeNode) {
   aObj.css('display','inline');
   console.log(treeNode.cnum);
   if(treeNode.cnum!=null){
-    var cnumStr = "<span >"+ treeNode.cnum +" </span>";
+    var cnumStr = '<span class="">'+ treeNode.cnum +' </span>';
     aObj.prepend(cnumStr);  
   }
   var color="icon_sh";
@@ -155,6 +155,7 @@ function addDiyDom(treeId, treeNode) {
     var lockStr = '<span id="'+treeNode.tId+'_sh_a" onClick="shenhe(\''+treeNode.tId+'\')" class="icon iconfont '+color+'">&#xe64e;</span>';
     aObj.after(lockStr);
   }
+  aObj.append('<span class="icon iconfont runMenu" title="更多操作" onclick="alert(\'123456\');return false;">&#xe641;</span>');
 }
 
 function shenhe(id){
@@ -348,39 +349,7 @@ $(document).ready(function() {
         placement:'top'
     });
 });
-function getSearch(val){
-  //alert($('.jtree').html())
-  var input = val;  //记录输入的商家名
-  var tds = $('.jtree>li>a');  //取商家名那一列
-  if(tds.length<1){
-      //blockAlert(0)
-      //art.dialog.tips('搜不到任何数据...','warning')
-      return false;
-  }else{
-    for(var i = 0; i < tds.length; i++){
-      var td = $(tds[i]).eq(0);
-  //  blockAlert( input +'|'+ td.html() +'|'+ td.parent().html() +'|'+ td.html().indexOf(input))
-  //    alert(td.attr('rev').indexOf(input))
-      if(td.text().indexOf(input) >= 0){ //如果商家名这列总某行内容不包含输入的商家名
-        td.parent().show();
-      }else{
-        td.parent().hide();  //隐藏这行
-      }
-    }
-  }
-}
-$(document).on('keyup','.input_search', function(event) {
-    //blockAlert(event.keyCode)
-    if(event.keyCode==27){
-        $('[data-toggle=popover]').popover('hide');return false;
-    }
-    var Thi=$(this),
-    ThiVal=Thi.val();
-    if(event.keyCode==13){
-        getSearch(ThiVal);
-    }
-    return false;
-});
+getFunSettingSideEarch();
 </script>
 <div class="sideHead">
     组织架构

@@ -153,7 +153,7 @@ public class HouseService {
 		po.seeHM = house.seeHM;
 		if(po.mji!=null && po.mji!=0){
 			int jiage = (int) (po.zjia*10000/house.mji);
-			house.djia = (float) jiage;
+			po.djia = (float) jiage;
 		}
 		dao.saveOrUpdate(po);
 		User user = ThreadSession.getUser();

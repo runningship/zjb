@@ -279,7 +279,42 @@ $(document).ready(function() {
     });
 });
 
+/**
+ * 测试中
+ */
+function DesktopAlert(str) {
+  alert(str)
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    //alert("This browser does not support desktop notification");
+  }
 
+  // Let's check if the user is okay to get some notification
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification(str);
+  }
+
+  // Otherwise, we need to ask the user for permission
+  // Note, Chrome does not implement the permission static property
+  // So we have to check for NOT 'denied' instead of 'default'
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // Whatever the user answers, we make sure we store the information
+      if (!('permission' in Notification)) {
+        Notification.permission = permission;
+      }
+
+      // If the user is okay, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification(str);
+      }
+    });
+  }
+
+  // At last, if the user already denied any notification, and you 
+  // want to be respectful there is no need to bother them any more.
+}
 
 /**
  * 添加 autoComplete 功能
@@ -381,13 +416,21 @@ function autoComplete(id){
  * 房源重复提示
  * 仅在出售添加和修改里用
  */
-function getHouseToo(){
+var getHouseTooStr;
+function getHouseToo(callback){
     var area=$('#area'),
     dhao=$('#dhao'),
     fhao=$('#fhao'),
+    seeGX=$('#seeGX'),
     areav=area.val(),
     dhaov=dhao.val(),
     fhaov=fhao.val();
+    if(getHouseTooStr==areav+dhaov+fhaov){
+        return false;
+    }else{
+      getHouseTooStr=areav+dhaov+fhaov;
+      //alert(areav+dhaov+fhaov)
+    }
     if(!areav || !dhaov || !fhaov){
         return false;
     }else{
@@ -417,8 +460,61 @@ function getHouseToo(){
     });
 }
 
+/**
+ * 列表循环完成后，替换相应class，一般用在审核未审核的样式上
+ */
+/*function replaceClass(a,c){
+a.addClass(c);
+}
+function replaceClassAll(d1,a1,a2,c1,c2){
+  if(!d1!a1||!a2||c2){return false;}
+  var Thi=d1;
+  if(d1.hasClass(a1)){
+    d1.addClass(c1);
+  }else if(d1.hasClass(a2)){
+    d1.addClass(c2)
+  }
+}*/
 
 
+/**
+ * 后台侧边搜索功能
+ */
+function getFunSettingSideEarch(){
+  function getSearch(val){
+    //alert($('.jtree').html())
+    var input = val;  //记录输入的商家名
+    var tds = $('.jtree>li>a');  //取商家名那一列
+    if(tds.length<1){
+        //blockAlert(0)
+        //art.dialog.tips('搜不到任何数据...','warning')
+        return false;
+    }else{
+      for(var i = 0; i < tds.length; i++){
+        var td = $(tds[i]).eq(0);
+    //  blockAlert( input +'|'+ td.html() +'|'+ td.parent().html() +'|'+ td.html().indexOf(input))
+    //    alert(td.attr('rev').indexOf(input))
+        if(td.text().indexOf(input) >= 0){ //如果商家名这列总某行内容不包含输入的商家名
+          td.parent().show();
+        }else{
+          td.parent().hide();  //隐藏这行
+        }
+      }
+    }
+  }
+  $(document).on('keyup','.input_search', function(event) {
+      //blockAlert(event.keyCode)
+      if(event.keyCode==27){
+          $('[data-toggle=popover]').popover('hide');return false;
+      }
+      var Thi=$(this),
+      ThiVal=Thi.val();
+      if(event.keyCode==13){
+          getSearch(ThiVal);
+      }
+      return false;
+  });
+}
 
 
 
@@ -653,6 +749,19 @@ function quit(){
         success: function(data){
           WinClose(true);
         }
+      });
+  },function(){},'warning');
+}
+
+function relogin(){
+  art.dialog.confirm('退出并重新登录？', function () {
+      $.ajax({
+            type: 'get',
+            url: '/c/user/logout',
+            success: function(data){
+                gui.App.clearCache();
+                window.location="/login/login.html";
+            }
       });
   },function(){},'warning');
 }

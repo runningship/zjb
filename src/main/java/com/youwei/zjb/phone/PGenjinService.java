@@ -78,7 +78,7 @@ public class PGenjinService {
 		long count = dao.countHql("select count(distinct cid) from GenJin where hid=? and sh=1 and addtime>? and chuzu=0 and flag=? ", h.id, lockdate , type);
 		if(String.valueOf(SellState.在售.getCodeString()).equals(h.ztai)){
 			if(SellState.已售.getCode()==type || SellState.停售.getCode()==type){
-				if(count>=5){
+				if(count>=4){
 					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
@@ -90,7 +90,7 @@ public class PGenjinService {
 				gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
 			}
 		}else if(String.valueOf(SellState.已售.getCodeString()).equals(h.ztai)){
-			if(count>=2){
+			if(count>=1){
 				if(type==SellState.已售.getCode()){
 					dao.delete(h);
 					delete = true;
@@ -103,7 +103,7 @@ public class PGenjinService {
 				}
 			}
 		}else if(String.valueOf(SellState.停售.getCodeString()).equals(h.ztai)){
-			if(count>=2){
+			if(count>=1){
 				if(type==SellState.停售.getCode()){
 					dao.delete(h);
 					delete = true;

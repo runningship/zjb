@@ -87,8 +87,25 @@ try{
         quit();
     });
 }catch(e){
-	console.error(e);
+    console.error(e);
 }
+try{
+    win.setMinimumSize(1020,660);
+}catch(e){
+    console.error(e);
+}
+try{
+    win.on('resize', function (stream) {
+    if(screen.width-win.width<5){
+        WinMaxOrRev(0);
+    }else{
+        WinMaxOrRev(1);  
+    }
+    }); 
+}catch(e){
+    console.error(e);
+}
+
     setSideMenu();
     $(document).on('click', '.winBtn', function(event) {
         var Thi=$(this);
@@ -121,7 +138,7 @@ $('.menuSide').find('.curr a').click();
 });
 $(window).resize(function() {
 //    setDomSize();
-  WinMaxOrRev(1);
+//  WinMaxOrRev(1);
 });
 
 function resetPwd(){
@@ -135,19 +152,6 @@ function pay(){
   art.dialog.open('/v/pay/order.html');
 }
 
-function relogin(){
-  art.dialog.confirm('退出并重新登录？', function () {
-      $.ajax({
-            type: 'get',
-            url: '/c/user/logout',
-            success: function(data){
-                gui.App.clearCache();
-                window.location="/login/login.html";
-            }
-      });
-  },function(){},'warning');
-}
-
 </script>
 </head>
 <body>
@@ -156,7 +160,7 @@ function relogin(){
         <div class="lefter td title">
             <div class="table">
                 <div class="tr thead">
-                    <span title="$${version} 更新概要&#13; 1.房源名称居左&#13; 2性能优化" class="logo title"></span>
+                    <span title="$${version} 更新概要&#13; 1.修改房源计算均价&#13; 2跟进优化" class="logo title"></span>
                 </div>
                 <div class="tr tbody">
                     <ul class="menuSide">

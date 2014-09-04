@@ -67,6 +67,30 @@ function onClick(event, treeId, treeNode, clickFlag) {
   doSearch();
 } 
 
+$(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip();
+    $('.sideCont').on('click', '.btns', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var Thi=$(this),
+        ThiType=Thi.data('type');
+        if(ThiType=='add_company'){
+            art.dialog.open('/v/settings/uc_index_c_add.html');
+        }else if(ThiType=='popover'){
+            var popoverTime=setTimeout(function(){
+                $('.input_search').focus();
+                clearTimeout(popoverTime);
+            },100)
+        }
+        return false;
+    });
+});
+$('[data-toggle=popover]').popover({
+    html:true,
+    container:'body',
+    placement:'top'
+});
+getFunSettingSideEarch();
 </script>
 
 <div class="sideHead">
@@ -88,7 +112,7 @@ function onClick(event, treeId, treeNode, clickFlag) {
 <div class="sideFoot">
   <ul>
     <li>
-      
+      <a href="" title="搜索数据" class="btns" id="search" data-type="popover" data-toggle="popover" data-content='<input type="text" class="form-control input_search" placeholder="公司代码\公司名\等" name="" value="" style="min-width:250px;">' autofocus="autofocus"><i class="glyphicon glyphicon-plus"></i>搜索</a>
     </li>
   </ul>
 </div>
