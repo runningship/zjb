@@ -2,6 +2,7 @@
 <script type="text/javascript">
 var rMenu;
 var id;
+var node;
   var setting = {
     view: {
       showIcon: false,
@@ -50,6 +51,7 @@ function addDiyDom(treeId, treeNode) {
 }
 
 function onClick(event, treeId, treeNode, clickFlag) {
+  node = treeNode;
   console.log(treeNode);
   if(clickFlag!=null){
     var treeObj = $.fn.zTree.getZTreeObj(treeId);

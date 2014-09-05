@@ -17,6 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
+import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.DeptGroup;
 import com.youwei.zjb.util.JSONHelper;
@@ -169,7 +170,7 @@ public class DepartmentService {
 					json.put("pId", g.pid);
 				}else{
 					//中介宝用户看到的分组略有不同
-					if(g.cid!=1){
+					if(ThreadSession.getUser().cid!=1){
 						json.put("pId", g.cid);
 					}
 				}

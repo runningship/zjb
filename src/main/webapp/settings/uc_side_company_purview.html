@@ -104,6 +104,15 @@ function onBodyMouseDown(event){
     rMenu.css({"visibility" : "hidden"});
 }
 
+function runMenu(This){
+  var event;
+  var treeObj = $.fn.zTree.getZTreeObj(node.tId);
+  onClick(event, node.tId, node,null);
+//  var This=Thi;
+//  alert(Thi.html());
+//  return false;
+  showRMenu(node.type, This.offset().left+20, This.offset().top+26);
+}
 function addDiyDom(treeId, treeNode) {
   $("#" + treeNode.tId + "_ico").remove();
   // $("#" + treeNode.tId).css('display','inline');
@@ -112,6 +121,7 @@ function addDiyDom(treeId, treeNode) {
     var editStr = "<span>"+ treeNode.cnum +" </span>";
     aObj.prepend(editStr);  
   }
+  aObj.append('<span class="icon iconfont btns runMenu" data-type="runMenu" data-tree="'+treeNode.tId+'"  title="更多操作">&#xe641;</span>');
 }
 
 function delNode(){
@@ -122,7 +132,7 @@ function delNode(){
       mysuccess: function(data){
           var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
           treeObj.removeNode(node);
-          alert('成功删除职务: '+node.name);
+          alert('成功删除职位: '+node.name);
       }
     });
 }
@@ -130,7 +140,7 @@ function delNode(){
 function addRole(){
     dialog_see=art.dialog.open('/v/settings/roleAdd.html?&cid='+id,{
       id:'roleAdd',
-      title:'添加职务',
+      title:'添加职位',
       height:100,
       width:500
     })
@@ -139,7 +149,7 @@ function addRole(){
 function editRole(){
     dialog_see=art.dialog.open('/v/settings/roleEdit.html?&id='+id,{
       id:'roleEdit',
-      title:'修改职务',
+      title:'修改职位',
       height:100,
       width:500
     })
@@ -156,7 +166,7 @@ $(document).ready(function() {
         ThiUrl=Thi.attr('href'),
         ThiType=Thi.data('type');
         if(ThiType=='delThis'){
-            art.dialog.confirm('删除职务后不可恢复，确定要删除吗？', function () {
+            art.dialog.confirm('删除职位后不可恢复，确定要删除吗？', function () {
                 delNode();
             },function(){
                 
@@ -188,6 +198,11 @@ $(document).ready(function() {
                 $('.input_search').focus();
                 clearTimeout(popoverTime);
             },100)
+        }else if(ThiType=='runMenu'){
+          ThiTree=Thi.data('tree')
+          // alert(ThiTree);
+          // return false;
+          runMenu(Thi);
         }
         return false;
     });

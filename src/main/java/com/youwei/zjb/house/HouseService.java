@@ -38,14 +38,26 @@ public class HouseService {
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
 	@WebMethod
-	public ModelAndView exist(String area, String dhao , String fhao){
+	public ModelAndView exist(String area, String dhao , String fhao , String seeGX){
 		ModelAndView mv = new ModelAndView();
-		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{area,dhao,fhao});
-		if(po==null){
+		StringBuilder hql = new StringBuilder();
+		hql.append("from House where area=? and dhao=? and fhao=? ");
+		List<Object> params = new ArrayList<Object>();
+		params.add(area);
+		params.add(dhao);
+		params.add(fhao);
+		if(StringUtils.isEmpty(seeGX) || "0".equals(seeGX)){
+			hql.append(" and cid= ? ");
+			params.add(ThreadSession.getUser().cid);
+		}else{
+			hql.append(" and seeGX=1");
+		}
+		List<House> list = dao.listByParams(House.class, hql.toString(), params.toArray());
+		if(list==null || list.isEmpty()){
 			mv.data.put("exist", "0");
 		}else{
 			mv.data.put("exist", "1");
-			mv.data.put("hid", po.id);
+			mv.data.put("hid", list.get(0).id);
 		}
 		return mv;
 	}

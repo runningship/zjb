@@ -127,7 +127,7 @@ $(window).resize(function() {      //类别
       <th>帐号</th>
       <th>姓名</th>
       <th>联系电话</th>
-      <th>部门-职务</th>
+      <th>部门-职位</th>
       <th>最后登陆时间</th>
       <th>最后ＩＰ</th>
       <th>操作</th>
@@ -163,17 +163,18 @@ $(window).resize(function() {      //类别
     </div>
 </div>
 <div id="rMenu" class="list-group" style="position:absolute;z-index:999;display:none;">
+  <a href="javascript:void(0)" auth="sz_comp_edit" id="m_edit_comp" data-type="editThis" class="list-group-item">修改公司</a>
+  <a href="javascript:void(0)" auth="sz_comp_del" id="m_del_comp" data-type="delThis" class="list-group-item">删除公司</a>
+  <a href="javascript:void(0)" auth="sz_group_add" id="m_add_group" data-type="addGroup" class="list-group-item" >添加区域</a>
+  <a href="javascript:void(0)" auth="sz_group_edit" id="m_edit_group" data-type="editThis" class="list-group-item">修改区域</a>
+  <a href="javascript:void(0)" auth="sz_group_del" id="m_del_group" data-type="delThis" class="list-group-item">删除区域</a>
+  <a href="javascript:void(0)" auth="sz_dian_add" id="m_add_dept" data-type="adddept" class="list-group-item" >添加门店</a>
+  <a href="javascript:void(0)" auth="sz_dian_edit" id="m_edit_dept" data-type="editThis" class="list-group-item">修改门店</a>
+  <a href="javascript:void(0)" auth="sz_dian_del" id="m_del_dept" data-type="delThis" class="list-group-item">删除门店</a>
+  <a href="javascript:void(0)" auth="sz_group_set" id="m_move_to" data-type="moveTo" class="list-group-item">移动门店</a>
+  <a href="javascript:void(0)" auth="sz_user_add" id="m_add_user" data-type="addUser" class="list-group-item" >添加员工</a>
   <a href="javascript:void(0)" auth="sz_record_on" id="m_list_records" data-type="seeRecords" class="list-group-item disabled">查看操作记录</a>
-  <a href="javascript:void(0)" auth="sz_genjin_on" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进</a>
-  <a href="javascript:void(0)" auth="sz_group_add" id="m_add_group" data-type="addGroup" class="list-group-item" >添加分组</a>
-  <a href="javascript:void(0)" auth="sz_user_add" id="m_add_user" data-type="addUser" class="list-group-item" >添加用户</a>
-  <a href="javascript:void(0)" auth="sz_dian_add" id="m_add_dept" data-type="adddept" class="list-group-item" >添加店面</a>
-  <a href="javascript:void(0)" auth="sz_group_set" id="m_move_to" data-type="moveTo" class="list-group-item">移动至</a>
-  <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_dept" class="list-group-item">修改店面</a>
-  <a href="javascript:void(0)" auth="sz_dian_edit" data-type="editThis" id="m_edit_comp" class="list-group-item">修改公司</a>
-  <a href="javascript:void(0)" auth="sz_group_edit" data-type="editThis" id="m_edit_group" class="list-group-item">修改分组</a>
-  <a href="javascript:void(0)" auth="sz_dian_del" data-type="delThis" id="m_del_dept" class="list-group-item">删除店面</a>
-  <a href="javascript:void(0)" auth="sz_group_del" data-type="delThis" id="m_del_group" class="list-group-item">删除分组</a>
+  <a href="javascript:void(0)" auth="sz_genjin_on" id="m_list_genjin" data-type="seeGenjin" class="list-group-item">查看跟进记录</a>
 </div>
 </body>
 </html>

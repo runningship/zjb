@@ -94,31 +94,32 @@ function OnRightClick(event, treeId, treeNode) {
   showRMenu(treeNode.type, event.clientX, Y);
 }
 function showRMenu(type, x, y) {
-  $("#rMenu a").show();
+   $("#rMenu a").show();
   if(type!="comp"){
-    $('#m_add_group').hide();
-    $('#m_add_dept').hide();
+    $('#m_edit_comp').hide();
+    $('#m_del_comp').hide();
   }
-  if(type=="comp"){
-    $('#m_del_group').hide();
-    $('#m_del_dept').hide();
+  if(type!="group"){
     $('#m_edit_group').hide();
-    $('#m_edit_dept').hide();
+    $('#m_del_group').hide();
   }
   if(type!="dept"){
+    $('#m_edit_dept').hide();
+    $('#m_del_dept').hide();
     $('#m_move_to').hide();
   }
-  if(type=="dept"){
-    $('#m_del_group').hide();
-    $('#m_edit_group').hide();
-    $('#m_edit_comp').hide();
+  if(type=="comp"){
+    $('#m_edit_group1').hide();
   }
   if(type=="group"){
+    $('#m_add_group').hide();
+    $('#m_add_user').hide();
     $('#m_list_records').hide();
     $('#m_list_genjin').hide();
-    $('#m_add_user').hide();
-    $('#m_del_dept').hide();
-    $('#m_edit_dept').hide();
+  }
+  if(type=="dept"){
+    $('#m_add_group').hide();
+    $('#m_add_dept').hide();
   }
   var menuHeight = rMenu[0].clientHeight;
   if(y+menuHeight>$('#sideCont')[0].clientHeight){
@@ -134,7 +135,15 @@ function hideRMenu() {
 function onBodyMouseDown(event){
     rMenu.css({"visibility" : "hidden"});
 }
-
+function runMenu(This){
+  var event;
+  var treeObj = $.fn.zTree.getZTreeObj(node.tId);
+  onClick(event, node.tId, node,null);
+//  var This=Thi;
+//  alert(Thi.html());
+//  return false;
+  showRMenu(node.type, This.offset().left+20, This.offset().top+26);
+}
 function addDiyDom(treeId, treeNode) {
   if(treeNode.type!="group"){
     $("#" + treeNode.tId + "_ico").remove();  
@@ -155,7 +164,7 @@ function addDiyDom(treeId, treeNode) {
     var lockStr = '<span id="'+treeNode.tId+'_sh_a" onClick="shenhe(\''+treeNode.tId+'\')" class="icon iconfont '+color+'">&#xe64e;</span>';
     aObj.after(lockStr);
   }
-  aObj.append('<span class="icon iconfont runMenu" title="更多操作" onclick="alert(\'123456\');return false;">&#xe641;</span>');
+  aObj.append('<span class="icon iconfont btns runMenu" data-type="runMenu" data-tree="'+treeNode.tId+'"  title="更多操作">&#xe641;</span>');
 }
 
 function shenhe(id){
@@ -257,8 +266,23 @@ $(document).ready(function() {
                 $('.input_search').focus();
                 clearTimeout(popoverTime);
             },100)
+        }else if(ThiType=='runMenu'){
+          ThiTree=Thi.data('tree')
+          // alert(ThiTree);
+          // return false;
+          runMenu(Thi);
         }
         return false;
+    }).on('mousemove', '.hbtn', function(event) {
+        var Thi=$(this),
+        ThiType=Thi.data('type');
+        if(ThiType=='runMenu'){
+          ThiTree=Thi.data('tree')
+          runMenu(ThiTree,Thi);
+        }else{
+          return false;
+        }
+
     });
     $('#rMenu').on('click', 'a', function(event) {
         var Thi=$(this),

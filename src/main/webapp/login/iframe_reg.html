@@ -163,19 +163,41 @@ function btnAction(){
                 winBoxHeight=-LiBoxHeight;
                 var form=$(ThiFormId),
                 getDid=$('select[name=fendian]').val(),
-                getDname=$('select[name=fendian] option:selected').text(),
-                getCode=$('#authCode').val(),
-                param;
+                getDname=$('select[name=fendian] option:selected').text();
                 if(!getDid||!getDname){
                     art.dialog.tips('请选择分公司');
                     $('select[name=fendian]').focus();
                     l.stop();
                     return false;
                 }
+                var inTime=setTimeout(function(){
+                    l.stop();
+                    goto_marTop(winBoxHeight,function(){
+                        $('select[name=beizhu]').focus();
+                    });
+                    clearTimeout(inTime);
+                },1000);
+                return false;
+            }else if(ThiFormId=="idBeizhu"){
+                winBoxHeight=-LiBoxHeight;
+                var form=$(ThiFormId),
+                getBeizhu=$('textarea[name=beizhu]').val(),
+                getCode=$('#authCode').val(),
+                getDid=$('select[name=fendian]').val(),
+                getDname=$('select[name=fendian] option:selected').text(),
+                param;
+                if(!getBeizhu){
+                    art.dialog.tips('请填写备注信息');
+                    $('textarea[name=beizhu]').focus();
+                    l.stop();
+                    return false;
+                }
+
 
                 param=window.parent.pcinfo;
                 param.authCode=getCode;
                 param.did=getDid[0];
+                param.beizhu=getBeizhu;
                 YW.ajax({
                     type: 'POST',
                     async:false,
@@ -204,6 +226,7 @@ function btnAction(){
                         l.stop();
                     },complete:function(){
                         $('#authCode').val('');
+                        $('textarea[name=beizhu]').val('');
                         $('select[name=fendian]').empty();
                         $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
                     }
@@ -329,7 +352,30 @@ $(window).resize(function() {
             <button class=" pull-right btn btn-link apage" data-next="p">上一步</button>
         </div>
     </li>
-    <li id="body3">
+    <li id="body3" data-formId="idBeizhu">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="page-header">
+                    <h1><b style="padding:0 25px;"></b>备注信息 <small>请为这台电脑备注名称</small></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">备注：</label>
+                        <div class="col-xs-6">
+                            <textarea class="form-control" name="beizhu" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10 btn_submit_box" style="margin-left:8.33333333%;">
+            <button class=" pull-right btn btn-primary ladda-button apage" data-style="expand-left" data-goto="body4" data-next="next"><span class="ladda-label">提交</span></button>
+            <button class=" pull-right btn btn-link apage" data-next="p">上一步</button>
+        </div>
+    </li>
+    <li id="body4">
         <div class="container-fluid">
             <div class="row">
                 <div class="page-header">

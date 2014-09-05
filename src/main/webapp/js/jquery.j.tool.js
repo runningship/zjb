@@ -424,7 +424,8 @@ function getHouseToo(callback){
     seeGX=$('#seeGX'),
     areav=area.val(),
     dhaov=dhao.val(),
-    fhaov=fhao.val();
+    fhaov=fhao.val(),
+    seeGXv=seeGX.val();
     if(getHouseTooStr==areav+dhaov+fhaov){
         return false;
     }else{
@@ -439,7 +440,8 @@ function getHouseToo(callback){
     var param={
         area:areav,
         dhao:dhaov,
-        fhao:fhaov
+        fhao:fhaov,
+        seeGX:seeGXv
     }
     YW.ajax({
         type: 'POST',
@@ -455,6 +457,7 @@ function getHouseToo(callback){
                 }
             }else{
                 api.title(apiTitle + '　<b style="color:#090;">无重复</b>');
+                callback;
             }
         }
     });
