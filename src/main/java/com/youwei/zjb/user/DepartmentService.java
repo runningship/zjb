@@ -47,6 +47,7 @@ public class DepartmentService {
 			throw new GException(PlatformExceptionType.BusinessException, "授权码重复");
 		}
 		dept.addtime = new Date();
+		dept.flag=1;
 		dao.saveOrUpdate(dept);
 		ModelAndView mv = new ModelAndView();
 		JSONObject json = new JSONObject();

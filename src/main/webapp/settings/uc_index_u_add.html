@@ -67,7 +67,7 @@ $(document).ready(function() {
 <div class="html edit title">
     <div class="bodyer mainCont">
         <div class="maxHW" style="min-width: 500px;">
-            <form name="form1" class="form-horizontal form1" role="form" onsubmit="submits();return false;">
+            <form name="form1" class="form-horizontal form_label_right form1" role="form" onsubmit="submits();return false;">
                 
                 <div class="form-group">
                     <label class="col-xs-3 control-label">登录帐号:</label>
@@ -114,10 +114,10 @@ $(document).ready(function() {
                     <label class="col-xs-3 control-label">锁定:</label>
                     <div class="col-xs-8">
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary">
-                                <input type="radio" value="1" name="lock" autocomplete="off"> 开启
+                            <label class="btn btn-default active">
+                                <input type="radio" value="1" name="lock" autocomplete="off" checked> 开启
                             </label>
-                            <label class="btn btn-primary">
+                            <label class="btn btn-default">
                                 <input type="radio" value="0" name="lock" autocomplete="off"> 锁定
                             </label>
                         </div>

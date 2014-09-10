@@ -26,24 +26,28 @@ public class uc_index_u_add extends page{
 		if(StringUtils.isNotEmpty(id)){
 			comp = dao.get(Department.class, Integer.valueOf(id));
 		}
+		String cnum="";
 		Integer cid=null;
 		if(comp.fid==0){
 			cid = comp.id;
+			cnum = comp.cnum;
 		}else{
 			cid = comp.fid;
+			cnum = dao.get(Department.class, comp.fid).cnum;
 		}
 		int count=0;
 		List<Map> list = dao.listAsMap("select max(lname) as maxLName from User where cid=?", cid);
 		if(!list.isEmpty()){
-			if(list.get(0).get("maxLName")!=null){
-				count = Integer.valueOf(list.get(0).get("maxLName").toString());
+			Object mlname = list.get(0).get("maxLName");
+			if(mlname!=null && !"null".equals(mlname)){
+				count = Integer.valueOf(mlname.toString());
 			}
 		}
 		String pattern="0000000";
 		String lname="";
 		 java.text.DecimalFormat df = new java.text.DecimalFormat(pattern);
 		 if(count==0){
-			 lname=comp.cnum+"0001";
+			 lname=cnum+"0001";
 		 }else{
 			 lname=df.format(count+1);
 		 }

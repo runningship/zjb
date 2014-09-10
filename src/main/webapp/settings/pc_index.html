@@ -39,6 +39,11 @@ function doSearch(){
         setTableFix();
         $('.shenhe-0').addClass('btn-warning');
         $('.shenhe-1').addClass('btn-primary');
+        if(houseData['page']['data']<=0){
+          $('.id_House_list').parents('.maxHW').addClass('list_noThing');
+        }else{
+          $('.id_House_list').parents('.maxHW').removeClass('list_noThing');
+        }
     }
   });
 }

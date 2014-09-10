@@ -199,11 +199,9 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .html .wintools .winBtn i{ display: inline-block; height: 100%; width: 100%; background:url(images/winBtn.png) no-repeat left top;}
 .html .wintools ul.dropdown-menu > li > a { padding:3px 10px;}
 .html .wintools ul.dropdown-menu > li > a:hover,
-.html .wintools ul.dropdown-menu > li > a:focus {
-color: #FFF;
-text-decoration: none;
-background-color: #09F;
-}
+.html .wintools ul.dropdown-menu > li > a:focus {color: #FFF;text-decoration: none;background-color: #09F;}
+.html .wintools ul.dropdown-menu > li > a:hover span,
+.html .wintools ul.dropdown-menu > li > a:focus span{color: #428bca;text-decoration: none;background-color: #fff;}
 .html .wintools ul a i{font-size: 20px;}
 .html .wintools .winBtn.winBtnMenu i{background-position: -10px  3px }
 .html .wintools .winBtn.winBtnMin i{background-position:-60px  3px }
@@ -397,6 +395,7 @@ padding: 5px 0;
 
 .maxHW{ height: 100%; width: 100%;}
 .maxHW.list_noThing{ background: url(images/list_nothing.png) no-repeat center;}
+.side_noThing{ text-align: center;}
 
 .list .header{ height: 36px; line-height: 36px; color:#333;}
 .list .bodyer{ position:relative; }

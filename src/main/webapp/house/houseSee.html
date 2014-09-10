@@ -71,6 +71,16 @@ $(document).ready(function() {
             return false;
         });
     }
+    var GenjinTbody=$('.see_house_genjin').find('tbody'),
+    GenjinTbodyHtml=GenjinTbody.html().replace(/(\n)+|(\r\n)+/g, "");
+    GenjinTbodyHtml=GenjinTbodyHtml.replace('   ','');
+
+    if(GenjinTbodyHtml==' '){
+      $('.see_house_genjin').find('tbody').html('<tr><td class="side_noThing">暂无跟进...</td></tr>');
+      $('#addGenjinBtn').tooltip('show');
+    }
+
+
 });
 </script>
 <div class="sideHead"  >

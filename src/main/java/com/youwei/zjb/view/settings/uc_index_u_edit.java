@@ -14,7 +14,7 @@ import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
 
-public class user_edit extends uc_index_u_add{
+public class uc_index_u_edit extends uc_index_u_add{
 
 	@Override
 	public Document initPage(Document doc, HttpServletRequest req) {

@@ -165,7 +165,8 @@ function sideBtnFun(){
                 }
             });
         }else if(ThiType=='map'){
-            art.dialog.open('/house/house_see_map.html',{id:'seemap',height:400,width:900});
+            ThiArea=Thi.data('area');
+            art.dialog.open('/house/house_see_map.html?area='+ThiArea,{id:'seemap'});
         }else if(ThiType=='copy'){
             alert('不给复制');
         }else{
