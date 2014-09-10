@@ -173,7 +173,7 @@ function btnAction(){
                 getDid=$('select[name=fendian]').val(),
                 getDname=$('select[name=fendian] option:selected').text();
                 if(!getDid||!getDname){
-                    art.dialog.tips('请选择分公司');
+                    art.dialog.tips('请选择门店');
                     $('select[name=fendian]').focus();
                     l.stop();
                     return false;
@@ -329,7 +329,7 @@ $(window).resize(function() {
         <div class="container-fluid">
             <div class="row">
                 <div class="page-header">
-                    <h1><b style="padding:0 25px;"></b>授权范围 <small>请选择所在分公司</small></h1>
+                    <h1><b style="padding:0 25px;"></b>授权范围 <small>请选择所在门店</small></h1>
                 </div>
             </div>
             <div class="row">
@@ -347,7 +347,7 @@ $(window).resize(function() {
                 </div>
                 <div class="col-xs-10" style="margin-left:8.33333333%;">
                     <div class="form-group">
-                        <label for="city" class="col-xs-3 control-label">选择分公司：</label>
+                        <label for="city" class="col-xs-3 control-label">选择门店：</label>
                         <div class="col-xs-6">
                             <select class="form-control" multiple size="6" name="fendian">
                                 <option class="fendian" value="${id}">${name}</option>
@@ -384,7 +384,7 @@ $(window).resize(function() {
                 </div>
                 <div class="col-xs-10" style="margin-left:8.33333333%;">
                     <div class="form-group">
-                        <label for="city" class="col-xs-3 control-label">分公司：</label>
+                        <label for="city" class="col-xs-3 control-label">门店：</label>
                         <div class="col-xs-6 view_fendian"></div>
                     </div>
                 </div>
@@ -416,7 +416,7 @@ $(window).resize(function() {
                     <ol>
                         <li>城　市：<span class="view_city"></span></li>
                         <li>公　司：<span class="view_company"></span></li>
-                        <li>分公司：<span class="view_fendian"></span></li>
+                        <li>门店：<span class="view_fendian"></span></li>
                         <li>备　注：<span class="view_beizhu"></span></li>
                     </ol>
                 </div>

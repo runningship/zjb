@@ -152,51 +152,55 @@
 		"type":"virtual",
 		"children":[{
 			"name":"sz_dian_add",
-			"text":"添加店面",
+			"text":"添加门店",
 			"type":"menu"
 		},{
 			"name":"sz_dian_edit",
-			"text":"修改店面",
+			"text":"修改门店",
 			"type":"menu"
 		},{
 			"name":"sz_dian_suo",
-			"text":"锁定店面",
+			"text":"锁定门店",
+			"type":"menu"
+		},{
+			"name":"sz_comp_edit",
+			"text":"修改公司",
 			"type":"menu"
 		},{
 			"name":"sz_dian_del",
-			"text":"删除店面",
+			"text":"删除门店",
 			"type":"menu"
 		},{
 			"name":"sz_group_add",
-			"text":"添加分组",
+			"text":"添加区域",
 			"type":"menu"
 		},{
 			"name":"sz_group_edit",
-			"text":"修改分组",
+			"text":"修改区域",
 			"type":"menu"
 		},{
 			"name":"sz_group_del",
-			"text":"删除分组",
+			"text":"删除区域",
 			"type":"menu"
 		},{
 			"name":"sz_group_set",
-			"text":"调整店面分组",
+			"text":"调整门店区域",
 			"type":"menu"
 		},{
 			"name":"sz_user_add",
-			"text":"添加用户",
+			"text":"添加员工",
 			"type":"menu"
 		},{
 			"name":"sz_user_edit",
-			"text":"修改用户",
+			"text":"修改员工",
 			"type":"menu"
 		},{
 			"name":"sz_user_sh",
-			"text":"审核用户",
+			"text":"审核员工",
 			"type":"menu"
 		},{
 			"name":"sz_user_del",
-			"text":"删除用户(永久)",
+			"text":"删除员工(永久)",
 			"type":"menu"
 		}]
 	},{

@@ -96,6 +96,14 @@ function shenheFy(id , obj){
   });
 }
 
+function showAction(hcid,cid){
+  if(cid==1 || hcid==cid){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 function houseEdit(id){
   art.dialog.open("/house/house_rent_edit.html?id="+id)
 }
@@ -407,9 +415,9 @@ $(window).resize(function() {      //类别
     <tr data-hid="${id}" style="display:none;" class="id_House_list">
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td style="width:50px;" auth="fy_sh|fy_edit|fy_del">
-        <a href="##" auth="fy_sh" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
-        <a href="#" auth="fy_edit" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
-        <a href="##" auth="fy_del" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
+        <a href="##" auth="fy_sh" class="shenhe_${sh}" show="showAction(${cid},$${cid})" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
+        <a href="#" auth="fy_edit" class="edit" show="showAction(${cid},$${cid})" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
+        <a href="##" auth="fy_del" class="del" show="showAction(${cid},$${cid})" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
       </td>
       <td class="ztai_${ztai}">${ztai}</td>
       <td>${quyu}</td>

@@ -37,7 +37,7 @@ public class houseSee_rent extends AbstractSee{
 		json.put("fbr", user.uname==null ? "":user.uname);
 		json.put("ywy", h.forlxr==null ? "":h.forlxr);
 		json.put("fortel", h.fortel==null ? "":h.fortel);
-		json.put("dname", dept.namea);
+		json.put("dname", dept==null? "":dept.namea);
 		json.put("ztai", RentState.parse(h.ztai));
 		RentType fs = RentType.parse(h.fangshi);
 		json.put("fangshi", fs==null ? "": fs.toString());

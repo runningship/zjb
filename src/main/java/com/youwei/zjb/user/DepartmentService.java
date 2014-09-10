@@ -109,11 +109,11 @@ public class DepartmentService {
 		Department po = dao.get(Department.class, deptId);
 		long count = dao.countHqlResult("from Department where fid=?", deptId);
 		if(count>0){
-			throw new GException(PlatformExceptionType.BusinessException, "请先删除分公司");
+			throw new GException(PlatformExceptionType.BusinessException, "请先删除公司下门店");
 		}
 		count = dao.countHqlResult("from User where did=?", deptId);
 		if(count>0){
-			throw new GException(PlatformExceptionType.BusinessException, "该分公司下有人员信息，请先删除公司人员信息");
+			throw new GException(PlatformExceptionType.BusinessException, "该门店下有员工信息，请先删除员工信息");
 		}
 		dao.delete(po);
 		return new ModelAndView();
