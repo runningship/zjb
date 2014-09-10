@@ -108,9 +108,9 @@ function showRMenu(type, x, y) {
     $('#m_del_dept').hide();
     $('#m_move_to').hide();
   }
-  if(type=="comp"){
-    $('#m_edit_group1').hide();
-  }
+  // if(type=="comp"){
+  //   $('#m_edit_group1').hide();
+  // }
   if(type=="group"){
     $('#m_add_group').hide();
     $('#m_add_user').hide();
@@ -150,7 +150,9 @@ function addDiyDom(treeId, treeNode) {
   }
   
   var aObj = $("#" + treeNode.tId + "_a");
+//  aObj.css('display','inline');
   aObj.css('display','inline');
+  aObj.parent().addClass('a_'+treeNode.type);
   console.log(treeNode.cnum);
   if(treeNode.cnum!=null){
     var cnumStr = '<span class="">'+ treeNode.cnum +' </span>';
@@ -164,7 +166,7 @@ function addDiyDom(treeId, treeNode) {
     var lockStr = '<span id="'+treeNode.tId+'_sh_a" onClick="shenhe(\''+treeNode.tId+'\')" class="icon iconfont '+color+'">&#xe64e;</span>';
     aObj.after(lockStr);
   }
-  aObj.append('<span class="icon iconfont btns runMenu" data-type="runMenu" data-tree="'+treeNode.tId+'"  title="更多操作">&#xe641;</span>');
+  aObj.append('<span class="icon iconfont btns runMenu" data-type="runMenu" data-tree="'+treeNode.tId+'">&#xe641;</span>');
 }
 
 function shenhe(id){
@@ -182,11 +184,13 @@ function shenhe(id){
          if(treeNode.sh==1){
             //开通-->锁定
             treeNode.sh=0;
-            $("#"+id+"_sh_a").css('color','red');
+            $("#"+id+"_sh_a").removeClass('icon_sh');
+            $("#"+id+"_sh_a").addClass('icon_wsh');
           }else{
             //锁定--开通
             treeNode.sh=1;
-            $("#"+id+"_sh_a").css('color','green');
+            $("#"+id+"_sh_a").removeClass('icon_wsh');
+            $("#"+id+"_sh_a").addClass('icon_sh');
           }
       }
     });
@@ -235,7 +239,7 @@ function delNode(){
       mysuccess: function(data){
           var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
           treeObj.removeNode(node);
-          alert('成功删除分组: '+node.name);
+          alert('成功删除区域: '+node.name);
       }
     });
   }else{
@@ -325,7 +329,7 @@ $(document).ready(function() {
           });
             return false;
         }else if(ThiType=='addGroup'){
-            art.dialog.prompt('新的分组名称', function (val) {
+            art.dialog.prompt('新的区域名称', function (val) {
                 YW.ajax({
                   type: 'POST',
                   url: '/c/dept/group/add',
@@ -346,7 +350,7 @@ $(document).ready(function() {
             return false;
         }else if(ThiType=='editThis'){
             if(node.type=='group'){
-              art.dialog.prompt('修改分组', function (val) {
+              art.dialog.prompt('修改区域名称', function (val) {
                 updateGroup(val);
               }, node.name);
             }else{

@@ -36,6 +36,7 @@ function addDiyDom(treeId, treeNode) {
   // $("#" + treeNode.tId).css('display','inline');
   var aObj = $("#" + treeNode.tId + "_a");
   aObj.css('display','inline');
+  aObj.parent().addClass('a_'+treeNode.type);
   if(treeNode.cnum!=null){
     var cnumStr = "<span>"+ treeNode.cnum +" </span>";
     aObj.prepend(cnumStr);  

@@ -41,6 +41,11 @@ function doSearch(){
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
         setTableFix();
+        if(houseData['page']['data']<=0){
+          $('.id_House_list').parents('.maxHW').addClass('list_noThing');
+        }else{
+          $('.id_House_list').parents('.maxHW').removeClass('list_noThing');
+        }
     }
   });
 }
@@ -148,7 +153,7 @@ $(window).resize(function() {      //类别
             <td>${dname}-${role}</td>
             <td>${lasttime}</td>
             <td>${ip}</td>
-            <td><span class="btn-group">
+            <td><span class="btn-group null-float">
               <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit(${uid})">编辑</a>
               <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="uc_delete(${uid})">删除</a>
               </span>

@@ -35,7 +35,7 @@ public class DepartmentService {
 		if(po!=null){
 			throw new GException(PlatformExceptionType.BusinessException, "公司代码重复");
 		}
-		po = dao.getUniqueByKeyValue(Department.class, "namea", dept.namea);
+		po = dao.getUniqueByParams(Department.class, new String[]{"fid" , "namea"}, new Object[]{dept.fid , dept.namea});
 		if(po!=null){
 			throw new GException(PlatformExceptionType.BusinessException, "公司名称重复");
 		}
@@ -138,7 +138,8 @@ public class DepartmentService {
 	@WebMethod
 	public ModelAndView getDeptTree(Integer cid){
 		ModelAndView mv = new ModelAndView();
-		if(cid==1){
+		if(ThreadSession.getUser().cid==1){
+			//中介宝用户看到的分组略有不同
 			List<Department> comps = dao.listByParams(Department.class, "from Department where 1=1 order by sh desc, cnum");
 			JSONArray result = new JSONArray();
 			for(Department dept : comps){
@@ -169,10 +170,7 @@ public class DepartmentService {
 				if(g.pid!=null){
 					json.put("pId", g.pid);
 				}else{
-					//中介宝用户看到的分组略有不同
-					if(ThreadSession.getUser().cid!=1){
-						json.put("pId", g.cid);
-					}
+					json.put("pId", g.cid);
 				}
 				json.put("name", g.name);
 				result.add(json);

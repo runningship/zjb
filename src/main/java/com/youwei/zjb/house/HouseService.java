@@ -41,7 +41,7 @@ public class HouseService {
 	public ModelAndView exist(String area, String dhao , String fhao , String seeGX){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder();
-		hql.append("from House where area=? and dhao=? and fhao=? ");
+		hql.append("from House where area = ? and dhao = ? and fhao = ? ");
 		List<Object> params = new ArrayList<Object>();
 		params.add(area);
 		params.add(dhao);
@@ -50,7 +50,8 @@ public class HouseService {
 			hql.append(" and cid= ? ");
 			params.add(ThreadSession.getUser().cid);
 		}else{
-			hql.append(" and seeGX=1");
+			hql.append(" and (seeGX=1 or cid=?)");
+			params.add(ThreadSession.getUser().cid);
 		}
 		List<House> list = dao.listByParams(House.class, hql.toString(), params.toArray());
 		if(list==null || list.isEmpty()){
@@ -72,11 +73,11 @@ public class HouseService {
 		}
 		User user = ThreadSession.getUser();
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
-		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
-		if(po!=null){
-			throw new GException(PlatformExceptionType.BusinessException,"存在栋号，房号相同的房源,编号为"+po.id);
-		}else{
-			
+//		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
+//		if(po!=null){
+//			throw new GException(PlatformExceptionType.BusinessException,"存在栋号，房号相同的房源,编号为"+po.id);
+//		}else{
+//			
 			if(house.mji==null){
 				throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
 			}
@@ -118,7 +119,7 @@ public class HouseService {
 			dao.saveOrUpdate(house);
 			mv.data.put("msg", "发布成功");
 			mv.data.put("result", 0);
-		}
+//		}
 		
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 添加了房源["+house.area+"]";
 		operService.add(OperatorType.房源记录, operConts);

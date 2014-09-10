@@ -425,7 +425,7 @@ function getHouseToo(callback){
     areav=area.val(),
     dhaov=dhao.val(),
     fhaov=fhao.val(),
-    seeGXv=seeGX.val();
+    seeGXv=seeGX[0].checked?"1":"0";
     if(getHouseTooStr==areav+dhaov+fhaov){
         return false;
     }else{

@@ -2,7 +2,9 @@ package com.youwei.zjb;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -23,6 +25,7 @@ import com.youwei.zjb.util.SessionHelper;
 
 public class SessionFilter implements Filter{
 	private static List<String> excludes= new ArrayList<String>();
+	public static Map<String,Integer> calls = new HashMap<String,Integer>();
 	static{
 		excludes.add("/c/user/login");
 		excludes.add("/c/pc/add");
@@ -50,6 +53,12 @@ public class SessionFilter implements Filter{
 		HttpSession session = req.getSession();
 		String oldSessionId = getClientSid(req);
 		String clientId = getClientID(req);
+		if(!calls.containsKey(path)){
+			calls.put(path,0);
+		}
+		Integer count = calls.get(path);
+		count++;
+		calls.put(path, count);
 		System.out.println("----------->clientId="+clientId+",path="+path+",oldSession="+oldSessionId+",session="+session.getId());
 		ThreadSession.setHttpSession(session);
 		if(excludes.contains(path)){

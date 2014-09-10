@@ -118,6 +118,8 @@ background-color: #6FBEFF; color:#000;
 .miniwidth{white-space:nowrap;word-break: keep-all; text-align:center;}
 table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
 
+span.null-float{ float: none;}
+
 .dropdown-menu label{ padding: 0 10px; display: block;}
 .dropdown-menu label:hover{ background: #EEE;}
 .dropdown-menu input[type="checkbox"]{vertical-align: text-top;}
@@ -171,9 +173,7 @@ border-bottom-right-radius: 0;
 
 .form_label_right .control-label, .form_label_right .radio, .form_label_right .checkbox, .form_label_right .radio-inline, .form_label_right .checkbox-inline {
 padding-top: 7px;margin-top: 0;margin-bottom: 0;text-align: right;}
-.btn-group.open .dropdown-toggle {
-box-shadow:none;
-}
+.btn-group.open .dropdown-toggle {box-shadow:none;}
 
 .dropdown-menu{white-space:nowrap;word-break: keep-all;min-width:initial;}
 
@@ -242,12 +242,30 @@ ul.jtree  li  a.curSelectedNode>span{ color:#FFF;}
 ul.jtree  li .icon.iconfont{ position: absolute; right: 0; left: auto; font-size: 16px; color: #DDD;display: inline-block;height: 26px;line-height: 26px; }
 ul.jtree  li .icon.icon_sh:hover{ color: #666;}
 ul.jtree  li .icon.icon_wsh{ color: #F00;}
-ul.ztree li span.button.noline_docu,
-ul.jtree li span.button.noline_open,
-ul.jtree li span.button.noline_close{ background-image: url('images/icon_ymxjt.png');background-repeat: no-repeat; height: 11px;}
-ul.jtree li span.button.noline_open{ background-position: 5px -10px;}
-ul.jtree li span.button.noline_close,
-ul.ztree li span.button.noline_docu{ background-position: 5px 0;}
+ul.ztree li.a_comp > span.button.noline_docu,
+ul.jtree li.a_comp > span.button.noline_open,
+ul.jtree li.a_comp > span.button.noline_close,
+ul.ztree li.a_group > span.button.noline_docu,
+ul.jtree li.a_group > span.button.noline_open,
+ul.jtree li.a_group > span.button.noline_close{ background-image: url('images/icon_ymxjt.png');background-repeat: no-repeat; height: 11px;}
+ul.jtree li.a_comp > span.button.noline_open,
+ul.jtree li.a_group > span.button.noline_open{ background-position: 5px -10px;}
+ul.jtree li.a_comp > span.button.noline_close,
+ul.ztree li.a_comp > span.button.noline_docu,
+ul.jtree li.a_group > span.button.noline_close,
+ul.ztree li.a_group > span.button.noline_docu{ background-position: 5px 0;}
+ul.ztree li.a_dept > span.button.noline_docu,
+ul.jtree li.a_dept > span.button.noline_open,
+ul.jtree li.a_dept > span.button.noline_close,
+ul.ztree li.a_role > span.button.noline_docu,
+ul.jtree li.a_role > span.button.noline_open,
+ul.jtree li.a_role > span.button.noline_close{ background-image: url('images/icon_ymxjtd.png');background-repeat: no-repeat; height: 11px;}
+ul.jtree li.a_dept > span.button.noline_open
+ul.jtree li.a_role > span.button.noline_open{ background-position: 5px 0px;}
+ul.jtree li.a_dept > span.button.noline_close,
+ul.ztree li.a_dept > span.button.noline_docu
+ul.jtree li.a_role > span.button.noline_close,
+ul.ztree li.a_role > span.button.noline_docu{ background-position: 5px 0;}
 
 .autocomplete{position:absolute;z-index: 999; max-height: 330px; overflow: auto; box-shadow:0 0 5px #09f; border:1px solid #09F; border-top:none; background: #FFF; display: none; }
 .autocomplete a{ display: block; height: 26px; line-height: 26px; border-bottom: 1px solid #EEE; padding: 0 5px; overflow: hidden;  color:#999;}
@@ -378,6 +396,7 @@ padding: 5px 0;
 
 
 .maxHW{ height: 100%; width: 100%;}
+.maxHW.list_noThing{ background: url(images/list_nothing.png) no-repeat center;}
 
 .list .header{ height: 36px; line-height: 36px; color:#333;}
 .list .bodyer{ position:relative; }

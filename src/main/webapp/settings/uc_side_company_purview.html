@@ -117,6 +117,7 @@ function addDiyDom(treeId, treeNode) {
   $("#" + treeNode.tId + "_ico").remove();
   // $("#" + treeNode.tId).css('display','inline');
   var aObj = $("#" + treeNode.tId + "_a");
+  aObj.parent().addClass('a_'+treeNode.type);
   if(treeNode.cnum!=null){
     var editStr = "<span>"+ treeNode.cnum +" </span>";
     aObj.prepend(editStr);  

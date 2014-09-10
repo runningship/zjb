@@ -99,6 +99,19 @@ function hetKeyAct(){
         }
     });
 }
+function getThiLiTop(Thi,act){
+    var ThiP=Thi.parents('ul'),
+    ThiLi=Thi.parents('li'),
+    ThiIndex=ThiLi.index(),
+    ThiLiH=ThiLi.height(),
+    ThiLiTop=0;
+    for(var i=0;i<ThiIndex;i++){
+        ThiLiTop+=ThiP.find('li').eq(i).height();
+    }
+    if(act=='next'){ThiLiTop+=ThiLiH
+    }else if(act=='p'){ThiLiTop-=ThiLiH}
+    return ThiLiTop;
+}
 function btnAction(){
     $(document).on('click', '.apage', function(event) {
         var Thi=$(this),
@@ -109,15 +122,11 @@ function btnAction(){
         ThiLiIndex=ThiLi.index(),
         ThiLiH=ThiLi.height(),
         LiBoxHeight=0;
+
         if(ThiNext=='next'){
             var l = Ladda.create(this);
             l.start();
-            for(var i=0;i<ThiLiIndex+1;i++){
-                LiBoxHeight=LiBoxHeight+Thi.parents('ul').find('li').eq(i).height();
-                //blockAlert(i +'|'+ Thi.parents('li').index() +'|'+ LiBoxHeight);
-            }
             var ThiFormId=ThiLi.attr('data-formId');
-            winBoxHeight=-LiBoxHeight;
             if(ThiFormId=="auth"){
                 var form=$(ThiFormId),
                 getCode=$('#authCode').val(),
@@ -141,7 +150,7 @@ function btnAction(){
                             buildHtmlWithJsonArray('fendian' , json['depts'] , "true");
                             var inTime=setTimeout(function(){
                                 l.stop();
-                                goto_marTop(winBoxHeight,function(){
+                                goto_marTop(-getThiLiTop(Thi,ThiNext),function(){
                                     $('select[name=fendian]').focus();
                                 });
                                 clearTimeout(inTime);
@@ -160,7 +169,6 @@ function btnAction(){
                     }
                 });
             }else if(ThiFormId=="idFendian"){
-                winBoxHeight=-LiBoxHeight;
                 var form=$(ThiFormId),
                 getDid=$('select[name=fendian]').val(),
                 getDname=$('select[name=fendian] option:selected').text();
@@ -170,16 +178,16 @@ function btnAction(){
                     l.stop();
                     return false;
                 }
+                $('.view_fendian').text(getDname);
                 var inTime=setTimeout(function(){
                     l.stop();
-                    goto_marTop(winBoxHeight,function(){
-                        $('select[name=beizhu]').focus();
+                    goto_marTop(-getThiLiTop(Thi,ThiNext),function(){
+                        $('textarea[name=beizhu]').focus();
                     });
                     clearTimeout(inTime);
                 },1000);
                 return false;
             }else if(ThiFormId=="idBeizhu"){
-                winBoxHeight=-LiBoxHeight;
                 var form=$(ThiFormId),
                 getBeizhu=$('textarea[name=beizhu]').val(),
                 getCode=$('#authCode').val(),
@@ -192,8 +200,6 @@ function btnAction(){
                     l.stop();
                     return false;
                 }
-
-
                 param=window.parent.pcinfo;
                 param.authCode=getCode;
                 param.did=getDid[0];
@@ -204,9 +210,9 @@ function btnAction(){
                     url: '/c/pc/add',
                     data:param,
                     success: function(data){
-                        $('.view_fendian').text(getDname);
                         l.stop();
-                        goto_marTop(winBoxHeight,function(){$('.getologin').focus();});
+                        $('.view_fendian').text(getBeizhu);
+                        goto_marTop(-getThiLiTop(Thi,ThiNext),function(){$('.getologin').focus();});
                         window.parent.putConfig('domain', domains);
                         window.parent.putConfig('cityName', cityNames);
                     },error:function(e){
@@ -241,14 +247,18 @@ function btnAction(){
 
             }
         }else if(ThiNext=='p'){
-            $('select[name=fendian]').empty();
-            $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
-            
-            for(var i=0;i<=ThiLiIndex;i++){
-               LiBoxHeight=+Thi.parents('ul').find('li').eq(i).height()
+            if(ThiLiIndex<=0){return false;}
+            var ThiFormId=ThiLi.attr('data-formId');
+            if(ThiFormId=="auth"){
+
+            }else if(ThiFormId=="idFendian"){
+                $('select[name=fendian]').empty();
+                $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
+            }else if(ThiFormId=="idBeizhu"){
+
             }
-            winBoxHeight=(LiBoxHeight-ThiLiH);
-            goto_marTop(winBoxHeight,function(){
+            
+            goto_marTop(-getThiLiTop(Thi,ThiNext),function(){
                 //blockAlert(ThiLiIndex)
                 if(ThiLiIndex==1){
                     $('#authCode').focus();
@@ -348,7 +358,7 @@ $(window).resize(function() {
             </div>
         </div>
         <div class="col-xs-10 btn_submit_box" style="margin-left:8.33333333%;">
-            <button class=" pull-right btn btn-primary ladda-button apage" data-style="expand-left" data-goto="body3" data-next="next"><span class="ladda-label">提交</span></button>
+            <button class=" pull-right btn btn-primary ladda-button apage" data-style="expand-left" data-goto="body3" data-next="next"><span class="ladda-label">下一步</span></button>
             <button class=" pull-right btn btn-link apage" data-next="p">上一步</button>
         </div>
     </li>
@@ -362,9 +372,27 @@ $(window).resize(function() {
             <div class="row">
                 <div class="col-xs-10" style="margin-left:8.33333333%;">
                     <div class="form-group">
+                        <label class="col-xs-3 control-label">当前城市：</label>
+                        <div class="col-xs-6 view_city"></div>
+                    </div>
+                </div>
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">所属公司：</label>
+                        <div class="col-xs-6 view_company"></div>
+                    </div>
+                </div>
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
+                        <label for="city" class="col-xs-3 control-label">分公司：</label>
+                        <div class="col-xs-6 view_fendian"></div>
+                    </div>
+                </div>
+                <div class="col-xs-10" style="margin-left:8.33333333%;">
+                    <div class="form-group">
                         <label class="col-xs-3 control-label">备注：</label>
                         <div class="col-xs-6">
-                            <textarea class="form-control" name="beizhu" cols="30" rows="10"></textarea>
+                            <textarea class="form-control" name="beizhu" cols="30" rows="5" placeholder="请填写备注信息"></textarea>
                         </div>
                     </div>
                 </div>
@@ -389,7 +417,7 @@ $(window).resize(function() {
                         <li>城　市：<span class="view_city"></span></li>
                         <li>公　司：<span class="view_company"></span></li>
                         <li>分公司：<span class="view_fendian"></span></li>
-                        <li></li>
+                        <li>备　注：<span class="view_beizhu"></span></li>
                     </ol>
                 </div>
             </div>

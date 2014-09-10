@@ -22,6 +22,16 @@
 <script src="/js/jquery.j.tool.js" type="text/javascript"></script>
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript">
+function setSideMenuCurr(){
+var menuerBox=$('.menuSide'),
+menuerBoxOn=menuerBox.find('a').parents('.curr'),
+menuerBoxOnH=menuerBoxOn.innerHeight(),
+menuerBoxTop=menuerBoxOn.position().top,
+menuerBoxOnI=menuerBoxOn.index(),
+menuerBoxI=menuerBox.children('#menu_animate_block');
+menuerBoxI.stop().animate({top: menuerBoxTop+(menuerBoxOnH/2-10)},300);
+}
+
 function setSideMenu(){
 var menuerBox=$('.menuSide'),
 menuerIndex=0,
@@ -97,11 +107,11 @@ try{
 }
 try{
     win.on('resize', function (stream) {
-    if(screen.width-win.width<5){
-        WinMaxOrRev(0);
-    }else{
-        WinMaxOrRev(1);  
-    }
+        if(screen.width-win.width<5){
+            WinMaxOrRev(0);
+        }else{
+            WinMaxOrRev(1);  
+        }
     }); 
 }catch(e){
     console.error(e);
@@ -140,6 +150,7 @@ $('.menuSide').find('.curr a').click();
 $(window).resize(function() {
 //    setDomSize();
 //  WinMaxOrRev(1);
+        setSideMenuCurr();
 });
 
 function resetPwd(){

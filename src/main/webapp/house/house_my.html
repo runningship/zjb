@@ -54,6 +54,11 @@ function doSearch(callback){
         if(callback){
           callback();
         }
+        if(houseData['page']['data']<=0){
+          $('.id_House_list').parents('.maxHW').addClass('list_noThing');
+        }else{
+          $('.id_House_list').parents('.maxHW').removeClass('list_noThing');
+        }
     }
   });
 }
