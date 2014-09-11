@@ -57,7 +57,8 @@ function doSearch(callback){
 function doSearchAndSelectFirst(){
   doSearch(function(){
     if(houseData.page.data.length>0){
-      getSider(houseData.page.data[0].id);
+      $('.TableB').find('tr')[1].click();
+      // getSider(houseData.page.data[0].id);
     }
   });
 }
@@ -432,7 +433,7 @@ $(window).resize(function() {      //类别
       <td class="cs">${djia}</td>
       <td>${lceng}/${zceng}</td>
       <td>${zxiu}</td>
-      <td class="sy">${dateadd}</td>
+      <td class="sy" runscript="true" title="${dateadd}">'${dateadd}'.split(' ')[0]</td>
     </tr>
     </tbody>
   </table>

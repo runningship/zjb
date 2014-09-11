@@ -142,9 +142,9 @@ public class HouseService {
 		po.mji = house.mji;
 		po.zjia =house.zjia;
 		FangXing fx = FangXing.parse(hxing);
-		house.hxf = fx.getHxf();
-		house.hxt = fx.getHxt();
-		house.hxw = fx.getHxw();
+		po.hxf = fx.getHxf();
+		po.hxt = fx.getHxt();
+		po.hxw = fx.getHxw();
 		po.dateyear = house.dateyear;
 		po.zxiu = house.zxiu;
 		po.tel = house.tel;
@@ -450,7 +450,7 @@ public class HouseService {
 		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
-		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern());
+		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.sdf.toPattern());
 		fixEnumValue(jpage);
 		mv.data.put("page", jpage);
 		return mv;

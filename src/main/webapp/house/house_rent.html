@@ -54,7 +54,8 @@ function doSearch(callback){
 function doSearchAndSelectFirst(){
   doSearch(function(){
     if(houseData.page.data.length>0){
-      getSider(houseData.page.data[0].id);
+    	$('.TableB').find('tr')[1].click();
+      	//getSider(houseData.page.data[0].id);
     }
   });
 }

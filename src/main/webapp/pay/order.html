@@ -15,7 +15,7 @@
 
 </script>
 <style>
-body{font-family: "microsoft yahei","微软雅黑";font-size: 16px;}
+body{font-family: "microsoft yahei","微软雅黑";font-size: 16px; width: 700px; height: 400px;}
 .cashier-nav {font-size: 14px;margin: 15px 0 10px;text-align: left;height:30px;border-bottom:solid 2px #CFD2D7;}
 .cashier-nav ul li {float: left;}
 .cashier-nav li.current {color: #09F;font-weight: bold;}
@@ -42,19 +42,29 @@ html,body{ overflow: hidden;;}
 li{list-style: none}
 </style>
 <script type="text/javascript">
+function submit_fun(){
+    var total_fee=$('input[name=total_fee]');
+    if(total_fee.val()<1){
+        art.dialog.tips('金额请填数字',2,'warning');
+        total_fee.focus();
+        return false;
+    }
+    $('.btn_subnmit').click();
+}
+
 var api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('form[name=alipayment]');
 if (!api) return;
 // 操作对话框
 api.title('支付宝快捷支付')
 .button({
-  name: '确定',
+  name: '提交',
   callback: function () {
-    form1.submit();
+    submit_fun();
     return false;
   },focus: true
 },{
-  name: '取消'
+  name: '关闭'
 });
 </script>
 </head>
@@ -89,14 +99,15 @@ api.title('支付宝快捷支付')
         </tr>
         <tr>
             <th>付款金额：</th>
-            <td><input size="30" name="total_fee" /><span class="null-star">必填,数字</span></td>
+            <td><input size="30" name="total_fee" autofocus /><span class="null-star">必填,数字</span></td>
         </tr>
         <tr>
             <th>备注描述：</th>
-            <td><input size="30" name="body" /><span class="null-star">选填，如姓名手机号</span></td>
+            <td><input size="30" name="body" value="" /><span class="null-star">选填，如姓名手机号等</span></td>
         </tr>
     </table>
-    <div class="full_tip">支付完成后，请联系中介宝客服确认。</div>
+    <div class="">支付完成后，请联系中介宝客服确认。</div>
+    <button type="submit" class="btn btn-sms btn-primary btn_subnmit" style="display:none;">提交</button>
     </form>
 </div>
 </body>
