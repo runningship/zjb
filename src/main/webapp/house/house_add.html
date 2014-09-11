@@ -25,37 +25,49 @@
 <script type="text/javascript">
 var id;
 var queryOptions;
+var apiTitle;
+var parent = art.dialog.parent,       // 父页面window对象
+api = art.dialog.open.api,  //      art.dialog.open扩展方法
+form1=$('.form1');
 function save(){
+  api.button({
+      name: '保存',
+      disabled:true
+  });
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
     url: '/c/house/add',
     data:a,
     mysuccess: function(data){
+        // $('#saveBtn').removeAttr('disabled');
         art.dialog.close();
         art.dialog.opener.doSearchAndSelectFirst();
         alert('发布成功');
+    },
+    complete:function(){
+        api.button({
+              name: '保存',
+              disabled:false
+          });
     }
   });
 }
-var apiTitle;
-var parent = art.dialog.parent,       // 父页面window对象
-api = art.dialog.open.api,  //      art.dialog.open扩展方法
-form1=$('.form1');
+
+
 if (!api) return;
 // 操作对话框
-    api.title('添加房源')
-    .size(600, 500)
-// 自定义按钮
-    .button({
-      name: '保存',
-      callback: function () {
-        save();
-        return false;
-      },focus: true
-    },{
-      name: '取消'
-    });
+api.title('添加房源').size(600, 500)
+.button({
+  name: '保存',
+  callback: function () {
+    save();
+    return false;
+  },focus: true
+},{
+  name: '取消'
+});
+
 if(getParam('chuzu')=='0' || getParam('chuzu')==''){
     apiTitle='登记出售房源';
 }else{

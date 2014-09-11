@@ -1,4 +1,12 @@
-<form id="alipaysubmit" name="alipaysubmit" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" method="get">
+
+<style type="text/css">
+    .box{height:570px; width:800;}
+    .box span{ padding-top: 100px; display: block; text-align: center;}
+</style>
+<div class="box">
+    <span>正在跳转到支付宝请稍后...</span>
+</div>
+<form id="alipaysubmit" name="alipaysubmit" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" method="get" target="_blank" style="display:none;" >
 <input type="hidden" name="subject" value="$${subject}"/>
 <input type="hidden" name="sign_type" value="$${sign_type}"/>
 <input type="hidden" name="out_trade_no" value="$${out_trade_no}" />
@@ -12,5 +20,11 @@
 <input type="hidden" name="seller_email" value="$${seller_email}"/>
 <input type="hidden" name="payment_type" value="$${payment_type}"/>
 <input type="hidden" name="body" value="$${body}" />
-<input type="submit" value="确认">
+<input type="submit" value="确认" style="display:none;">
 </form>
+<script type="text/javascript">
+var time=setTimeout(function(){
+    document.getElementById('alipaysubmit').submit();
+    clearTimeout(time);
+},100);
+</script>

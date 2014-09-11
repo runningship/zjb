@@ -40,16 +40,35 @@ html,body{ overflow: hidden;;}
 
 .head{ background: #09F; color: #FFF;}
 li{list-style: none}
+p.pzhifujine{ }
+p.pzhifujine span{ font-size: 36px; font-weight: bold; color: #FF6600;}
+p.pzhifujine i{ font-size: 18px; color: #FF6600;}
+p.pbeizhu{}
 </style>
 <script type="text/javascript">
 function submit_fun(){
-    var total_fee=$('input[name=total_fee]');
-    if(total_fee.val()<1){
-        art.dialog.tips('金额请填数字',2,'warning');
-        total_fee.focus();
-        return false;
+    var total_fee=$('input[name=total_fee]'),
+        total_body=$('input[name=body]');
+    if(total_fee.val()>0.01){
+//        art.dialog.tips('金额请填数字',2,'warning');
+        var ThiHtml='<p class="pzhifujine">金额：<span>'+total_fee.val()+'</span> <i>元</i></p>'+
+        '<p class="pbeizhu">备注：<span>'+total_body.val()+'</span></p>'
+        art.dialog({
+            title: '确认金额',
+            content: ThiHtml,
+            lock:true,
+            ok: function () {
+                $('.btn_subnmit').click();
+                return false;
+            },
+            cancel:true,
+            okVal:'确认',
+            cancelVal: '稍后'
+        });
+    }else{
+        art.dialog.tips('金额请填数字');
     }
-    $('.btn_subnmit').click();
+        return false;
 }
 
 var api = art.dialog.open.api,  //      art.dialog.open扩展方法
@@ -79,8 +98,8 @@ api.title('支付宝快捷支付')
         </ul>
     </div>
     <form action="submit.html" name="alipayment" method="post">
-
-    <input type="hidden" name="defaultbank" title="默认网银"  value="CMB"/>
+<!--     <form id="alipaysubmit" name="alipaysubmit" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" method="get">
+     -->    <input type="hidden" name="defaultbank" title="默认网银"  value="CMB"/>
     <input type="hidden" name="show_url" title="展示地址" value="http://www.zhongjiebao.com/" />
     <input name="return_url" type="hidden" value="http://$${domainName}:8081/v/pay/return_url.html" />
     <table class="table">
@@ -94,19 +113,19 @@ api.title('支付宝快捷支付')
         </tr>
         <tr>
             <th>订单名称：</th>
-            <td><span class="showtext">$${user}PC端支付的费用</span>
-            <input type="hidden" name="subject" value="" /></td>
+            <td><span class="showtext">$${user}从PC端支付的费用</span>
+            <input type="hidden" name="subject" value="$${user}从PC端支付的费用" /></td>
         </tr>
         <tr>
             <th>付款金额：</th>
-            <td><input size="30" name="total_fee" autofocus /><span class="null-star">必填,数字</span></td>
+            <td><input size="30" name="total_fee" value="" autofocus /><span class="null-star">必填,数字</span></td>
         </tr>
         <tr>
             <th>备注描述：</th>
             <td><input size="30" name="body" value="" /><span class="null-star">选填，如姓名手机号等</span></td>
         </tr>
     </table>
-    <div class="">支付完成后，请联系中介宝客服确认。</div>
+    <div class="full_tip">支付完成后，请联系中介宝客服确认。</div>
     <button type="submit" class="btn btn-sms btn-primary btn_subnmit" style="display:none;">提交</button>
     </form>
 </div>

@@ -40,9 +40,7 @@ public class return_url {
 			}
 			params.put(name, valueStr);
 		}
-		
-		boolean verify_result = AlipayNotify.verify(params);
-		if(verify_result){//验证成功
+		if("TRADE_SUCCESS".equals(params.get("trade_status"))){
 			Charge charge = dao.getUniqueByKeyValue(Charge.class, "tradeNo", params.get("out_trade_no"));
 			if(charge==null){
 				LogUtil.warning("处理充值异常,"+params);
@@ -74,7 +72,8 @@ public class return_url {
 			//转到错误页面
 		}
 		String html = doc.html();
-		html= html.replace("$${total_fee}", params.get("total_fee"));
+		String fee = params.get("total_fee");
+		html= html.replace("$${total_fee}", fee==null?"":fee);
 		return  Jsoup.parse(html);
 	}
 }

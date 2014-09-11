@@ -29,7 +29,7 @@ public class submit {
         sParaTemp.put("_input_charset", input_charset);
 		sParaTemp.put("payment_type", payment_type);
 		sParaTemp.put("return_url", req.getParameter("return_url"));
-		sParaTemp.put("notify_url", req.getParameter("notify_url"));
+		sParaTemp.put("notify_url", req.getParameter("return_url"));
 		sParaTemp.put("seller_email", req.getParameter("seller_email"));
 		sParaTemp.put("out_trade_no", req.getParameter("out_trade_no"));
 		sParaTemp.put("subject", req.getParameter("subject"));

@@ -28,9 +28,15 @@
 var queryOptions;
 var houseGJbox,/*houseSee / houseGJ 的*/
 chuzu=getParam('chuzus');
+var searching=false;
 var houseData;
 function doSearch(callback){
+  if(searching){
+    return;
+  }
+  searching=true;
   var a=$('form[name=form1]').serialize();
+  $('#searchBtn').attr('disabled','disabled');
   YW.ajax({
     type: 'POST',
     url: '/c/house/rent/listAll',
@@ -48,6 +54,10 @@ function doSearch(callback){
         }else{
           $('.id_House_list').parents('.maxHW').removeClass('list_noThing');
         }
+    },
+    complete:function(){
+      searching=false;
+      $('#searchBtn').removeAttr('disabled');
     }
   });
 }
@@ -381,7 +391,7 @@ $(window).resize(function() {      //类别
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索</button>
+        <button type="submit" class="btn btn-sms btn-primary btn_subnmit" id="searchBtn">搜索</button>
       </div><br>
       <div class="btn-group">
         <button type="button" class="btn btn-sms zbtns" data-type="qingkong">清空</button>
