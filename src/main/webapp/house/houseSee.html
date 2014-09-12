@@ -24,16 +24,17 @@ $(document).ready(function() {
         var ThiBox=$('.telBox');
         // blockAlert(ThiBox.attr('seeHM'));
         ThiBox.html('');
-        ThiBox.prepend('<a class="btn btn-success btn-xs"></a>');
-        var ThiBoxBtn=ThiBox.find('a')
-        ThiBoxBtn.css({'display':'block','overflow':'hidden'}).attr('href', '#')
+        ThiBox.prepend('<div class="alert alert-success btn-xs"></div>');
+        var ThiBoxBtn=ThiBox.find('.telSee'),
+        ThiBoxDiv=ThiBox.find('div')
+        ThiBoxDiv.css({'display':'block','overflow':'hidden'});
         $('.telBox').find('p:last-child').css({'margin':'0'});
         if(ThiBox.attr('seeHM')=="0"){
-          ThiBoxBtn.removeClass('btn-success');
-          ThiBoxBtn.addClass('btn-danger');
-          ThiBoxBtn.html('未共享，联系业务员');
+          ThiBoxDiv.removeClass('alert-success');
+          ThiBoxDiv.addClass('alert-danger');
+          ThiBoxDiv.html('未共享，联系业务员');
         }else{
-          ThiBoxBtn.html('点此查看房主资料');
+          ThiBoxDiv.html('点此查看房主资料').addClass('onOpen');
           var TelBoxStr='';
           $.each(telArr, function(index, val) {
           var thiTel=telArr[index],thiLxr='';
@@ -42,11 +43,13 @@ $(document).ready(function() {
               }
               TelBoxStr=TelBoxStr+'<p><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" title="百度">&#xe64a;</span></p>';
           });
+          TelBoxStr=TelBoxStr+'<b>^</b>'
         }
-        ThiBox.on('click', 'a', function(event) {
-            if($(this).find('p').length<1){
-                ThiBoxBtn.html(TelBoxStr);
-                ThiBox.find('p').each(function(index, el) {
+        ThiBox.on('click', 'b,.onOpen', function(event) {
+          alert(ThiBox.find('p').length)
+            if(ThiBox.find('p').length<1){
+                ThiBoxDiv.html(TelBoxStr).removeClass('onOpen');
+                ThiBoxDiv.find('p').each(function(index, el) {
                     var Thisa=$(this),
                     ThiTel=Thisa.find('.tel').text(),
                     ThiTelFrom=Thisa.find('.telFrom');
@@ -57,7 +60,7 @@ $(document).ready(function() {
                 $('[data-toggle=tooltip]').tooltip();
             }else{
               //blockAlert($(this).find('p').length)
-                ThiBoxBtn.html('点此查看房主资料');
+                ThiBoxDiv.html('点此查看房主资料').addClass('onOpen');
             }
             return false;
         });

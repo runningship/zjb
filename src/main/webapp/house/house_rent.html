@@ -297,9 +297,9 @@ $(window).resize(function() {      //类别
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
-    <div class="form-group clearfix" style="background:#FFF; width:980px;">
+    <div class="form-group clearfix form_menuSize" style="background:#FFF; width:980px;">
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right: 11px;padding-left: 10px;">
+        <button type="button" class="btn_zhe btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right:11px;padding-left:10px;">
           综合 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -309,7 +309,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 10px;padding-left: 10px;">
+        <button type="button" class="btn_zt btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right:10px;padding-left:10px;">
           状态 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -317,12 +317,12 @@ $(window).resize(function() {      //类别
           <li class="id_zhuangtai"  onclick="doSearch();"><label><input type="radio" name="ztai" value="${code}"> ${name}</label>
         </ul>
       </div>
-      <div class="input-group input-group-max" style="width: 265px;">
+      <div class="input-group input-group-max btn_zn" style="width:197px;">
         <span class="input-group-addon">智能</span>
         <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 11px;padding-left: 11px;">
+        <button type="button" class="btn_qy btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:63px;">
           区域<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -330,7 +330,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 11px;padding-left: 11px;">
+        <button type="button" class="btn_lx btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:62px;">
           楼型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -338,7 +338,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 11px;padding-left: 11px;">
+        <button type="button" class="btn_fx btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:63px;">
           房型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -346,7 +346,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 11px;padding-left: 11px;">
+        <button type="button" class="btn_zh btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:62px;">
           装潢<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -354,12 +354,22 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 11px;padding-left: 11px;">
+        <button type="button" class="btn_fs btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:63px;">
           方式<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
           <li><label><input type="radio" name="fangshi" value="" checked="checked" /> 不限</label></li>
           <li class="id_fangshi" style="display:none"><label><input type="radio" name="fangshi" value="${code}" /> ${name}</label></li>
+        </ul>
+      </div>
+      <div class="btn-group btn-sm">
+        <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:50px;padding-right:5px;padding-left:5px;">
+          审核<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li class="id_shenhe"><label><input type="radio" name="she" value="" checked /> 全部</label></li>
+          <li class="id_shenhe"><label><input type="radio" name="she" value="1" /> 已审</label></li>
+          <li class="id_shenhe"><label><input type="radio" name="she" value="0" /> 未审</label></li>
         </ul>
       </div>
     </div>

@@ -464,9 +464,14 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .list .TableH th{background-color: #EEE;}
 
 
+.telBox { position: relative;}
 .telBox p{margin:0; border-bottom: 1px solid #4cae4c;}
 .telBox p:last-child{ border:none;}
 .telBox a{color:#FFF;}
+.telBox .telSee{ position:absolute; top: 0px; right: 0px;}
+.telBox .alert{ padding:0; text-align: center; margin:0;}
+.telBox b{ display: block; cursor: pointer;height: 12px;background: #7cbe8c;}
+.telBox .onOpen{ cursor: pointer;}
 
 
 .settings{}

@@ -255,7 +255,43 @@ $(document).ready(function() {
 //        $('#menuTop').html(data);
 //    });
 });
+function form_menuSize(){
+  var fBox=$('.form_menuSize'),
+  fboxW=fBox.width(),
+  fboxDiv=fBox.children('div'),
+  btnZhe=fBox.find('.btn_zhe'),
+  btnZt=fBox.find('.btn_zt'),
+  btnZn=fBox.find('.btn_zn'),
+  btnDh=fBox.find('.btn_dh'),
+  btnQy=fBox.find('.btn_qy'),
+  btnLx=fBox.find('.btn_lx'),
+  btnFx=fBox.find('.btn_fx'),
+  btnZh=fBox.find('.btn_zh'),
+  btnSh;
+  if (fBox.find('.btn_sh').length>0) {
+    btnSh=fBox.find('.btn_sh');
+  };
+  btnZhe.css({'padding-right':'11px','padding-left':'10px'});
+  btnZt.css({'padding-right':'10px','padding-left':'10px'});
+  btnZn.css({'width':'265px'});
+  btnDh.css({'width':'130px'});
+
+  btnQy.css({'width':'77px'});
+  btnLx.css({'width':'76px'});
+  btnFx.css({'width':'76px'});
+  btnZh.css({'width':'76px'});
+  if(fboxDiv.length==9){
+    btnQy.css({'width':'63px'});
+    btnLx.css({'width':'62px'});
+    btnFx.css({'width':'63px'});
+    btnZh.css({'width':'62px'});
+    btnSh.css({'width':'50px','padding-right':'5px','padding-left':'5px'});
+  }
+}
 $(window).resize(function() {      //类别
+});
+$(document).ready(function() {
+  form_menuSize();  
 });
 </script>
 <style type="text/css">
@@ -298,9 +334,9 @@ $(window).resize(function() {      //类别
   <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
     <input type="hidden" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
-    <div class="form-group clearfix" style="background:#FFF; width:980px;">
+    <div class="form-group clearfix form_menuSize" style="background:#FFF; width:980px;">
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right: 11px;padding-left: 10px;">
+        <button type="button" class="btn_zhe btn btn-default dropdown-toggle" data-toggle="dropdown">
           综合 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -310,7 +346,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"  style="padding-right: 10px;padding-left: 10px;">
+        <button type="button" class="btn_zt btn btn-default dropdown-toggle" data-toggle="dropdown">
           状态 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -318,17 +354,17 @@ $(window).resize(function() {      //类别
           <li class="id_zhuangtai"  ><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="${code}"> ${name}</label>
         </ul>
       </div>
-      <div class="input-group input-group-max" style="width: 265px;">
+      <div class="input-group input-group-max btn_zn ">
         <span class="input-group-addon">智能</span>
         <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
       </div>
-      <div class="input-group input-group-too" style="width:130px;">
+      <div class="input-group input-group-too btn_dh ">
         <input type="text" class="form-control input-sm" name="dhao" placeholder="栋号">
         <span class="input-group-addon">-</span>
         <input type="text" class="form-control input-sm" name="fhao" placeholder="房号">
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:77px;">
+        <button type="button" class="btn_qy btn btn-default dropdown-toggle" data-toggle="dropdown">
           区域<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -336,7 +372,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:76px;">
+        <button type="button" class="btn_lx btn btn-default dropdown-toggle" data-toggle="dropdown">
           楼型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -344,7 +380,7 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:76px;">
+        <button type="button" class="btn_fx btn btn-default dropdown-toggle" data-toggle="dropdown">
           房型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -352,11 +388,21 @@ $(window).resize(function() {      //类别
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:76px;">
+        <button type="button" class="btn_zh btn btn-default dropdown-toggle" data-toggle="dropdown">
           装潢<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
           <li class="id_zhuangxiu"><label><input type="checkbox" name="zxiu" value="${name}" /> ${name}</label></li>
+        </ul>
+      </div>
+      <div class="btn-group btn-sm">
+        <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown">
+          审核<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li class="id_shenhe"><label><input type="radio" name="she" value="" checked /> 全部</label></li>
+          <li class="id_shenhe"><label><input type="radio" name="she" value="1" /> 已审</label></li>
+          <li class="id_shenhe"><label><input type="radio" name="she" value="0" /> 未审</label></li>
         </ul>
       </div>
     </div>

@@ -29,7 +29,8 @@ document.onselectstart = function (event){
 		event = window.event;
 	}try{
 		var the = event.srcElement;
-		if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect")){
+    alert(the.tagName +'|'+ the.type.toLowerCase)
+		if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || (the.tagName == "SPAN" && (the.type.toLowerCase() == "lxr" || the.type.toLowerCase == "tel")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect")){
 			//alert(the.getAttribute("selectstart"))
 			return false;
 		}
