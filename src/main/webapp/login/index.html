@@ -39,9 +39,14 @@ try{
     console.log(e);
 }
 try{
-    win.resizeTo(692,660);
-    win.setPosition();
+    // win.resizeTo(692,660);
+    // win.setPosition();
     gui.App.clearCache();
+    // for(module in global.require.cache){
+    //     if(global.require.cache.hasOwnProperty(module)){
+    //         delete global.require.cache[module];
+    //     }
+    // }
 }catch(e){
     console.log(e);
 }

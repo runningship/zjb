@@ -110,9 +110,9 @@ function WinMin(){/*最小化*/
 }
 function WinMax(){/*最大化*/
 //  alert(0)
-  if(process.platform === 'win32' && parseFloat(require('os').release(), 10) > 6.1) {
+  // if(process.platform === 'win32' && parseFloat(require('os').release(), 10) > 6.1) {
     win.setMaximumSize(screen.availWidth + 15, screen.availHeight + 15);
-  }
+  // }
 	win.maximize();
   winMaxHeight=win.height;
   winMaxWidth=win.width;
