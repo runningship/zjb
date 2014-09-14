@@ -64,8 +64,8 @@ public class submit {
 		for(String key : sPara.keySet()){
 			html = html.replace("$${"+key+"}", sPara.get(key));
 		}
-		
-		User user = ThreadSession.getUser();
+		req.getParameter("uid");
+		User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, Integer.valueOf(req.getParameter("uid")));
 		Department dept = user.Department();
 		Department comp = dept.Company();
 		Charge charge = new Charge();

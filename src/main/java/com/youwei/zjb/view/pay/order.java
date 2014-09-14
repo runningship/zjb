@@ -31,6 +31,7 @@ public class order {
 		html = html.replace("$${trade_no}", String.valueOf(System.currentTimeMillis()));
 		html = html.replace("$${domainName}", ConfigCache.get("domainName", "localhost"));
 		html = html.replace("$${user}", cname+dname+uname);
+		html = html.replace("$${uid}", u.id.toString());
 		return  Jsoup.parse(html);
 	}
 }

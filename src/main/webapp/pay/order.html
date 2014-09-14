@@ -49,7 +49,7 @@ p.pbeizhu{}
 function submit_fun(){
     var total_fee=$('input[name=total_fee]'),
         total_body=$('input[name=body]');
-    if(total_fee.val()>0.01){
+    if(total_fee.val()>=0.01){
 //        art.dialog.tips('金额请填数字',2,'warning');
         var ThiHtml='<p class="pzhifujine">金额：<span>'+total_fee.val()+'</span> <i>元</i></p>'+
         '<p class="pbeizhu">备注：<span>'+total_body.val()+'</span></p>'
@@ -58,7 +58,11 @@ function submit_fun(){
             content: ThiHtml,
             lock:true,
             ok: function () {
-                $('.btn_subnmit').click();
+                var a=$('form[name=alipayment]').serialize();
+                url= window.location+"/../submit.html?"+a;
+                var gui = require('nw.gui');
+                gui.Shell.openExternal(url);
+                this.close();
                 return false;
             },
             cancel:true,
@@ -73,7 +77,7 @@ function submit_fun(){
 
 var api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('form[name=alipayment]');
-if (!api) return;
+// if (!api) return;
 // 操作对话框
 api.title('支付宝快捷支付')
 .button({
@@ -100,7 +104,8 @@ api.title('支付宝快捷支付')
     <form action="submit.html" name="alipayment" method="post">
 <!--     <form id="alipaysubmit" name="alipaysubmit" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" method="get">
      -->    <input type="hidden" name="defaultbank" title="默认网银"  value="CMB"/>
-    <input type="hidden" name="show_url" title="展示地址" value="http://www.zhongjiebao.com/" />
+    <input type="hidden" name="show_url" value="http://www.zhongjiebao.com/" />
+    <input type="hidden" name="uid" value="$${uid}" />
     <input name="return_url" type="hidden" value="http://$${domainName}:8081/v/pay/return_url.html" />
     <table class="table">
         <tr>
