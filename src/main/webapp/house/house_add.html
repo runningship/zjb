@@ -100,6 +100,7 @@ $(document).on('keydown', function(event) {
     getHouseToo();
 });
 $(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip();
 // autocomplete
     autoComplete($('#area'))
     
@@ -235,7 +236,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="tel" class="col-xs-4 control-label">房主号码:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="tel" id="tel" placeholder="房主号码" tabindex="11">
+                                <input type="text" class="form-control" value="" name="tel" id="tel" placeholder="房主号码 / 分割" tabindex="11">
                             </div>
                         </div>
                         <div class="form-group">
@@ -264,13 +265,13 @@ $(document).ready(function() {
                             <label for="seeGX" class="col-xs-2 control-label">权限:</label>
                             <div class="col-xs-10">
                             <span class="btn-group">
-                                <label class="btn btn-default">
+                                <label class="btn btn-default" data-toggle="tooltip" title="☑为所有用户可看<br>□为本公司可看　" data-html="true">
                                     <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off" tabindex="12"> 发布至共享平台
                                 </label>
-                                <label class="btn btn-default">
+                                <label class="btn btn-default" data-toggle="tooltip" title="☑为所有用户可看<br>□为自己可看　　" data-html="true">
                                     <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" tabindex="12" checked> 显示房号栋号
                                 </label>
-                                <label class="btn btn-default">
+                                <label class="btn btn-default" data-toggle="tooltip" title="☑共享房主号码　　<br>□仅显示业务员号码" data-html="true">
                                     <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" tabindex="12" checked> 显示房主号码
                                 </label>
                             </span>

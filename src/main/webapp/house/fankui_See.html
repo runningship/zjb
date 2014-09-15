@@ -11,6 +11,7 @@ function replaceAlls(a){
 }
 $(document).ready(function() {
     $('[data-toggle=tooltip]').tooltip();
+
         var lxr='$${lxr}',
         tel='$${tel}';
     if($('.telBox').length>0){
@@ -43,7 +44,7 @@ $(document).ready(function() {
               TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" title="百度">&#xe64a;</span></p>';
           });
           TelBoxStr=TelBoxStr+'<i>^</i>'
-        };
+        }
         ThiBox.on('click', 'i,.onOpen', function(event) {
 //          alert(ThiBox.find('p').length)
             if(ThiBox.find('p').length<1){
@@ -82,13 +83,8 @@ $(document).ready(function() {
       $('#addGenjinBtn').tooltip('show');
     }
 
+
 });
-$('#area').on('click',function(){
-  var Thi=$(this),
-  ThiVal=Thi.find('b').text();
-  $('#search').val(ThiVal);
-  $('#searchBtn').click();
-})
 </script>
 <div class="sideHead"  >
     房源详细
@@ -139,7 +135,7 @@ $('#area').on('click',function(){
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
         <tr>
           <td class="biaoti" selectstart="yes">楼盘：</td>
-          <td class="neirong"><span class="onselect" id="area" style=" cursor: pointer; color:#06C; font-weight:bold; font-size:14px;"><b>${area}</b> ${fdhao}</span></td>
+          <td class="neirong"><span class="onselect" style=" color:#06C; font-weight:bold; font-size:14px;">${area} ${fdhao}</span></td>
         </tr>
       </table>
     </td>

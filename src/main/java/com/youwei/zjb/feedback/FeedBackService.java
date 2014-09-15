@@ -28,9 +28,25 @@ public class FeedBackService {
 	@WebMethod
 	public ModelAndView list(Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,20) as conts ,fb.addtime as addtime , u.uname as uname, d.namea as deptName from FeedBack fb, User u, "
+		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,30) as conts ,fb.addtime as addtime , u.uname as uname, d.namea as deptName from FeedBack fb, User u, "
 				+ "Department d where fb.userId=u.id and u.did=d.id");
 		List<Object> params = new ArrayList<Object>();
+		page = dao.findPage(page, hql.toString(), true, params.toArray());
+		mv.data.put("page", JSONHelper.toJSON(page));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView listMy(Page<Map> page , String search){
+		ModelAndView mv = new ModelAndView();
+		//id>117表示是5.0以后的反馈
+		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,30) as conts ,fb.addtime as addtime  from FeedBack fb "
+				+ " where userId=? and fb.conts like ? and id>117");
+		List<Object> params = new ArrayList<Object>();
+		params.add(ThreadSession.getUser().id);
+		params.add("%"+search+"%");
+		page.orderBy = "fb.addtime";
+		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;

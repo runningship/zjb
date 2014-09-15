@@ -135,25 +135,30 @@ function getArea(search){
     mysuccess: function(data){
       var getAreas=JSON.parse(data);
       dataArr = getAreas['areas'];
-      buildHtmlWithJsonArray("id_House_list",dataArr);
-      $.each(dataArr, function(index, obj) {
-        if(obj.maplng || obj.maplat){
-          addMarker(obj.maplng, obj.maplat,obj.name,obj.address);
-        }
-      });
-      $('#id_House_list').find('tr').each(function(index, el) {
-        var Thi=$(this),
-        ThiLng=Thi.data('lng'),
-        ThiLat=Thi.data('lat');
+      if(dataArr.length>0){
+        buildHtmlWithJsonArray("id_House_list",dataArr);
+        $.each(dataArr, function(index, obj) {
+          if(obj.maplng || obj.maplat){
+            addMarker(obj.maplng, obj.maplat,obj.name,obj.address);
+          }
+        });
+        $('#id_House_list').find('tr').each(function(index, el) {
+          var Thi=$(this),
+          ThiLng=Thi.data('lng'),
+          ThiLat=Thi.data('lat');
 
-        if(ThiLat || ThiLng){
-          Thi.data('nulls', '1')
-        }else{
-          Thi.data('nulls', '0')
-          Thi.addClass('class_name')
-        }
-        
-      });
+          if(ThiLat || ThiLng){
+            Thi.data('nulls', '1')
+          }else{
+            Thi.data('nulls', '0')
+            Thi.addClass('class_name')
+          }
+          
+        });
+
+      }else{
+          window.location.href='house_see_map_web.html?area='+area;
+      }
     }
   })
 
@@ -211,7 +216,7 @@ try{
     getArea(search);
   }
 //  onSubmit_Form();
-  BtnAreaList()
+  BtnAreaList();
 });
 </script>
 <style type="text/css">
@@ -219,8 +224,12 @@ try{
   .input-group, .btn-group {float: none;margin-bottom: 5px;}
   #mapDiv{ height: 400px; width:800px; position: relative;}
   #map{ height: 100%; margin-right: 200px;}
-  div.mapInfo{ position: absolute; top: 0px; right: 0px; bottom: 0px;overflow:none; overflow-y: auto;  z-index: 9999; background-color: #FFF; box-shadow: 0px 0px 5px #000; width: 200px;}
-  #loading{ display: none;;}
+  div.mapInfo{ position: absolute; top: 30px; right: 0px; bottom: 0px;overflow:none; overflow-y: auto;  z-index: 9999; background-color: #FFF; box-shadow: 0px 0px 5px #000; width: 200px;}
+  #loading{ display: none;}
+  .MapDiv1{ display: none;}
+  .MapDiv2{ position: absolute; top: 0; right: 0; bottom:0; left: 0; z-index: 0;}
+  .btn-group{ position: absolute; top: 0; right: 0px; z-index: 99999;}
+  .btn-group .btn{ width: 200px;}
 </style>
 </head>
 <body>
@@ -236,11 +245,24 @@ try{
       </table>
     </div>
   </div>
+
+  <div class="btn-group">
+    <bottom class="btn btn-primary" data-type="mapGo" data-mgo="bd">切换到百度地图数据</bottom>
+  </div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
 <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
 <script type="text/javascript">
-
+$(document).ready(function() {
+});
+  $(document).on('click', '.btn', function(event) {
+    var Thi=$(this),
+    ThiType=Thi.data('type');
+    if(ThiType=='mapGo'){
+      var ThiMGo=Thi.data('mgo');
+      window.location.href='house_see_map_web.html?area='+area;
+    }
+  });
 </script>
 </body>
 </html>

@@ -470,8 +470,9 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .telBox a{color:#FFF;}
 .telBox .telSee{ position:absolute; top: 0px; right: 0px;}
 .telBox .alert{ padding:0; text-align: center; margin:0;}
-.telBox b{ display: block; cursor: pointer;height: 12px;background: #7cbe8c;}
+.telBox i{ display: block; cursor: pointer;height: 12px;background: #7cbe8c;}
 .telBox .onOpen{ cursor: pointer;}
+.telBox b{ display: block;}
 
 
 .settings{}

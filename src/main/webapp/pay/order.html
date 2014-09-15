@@ -46,6 +46,23 @@ p.pzhifujine i{ font-size: 18px; color: #FF6600;}
 p.pbeizhu{}
 </style>
 <script type="text/javascript">
+function isPayOK(){
+    art.dialog({
+        title: '已经支付？',
+        content: '支付成功后，您需要联系中介宝客服确认！',
+        lock:true,
+        icon:'warning',
+        ok: function () {
+            var list = art.dialog.list;
+            for (var i in list) {
+                list[i].close();
+            };
+        },
+        cancel:true,
+        okVal:'确认',
+        cancelVal: '稍后'
+    });
+}
 function submit_fun(){
     var total_fee=$('input[name=total_fee]'),
         total_body=$('input[name=body]');
@@ -62,6 +79,7 @@ function submit_fun(){
                 url= window.location+"/../submit.html?"+a;
                 var gui = require('nw.gui');
                 gui.Shell.openExternal(url);
+                isPayOK();
                 this.close();
                 return false;
             },
@@ -101,7 +119,7 @@ api.title('支付宝快捷支付')
             <li class="last">&nbsp;3、确认完成</li>
         </ul>
     </div>
-    <form action="submit.html" name="alipayment" method="post">
+    <form name="alipayment" method="post" onsubmit="submit_fun();return false;">
 <!--     <form id="alipaysubmit" name="alipaysubmit" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" method="get">
      -->    <input type="hidden" name="defaultbank" title="默认网银"  value="CMB"/>
     <input type="hidden" name="show_url" value="http://www.zhongjiebao.com/" />
