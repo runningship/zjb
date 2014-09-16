@@ -6,11 +6,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.youwei.zjb.SimpDaoTool;
-import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -34,7 +34,11 @@ public class submit {
 		sParaTemp.put("out_trade_no", req.getParameter("out_trade_no"));
 		sParaTemp.put("subject", req.getParameter("subject"));
 		sParaTemp.put("total_fee", req.getParameter("total_fee"));
-		sParaTemp.put("body", req.getParameter("body"));
+		String body = req.getParameter("body");
+		if(StringUtils.isEmpty(body)){
+			body = req.getParameter("subject");
+		}
+		sParaTemp.put("body", body);
 //		sParaTemp.put("show_url", req.getParameter("show_url"));
 		sParaTemp.put("anti_phishing_key", "");
 		sParaTemp.put("exter_invoke_ip", "");
@@ -64,23 +68,31 @@ public class submit {
 		for(String key : sPara.keySet()){
 			html = html.replace("$${"+key+"}", sPara.get(key));
 		}
-		req.getParameter("uid");
-		User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, Integer.valueOf(req.getParameter("uid")));
-		Department dept = user.Department();
-		Department comp = dept.Company();
-		Charge charge = new Charge();
-		charge.uid = user.id;
-		charge.uname = user.uname;
-		charge.did = dept.id;
-		charge.dname = dept.namea;
-		charge.cid = comp.id;
-		charge.cname = comp.namea;
-		charge.tradeNo = sParaTemp.get("out_trade_no");
-		charge.fee = Float.valueOf(sParaTemp.get("total_fee"));
-		charge.payType = 1;
-		charge.addtime = new Date();
-		charge.finish = 0;
-		SimpDaoTool.getGlobalCommonDaoService().saveOrUpdate(charge);
+		String trade_no = sParaTemp.get("out_trade_no");
+		Charge po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(Charge.class,"tradeNO" , trade_no);
+		if(po==null){
+			req.getParameter("uid");
+			User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, Integer.valueOf(req.getParameter("uid")));
+			Department dept = user.Department();
+			Department comp = dept.Company();
+			Charge charge = new Charge();
+			charge.uid = user.id;
+			charge.uname = user.uname;
+			charge.did = dept.id;
+			charge.dname = dept.namea;
+			charge.cid = comp.id;
+			charge.cname = comp.namea;
+			charge.tradeNo = sParaTemp.get("out_trade_no");
+			charge.fee = Float.valueOf(sParaTemp.get("total_fee"));
+			charge.payType = 1;
+			charge.addtime = new Date();
+			charge.finish = 0;
+			SimpDaoTool.getGlobalCommonDaoService().saveOrUpdate(charge);
+		}else{
+			if(po.finish==1){
+				html="订单已经完成";
+			}
+		}
 		return  Jsoup.parse(html);
 	}
 	

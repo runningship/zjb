@@ -39,6 +39,8 @@ $(document).ready(function() {
           var thiTel=telArr[index],thiLxr='';
               if(lxrArr.length>index){
                   thiLxr=lxrArr[index]
+              }else{
+                  thiLxr=lxrArr[0]
               }
               TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" title="百度">&#xe64a;</span></p>';
           });

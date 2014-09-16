@@ -347,9 +347,9 @@ $(document).ready(function() {
           综合 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" name="scope" value="all" checked onclick="doSearchAndSelectFirst();"> 所有</label>
-          <li><label><input type="radio" name="scope" value="comp" onclick="doSearchAndSelectFirst();"> 公司</label>
-          <li><label><input type="radio" name="scope" value="seeGX" onclick="doSearchAndSelectFirst();"> 共享</label>
+          <li id="seeAll"><label><input type="radio" name="scope" value="all" checked onclick="doSearchAndSelectFirst();"> 所有</label>
+          <li id="seeComp"><label><input type="radio" name="scope" value="comp" onclick="doSearchAndSelectFirst();"> 公司</label>
+          <li id="seeGX"><label><input type="radio" name="scope" value="seeGX" onclick="doSearchAndSelectFirst();"> 共享</label>
         </ul>
       </div>
       <div class="btn-group btn-sm">

@@ -287,6 +287,8 @@ public class UserService {
 		po.ip = ThreadSession.getIp();
 		mv.data.put("result", "0");
 		mv.data.put("msg", "登录成功");
+		po.lasttime = new Date();
+		dao.saveOrUpdate(po);
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
 		ThreadSession.getHttpSession().setAttribute("pc", pcpo);
 		String operConts = "["+po.Department().namea+"-"+po.uname+ "] 登录成功";

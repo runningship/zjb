@@ -33,12 +33,6 @@ try{
     console.log(e);
 }
 try{
-    win.setMinimumSize(692,660);
-    win.setMaximumSize(692,660);
-}catch(e){
-    console.log(e);
-}
-try{
     // win.resizeTo(692,660);
     // win.setPosition();
     gui.App.clearCache();
@@ -47,6 +41,12 @@ try{
     //         delete global.require.cache[module];
     //     }
     // }
+}catch(e){
+    console.log(e);
+}
+try{
+    win.setMinimumSize(692,660);
+    win.setMaximumSize(692,660);
 }catch(e){
     console.log(e);
 }
@@ -313,13 +313,18 @@ $(document).ready(function() {
         }
         clearTimeout(inTime);
     },1300);
+// 设置默认显示页面
+    var inTimes=setTimeout(function(){
+        win.width=660;
+        clearTimeout(inTimes);
+    },10);
 // 按钮加载中状态
     try{
         Ladda.bind( 'button', { timeout: 2000 } );
     }catch(e){
         console.log(e);
     }
-    
+
 });
 $(document).on('click', '.act_menu a', function(event) {
     var Thi=$(this),
@@ -428,7 +433,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                         <div class="col-xs-8">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label for="idCity" class="col-xs-2 control-label">城市:</label>
+                                    <label for="idCity" class="col-xs-2 control-label" onclick="alert(win.width)">城市:</label>
                                     <div class="col-xs-8">
                                         <input type="text" class="form-control" value="" id="idCity" placeholder="" readonly>
                                     </div>
