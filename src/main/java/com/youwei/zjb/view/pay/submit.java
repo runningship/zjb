@@ -90,7 +90,7 @@ public class submit {
 			SimpDaoTool.getGlobalCommonDaoService().saveOrUpdate(charge);
 		}else{
 			if(po.finish==1){
-				html="订单已经完成";
+				html="<html><head><meta charset='utf-8' /></head>订单已经完成</html>";
 			}
 		}
 		return  Jsoup.parse(html);

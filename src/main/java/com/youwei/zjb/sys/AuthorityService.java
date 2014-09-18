@@ -74,7 +74,14 @@ public class AuthorityService {
 	@WebMethod
 	public ModelAndView addRole(Role role){
 		ModelAndView mv = new ModelAndView();
+		if(StringUtils.isEmpty(role.title)){
+			throw new GException(PlatformExceptionType.BusinessException, "请先填写职务名称");
+		}
 		role.cid-=cidOffset;
+		long count = dao.countHql("select count(*) from Role where cid=? and title=?", role.cid , role.title);
+		if(count>0){
+			throw new GException(PlatformExceptionType.BusinessException, "已经存在相同名称的职务");
+		}
 		role.flag = 1;
 		role.sh = 1;
 		dao.saveOrUpdate(role);
