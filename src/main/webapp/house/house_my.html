@@ -45,6 +45,9 @@ function doSearch(callback){
   if(searching){
     return;
   }
+  if($(event.srcElement).attr('action')!='page'){
+    $('.pageInput').val(1);
+  }
   searching=true;
   var a=$('form[name=form1]').serialize();
   $('#searchBtn').attr('disabled','disabled');
@@ -284,9 +287,9 @@ $(document).ready(function() {
         // Thi.toggleClass('selected');
         return false;
     });
-    // $.get('menuTop.html', function(data) {
-    //     $('#menuTop').html(data);
-    // });
+    $.get('menuTop.html', function(data) {
+        $('#menuTop').html(data);
+    });
 });
 function form_menuSize(){
   var fBox=$('.form_menuSize'),
@@ -386,6 +389,7 @@ $(document).ready(function() {
 <!--                         <li><label><a href="fankui_list.html" data-type="url">我的反馈列表</a></label> -->
                     </ul>
                 </li>
+                <li auth="sz_cj" class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li>
             </ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">

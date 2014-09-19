@@ -36,29 +36,18 @@ function doSearch(callback){
   if(searching){
     return;
   }
-  if($(event.srcElement).attr('action')!='page'){
-    $('.pageInput').val(1);
-  }
   searching=true;
   $('#searchBtn').attr('disabled','disabled');
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/house/listAll',
+    url: '/c/house/exp/list',
     data:a,
     mysuccess: function(data){
         houseData=JSON.parse(data);
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
         setTableFix();
-        if(callback){
-          callback();
-        }
-        if(houseData['page']['data']<=0){
-          $('.id_House_list').parents('.maxHW').addClass('list_noThing');
-        }else{
-          $('.id_House_list').parents('.maxHW').removeClass('list_noThing');
-        }
     },
     complete:function(){
       searching=false;
@@ -67,151 +56,10 @@ function doSearch(callback){
   });
 }
 
-function doSearchAndSelectFirst(){
-  doSearch(function(){
-    if(houseData.page.data.length>0){
-      $('.TableB').find('tr')[1].click();
-      // getSider(houseData.page.data[0].id);
-    }
-  });
-}
-function getSider(id){
-    if(id){
-        $.get('/v/house/houseSee.html?id='+id, function(data) {
-            var sideTop=parseInt(getSideH());
-            $('#sideCont').html(data);
-            $('#sideCont').css({top:sideTop});
-            var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+3;
-            $('#sideCont').css({'padding-top':sideHeadHeight});
-            $('.sideHead').css({top:getHeadH()+sideTop+1});
-        });
-    }else{
-    }
+function houseShen(id){
+  art.dialog.open("/house/house_shen.html?id="+id,{id:'seemap'})
 }
 
-function getShenHeText(lock){
-  if(lock==1){
-    return "审";
-  }else{
-    return "未";
-  }
-}
-
-function showAction(hcid,cid , seeGX){
-  if(cid==1){
-    return true;
-  }else if(hcid==cid){
-    if(seeGX==1){
-      return false;
-    }else{
-      return true;
-    }
-  }else{
-    return false;
-  }
-}
-
-function shenheFy(id , obj){
-  YW.ajax({
-    type: 'POST',
-    url: '/c/house/toggleShenHe?id='+id,
-    mysuccess: function(data){
-        var json = JSON.parse(data);
-        if(json.sh==1){
-          $(obj).text('审');
-          $(obj).css('color','green');
-        }else{
-          $(obj).text('未');
-          $(obj).css('color','red');
-        }
-    }
-  });
-}
-
-function houseEdit(id){
-  art.dialog.open("/house/house_edit.html?id="+id,{id:'seemap'})
-}
-
-function deletehouse(id){
-  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
-  YW.ajax({
-    type: 'POST',
-    url: '/c/house/physicalDelete?id='+id,
-    mysuccess: function(data){
-      doSearchAndSelectFirst();
-      alert('删除成功');
-    }
-  });
-  },function(){},'warning');
-}
-
-function sideBtnFun(){
-    $('.sideCont').on('click', '.btns', function(event) {
-        var Thi=$(this),
-        ThiHid=Thi.data('hid'),
-        ThiType=Thi.data('type');
-        if(ThiType=='addGenjin'){
-            if(houseGJbox)houseGJbox.close();
-            houseGJbox=art.dialog({
-                follow: document.getElementById('addGenjinBtn'),
-                content: '加载中...',
-                title:'添加跟进',
-                left:20,
-                id:'houseGenjinBox',
-                width:'250px',
-                padding:'0'
-            });
-            // jQuery ajax   
-            YW.ajax({
-                url: '/v/house/house_genjin_add.html',
-                mysuccess: function (data) {
-                    //blockAlert(data)
-                    houseGJbox.content(data);
-                },cache: false
-            });
-            return false;
-        }else if(ThiType=='fav'){
-            var ThiIsFav=Thi.attr('fav'),
-            url,param={
-                houseId:$('#dimHouseId').text(),
-                chuzu:chuzu
-            }
-            if(ThiIsFav==1){
-                url='addSell';
-                alertStr="收藏成功";
-                dimStr='<i class="iconfont">&#xe62e;</i> 已收藏';
-                Thi.attr('fav',0).attr('title','已收藏');
-            }else{
-                url='deleteSell';
-                alertStr="已取消收藏";
-                dimStr='<i class="iconfont">&#xe648;</i> 收藏';
-                Thi.attr('fav',1).attr('title','点此收藏');
-            }
-            YW.ajax({
-                type: 'POST',
-                url: '/c/house/fav/'+url,
-                data:param,
-                mysuccess: function(data){
-                    //var json = JSON.parse(data);
-                    alert(alertStr);
-                    Thi.html(dimStr);
-                },complete:function(){
-                    
-                }
-            });
-            return false;
-        }else if(ThiType=='map'){
-            ThiArea=Thi.data('area');
-            art.dialog.open('/house/house_see_map.html?area='+ThiArea,{id:'seemap'});
-            return false;
-        }else if(ThiType=='copy'){
-            alert('不给复制');
-            return false;
-        }else{
-            return false;
-        }
-    });
-}
 //文档按钮功能区
 $(document).on('click', '.zbtns', function(event) {
     var Thi=$(this),
@@ -232,33 +80,15 @@ $(document).ready(function() {
 // autocomplete
     autoComplete($('#search'))
 // 加载侧边按钮功能
-    sideBtnFun();
 // 加载侧边
     
 //添加提示框
     $(document).find('[data-toggle="tooltip"]').tooltip();
     $.get('/c/config/getQueryOptions', function(data) {
         queryOptions=JSON.parse(data);
-        buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
-        buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
-        buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-        buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
         Page.Init();
-        doSearchAndSelectFirst();
-    });
-    $('.id_House_list').on('click', 'a', function(event) {
-        var Thi=$(this),
-        rel=Thi.data('rel'),
-        this_hid=Thi.data('hid');
-    });
-    $('.TableB').on('click', 'tr', function(event) {
-        var Thi=$(this),
-        ThiHid=Thi.data('hid');
-        if(houseGJbox)houseGJbox.close();
-        getSider(ThiHid);
-        // Thi.toggleClass('selected');
-        return false;
+        doSearch();
     });
     $.get('menuTop.html', function(data) {
         $('#menuTop').html(data);
@@ -300,7 +130,7 @@ function form_menuSize(){
 $(window).resize(function() {      //类别
 });
 $(document).ready(function() {
-  form_menuSize();  
+  // form_menuSize();  
 });
 </script>
 <style type="text/css">
@@ -316,7 +146,7 @@ $(document).ready(function() {
 </style>
 </head>
 <body>
-<div class="html list addSide">
+<div class="html list">
     <div class="header">
         <div class="maxHW ">
             <ul class="menuLi clearfix titlebar" id="menuTop">
@@ -339,40 +169,16 @@ $(document).ready(function() {
                         <li><label><a href="fankui_list.html" data-type="url">我的反馈列表</a></label>
                     </ul>
                 </li>
-                <li auth="sz_cj" class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li>
+                <li class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li>
             </ul>
         </div>
-  <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
+  <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" id="sh" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix form_menuSize" style="background:#FFF; width:980px;">
-      <div class="btn-group btn-sm">
-        <button type="button" class="btn_zhe btn btn-default dropdown-toggle" data-toggle="dropdown">
-          综合 <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li id="seeAll"><label><input type="radio" name="scope" value="all" checked onclick="doSearchAndSelectFirst();"> 所有</label>
-          <li id="seeComp"><label><input type="radio" name="scope" value="comp" onclick="doSearchAndSelectFirst();"> 公司</label>
-          <li id="seeGX"><label><input type="radio" name="scope" value="seeGX" onclick="doSearchAndSelectFirst();"> 共享</label>
-        </ul>
-      </div>
-      <div class="btn-group btn-sm">
-        <button type="button" class="btn_zt btn btn-default dropdown-toggle" data-toggle="dropdown">
-          状态 <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="" checked> 所有</label>
-          <li class="id_zhuangtai"  ><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="${code}"> ${name}</label>
-        </ul>
-      </div>
       <div class="input-group input-group-max btn_zn ">
         <span class="input-group-addon">智能</span>
         <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
-      </div>
-      <div class="input-group input-group-too btn_dh ">
-        <input type="text" class="form-control input-sm" name="dhao" placeholder="栋号">
-        <span class="input-group-addon">-</span>
-        <input type="text" class="form-control input-sm" name="fhao" placeholder="房号">
       </div>
       <div class="btn-group btn-sm">
         <button type="button" class="btn_qy btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -380,40 +186,6 @@ $(document).ready(function() {
         </button>
         <ul class="dropdown-menu" role="menu">
           <li class="id_quyu"><label><input type="checkbox" name="quyus" value="${name}"> ${name}</label>
-        </ul>
-      </div>
-      <div class="btn-group btn-sm">
-        <button type="button" class="btn_lx btn btn-default dropdown-toggle" data-toggle="dropdown">
-          楼型<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" >
-          <li class="id_lxing"><label><input type="checkbox" name="lxing" value="${name}" /> ${name}</label></li>
-        </ul>
-      </div>
-      <div class="btn-group btn-sm">
-        <button type="button" class="btn_fx btn btn-default dropdown-toggle" data-toggle="dropdown">
-          房型<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" >
-          <li class="id_fxing"><label><input type="checkbox" name="fxing" value="${value}" /> ${name}</label></li>
-        </ul>
-      </div>
-      <div class="btn-group btn-sm">
-        <button type="button" class="btn_zh btn btn-default dropdown-toggle" data-toggle="dropdown">
-          装潢<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li class="id_zhuangxiu"><label><input type="checkbox" name="zxiu" value="${name}" /> ${name}</label></li>
-        </ul>
-      </div>
-      <div auth="fy_sh" class="btn-group btn-sm">
-        <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown">
-          审核<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li class="id_shenhe"><label><input type="radio" name="she" value="" onclick="$('#sh').val(this.value);doSearchAndSelectFirst();" checked /> 全部</label></li>
-          <li class="id_shenhe"><label><input type="radio" name="she" value="1" onclick="$('#sh').val(this.value);doSearchAndSelectFirst();" /> 已审</label></li>
-          <li class="id_shenhe"><label><input type="radio" name="she" value="0" onclick="$('#sh').val(this.value);doSearchAndSelectFirst();" /> 未审</label></li>
         </ul>
       </div>
     </div>
@@ -430,19 +202,9 @@ $(document).ready(function() {
         <input type="text" class="form-control input-sm" name="zjiaEnd">
       </div>
       <div class="input-group">
-        <span class="input-group-addon">单价</span>
-        <input type="text" class="form-control input-sm" name="djiaStart">
-        <input type="text" class="form-control input-sm" name="djiaEnd">
-      </div>
-      <div class="input-group">
         <span class="input-group-addon">楼层</span>
         <input type="text" class="form-control input-sm" name="lcengStart">
         <input type="text" class="form-control input-sm" name="lcengEnd">
-      </div>
-      <div class="input-group">
-        <span class="input-group-addon">建筑<br/>年代</span>
-        <input type="text" class="form-control input-sm" name="yearStart">
-        <input type="text" class="form-control input-sm" name="yearEnd">
       </div>
       <div class="input-group">
         <span class="input-group-addon" style="padding:8px;">发布<br/>日期</span>
@@ -450,7 +212,7 @@ $(document).ready(function() {
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn btn-sms btn-primary btn_subnmit" onclick="doSearchAndSelectFirst();return false;" id="searchBtn" data-type="submit">搜索</button>
+        <button type="submit" class="btn btn-sms btn-primary btn_subnmit" id="searchBtn" data-type="submit">搜索</button>
       </div><br>
       <div class="btn-group">
         <button type="button" class="btn btn-sms zbtns" data-type="qingkong">清空</button>
@@ -461,24 +223,24 @@ $(document).ready(function() {
   <table class="table table-nopadding TableH  mainCont" >
     <tr>
       <th>编号</th>
-      <th auth="fy_sh|fy_edit|fy_del">操作</th>
-      <th>状态</th>
+      <th>操作</th>
+      <th>操作人</th>
       <th>区域</th>
       <th>楼盘名称</th>
-      <th>楼型</th>
       <th>户型</th>
       <th>面积</th>
-      <th class="cs">总价(万)</th>
-      <th class="cs">单价</th>
+      <th>总价(万)</th>
       <th>楼层</th>
       <th>装潢</th>
-      <th class="sy">发布时间</th>
+      <th>电话</th>
+      <th>扫网时间</th>
+      <th>发布时间</th>
+      <th>来源</th>
     </tr>
   </table>
 
     </div>
     <div class="bodyer mainCont">
-  <div class="sideCont" id="sideCont"></div>
         <div class="maxHW" style="min-width: 700px;">
 
   <table class="table table-hover table-striped table-nopadding TableB" >
@@ -487,20 +249,21 @@ $(document).ready(function() {
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td style="width:50px;"  auth="fy_sh|fy_edit|fy_del">
         <a href="##" auth="fy_sh" show="showAction(${cid},$${cid},${seeGX})" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
-        <a href="#" auth="fy_edit" show="showAction(${cid},$${cid},${seeGX})" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
-        <a href="##" auth="fy_del" show="showAction(${cid},$${cid},${seeGX})" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
+        <a href="${href}" target="_blank" class="edit" data-hid="${id}" data-rel="edit">原</a>
+        <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="houseShen(${id})">审</a>
       </td>
-      <td class="ztai_${ztai}">${ztai}</td>
+      <td style="width:60px;">${shr}</td>
       <td>${quyu}</td>
-      <td class="br_area">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></td>
-      <td>${lxing}</td>
+      <td class="br_area">${area}</td>
       <td>${hxf}-${hxt}-${hxw}</td>
       <td>${mji}</td>
       <td>${zjia}</td>
-      <td class="cs">${djia}</td>
       <td>${lceng}/${zceng}</td>
       <td>${zxiu}</td>
-      <td class="sy" runscript="true" title="${dateadd}">'${dateadd}'.split(' ')[0]</td>
+      <td style="width:150px;"><img style="height:22px;" src="${telImg}"></td>
+      <td title="${dateadd}">${addtime}</td>
+      <td>${timeOffset}前</td>
+      <td>${site}</td>
     </tr>
     </tbody>
   </table>

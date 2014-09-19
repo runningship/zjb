@@ -253,9 +253,7 @@ $('a').attr('draggable','false');
 //  alert(0)
 });
 
-
-
-$(document).ready(function() {
+function menuTopFuns(){
     menuTopFun();/* 顶部自动选中 */
     $('.menuLi').on('click', 'a', function(event) {
         var Thi=$(this),
@@ -281,6 +279,9 @@ $(document).ready(function() {
     },function(){
         clearTimeout(menuLi_time);
     });
+}
+
+$(document).ready(function() {
 });
 
 /**

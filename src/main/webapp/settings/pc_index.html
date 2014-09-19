@@ -38,7 +38,7 @@ function doSearch(){
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
         setTableFix();
-        Page.Init();
+        
         $('.shenhe-0').addClass('btn-warning');
         $('.shenhe-1').addClass('btn-primary');
         if(houseData['page']['data']<=0){
@@ -59,6 +59,7 @@ function getSider(id){
     });
 }
 $(document).ready(function() {
+  Page.Init();
 // 加载侧边
     getSider();
 // 列表内容

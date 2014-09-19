@@ -92,4 +92,15 @@ public class ExpHouse {
 	
 	//是否已经导入到中介宝
 	public Integer finish;
+	
+	public String timeOffset;
+	
+	/**
+	 * 当前处理人
+	 */
+	public String shr;
+	
+	public Integer hid;
+	
+	public String beizhu;
 }

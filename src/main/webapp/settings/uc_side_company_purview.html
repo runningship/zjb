@@ -45,6 +45,7 @@ function onClick(event, treeId, treeNode, clickFlag) {
   node = treeNode;
   console.log(treeNode);
   roleId = treeNode.id;
+  id = treeNode.id;
   
   if(clickFlag!=null){
     var treeObj = $.fn.zTree.getZTreeObj(treeId);
@@ -109,7 +110,7 @@ function runMenu(This){
   var treeObj = $.fn.zTree.getZTreeObj(node.tId);
   onClick(event, node.tId, node,null);
 //  var This=Thi;
-//  alert(Thi.html());
+//  alert(node.id);
 //  return false;
   showRMenu(node.type, This.offset().left+20, This.offset().top+26);
 }
@@ -201,7 +202,7 @@ $(document).ready(function() {
             },100)
         }else if(ThiType=='runMenu'){
           ThiTree=Thi.data('tree')
-          // alert(ThiTree);
+           // alert(ThiTree);
           // return false;
           runMenu(Thi);
         }
@@ -224,7 +225,7 @@ getFunSettingSideEarch();
     <tr class="list">
       <td>
         <div class="zTreeDemoBackground left">
-          <ul id="treeDemo" class="ztree jtree"></ul>
+          <ul id="treeDemo" class="ztree jtree noLock"></ul>
         </div>
       </td>
     </tr>

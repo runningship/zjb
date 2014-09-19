@@ -47,6 +47,13 @@ font-style:normal;
 .icon-hxtel:before { content: "\e628"; }
 .icon-message:before { content: "\e615"; }
 
+.miniwidth{white-space:nowrap;word-break: keep-all; text-align:center;}
+table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
+.titlebar{-webkit-app-region:drag;}
+.nobar{-webkit-app-region:no-drag;}
+
+/* bootstrap 样式修改 */
+
 .bs-callout{padding:20px;margin:20px 0;border:1px solid #eee;border-left-width:5px;border-radius:3px}
 .bs-callout h4{margin-top:0;margin-bottom:5px}
 .bs-callout p:last-child{margin-bottom:0}
@@ -63,8 +70,6 @@ font-style:normal;
 .bs-callout-success {border-left-color:#5cb85c}
 .bs-callout-success h4{color:#5cb85c}
 
-.titlebar{-webkit-app-region:drag;}
-.nobar{-webkit-app-region:no-drag;}
 /* 列表点击之后变色
 // 这里是几份测试数据
 1 67B8FD
@@ -114,9 +119,19 @@ background-color: #6FBEFF; color:#000;
 .table-hover > tbody > tr.cursor:hover > th{
 background-color: #6FBEFF; color:#000;
 }
-/* bootstrap 样式修改 */
-.miniwidth{white-space:nowrap;word-break: keep-all; text-align:center;}
-table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
+
+.table-nopadding > thead > tr > th,
+.table-nopadding > tbody > tr > th,
+.table-nopadding > tfoot > tr > th,
+.table-nopadding > thead > tr > td,
+.table-nopadding > tbody > tr > td,
+.table-nopadding > tfoot > tr > td {padding: 5px 0;}
+.table-nopadding > thead > tr > td,
+.table-nopadding > tbody > tr > td,
+.table-nopadding > tfoot > tr > td {padding: 8px 0;}
+.table-minpadding > thead > tr > td,
+.table-minpadding > tbody > tr > td,
+.table-minpadding > tfoot > tr > td {padding: 3px 0;}
 
 span.null-float{ float: none;}
 
@@ -186,6 +201,8 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 
 
 /* 页面样式 */
+
+/* 主框架样式，html……body可嵌套，table原理即可 */
 .html{height:100%;display:table; width:100%; margin:0 auto; position:relative;   }
 .html .header,.html .bodyer,.html .footer{display:table-row; position:relative; }
 .html .header{height:50px; color: #FFF;}
@@ -194,6 +211,7 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .html .wintool{ position: absolute; top: 1px; right: 1px; z-index: 9999;}
 .html .bodyer .maxHW{ position: relative;}
 
+/* 右上角Win按钮 */
 .html .wintools>li{ float: left; }
 .html .wintools .winBtn{ display: inline-block; height: 26px; width: 30px; line-height:26px;-webkit-transition:all .3s;}
 .html .wintools .winBtn i{ display: inline-block; height: 100%; width: 100%; background:url(images/winBtn.png) no-repeat left top;}
@@ -221,12 +239,13 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .html .wintools .winBtn.winBtnMax.black i,
 .html .wintools .winBtn.winBtnRevert.black i,
 .html .wintools .winBtn.winBtnClose.black i{background-position-y: -20px }
-
+/* Win窗口边框，需配合js使用，too.js里 */
 .winBoxBorder{ position:absolute; border-style: solid; border-color: #000;top:0; right:0; bottom:0; left: 0; z-index: 9999;}
 .winBoxBorder.winBoxBorderT{ border-top-width: 1px; bottom: auto;}
 .winBoxBorder.winBoxBorderR{ border-right-width: 1px; left: auto;}
 .winBoxBorder.winBoxBorderB{ border-bottom-width: 1px; top: auto;}
 .winBoxBorder.winBoxBorderL{ border-left-width: 1px; right: auto;}
+
 /* ztree样式 */
 ul.jtree { padding: 0;}
 ul.jtree li a:link, ul.jtree li a:visited, ul.jtree li a:hover, ul.jtree li a:active{text-decoration:none;}
@@ -240,6 +259,7 @@ ul.jtree  li  a.curSelectedNode>span{ color:#FFF;}
 ul.jtree  li .icon.iconfont{ position: absolute; right: 0; left: auto; font-size: 16px; color: #DDD;display: inline-block;height: 26px;line-height: 26px; }
 ul.jtree  li .icon.icon_sh:hover{ color: #666;}
 ul.jtree  li .icon.icon_wsh{ color: #F00;}
+ul.jtree.noLock  li  a{ right: 4px;}
 ul.ztree li.a_comp > span.button.noline_docu,
 ul.jtree li.a_comp > span.button.noline_open,
 ul.jtree li.a_comp > span.button.noline_close,
@@ -264,7 +284,7 @@ ul.jtree li.a_dept > span.button.noline_close,
 ul.ztree li.a_dept > span.button.noline_docu
 ul.jtree li.a_role > span.button.noline_close,
 ul.ztree li.a_role > span.button.noline_docu{ background-position: 5px 0;}
-
+/* 输入提示菜单 */
 .autocomplete{position:absolute;z-index: 999; max-height: 330px; overflow: auto; box-shadow:0 0 5px #09f; border:1px solid #09F; border-top:none; background: #FFF; display: none; }
 .autocomplete a{ display: block; height: 26px; line-height: 26px; border-bottom: 1px solid #EEE; padding: 0 5px; overflow: hidden;  color:#999;}
 .autocomplete a b{ float: left; color: #09F; padding-right: 5px;}
@@ -310,7 +330,7 @@ ul.ztree li.a_role > span.button.noline_docu{ background-position: 5px 0;}
 .login #idNameBox .form_menu_list a:hover b{ background-color: #EEE;}
 .login #idNameBox .form_menu_list b{ display: none; float: right; padding: 0 5px; color: #09f;}
 .login #idNameBox .form_menu_list a.curr { font-weight: bold; background-color: #09F; color: #FFF;}
-/*  动画 */
+/*  登陆页动画 */
 .login .bodyer{  }
 .login .bodyer .mainer{ padding:10px; overflow:hidden; position:relative; background-color:rgba(255,255,255,1); }
 .login .bodyer .mainer ul{ overflow:hidden; zoom:1; margin: 0; }
@@ -348,7 +368,7 @@ opacity:0}
 opacity:1}
 }
 
-
+/* 内页DIV仿Table样式 */
 
 .table{ display: table;  border-collapse:separate; margin:0;}
 .tr {display:table-row;}
@@ -356,12 +376,8 @@ opacity:1}
 .tbody{display:table-cell;}
 
 .table_box{ height: 100%;}
-.table-nopadding > thead > tr > th, .table-nopadding > tbody > tr > th, .table-nopadding > tfoot > tr > th, .table-nopadding > thead > tr > td, .table-nopadding > tbody > tr > td, .table-nopadding > tfoot > tr > td {
-padding: 5px 0;
-}
-.table-nopadding > thead > tr > td, .table-nopadding > tbody > tr > td, .table-nopadding > tfoot > tr > td {padding: 8px 0;}
 
-.table-minpadding > thead > tr > td, .table-minpadding > tbody > tr > td, .table-minpadding > tfoot > tr > td {padding: 3px 0;}
+/* 内页主框架样式 */
 
 .default{background-color: #278ADD;width: 100%;overflow:hidden;}
 .default .lefter{ width: 50px;  box-shadow:0 0 -5px #666;}
@@ -392,6 +408,7 @@ padding: 5px 0;
 .default #iframeBox{ position: relative;}
 .default .iframe{ position:absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 10;}
 
+/* 内页列表页样式 */
 
 .maxHW{ height: 100%; width: 100%;}
 .maxHW.list_noThing{ background: url(images/list_nothing.png) no-repeat center;}
@@ -474,6 +491,7 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .telBox .onOpen{ cursor: pointer;}
 .telBox b{ display: block;}
 
+/* 设置页面的样式 */
 
 .settings{}
 .settings input[type="radio"], 
@@ -489,3 +507,5 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 #rMenu.list-group{ box-shadow: 0px 2px 10px #999; padding:0;}
 #rMenu.list-group .list-group-item:hover{ background-color: #09F; color:#FFF;}
 
+
+/* 其他 */

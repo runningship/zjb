@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
+import com.youwei.zjb.house.ZhuangXiu;
 import com.youwei.zjb.house.entity.ExpHouse;
 
 public class Pull58 {
@@ -52,6 +53,8 @@ public class Pull58 {
 						continue;
 					}
 					Elements h1 = e.getElementsByTag("h1");
+					String timeOffset = jjr.first().ownText();
+					timeOffset= timeOffset.replace("&nbsp", "");
 //					System.out.println(e.getElementsByClass("qj-listleft").text());
 					Elements link = h1.first().getElementsByTag("a");
 //					System.out.println(link.first().attr("href"));
@@ -60,7 +63,7 @@ public class Pull58 {
 					if(po!=null){
 						continue;
 					}
-					pull(href);
+					pull(href , timeOffset);
 					count++;
 				}
 			}
@@ -69,12 +72,12 @@ public class Pull58 {
 			ex.printStackTrace();
 		}
 	}
-	public static void pull(String hlink){
+	public static void pull(String hlink , String timeOffset){
 		System.out.println("pulling "+hlink);
 		ExpHouse ehouse = new ExpHouse();
 		ehouse.href = hlink;
 		ehouse.site="58";
-		
+		ehouse.timeOffset = timeOffset;
 		try{
 			URL url = new URL(hlink);
 			URLConnection conn = url.openConnection();
@@ -161,6 +164,7 @@ public class Pull58 {
 						System.out.println("zceng="+str);
 					}else if(arr[i].contains("装修") || arr[i].contains("毛坯")){
 						ehouse.zxiu = arr[i];
+						ehouse.zxiu =ehouse.zxiu.replace(String.valueOf((char)160), "");
 						System.out.println("zxiu="+arr[i]);
 					}else{
 						if(ehouse.lceng==null){
@@ -236,6 +240,18 @@ public class Pull58 {
 			ehouse.repeat=0;
 		}else{
 			ehouse.repeat=1;
+		}
+		
+		if("简单装修".equals(ehouse.zxiu)){
+			ehouse.zxiu = ZhuangXiu.简装.toString();
+		}else if("中等装修".equals(ehouse.zxiu)){
+			ehouse.zxiu = ZhuangXiu.中装.toString();
+		}else if("精装修".equals(ehouse.zxiu)){
+			ehouse.zxiu = ZhuangXiu.精装.toString();
+		}else if("豪华装修".equals(ehouse.zxiu)){
+			ehouse.zxiu = ZhuangXiu.豪装.toString();
+		}else if("毛坯".equals(ehouse.zxiu)){
+			ehouse.zxiu = ZhuangXiu.毛坯.toString();
 		}
 		ehouse.addtime = new Date();
 		dao.saveOrUpdate(ehouse);
