@@ -33,7 +33,7 @@ function save(){
     data:a,
     mysuccess: function(data){
         art.dialog.close();
-        art.dialog.opener.doSearchAndSelectFirst();
+        art.dialog.opener.updateHouse(id,data);
         alert('修改成功');
     }
   });
@@ -65,8 +65,9 @@ function getContent(){
       $('#id_ztai').val(json['ztai']);
       $('#id_lxing').val(json['lxing']);
       $('#id_hxing').val(json['hxing']);
-      $('#id_fxing').val(json['fxing']);
+      // $('#id_fxing').val(json['fxing']);
       $('#id_zxiu').val(json['zxiu']);
+      $('#id_rent_type').val(json['fangshi']);
       if(json['seeGX']==1){
         $('#seeGX').attr('checked','checked');
       }
@@ -122,7 +123,7 @@ $(document).ready(function() {
         buildHtmlWithJsonArray("id_hxing",queryOptions['fxing'],true);
         buildHtmlWithJsonArray("id_zxiu",queryOptions['zhuangxiu'],true);
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-        buildHtmlWithJsonArray("id_ztai",queryOptions['ztai_sell'],true, true);
+        buildHtmlWithJsonArray("id_ztai",queryOptions['ztai_rent'],true, true);
         //doSearchAndSelectFirst();
         getContent();
     });
@@ -203,7 +204,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="nulls" class="col-xs-4 control-label">方式:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="rent_type" id="id_rent_type" type="tabs">
+                                <select class="form-control" name="fangshi" id="id_rent_type" type="tabs">
                                     <option class="id_rent_type" value="${code}">${name}</option>
                                 </select>
                             </div>
@@ -212,7 +213,7 @@ $(document).ready(function() {
                             <label for="ztai" class="col-xs-4 control-label">状态:</label>
                             <div class="col-xs-8">
                                 <select class="form-control" name="ztai" id="id_ztai" type="tabs">
-                                    <option class="id_ztai" value="${name}">${name}</option>
+                                    <option class="id_ztai" value="${code}">${name}</option>
                                 </select>
                             </div>
                         </div>

@@ -294,22 +294,26 @@ $(document).ready(function() {
         ThiLi=Thi.parents('li'),
         ThiUrl=Thi.attr('href'),
         ThiType=Thi.data('type');
+        var h=window.top.document.body.offsetHeight-100;
+        var w=window.top.document.body.offsetWidth-100;
         if(ThiType=='seeRecords'){
               if(node.type=='comp'){
                 art.dialog.open('/v/settings/sys_record.html?cid='+node.id,{
                     padding:0,
                     resize:true,
+                    focus:false,
                     lock:1,
-                    height:600,
-                    width:1000
+                    height:h,
+                    width:w
                   });
                 }else{
                   art.dialog.open('/v/settings/sys_record.html?did='+node.id,{
                     padding:0,
                     resize:true,
+                    focus:false,
                     lock:1,
-                    height:600,
-                    width:1000
+                    height:h,
+                    width:w
                   });
                 }
             return false;
@@ -322,10 +326,13 @@ $(document).ready(function() {
           }
           art.dialog.open(url,{
             padding:0,
+            focus:false,
             resize:true,
             lock:1,
-            height:600,
-            width:1000
+            height:h,
+            width:w
+            // height:600,
+            // width:1000
           });
             return false;
         }else if(ThiType=='addGroup'){

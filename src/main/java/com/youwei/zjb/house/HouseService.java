@@ -173,6 +173,11 @@ public class HouseService {
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
 		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "修改成功");
+		mv.data.put("house", JSONHelper.toJSON(po , DataHelper.dateSdf.toPattern()));
+		SellState state = SellState.parse(po.ztai);
+		if(state!=null){
+			mv.data.getJSONObject("house").put("ztai", state.toString());
+		}
 		mv.data.put("result", 0);
 		return mv;
 	}

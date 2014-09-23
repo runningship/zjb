@@ -389,7 +389,7 @@ $(document).ready(function() {
 <!--                         <li><label><a href="fankui_list.html" data-type="url">我的反馈列表</a></label> -->
                     </ul>
                 </li>
-                <li auth="sz_cj" class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li>
+                <!-- <li auth="sz_cj" class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li> -->
             </ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
@@ -514,7 +514,7 @@ $(document).ready(function() {
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn btn-sms btn-primary btn_subnmit" id="searchBtn">搜索</button>
+        <button type="submit" class="btn btn-sms btn-primary btn_subnmit" onclick="doSearchAndSelectFirst();return false;" id="searchBtn">搜索</button>
       </div><br>
       <div class="btn-group">
         <button type="button" class="btn btn-sms zbtns" data-type="qingkong">清空</button>

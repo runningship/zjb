@@ -34,7 +34,7 @@ function save(){
     data:a,
     mysuccess: function(data){
         art.dialog.close();
-        art.dialog.opener.doSearchAndSelectFirst();
+        art.dialog.opener.updateHouse(id,data);
         alert('修改成功');
     }
   });

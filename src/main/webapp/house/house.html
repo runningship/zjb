@@ -36,7 +36,7 @@ function doSearch(callback){
   if(searching){
     return;
   }
-  if($(event.srcElement).attr('action')!='page'){
+  if(event==undefined || $(event.srcElement).attr('action')!='page'){
     $('.pageInput').val(1);
   }
   searching=true;
@@ -75,6 +75,35 @@ function doSearchAndSelectFirst(){
     }
   });
 }
+
+function updateHouse(id,data){
+  getSider(id);
+  var json = JSON.parse(data);
+  var tr = $('tr[data-hid='+json['house']['id']+']');
+  var a = tr.children()[2]
+  var b = tr.children()[3]
+  var c = tr.children()[4]
+  var d = tr.children()[5]
+  var e = tr.children()[6]
+  var f = tr.children()[7]
+  var g = tr.children()[8]
+  var h = tr.children()[9]
+  var i = tr.children()[10]
+  var j = tr.children()[11]
+  var k = tr.children()[12]
+  $(a).html(json['house']['ztai']);
+  $(b).html(json['house']['quyu']);
+  $(c).html(json['house']['area']+' '+json['house']['dhao']+'-'+json['house']['fhao']);
+  $(d).html(json['house']['lxing']);
+  $(e).html(json['house']['hxf']+'-'+json['house']['hxt']+'-'+json['house']['hxw']);
+  $(f).html(json['house']['mji']);
+  $(g).html(json['house']['zjia']);
+  $(h).html(json['house']['djia']);
+  $(i).html(json['house']['lceng']+'/'+json['house']['zceng']);
+  $(j).html(json['house']['zxiu']);
+  $(k).html(json['house']['dateadd']);
+}
+
 function getSider(id){
     if(id){
         $.get('/v/house/houseSee.html?id='+id, function(data) {
@@ -263,6 +292,8 @@ $(document).ready(function() {
     $.get('menuTop.html', function(data) {
         $('#menuTop').html(data);
     });
+    var table = $('#table-container');
+    table.width(table.width()-3);
 });
 function form_menuSize(){
   var fBox=$('.form_menuSize'),
@@ -339,7 +370,7 @@ $(document).ready(function() {
                         <li><label><a href="fankui_list.html" data-type="url">我的反馈列表</a></label>
                     </ul>
                 </li>
-                <li auth="sz_cj" class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li>
+                <!-- <li auth="sz_cj" class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li> -->
             </ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
@@ -478,32 +509,31 @@ $(document).ready(function() {
 
     </div>
     <div class="bodyer mainCont">
-  <div class="sideCont" id="sideCont"></div>
-        <div class="maxHW" style="min-width: 700px;">
-
-  <table class="table table-hover table-striped table-nopadding TableB" >
-    <tbody>
-    <tr data-hid="${id}" style="display:none;" class="id_House_list" >
-      <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
-      <td style="width:50px;"  auth="fy_sh|fy_edit|fy_del">
-        <a href="##" auth="fy_sh" show="showAction(${cid},$${cid},${seeGX})" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
-        <a href="#" auth="fy_edit" show="showAction(${cid},$${cid},${seeGX})" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
-        <a href="##" auth="fy_del" show="showAction(${cid},$${cid},${seeGX})" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
-      </td>
-      <td class="ztai_${ztai}">${ztai}</td>
-      <td>${quyu}</td>
-      <td class="br_area">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></td>
-      <td>${lxing}</td>
-      <td>${hxf}-${hxt}-${hxw}</td>
-      <td>${mji}</td>
-      <td>${zjia}</td>
-      <td class="cs">${djia}</td>
-      <td>${lceng}/${zceng}</td>
-      <td>${zxiu}</td>
-      <td class="sy" runscript="true" title="${dateadd}">'${dateadd}'.split(' ')[0]</td>
-    </tr>
-    </tbody>
-  </table>
+        <div class="sideCont" id="sideCont"></div>
+        <div class="maxHW" style="min-width: 700px;" id="table-container">
+          <table class="table table-hover table-striped table-nopadding TableB" >
+            <tbody>
+            <tr data-hid="${id}" style="display:none;" class="id_House_list" >
+              <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
+              <td style="width:50px;"  auth="fy_sh|fy_edit|fy_del">
+                <a href="##" auth="fy_sh" show="showAction(${cid},$${cid},${seeGX})" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
+                <a href="#" auth="fy_edit" show="showAction(${cid},$${cid},${seeGX})" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
+                <a href="##" auth="fy_del" show="showAction(${cid},$${cid},${seeGX})" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
+              </td>
+              <td class="ztai_${ztai}">${ztai}</td>
+              <td>${quyu}</td>
+              <td class="br_area">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></td>
+              <td>${lxing}</td>
+              <td>${hxf}-${hxt}-${hxw}</td>
+              <td>${mji}</td>
+              <td>${zjia}</td>
+              <td class="cs">${djia}</td>
+              <td>${lceng}/${zceng}</td>
+              <td>${zxiu}</td>
+              <td class="sy" runscript="true" title="${dateadd}">'${dateadd}'.split(' ')[0]</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
     </div>
     <div class="footer">

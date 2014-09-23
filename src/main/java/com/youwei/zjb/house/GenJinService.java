@@ -42,6 +42,8 @@ public class GenJinService {
 			gj.uid = user.id;
 			gj.did = user.did;
 			gj.cid = user.cid;
+			//默认审核通过
+			gj.sh=1;
 			gj.addtime = new Date();
 			HouseRent hr = dao.get(HouseRent.class, gj.hid);
 			gj.ztai = RentState.parse(hr.ztai)+"-"+RentState.parse(String.valueOf(gj.flag));
@@ -119,6 +121,7 @@ public class GenJinService {
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeEnd, DateSeparator.Before, params));
 		
 		hql.append(" order by gj.addtime desc ");
+		page.pageSize=20;
 		page = dao.findPage(page, hql.toString(), true,params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;

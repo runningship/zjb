@@ -87,11 +87,15 @@ $(document).ready(function() {
     $(document).find('[data-toggle="tooltip"]').tooltip();
     api = art.dialog.open.api,  //      art.dialog.open扩展方法
     form1=$('.form1');
-    if (!api) return;
+    if (api){
+      api.title('跟进列表');
+    }
     // 操作对话框
-    api.title('跟进列表')
     did = getParam('did');
     cid = getParam('cid');
+    if(cid=='1'){
+      cid='';
+    }
     $('#did').val(did);
     $('#cid').val(cid);
     Page.Init();
@@ -139,9 +143,9 @@ $(document).ready(function() {
           审核 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" name="sh" value=""> 所有</label>
-          <li><label><input type="radio" name="sh" value="0"> 未审</label>
-          <li><label><input type="radio" name="sh" value="1"> 已审</label>
+          <li><label><input type="radio" name="sh" checked="checked" value=""> 所有</label>
+          <li><label><input type="radio" name="sh" value="未审核"> 未审</label>
+          <li><label><input type="radio" name="sh" value="已审核"> 已审</label>
         </ul>
       </div>
       <div class="btn-group btn-sm">
@@ -149,7 +153,7 @@ $(document).ready(function() {
           租售 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" name="chuzu" value=""> 所有</label>
+          <li><label><input type="radio" name="chuzu" checked="checked" value=""> 所有</label>
           <li><label><input type="radio" name="chuzu" value="0"> 出售</label>
           <li><label><input type="radio" name="chuzu" value="1"> 出租</label>
         </ul>

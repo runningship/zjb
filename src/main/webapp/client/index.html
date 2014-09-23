@@ -151,7 +151,7 @@ $(document).on('click', '.zbtns', function(event) {
         window.location.href=window.location.pathname+window.location.search;
     }else if(ThiType=='see'){
         this_hid=Thi.data('hid');
-        art.dialog.open("/client/client_see.html?id="+this_hid,{id:'see',height:'90%',width:'95%'})
+        art.dialog.open("/client/client_see.html?id="+this_hid,{id:'see',height:'90%',width:'95%',lock:true})
     }
 });
 $(document).ready(function() {

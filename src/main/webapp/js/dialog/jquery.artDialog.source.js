@@ -1040,7 +1040,7 @@ artDialog.defaults = {
 	icon: null,					// 消息图标名称
 	time: null,					// 自动关闭时间
 	esc: true,					// 是否支持Esc键关闭
-	focus: true,				// 是否支持对话框按钮自动聚焦
+	focus: false,				// 是否支持对话框按钮自动聚焦
 	show: true,					// 初始化后是否显示对话框
 	follow: null,				// 跟随某元素(即让对话框在元素附近弹出)
 	path: _path,				// artDialog路径

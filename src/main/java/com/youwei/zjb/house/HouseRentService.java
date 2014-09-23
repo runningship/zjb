@@ -97,9 +97,9 @@ public class HouseRentService {
 		po.zjia =house.zjia;
 		po.fangshi = house.fangshi;
 		FangXing fx = FangXing.parse(hxing);
-		house.hxf = fx.getHxf();
-		house.hxt = fx.getHxt();
-		house.hxw = fx.getHxw();
+		po.hxf = fx.getHxf();
+		po.hxt = fx.getHxt();
+		po.hxw = fx.getHxw();
 		po.dateyear = house.dateyear;
 		po.zxiu = house.zxiu;
 		po.tel = house.tel;
@@ -120,11 +120,16 @@ public class HouseRentService {
 		po.seeGX	= house.seeGX;
 		po.seeHM = house.seeHM;
 		
-		service.saveOrUpdate(house);
+		service.saveOrUpdate(po);
 		User user = ThreadSession.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
 		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "修改成功");
+		mv.data.put("house", JSONHelper.toJSON(po , DataHelper.dateSdf.toPattern()));
+		RentState state = RentState.parse(po.ztai);
+		if(state!=null){
+			mv.data.getJSONObject("house").put("ztai", state.toString());
+		}
 		mv.data.put("result", 0);
 		return mv;
 	}
