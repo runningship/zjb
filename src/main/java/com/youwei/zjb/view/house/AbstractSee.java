@@ -1,5 +1,6 @@
 package com.youwei.zjb.view.house;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +32,31 @@ public abstract class AbstractSee extends page{
 			for(Element elem : nrlist){
 				String innerHtml = elem.html();
 				for(Object key : json.keySet()){
-					innerHtml= innerHtml.replace("${"+key+"}", String.valueOf(json.get(key)));
+					String val = "";
+					if("mji".equals(key)){
+						double tmp = json.getDouble(key.toString());
+						if(tmp == (int)tmp){
+							//没有小数部分
+							val = String.valueOf((int)tmp);
+						}else{
+							val = String.valueOf(tmp);
+						}
+					}else if ("djia".equals(key)){
+						val = String.valueOf(json.getInt(key.toString()));
+					}else if ("zjia".equals(key)){
+						double tmp = json.getDouble(key.toString());
+						if(tmp == (int)tmp){
+							//没有小数部分
+							val = String.valueOf((int)tmp);
+						}else{
+							//保留一位小数
+							DecimalFormat df = new DecimalFormat("0.0");
+							val = df.format(tmp);
+						}
+					}else {
+						val = String.valueOf(json.get(key));
+					}
+					innerHtml= innerHtml.replace("${"+key+"}", val);
 				}
 				elem.html(innerHtml);
 			}
