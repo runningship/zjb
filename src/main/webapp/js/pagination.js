@@ -50,6 +50,7 @@ var Page={
       }
 
     if(this.pn <= 10){
+      //总页数小于10
       for(var i = 1;i<=this.pn;i++){  
         if(this.p == i){  
             this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+i+'</button>';
@@ -58,26 +59,42 @@ var Page={
         }  
       }
     }else{
-      if(this.p<4){  
+      if(this.p<8){  
         for(var i = this.p-1;i>0;i--){  
             this.pageHtml='<button type="button" action="page" class="btn btn-default btn_p_list">'+i+'</button>'+this.pageHtml; 
         }  
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+1) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+2) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+3) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
       }
-      if(this.p>=4 && (this.p<=this.pn-3)){
+      if(this.p>=8 && (this.p<=this.pn-7)){
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-1) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+1) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+2) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+3) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
       }
-      if(this.p>this.pn-3){
+      if(this.p>this.pn-7){
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-1) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';

@@ -324,12 +324,12 @@ public class HouseService {
 		}
 		
 		if(StringUtils.isNotEmpty(query.dhao)){
-			hql.append(" and h.dhao like ? ");
-			params.add("%"+query.dhao+"%");
+			hql.append(" and h.dhao = ? ");
+			params.add(query.dhao);
 		}
 		if(StringUtils.isNotEmpty(query.fhao)){
 			hql.append(" and h.fhao like ? ");
-			params.add("%"+query.fhao+"%");
+			params.add(query.fhao+"%");
 		}
 		if(StringUtils.isNotEmpty(query.favStr)){
 			hql.append(" and h.fav like ? ");
@@ -451,7 +451,7 @@ public class HouseService {
 
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
-		page.setPageSize(20);
+		page.setPageSize(25);
 		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();

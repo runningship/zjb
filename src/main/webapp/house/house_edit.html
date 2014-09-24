@@ -48,20 +48,24 @@ function getContent(){
     mysuccess: function(result){
       var json = JSON.parse(result);
       $('#id').val(json['id']);
-      $('#area').val(json['area']);
-      $('#address').val(json['address']);
+        var area=json['area'];
+      $('#area').val(area.replace(/&nbsp;/g," "));
+        var address=json['address'];
+      $('#address').val(address.replace(/&nbsp;/g," "));
       $('#dhao').val(json['dhao']);
       $('#fhao').val(json['fhao']);
       $('#dateyear').val(json['dateyear']);
       $('#tel').val(json['tel']);
       $('#fortel').val(json['fortel']);
       $('#forlxr').val(json['forlxr']);
-      $('#lxr').val(json['lxr']);
+        var lxr=json['lxr'];
+      $('#lxr').val(lxr.replace(/&nbsp;/g," "));
       $('#zjia').val(json['zjia']);
       $('#mji').val(json['mji']);
       $('#zceng').val(json['zceng']);
       $('#lceng').val(json['lceng']);
-      $('#beizhu').val(json['beizhu']);
+      var beizhu = json['beizhu'];
+      $('#beizhu').val(beizhu.replace(/&nbsp;/g," "));
       $('#id_quyu').val(json['quyu']);
       $('#id_ztai').val(json['ztai']);
       $('#id_lxing').val(json['lxing']);

@@ -115,11 +115,13 @@ public class PGenjinService {
 				}
 			}
 		}
-		if(delete){
-			dao.execute("delete from GenJin where hid=?", houseId);
-		}else{
-			dao.saveOrUpdate(gj);
-		}
+//		暂时不删除跟进信息
+//		if(delete){
+//			dao.execute("delete from GenJin where hid=?", houseId);
+//		}else{
+//			dao.saveOrUpdate(gj);
+//		}
+		dao.saveOrUpdate(gj);
 		obj.put("result", "0");
 		obj.put("msg", "添加成功");
 		arr.add(obj);

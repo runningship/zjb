@@ -50,7 +50,7 @@ font-style:normal;
 .miniwidth{white-space:nowrap;word-break: keep-all; text-align:center;}
 table.nobr th,table.nobr td{white-space:nowrap;word-break: keep-all;}
 .titlebar{-webkit-app-region:drag;}
-.nobar{-webkit-app-region:no-drag;}
+.nobar{-webkit-app-region:no-drag;z-index: 9999}
 
 /* bootstrap 样式修改 */
 
@@ -416,10 +416,10 @@ opacity:1}
 
 .list .header{ height: 36px; line-height: 36px; color:#333;}
 .list .bodyer{ position:relative; }
-.list .footer{ height: 30px; }
+.list .footer{ height: 45px; }
 .border_bottom{ position: absolute; right: 0; bottom: 0; left: 0; border-bottom: 1px solid #EEE;}
 
-.list .header .maxHW{ border-bottom: 2px solid #278ADD;}
+.list .header .maxHW{ border-bottom: 2px solid #278ADD;height: 37px;}
 .list .bodyer .maxHW{ overflow: hidden; overflow-y: auto; background-color: rgba(255,255,255,1); }
 .list .footer .maxHW{ border-top: 1px solid #ccc;}
 
@@ -442,7 +442,7 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .list.addSide .bodyer .sideCont .sideFoot, 
 .list.addSide .bodyer .sideCont .sideFoot ul,
 .list.addSide .bodyer .sideCont .sideFoot ul li,
-.list.addSide .bodyer .sideCont .sideFoot ul li a{ height: 35px; line-height: 34px;}
+.list.addSide .bodyer .sideCont .sideFoot ul li a{ height: 45px; line-height: 34px;}
 .list.addSide .bodyer .sideCont .sideFoot ul li a{ display: inline-block; padding:0 5px; margin:0; color: #F00;}
 .list.addSide .bodyer .sideCont .sideFoot ul li a:hover{ background-color: #EEE;}
 
@@ -455,7 +455,7 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .list .ymx_page .btn-group > .btn:first-child { border-left:none;}
 
 .menuLi i.font_icon{ font-family:"微软雅黑","mrciosoft yaei" !important; font-size: 14px; font-weight: bold; border:2px solid #333; padding:0 3px;vertical-align: top; border-radius: 6px}
-.menuLi{ margin:0; padding-left: 10px; }
+.menuLi{ margin:0; padding-left: 10px; display: inline-block;}
 .menuLi>li{ float: left; margin:0 5px }
 .menuLi>li.curr>a { border-bottom: 3px solid #278ADD;}
 .menuLi>li>i{ vertical-align: middle;}

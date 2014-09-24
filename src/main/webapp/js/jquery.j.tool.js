@@ -107,6 +107,15 @@ function WinMaxOrRev(a){
   if($('.winBtnRevert').length>0){
     $('.winBtnRevert').css('display',winRevertNone);
   }
+
+  //设置拖动栏
+  try{
+    var menuTopW = $(window.frames[0].document).find('#menuTop').width();
+    var bodyW = $(window.top.document).width()-50;
+    $(window.top.document).find('#dragbar').width(bodyW-menuTopW);
+  }catch(e){
+    console.log('set drag bar width fail,'+e);
+  }
 }
 function WinMin(){/*最小化*/
 	win.minimize();
@@ -127,6 +136,7 @@ function WinRevert(){/*恢复*/
   if(win.width<692){
     win.resizeTo(692,win.height);
   }
+
   WinMaxOrRev(1);
 //    alert(hex.getSize().height)
 //hex.sizeTo(1022,660);
@@ -566,6 +576,7 @@ function menuTopFun(){
         menuBLi.eq(0).addClass('curr')
     }
     menuBLi.addClass('nobar');
+    menuBLi.attr('draggable' , 'false');
 }
 
 // 获取归属地信息

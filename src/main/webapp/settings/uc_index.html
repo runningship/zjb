@@ -78,6 +78,8 @@ function uc_delete(id){
 }
 
 $(document).ready(function() {
+  var bodyW = $(window.top.document).width()-50;
+  $(document.body).width(bodyW);
 // 加载侧边
     getSider();
 // 列表内容
@@ -101,6 +103,9 @@ $(document).ready(function() {
 //     });
     $.get('menuTop.html', function(data) {
         $('#menuTop').html(data);
+        //设置拖动栏
+        var bodyW = $(window.top.document).width()-50;
+        $(window.top.document).find('#dragbar').width(bodyW-$('#menuTop').width());
     });
 });
 $(window).resize(function() {      //类别

@@ -258,6 +258,9 @@ function setSearchValue(index){
     $('#search').val(Vals);
 }
 $(document).ready(function() {
+  var bodyW = $(window.top.document).width()-50;
+  $(document.body).width(bodyW);
+  $(window.top.document).find('#dragbar').width(bodyW-$('#menuTop').width());
 // autocomplete
     autoComplete($('#search'))
 // 加载侧边按钮功能

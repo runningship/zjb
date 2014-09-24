@@ -83,12 +83,15 @@ function setiframe(id,src){
     iframeIndex+=1;
 var iframeBox=$('#iframeBox'),
     iframeDom='<iframe src="'+src+'" id="iframe_'+id+'" name="iframe_'+id+'" class="iframe" width="100%" height="100%" marginheight="0" frameborder="0" style="overflow:auto;"></iframe>';
+    //设置绝对定位元素的宽对等于父元素的宽度
+    
     iframeBox.find('.iframe').hide();
     if(iframeBox.find('#iframe_'+id).length>0){
         iframeBox.find('#iframe_'+id).css({'z-index': iframeIndex,'opacity':0}).show().animate({'opacity':1});
     }else{
         iframeBox.append(iframeDom).css({'z-index': iframeIndex});
     }
+    // $(iframeBox).width($(iframeBox).parent().width());
 }
 $(document).ready(function() {
 try{
@@ -99,6 +102,8 @@ try{
 }
 try{
     WinMax();
+    // $(iframeBox).width($(iframeBox).parent().width());
+    // alert($(document).width()-50);
     gui.Window.get().on('close', function() {
         quit();
     });
@@ -195,7 +200,7 @@ function pay(){
         <div class="righter td title">
             <div class="table">
                 <div class="tr thead title">
-                    <div class="maxHW title titlebar"></div>
+                    <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:50px;"></div>
                     <div class="wintool title nobar">
                         <ul class="wintools">
                             <li class="dropdown btn-group">
@@ -224,7 +229,7 @@ function pay(){
                     </div>
                 </div>
                 <div class="tr tbody">
-                    <div id="iframeBox" class="maxHW"></div>
+                    <div id="iframeBox" class="maxHW" style="position:absolute;top:14px;left:50px"></div>
                 </div>
             </div>
         </div>
