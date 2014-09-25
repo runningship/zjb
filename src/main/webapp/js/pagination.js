@@ -48,7 +48,6 @@ var Page={
         this.next_disabled=""
         this.prev_disabled=""
       }
-
     if(this.pn <= 10){
       //总页数小于10
       for(var i = 1;i<=this.pn;i++){  
@@ -59,44 +58,64 @@ var Page={
         }  
       }
     }else{
-      if(this.p<8){  
+      var pshow = 3;
+      if(window.screen.width>=1028 && window.screen.width<1366){
+        pshow=5;
+      }else if(window.screen.width>=1366 && window.screen.width<1600){
+        pshow=6;
+      }else if(window.screen.width>=1600){
+        pshow=8;
+      }
+      if(this.p<pshow){  
         for(var i = this.p-1;i>0;i--){  
             this.pageHtml='<button type="button" action="page" class="btn btn-default btn_p_list">'+i+'</button>'+this.pageHtml; 
         }  
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+1) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+2) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+3) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
+        for(var i=1;i<=pshow-2;i++){
+          this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+i) +'</button>';  
+        }
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+1) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+2) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+3) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
-      }
-      if(this.p>=8 && (this.p<=this.pn-7)){
+      }else if(this.p>=pshow && (this.p<=this.pn-pshow+1)){
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-1) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+1) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+2) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+3) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
+        for(var i=2-pshow;i<pshow-1;i++){
+          if(i==0){
+            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
+          }else{
+            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+i) +'</button>';
+          } 
+        }
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-1) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+1) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+2) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+3) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
-      }
-      if(this.p>this.pn-7){
+      }else if(this.p>this.pn-pshow){
+        //尾页
         this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-1) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
+        for(var i=pshow-2;i>0;i--){
+          this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-i) +'</button>';  
+        }
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
+        // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-1) +'</button>';
         this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
         for(var i = this.p+1;i<=this.pn;i++){
             this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+i+'</button>';

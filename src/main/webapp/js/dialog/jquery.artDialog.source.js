@@ -1191,7 +1191,9 @@ _use = function (event) {
 			var style = wrap[0].style,
 				left = Math.max(limit.minX, Math.min(limit.maxX, x + startLeft)),
 				top = Math.max(limit.minY, Math.min(limit.maxY, y + startTop));
-
+			if(top<=50){
+				top=50;
+			}
 			style.left = left  + 'px';
 			style.top = top + 'px';
 		};

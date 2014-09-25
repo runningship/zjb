@@ -294,7 +294,7 @@ $(document).ready(function() {
         ThiLi=Thi.parents('li'),
         ThiUrl=Thi.attr('href'),
         ThiType=Thi.data('type');
-        var h=window.top.document.body.offsetHeight-100;
+        var h=window.top.document.body.offsetHeight-120;
         var w=window.top.document.body.offsetWidth-100;
         if(ThiType=='seeRecords'){
               if(node.type=='comp'){
@@ -304,7 +304,8 @@ $(document).ready(function() {
                     focus:false,
                     lock:1,
                     height:h,
-                    width:w
+                    width:w,
+                    top:52
                   });
                 }else{
                   art.dialog.open('/v/settings/sys_record.html?did='+node.id,{
@@ -313,7 +314,8 @@ $(document).ready(function() {
                     focus:false,
                     lock:1,
                     height:h,
-                    width:w
+                    width:w,
+                    top:52
                   });
                 }
             return false;
@@ -330,7 +332,8 @@ $(document).ready(function() {
             resize:true,
             lock:1,
             height:h,
-            width:w
+            width:w,
+            top:52
             // height:600,
             // width:1000
           });
