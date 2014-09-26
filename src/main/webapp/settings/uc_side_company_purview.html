@@ -43,7 +43,7 @@ var node;
 
 function onClick(event, treeId, treeNode, clickFlag) {
   node = treeNode;
-  console.log(treeNode);
+  //console.log(treeNode);
   roleId = treeNode.id;
   id = treeNode.id;
   
@@ -70,7 +70,7 @@ function updateNode(title){
 }
 
 function OnRightClick(event, treeId, treeNode) {
-  console.log(treeId);
+  //console.log(treeId);
   var treeObj = $.fn.zTree.getZTreeObj(treeId);
   treeObj.selectNode(treeNode);
   onClick(event, treeId, treeNode,null);

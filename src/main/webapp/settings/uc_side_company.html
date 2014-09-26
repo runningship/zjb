@@ -42,7 +42,7 @@ YW.ajax({
 
 function onClick(event, treeId, treeNode, clickFlag) {
   node = treeNode;
-  console.log(clickFlag);
+  //console.log(clickFlag);
   if(clickFlag!=null){
     var treeObj = $.fn.zTree.getZTreeObj(treeId);
     treeObj.expandNode(treeNode);
@@ -153,7 +153,7 @@ function addDiyDom(treeId, treeNode) {
 //  aObj.css('display','inline');
   aObj.css('display','inline');
   aObj.parent().addClass('a_'+treeNode.type);
-  console.log(treeNode.cnum);
+  //console.log(treeNode.cnum);
   if(treeNode.cnum!=null){
     var cnumStr = '<span class="">'+ treeNode.cnum +' </span>';
     aObj.prepend(cnumStr);  
@@ -225,7 +225,7 @@ function updateDept(){
 }
 
 function moveTo(targetId){
-  console.log('move node...');
+  //console.log('move node...');
   var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
   var target = treeObj.getNodeByParam("id",targetId,null);
   treeObj.moveNode(target,node,"inner",false);

@@ -53,7 +53,7 @@ function addDiyDom(treeId, treeNode) {
 
 function onClick(event, treeId, treeNode, clickFlag) {
   node = treeNode;
-  console.log(treeNode);
+  //console.log(treeNode);
   if(clickFlag!=null){
     var treeObj = $.fn.zTree.getZTreeObj(treeId);
     treeObj.expandNode(treeNode);
