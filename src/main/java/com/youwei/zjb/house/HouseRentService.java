@@ -214,7 +214,10 @@ public class HouseRentService {
 			}
 			hql.append(")");
 		}
-		
+		if(query.id!=null){
+			hql.append(" and h.id = ? ");
+			params.add(query.id);
+		}
 		if(StringUtils.isNotEmpty(query.dhao)){
 			hql.append(" and h.dhao = ? ");
 			params.add(query.dhao);
@@ -226,6 +229,18 @@ public class HouseRentService {
 		if(StringUtils.isNotEmpty(query.favStr)){
 			hql.append(" and h.fav like ? ");
 			params.add("%"+query.favStr+"%");
+		}
+		if(StringUtils.isNotEmpty(query.tel)){
+			hql.append(" and h.tel like ? ");
+			params.add("%"+query.tel+"%");
+		}
+		if(StringUtils.isNotEmpty(query.address)){
+			hql.append(" and h.address like ? ");
+			params.add("%"+query.address+"%");
+		}
+		if(StringUtils.isNotEmpty(query.area)){
+			hql.append(" and h.area like ? ");
+			params.add("%"+query.area+"%");
 		}
 //		if(query.id!=null){
 //			hql.append(" and h.id = ?");

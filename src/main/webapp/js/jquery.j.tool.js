@@ -110,8 +110,10 @@ function WinMaxOrRev(a){
 
   //设置拖动栏
   try{
-    var menuTopW = $(window.frames[0].document).find('#menuTop').width();
+    // var menuTopW = $(window.frames[0].document).find('#menuTop').width();
+    var menuTopW = $(selectedFrame[0].contentDocument).find('#menuTop').width();
     var bodyW = $(window.top.document).width()-50;
+    var bodyW = win.width-50;
     $(window.top.document).find('#dragbar').width(bodyW-menuTopW);
   }catch(e){
     console.log('set drag bar width fail,'+e);

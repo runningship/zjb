@@ -321,36 +321,45 @@ function form_menuSize(){
   btnLx.css({'width':'62px'});
   btnFx.css({'width':'63px'});
   btnZh.css({'width':'62px'});
-if (flags=='favZu' ||flags=='addZu') {
-  $('div.chushou').remove();
-  if(flags=='addZu'){
-    $('td.shc').remove();
-    $('th.shc').remove();
-  }
-  if(fboxDiv.length==9){
-    btnZn.css({'width':'197px'});
-    btnFs.css({'width':'50px','padding-right':'5px','padding-left':'5px'});
-  }
-}else {
-  $('div.chuzu').remove();
-  if(flags=='addShou'){
-    $('td.shc').remove();
-    $('th.shc').remove();
-  }
-  if(fboxDiv.length==8){
-   btnQy.css({'width':'77px'});
-   btnLx.css({'width':'76px'});
-   btnFx.css({'width':'76px'});
-   btnZh.css({'width':'76px'});
-  }else if(fboxDiv.length==9){
-   btnSh.css({'width':'50px','padding-right':'5px','padding-left':'5px'});
+  if(flags=='favZu' ||flags=='addZu') {
+    $('div.chushou').remove();
+    if(flags=='addZu'){
+      $('td.shc').remove();
+      $('th.shc').remove();
+    }
+    if(fboxDiv.length==9){
+      btnZn.css({'width':'197px'});
+      btnFs.css({'width':'50px','padding-right':'5px','padding-left':'5px'});
+    }
+  }else {
+    $('div.chuzu').remove();
+    if(flags=='addShou'){
+      $('td.shc').remove();
+      $('th.shc').remove();
+    }
+    if(fboxDiv.length==8){
+     btnQy.css({'width':'77px'});
+     btnLx.css({'width':'76px'});
+     btnFx.css({'width':'76px'});
+     btnZh.css({'width':'76px'});
+    }else if(fboxDiv.length==9){
+     btnSh.css({'width':'50px','padding-right':'5px','padding-left':'5px'});
+    }
   }
 }
+function form_menuSize2(){
+  var fBox=$('.form_menuSize');
+  var btnZn=fBox.find('.btn_zn');
+  if(flags=='favShou' || flags=='addShou'){
+    btnZn.width(255);
+  }else{
+    btnZn.width(190);
+  }
+  
 }
-$(window).resize(function() {      //类别
-});
 $(document).ready(function() {
-  form_menuSize();  
+  // form_menuSize();  
+  form_menuSize2();
 });
 </script>
 <style type="text/css">
@@ -418,10 +427,10 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="input-group input-group-max btn_zn ">
-        <span class="input-group-addon">智能</span>
-        <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
+        <span class="input-group-addon">楼盘</span>
+        <input type="text" class="form-control input-sm" name="area" id="search" autocomplete="off" placeholder="">
       </div>
-      <div class="input-group input-group-too chushou btn_dh ">
+      <div class="input-group input-group-too chushou btn_dh " style="width:125px;">
         <input type="text" class="form-control input-sm" name="dhao" placeholder="栋号">
         <span class="input-group-addon">-</span>
         <input type="text" class="form-control input-sm" name="fhao" placeholder="房号">
@@ -467,8 +476,11 @@ $(document).ready(function() {
           <li class="id_fangshi" style="display:none"><label><input type="radio" name="fangshi" value="${code}" /> ${name}</label></li>
         </ul>
       </div>
+      <div class="input-group input-group-max " style="width:120px;">
+        <input type="text" class="form-control input-sm" style="border-radius:3px;" name="tel" placeholder="电话">
+      </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:50px;padding:0px;">
           审核<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -515,12 +527,21 @@ $(document).ready(function() {
         <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})">
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
-      <div class="btn-group">
+      <div class="input-group input-group-max btn_zn " style="width:120px;">
+        <input type="text" class="form-control input-sm" name="id" style="border-radius:3px;" placeholder="编号">
+        <input type="text" class="form-control input-sm" name="address" style="border-radius:3px;" placeholder="路段">
+      </div>
+      <!-- <br/> -->
+      <div class="input-group input-group-max btn_zn " style="width:50px;">
+        <button type="submit" class="btn btn-sms btn-primary btn_subnmit" onclick="doSearchAndSelectFirst();return false;" id="searchBtn" data-type="submit">搜索</button>
+        <button type="button" class="btn btn-sms zbtns" data-type="qingkong">清空</button>
+      </div>
+      <!-- <div class="btn-group">
         <button type="submit" class="btn btn-sms btn-primary btn_subnmit" onclick="doSearchAndSelectFirst();return false;" id="searchBtn">搜索</button>
       </div><br>
       <div class="btn-group">
         <button type="button" class="btn btn-sms zbtns" data-type="qingkong">清空</button>
-      </div>
+      </div> -->
     </div>
   </form>
  

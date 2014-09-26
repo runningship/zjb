@@ -38,6 +38,10 @@ public class HouseQuery{
 	public String scope="";
 	public Integer sh;
 	
+	public String area;
+	public String tel;
+	public String address;
+	
 	// for phone client
 	//current page number
 	public String quyu;

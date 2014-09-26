@@ -322,10 +322,25 @@ public class HouseService {
 //				
 //			}
 		}
-		
+		if(query.id!=null){
+			hql.append(" and h.id = ? ");
+			params.add(query.id);
+		}
 		if(StringUtils.isNotEmpty(query.dhao)){
 			hql.append(" and h.dhao = ? ");
 			params.add(query.dhao);
+		}
+		if(StringUtils.isNotEmpty(query.tel)){
+			hql.append(" and h.tel like ? ");
+			params.add("%"+query.tel+"%");
+		}
+		if(StringUtils.isNotEmpty(query.area)){
+			hql.append(" and h.area like ? ");
+			params.add("%"+query.area+"%");
+		}
+		if(StringUtils.isNotEmpty(query.address)){
+			hql.append(" and h.address like ? ");
+			params.add("%"+query.address+"%");
 		}
 		if(StringUtils.isNotEmpty(query.fhao)){
 			hql.append(" and h.fhao like ? ");
