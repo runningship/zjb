@@ -77,8 +77,9 @@ function submit_fun(){
             ok: function () {
                 var a=$('form[name=alipayment]').serialize();
                 url= window.location+"/../submit.html?"+a;
-                var gui = require('nw.gui');
-                gui.Shell.openExternal(url);
+                //var gui = require('nw.gui');
+                //gui.Shell.openExternal(url);
+                window.top.gui.Shell.openExternal(url);
                 isPayOK();
                 this.close();
                 return false;
