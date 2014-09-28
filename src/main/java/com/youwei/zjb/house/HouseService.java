@@ -65,12 +65,13 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView add(House house , String hxing){
 		ModelAndView mv = new ModelAndView();
-		if(house.fhao==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
-		}
-		if(house.dhao==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
-		}
+		validte(house);
+//		if(house.fhao==null){
+//			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+//		}
+//		if(house.dhao==null){
+//			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
+//		}
 		User user = ThreadSession.getUser();
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
 //		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
@@ -78,21 +79,21 @@ public class HouseService {
 //			throw new GException(PlatformExceptionType.BusinessException,"存在栋号，房号相同的房源,编号为"+po.id);
 //		}else{
 //			
-			if(house.mji==null){
-				throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
-			}
-			if(house.zceng==null){
-				throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
-			}
-			
-			if(house.zjia==null){
-				throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
-			}
-			if(house.seeGX==null || house.seeGX==0){
-				if(UserHelper.getUserWithAuthority("fy_sh").isEmpty()){
-					throw new GException(PlatformExceptionType.BusinessException,"由于贵公司没有设置房源审核权限，请选择发布至共享房源,由中介宝审核。");
-				}
-			}
+//			if(house.mji==null){
+//				throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+//			}
+//			if(house.zceng==null){
+//				throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
+//			}
+//			
+//			if(house.zjia==null){
+//				throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+//			}
+//			if(house.seeGX==null || house.seeGX==0){
+//				if(UserHelper.getUserWithAuthority("fy_sh").isEmpty()){
+//					throw new GException(PlatformExceptionType.BusinessException,"由于贵公司没有设置房源审核权限，请选择发布至共享房源,由中介宝审核。");
+//				}
+//			}
 			house.isdel = 0;
 			house.dateadd = new Date();
 			house.uid = user.id;
@@ -128,6 +129,7 @@ public class HouseService {
 	
 	@WebMethod
 	public ModelAndView update(House house , String hxing){
+		validte(house);
 		ModelAndView mv = new ModelAndView();
 		House po = dao.get(House.class, house.id);
 		po.area = house.area;
@@ -331,14 +333,17 @@ public class HouseService {
 			params.add(query.dhao);
 		}
 		if(StringUtils.isNotEmpty(query.tel)){
+			query.tel = query.tel.replace(" ", "");
 			hql.append(" and h.tel like ? ");
 			params.add("%"+query.tel+"%");
 		}
 		if(StringUtils.isNotEmpty(query.area)){
+			query.area = query.area.replace(" ", "");
 			hql.append(" and h.area like ? ");
 			params.add("%"+query.area+"%");
 		}
 		if(StringUtils.isNotEmpty(query.address)){
+			query.address = query.address.replace(" ", "");
 			hql.append(" and h.address like ? ");
 			params.add("%"+query.address+"%");
 		}
@@ -476,6 +481,29 @@ public class HouseService {
 		return mv;
 	}
 	
+	private void validte(House house){
+		if(house.fhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+		}
+		if(house.dhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
+		}
+		if(house.mji==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+		}
+		if(house.zceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
+		}
+		
+		if(house.zjia==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+		}
+		if(house.seeGX==null || house.seeGX==0){
+			if(UserHelper.getUserWithAuthority("fy_sh").isEmpty()){
+				throw new GException(PlatformExceptionType.BusinessException,"由于贵公司没有设置房源审核权限，请选择发布至共享房源,由中介宝审核。");
+			}
+		}
+	}
 	private void fixEnumValue(JSONObject jpage) {
 		JSONArray results = jpage.getJSONArray("data");
 		for(int i=0;i<results.size();i++){

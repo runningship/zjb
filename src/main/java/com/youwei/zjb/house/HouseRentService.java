@@ -231,14 +231,17 @@ public class HouseRentService {
 			params.add("%"+query.favStr+"%");
 		}
 		if(StringUtils.isNotEmpty(query.tel)){
+			query.tel = query.tel.replace(" ", "");
 			hql.append(" and h.tel like ? ");
 			params.add("%"+query.tel+"%");
 		}
 		if(StringUtils.isNotEmpty(query.address)){
+			query.address = query.address.replace(" ", "");
 			hql.append(" and h.address like ? ");
 			params.add("%"+query.address+"%");
 		}
 		if(StringUtils.isNotEmpty(query.area)){
+			query.area = query.area.replace(" ", "");
 			hql.append(" and h.area like ? ");
 			params.add("%"+query.area+"%");
 		}

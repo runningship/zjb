@@ -111,10 +111,16 @@ function WinMaxOrRev(a){
   //设置拖动栏
   try{
     // var menuTopW = $(window.frames[0].document).find('#menuTop').width();
-    var menuTopW = $(selectedFrame[0].contentDocument).find('#menuTop').width();
+    var doc = $(selectedFrame[0].contentDocument);
+    var menuTopW = doc.find('#menuTop').width();
     var bodyW = $(window.top.document).width()-50;
     var bodyW = win.width-50;
     $(window.top.document).find('#dragbar').width(bodyW-menuTopW);
+    doc.find('.mainCont').width(win.width-50-270);
+    doc.find('#table-container').width(win.width-50-270);
+    var TableH=doc.find('.TableH');
+    var TableB=doc.find('.TableB');
+    tableFix(TableH,TableB);
   }catch(e){
     console.log('set drag bar width fail,'+e);
   }

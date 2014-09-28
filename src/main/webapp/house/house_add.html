@@ -44,14 +44,13 @@ function save(){
         art.dialog.close();
         art.dialog.opener.doSearchAndSelectFirst();
         alert('发布成功');
+    },
+    complete:function(){
+        api.button({
+              name: '保存',
+              disabled:false
+          });
     }
-    // ,
-    // complete:function(){
-    //     api.button({
-    //           name: '保存',
-    //           disabled:false
-    //       });
-    // }
   });
 }
 

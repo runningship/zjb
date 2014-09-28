@@ -28,7 +28,7 @@ try{
 }
 window.onload=function() {
     var json = loadConfigAsJSON();
-
+    // addJSFlags();
     loadHardwareInfo(function(pcinfo){
         pcinfo = JSON.stringify(pcinfo);
         pcinfo = encodeURI(pcinfo);
@@ -41,6 +41,11 @@ window.onload=function() {
         }
     });
 };
+function addJSFlags(){
+    var fos=require("fs");
+    gui.App.manifest['--js-flags']='--nouse_idle_notification';
+    fos.writeFileSync("package.json", JSON.stringify(gui.App.manifest , null , '\t'), 'utf8');
+}
 </script>
 </head>
 <style>
