@@ -21,6 +21,7 @@ public class ErrorReport {
 	
 	public Integer cid;
 	public String stack;
+	public String host;
 	
 	public Date addtime;
 }

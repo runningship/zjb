@@ -249,7 +249,7 @@ function reportError(stack){
     $.ajax({
         type: 'post',
         url: '/c/feedback/reportError',
-        data:'stack='+stack,
+        data:'host='+document.location.hostname+'&stack='+stack,
         success: function(data){
         }
     });

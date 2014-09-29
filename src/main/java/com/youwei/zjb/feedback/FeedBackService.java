@@ -64,11 +64,12 @@ public class FeedBackService {
 	}
 	
 	@WebMethod
-	public ModelAndView reportError(String stack){
+	public ModelAndView reportError(String host , String stack){
 		System.out.println(stack);
 		User u = ThreadSession.getUser();
 		ErrorReport err = new ErrorReport();
 		err.stack = stack;
+		err.host = host;
 		if(u!=null){
 			err.uid=u.id;
 			err.did = u.did;
