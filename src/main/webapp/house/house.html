@@ -25,6 +25,7 @@
 <script type="text/javascript" src="/js/pagination.js"></script>
 <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
 <script type='text/javascript' src='/js/autocomplete/jquery.autocomplete.js'></script>
+<!-- <script type='text/javascript' src='/js/menus.js'></script> -->
 <script type="text/javascript">
 var id;
 var queryOptions;
@@ -42,6 +43,7 @@ function doSearch(callback){
   searching=true;
   $('#searchBtn').attr('disabled','disabled');
   var a=$('form[name=form1]').serialize();
+  // pushQueryToHistory($('form[name=form1]').serializeArray());
   YW.ajax({
     type: 'POST',
     url: '/c/house/listAll',
@@ -254,7 +256,7 @@ $(document).on('click', '.zbtns', function(event) {
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a');
     ThiA.removeClass('hover');
-    var Vals=ThiA.eq(index).addClass('hover').attr('title');
+    var Vals=ThiA.eq(index).addClass('hover').attr('area');
     $('#search').val(Vals);
 }
 $(document).ready(function() {
