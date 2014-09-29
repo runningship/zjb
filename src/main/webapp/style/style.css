@@ -285,7 +285,7 @@ ul.ztree li.a_dept > span.button.noline_docu
 ul.jtree li.a_role > span.button.noline_close,
 ul.ztree li.a_role > span.button.noline_docu{ background-position: 5px 0;}
 /* 输入提示菜单 */
-.autocomplete{position:absolute;z-index: 999; max-height: 330px; overflow: auto; box-shadow:0 0 5px #09f; border:1px solid #09F; border-top:none; background: #FFF; display: none; }
+.autocomplete{position:absolute;z-index: 999; max-height: 339px; overflow: auto; box-shadow:0 0 5px #09f; border:1px solid #09F; border-top:none; background: #FFF; display: none; }
 .autocomplete a{ display: block; height: 26px; line-height: 26px; border-bottom: 1px solid #EEE; padding: 0 5px; overflow: hidden;  color:#999;}
 .autocomplete a b{ float: left; color: #09F; padding-right: 5px;}
 .autocomplete a i{ float: right; color:#999;}
