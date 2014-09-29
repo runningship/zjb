@@ -25,7 +25,7 @@ public class home {
 		html = html.replace("$${role}", role==null?"":role.title);
 		html = html.replace("$${tel}", u.tel==null? "" : u.tel);
 		
-		html = html.replace("$${version}", "5.0.928");
+		html = html.replace("$${version}", "5.0.929");
 		return Jsoup.parse(html);
 	}
 }

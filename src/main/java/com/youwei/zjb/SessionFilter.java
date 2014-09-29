@@ -28,6 +28,7 @@ public class SessionFilter implements Filter{
 	public static Map<String,Integer> calls = new HashMap<String,Integer>();
 	static{
 		excludes.add("/c/user/login");
+		excludes.add("/c/user/logout");
 		excludes.add("/c/pc/add");
 		excludes.add("/c/dept/listDept");
 		excludes.add("/login/index.html");
