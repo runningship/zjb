@@ -195,17 +195,17 @@ try{
   form1=$('.form1');
   if (!api) return;
   // 操作对话框
-  api.title('地图查看')
+  api.title('地图查看');
   // 自定义按钮
-    .button({
-        name: '保存',
-        callback: function () {
-          form1.submit();
-          return false;
-        },focus: true
-    },{
-        name: '取消'
-    });
+    // .button({
+    //     name: '保存',
+    //     callback: function () {
+    //       form1.submit();
+    //       return false;
+    //     },focus: true
+    // },{
+    //     name: '取消'
+    // });
 }catch(e){
 
 }
