@@ -204,17 +204,22 @@ function btnAction(){
                 param.authCode=getCode;
                 param.did=getDid[0];
                 param.beizhu=getBeizhu;
+                var lic = window.parent.getLicence();
+                param.ctime = lic.ctime;
+                param.uuid = lic.data;
                 YW.ajax({
                     type: 'POST',
                     async:false,
-                    url: '/c/pc/add',
+                    url: '/c/pc/addByUUID',
                     data:param,
                     success: function(data){
+                        var result = JSON.parse(data);
                         l.stop();
                         $('.view_fendian').text(getBeizhu);
                         goto_marTop(-getThiLiTop(Thi,ThiNext),function(){$('.getologin').focus();});
                         window.parent.putConfig('domain', domains);
                         window.parent.putConfig('cityName', cityNames);
+                        window.parent.writeLicence(result.uuid);
                     },error:function(e){
                         var msg=JSON.parse(e.responseText)
                         art.dialog({
@@ -283,7 +288,12 @@ $(document).ready(function() {
     hetKeyAct();
 //    setCity();
     setDomSize();
-    btnAction();
+    try{
+        btnAction();    
+    }catch(e){
+        console.log(e);
+    }
+    
     // Ladda.bind( 'button', { timeout: 2000 } );
     $('.view_city').text(cityNames);
 

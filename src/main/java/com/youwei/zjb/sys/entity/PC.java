@@ -48,7 +48,9 @@ public class PC {
 	 * 加密过的机器码
 	 */
 	@Column(name="code_cp")
-	public String uuid="";
+	public String codeCP="";
+	
+	public String uuid;
 	
 	@Column(name="regnumber")
 	public String authCode;
@@ -62,5 +64,10 @@ public class PC {
 	
 	public String disk;
 	
+	//licence create time
+	public Date licTime;
+	
 	public transient String debug;
+	
+	public transient long ctime;
 }

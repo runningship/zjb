@@ -277,7 +277,11 @@ public class UserService {
 		}
 		PC pcpo= null;
 		if(!"8753".equals(pc.debug)){
-			pcpo = SecurityHelper.validate(pc , po);
+			if(StringUtils.isNotEmpty(pc.uuid)){
+				pcpo = SecurityHelper.validateByUUID(pc , po);
+			}else{
+				pcpo = SecurityHelper.validate(pc , po);
+			}
 		}
 		if(pcpo!=null){
 			pcpo.lasttime = new Date();

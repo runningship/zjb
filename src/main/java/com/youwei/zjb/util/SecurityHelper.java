@@ -2,6 +2,7 @@ package com.youwei.zjb.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 import org.bc.sdak.GException;
@@ -56,13 +57,25 @@ public class SecurityHelper {
 			target.cpu = target.cpu.toLowerCase();
 		}
 		String targetUUID = SecurityHelper.Md5(target.cpu+target.disk)+SecurityHelper.Md5(target.mac);
-		PC pc= SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(PC.class, new String[]{"did" , "uuid"}, new Object[]{target.did , targetUUID});
+		PC pc= SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(PC.class, new String[]{"did" , "codeCP"}, new Object[]{target.did , targetUUID});
 		if(pc==null){
 			LogUtil.warning("机器未授权,lname="+u.lname+",cid="+u.cid+",did="+u.did+",cpu="+target.cpu+",disk="+target.disk+",mac="+target.mac+",pcname="+target.pcname+",uuid=+"+targetUUID);
 			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权...");
 		}
 		if(pc.lock==1){
 			return pc;
+		}
+		throw new GException(PlatformExceptionType.BusinessException, "授权审核中...");
+	}
+	public static PC validateByUUID(PC target, User u) {
+		target.licTime = new Date(target.ctime);
+		PC pcpo = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(PC.class, new String[]{"did","uuid" , "licTime"},	new Object[]{target.did , target.uuid , target.licTime});
+		if(pcpo==null){
+			LogUtil.warning("机器未授权,lname="+u.lname+",cid="+u.cid+",did="+u.did);
+			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权...");
+		}
+		if(pcpo.lock==1){
+			return pcpo;
 		}
 		throw new GException(PlatformExceptionType.BusinessException, "授权审核中...");
 	}

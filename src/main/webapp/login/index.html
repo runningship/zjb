@@ -60,7 +60,8 @@ try{
     if(debug){
         pcinfo = JSON.parse('{}');
         pcinfo.debug = debug;
-    }else{
+    }
+    else{
         if(pcinfo==undefined || pcinfo==null || pcinfo==""){
             loadHardwareInfo(function(data){
                 pcinfo = data;
@@ -92,6 +93,18 @@ function isFocus(){
     }
     $('#idPassword').focus();
     return false;
+}
+function writeLicence(lic){
+    try{
+        if(lic==undefined || lic==""){
+            return;
+        }
+        var fs = require("fs");
+        fs.writeFileSync("zjb.lic", lic, 'utf8');
+        fs.writeFileSync("c:\\zjb.lic", lic, 'utf8');
+    }catch(e){
+        blockAlert('写入授权信息失败，这是由您的电脑的目录权限设置引起的，请联系中介宝客户为您解决.');
+    }
 }
 
 function setDomSize(){
@@ -275,7 +288,7 @@ $(document).ready(function() {
             }
             pcinfo.lname=$('#idName').val();
             pcinfo.pwd=$('#idPassword').val();
-
+            pcinfo.uuid = pcinfo.data;
             YW.ajax({
                 type: 'POST',
                 url: '/c/user/login',

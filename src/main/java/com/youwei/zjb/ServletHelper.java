@@ -166,7 +166,12 @@ public class ServletHelper {
 						f.set(obj, Integer.valueOf(String.valueOf(pval[0])));
 					}catch(Exception ex){
 						throw new GException(PlatformExceptionType.ParameterTypeError,pname , "必须是数字类型");
-//						throw new GException(PlatformExceptionType.ParameterMissingError,"无效的数据["+pname+"="+pval[0]+"],必须是数字类型");
+					}
+				}else if("long".equals(f.getType().getName()) || "java.lang.Long".equals(f.getType().getName())){
+					try{
+						f.set(obj, Long.valueOf(String.valueOf(pval[0])));
+					}catch(Exception ex){
+						throw new GException(PlatformExceptionType.ParameterTypeError,pname , "必须是数字类型");
 					}
 				} else if(Enum.class.equals(f.getType().getSuperclass())){
 					if(data.get(pname)!=null){

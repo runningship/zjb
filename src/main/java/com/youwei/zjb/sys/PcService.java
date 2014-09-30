@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
@@ -27,6 +28,45 @@ public class PcService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
+	@WebMethod
+	public ModelAndView addByUUID(PC pc){
+		ModelAndView mv = new ModelAndView();
+		if(pc==null){
+			return mv;
+		}
+		if(pc.did==null){
+			throw new GException(PlatformExceptionType.BusinessException, "请先填写店面信息");
+		}
+		if(StringUtils.isEmpty(pc.mac) && StringUtils.isEmpty(pc.disk)){
+			throw new GException(PlatformExceptionType.BusinessException, "机器码为空，不能授权，可能是由于您安装的是精简版的操作系统.");
+		}
+		Department comp =  dao.getUniqueByKeyValue(Department.class, "authCode", pc.authCode);
+		if(comp==null){
+			throw new GException(PlatformExceptionType.BusinessException, "授权码不正确,请联系系统管理员");
+		}
+		long pcCount = dao.countHql("select count(*) from PC where cid=?", comp.id);
+		if(comp.pcnum==null || pcCount>=comp.pcnum){
+			throw new GException(PlatformExceptionType.BusinessException, "已经授权的机器数量超过预定额度");
+		}
+		if(StringUtils.isEmpty(pc.uuid)){
+			pc.uuid = UUID.randomUUID().toString();
+			mv.data.put("uuid", pc.uuid);
+		}
+		pc.licTime = new Date(pc.ctime);
+		PC po = dao.getUniqueByParams(PC.class, new String[]{"did","uuid" , "licTime"},	new Object[]{pc.did , pc.uuid , pc.licTime});
+		if(po==null){
+			pc.addtime = new Date();
+			pc.lock=0;
+			pc.cid = comp.id;
+			pc.lastip = ThreadSession.getIp();
+			dao.saveOrUpdate(pc);
+		}else{
+			throw new GException(PlatformExceptionType.BusinessException, "您已经申请过授权，无需重复申请");
+		}
+		mv.data.put("result", "0");
+		mv.data.put("msg", "申请授权成功，等待审核");
+		return mv;
+	}
 	@WebMethod
 	public ModelAndView add(PC pc){
 		ModelAndView mv = new ModelAndView();
@@ -58,8 +98,8 @@ public class PcService {
 		if(pc.cpu!=null){
 			pc.cpu = pc.cpu.toLowerCase();
 		}
-		pc.uuid = SecurityHelper.Md5(pc.cpu+pc.disk)+SecurityHelper.Md5(pc.mac);
-		PC po = dao.getUniqueByParams(PC.class, new String[]{"did","uuid"},	new Object[]{pc.did , pc.uuid});
+		pc.codeCP = SecurityHelper.Md5(pc.cpu+pc.disk)+SecurityHelper.Md5(pc.mac);
+		PC po = dao.getUniqueByParams(PC.class, new String[]{"did","codeCP"},	new Object[]{pc.did , pc.codeCP});
 		if(po==null){
 			pc.addtime = new Date();
 			pc.lock=0;

@@ -30,6 +30,7 @@ public class SessionFilter implements Filter{
 		excludes.add("/c/user/login");
 		excludes.add("/c/user/logout");
 		excludes.add("/c/pc/add");
+		excludes.add("/c/pc/addByUUID");
 		excludes.add("/c/dept/listDept");
 		excludes.add("/login/index.html");
 		excludes.add("/login/iframe_reg.html");
