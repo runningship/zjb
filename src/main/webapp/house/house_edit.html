@@ -126,7 +126,7 @@ function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a'),
     ThiAH=ThiA.eq(index);
     ThiA.removeClass('hover');
-    var Vals=ThiAH.addClass('hover').attr('title');
+    var Vals=ThiAH.addClass('hover').attr('area');
     $('#area').val(Vals);
     $('#address').val(ThiAH.data('address'));
     $('#quyu option[value="'+ThiAH.data('quyu')+'"]').attr('selected',true);
