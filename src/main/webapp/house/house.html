@@ -382,24 +382,8 @@ $(document).ready(function() {
     <input type="hidden" id="sh" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix form_menuSize" style="background:#FFF; width:980px;">
-      <div class="btn-group btn-sm">
-        <button type="button" class="btn_zhe btn btn-default dropdown-toggle" data-toggle="dropdown">
-          综合 <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li id="seeAll"><label><input type="radio" name="scope" value="all" checked onclick="doSearchAndSelectFirst();"> 所有</label>
-          <li id="seeComp"><label><input type="radio" name="scope" value="comp" onclick="doSearchAndSelectFirst();"> 公司</label>
-          <li id="seeGX"><label><input type="radio" name="scope" value="seeGX" onclick="doSearchAndSelectFirst();"> 共享</label>
-        </ul>
-      </div>
-      <div class="btn-group btn-sm">
-        <button type="button" class="btn_zt btn btn-default dropdown-toggle" data-toggle="dropdown">
-          状态 <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="" checked> 所有</label>
-          <li class="id_zhuangtai"  ><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="${code}"> ${name}</label>
-        </ul>
+      <div class="input-group input-group-max btn_zn " style="width:120px;">
+        <input type="text" class="form-control input-sm" style="border-radius:3px;" name="tel" placeholder="电话">
       </div>
       <div class="input-group input-group-max btn_zn " style="width:255px;">
         <span class="input-group-addon">楼盘</span>
@@ -442,8 +426,24 @@ $(document).ready(function() {
           <li class="id_zhuangxiu"><label><input type="checkbox" name="zxiu" value="${name}" /> ${name}</label></li>
         </ul>
       </div>
-      <div class="input-group input-group-max btn_zn " style="width:120px;">
-        <input type="text" class="form-control input-sm" style="border-radius:3px;" name="tel" placeholder="电话">
+      <div class="btn-group btn-sm">
+        <button type="button" class="btn_zhe btn btn-default dropdown-toggle" data-toggle="dropdown">
+          综合 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li id="seeAll"><label><input type="radio" name="scope" value="all" checked onclick="doSearchAndSelectFirst();"> 所有</label>
+          <li id="seeComp"><label><input type="radio" name="scope" value="comp" onclick="doSearchAndSelectFirst();"> 公司</label>
+          <li id="seeGX"><label><input type="radio" name="scope" value="seeGX" onclick="doSearchAndSelectFirst();"> 共享</label>
+        </ul>
+      </div>
+      <div class="btn-group btn-sm">
+        <button type="button" class="btn_zt btn btn-default dropdown-toggle" data-toggle="dropdown">
+          状态 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="" checked> 所有</label>
+          <li class="id_zhuangtai"  ><label><input type="radio" onclick="doSearchAndSelectFirst();" name="ztai" value="${code}"> ${name}</label>
+        </ul>
       </div>
       <div auth="fy_sh" class="btn-group btn-sm">
         <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:50px;padding:0px;">
@@ -458,11 +458,9 @@ $(document).ready(function() {
     </div>
 
     <div class="form-group clearfix" style="line-height: 30px;">
-      
-      <div class="input-group">
-        <span class="input-group-addon">面积</span>
-        <input type="text" class="form-control input-sm" name="mjiStart">
-        <input type="text" class="form-control input-sm" name="mjiEnd">
+      <div class="input-group input-group-max btn_zn " style="width:120px;">
+        <input type="text" class="form-control input-sm" name="id" desc="编号" style="border-radius:3px;" placeholder="编号">
+        <input type="text" class="form-control input-sm" name="address" style="border-radius:3px;" placeholder="路段">
       </div>
       <div class="input-group">
         <span class="input-group-addon">总价</span>
@@ -489,9 +487,10 @@ $(document).ready(function() {
         <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})">
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
       </div>
-      <div class="input-group input-group-max btn_zn " style="width:120px;">
-        <input type="text" class="form-control input-sm" name="id" desc="编号" style="border-radius:3px;" placeholder="编号">
-        <input type="text" class="form-control input-sm" name="address" style="border-radius:3px;" placeholder="路段">
+      <div class="input-group">
+        <span class="input-group-addon">面积</span>
+        <input type="text" class="form-control input-sm" name="mjiStart">
+        <input type="text" class="form-control input-sm" name="mjiEnd">
       </div>
       <!-- <br/> -->
       <div class="input-group input-group-max btn_zn " style="width:50px;">
