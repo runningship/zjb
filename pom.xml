@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.youwei</groupId>
 	<artifactId>zjb</artifactId>
-	<version>1.0</version>
+	<version>5.0</version>
 	<packaging>war</packaging>
 	<name>zjb</name>
 	<dependencies>
