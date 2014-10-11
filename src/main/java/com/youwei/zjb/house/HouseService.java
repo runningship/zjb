@@ -22,6 +22,7 @@ import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.user.UserHelper;
@@ -118,6 +119,15 @@ public class HouseService {
 				house.seeGX=0;
 			}
 			dao.saveOrUpdate(house);
+			if(StringUtils.isNotEmpty(house.tel)){
+				String[] arr = house.tel.split("/");
+				for(String tel : arr){
+					HouseTel ht = new HouseTel();
+					ht.hid = house.id;
+					ht.tel = tel;
+					dao.saveOrUpdate(ht);
+				}
+			}
 			mv.data.put("msg", "发布成功");
 			mv.data.put("result", 0);
 //		}
@@ -149,7 +159,6 @@ public class HouseService {
 		po.hxw = fx.getHxw();
 		po.dateyear = house.dateyear;
 		po.zxiu = house.zxiu;
-		po.tel = house.tel;
 		po.lxr = house.lxr;
 		po.forlxr = house.forlxr;
 		po.fortel = house.fortel;
@@ -169,6 +178,18 @@ public class HouseService {
 		if(po.mji!=null && po.mji!=0){
 			int jiage = (int) (po.zjia*10000/house.mji);
 			po.djia = (float) jiage;
+		}
+		if(po.tel!=null && !po.tel.equals(house.tel)){
+			//修改了电话号码
+			dao.execute("delete from HouseTel where hid = ?", house.id);
+			String[] arr = house.tel.split("/");
+			for(String tel : arr){
+				HouseTel ht = new HouseTel();
+				ht.hid = house.id;
+				ht.tel = tel;
+				dao.saveOrUpdate(ht);
+			}
+			po.tel = house.tel;
 		}
 		dao.saveOrUpdate(po);
 		User user = ThreadSession.getUser();
@@ -277,12 +298,19 @@ public class HouseService {
 	public ModelAndView listAll(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql = null;
-		if(StringUtils.isNotEmpty(query.xpath)){
-			hql = new StringBuilder(" select h from  House h  ,User u where h.uid=u.id and u.id is not null and u.orgpath like ? ");
-			params.add(query.xpath+"%");
+//		if(StringUtils.isNotEmpty(query.xpath)){
+//			hql = new StringBuilder(" select h from  House h  ,User u where h.uid=u.id and u.id is not null and u.orgpath like ? ");
+//			params.add(query.xpath+"%");
+//		}else{
+//			hql = new StringBuilder(" select h  from House  h where 1=1");
+//		}
+		if(StringUtils.isNotEmpty(query.tel)){
+			hql = new StringBuilder(" select h  from House  h , HouseTel ht where h.id=ht.hid and ht.tel=?");
+			params.add(query.tel);
 		}else{
 			hql = new StringBuilder(" select h  from House  h where 1=1");
 		}
+		
 		User u = ThreadSession.getUser();
 		if("all".equals(query.scope)){
 			hql.append(" and (h.cid=? or h.seeGX=?) ");
@@ -332,11 +360,11 @@ public class HouseService {
 			hql.append(" and h.dhao = ? ");
 			params.add(query.dhao);
 		}
-		if(StringUtils.isNotEmpty(query.tel)){
-			query.tel = query.tel.replace(" ", "");
-			hql.append(" and h.tel like ? ");
-			params.add("%"+query.tel+"%");
-		}
+//		if(StringUtils.isNotEmpty(query.tel)){
+//			query.tel = query.tel.replace(" ", "");
+//			hql.append(" and h.tel like ? ");
+//			params.add("%"+query.tel+"%");
+//		}
 		if(StringUtils.isNotEmpty(query.area)){
 			query.area = query.area.replace(" ", "");
 			hql.append(" and h.area like ? ");
@@ -504,6 +532,43 @@ public class HouseService {
 			}
 		}
 	}
+	
+	@WebMethod
+	public ModelAndView splitHouseTel(){
+		List<HouseTel> list = dao.listByParams(HouseTel.class, "from HouseTel where tel like '%/%' ");
+		List<HouseTel> list2 = dao.listByParams(HouseTel.class, "from HouseTel where tel like '% %' ");
+		int index=0;
+		for(HouseTel ht : list){
+			String[] arr = ht.tel.split("/");
+			if(arr.length<=1){
+				arr = ht.tel.split("／");
+			}
+			for(String tel : arr){
+				tel = tel.replace("&nbsp;", "");
+				HouseTel vo = new HouseTel();
+				vo.hid = ht.hid;
+				vo.tel = tel;
+				dao.saveOrUpdate(vo);
+			}
+			dao.delete(ht);
+			index++;
+			System.out.println(index);
+		}
+		for(HouseTel ht : list2){
+			String[] arr = ht.tel.split(" ");
+			for(String tel : arr){
+				tel = tel.replace("&nbsp;", "");
+				tel = tel.replace(" ", "");
+				HouseTel vo = new HouseTel();
+				vo.hid = ht.hid;
+				vo.tel = tel;
+				dao.saveOrUpdate(vo);
+			}
+			dao.delete(ht);
+		}
+		return new ModelAndView();
+	}
+	
 	private void fixEnumValue(JSONObject jpage) {
 		JSONArray results = jpage.getJSONArray("data");
 		for(int i=0;i<results.size();i++){

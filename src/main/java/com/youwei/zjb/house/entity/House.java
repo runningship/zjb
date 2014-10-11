@@ -103,6 +103,7 @@ public class House {
 
 	/**
 	 * 房主电话，/ 分隔
+	 * 已分开放在HouseTel表中，但查看房源中仍使用这个字段
 	 */
 	public String tel;
 
