@@ -536,15 +536,10 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView splitHouseTel(){
 		List<HouseTel> list = dao.listByParams(HouseTel.class, "from HouseTel where tel like '%/%' ");
-		List<HouseTel> list2 = dao.listByParams(HouseTel.class, "from HouseTel where tel like '% %' ");
 		int index=0;
 		for(HouseTel ht : list){
 			String[] arr = ht.tel.split("/");
-			if(arr.length<=1){
-				arr = ht.tel.split("／");
-			}
 			for(String tel : arr){
-				tel = tel.replace("&nbsp;", "");
 				HouseTel vo = new HouseTel();
 				vo.hid = ht.hid;
 				vo.tel = tel;
@@ -553,18 +548,6 @@ public class HouseService {
 			dao.delete(ht);
 			index++;
 			System.out.println(index);
-		}
-		for(HouseTel ht : list2){
-			String[] arr = ht.tel.split(" ");
-			for(String tel : arr){
-				tel = tel.replace("&nbsp;", "");
-				tel = tel.replace(" ", "");
-				HouseTel vo = new HouseTel();
-				vo.hid = ht.hid;
-				vo.tel = tel;
-				dao.saveOrUpdate(vo);
-			}
-			dao.delete(ht);
 		}
 		return new ModelAndView();
 	}
