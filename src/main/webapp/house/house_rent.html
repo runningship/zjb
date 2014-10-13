@@ -430,6 +430,11 @@ $(window).resize(function() {      //类别
         <input type="text" class="form-control input-sm" name="address" style="border-radius:3px;" placeholder="路段">
       </div>
       <div class="input-group">
+        <span class="input-group-addon">面积</span>
+        <input type="text" class="form-control input-sm" name="mjiStart">
+        <input type="text" class="form-control input-sm" name="mjiEnd">
+      </div>
+      <div class="input-group">
         <span class="input-group-addon">租金</span>
         <input type="text" class="form-control input-sm" name="zjiaStart">
         <input type="text" class="form-control input-sm" name="zjiaEnd">
@@ -448,11 +453,6 @@ $(window).resize(function() {      //类别
         <span class="input-group-addon" style="padding:8px;">发布<br/>日期</span>
         <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})">
         <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})">
-      </div>
-      <div class="input-group">
-        <span class="input-group-addon">面积</span>
-        <input type="text" class="form-control input-sm" name="mjiStart">
-        <input type="text" class="form-control input-sm" name="mjiEnd">
       </div>
       <div class="input-group input-group-max btn_zn " style="width:50px;">
         <button type="submit" class="btn btn-sms btn-primary btn_subnmit" onclick="doSearchAndSelectFirst();return false;" id="searchBtn" data-type="submit">搜索</button>
