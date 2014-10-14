@@ -41,6 +41,9 @@ function doSearch(){
         
         $('.shenhe-0').addClass('btn-warning');
         $('.shenhe-1').addClass('btn-primary');
+        if(event==undefined || $(event.srcElement).attr('action')!='page'){
+          $('.pageInput').val(1);
+        }
         if(houseData['page']['data']<=0){
           $('.id_House_list').parents('.maxHW').addClass('list_noThing');
         }else{
