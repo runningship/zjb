@@ -93,7 +93,15 @@ window.blockAlert = window.alert;
 window.alert = function(data){
     art.dialog.tips(data);
 }
-
+window.infoAlert = function(data){
+    art.dialog({
+        id:'tips',
+        title:'提示',
+        content:data,
+        ok:true,
+        focus:true
+    });
+}
 YW={
     options:{
         beforeSend: function(XMLHttpRequest){
