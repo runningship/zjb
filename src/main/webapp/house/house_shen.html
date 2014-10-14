@@ -30,12 +30,12 @@ function save(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/house/update',
+    url: '/c/house/exp/shenhe',
     data:a,
     mysuccess: function(data){
         art.dialog.close();
-        art.dialog.opener.doSearchAndSelectFirst();
-        alert('修改成功');
+        art.dialog.opener.doSearch();
+        alert('发布成功');
     }
   });
 }
@@ -43,11 +43,11 @@ function save(){
 function getContent(){
   YW.ajax({
     type: 'get',
-    url: '/c/house/get?id='+id,
+    url: '/c/house/exp/get?id='+id,
     data:'',
     mysuccess: function(result){
       var json = JSON.parse(result);
-      $('#id').val(json['id']);
+      $('#expHid').val(json['id']);
       $('#area').val(json['area']);
       $('#address').val(json['address']);
       $('#dhao').val(json['dhao']);
@@ -68,22 +68,6 @@ function getContent(){
       $('#id_hxing').val(json['hxing']);
       $('#id_fxing').val(json['fxing']);
       $('#id_zxiu').val(json['zxiu']);
-      if(json['seeGX']==1){
-        $('#seeGX').attr('checked','checked');
-      }
-      if(json['seeFH']==1){
-        $('#seeFH').attr('checked','checked');
-      }
-      if(json['seeHM']==1){
-        $('#seeHM').attr('checked','checked');
-      }
-      // $('#seeGX').val(json['seeGX']);
-      // $('#seeFH').val(json['seeFH']);
-      // $('#seeHM').val(json['seeHM']);
-      // $('.btn-primary').removeClass('active');
-      // var yy = $('input[name=sh][value='+json['sh']+']').parent();
-      // $('input[name=sh][value='+json['sh']+']').attr('checked','checked');
-      // yy.addClass('active');
     }
   });
 }
@@ -91,28 +75,26 @@ var apiTitle;
 var parent = art.dialog.parent,       // 父页面window对象
 api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('.form1');
-if (!api) return;
-    api.title('录入审核').size(600, 500)
+api.title('录入审核').size(600, 500)
 // 自定义按钮
-    .button({
-      name: '保存',
-      callback: function () {
-        save();
-        return false;
-      },focus: true
-    },{
-      name: '取消'
-    });
+.button({
+  name: '保存',
+  callback: function () {
+    save();
+    return false;
+  },focus: true
+},{
+  name: '取消'
+});
 if (id!='') {
     apiTitle='录入审核';
-    getContent();
 };
 api.title(apiTitle);
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a'),
     ThiAH=ThiA.eq(index);
     ThiA.removeClass('hover');
-    var Vals=ThiAH.addClass('hover').attr('title');
+    var Vals=ThiAH.addClass('hover').attr('area');
     $('#area').val(Vals);
     $('#address').val(ThiAH.data('address'));
     $('#quyu option[value="'+ThiAH.data('quyu')+'"]').attr('selected',true);
@@ -143,6 +125,13 @@ $(document).ready(function() {
         buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
         buildHtmlWithJsonArray("id_ztai",queryOptions['ztai_sell'],true, true);
         //doSearchAndSelectFirst();
+    $('select').each(function(index,obj){
+      if(obj.name=='ztai'){
+        return;
+      }
+      $(obj).prepend('<option value="">请选择...</option>');
+      $(obj).val("");
+    });
         getContent();
     });
 });
@@ -154,7 +143,7 @@ $(document).ready(function() {
         <div class="maxHW">
 
             <form class="form-horizontal form_label_right form1" name="form1" role="form" onsubmit="submits();return false;">
-                <input type="hidden" name="id" id="id"/>
+                <input type="hidden" name="expHid" id="expHid"/>
                 <div class="row">
                     <div class="col-xs-6">
 
@@ -236,7 +225,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="quyu" class="col-xs-4 control-label">区域:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="quyu" id="id_quyu" type="tabs">
+                                <select class="form-control" desc="区域" name="quyu" id="id_quyu" type="tabs">
                                     <option class="id_quyu" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -244,7 +233,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="lxing" class="col-xs-4 control-label">楼型:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="lxing" id="id_lxing" type="tabs">
+                                <select class="form-control" desc="楼型" name="lxing" id="id_lxing" type="tabs">
                                     <option class="id_lxing" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -252,7 +241,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="hxing" class="col-xs-4 control-label">户型:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="hxing" id="id_hxing" type="tabs">
+                                <select class="form-control" desc="户型" name="hxing" id="id_hxing" type="tabs">
                                     <option class="id_hxing" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -260,7 +249,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="zxiu" class="col-xs-4 control-label" type="tabs">装潢:</label>
                             <div class="col-xs-8">
-                                <select class="form-control" name="zxiu" id="id_zxiu">
+                                <select class="form-control" desc="装潢" name="zxiu" id="id_zxiu">
                                     <option class="id_zxiu" value="${name}">${name}</option>
                                 </select>
                             </div>
@@ -298,13 +287,13 @@ $(document).ready(function() {
                             <div class="col-xs-10">
                             <span class="btn-group">
                                 <label class="btn btn-default">
-                                    <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off" > 发布至共享平台
+                                    <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off" checked="checked"> 发布至共享平台
                                 </label>
                                 <label class="btn btn-default">
-                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" > 显示房号栋号
+                                    <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" checked="checked"> 显示房号栋号
                                 </label>
                                 <label class="btn btn-default">
-                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" > 显示房主号码
+                                    <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" checked="checked"> 显示房主号码
                                 </label>
                             </span>
                             </div>
