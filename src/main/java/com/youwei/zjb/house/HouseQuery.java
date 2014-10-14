@@ -41,6 +41,7 @@ public class HouseQuery{
 	public String area;
 	public String tel;
 	public String address;
+	public boolean useLike;
 	
 	// for phone client
 	//current page number

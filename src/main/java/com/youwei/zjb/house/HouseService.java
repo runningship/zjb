@@ -9,6 +9,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
@@ -21,6 +22,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.sys.OperatorService;
@@ -67,76 +69,72 @@ public class HouseService {
 	public ModelAndView add(House house , String hxing){
 		ModelAndView mv = new ModelAndView();
 		validte(house);
-//		if(house.fhao==null){
-//			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
-//		}
-//		if(house.dhao==null){
-//			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
-//		}
 		User user = ThreadSession.getUser();
-		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
-//		House po = dao.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
-//		if(po!=null){
-//			throw new GException(PlatformExceptionType.BusinessException,"存在栋号，房号相同的房源,编号为"+po.id);
-//		}else{
-//			
-//			if(house.mji==null){
-//				throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
-//			}
-//			if(house.zceng==null){
-//				throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
-//			}
-//			
-//			if(house.zjia==null){
-//				throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
-//			}
-//			if(house.seeGX==null || house.seeGX==0){
-//				if(UserHelper.getUserWithAuthority("fy_sh").isEmpty()){
-//					throw new GException(PlatformExceptionType.BusinessException,"由于贵公司没有设置房源审核权限，请选择发布至共享房源,由中介宝审核。");
-//				}
-//			}
-			house.isdel = 0;
-			house.dateadd = new Date();
-			house.uid = user.id;
-			house.cid = user.cid;
-			house.did = user.did;
-			house.sh = 0;
-			FangXing fx = FangXing.parse(hxing);
-			house.hxf = fx.getHxf();
-			house.hxt = fx.getHxt();
-			house.hxw = fx.getHxw();
-			if(house.mji!=null && house.mji!=0){
-				int jiage = (int) (house.zjia*10000/house.mji);
-				house.djia = (float) jiage;
+		house.isdel = 0;
+		house.dateadd = new Date();
+		house.uid = user.id;
+		house.cid = user.cid;
+		house.did = user.did;
+		house.sh = 0;
+		FangXing fx = FangXing.parse(hxing);
+		house.hxf = fx.getHxf();
+		house.hxt = fx.getHxt();
+		house.hxw = fx.getHxw();
+		if(house.mji!=null && house.mji!=0){
+			int jiage = (int) (house.zjia*10000/house.mji);
+			house.djia = (float) jiage;
+		}
+		if(house.seeFH==null){
+			house.seeFH=0;
+		}
+		if(house.seeHM==null){
+			house.seeHM=0;
+		}
+		if(house.seeGX==null){
+			house.seeGX=0;
+		}
+		dao.saveOrUpdate(house);
+		if(StringUtils.isNotEmpty(house.tel)){
+			String[] arr = house.tel.split("/");
+			String nbsp = String.valueOf((char)160);
+			for(String tel : arr){
+				tel = tel.trim().replace(nbsp, "");
+				HouseTel ht = new HouseTel();
+				ht.hid = house.id;
+				ht.tel = tel;
+				dao.saveOrUpdate(ht);
 			}
-			if(house.seeFH==null){
-				house.seeFH=0;
-			}
-			if(house.seeHM==null){
-				house.seeHM=0;
-			}
-			if(house.seeGX==null){
-				house.seeGX=0;
-			}
-			dao.saveOrUpdate(house);
-			if(StringUtils.isNotEmpty(house.tel)){
-				String[] arr = house.tel.split("/");
-				for(String tel : arr){
-					HouseTel ht = new HouseTel();
-					ht.hid = house.id;
-					ht.tel = tel;
-					dao.saveOrUpdate(ht);
-				}
-			}
-			mv.data.put("msg", "发布成功");
-			mv.data.put("result", 0);
-//		}
+		}
+		mv.data.put("msg", "发布成功");
+		mv.data.put("result", 0);
 		
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 添加了房源["+house.area+"]";
 		operService.add(OperatorType.房源记录, operConts);
+		
+		try{
+			addDistrictIfNotExist(house);
+		}catch(Exception ex){
+			LogUtil.log(Level.WARN,"add district of house failed,hid= "+house.id,ex);
+		}
 		return mv;
 	}
 	
+	private void addDistrictIfNotExist(House house){
+		//检查楼盘是否在楼盘字典中，如果没有，则添加
+		String hql = "from District  where name = ? and address=?";
+		List<District> list = dao.listByParams(District.class, hql, house.area,house.address);
+		if(list.isEmpty()){
+			District d= new District();
+			d.address = house.address;
+			d.name = house.area;
+			d.addtime = new Date();
+			d.quyu = house.quyu;
+			d.pinyin=DataHelper.toPinyin(d.name);
+			d.pyShort=DataHelper.toPinyinShort(d.name);
+			d.sh=0;
+			dao.saveOrUpdate(d);
+		}
+	}
 	@WebMethod
 	public ModelAndView update(House house , String hxing){
 		validte(house);
@@ -305,8 +303,15 @@ public class HouseService {
 //			hql = new StringBuilder(" select h  from House  h where 1=1");
 //		}
 		if(StringUtils.isNotEmpty(query.tel)){
-			hql = new StringBuilder(" select h  from House  h , HouseTel ht where h.id=ht.hid and ht.tel=?");
-			params.add(query.tel);
+//			hql = new StringBuilder(" select h  from House  h , (select hid from HouseTel where tel=? group by hid,tel) ht where h.id=ht.hid ");
+			if(query.useLike){
+				hql = new StringBuilder(" select h  from House  h , HouseTel  ht where h.id=ht.hid and ht.tel like ? ");
+				params.add("%"+query.tel+"%");
+			}else{
+				hql = new StringBuilder(" select h  from House  h , HouseTel  ht where h.id=ht.hid and ht.tel=? ");
+				params.add(query.tel);
+			}
+			
 		}else{
 			hql = new StringBuilder(" select h  from House  h where 1=1");
 		}
@@ -503,6 +508,10 @@ public class HouseService {
 		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
+		if(page.getResult().size()==0 && query.useLike==false){
+			query.useLike = true;
+			mv = listAll(query, page);
+		}
 		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.sdf.toPattern());
 		fixEnumValue(jpage);
 		mv.data.put("page", jpage);
@@ -531,6 +540,23 @@ public class HouseService {
 				throw new GException(PlatformExceptionType.BusinessException,"由于贵公司没有设置房源审核权限，请选择发布至共享房源,由中介宝审核。");
 			}
 		}
+	}
+	
+	@WebMethod
+	public ModelAndView clearHouseWith2SameTel(){
+		List<Map> list = dao.listAsMap("select hid as hid ,tel as tel from HouseTel group by hid,tel having COUNT(*)>1");
+		int index=0;
+		for(Map ht : list){
+			Integer hid = (Integer)ht.get("hid");
+			String tel = (String)ht.get("tel");
+			List<HouseTel> result = dao.listByParams(HouseTel.class, "from HouseTel where hid=? and tel=?", hid , tel);
+			for(int i=0;i<result.size()-1;i++){
+				dao.delete(result.get(i));
+			}
+			index++;
+			System.out.println(index);
+		}
+		return new ModelAndView();
 	}
 	
 	@WebMethod

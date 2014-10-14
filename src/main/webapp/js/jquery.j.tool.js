@@ -808,3 +808,36 @@ function relogin(){
       });
   },function(){},'warning');
 }
+
+function check(s){
+    var isPhone = new RegExp(/^([0-9]{3,4}-?)?[0-9]{7,8}$/);
+    var isMob = new RegExp(/^(1[3458][0-9]{9})$/);
+    var is400 = /^([0-9]{10})-[0-9]{5,6}$/;
+    if(s=="" || s==null || s==undefined){
+        return true;
+    }
+    if(isMob.test(s) || isPhone.test(s) || is400.test(s)){
+        return true;
+    }else{
+        return false;
+    }
+}
+function checkTel(){
+    var reg = new RegExp(/^[0-9-/]+$/);
+    var inputBox=$("#tel");
+    var value=inputBox.val().trim();
+    if(value.length == 0){ return false; }
+    if(!reg.test(value)){
+        infoAlert("输入错误！只能输入‘数字’或‘-’或‘/’");
+        inputBox.focus();
+        return false;
+    }
+
+    var str = value.split("/");
+    for(var i = 0; i < str.length; i ++){
+        if(check(str[i]) == false){
+            infoAlert("号码"+str[i]+"填写错误?请检查电话号码的长度,如果想输入多个号码请用/隔开");
+            // inputBox.focus();
+        }
+    }
+}
