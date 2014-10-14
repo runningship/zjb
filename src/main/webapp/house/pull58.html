@@ -24,7 +24,6 @@
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
 <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
-<script type='text/javascript' src='/js/autocomplete/jquery.autocomplete.js'></script>
 <script type="text/javascript">
 var id;
 var queryOptions;
@@ -70,15 +69,13 @@ $(document).on('click', '.zbtns', function(event) {
     }
 });
 // autocomplete 必加
-function setSearchValue(index){
-    var ThiA=$('#autoCompleteBox').find('a');
-    ThiA.removeClass('hover');
-    var Vals=ThiA.eq(index).addClass('hover').attr('title');
-    $('#search').val(Vals);
-}
+// function setSearchValue(index){
+//     var ThiA=$('#autoCompleteBox').find('a');
+//     ThiA.removeClass('hover');
+//     var Vals=ThiA.eq(index).addClass('hover').attr('address');
+//     $('#search').val(Vals);
+// }
 $(document).ready(function() {
-// autocomplete
-    autoComplete($('#search'))
 // 加载侧边按钮功能
 // 加载侧边
     
@@ -146,39 +143,19 @@ $(document).ready(function() {
 </style>
 </head>
 <body>
-<div class="html list">
+<div class="html list" >
     <div class="header">
         <div class="maxHW ">
             <ul class="menuLi clearfix titlebar" id="menuTop">
-                <li class="act_shou hover"><a href="/v/house/house.html?act=shou&chuzus=0" data-type="url"><i class="icon iconfont font_icon">售</i> 出售</a></li>
-                <li class="act_zu hover"><a href="/v/house/house_rent.html?act=zu&chuzus=1" data-type="url"><i class="icon iconfont font_icon">租</i> 出租</a></li>
-                <li class="act_add hover btn-group">
-                    <a href="/v/house/house_add.html?act=add&chuzu=0" data-type="dialog" class="dropdown-toggle" data-toggle="dropdown"><i class="icon iconfont font_icon">+</i> 登记<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><label><a href="/v/house/house_add.html?act=add&chuzu=0" data-type="dialog">登记出售房源</a></label>
-                        <li><label><a href="/v/house/house_rent_add.html?act=add&chuzu=1" data-type="dialog">登记出租房源</a></label>
-                    </ul>
-                </li>
-                <li class="act_my hover btn-group">
-                    <a href="house_my.html?act=my&flag=favShou&chuzus=0" data-type="url"  class="dropdown-toggle" data-toggle="dropdown"><i class="icon iconfont font_icon">我</i> 我的<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><label><a href="house_my.html?act=my&flag=favShou&chuzus=0" data-type="url">我收藏的出售</a></label>
-                        <li><label><a href="house_my.html?act=my&flag=favZu&chuzus=1" data-type="url">我收藏的出租</a></label>
-                        <li><label><a href="house_my.html?act=my&flag=addShou&chuzus=0" data-type="url">我发布的出售</a></label>
-                        <li><label><a href="house_my.html?act=my&flag=addZu&chuzus=1" data-type="url">我发布的出租</a></label>
-                        <li><label><a href="fankui_list.html" data-type="url">我的反馈列表</a></label>
-                    </ul>
-                </li>
-                <li class="act_zu hover"><a href="/v/house/pull58.html" data-type="url"><i class="icon iconfont font_icon">扫</i> 采集</a></li>
+                
             </ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
-    <input type="hidden" id="sh" name="sh" value="$${sh}">
     <input type="hidden" class="hidden" name="pageInput" value="">
     <div class="form-group clearfix form_menuSize" style="background:#FFF; width:980px;">
       <div class="input-group input-group-max btn_zn ">
-        <span class="input-group-addon">智能</span>
-        <input type="text" class="form-control input-sm" name="search" id="search" autocomplete="off" placeholder="楼盘/路段/电话/编号">
+        <span class="input-group-addon">编号</span>
+        <input type="text" class="form-control input-sm" name="id" autocomplete="off" placeholder="">
       </div>
       <div class="btn-group btn-sm">
         <button type="button" class="btn_qy btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -187,6 +164,10 @@ $(document).ready(function() {
         <ul class="dropdown-menu" role="menu">
           <li class="id_quyu"><label><input type="checkbox" name="quyus" value="${name}"> ${name}</label>
         </ul>
+      </div>
+      <div class="input-group input-group-max" style="width:190px;">
+        <span class="input-group-addon">楼盘</span>
+        <input type="text" class="form-control input-sm" name="area" placeholder="">
       </div>
     </div>
 
@@ -220,7 +201,7 @@ $(document).ready(function() {
     </div>
   </form>
  
-  <table class="table table-nopadding TableH  mainCont" >
+  <table class="table table-nopadding TableH  mainCont" style="width:98%">
     <tr>
       <th>编号</th>
       <th>操作</th>
@@ -232,6 +213,7 @@ $(document).ready(function() {
       <th>总价(万)</th>
       <th>楼层</th>
       <th>装潢</th>
+      <th>建筑年代</th>
       <th>电话</th>
       <th>扫网时间</th>
       <th>发布时间</th>
@@ -246,24 +228,24 @@ $(document).ready(function() {
   <table class="table table-hover table-striped table-nopadding TableB" >
     <tbody>
     <tr data-hid="${id}" style="display:none;" class="id_House_list" >
-      <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
-      <td style="width:50px;"  auth="fy_sh|fy_edit|fy_del">
-        <a href="##" auth="fy_sh" show="showAction(${cid},$${cid},${seeGX})" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
+      <td style="width:80px;"><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
+      <td style="width:50px;" >
         <a href="${href}" target="_blank" class="edit" data-hid="${id}" data-rel="edit">原</a>
         <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="houseShen(${id})">审</a>
       </td>
       <td style="width:60px;">${shr}</td>
-      <td>${quyu}</td>
+      <td style="width:100px;">${quyu}</td>
       <td class="br_area">${area}</td>
-      <td>${hxf}-${hxt}-${hxw}</td>
-      <td>${mji}</td>
-      <td>${zjia}</td>
-      <td>${lceng}/${zceng}</td>
-      <td>${zxiu}</td>
+      <td style="width:150px;">${hxf}-${hxt}-${hxw}</td>
+      <td style="width:100px;">${mji}</td>
+      <td style="width:100px;">${zjia}</td>
+      <td style="width:100px;">${lceng}/${zceng}</td>
+      <td style="width:100px;">${zxiu}</td>
+      <td style="width:100px;">${dateyear}</td>
       <td style="width:150px;"><img style="height:22px;" src="${telImg}"></td>
-      <td title="${dateadd}">${addtime}</td>
-      <td>${timeOffset}前</td>
-      <td>${site}</td>
+      <td style="width:150px;" title="${dateadd}">${addtime}</td>
+      <td style="width:150px;">${timeOffset}前</td>
+      <td style="width:100px;text-align:left">${site}</td>
     </tr>
     </tbody>
   </table>

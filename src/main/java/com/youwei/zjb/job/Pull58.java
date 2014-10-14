@@ -4,8 +4,6 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.bc.sdak.CommonDaoService;
@@ -225,6 +223,7 @@ public class Pull58 {
 					}
 				}
 			}
+			ehouse.finish=0;
 			save(ehouse);
 		}catch(SocketTimeoutException ex){
 			System.err.println("请求超时");
