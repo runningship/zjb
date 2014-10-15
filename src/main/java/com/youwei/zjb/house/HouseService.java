@@ -305,7 +305,7 @@ public class HouseService {
 		if(StringUtils.isNotEmpty(query.tel)){
 //			hql = new StringBuilder(" select h  from House  h , (select hid from HouseTel where tel=? group by hid,tel) ht where h.id=ht.hid ");
 			if(query.useLike){
-				hql = new StringBuilder(" select h  from House  h , HouseTel  ht where h.id=ht.hid and ht.tel like ? ");
+				hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
 				params.add("%"+query.tel+"%");
 			}else{
 				hql = new StringBuilder(" select h  from House  h , HouseTel  ht where h.id=ht.hid and ht.tel=? ");
@@ -508,7 +508,7 @@ public class HouseService {
 		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
-		if(page.getResult().size()==0 && query.useLike==false){
+		if(page.getResult().size()==0 && query.useLike==false && StringUtils.isNotEmpty(query.tel)){
 			query.useLike = true;
 			mv = listAll(query, page);
 		}
