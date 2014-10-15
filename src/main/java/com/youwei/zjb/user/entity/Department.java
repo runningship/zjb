@@ -73,6 +73,14 @@ public class Department {
 	
 	public Integer dgroup;
 	
+	/**
+	 * 季度价格
+	 */
+	public Integer price;
+	
+	//服务过期时间
+	public Date deadline;
+	
 	public void Group(){
 		
 	}

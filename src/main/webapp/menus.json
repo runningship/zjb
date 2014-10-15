@@ -165,10 +165,17 @@
 		},{
 			"name":"sz_comp_edit",
 			"text":"修改公司",
+			"zjb-only":true,
 			"type":"menu"
 		},{
-			"name":"sz_dian_del",
-			"text":"删除门店",
+			"name":"sz_comp_edit",
+			"text":"修改公司",
+			"zjb-only":true,
+			"type":"menu"
+		},{
+			"name":"sz_dian_feiyong",
+			"text":"费用管理",
+			"zjb-only":true,
 			"type":"menu"
 		},{
 			"name":"sz_group_add",

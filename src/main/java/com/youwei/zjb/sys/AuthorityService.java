@@ -190,19 +190,26 @@ public class AuthorityService {
 	}
 	
 	private void setSelected(RoleAuthority ra, JSONArray jarr) {
-		if("sz_comp_edit".equals(ra.name)){
-			if(ThreadSession.getUser().cid!=1){
-				//remove sz_comp_edit 只有中介宝用户才能才能修改公司
-				for(int i=0;i<jarr.size();i++){
-					JSONObject jobj = jarr.getJSONObject(i);
-					if("sz_comp_edit".equals(jobj.getString("name"))){
-						jarr.remove(i);
-					}
-				}
-			}
-		}
+//		if("sz_comp_edit".equals(ra.name)){
+//			if(ThreadSession.getUser().cid!=1){
+//				//remove sz_comp_edit 只有中介宝用户才能才能修改公司
+//				for(int i=0;i<jarr.size();i++){
+//					JSONObject jobj = jarr.getJSONObject(i);
+//					if("sz_comp_edit".equals(jobj.getString("name"))){
+//						jarr.remove(i);
+//					}
+//				}
+//			}
+//		}
 		for(int i=0;i<jarr.size();i++){
 			JSONObject jobj = jarr.getJSONObject(i);
+			if(jobj.get("zjb-only")!=null && jobj.get("zjb-only").equals(true)){
+				if(ThreadSession.getUser().cid!=1){
+					jarr.remove(i);
+					continue;
+				}
+				
+			}
 			if(jobj.getString("name").equals(ra.name)){
 				jobj.put("checked", "checked");
 				return;

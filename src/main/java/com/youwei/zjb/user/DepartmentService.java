@@ -20,6 +20,7 @@ import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.DeptGroup;
+import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/dept/")
@@ -68,7 +69,7 @@ public class DepartmentService {
 	public ModelAndView get(int id){
 		ModelAndView mv = new ModelAndView();
 		Department dept = dao.get(Department.class, id);
-		mv.data.put("comp", JSONHelper.toJSON(dept));
+		mv.data.put("comp", JSONHelper.toJSON(dept , DataHelper.dateSdf.toPattern()));
 		return mv;
 	}
 	
@@ -95,7 +96,12 @@ public class DepartmentService {
 		po.tel = dept.tel;
 		po.beizhu = dept.beizhu;
 		po.sh = dept.sh;
-		
+		if(dept.price!=null){
+			po.price = dept.price;
+		}
+		if(dept.deadline!=null){
+			po.deadline=dept.deadline;
+		}
 		//公司需要更新的字段
 		po.share = dept.share;
 		po.authCode = dept.authCode;
