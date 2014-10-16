@@ -810,8 +810,8 @@ function relogin(){
 }
 
 function check(s){
-    var isPhone = new RegExp(/^([0-9]{3,4}-?)?[0-9]{7,8}$/);
-    var isMob = new RegExp(/^(1[3458][0-9]{9})$/);
+    var isPhone = new RegExp(/^(0[0-9]{2,3}-?)?[0-9]{7,8}$/);
+    var isMob = new RegExp(/^(1[34578][0-9]{9})$/);
     var is400 = /^([0-9]{10})-[0-9]{5,6}$/;
     if(s=="" || s==null || s==undefined){
         return true;
