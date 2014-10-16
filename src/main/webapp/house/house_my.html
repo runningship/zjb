@@ -420,7 +420,7 @@ $(document).ready(function() {
         <input type="text" class="form-control input-sm" name="fhao" placeholder="房号">
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_qy btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_qy btn btn-default dropdown-toggle" data-toggle="dropdown" onmousemove="$(this).click();">
           区域<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -428,7 +428,7 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_lx btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_lx btn btn-default dropdown-toggle" data-toggle="dropdown" onmousemove="$(this).click();">
           楼型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -436,7 +436,7 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_fx btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_fx btn btn-default dropdown-toggle" data-toggle="dropdown" onmousemove="$(this).click();">
           房型<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" >
@@ -444,7 +444,7 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_zh btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_zh btn btn-default dropdown-toggle" data-toggle="dropdown" onmousemove="$(this).click();">
           装潢<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -452,7 +452,7 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="btn-group btn-sm chuzu">
-        <button type="button" class="btn_fs btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_fs btn btn-default dropdown-toggle" data-toggle="dropdown" onmousemove="$(this).click();">
           方式<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -461,7 +461,7 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_zhe btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_zhe btn btn-default dropdown-toggle" data-toggle="dropdown" onmousemove="$(this).click();">
           综合 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -471,7 +471,7 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_zt btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn_zt btn btn-default dropdown-toggle" data-toggle="dropdown" onmousemove="$(this).click();">
           状态 <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -480,13 +480,13 @@ $(document).ready(function() {
         </ul>
       </div>
       <div class="btn-group btn-sm">
-        <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:50px;padding:0px;">
+        <button type="button" class="btn_sh btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:50px;padding:0px;" onmousemove="$(this).click();">
           审核<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li class="id_shenhe"><label><input type="radio" name="she" value="" checked /> 全部</label></li>
-          <li class="id_shenhe"><label><input type="radio" name="she" value="1" /> 已审</label></li>
-          <li class="id_shenhe"><label><input type="radio" name="she" value="0" /> 未审</label></li>
+          <li class="id_shenhe"><label><input type="radio" onclick="doSearchAndSelectFirst();" name="sh" value="" checked /> 全部</label></li>
+          <li class="id_shenhe"><label><input type="radio" onclick="doSearchAndSelectFirst();" name="sh" value="1" /> 已审</label></li>
+          <li class="id_shenhe"><label><input type="radio" onclick="doSearchAndSelectFirst();" name="sh" value="0" /> 未审</label></li>
         </ul>
       </div>
     </div>
