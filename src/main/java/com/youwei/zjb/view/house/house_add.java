@@ -14,8 +14,13 @@ public class house_add {
 		String html=doc.html();
 		//业务员，默认为自己
 		User u = ThreadSession.getUser();
-		html = html.replace("$${forlxr}", u.uname==null ? "": u.uname);
-		html = html.replace("$${fortel}", u.tel==null ? "" : u.tel);
+		if(u.cid!=1){
+			html = html.replace("$${forlxr}", u.uname==null ? "": u.uname);
+			html = html.replace("$${fortel}", u.tel==null ? "" : u.tel);
+		}else{
+			html = html.replace("$${forlxr}","");
+			html = html.replace("$${fortel}", "");
+		}
 		return Jsoup.parse(html);
 	}
 }
