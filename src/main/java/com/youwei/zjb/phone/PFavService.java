@@ -4,12 +4,17 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.PlatformExceptionType;
+import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.Favorite;
+import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.user.entity.User;
 
 @Module(name="/")
 public class PFavService {
@@ -19,6 +24,7 @@ public class PFavService {
 	@WebMethod(name="phone/addFavorite.asp")
 	public ModelAndView add(String houseId , Integer userId){
 		ModelAndView mv = new ModelAndView();
+		
 		mv.encodeReturnText=true;
 		JSONArray arr = new JSONArray();
 		JSONObject jobj = new JSONObject();
@@ -46,16 +52,35 @@ public class PFavService {
 	}
 	
 	private String triggerFav(int hid , int uid){
-		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{uid ,hid});
-		if(po==null){
-			po = new Favorite();
-			po.houseId = hid;
-			po.userId = uid;
-			dao.saveOrUpdate(po);
-			return "0";
-		}else{
-			dao.delete(po);
-			return "1";
+		User user = dao.get(User.class, uid);
+		House h = dao.get(House.class, hid);
+		if(h==null){
+			throw new GException(PlatformExceptionType.BusinessException, "房源已被删除或不存在!");
 		}
+		String favStr = "@"+user.id+"|";
+		String result = "0";
+		if(h.fav==null){
+			h.fav= favStr;
+		}else{
+			if(!h.fav.contains(favStr)){
+				h.fav+=favStr;
+			}else{
+				h.fav = h.fav.replace(favStr, "");
+				result="1";
+			}
+		}
+		dao.saveOrUpdate(h);
+		return result;
+//		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{uid ,hid});
+//		if(po==null){
+//			po = new Favorite();
+//			po.houseId = hid;
+//			po.userId = uid;
+//			dao.saveOrUpdate(po);
+//			return "0";
+//		}else{
+//			dao.delete(po);
+//			return "1";
+//		}
 	}
 }

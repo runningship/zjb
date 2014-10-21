@@ -28,7 +28,7 @@ public class PGenjinService {
 	
 	@WebMethod(name="house/genjin/add.asp")
 	public ModelAndView add(Integer userId , Integer houseId , Integer type , String content){
-		if(type==null){
+		if(type==null || type==0){
 			//客户端bug
 			type=SellState.已售.getCode();
 		}

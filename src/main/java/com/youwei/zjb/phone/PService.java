@@ -154,7 +154,7 @@ public class PService {
 	public ModelAndView version(Integer userId){
 		ModelAndView mv = new ModelAndView();
 		mv.encodeReturnText=true;
-		mv.returnText = "[{'shareurl':'http://app.qq.com/#id=detail&appid=1101502997','downurl':'http://www.zhongjiebao.com/download/zhongjiebao.apk','version':'1.1','content':[{'content':'1.1正式版发布'}]}]";
+		mv.returnText = "[{'shareurl':'http://app.qq.com/#id=detail&appid=1101502997','downurl':'http://www.zhongjiebao.com/download/zhongjiebao.apk','version':'1.3','content':[{'content':'1.3正式版发布'}]}]";
 		return mv;
 	}
 }

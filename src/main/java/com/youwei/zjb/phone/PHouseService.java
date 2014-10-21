@@ -54,13 +54,16 @@ public class PHouseService {
 		House house = dao.get(House.class, houseId);
 		JSONArray arr = new JSONArray();
 		JSONObject result = JSONHelper.toJSON(house);
-		
 		if(house==null){
 			result.put("result","1");
 			result.put("msg", "已删除或未审核");
 			arr.add(result);
 			mv.returnText = arr.toString();
 			return mv;
+		}
+		if(house.tel!=null){
+			house.tel=house.tel.replace("&nbsp;", "").replace("/", ",").replace(" ", ",");
+			result.put("tel", house.tel);
 		}
 		Department dept = dao.get(Department.class, house.did);
 		Department comp = dao.get(Department.class, house.cid);
@@ -100,6 +103,11 @@ public class PHouseService {
 			hxing+=house.hxf+"卫";
 		}
 		result.put("hxing", hxing);
+		if(house.dateyear==null){
+			house.dateyear="(未提供)";
+		}
+		
+		result.put("year", house.dateyear);
 		arr.add(result);
 		mv.returnText = arr.toString();
 		
@@ -122,10 +130,14 @@ public class PHouseService {
 		StringBuilder hql  = new StringBuilder();
 		if(query.userid!=null){
 			//我的收藏
+//			hql.append("select h.id as id ,"
+//					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
+//					+ " h.lceng as lceng, h.zceng as zceng from House h , Favorite f where h.sh=1 and f.houseId=h.id and f.userId=?");
+			String favStr = "@"+query.userid+"|";
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng from House h , Favorite f where h.sh=1 and f.houseId=h.id and f.userId=?");
-			params.add(query.userid);
+					+ " h.lceng as lceng, h.zceng as zceng from House h  where h.sh=1 and h.fav like ?");
+			params.add("%"+favStr+"%");
 		}else{
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
