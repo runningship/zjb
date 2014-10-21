@@ -99,7 +99,7 @@ public class GenJinService {
 		
 		if(StringUtils.isNotEmpty(query.conts)){
 			hql.append(" and gj.conts like ? ");
-			params.add(query.conts);
+			params.add("%"+query.conts+"%");
 		}
 		
 		if(query.sh!=null){
