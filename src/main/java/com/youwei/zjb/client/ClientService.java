@@ -2,6 +2,7 @@ package com.youwei.zjb.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
@@ -43,6 +44,9 @@ public class ClientService {
 		client.dname = ywy.Department().namea;
 		client.cid = ywy.Company().id;
 		client.cname = ywy.Company().namea;
+		User u = ThreadSession.getUser();
+		client.djrId = u.id;
+		client.djrName = u.uname;
 		dao.saveOrUpdate(client);
 		return mv;
 	}

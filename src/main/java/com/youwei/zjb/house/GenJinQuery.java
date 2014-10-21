@@ -19,4 +19,6 @@ public class GenJinQuery{
 	
 	public Integer did;
 	
+	public String conts;
+	
 }

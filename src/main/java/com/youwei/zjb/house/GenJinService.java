@@ -97,6 +97,11 @@ public class GenJinService {
 			params.add(query.houseId);
 		}
 		
+		if(StringUtils.isNotEmpty(query.conts)){
+			hql.append(" and gj.conts like ? ");
+			params.add(query.conts);
+		}
+		
 		if(query.sh!=null){
 			hql.append(" and gj.sh=? ");
 			params.add(query.sh.getCode());

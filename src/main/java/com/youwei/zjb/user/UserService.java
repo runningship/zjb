@@ -60,6 +60,13 @@ public class UserService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView groupUserByDept(int cid){
+		ModelAndView mv = new ModelAndView();
+		List<Map> users = dao.listAsMap("select cid as cid ,did as did ,id as id, uname as name from User where cid=?" , cid);
+		mv.data.put("users", JSONHelper.toJSONArray(users));
+		return mv;
+	}
 	
 	public ModelAndView authorities(){
 		ModelAndView mv = new ModelAndView();

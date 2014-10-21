@@ -351,10 +351,8 @@ $(document).ready(function() {
     <tr data-hid="${id}" style="display:none;" class="id_client_list" >
       <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
       <td style="width:80px;"  auth="fy_sh|fy_edit|fy_del">
-        <a href="##" class="zbtns" data-hid="${id}" data-type="see">查看</a>
-        <a href="##" auth="fy_sh" show="showAction(${cid},$${cid},${seeGX})" class="shenhe_${sh}" data-hid="${id}" runscript="true" data-rel="del" onclick="shenheFy(${id},this)">getShenHeText(${sh})</a>
-        <a href="#" auth="fy_edit" show="showAction(${cid},$${cid},${seeGX})" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">改</a>
-        <a href="##" auth="fy_del" show="showAction(${cid},$${cid},${seeGX})" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">删</a>
+        <a href="#" auth="fy_edit" show="showAction(${cid},$${cid},${seeGX})" class="edit" data-hid="${id}" onclick="houseEdit(${id})" data-rel="edit">详情</a>
+        <a href="##" auth="fy_del" show="showAction(${cid},$${cid},${seeGX})" class="del" data-hid="${id}" data-rel="del" onclick="deletehouse(${id})">房配客</a>
       </td>
       <td class="br_area">${name}</td>
       <td class="br_area">${tels}</td>
