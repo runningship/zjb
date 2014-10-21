@@ -93,6 +93,7 @@ public class HouseService {
 		if(house.seeGX==null){
 			house.seeGX=0;
 		}
+		dao.saveOrUpdate(house);
 		String nbsp = String.valueOf((char)160);
 		if(StringUtils.isNotEmpty(house.tel)){
 			house.tel = house.tel.trim().replace("nbsp", "");
@@ -105,7 +106,6 @@ public class HouseService {
 				dao.saveOrUpdate(ht);
 			}
 		}
-		dao.saveOrUpdate(house);
 		mv.data.put("msg", "发布成功");
 		mv.data.put("result", 0);
 		
