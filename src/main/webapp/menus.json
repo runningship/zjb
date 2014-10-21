@@ -253,6 +253,17 @@
 			"type":"menu"
 		}]
 	},{
+		"name":"sz_area",
+		"text":"楼盘字典",
+		"zjb-only":true,
+		"type":"virtual",
+		"children":[{
+			"name":"sz_area_on",
+			"text":"开启楼盘字典",
+			"zjb-only":true,
+			"type":"menu"
+		}]
+	},{
 		"name":"sz_record",
 		"text":"监控管理",
 		"type":"virtual",

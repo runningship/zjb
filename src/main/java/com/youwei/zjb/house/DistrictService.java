@@ -59,9 +59,18 @@ public class DistrictService {
 	}
 	
 	@WebMethod
-	public ModelAndView list(String search , Page<District> page){
+	public ModelAndView list(String search ,String leibie, Page<District> page){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder("from District where 1=1 ");
+		if("chongfu".equals(leibie)){
+			hql = new StringBuilder("select name as name from District group by name having count(*)>1");
+			List<Map> list = service.listAsMap(hql.toString());
+			mv.data.put("list", JSONHelper.toJSONArray(list));
+			mv.data.put("leibie", leibie);
+			return mv;
+		}else if("kong".equals(leibie)){
+			hql = new StringBuilder("from District where maplat is null or maplng is null");
+		}
 		List<Object> params = new ArrayList<Object>();
 		if(StringUtils.isNotEmpty(search)){
 			search = "%"+search+"%";
@@ -71,6 +80,7 @@ public class DistrictService {
 			params.add(search);
 			params.add(search);
 		}
+		
 		page = service.findPage(page, hql.toString(), params.toArray());
 		mv.data.put("result", 0);
 		mv.data.put("page", JSONHelper.toJSON(page));
@@ -86,9 +96,15 @@ public class DistrictService {
 		if(StringUtils.isEmpty(district.name)){
 			throw new GException(PlatformExceptionType.BusinessException, "小区名不能为空");
 		}
-		district.pinyin=DataHelper.toPinyin(district.name);
-		district.pyShort=DataHelper.toPinyinShort(district.name);
-		service.saveOrUpdate(district);
+		District po = service.get(District.class, district.id);
+		po.address = district.address;
+		po.name = district.name;
+		po.quyu = district.quyu;
+		po.maplat = district.maplat;
+		po.maplng  = district.maplng;
+		po.pinyin=DataHelper.toPinyin(district.name);
+		po.pyShort=DataHelper.toPinyinShort(district.name);
+		service.saveOrUpdate(po);
 		mv.data.put("msg", "保存成功");
 		return mv;
 	}
