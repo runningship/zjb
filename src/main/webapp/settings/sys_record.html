@@ -53,6 +53,9 @@ $(document).ready(function() {
     api.title('操作记录')
     did = getParam('did');
     cid = getParam('cid');
+    if(cid=='1'){
+      cid='';
+    }
     $('#did').val(did);
     $('#cid').val(cid);
     Page.Init();
@@ -72,32 +75,21 @@ $(window).resize(function() {      //类别
     <input type="hidden" class="userInput" name="xpath" value="">
     <div class="form-group clearfix" style="background:#FFF; width:980px;">
      
-      <div class="input-group" style="width: 300px;">
-        <span class="input-group-addon">机器码</span>
-        <input type="text" class="form-control input-sm" name="pcma">
-      </div>
-      <div class="input-group" style="width: 300px;">
+      <div class="input-group" style="width: 200px;">
         <span class="input-group-addon">内容</span>
         <input type="text" class="form-control input-sm" name="conts">
       </div>
-      <div class="input-group" style="width: 300px;">
-        <span class="input-group-addon">用户</span>
-        <input type="text" class="form-control input-sm" name="uname">
-      </div>
-    </div>
-
-    <div class="form-group clearfix">
-      <div class="input-group" style="width: 300px;">
+      <div class="input-group" style="width: 200px;">
         <span class="input-group-addon">IP地址</span>
         <input type="text" class="form-control input-sm" name="ip">
       </div>
-      <div class="input-group" style="width:400px">
+      <div class="input-group" style="width:315px">
         <span class="input-group-addon">操作时间</span>
-        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:150px;border-radius:0;">
-        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:150px">
+        <input type="text" class="form-control input-sm" name="addtimeStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:120px;border-radius:0;">
+        <input type="text" class="form-control input-sm" name="addtimeEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:120px">
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索提交</button>
+        <button type="submit" class="btn btn-sms btn-primary btn_subnmit">搜索</button>
         <button type="button" class="btn btn-sms" data-type="qingkong" onclick="window.location.href='house_list.html?nav='+getParamS">清空</button>
       </div>
     </div>
@@ -107,7 +99,7 @@ $(window).resize(function() {      //类别
     <tr>
       <th>编号</th>
       <th>IP</th>
-      <th>机器码.</th>
+      <th>操作内容</th>
       <th>操作人</th>
       <th>操作时间</th>
     </tr>
