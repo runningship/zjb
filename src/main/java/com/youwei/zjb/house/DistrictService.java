@@ -51,6 +51,16 @@ public class DistrictService {
 	}
 	
 	@WebMethod
+	public ModelAndView delete(int id){
+		ModelAndView mv = new ModelAndView();
+		District po = service.get(District.class, id);
+		if(po!=null){
+			service.delete(po);
+		}
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView getMapInfo(String area){
 		ModelAndView mv = new ModelAndView();
 		List<District> areas = service.listByParams(District.class, "from District where name like ?", "%"+area+"%");
@@ -69,7 +79,7 @@ public class DistrictService {
 			mv.data.put("leibie", leibie);
 			return mv;
 		}else if("kong".equals(leibie)){
-			hql = new StringBuilder("from District where maplat is null or maplng is null");
+			hql = new StringBuilder("from District where (maplat is null or maplng is null)");
 		}
 		List<Object> params = new ArrayList<Object>();
 		if(StringUtils.isNotEmpty(search)){

@@ -72,10 +72,10 @@ public class GenJinService {
 		if(id!=null){
 			GenJin po = dao.get(GenJin.class, id);
 			if(po!=null){
-				if(po.sh==1){
-					po.sh=0;
-				}else{
+				if(po.sh==null || po.sh==0){
 					po.sh=1;
+				}else{
+					po.sh=0;
 				}
 				dao.saveOrUpdate(po);
 				mv.data.put("sh", po.sh);
