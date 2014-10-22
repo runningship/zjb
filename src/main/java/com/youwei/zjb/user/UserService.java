@@ -63,8 +63,34 @@ public class UserService {
 	@WebMethod
 	public ModelAndView groupUserByDept(int cid){
 		ModelAndView mv = new ModelAndView();
-		List<Map> users = dao.listAsMap("select cid as cid ,did as did ,id as id, uname as name from User where cid=?" , cid);
-		mv.data.put("users", JSONHelper.toJSONArray(users));
+		List<Map> users = dao.listAsMap("select u.did as did , u.id as uid, u.uname as uname,d.namea as dname from User u, Department d where u.did=d.id and u.cid=?" , cid);
+		JSONArray result = new JSONArray();
+		for(Map u : users){
+			Integer did =  (Integer) u.get("did");
+			String dname = (String) u.get("dname");
+			JSONObject tmp = null;
+			boolean contains=false;
+			for(int i=0;i<result.size();i++){
+				if(result.getJSONObject(i).get("did").equals(did.toString())){
+					tmp = result.getJSONObject(i);
+					contains = true;
+					break;
+				}
+			}
+			if(tmp==null){
+				tmp = new JSONObject();
+				tmp.put("did", did.toString());
+				tmp.put("dname", dname);
+			}
+			if(!tmp.has("users")){
+				tmp.put("users", new JSONArray());
+			}
+			tmp.getJSONArray("users").add(u);
+			if(!contains){
+				result.add(tmp);
+			}
+		}
+		mv.data.put("result", result);
 		return mv;
 	}
 	
