@@ -207,17 +207,23 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView toggleShenHe(Integer id){
 		ModelAndView mv = new ModelAndView();
+		User user = ThreadSession.getUser();
 		if(id!=null){
 			House po = dao.get(House.class, id);
+			String state="";
 			if(po!=null){
 				if(po.sh==1){
 					po.sh=0;
+					state="已审-->未审";
 				}else{
 					po.sh=1;
+					state="未审-->已审";
 				}
 				dao.saveOrUpdate(po);
 				mv.data.put("sh", po.sh);
 			}
+			String operConts = "["+user.Department().namea+"-"+user.uname+ "] 审核了房源["+id+"],状态从"+state;
+			operService.add(OperatorType.房源记录, operConts);
 		}
 		return mv;
 	}

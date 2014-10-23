@@ -73,7 +73,7 @@ public class DistrictService {
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder("from District where 1=1 ");
 		if("chongfu".equals(leibie)){
-			hql = new StringBuilder("select name as name from District group by name having count(*)>1");
+			hql = new StringBuilder("select name as name,quyu as quyu from District group by name,quyu having count(*)>1");
 			List<Map> list = service.listAsMap(hql.toString());
 			mv.data.put("list", JSONHelper.toJSONArray(list));
 			mv.data.put("leibie", leibie);
