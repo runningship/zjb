@@ -73,7 +73,7 @@ public abstract class AbstractSee extends page{
 		Object seeFH = json.get("seeFH");
 		Object seeHM = json.get("seeHM");
 		if(Integer.valueOf(1).equals(seeFH)){
-			html = html.replace("${fdhao}", json.getString("dhao")+"-"+ json.getString("fhao"));
+			html = html.replace("${fdhao}", json.getString("dhao")+"#"+ json.getString("fhao"));
 		}else{
 			html = html.replace("${fdhao}","");
 		}
