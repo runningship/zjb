@@ -23,59 +23,59 @@
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript">
 function setSideMenuCurr(){
-var menuerBox=$('.menuSide'),
-menuerBoxOn=menuerBox.find('a').parents('.curr'),
-menuerBoxOnH=menuerBoxOn.innerHeight(),
-menuerBoxTop=menuerBoxOn.position().top,
-menuerBoxOnI=menuerBoxOn.index(),
-menuerBoxI=menuerBox.children('#menu_animate_block');
-menuerBoxI.stop().animate({top: menuerBoxTop+(menuerBoxOnH/2-10)},300);
+    var menuerBox=$('.menuSide'),
+    menuerBoxOn=menuerBox.find('a').parents('.curr'),
+    menuerBoxOnH=menuerBoxOn.innerHeight(),
+    menuerBoxTop=menuerBoxOn.position().top,
+    menuerBoxOnI=menuerBoxOn.index(),
+    menuerBoxI=menuerBox.children('#menu_animate_block');
+    menuerBoxI.stop().animate({top: menuerBoxTop+(menuerBoxOnH/2-10)},300);
 }
 var selectedFrame;
 function setSideMenu(){
-var menuerBox=$('.menuSide'),
-menuerIndex=0,
-menuerBoxH=menuerBox.innerHeight(),
-menuerBoxTop=menuerBox.position().top,
-menuerBoxLH=menuerBox.children('li').height();
-menuerBox.append('<div id="menu_animate_block"></div>');
-var menuerBoxI=menuerBox.children('#menu_animate_block');
-menuerBox.css({'position':'relative'});
-menuerBoxI.css({
-    'position':'absolute',
-    'right': 0,
-    'border-color':'transparent #FFF transparent transparent',
-    'border-style':'solid',
-    'border-width':'10px',
-    'font-size':'0',
-    'height':'0px',
-    'line-height':'0',
-    'height':'20px',
-    'width':'20px'
-});
+    var menuerBox=$('.menuSide'),
+    menuerIndex=0,
+    menuerBoxH=menuerBox.innerHeight(),
+    menuerBoxTop=menuerBox.position().top,
+    menuerBoxLH=menuerBox.children('li').height();
+    menuerBox.append('<div id="menu_animate_block"></div>');
+    var menuerBoxI=menuerBox.children('#menu_animate_block');
+    menuerBox.css({'position':'relative'});
+    menuerBoxI.css({
+        'position':'absolute',
+        'right': 0,
+        'border-color':'transparent #FFF transparent transparent',
+        'border-style':'solid',
+        'border-width':'10px',
+        'font-size':'0',
+        'height':'0px',
+        'line-height':'0',
+        'height':'20px',
+        'width':'20px'
+    });
 
-menuerBox.on('click', 'a', function(event) {
-    var Thi=$(this),
-    ThiPLi=Thi.parents('li'),
-    ThiIndex=ThiPLi.index(),
-    ThiPLiH=ThiPLi.innerHeight(),
-    ThiTop=ThiPLi.position().top,
-    ThiTopAct=0;
-    if(ThiIndex<=menuerIndex){
-        ThiTopAct= ThiTop+(ThiPLiH/2)
-    }else{
-        ThiTopAct= ThiTop+(ThiPLiH/2)-20
-    }
-    menuerBoxI.stop().animate({top:ThiTopAct},300);
-    menuerIndex=ThiIndex;
-})
+    menuerBox.on('click', 'a', function(event) {
+        var Thi=$(this),
+        ThiPLi=Thi.parents('li'),
+        ThiIndex=ThiPLi.index(),
+        ThiPLiH=ThiPLi.innerHeight(),
+        ThiTop=ThiPLi.position().top,
+        ThiTopAct=0;
+        if(ThiIndex<=menuerIndex){
+            ThiTopAct= ThiTop+(ThiPLiH/2)
+        }else{
+            ThiTopAct= ThiTop+(ThiPLiH/2)-20
+        }
+        menuerBoxI.stop().animate({top:ThiTopAct},300);
+        menuerIndex=ThiIndex;
+    })
 
-var menuerBoxOn=menuerBox.find('a').parents('.curr'),
-menuerBoxOnH=menuerBoxOn.innerHeight(),
-menuerBoxTop=menuerBoxOn.position().top,
-menuerBoxOnI=menuerBoxOn.index();
+    var menuerBoxOn=menuerBox.find('a').parents('.curr'),
+    menuerBoxOnH=menuerBoxOn.innerHeight(),
+    menuerBoxTop=menuerBoxOn.position().top,
+    menuerBoxOnI=menuerBoxOn.index();
 
-menuerBoxI.stop().animate({top: menuerBoxTop+(menuerBoxOnH/2-10)+(menuerBoxOnH*menuerBoxOnI)},300);
+    menuerBoxI.stop().animate({top: menuerBoxTop+(menuerBoxOnH/2-10)+(menuerBoxOnH*menuerBoxOnI)},300);
 }
 /*设置iframebox与z-index*/
 var iframeIndex=100;
@@ -98,13 +98,10 @@ $(document).ready(function() {
 try{
     win.setMinimumSize(1020,660);
     win.setMaximumSize(9020,9960);
-}catch(e){
-    console.error(e);
-}
-try{
     WinMax();
-    // $(iframeBox).width($(iframeBox).parent().width());
-    // alert($(document).width()-50);
+    setSideMenu();
+    // 添加winBox边框
+    WinBoxBorder();
     gui.Window.get().on('close', function() {
         quit();
     });
@@ -123,33 +120,32 @@ try{
     console.error(e);
 }
 
-    setSideMenu();
-    $(document).on('click', '.winBtn', function(event) {
-        var Thi=$(this);
-        var ThiQ=Thi.data('q');
-        if(ThiQ=='menu'){
+    
+$(document).on('click', '.winBtn', function(event) {
+    var Thi=$(this);
+    var ThiQ=Thi.data('q');
+    if(ThiQ=='menu'){
 
+    }
+    return false;
+}).on('click', '.ibtn', function(event) {
+    var Thi=$(this),
+    ThiType=Thi.data('type'),
+    ThiPbox=Thi.parents('.menuSide'),
+    ThiPli=Thi.parents('li');
+    ThiPbox.find('li').removeClass('curr');
+    ThiPli.addClass('curr');
+    if(ThiType=='url'){
+        var ThiIdf=Thi.data('id'),
+            ThiHref=Thi.attr('href');
+        if(ThiHref){
+            setiframe(ThiIdf,ThiHref);
         }
-        return false;
-    }).on('click', '.ibtn', function(event) {
-        var Thi=$(this),
-        ThiType=Thi.data('type'),
-        ThiPbox=Thi.parents('.menuSide'),
-        ThiPli=Thi.parents('li');
-        ThiPbox.find('li').removeClass('curr');
-        ThiPli.addClass('curr');
-        if(ThiType=='url'){
-            var ThiIdf=Thi.data('id'),
-                ThiHref=Thi.attr('href');
-            if(ThiHref){
-                setiframe(ThiIdf,ThiHref);
-            }
-        }
-        return false;
-    });;
+    }
+    return false;
+});;
 
-// 添加winBox边框
-WinBoxBorder();
+
 //$('a[data-toggle="tooltip"]').tooltip();
 $('.menuSide').find('.curr a').click();
 });

@@ -52,9 +52,9 @@ var Page={
       //总页数小于10
       for(var i = 1;i<=this.pn;i++){  
         if(this.p == i){  
-            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+i+'</button>';
+            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand'+this.btn_css+'">'+i+'</button>';
         }else{  
-            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+i+'</button>';
+            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand">'+i+'</button>';
         }  
       }
     }else{
@@ -68,11 +68,11 @@ var Page={
       }
       if(this.p<pshow){  
         for(var i = this.p-1;i>0;i--){  
-            this.pageHtml='<button type="button" action="page" class="btn btn-default btn_p_list">'+i+'</button>'+this.pageHtml; 
+            this.pageHtml='<button type="button" action="page" class="btn btn-default btn_p_list hand">'+i+'</button>'+this.pageHtml; 
         }  
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand '+this.btn_css+'">'+this.p+'</button>';
         for(var i=1;i<=pshow-2;i++){
-          this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+i) +'</button>';  
+          this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand">'+ (this.p+i) +'</button>';  
         }
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+1) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+2) +'</button>';
@@ -80,18 +80,18 @@ var Page={
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default hand">...</button>';
       }else if(this.p>=pshow && (this.p<=this.pn-pshow+1)){
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default hand">...</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
         for(var i=2-pshow;i<pshow-1;i++){
           if(i==0){
-            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
+            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand'+this.btn_css+'">'+this.p+'</button>';
           }else{
-            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+i) +'</button>';
+            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand">'+ (this.p+i) +'</button>';
           } 
         }
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
@@ -103,22 +103,22 @@ var Page={
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+4) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+5) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p+6) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default hand">...</button>';
       }else if(this.p>this.pn-pshow){
         //尾页
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default">...</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default hand">...</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-6) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-5) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-4) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-3) +'</button>';
         for(var i=pshow-2;i>0;i--){
-          this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-i) +'</button>';  
+          this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand">'+ (this.p-i) +'</button>';  
         }
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-2) +'</button>';
         // this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+ (this.p-1) +'</button>';
-        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list '+this.btn_css+'">'+this.p+'</button>';
+        this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand'+this.btn_css+'">'+this.p+'</button>';
         for(var i = this.p+1;i<=this.pn;i++){
-            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list">'+i+'</button>';
+            this.pageHtml+='<button type="button" action="page" class="btn btn-default btn_p_list hand">'+i+'</button>';
         }
       }
     }
@@ -131,14 +131,14 @@ var Page={
       '</div>'+
       '<div class="btn-group">';
       pageInfoStrs=pageInfoStrs+
-      '  <button type="button" action="page" class="btn btn-default btn_p_prev_no"'+this.prev_disabled+'>首页</button>';
+      '  <button type="button" action="page" class="btn btn-default btn_p_prev_no hand"'+this.prev_disabled+'>首页</button>';
       pageInfoStrs=pageInfoStrs+
-      '  <button type="button" action="page" class="btn btn-default btn_p_prev"'+this.prev_disabled+'>上一页</button>';
+      '  <button type="button" action="page" class="btn btn-default btn_p_prev hand"'+this.prev_disabled+'>上一页</button>';
       pageInfoStrs=pageInfoStrs+this.pageHtml;
       pageInfoStrs=pageInfoStrs+
-      '  <button type="button" action="page" class="btn btn-default btn_p_next"'+this.next_disabled+'>下一页</button>';
+      '  <button type="button" action="page" class="btn btn-default btn_p_next hand"'+this.next_disabled+'>下一页</button>';
       pageInfoStrs=pageInfoStrs+
-      '  <button type="button" action="page" class="btn btn-default btn_p_next_no"'+this.next_disabled+'>尾页</button>'+
+      '  <button type="button" action="page" class="btn btn-default btn_p_next_no hand"'+this.next_disabled+'>尾页</button>'+
       '</div>';
 
       $('.foot_page_box').html(pageInfoStrs);
