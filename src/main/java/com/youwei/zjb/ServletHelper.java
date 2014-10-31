@@ -136,7 +136,7 @@ public class ServletHelper {
 	
 	private static void setValue(Object obj, Map<String, Object> data) {
 		
-		for(Field f : obj.getClass().getDeclaredFields()){
+		for(Field f : obj.getClass().getFields()){
 			String pname=f.getName();
 			WebParam wparam = f.getAnnotation(WebParam.class);
 			if(wparam!=null && StringUtils.isNotEmpty(wparam.name())){

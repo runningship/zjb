@@ -3,8 +3,10 @@
 */
 var groupUserByDeptData;
 $(document).ready(function() {
+    //cid应该在调用页面中定义好
+    //var cid=$${cid};
     YW.ajax({
-        url:'/c/user/groupUserByDept?cid=1',
+        url:'/c/user/groupUserByDept?cid='+cid,
         timeout:3000,
         async:false,
         dataType:'json',

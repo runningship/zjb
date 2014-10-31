@@ -252,7 +252,7 @@ $(document).on('click', '.zbtns', function(event) {
         window.location.href=window.location.pathname+window.location.search;
     }
 });
-// autocomplete 必加
+
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a');
     ThiA.removeClass('hover');
@@ -264,7 +264,7 @@ $(document).ready(function() {
   $(document.body).width(bodyW);
   $(window.top.document).find('#dragbar').width(bodyW-$('#menuTop').width());
 // autocomplete
-    autoComplete($('#search'))
+    autoComplete($('#search'));
 // 加载侧边按钮功能
     sideBtnFun();
 // 加载侧边

@@ -11,6 +11,7 @@ import org.bc.web.ModuleManager;
 import org.hibernate.cfg.AvailableSettings;
 
 import com.youwei.zjb.cache.ConfigCache;
+import com.youwei.zjb.job.Pull58;
 
 public class StartUpListener implements ServletContextListener{
 
@@ -20,6 +21,7 @@ public class StartUpListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent arg0) {
 		initDataSource();
 		initModule();
+		Pull58.startJob();
 	}
 
 	private void initModule() {

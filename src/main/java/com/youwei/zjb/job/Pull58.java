@@ -3,10 +3,14 @@ package com.youwei.zjb.job;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.commons.io.IOUtils;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.utils.LogUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,6 +30,23 @@ public class Pull58 {
 		start();
 	}
 	
+	public static void startJob(){
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask(){
+
+			@Override
+			public void run() {
+				start();
+//				Calendar cal = Calendar.getInstance();
+//				if(cal.get(Calendar.HOUR_OF_DAY)>=20 && cal.get(Calendar.HOUR_OF_DAY)<=7){
+//					start();
+//				}else{
+//					LogUtil.info("58 pulling is on");
+//				}
+			}
+			
+		}, 1000*60,1000*60*5);
+	}
 	private static void start(){
 		try{
 			String urlStr = "http://hf.58.com/ershoufang/0/h1/?ClickID=1";

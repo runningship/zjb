@@ -32,6 +32,8 @@ public class Client {
 	public String dname;
 	
 	public String cname;
+	
+	public Integer djrDid;
 	/**
 	 * 记录的最初登记人
 	 */
@@ -62,21 +64,30 @@ public class Client {
 	
 	public String lxings;
 	
+	/**
+	 * 户型，房型
+	 */
 	public String hxings;
 	
 	public String zxius;
 	
-	public Integer mjiFrom;
+	//要查询面积期望落在区间D(d1到d2)的客户，算法为：d1<=mjiFrom<=d2 || d1<=mjiTo<=d2
+	//用if(mjiFrom==null) mjiFrom=0; if(mjiTo==null) mjiTo=100000;来保证区间D的完整性
+	public Float mjiFrom;
 	
-	public Integer mjiTo;
+	public Float mjiTo;
 	
 	/**
 	 * 总价
 	 */
-	public Integer jiageFrom;
+	public Float jiageFrom;
 	
-	public Integer jiageTo;
+	public Float jiageTo;
 	
+	/**
+	 * 购房单价
+	 */
+	public Float djia;
 	
 	public Integer zujinFrom;
 	public Integer zujinTo;
@@ -94,9 +105,14 @@ public class Client {
 	
 	public Integer lcengTo;
 	
+	public Integer yearFrom;
+	public Integer yearTo;
+	
 	public String quyus;
 	
 	public String source;
 	
 	public Date gjtime;
+	
+	public Integer isdel=0;
 }

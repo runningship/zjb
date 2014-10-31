@@ -263,3 +263,59 @@ function reportError(stack){
     });
 }
 
+function addQueryStr(type){
+  var str="";
+  $('input[name="'+type+'"]').each(function(index,obj){
+    if(obj.checked){
+      if(str==""){
+          str+=$(obj).attr('text');
+      }else{
+        str+='、'+$(obj).attr('text');
+      }
+    }
+  });
+  $('#query_str').find('li[name="'+type+'"]').remove();
+  if(str!=""){
+    var xx = '<li name="'+type+'">'+str+'<i onclick="deleteQuery(this)"></i></li>';
+    $('#query_str').find('span').append(xx);
+  }
+}
+
+function deleteQuery(delIcon){
+  $(delIcon).parent().remove();
+  var name = $(delIcon).parent().attr('name');
+  $('input[name="'+name+'"]').attr('checked',false);
+  try{
+    $('input[name="'+name+'"][type="radio"]')[0].checked='checked';
+  }catch(e){
+
+  }
+  
+}
+
+function ChangeW(){
+    // var h = $(window).height();
+    // $(window.top.document).find('#iframeBox').height(h+40);
+  var w = $(window).width();
+  w = w - 267;
+  
+  $("#FY_RCon").width(w);
+  // $("#FY_RCon").css('margin-top','5px');
+  $("#FY_RTit").width(w);
+  $("#KY_TableMain").width(w);
+  $("#FY_TableTit").width(w);
+  $("#pageMwidth").width(w);
+
+  //设置拖动栏
+  try{
+    var doc = $(window.top.selectedFrame[0].contentDocument);
+    var menuTopW = doc.find('#menuTop').width();
+    var bodyW = $(window.top.document).width()-50;
+    $(window.top.document).find('#dragbar').width(bodyW-menuTopW);
+  }catch(e){
+    console.log('set drag bar width fail,'+e);
+  }
+}
+window.onresize = function(){
+  ChangeW();
+}

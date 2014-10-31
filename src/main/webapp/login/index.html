@@ -35,6 +35,7 @@ try{
 try{
     // win.resizeTo(692,660);
     // win.setPosition();
+    gui.App.setCrashDumpDir("F:\\发布\\node-webkit-v0.10.5-win-ia32-local");
     gui.App.clearCache();
     // for(module in global.require.cache){
     //     if(global.require.cache.hasOwnProperty(module)){
@@ -282,11 +283,15 @@ $(document).ready(function() {
                 data:pcinfo,
                 success: function(data){
                     if(!debug){
-                        putConfig('domain', domains);
-                        putConfig('cityName', cityNames);
-                        appendConfig('account', pcinfo.lname);
+                        try{
+                            putConfig('domain', domains);
+                            putConfig('cityName', cityNames);
+                            appendConfig('account', pcinfo.lname);    
+                        }catch(e){
+                            alert('保存用户信息失败,请检查中介宝安装目录下的写权限设置.或者联系中介宝客服为您解决.');
+                        }
                     }
-                    window.location="/v/home.html";
+                    window.location="/v/home_v2.html";
                 },complete:function(){
                     l.stop();
                 },beforeSend:function(){}

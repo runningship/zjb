@@ -34,10 +34,10 @@ public class return_url {
 						: valueStr + values[i] + ",";
 			}
 			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-			try {
-				valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
-			} catch (UnsupportedEncodingException e) {
-			}
+//			try {
+//				valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+//			} catch (UnsupportedEncodingException e) {
+//			}
 			params.put(name, valueStr);
 		}
 		if("TRADE_SUCCESS".equals(params.get("trade_status"))){

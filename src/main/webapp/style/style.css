@@ -379,9 +379,9 @@ opacity:1}
 
 /* 内页主框架样式 */
 
-.default{background-color: #278ADD;width: 100%;overflow:hidden;}
-.default .lefter{ width: 50px;  box-shadow:0 0 -5px #666;}
-.default .lefter .thead{ height: 50px;}
+.default{background-color: #5d6065;width: 100%;overflow:hidden;}
+.default .lefter{ width: 50px;  box-shadow:0 0 -5px #666; border-right:1px solid #383838;}
+.default .lefter .thead{ width:49px; height: 50px; background:-webkit-gradient(linear, 0 0, 0 100%, from(#00aa7b), to(#007d5b)); border-right:1px solid #0f5845;}
 .default .lefter .tfoot{ height: 44px;}
 .default .righter{ background-color:rgba(255,255,255,1.9); background-color: #FFF  }
 .default .lefter>.table,
@@ -390,17 +390,20 @@ opacity:1}
 
 .default .logo{ display: inline-block; margin:5px 0 0 5px; height: 40px; width: 40px; background: #FFF url('images/logo.png') no-repeat center; background-size: 100% 100%; border-radius: 3px; box-shadow: 0 0 5px #666;}
 .default .menuSide { position: relative; height: 100%;}
-.default .menuSide .iconfont{ width: 100%; display: inline-block; text-align: center; line-height: 20px; font-size: 24px;}
+.default .menuSide .iconfont{ width: 100%; display: inline-block; text-align: center; line-height: 20px; font-size: 22px;}
 .default .menuSide li,
-.default .menuSideTool li { position: relative; padding:10px 0; text-align: center;-webkit-transition:all .3s; text-shadow: 0 0 10px #555;}
+.default .menuSideTool li { position: relative; padding:16px 0; text-align: center;-webkit-transition:all .3s; text-shadow: 0 0 10px #555;}
 .default .menuSide li a,
 .default .menuSideTool li a{ display: block;}
 .default .menuSide li a span,
 .default .menuSideTool li a span{ display: block; height: auto; overflow: hidden;}
 
-.default .menuSide li.curr { background-color: rgba(0,0,0,0.5); padding:20px 0; }
-.default .menuSide li.curr span{ display: block; height: auto; }
-.default .menuSide li:hover { background-color: rgba(0,0,0,0.3); }
+
+.default .menuSide li span{ font-size:24px;}
+.default .menuSide li{background:-webkit-gradient(linear, 0 0, 0 100%, from(#7b8087), to(#5d6065)); border-top:1px solid #333333;}
+.default .menuSide li.curr { background-color: rgba(0,0,0,0.5); padding:16px 0; box-shadow: inset 0px 0px 20px #111111; background:-webkit-gradient(linear, 0 0, 0 100%, from(#3bb093), to(#175a49));}
+.default .menuSide li.curr span{ display: block; height: auto;}
+.default .menuSide li:hover {  box-shadow: inset 0px 0px 20px #111111; background:-webkit-gradient(linear, 0 0, 0 100%, from(#3bb093), to(#175a49));}/* background-color: rgba(0,0,0,0.3);*/
 
 .default li.positionBottom{ position:absolute; right: 0; bottom: 0; left: 0;}
 

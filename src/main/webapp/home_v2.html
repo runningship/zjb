@@ -19,7 +19,7 @@
 <script src="/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="/js/jquery.timers.js" type="text/javascript"></script>
 <script src="/js/jquery.input.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.js" type="text/javascript"></script>
+<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
 <script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript">
 function setSideMenuCurr(){
@@ -94,41 +94,41 @@ var iframeBox=$('#iframeBox'),
     selectedFrame =  $('#iframe_'+id);
     // $(iframeBox).width($(iframeBox).parent().width());
 }
-$(document).ready(function() {
+
+$(function() {
+
 try{
-    win.setMinimumSize(1020,660);
+    // $('#iframeBox').height($('#iframeBox').height()+40);
+    win.setMinimumSize(1040,660);
     win.setMaximumSize(9020,9960);
-    WinMax();
+    try{
+        win.on('resize', function (stream) {
+            if(screen.width-win.width<5){
+                WinMaxOrRev(0);
+            }else{
+                WinMaxOrRev(1);  
+            }
+        }); 
+    }catch(e){
+        console.error(e);
+    }
+    
     setSideMenu();
     // 添加winBox边框
     WinBoxBorder();
     gui.Window.get().on('close', function() {
         quit();
     });
-}catch(e){
-    console.error(e);
-}
-try{
-    win.on('resize', function (stream) {
-        if(screen.width-win.width<5){
-            WinMaxOrRev(0);
-        }else{
-            WinMaxOrRev(1);  
-        }
-    }); 
-}catch(e){
-    console.error(e);
-}
-
+    WinMax();
     
-$(document).on('click', '.winBtn', function(event) {
-    var Thi=$(this);
-    var ThiQ=Thi.data('q');
-    if(ThiQ=='menu'){
+}catch(e){
+    console.error(e);
+};
 
-    }
-    return false;
-}).on('click', '.ibtn', function(event) {
+// window.onresize = function(){
+//   $('#iframeBox').height($('#iframeBox').height()+40);
+// }
+$(document).on('click', '.ibtn', function(event) {
     var Thi=$(this),
     ThiType=Thi.data('type'),
     ThiPbox=Thi.parents('.menuSide'),
@@ -143,16 +143,15 @@ $(document).on('click', '.winBtn', function(event) {
         }
     }
     return false;
-});;
-
-
-//$('a[data-toggle="tooltip"]').tooltip();
-$('.menuSide').find('.curr a').click();
 });
+
+//点击第一个菜单
+$('.menuSide').find('.curr a').click();
+
+});
+
 $(window).resize(function() {
-//    setDomSize();
-//  WinMaxOrRev(1);
-        setSideMenuCurr();
+    setSideMenuCurr();
 });
 
 function resetPwd(){
@@ -166,10 +165,12 @@ function pay(){
   art.dialog.open('/v/pay/order.html');
 }
 
+
+
 </script>
 </head>
 <body>
-<div class="html default table">
+<div class="html default table MainLeft">
     <div class="tr">
         <div class="lefter td title">
             <div class="table">
@@ -178,8 +179,8 @@ function pay(){
                 </div>
                 <div class="tr tbody">
                     <ul class="menuSide">
-                        <li class="curr"><a href="/v/house/house.html" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span>房源</span></a></li>
-                        <li auth="ky_on"><a href="/v/client/index.html" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span>客源</span></a></li>
+                        <li class="curr"><a href="/v/house/house_v2.html" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span><!--房源--></span></a></li>
+                        <li auth="ky_on"><a href="/v/client/index.html" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span><!--客源--></span></a></li>
                         <li auth="yw_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span>业务</span></a></li>
                         <li auth="ht_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="hetong" data-toggle="tooltip" data-placement="right" title="合同"><i class="iconfont">&#xe614;</i><span>合同</span></a></li>
                         <li auth="cw_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="caiwu" data-toggle="tooltip" data-placement="right" title="财务"><i class="iconfont">&#xe613;</i><span>财务</span></a></li>
@@ -195,9 +196,9 @@ function pay(){
             </div>
         </div>
         <div class="righter td title">
-            <div class="table">
+            <div class="table" >
                 <div class="tr thead title">
-                    <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:50px;"></div>
+                    <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:40px;"></div>
                     <div class="wintool title nobar">
                         <ul class="wintools">
                             <li class="dropdown btn-group">
@@ -226,7 +227,7 @@ function pay(){
                     </div>
                 </div>
                 <div class="tr tbody">
-                    <div id="iframeBox" class="maxHW" ></div>
+                    <div id="iframeBox" class="maxHW" style="margin-top:-40px;height:105%"></div>
                 </div>
             </div>
         </div>

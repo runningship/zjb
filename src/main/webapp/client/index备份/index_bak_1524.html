@@ -3,17 +3,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>中介宝房源软件系统</title>
+<link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
 <script type="text/javascript" src="/js/user.js"></script>
-<script type="text/javascript" src="/js/layerBox.js"></script>
 <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
 <script type="text/javascript">
-var cid=$${cid};
+
 function doSearch(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
@@ -64,29 +64,36 @@ function getlouceng(a,b){
   }
 }
 
-function deleteClient(id){
-  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
-  YW.ajax({
-    type: 'POST',
-    url: '/c/client/delete?id='+id,
-    mysuccess: function(data){
-      doSearch();
-      alert('删除成功');
+function openAdd(){
+  art.dialog.open("/house/house_edit.html?id="+id,{id:'add_client'});
+}
+
+function addQueryStr(type){
+  var str="";
+  $('input[name="'+type+'"]').each(function(index,obj){
+    if(obj.checked){
+      console.log(obj.value);
+      if(str==""){
+          str+=obj.value;
+      }else{
+        str+='、'+obj.value;
+      }
     }
   });
-  },function(){},'warning');
+  $('#query_str').find('li[name="'+type+'"]').remove();
+  if(str!=""){
+    var xx = '<li name="'+type+'">'+str+'<i onclick="deleteQuery(this)"></i></li>';
+    $('#query_str').find('span').append(xx);
+  }
 }
 
-function openAdd(){
-  art.dialog.open("/v/client/client_add.html",{id:'add_client',width:800,height:542,title:'添加客源'});
-}
-
-function needHouse(id){
-  art.dialog.open("/v/client/house.html?id="+id,{width:1100,height:600,title:'客配房'});
+function deleteQuery(delIcon){
+  $(delIcon).parent().remove();
+  var name = $(delIcon).parent().attr('name');
+  $('input[name="'+name+'"]').attr('checked',false);
 }
 
 $(document).ready(function() {
-  ChangeW();
   Page.Init();
   $("button.selectMethod").parent().hover(function(){
     $(this).siblings().find("div.ulErMenu").hide();
@@ -104,23 +111,22 @@ $(document).ready(function() {
   });
 });
 </script>
-<link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 </head>
 <body>
-
-
 <div class="KY_Main KY_W">
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;">
-            <div id="menuTop" style="display:inline-block">
+          
               <ul class="MainRightTop KY_W">
-                  <li onclick="window.location='/v/client/index.html'" class="slect"><i class="i1"></i>求购</li>
+                  <li class="slect"><i class="i1"></i>出售</li>
                   <li class="line"></li>
                   <li onclick="openAdd()"><i class="i3"></i>登记</li>
                   <li class="line"></li>
+                  <li><i class="i4"></i>我的</li>
+                  <li class="line"></li>
               </ul>
-            </div>
+              
               <div class="MainRightInputMain KY_W">
               
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
@@ -132,12 +138,14 @@ $(document).ready(function() {
                         </li>
                         <li>
                             <span class="SpanName">登记人</span>
-                            <select name="djrDid" id="djrDid" class="input-sm input-rightB w102 dept_select">
+                            <select name="did" id="djrDid" class="input-sm input-rightB w102 dept_select">
                               <option value="">所有</option>
                             </select>
-                            <select name="djrId" id="djrId" class="input-sm input-left w102 user_select">
+                            <select name="uid" id="djrId" class="input-sm input-left w102 user_select">
                               <option value="">所有</option>
                             </select>
+                            <!--<input class="input-sm input-rightB w120" type="text" placeholder="门店名称" name="dhao" />
+                            <input class="input-sm input-left w45" type="text" placeholder="业务员" name="fhao" />-->
                         </li>
                         <li>
                             <button class="selectMethod hand"  type="button">区域<i class="caret"></i> </button>
@@ -215,8 +223,8 @@ $(document).ready(function() {
                              <button class="ButtonW1 ButtonQ hand" type="button">清空</button>
                         </li>
                    </ul>
-              </form>
               </div>
+              </form>
               <div style="width:100%; float:left; border-top:1px solid #f2f2f2;">
                            
                                <div  class="MR_ConTit KY_W" style=" position:inherit; margin:0 0.5%; width:99%; margin-top:5px; float:left; border:1px solid #d1d1d1;">
@@ -226,44 +234,38 @@ $(document).ready(function() {
                                         </span>
                                     </ul>
                                </div>
-                              
                                
-              </div>
-               
-               
-              <div class="KY_W" style="display:table-row; position:relative;">            
-                   <div style="margin:0 0.5%; width:98.5%; padding-right:0.5%; border-bottom:1px solid #dddddd; border-left:1px solid #d1d1d1; float:left; border-right:1px solid #d1d1d1; background-color:#e9e9e9;">
-                           
-                                   <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" style=" margin-bottom:-1px;">
-                                    <tr>
-                                            <th width="60">客户姓名</th>
-                                            <th width="100">操作</th>
-                                            <th width="80">区域</th>
-                                            <th style="width:200px; min-width:50px;">楼盘名称</th>
-                                            <th width="50">楼型</th>
-                                            <th width="60">户型</th>
-                                            <th width="50">面积</th>
-                                            <th width="50">总价(万)</th>
-                                            <th width="50">单价</th>
-                                            <th width="50">楼层</th>
-                                            <th width="50">装潢</th>
-                                            <th width="70">发布时间</th>
-                                            
-                                     </tr>
-                                          
-                                    </table>
-                           
-                    </div>   
-              </div>      
-                           
+                               <div style="margin:0 0.5%; width:99%; border-left:1px solid #d1d1d1; float:left; border-right:1px solid #d1d1d1;">
+                               
+                                       <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain">
+                                        <tr>
+                                                <th width="60">客户姓名</th>
+                                                <th width="75">操作</th>
+                                                <th width="60">区域</th>
+                                                <th>楼盘名称</th>
+                                                <th width="50">楼型</th>
+                                                <th width="60">户型</th>
+                                                <th width="50">面积</th>
+                                                <th width="50">总价(万)</th>
+                                                <th width="50">单价</th>
+                                                <th width="50">楼层</th>
+                                                <th width="50">装潢</th>
+                                                <th width="70">发布时间</th>
+                                         </tr>
+                                              
+                                        </table>
+                               
+                               </div>
+                               
+                           </div>
               <div class="MainRightConMain KY_W" style="display:table-row; position:relative;">
-                <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:98.5%; padding-right:0.5%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:auto;">
+                <div class="KY_MainRCon" style="height:100%; margin:0 0.5% 0; width:99%; display:table-cell; overflow:hidden; overflow-y:auto; z-index:-1;">
                   <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain">
                     <tr data-hid="${id}" style="display:none;" class="id_client_list" >
                       <td width="60">${name}</td>
-                      <td width="100"><a href="###">详情</a> <a href="##" onclick="needHouse(${id});">客配房</a> <a href="#" onclick="deleteClient(${id});">删除</a></td>
-                      <td width="80">${quyus}</td>
-                      <td style="width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">${areas}</div></td>
+                      <td width="75"><a href="#">详情</a> <a href="#">房配客</a></td>
+                      <td width="60">${quyus}</td>
+                      <td>${areas} 2-203</td>
                       <td width="50">${lxings}</td>
                       <td width="60">${hxings}</td>
                       <td width="50" runscript="true">getmianji(${mjiFrom},${mjiTo})</td>

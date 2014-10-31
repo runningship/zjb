@@ -209,6 +209,7 @@ function favDelete(houseId){
     });
   }
 }
+
 function getShenHeText(lock){
   if(lock==1){
     return "审";
@@ -216,6 +217,7 @@ function getShenHeText(lock){
     return "未";
   }
 }
+
 function doSearchAndSelectFirst(){
   doSearch(function(){
     if(houseData.page.data.length>0){
