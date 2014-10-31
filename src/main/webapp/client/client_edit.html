@@ -15,11 +15,12 @@ var hxingcont=0;
 var zxiucont=0;
 var quyucont=0;
 var cid=$${cid};
+var id;
 function save(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/client/add',
+    url: '/c/client/update',
     data:a,
     mysuccess: function(data){
         // $('#saveBtn').removeAttr('disabled');
@@ -37,6 +38,48 @@ function setSearchValue(index){
     $('#search').val(Vals);
 }
 
+function getContent(){
+  YW.ajax({
+    type: 'get',
+    url: '/c/client/get?id='+id,
+    data:'',
+    mysuccess: function(result){
+      var json = JSON.parse(result);
+      $('#id').val(json['id']);
+      $('#name').val(json['name']);
+      $('#tel').val(json['tels']);
+      $('#lcengFrom').val(json['lcengFrom']);
+      $('#lcengTo').val(json['lcengTo']);
+      $('#areas').val(json['areas']);
+      $('#mjiFrom').val(json['mjiFrom']);
+      $('#mjiTo').val(json['mjiTo']);
+      $('#jiageFrom').val(json['jiageFrom']);
+      $('#jiageTo').val(json['jiageTo']);
+      $('#yearFrom').val(json['yearFrom']);
+      $('#yearTo').val(json['yearTo']);
+      $('#beizhu').val(json['beizhu']);
+      chaifen(json['lxings'],'lxings');
+      chaifen(json['zxius'],'zxius');
+      chaifen(json['hxings'],'hxings');
+      chaifen(json['quyus'],'quyus');
+      $('#djrDid').val(json['did']);
+      $('#djrId').val(json['uid']);
+    }
+  });
+}
+
+function chaifen(val,name){
+  if (val==null) {
+    return;
+  }else{
+    var row = val.split(',');
+    for (var i = 0; i < row.length ; i++) {
+      var value = row[i];
+      $('input[value="'+value+'"]').attr('checked','checked');
+    }
+  }
+}
+
 function jianCe(a){
   var count = 0;
   $('input[name="'+a.name+'"]').each(function(i,obj){
@@ -51,15 +94,16 @@ function jianCe(a){
 }
 
 $(document).ready(function() {
-  autoComplete($('#search'));
-    $.get('/c/config/getQueryOptions', function(data) {
-        queryOptions=JSON.parse(data);
-        buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
-        buildHtmlWithJsonArray("id_zxiu",queryOptions['zhuangxiu'],true);
-        buildHtmlWithJsonArray("id_hxing",queryOptions['fxing'],true);
-        buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-        //doSearchAndSelectFirst();
-    });
+  id = getParam('id');
+  // autoComplete($('#search'));
+  $.get('/c/config/getQueryOptions', function(data) {
+    queryOptions=JSON.parse(data);
+    buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
+    buildHtmlWithJsonArray("id_zxiu",queryOptions['zhuangxiu'],true);
+    buildHtmlWithJsonArray("id_hxing",queryOptions['fxing'],true);
+    buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
+    getContent();
+  });
 });
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
@@ -69,7 +113,6 @@ $(document).ready(function() {
 
 <script>
    $(document).keypress(function(e) { 
-    // 回车键事件 
        if(e.which == 13) {
         e.preventDefault();
           // jQuery(".confirmButton").click(); 
@@ -77,63 +120,65 @@ $(document).ready(function() {
    }); 
 </script>
 <form name="form1" role="form">
+<input type="hidden" name="id" id="id"/>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="layerTable1 TableBgColor1" style=" border-top:4px solid #e9e9e9;">
+
   <tr>
     <td width="80" align="right" class="TableTdBorBot TableTdBorTop">姓名：</td>
-    <td width="318" class="TableTdBgColor"><input type="text" class="w1" name="name" desc="客户姓名"/></td>
+    <td width="318" class="TableTdBgColor"><input type="text" class="w1" id="name" name="name" desc="客户姓名"/></td>
     <td width="80" align="right" class="TableTdBorBot TableTdBorTop">电话：</td>
     <td width="318" class="TableTdBgColor"><input type="text" class="w1" id="tel" name="tels" placeholder="房主号码 / 分割" onblur="checkTel()"  /><span></span></td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">楼盘：</td>
-    <td class="TableTdBgColor"><input id="search" type="text" class="w1"  name="areas"/></td>
+    <td class="TableTdBgColor"><input id="search" type="text" class="w1" id="areas" name="areas"/></td>
     <td align="right" class="TableTdBorBot">楼层：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="lcengFrom" />-<input type="text" class="w2" name="lcengTo" /> 层</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" id="lcengFrom" name="lcengFrom" />-<input type="text" class="w2" id="lcengTo" name="lcengTo" /> 层</td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">楼型：</td>
     <td class="TableTdBgColor">
-        <div class="id_lxing"><input type="checkbox" value="${name}" name="lxings" onclick="jianCe(this);" />${name}</div>
+        <div class="id_lxing"><input type="checkbox" value="${name}" id="lxings" name="lxings" onclick="jianCe(this);" />${name}</div>
     </td>
     <td align="right" class="TableTdBorBot">装潢：</td>
     <td class="TableTdBgColor">
-        <div class="id_zxiu"><input type="checkbox" value="${name}" name="zxius" onclick="jianCe(this);"/>${name}</div>
+        <div class="id_zxiu"><input type="checkbox" value="${name}" name="zxius" id="zxius" onclick="jianCe(this);"/>${name}</div>
     </td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">户型：</td>
     <td class="TableTdBgColor">
-        <div class="id_hxing"><input type="checkbox" value="${name}" name="hxings" onclick="jianCe(this);"/>${name}</div>
+        <div class="id_hxing"><input type="checkbox" value="${name}" name="hxings" id="hxings" onclick="jianCe(this);"/>${name}</div>
     </td>
     <td align="right" class="TableTdBorBot">区域：</td>
     <td class="TableTdBgColor">
-        <div class="id_quyu"><input type="checkbox" value="${name}" name="quyus" onclick="jianCe(this);"/>${name}</div>
+        <div class="id_quyu"><input type="checkbox" value="${name}" name="quyus" id="quyus" onclick="jianCe(this);"/>${name}</div>
     </td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">面积：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="mjiFrom" />-<input type="text" class="w2"  name="mjiTo"/> ㎡</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" id="mjiFrom" name="mjiFrom" />-<input type="text" class="w2" id="mjiTo" name="mjiTo"/> ㎡</td>
     <td align="right" class="TableTdBorBot">价格：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="jiageFrom" />-<input type="text" class="w2"  name="jiageTo"/> 万</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" id="jiageFrom" name="jiageFrom" />-<input type="text" class="w2" id="jiageTo" name="jiageTo"/> 万</td>
   </tr>
   <tr>
     
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">年代：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="yearFrom" />-<input type="text" class="w2"  name="yearTo"/></td>
+    <td class="TableTdBgColor"><input type="text" class="w2" id="yearFrom" name="yearFrom" />-<input type="text" class="w2" id="yearTo" name="yearTo"/></td>
     <td align="right" class="TableTdBorBot">业务员：</td>
     <td colspan="3" class="TableTdBgColor">
-        <select name="uid" id="djrDid" class="input-sm input-rightB w3 dept_select">
+        <select name="did" id="djrDid" class="input-sm input-rightB w3 dept_select">
 	    </select>
-	    <select name="did" id="djrId" class="input-sm input-left w3 user_select">
+	    <select name="uid" id="djrId" class="input-sm input-left w3 user_select">
         </select>
     </td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">备注：</td>
     <td colspan="3" class="TableTdBgColor">
-       <textarea class="TA" name="beizhu"></textarea>
+       <textarea class="TA" name="beizhu" id="beizhu"></textarea>
     </td>
   </tr>
   <tr>

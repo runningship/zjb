@@ -21,7 +21,7 @@ public class StartUpListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent arg0) {
 		initDataSource();
 		initModule();
-		Pull58.startJob();
+//		Pull58.startJob();
 	}
 
 	private void initModule() {

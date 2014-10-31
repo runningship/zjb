@@ -291,58 +291,58 @@ function crashTest(){
                         <li>
                             <button class="selectMethod" type="button">综合<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="" name="scope" value="all" checked="checked" onclick="doSearchAndSelectFirst();"> 所有</label> </p> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="公司" name="scope" value="comp" onclick="doSearchAndSelectFirst();">公司</label> </p> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="共享" name="scope" value="seeGX" onclick="doSearchAndSelectFirst();"> 共享</label> </p> 
+                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="" name="scope" value="all" checked="checked" > 所有</label> </p> 
+                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="公司" name="scope" value="comp" >公司</label> </p> 
+                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="共享" name="scope" value="seeGX" > 共享</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod" type="button" >状态<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('ztai')"><label><input type="radio" name="ztai" value="" text="" checked="" onclick="doSearchAndSelectFirst();"> 所有</label> </p> 
-                                <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input type="radio" text="${name}" onclick="doSearchAndSelectFirst();" name="ztai" value="${code}"> ${name}</p>
+                                <p onclick="addQueryStr('ztai')"><label><input type="radio" name="ztai" value="" text="" checked="" > 所有</label> </p> 
+                                <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input type="radio" text="${name}" name="ztai" value="${code}"> ${name}</p>
                             </div>
                         </li>
                         <li auth="fy_sh">
                             <button class="selectMethod" type="button" >审核<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('shehe')"><label><input text="" name="shehe" type="radio" value="" checked="checked" onclick="$('#sh').val(this.value);doSearchAndSelectFirst();">全部</label> </p> 
-                                <p onclick="addQueryStr('shehe')"><label><input text="已审" name="shehe" type="radio" value="1" onclick="$('#sh').val(this.value);doSearchAndSelectFirst();">已审</label> </p> 
-                                <p onclick="addQueryStr('shehe')"><label><input text="未审" name="shehe" type="radio" value="0" onclick="$('#sh').val(this.value);doSearchAndSelectFirst();">未审</label> </p> 
+                                <p onclick="addQueryStr('shehe')"><label><input text="" name="shehe" type="radio" value="" checked="checked" onclick="$('#sh').val(this.value);">全部</label> </p> 
+                                <p onclick="addQueryStr('shehe')"><label><input text="已审" name="shehe" type="radio" value="1" onclick="$('#sh').val(this.value);">已审</label> </p> 
+                                <p onclick="addQueryStr('shehe')"><label><input text="未审" name="shehe" type="radio" value="0" onclick="$('#sh').val(this.value);">未审</label> </p> 
                             </div>
                         </li>
                    </ul>
                    
                    <ul class="InputMainLine KY_W">
                    
-                        <li style="width:122px;"><input class="input-sm w110" type="text" placeholder="编号" name="id" />
+                        <li style="width:122px;"><input class="input-sm w110" type="text" placeholder="编号" name="id"  desc="编号"/>
                         <input class="input-sm w110" type="text" placeholder="路段" name="address" /></li>
                         <li>
                             <span class="SpanNameH2"><em>面积</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="mjiStart" />
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="mjiEnd" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="面积" autocomplete="off" name="mjiStart" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="面积" autocomplete="off" name="mjiEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2"><em>总价</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="zjiaStart" />
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="zjiaEnd" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="总价" autocomplete="off" name="zjiaStart" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="总价" autocomplete="off" name="zjiaEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2"><em>单价</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="djiaStart" />
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="djiaEnd" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="单价" autocomplete="off" name="djiaStart" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="单价" autocomplete="off" name="djiaEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2"><em>楼层</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="lcengStart" />
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="lcengEnd" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengStart" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengEnd" />
                             </div>
                         </li>
                         <li>

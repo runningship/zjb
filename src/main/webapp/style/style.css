@@ -392,7 +392,7 @@ opacity:1}
 .default .menuSide { position: relative; height: 100%;}
 .default .menuSide .iconfont{ width: 100%; display: inline-block; text-align: center; line-height: 20px; font-size: 22px;}
 .default .menuSide li,
-.default .menuSideTool li { position: relative; padding:16px 0; text-align: center;-webkit-transition:all .3s; text-shadow: 0 0 10px #555;}
+.default .menuSideTool li { position: relative; text-align: center;-webkit-transition:all .3s; text-shadow: 0 0 10px #555;}
 .default .menuSide li a,
 .default .menuSideTool li a{ display: block;}
 .default .menuSide li a span,
@@ -401,9 +401,9 @@ opacity:1}
 
 .default .menuSide li span{ font-size:24px;}
 .default .menuSide li{background:-webkit-gradient(linear, 0 0, 0 100%, from(#7b8087), to(#5d6065)); border-top:1px solid #333333;}
-.default .menuSide li.curr { background-color: rgba(0,0,0,0.5); padding:16px 0; box-shadow: inset 0px 0px 20px #111111; background:-webkit-gradient(linear, 0 0, 0 100%, from(#3bb093), to(#175a49));}
+.default .menuSide li.curr { background-color: rgba(0,0,0,0.5); box-shadow: inset 0px 0px 20px #111111; background:-webkit-gradient(linear, 0 0, 0 100%, from(#3bb093), to(#175a49));}
 .default .menuSide li.curr span{ display: block; height: auto;}
-.default .menuSide li:hover {  box-shadow: inset 0px 0px 20px #111111; background:-webkit-gradient(linear, 0 0, 0 100%, from(#3bb093), to(#175a49));}/* background-color: rgba(0,0,0,0.3);*/
+.default .menuSide li:hover { cursor:pointer;  box-shadow: inset 0px 0px 20px #111111; background:-webkit-gradient(linear, 0 0, 0 100%, from(#3bb093), to(#175a49));}/* background-color: rgba(0,0,0,0.3);*/
 
 .default li.positionBottom{ position:absolute; right: 0; bottom: 0; left: 0;}
 
@@ -512,3 +512,6 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 
 .input-group{width:125px;}
 /* 其他 */
+
+
+.ibtn{ width:100%; padding:16px 0;}

@@ -80,14 +80,6 @@ public class ClientService {
 		params.add(query.lcengStart);
 		params.add(query.lcengEnd);
 		
-		if(query.djiaStart!=null){
-			hql.append(" and djia>= ? ");
-			params.add(query.djiaStart);
-		}
-		if(query.djiaEnd!=null){
-			hql.append(" and djia<= ? ");
-			params.add(query.djiaEnd);
-		}
 		//总价或租金
 		if(query.zjiaStart==null){
 			query.zjiaStart=0f;
@@ -181,12 +173,14 @@ public class ClientService {
 	 * @param cid 客源id
 	 */
 	@WebMethod
-	public ModelAndView matchHouse(Integer cid){
+	public ModelAndView matchHouse(Integer cid , Page<Client> page){
 		ModelAndView mv = new ModelAndView();
 		Client client = dao.get(Client.class, cid);
 		List<Object> params = new ArrayList<Object>();
 		User u = ThreadSession.getUser();
-		StringBuilder hql = new StringBuilder("from House h where 1=1 ");
+		StringBuilder hql = new StringBuilder("from House h where (h.cid=? or h.seeGX=?) ");
+		params.add(u.cid);
+		params.add(1);
 		if(client.areas!=null){
 				hql.append(" and ( ");
 				String[] arr = client.areas.split(",");
@@ -274,14 +268,18 @@ public class ClientService {
 			hql.append(" and h.lceng<=? ");
 			params.add(client.lcengTo);
 		}
-		if(client.yearFrom!=null){
-			hql.append(" and h.dateyear>=? ");
-			params.add(client.yearFrom);
-		}
-		if(client.yearTo!=null){
-			hql.append(" and h.dateyear<=? ");
-			params.add(client.yearTo);
-		}
+//		if(client.yearFrom!=null){
+//			hql.append(" and h.dateyear>=? ");
+//			params.add(client.yearFrom);
+//		}
+//		if(client.yearTo!=null){
+//			hql.append(" and h.dateyear<=? ");
+//			params.add(client.yearTo);
+//		}
+		page.orderBy = "h.dateadd";
+		page.order = Page.DESC;
+		page = dao.findPage(page, hql.toString(), params.toArray());
+		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
 		return mv;
 	}
 	@WebMethod
@@ -299,6 +297,12 @@ public class ClientService {
 		client.djrDid = u.did;
 		client.djrName = u.uname;
 		client.addtime = new Date();
+		setDefaultValue(client);
+		dao.saveOrUpdate(client);
+		return mv;
+	}
+	
+	private void setDefaultValue(Client client){
 		if(client.jiageFrom==null){
 			client.jiageFrom=0f;
 		}
@@ -329,10 +333,10 @@ public class ClientService {
 		if(client.zujinTo==null){
 			client.zujinTo=maxExpection;
 		}
-		dao.saveOrUpdate(client);
-		return mv;
+		if(client.tels!=null){
+			client.tels = client.tels.replace("/", ",");
+		}
 	}
-	
 	@WebMethod
 	public ModelAndView delete(Integer id){
 		Client po = dao.get(Client.class, id);
@@ -347,7 +351,44 @@ public class ClientService {
 	public ModelAndView get(int id){
 		ModelAndView mv = new ModelAndView();
 		Client po = dao.get(Client.class, id);
-		mv.data.put("client", JSONHelper.toJSON(po));
+		if(po.tels!=null){
+			po.tels = po.tels.replace("/", ",");
+		}
+		mv.data= JSONHelper.toJSON(po);
+		if(po.jiageFrom==0){
+			mv.data.remove("jiageFrom");
+		}
+		if(po.jiageTo==(float)maxExpection){
+			mv.data.remove("jiageTo");
+		}
+		
+		if(po.lcengFrom==0){
+			mv.data.remove("lcengFrom");
+		}
+		if(po.lcengTo==maxExpection){
+			mv.data.remove("lcengTo");
+		}
+		
+		if(po.mjiFrom==0){
+			mv.data.remove("mjiFrom");
+		}
+		if(po.mjiTo==(float)maxExpection){
+			mv.data.remove("mjiTo");
+		}
+		
+		if(po.yearFrom==0){
+			mv.data.remove("yearFrom");
+		}
+		if(po.yearTo==maxExpection){
+			mv.data.remove("yearTo");
+		}
+		
+		if(po.zujinFrom==0){
+			mv.data.remove("zujinFrom");
+		}
+		if(po.zujinTo==maxExpection){
+			mv.data.remove("zujinTo");
+		}
 		return mv;
 	}
 	
@@ -355,6 +396,7 @@ public class ClientService {
 	public ModelAndView update(Client client){
 		ModelAndView mv = new ModelAndView();
 		Client po = dao.get(Client.class, client.id);
+		setDefaultValue(client);
 		po.name = client.name;
 		po.beizhu = client.beizhu;
 		po.areas = client.areas;
@@ -369,7 +411,8 @@ public class ClientService {
 		po.source = client.source;
 		po.tels = client.tels;
 		po.zxius = client.zxius;
-		po.djia = client.djia;
+		po.yearFrom = client.yearFrom;
+		po.yearTo = client.yearTo;
 		if(client.chuzu==1){
 			po.zujinFrom = client.zujinFrom;
 			po.zujinTo = client.zujinTo;
@@ -377,7 +420,7 @@ public class ClientService {
 			po.jiageFrom = client.jiageFrom;
 			po.jiageTo = client.jiageTo;
 		}
-		if(po.uid.equals(client.uid)){
+		if(!po.uid.equals(client.uid)){
 			//修改业务员
 			User ywy = dao.get(User.class, client.uid);
 			po.uid = client.uid;
@@ -387,7 +430,7 @@ public class ClientService {
 			po.cid = ywy.Company().id;
 			po.cname = ywy.Company().namea;
 		}
-		dao.saveOrUpdate(client);
+		dao.saveOrUpdate(po);
 		return mv;
 	}
 }
