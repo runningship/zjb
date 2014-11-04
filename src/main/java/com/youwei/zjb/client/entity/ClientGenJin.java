@@ -17,8 +17,9 @@ public class ClientGenJin {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
-	@Column(name="uid")
-	public Integer userId;
+	public Integer uid;
+	public Integer did;
+	public Integer cid;
 	
 	public String title;
 	

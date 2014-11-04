@@ -11,4 +11,6 @@ public class ClientQuery extends HouseQuery{
 	public Integer yearTo;
 	public Integer djrDid;
 	public Integer djrId;
+	
+	public Integer clientId;
 }

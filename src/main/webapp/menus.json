@@ -66,14 +66,13 @@
 			"name":"ky_on",
 			"text":"开启客源功能",
 			"type":"menu"
-		}]
-	},{
-		"name":"ky_gj",
-		"text":"跟进",
-		"type":"virtual",
-		"children":[{
-			"name":"gj_add",
-			"text":"添加",
+		},{
+			"name":"ky_edit",
+			"text":"修改",
+			"type":"menu"
+		},{
+			"name":"ky_del",
+			"text":"删除",
 			"type":"menu"
 		}]
 	}]

@@ -47,27 +47,27 @@
 var area=getParam('area');
 area = decodeURIComponent(area.replace(/\+/g,  " "));
 
-  // 百度地图API功能
-  var map = new BMap.Map("allmap");          
-  map.centerAndZoom(new BMap.Point(117.260429, 31.881385), 11);
-  var local = new BMap.LocalSearch(map, {
-    renderOptions:{map: map}
-  });
+// 百度地图API功能
+var map = new BMap.Map("allmap");          
+map.centerAndZoom(new BMap.Point(117.260429, 31.881385), 11);
+var local = new BMap.LocalSearch(map, {
+  renderOptions:options
+});
+// var local = new BMap.LocalSearch(map,options);
 
-  
-        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
-        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
-        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
-        map.enableKeyboard();//启用键盘上下左右键移动地图
-        //向地图中添加缩放控件
-  var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
-  map.addControl(ctrl_nav);
-        //向地图中添加缩略图控件
-  var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
-  map.addControl(ctrl_ove);
-        //向地图中添加比例尺控件
-  var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
-  map.addControl(ctrl_sca);
+map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+map.enableKeyboard();//启用键盘上下左右键移动地图
+//向地图中添加缩放控件
+var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+map.addControl(ctrl_nav);
+      //向地图中添加缩略图控件
+var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+map.addControl(ctrl_ove);
+      //向地图中添加比例尺控件
+var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+map.addControl(ctrl_sca);
 
 
 $(function(){
@@ -79,22 +79,78 @@ try{
   if (!api) return;
   // 操作对话框
   api.title('地图查看');
-  // 自定义按钮
-    // .button({
-    //     name: '保存',
-    //     callback: function () {
-    //       form1.submit();
-    //       return false;
-    //     },focus: true
-    // },{
-    //     name: '取消'
-    // });
 }catch(e){
 
 }
   local.search(area);
 
 });
+
+var options = {
+  map:map,
+  onSearchComplete: function(results){
+    if (local.getStatus() == BMAP_STATUS_SUCCESS){// 判断状态是否正确
+        openInfoWinFuns = [];
+        for (var i = 0; i < results.getCurrentNumPois(); i ++){
+            var marker = addMarker(results.getPoi(i).point,i);
+            var openInfoWinFun = addInfoWindow(marker,results.getPoi(i),i);
+            openInfoWinFuns.push(openInfoWinFun);
+            // 默认打开第一标注的信息窗口
+            var selected = "";
+            if(i == 0){
+                selected = "background-color:#f0f0f0;";
+                openInfoWinFun();
+            }
+        }
+    }else{
+    document.getElementById("errTip").style.display="block";
+  }
+  }
+};
+// 添加标注
+function addMarker(point, index){
+  var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(23, 25), {
+    offset: new BMap.Size(10, 25),
+    imageOffset: new BMap.Size(0, 0 - index * 25)
+  });
+  var marker = new BMap.Marker(point, {icon: myIcon});
+  map.addOverlay(marker);
+  return marker;
+}
+// 添加信息窗口
+function addInfoWindow(marker,poi,index){
+  var name = null;
+    if(poi.type == BMAP_POI_TYPE_NORMAL){
+        name = "地址:"
+    }else if(poi.type == BMAP_POI_TYPE_BUSSTOP){
+        name = "公交:"
+    }else if(poi.type == BMAP_POI_TYPE_SUBSTOP){
+        name = "地铁:"
+    }
+  poi_address="<b>"+name+"</b> "+poi.address
+//  poi.title
+/*  var searchInfoWindow = new BMap.InfoWindow(infoWindowHtml.join(""),{title:infoWindowTitle,width:200}); 
+*/  searchInfoWindow = new BMapLib.SearchInfoWindow(map, poi_address, {
+    title  : poi.title,      //标题
+//    width  : 290,             //宽度
+//    height : 105,              //高度
+    panel  : "panel",         //检索结果面板
+    enableAutoPan : true,     //自动平移
+    enableSendToPhone: true, //是否启用发送到手机
+    searchTypes   :[
+      //BMAPLIB_TAB_SEARCH,   //周边检索
+      BMAPLIB_TAB_TO_HERE,  //到这里去
+      BMAPLIB_TAB_FROM_HERE //从这里出发
+    ]
+  });
+  var openInfoWinFun = function(){
+    searchInfoWindow.open(marker);
+    map.panTo(new BMap.Point(marker.getPosition()));
+    }
+    marker.addEventListener("click", openInfoWinFun);
+    return openInfoWinFun;
+}
+
 </script>
 <script type="text/javascript">
 $(document).ready(function() {

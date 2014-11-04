@@ -99,7 +99,18 @@ function sideBtnFun(){
             return false;
         }else if(ThiType=='map'){
             ThiArea=Thi.data('area');
-            art.dialog.open('/house/house_see_map.html?area='+ThiArea,{id:'seemap'});
+            // art.dialog.open(
+            //   'http://map.baidu.com',
+            //   {
+            //     id:'baidu_map',width:800,height:600,
+            //     init:function(e){
+            //       this.iframe.onload=function(xx){
+            //         alert(2);
+            //       };
+            //     }
+            //   });
+            // art.dialog.open('/house/house_see_map.html?area='+ThiArea,{id:'seemap'});
+            art.dialog.open('/house/baidu_map.html?area='+ThiArea,{id:'seemap',width:800,height:600});
             return false;
         }else if(ThiType=='copy'){
             alert('不给复制');

@@ -81,8 +81,8 @@ function openAdd(){
   art.dialog.open("/v/client/client_add.html",{id:'add_client',width:800,height:542,title:'添加客源'});
 }
 
-function openDetail(){
-  art.dialog.open("/v/client/client_Detail.html",{id:'client_Detail',width:800,height:490,title:'客源信息'});
+function openDetail(id){
+  art.dialog.open("/v/client/client_Detail.html?id="+id,{id:'client_Detail',width:800,height:490,title:'客源信息'});
 }
 
 function openEdit(id){
@@ -121,7 +121,7 @@ $(document).ready(function() {
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;">
-            <div id="menuTop" style="display:inline-block">
+            <div id="menuTop" style="display:inline-block; width:100%;" onselectstart="return false;">
               <ul class="MainRightTop KY_W">
                   <li onclick="window.location='/v/client/index.html'" class="slect"><i class="i1"></i>求购</li>
                   <li class="line"></li>
@@ -129,7 +129,7 @@ $(document).ready(function() {
                   <li class="line"></li>
               </ul>
             </div>
-              <div class="MainRightInputMain KY_W">
+              <div class="MainRightInputMain KY_W" onselectstart="return false;">
               
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
                    <ul class="InputMainLine KY_W" style="margin-bottom:8px;">
@@ -140,35 +140,35 @@ $(document).ready(function() {
                         </li>
                         <li>
                             <span class="SpanName">登记人</span>
-                            <select name="djrDid" id="djrDid" class="input-sm input-rightB w102 dept_select">
+                            <select name="djrDid" id="djrDid" class="input-sm input-rightB w102 dept_select" >
                               <option value="">所有</option>
                             </select>
-                            <select name="djrId" id="djrId" class="input-sm input-left w102 user_select">
+                            <select name="djrId" id="djrId" class="input-sm input-left w102 user_select" >
                               <option value="">所有</option>
                             </select>
                         </li>
                         <li>
                             <button class="selectMethod hand"  type="button">区域<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('quyus')" class="id_quyu"><label><input class="hand" type="checkbox" name="quyus" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('quyus')" class="id_quyu"><label><input text="${name}" class="hand" type="checkbox" name="quyus" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand" type="button">楼型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('lxing')" class="id_lxing"><label><input class="hand" type="checkbox" name="lxing" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('lxing')" class="id_lxing"><label><input text="${name}" class="hand" type="checkbox" name="lxing" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand" type="button">房型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" type="checkbox" name="fxing" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input text="${value}" class="hand" type="checkbox" name="fxing" value="${value}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand" type="button">装潢<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input class="hand" type="checkbox" name="zxiu" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input text="${name}" class="hand" type="checkbox" name="zxiu" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
                    </ul>
@@ -190,13 +190,6 @@ $(document).ready(function() {
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2"><em>单价</em></span>
-                            <div class="DivBoxW1 Fleft">
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="djiaStart" />
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="djiaEnd" />
-                            </div>
-                        </li>
-                        <li>
                             <span class="SpanNameH2"><em>楼层</em></span>
                             <div class="DivBoxW1 Fleft">
                             <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="lcengStart" />
@@ -213,8 +206,8 @@ $(document).ready(function() {
                         <li>
                             <span class="SpanNameH2"><em>发布<br />日期</em></span>
                             <div class="DivBoxW1 Fleft">
-        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:78px">
-        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:78px">
+        <input type="text" class="form-control input-sm input-left" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:70px">
+        <input type="text" class="form-control input-sm input-left" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:70px">
                             </div>
                         </li>
                         
@@ -245,8 +238,8 @@ $(document).ready(function() {
                                    <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" style=" margin-bottom:-1px;">
                                     <tr>
                                             <th width="60">客户姓名</th>
-                                            <th width="120">客户电话</th>
-                                            <th width="100">操作</th>
+                                            <th width="160">客户电话</th>
+                                            <th width="120">操作</th>
                                             <th width="80">发布人</th>
                                             <th style="width:200px; min-width:50px;">楼盘名称</th>
                                             <!-- <th width="50">楼型</th> -->
@@ -265,13 +258,15 @@ $(document).ready(function() {
                     </div>   
               </div>      
                            
-              <div class="MainRightConMain KY_W" style="display:table-row; position:relative;">
+              <div class="MainRightConMain KY_W" style="display:table-row; position:relative; cursor:default;">
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain">
                     <tr data-hid="${id}" style="display:none;" class="id_client_list" >
                       <td width="60">${name}</td>
-                      <td width="120">${tels}</td>
-                      <td width="100"><a href="###" onclick="openDetail()">详情</a> <a href="###" onclick="openEdit(${id})">修改</a> <a href="##" onclick="needHouse(${id});">房配客</a> <a href="#" onclick="deleteClient(${id});">删除</a></td>
+                      <td width="160">${tels}</td>
+                      <td width="120"><a href="###" onclick="openDetail(${id})">详情</a>
+                       <a auth="ky_edit" href="###" onclick="openEdit(${id})">修改</a> <a href="##" onclick="needHouse(${id});">房配客</a>
+                       <a auth="ky_del" href="#" onclick="deleteClient(${id});">删除</a></td>
                       <td width="80">${djrName}</td>
                       <td style="width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">${areas}</div></td>
                       <!-- <td width="50">${lxings}</td> -->

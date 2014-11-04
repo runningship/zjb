@@ -806,7 +806,7 @@ function checkTel(){
     var reg = new RegExp(/^[0-9-/]+$/);
     var inputBox=$("#tel");
     var value=inputBox.val().trim();
-    if(value.length == 0){ return false; }
+    if(value.length == 0){ return true; }
     if(!reg.test(value)){
         infoAlert("输入错误！只能输入‘数字’或‘-’或‘/’");
         inputBox.focus();
@@ -817,11 +817,25 @@ function checkTel(){
     for(var i = 0; i < str.length; i ++){
         if(check(str[i]) == false){
             infoAlert("号码"+str[i]+"填写错误?请检查电话号码的长度,如果想输入多个号码请用/隔开");
-            // inputBox.focus();
+            inputBox.focus();
+            return false;
         }
     }
+    return true;
 }
 
+function checkDateyear(){
+   //检查建筑年代
+  var year = $('#dateyear').val();
+  var reg = new RegExp(/^[0-9/]+$/);
+  if(year.length>0){
+    if(year.length!=4 || !reg.test(year)){
+      art.dialog.tips("年代必须为4位数字");
+      $('#dateyear').focus();
+      return;
+    }  
+  }
+}
 function openAddHouse(url){
   art.dialog.open(url,{id:'house_add',width:642,height:500});
 }

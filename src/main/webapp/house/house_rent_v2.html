@@ -86,12 +86,12 @@ function getSider(id){
 
 
 function houseEdit(id){
-  event.cancelBubble=true;
+  // event.cancelBubble=true;
   art.dialog.open("/house/house_rent_edit.html?id="+id)
 }
 
 function shenheFy(id , obj){
-  event.cancelBubble=true;
+  // event.cancelBubble=true;
   YW.ajax({
     type: 'POST',
     url: '/c/house/rent/toggleShenHe?id='+id,
@@ -211,8 +211,8 @@ $(document).ready(function(){
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;">
-            <div id="menuTop" style="display:inline-block">
-              <ul class="MainRightTop KY_W">
+            <div id="menuTop" style="display:inline-block; width:100%;">
+              <ul class="MainRightTop KY_W" onselectstart="return false;">
                   <li onclick="window.location='/v/house/house_v2.html'"><i class="i1"></i>出售</li>
                   <li class="line"></li>
                   <li class="slect" onclick="window.location='/v/house/house_rent_v2.html'"><i class="i2"></i>出租</li>
@@ -239,7 +239,7 @@ $(document).ready(function(){
                   <li class="line"></li>
               </ul>
               </div>
-              <div class="MainRightInputMain KY_W" style="margin-bottom:5px;">
+              <div class="MainRightInputMain KY_W" style="margin-bottom:5px;" onselectstart="return false;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                    <input type="hidden" id="sh" name="sh" value="$${sh}">
                    <ul class="InputMainLine KY_W" style=" margin-bottom:8px;">

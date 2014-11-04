@@ -270,11 +270,11 @@ public class ClientService {
 		}
 //		if(client.yearFrom!=null){
 //			hql.append(" and h.dateyear>=? ");
-//			params.add(client.yearFrom);
+//			params.add(client.yearFrom.toString());
 //		}
 //		if(client.yearTo!=null){
 //			hql.append(" and h.dateyear<=? ");
-//			params.add(client.yearTo);
+//			params.add(client.yearTo.toString());
 //		}
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
@@ -352,42 +352,42 @@ public class ClientService {
 		ModelAndView mv = new ModelAndView();
 		Client po = dao.get(Client.class, id);
 		if(po.tels!=null){
-			po.tels = po.tels.replace("/", ",");
+			po.tels = po.tels.replace(",", "/");
 		}
 		mv.data= JSONHelper.toJSON(po);
 		if(po.jiageFrom==0){
-			mv.data.remove("jiageFrom");
+			mv.data.put("jiageFrom","");
 		}
 		if(po.jiageTo==(float)maxExpection){
-			mv.data.remove("jiageTo");
+			mv.data.put("jiageTo","");
 		}
 		
 		if(po.lcengFrom==0){
-			mv.data.remove("lcengFrom");
+			mv.data.put("lcengFrom","");
 		}
 		if(po.lcengTo==maxExpection){
-			mv.data.remove("lcengTo");
+			mv.data.put("lcengTo","");
 		}
 		
 		if(po.mjiFrom==0){
-			mv.data.remove("mjiFrom");
+			mv.data.put("mjiFrom","");
 		}
 		if(po.mjiTo==(float)maxExpection){
-			mv.data.remove("mjiTo");
+			mv.data.put("mjiTo","");
 		}
 		
 		if(po.yearFrom==0){
-			mv.data.remove("yearFrom");
+			mv.data.put("yearFrom","");
 		}
 		if(po.yearTo==maxExpection){
-			mv.data.remove("yearTo");
+			mv.data.put("yearTo","");
 		}
 		
 		if(po.zujinFrom==0){
-			mv.data.remove("zujinFrom");
+			mv.data.put("zujinFrom","");
 		}
 		if(po.zujinTo==maxExpection){
-			mv.data.remove("zujinTo");
+			mv.data.put("zujinTo","");
 		}
 		return mv;
 	}

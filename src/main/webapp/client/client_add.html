@@ -16,6 +16,9 @@ var zxiucont=0;
 var quyucont=0;
 var cid=$${cid};
 function save(){
+  if(checkTel()==false){
+    return;
+  }
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
@@ -28,6 +31,10 @@ function save(){
         alert('发布成功');
     }
   });
+}
+
+function close(){
+  art.dialog.close();
 }
 
 function setSearchValue(index){
@@ -82,13 +89,13 @@ $(document).ready(function() {
     <td width="80" align="right" class="TableTdBorBot TableTdBorTop">姓名：</td>
     <td width="318" class="TableTdBgColor"><input type="text" class="w1" name="name" desc="客户姓名"/></td>
     <td width="80" align="right" class="TableTdBorBot TableTdBorTop">电话：</td>
-    <td width="318" class="TableTdBgColor"><input type="text" class="w1" id="tel" name="tels" placeholder="房主号码 / 分割" onblur="checkTel()"  /><span></span></td>
+    <td width="318" class="TableTdBgColor"><input type="text" class="w1" id="tel" name="tels" placeholder="房主号码 / 分割" onblur="checkTel();"  /><span></span></td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">楼盘：</td>
-    <td class="TableTdBgColor"><input id="search" type="text" class="w1"  name="areas"/></td>
+    <td class="TableTdBgColor"><input id="search" type="text" class="w1" desc="" name="areas"/></td>
     <td align="right" class="TableTdBorBot">楼层：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="lcengFrom" />-<input type="text" class="w2" name="lcengTo" /> 层</td>
+    <td class="TableTdBgColor"><input type="text" desc="楼层" class="w2" name="lcengFrom" />-<input type="text" desc="楼层" class="w2" name="lcengTo" /> 层</td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">楼型：</td>
@@ -112,16 +119,16 @@ $(document).ready(function() {
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">面积：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="mjiFrom" />-<input type="text" class="w2"  name="mjiTo"/> ㎡</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" desc="面积" name="mjiFrom" />-<input type="text" desc="面积" class="w2"  name="mjiTo"/> ㎡</td>
     <td align="right" class="TableTdBorBot">价格：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="jiageFrom" />-<input type="text" class="w2"  name="jiageTo"/> 万</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" desc="价格" name="jiageFrom" />-<input type="text" desc="价格" class="w2"  name="jiageTo"/> 万</td>
   </tr>
   <tr>
     
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">年代：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" name="yearFrom" />-<input type="text" class="w2"  name="yearTo"/></td>
+    <td class="TableTdBgColor"><input type="text" class="w2" desc="年代" name="yearFrom" />-<input type="text" desc="年代" class="w2"  name="yearTo"/></td>
     <td align="right" class="TableTdBorBot">业务员：</td>
     <td colspan="3" class="TableTdBgColor">
         <select name="uid" id="djrDid" class="input-sm input-rightB w3 dept_select">
