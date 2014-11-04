@@ -104,6 +104,10 @@ public class DepartmentService {
 		}
 		//公司需要更新的字段
 		po.share = dept.share;
+		long count = dao.countHql("select count(*) from Department where authCode=?", dept.authCode);
+		if(count>0){
+			throw new GException(PlatformExceptionType.BusinessException, "授权码已被使用，请重新设置.");
+		}
 		po.authCode = dept.authCode;
 		po.pcnum = dept.pcnum;
 		dao.saveOrUpdate(po);
