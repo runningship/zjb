@@ -62,6 +62,8 @@ function getContent(){
       $('#mjiTo').val(json['mjiTo']);
       $('#jiageFrom').val(json['jiageFrom']);
       $('#jiageTo').val(json['jiageTo']);
+      $('#djiaFrom').val(json['djiaFrom']);
+      $('#djiaTo').val(json['djiaTo']);
       $('#yearFrom').val(json['yearFrom']);
       $('#yearTo').val(json['yearTo']);
       $('#beizhu').val(json['beizhu']);
@@ -170,7 +172,8 @@ $(document).ready(function() {
     <td class="TableTdBgColor"><input type="text" class="w2" desc="价格" id="jiageFrom" name="jiageFrom" />-<input type="text" class="w2" desc="价格" id="jiageTo" name="jiageTo"/> 万</td>
   </tr>
   <tr>
-    
+    <td align="right" class="TableTdBorBot">单价：</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" desc="单价" id="djiaFrom" name="djiaFrom" />-<input type="text" desc="单价" class="w2" id="djiaTo" name="djiaTo"/></td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">年代：</td>

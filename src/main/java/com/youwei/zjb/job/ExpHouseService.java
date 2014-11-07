@@ -21,6 +21,7 @@ import com.youwei.zjb.house.HouseService;
 import com.youwei.zjb.house.LouXing;
 import com.youwei.zjb.house.QuYu;
 import com.youwei.zjb.house.ZhuangXiu;
+import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.ExpHouse;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.util.JSONHelper;
@@ -43,6 +44,22 @@ public class ExpHouseService {
 			hql.append(" and finish=?");
 			params.add(finish);
 		}
+		if(StringUtils.isNotEmpty(query.area)){
+			query.area = query.area.replace(" ", "");
+			hql.append(" and area like ? ");
+			params.add("%"+query.area+"%");
+		}
+		if(query.quyus!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.quyus.size();i++){
+				hql.append(" quyu = ? ");
+				if(i<query.quyus.size()-1){
+					hql.append(" or ");
+				}
+				params.add(query.quyus.get(i));
+			}
+			hql.append(" )");
+		}
 		page.orderBy="addtime";
 		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString() , params.toArray());
@@ -52,6 +69,10 @@ public class ExpHouseService {
 	
 	@WebMethod
 	public ModelAndView shenhe(House house ,String hxing, Integer expHid){
+		ExpHouse po = dao.get(ExpHouse.class, expHid);
+		if(po==null){
+			throw new GException(PlatformExceptionType.BusinessException,"该房源已不存在");
+		}
 		if(StringUtils.isEmpty(house.zxiu)){
 			throw new GException(PlatformExceptionType.BusinessException,"请先选择装潢");
 		}
@@ -64,10 +85,7 @@ public class ExpHouseService {
 		if(StringUtils.isEmpty(hxing)){
 			throw new GException(PlatformExceptionType.BusinessException,"请先选择户型");
 		}
-		ExpHouse po = dao.get(ExpHouse.class, expHid);
-		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException,"该房源已不存在");
-		}
+		
 		ModelAndView mv = hs.add(house, hxing);
 		po.finish=1;
 		dao.saveOrUpdate(po);
@@ -75,16 +93,37 @@ public class ExpHouseService {
 	}
 	
 	@WebMethod
+	public ModelAndView notPass(Integer expHid,Integer finish, String beizhu){
+		ExpHouse po = dao.get(ExpHouse.class, expHid);
+		if(po==null){
+			throw new GException(PlatformExceptionType.BusinessException,"该房源已不存在");
+		}
+		po.finish=2;
+		po.beizhu = beizhu;
+		dao.saveOrUpdate(po);
+		return new ModelAndView();
+	}
+	@WebMethod
 	public ModelAndView get(int id){
 		ExpHouse po = dao.get(ExpHouse.class, id);
 		if(po.shr!=null && !ThreadSession.getUser().uname.equals(po.shr)){
 			throw new GException(PlatformExceptionType.BusinessException,"该房源正由"+po.shr+"在审核");
 		}
+		long count = dao.countHql("select count(*) from ExpHouse where shr=?", ThreadSession.getUser().uname);
+		if(count>2){
+			throw new GException(PlatformExceptionType.BusinessException,"您已经打开两天房源，请先处理未处理完房源.");
+		}
+		String nbsp = String.valueOf((char)160);
 		ModelAndView mv = new ModelAndView();
-		
+		if(StringUtils.isEmpty(po.address)){
+			List<District> list = dao.listByParams(District.class, "from District where name=?", po.area.trim().replace(nbsp, ""));
+			if(list!=null && list.size()>0){
+				po.address = list.get(0).address;
+			}
+		}
 		FangXing fxing = FangXing.parse(Integer.valueOf(po.hxf), Integer.valueOf(po.hxt), Integer.valueOf(po.hxw));
 		mv.data = JSONHelper.toJSON(po);
-		String nbsp = String.valueOf((char)160);
+		
 		if(po.quyu!=null){
 			String qy = po.quyu.trim().replace(nbsp, "");
 			if("合肥周边".equals(qy)){

@@ -79,6 +79,9 @@ public class ExpHouse {
 	public String dateyear;
 
 	public Date addtime;
+	
+	public Date pubtime;
+	
 	//房源地址
 	public String href;
 	
@@ -90,7 +93,8 @@ public class ExpHouse {
 	
 	public Integer repeat;
 	
-	//是否已经导入到中介宝
+	//是否已经通过审核
+	//0 未审核，1审核通过，2审核不通过
 	public Integer finish;
 	
 	public String timeOffset;

@@ -191,6 +191,13 @@ $(document).ready(function(){
         return false;
     });
     // tableHover();
+    if(!window.top.hasShowAds){
+      if($${seeAds}){
+        art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0}); 
+        window.top.hasShowAds=true;
+      }
+    }
+		 
 });
 
 function crashTest(){
@@ -219,9 +226,9 @@ function crashTest(){
      
      <div class="MainRight">
           
-          <div  style="display:table; width:100%; height:100%; overflow:hidden;">
-            <div id="menuTop" style="display:inline-block; width:100%;">
-              <ul class="MainRightTop KY_W titlebar" onselectstart="return false;">
+          <div  style="display:table; width:100%; height:100%; overflow:hidden;" class="not-select">
+            <div id="menuTop" style="display:inline-block;">
+              <ul class="MainRightTop KY_W titlebar">
                   <li class="slect nobar" onclick="window.location='/v/house/house_v2.html'"><i class="i1"></i>出售</li>
                   <li class="line"></li>
                   <li class="nobar" onclick="window.location='/v/house/house_rent_v2.html'"><i class="i2"></i>出租</li>
@@ -249,47 +256,47 @@ function crashTest(){
               </ul>
               </div>
               
-              <div class="MainRightInputMain KY_W" style="margin-bottom:5px;" onselectstart="return false;">
+              <div class="MainRightInputMain KY_W not-select" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                     <input type="hidden" id="sh" name="sh" value="$${sh}">
-                   <ul class="InputMainLine KY_W" style=" margin-bottom:8px;">
+                   <ul class="InputMainLine KY_W not-select" style=" margin-bottom:8px;">
                    
                         <li><input class="input-sm w110" type="text" placeholder="电话" name="tel" /></li>
                         <li>
-                            <span class="SpanName">楼盘</span>
+                            <span class="SpanName not-select">楼盘</span>
                             <input id="search" class="input-sm input-left w208" type="text" placeholder="" autocomplete="off" name="area" />
                         </li>
                         <li>
                             <input class="input-sm input-right w45" type="text" placeholder="栋号" name="dhao" />
-                            <span class="LRborNone SpanName">-</span>
+                            <span class="LRborNone SpanName not-select">-</span>
                             <input class="input-sm input-left w46" type="text" placeholder="房号" name="fhao" />
                         </li>
                         <li>
-                            <button class="selectMethod hand"  type="button">区域<i class="caret"></i> </button>
+                            <button class="selectMethod hand not-select"  type="button">区域<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('quyus')" class="id_quyu"><label><input class="hand" text="${name}" type="checkbox" name="quyus" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
-                            <button class="selectMethod hand" type="button">楼型<i class="caret"></i> </button>
+                            <button class="selectMethod hand not-select" type="button">楼型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('lxing')" class="id_lxing"><label><input class="hand" text="${name}" type="checkbox" name="lxing" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
-                            <button class="selectMethod hand" type="button">房型<i class="caret"></i> </button>
+                            <button class="selectMethod hand not-select" type="button">房型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" text="${value}" type="checkbox" name="fxing" value="${value}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
-                            <button class="selectMethod hand" type="button">装潢<i class="caret"></i> </button>
+                            <button class="selectMethod hand not-select" type="button">装潢<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input class="hand" text="${name}" type="checkbox" name="zxiu" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
-                            <button class="selectMethod" type="button">综合<i class="caret"></i> </button>
+                            <button class="selectMethod not-select" type="button">综合<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('scope')"><label><input type="radio" text="" name="scope" value="all" checked="checked" > 所有</label> </p> 
                                 <p onclick="addQueryStr('scope')"><label><input type="radio" text="公司" name="scope" value="comp" >公司</label> </p> 
@@ -297,14 +304,14 @@ function crashTest(){
                             </div>
                         </li>
                         <li>
-                            <button class="selectMethod" type="button" >状态<i class="caret"></i> </button>
+                            <button class="selectMethod not-select" type="button" >状态<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('ztai')"><label><input type="radio" name="ztai" value="" text="" checked="" > 所有</label> </p> 
                                 <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input type="radio" text="${name}" name="ztai" value="${code}"> ${name}</p>
                             </div>
                         </li>
                         <li auth="fy_sh">
-                            <button class="selectMethod" type="button" >审核<i class="caret"></i> </button>
+                            <button class="selectMethod not-select" type="button" >审核<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('shehe')"><label><input text="" name="shehe" type="radio" value="" checked="checked" onclick="$('#sh').val(this.value);">全部</label> </p> 
                                 <p onclick="addQueryStr('shehe')"><label><input text="已审" name="shehe" type="radio" value="1" onclick="$('#sh').val(this.value);">已审</label> </p> 
@@ -313,47 +320,47 @@ function crashTest(){
                         </li>
                    </ul>
                    
-                   <ul class="InputMainLine KY_W">
+                   <ul class="InputMainLine KY_W not-select">
                    
                         <li style="width:122px;"><input class="input-sm w110" type="text" placeholder="编号" name="id"  desc="编号"/>
                         <input class="input-sm w110" type="text" placeholder="路段" name="address" /></li>
                         <li>
-                            <span class="SpanNameH2"><em>面积</em></span>
+                            <span class="SpanNameH2 not-select"><em>面积</em></span>
                             <div class="DivBoxW1 Fleft">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="面积" autocomplete="off" name="mjiStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="面积" autocomplete="off" name="mjiEnd" />
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2"><em>总价</em></span>
+                            <span class="SpanNameH2 not-select"><em>总价</em></span>
                             <div class="DivBoxW1 Fleft">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="总价" autocomplete="off" name="zjiaStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="总价" autocomplete="off" name="zjiaEnd" />
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2"><em>单价</em></span>
+                            <span class="SpanNameH2 not-select"><em>单价</em></span>
                             <div class="DivBoxW1 Fleft">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="单价" autocomplete="off" name="djiaStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="单价" autocomplete="off" name="djiaEnd" />
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2"><em>楼层</em></span>
+                            <span class="SpanNameH2 not-select"><em>楼层</em></span>
                             <div class="DivBoxW1 Fleft">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengEnd" />
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2"><em>建筑<br />年代</em></span>
+                            <span class="SpanNameH2 not-select"><em>建筑<br />年代</em></span>
                             <div class="DivBoxW1 Fleft">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="yearStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="yearEnd" />
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2"><em>发布<br />日期</em></span>
+                            <span class="SpanNameH2 not-select"><em>发布<br />日期</em></span>
                             <div class="DivBoxW1 Fleft">
                             <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:70px">
         <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:70px">
@@ -361,8 +368,8 @@ function crashTest(){
                         </li>
                         
                         <li class="LiBoxW1">
-                             <button id="searchBtn" class="ButtonW1 ButtonS hand" type="submit">搜索</button>
-                             <button class="ButtonW1 ButtonQ hand" type="button" onclick="window.location.reload();">清空</button>
+                             <button id="searchBtn" class="ButtonW1 ButtonS hand not-select" type="submit">搜索</button>
+                             <button class="ButtonW1 ButtonQ hand not-select" type="button" onclick="window.location.reload();">清空</button>
                         </li>
                         
                    </ul>
@@ -382,7 +389,7 @@ function crashTest(){
                 <div class="MainRightConR" id="FY_RCon" style="margin:0px;overflow:hidden; overflow-y:hidden; display:table-cell; float:left;">
                   <div style="width:100%; display:table; height:100%;">
                                 <div style="display:table-row;">
-                                  <div class="MR_ConTit KY_W MR_ConTitW2" style=" display:table-cell; position:inherit;">
+                                  <div class="MR_ConTit KY_W MR_ConTitW2 not-select" style=" display:table-cell; position:inherit;">
                                     <ul id="query_str">
                                     <li class="tit">筛选条件：</li>
                                     <span></span>
@@ -416,7 +423,7 @@ function crashTest(){
                                   
                                   </div>
                                     
-                                 <div style="display:table-row;">           
+                                 <div style="display:table-row;" >           
 
                                             <div class="FY_RCon" style=" width:100%; display:table-cell;">
                                                 <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">

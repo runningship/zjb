@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>myFocus v2.0</title>
+<script type="text/javascript" src="js/myfocus-2.0.1.min.js"></script>
+<style type="text/css">
+body { background:#fff;}
+h2{height:42px; line-height:42px; background:#f1f1f1; margin-bottom:20px; font-size:12px; color:#666; font-weight:normal;}
+#myFocus{ width:960px; height:600px;}
+</style>
+<script type="text/javascript">
+//设置
+myFocus.set({
+	id:'myFocus',//ID
+	pattern:'mF_slide3D',//风格
+  auto:false,
+  loadIMGTimeout:0
+});
+</script>
+<style type="text/css">
+  .mF_slide3D_wrap{padding:0px;}
+</style>
+</head>
+<body style="margin:0px;">
+<div id="myFocus"><!--焦点图盒子-->
+  <div class="loading"><img src="img/loading.gif" alt="请稍候..." /></div><!--载入画面(可删除)-->
+  <div class="pic"><!--图片列表-->
+  	<ul>
+        <li><a href="#1"><img src="img/1.jpg" thumb="" /></a></li>
+        <li><a href="#2"><img src="img/2.jpg" thumb="" /></a></li>
+        <li><a href="#3"><img src="img/3.jpg" thumb="" /></a></li>
+  	</ul>
+  </div>
+</div>
+</body>
+</html>

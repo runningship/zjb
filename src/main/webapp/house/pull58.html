@@ -140,6 +140,7 @@ $(document).ready(function() {
 .ztai_已售{color:red;}
 .ztai_在售{color:blue;}
 .ztai_停售{color:orange;}
+.repeat_1{color:yellow;}
 </style>
 </head>
 <body>
@@ -227,11 +228,12 @@ $(document).ready(function() {
 
   <table class="table table-hover table-striped table-nopadding TableB" >
     <tbody>
-    <tr data-hid="${id}" style="display:none;" class="id_House_list" >
+    <tr data-hid="${id}" style="display:none;" class="id_House_list">
       <td style="width:80px;"><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
-      <td style="width:50px;" >
+      <td style="width:80px;" >
         <a href="${href}" target="_blank" class="edit" data-hid="${id}" data-rel="edit">原</a>
         <a href="##" class="del" data-hid="${id}" data-rel="del" onclick="houseShen(${id})">审</a>
+        <a href="#" show="${repeat}==1" style="color:orange">查看重复</a>
       </td>
       <td style="width:60px;">${shr}</td>
       <td style="width:100px;">${quyu}</td>

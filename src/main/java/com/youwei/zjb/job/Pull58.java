@@ -18,6 +18,7 @@ import org.jsoup.select.Elements;
 
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
+import com.youwei.zjb.house.QuYu;
 import com.youwei.zjb.house.ZhuangXiu;
 import com.youwei.zjb.house.entity.ExpHouse;
 
@@ -27,7 +28,7 @@ public class Pull58 {
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
 //		pull("http://hf.58.com/ershoufang/19231956718090x.shtml");
-		start();
+		startJob();
 	}
 	
 	public static void startJob(){
@@ -201,7 +202,13 @@ public class Pull58 {
 				String[] arr = str.split("-");
 				if(arr.length>0){
 					ehouse.quyu = arr[0];
-					System.out.println("quyu="+arr[0]);
+					if(ehouse.quyu.equals("合肥周边")){
+						ehouse.quyu = QuYu.周边市区.name();
+					}else if(!ehouse.quyu.contains("区")){
+						
+						ehouse.quyu = ehouse.quyu.trim().replace(String.valueOf((char)160), "")+"区";
+					}
+					System.out.println("quyu="+ehouse.quyu);
 				}
 				if(arr.length>2){
 					String tmp = arr[2];

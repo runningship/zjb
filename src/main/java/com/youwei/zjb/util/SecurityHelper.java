@@ -15,7 +15,7 @@ import com.youwei.zjb.user.entity.User;
 public class SecurityHelper {
 
 	public static void main(String[] args){
-		System.out.println(Md5("123456"));
+		System.out.println(Md5("13866772275"));
 	}
 	public static String Md5(String plainText) {
 		try {

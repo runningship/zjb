@@ -167,18 +167,8 @@ public class ClientService {
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
 		return mv;
 	}
-	
-	/**
-	 * 客配房
-	 * @param cid 客源id
-	 */
-	@WebMethod
-	public ModelAndView matchHouse(Integer cid , Page<Client> page){
-		ModelAndView mv = new ModelAndView();
-		Client client = dao.get(Client.class, cid);
-		List<Object> params = new ArrayList<Object>();
+	private void buildQuery(StringBuilder hql, List<Object> params,Client client){
 		User u = ThreadSession.getUser();
-		StringBuilder hql = new StringBuilder("from House h where (h.cid=? or h.seeGX=?) ");
 		params.add(u.cid);
 		params.add(1);
 		if(client.areas!=null){
@@ -276,6 +266,29 @@ public class ClientService {
 //			hql.append(" and h.dateyear<=? ");
 //			params.add(client.yearTo.toString());
 //		}
+	}
+	@WebMethod
+	public ModelAndView hasMatchResult(Integer cid){
+		ModelAndView mv = new ModelAndView();
+		Client client = dao.get(Client.class, cid);
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql = new StringBuilder("select count(*) from House h where (h.cid=? or h.seeGX=?) ");
+		buildQuery(hql, params, client);
+		long count = dao.countHql(hql.toString(), params.toArray());
+		mv.data.put("count", count);
+		return mv;
+	}
+	/**
+	 * 客配房
+	 * @param cid 客源id
+	 */
+	@WebMethod
+	public ModelAndView matchHouse(Integer cid , Page<Client> page){
+		ModelAndView mv = new ModelAndView();
+		Client client = dao.get(Client.class, cid);
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql = new StringBuilder("from House h where (h.cid=? or h.seeGX=?) ");
+		buildQuery(hql, params, client);
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString(), params.toArray());

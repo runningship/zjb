@@ -32,6 +32,7 @@ function setSideMenuCurr(){
     menuerBoxI.stop().animate({top: menuerBoxTop+(menuerBoxOnH/2-10)},300);
 }
 var selectedFrame;
+var hasShowAds=false;
 function setSideMenu(){
     var menuerBox=$('.menuSide'),
     menuerIndex=0,
@@ -120,7 +121,6 @@ try{
         quit();
     });
     WinMax();
-    
 }catch(e){
     console.error(e);
 };

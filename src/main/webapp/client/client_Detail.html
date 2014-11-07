@@ -42,6 +42,7 @@ function getContent(){
       panduan(json['mjiFrom'],json['mjiTo'],'㎡','#mji');
       // $('#mji').html(json['mjiFrom']+'㎡ - '+json['mjiTo']+'㎡');
       panduan(json['jiageFrom'],json['jiageTo'],'万元','#jiage');
+      panduan(json['djiaFrom'],json['djiaTo'],'元','#djia');
       // $('#jiage').html(json['jiageFrom']+'万元 - '+json['jiageTo']+'万元');
       panduan(json['yearFrom'],json['yearTo'],'年','#year');
       // $('#year').html(json['yearFrom']+'年 - '+json['yearTo']+'年');
@@ -152,11 +153,12 @@ $(document).ready(function() {
   <tr>
     <td align="right" height="33" class="TableTdBorBot">面积：</td>
     <td class="TableTdBgColor" id="mji"><span class="w1 h"> </span></td>
-    <td align="right" class="TableTdBorBot">价格：</td>
+    <td align="right" class="TableTdBorBot">总价：</td>
     <td class="TableTdBgColor" id="jiage"><span class="w1 h"></span></td>
   </tr>
   <tr>
-    
+    <td align="right" class="TableTdBorBot">单价：</td>
+    <td class="TableTdBgColor" id="djia"><span class="w1 h"></span></td>
   </tr>
   <tr>
     <td align="right" height="33" class="TableTdBorBot">年代：</td>

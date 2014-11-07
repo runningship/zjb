@@ -20,13 +20,17 @@
 <script src="/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="/js/jquery.timers.js" type="text/javascript"></script>
 <script src="/js/jquery.input.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.js" type="text/javascript"></script>
+<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript">
 var id;
 var queryOptions;
 id =getParam('id');
 function save(){
+   checkDateyear();
+   if(checkTel()==false){
+    return;
+  }
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
@@ -36,6 +40,19 @@ function save(){
         art.dialog.close();
         art.dialog.opener.doSearch();
         alert('发布成功');
+    }
+  });
+}
+
+function notPass(){
+    var bz = $('#beizhu').val();
+    YW.ajax({
+    type: 'POST',
+    url: '/c/house/exp/notPass?expHid='+$('#expHid').val()+'&beizhu='+bz,
+    mysuccess: function(data){
+        art.dialog.close();
+        art.dialog.opener.doSearch();
+        alert('处理成功');
     }
   });
 }
@@ -75,20 +92,24 @@ var apiTitle;
 var parent = art.dialog.parent,       // 父页面window对象
 api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('.form1');
-api.title('录入审核').size(600, 500)
+api.title('采集审核').size(600, 500)
 // 自定义按钮
 .button({
-  name: '保存',
+  name: '通过',
   callback: function () {
     save();
     return false;
   },focus: true
 },{
+  name: '不通过',
+  callback: function () {
+    notPass();
+    return false;
+  },focus: false
+},{
   name: '取消'
 });
-if (id!='') {
-    apiTitle='录入审核';
-};
+
 api.title(apiTitle);
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a'),

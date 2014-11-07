@@ -178,7 +178,7 @@ public class HouseService {
 			int jiage = (int) (po.zjia*10000/house.mji);
 			po.djia = (float) jiage;
 		}
-		if(po.tel!=null && !po.tel.equals(house.tel)){
+		if(house.tel!=null && !house.tel.equals(po.tel)){
 			//修改了电话号码
 			dao.execute("delete from HouseTel where hid = ?", house.id);
 			String[] arr = house.tel.split("/");
@@ -188,6 +188,9 @@ public class HouseService {
 				ht.tel = tel;
 				dao.saveOrUpdate(ht);
 			}
+			po.tel = house.tel;
+		}else{
+			dao.execute("delete from HouseTel where hid = ?", house.id);
 			po.tel = house.tel;
 		}
 		dao.saveOrUpdate(po);

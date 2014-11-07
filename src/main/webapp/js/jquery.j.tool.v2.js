@@ -24,24 +24,66 @@
 // 	} 
 // }
 //屏蔽全选
-// document.onselectstart = function (event){
-// 	if(window.event){
-// 		event = window.event;
-// 	}try{
-// 		var the = event.srcElement;
-//    if(!the.tagName){
-//     the=the.parentNode
-//    }
-//    if((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || (the.tagName == "SPAN" && (the.className == "lxr" || the.className == "tel")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect"){
-// 			//alert(the.getAttribute("selectstart"))
-//       return true;
-// 		}else{
+// document.onselectionchange=function(event){
+//   var the = document.getSelection().extentNode;
+//   if(the.tagName==undefined){
+//     the = the.parentElement;
+//   }
+//   // console.log(sel.outerHTML);
+//   if(the.tagName=='BODY' || the.tagName=='LI' || the.tagName=='EM' || the.tagName=='SELECT' ){
 //       return false;
+//     }else if(the.classList.contains('not-select')){
+//       return false;
+//     }else{
+//       return true;
 //     }
-// 	}catch (e){
-// 		return false; 
-// 	} 
 // }
+ document.onselectstart = function (event){
+ 	if(window.event){
+ 		event = window.event;
+ 	}
+
+  try{
+ 		var the = event.srcElement;
+    if(the.tagName==undefined){
+      the = the.parentElement;
+    }
+    if(the.tagName=='BODY' || the.tagName=='LI' || the.tagName=='EM' || the.tagName=='SELECT' ){
+      return false;
+    }else if(the.classList.contains('not-select')){
+      return false;
+    }else{
+      return true;
+    }
+   //  if((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || (the.tagName == "SPAN" && (the.className == "lxr" || the.className == "tel")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect" ){
+ 		// 	//alert(the.getAttribute("selectstart"))
+   //     return true;
+ 		// }else if(the.tagName == "TD" || the.tagName == "TH"){
+   //     return true;
+   //  }else{
+   //    return false;
+   //  }
+ 	}catch (e){
+ 		return false; 
+ 	} 
+ }
+ //屏蔽全选  结束
+
+
+ //添加例外
+    // var omitformtags = ["input", "table"];//设置可以的元素名称
+    // omitformtags = "|"+ omitformtags.join("|") + "|";
+    // function disableselect(){//判断是否是可选中的元素，不是的话就return false
+    //   if(event.srcElement.tagName==undefined){
+    //     return false;
+    //   }
+    //   if (omitformtags.indexOf("|"+event.srcElement.tagName.toLowerCase()+"|")==-1){
+    //     return false;
+    //   }
+    // }
+    // document.onselectstart = disableselect;
+ //添加例外  结束
+ 
 $(document).keydown(function(event){  
 //alert('a'+event.keyCode)
     if ((event.altKey)&&   
@@ -65,6 +107,24 @@ $(document).keydown(function(event){
         return false; 
       }   
     }  
+	
+	
+	if ((event.keyCode==17)&&(event.keyCode==65))   
+   {   
+       if(window.event){
+        event = window.event;
+      }try{
+        var the = event.srcElement;
+        if ((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || (the.tagName == "SPAN" && (the.className == "lxr" || the.className == "tel")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect"){
+          return true;
+        }
+        return false;
+      }catch (e){
+        return false; 
+      }  
+   }   
+	
+	
     if(event.keyCode==9){  
       if(window.event){
         event = window.event;
