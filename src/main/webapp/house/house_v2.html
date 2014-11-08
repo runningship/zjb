@@ -193,7 +193,12 @@ $(document).ready(function(){
     // tableHover();
     if(!window.top.hasShowAds){
       if($${seeAds}){
-        art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0}); 
+        if(window.screen.height<768){
+          art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0,top:50});   
+        }else{
+          art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0}); 
+        }
+        
         window.top.hasShowAds=true;
       }
     }

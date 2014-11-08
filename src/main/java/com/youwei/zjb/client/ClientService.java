@@ -17,6 +17,7 @@ import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.client.entity.Client;
 import com.youwei.zjb.house.FangXing;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
@@ -28,32 +29,34 @@ public class ClientService {
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	private static final int maxExpection=100000;
 	@WebMethod
-	public ModelAndView list(ClientQuery query ,Page<Client> page){
+	public ModelAndView list(ClientQuery query ,Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		User u = ThreadSession.getUser();
-		StringBuilder hql = new StringBuilder("from Client where isdel=0 ");
-		
+		StringBuilder hql = new StringBuilder("select c.name as name,c.tels as tels,c.mjiFrom as mjiFrom, c.mjiTo as mjiTo, c.jiageFrom as jiageFrom,"
+				+ "c.jiageTo as jiageTo,c.lcengFrom as lcengFrom ,c.lcengTo as lcengTo,d.namea as dname,c.uname as uname,c.addtime as addtime,c.id as id "
+				+ "from Client c,Department d where isdel=0 and d.id=c.did and c.cid=?");
+		params.add(u.cid);
 		if(StringUtils.isNotEmpty(query.name)){
 			query.name = query.name.replace(" ", "");
-			hql.append(" and name like ? ");
+			hql.append(" and c.name like ? ");
 			params.add("%"+query.name+"%");
 		}
 		
 		if(StringUtils.isNotEmpty(query.tel)){
 			query.tel = query.tel.replace(" ", "");
-			hql.append(" and tels like ? ");
+			hql.append(" and c.tels like ? ");
 			params.add("%"+query.tel+"%");
 		}
 		
-		if(query.id!=null){
-			hql.append(" and id=?");
-			params.add(query.id);
-		}
+//		if(query.id!=null){
+//			hql.append(" and c.id=?");
+//			params.add(query.id);
+//		}
 		
 		if(StringUtils.isNotEmpty(query.area)){
 			query.area = query.area.replace(" ", "");
-			hql.append(" and areas like ? ");
+			hql.append(" and c.areas like ? ");
 			params.add("%"+query.area+"%");
 		}
 		if(query.mjiStart==null){
@@ -62,7 +65,7 @@ public class ClientService {
 		if(query.mjiEnd==null){
 			query.mjiEnd=(float)maxExpection;
 		}
-		hql.append(" and ((mjiFrom>= ? and mjiFrom<=?) or (mjiTo>= ? and mjiTo<=?))");
+		hql.append(" and ((c.mjiFrom>= ? and c.mjiFrom<=?) or (c.mjiTo>= ? and c.mjiTo<=?))");
 		params.add(query.mjiStart);
 		params.add(query.mjiEnd);
 		params.add(query.mjiStart);
@@ -74,7 +77,7 @@ public class ClientService {
 		if(query.lcengEnd==null){
 			query.lcengEnd=maxExpection;
 		}
-		hql.append(" and ((lcengFrom>= ? and lcengFrom<=?) or (lcengTo>= ? and lcengTo<=?))");
+		hql.append(" and ((c.lcengFrom>= ? and c.lcengFrom<=?) or (c.lcengTo>= ? and c.lcengTo<=?))");
 		params.add(query.lcengStart);
 		params.add(query.lcengEnd);
 		params.add(query.lcengStart);
@@ -87,7 +90,7 @@ public class ClientService {
 		if(query.zjiaEnd==null){
 			query.zjiaEnd=(float)maxExpection;
 		}
-		hql.append(" and ((jiageFrom>= ? and jiageFrom<=?) or (jiageTo>= ? and jiageTo<=?))");
+		hql.append(" and ((c.jiageFrom>= ? and c.jiageFrom<=?) or (c.jiageTo>= ? and c.jiageTo<=?))");
 		params.add(query.zjiaStart);
 		params.add(query.zjiaEnd);
 		params.add(query.zjiaStart);
@@ -99,19 +102,19 @@ public class ClientService {
 		if(query.yearTo==null){
 			query.yearTo=maxExpection;
 		}
-		hql.append(" and ((yearFrom>= ? and yearFrom<=?) or (yearTo>= ? and yearTo<=?))");
+		hql.append(" and ((c.yearFrom>= ? and c.yearFrom<=?) or (c.yearTo>= ? and c.yearTo<=?))");
 		params.add(query.yearFrom);
 		params.add(query.yearTo);
 		params.add(query.yearFrom);
 		params.add(query.yearTo);
 		
-		hql.append(HqlHelper.buildDateSegment("addtime",query.dateStart,DateSeparator.After,params));
-		hql.append(HqlHelper.buildDateSegment("addtime",query.dateEnd, DateSeparator.Before , params));
+		hql.append(HqlHelper.buildDateSegment("c.addtime",query.dateStart,DateSeparator.After,params));
+		hql.append(HqlHelper.buildDateSegment("c.addtime",query.dateEnd, DateSeparator.Before , params));
 		
 		if(query.quyus!=null){
 			hql.append(" and ( ");
 			for(int i=0;i<query.quyus.size();i++){
-				hql.append(" quyus like ? ");
+				hql.append(" c.quyus like ? ");
 				if(i<query.quyus.size()-1){
 					hql.append(" or ");
 				}
@@ -123,7 +126,7 @@ public class ClientService {
 		if(query.lxing!=null){
 			hql.append(" and ( ");
 			for(int i=0;i<query.lxing.size();i++){
-				hql.append(" lxings like ? ");
+				hql.append(" c.lxings like ? ");
 				if(i<query.lxing.size()-1){
 					hql.append(" or ");
 				}
@@ -134,7 +137,7 @@ public class ClientService {
 		if(query.fxing!=null){
 			hql.append(" and ( ");
 			for(int i=0;i<query.fxing.size();i++){
-				hql.append(" hxings like ? ");
+				hql.append(" c.hxings like ? ");
 				if(i<query.fxing.size()-1){
 					hql.append(" or ");
 				}
@@ -145,7 +148,7 @@ public class ClientService {
 		if(query.zxiu!=null){
 			hql.append(" and ( ");
 			for(int i=0;i<query.zxiu.size();i++){
-				hql.append(" zxius like ? ");
+				hql.append(" c.zxius like ? ");
 				if(i<query.zxiu.size()-1){
 					hql.append(" or ");
 				}
@@ -153,17 +156,25 @@ public class ClientService {
 			}
 			hql.append(" )");
 		}
-		if(query.djrDid!=null){
-			hql.append(" and djrDid=?");
-			params.add(query.djrDid);
+//		if(query.djrDid!=null){
+//			hql.append(" and c.djrDid=?");
+//			params.add(query.djrDid);
+//		}
+//		if(query.djrId!=null){
+//			hql.append(" and c.djrId=?");
+//			params.add(query.djrId);
+//		}
+		if(query.uid!=null){
+			hql.append(" and c.uid=?");
+			params.add(query.uid);
 		}
-		if(query.djrId!=null){
-			hql.append(" and djrId=?");
-			params.add(query.djrId);
+		if(query.did!=null){
+			hql.append(" and c.did=?");
+			params.add(query.did);
 		}
-		page.orderBy = "addtime";
+		page.orderBy = "c.addtime";
 		page.order = Page.DESC;
-		page = dao.findPage(page, hql.toString(), params.toArray());
+		page = dao.findPage(page, hql.toString(), true,params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
 		return mv;
 	}
@@ -258,14 +269,14 @@ public class ClientService {
 			hql.append(" and h.lceng<=? ");
 			params.add(client.lcengTo);
 		}
-//		if(client.yearFrom!=null){
-//			hql.append(" and h.dateyear>=? ");
-//			params.add(client.yearFrom.toString());
-//		}
-//		if(client.yearTo!=null){
-//			hql.append(" and h.dateyear<=? ");
-//			params.add(client.yearTo.toString());
-//		}
+		if(client.yearFrom!=null){
+			hql.append(" and h.dateyear>=? ");
+			params.add(client.yearFrom);
+		}
+		if(client.yearTo!=null){
+			hql.append(" and h.dateyear<=? ");
+			params.add(client.yearTo);
+		}
 	}
 	@WebMethod
 	public ModelAndView hasMatchResult(Integer cid){
@@ -374,7 +385,12 @@ public class ClientService {
 		if(po.jiageTo==(float)maxExpection){
 			mv.data.put("jiageTo","");
 		}
-		
+		if(po.djiaFrom==null || po.djiaFrom==0){
+			mv.data.put("djiaFrom","");
+		}
+		if(po.djiaTo==null || po.djiaTo==(float)maxExpection){
+			mv.data.put("djiaTo","");
+		}
 		if(po.lcengFrom==0){
 			mv.data.put("lcengFrom","");
 		}
@@ -402,6 +418,10 @@ public class ClientService {
 		if(po.zujinTo==maxExpection){
 			mv.data.put("zujinTo","");
 		}
+		Department dept = dao.get(Department.class, po.djrDid);
+		if(dept!=null){
+			mv.data.put("djrDname", dept.namea);
+		}
 		return mv;
 	}
 	
@@ -426,6 +446,8 @@ public class ClientService {
 		po.zxius = client.zxius;
 		po.yearFrom = client.yearFrom;
 		po.yearTo = client.yearTo;
+		po.djiaFrom = client.djiaFrom;
+		po.djiaTo=client.djiaTo;
 		if(client.chuzu==1){
 			po.zujinFrom = client.zujinFrom;
 			po.zujinTo = client.zujinTo;

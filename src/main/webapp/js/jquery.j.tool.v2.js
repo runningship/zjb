@@ -831,6 +831,9 @@ function quit(){
         url: '/c/user/logout',
         success: function(data){
           WinClose(true);
+        },
+        error:function(){
+          WinClose(true);
         }
       });
   },function(){},'warning');

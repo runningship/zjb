@@ -28,7 +28,8 @@ public class Pull58 {
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
 //		pull("http://hf.58.com/ershoufang/19231956718090x.shtml");
-		startJob();
+//		startJob();
+		start();
 	}
 	
 	public static void startJob(){

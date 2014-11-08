@@ -52,12 +52,13 @@ function getContent(){
       $('#hxings').html(json['hxings']);
       $('#quyus').html(json['quyus']);
       $('#user').html(json['dname']+' - '+json['uname']);
+      $('#djr').html(json['djrDname']+' - '+json['djrName']);
     }
   })
 }
 
 function panduan(a,b,c,d){
-  if (a==0||b==0) {
+  if (a==0&&b==0) {
       $(d).html('不限');
   }else if (a==0) {
       $(d).html('小于'+b+c);
@@ -159,11 +160,15 @@ $(document).ready(function() {
   <tr>
     <td align="right" class="TableTdBorBot">单价：</td>
     <td class="TableTdBgColor" id="djia"><span class="w1 h"></span></td>
+    <td align="right" class="TableTdBorBot">登记人员：</td>
+    <td colspan="3" class="TableTdBgColor" id="djr">
+        <span class="w1 h"></span>
+    </td>
   </tr>
   <tr>
     <td align="right" height="33" class="TableTdBorBot">年代：</td>
     <td class="TableTdBgColor" id="year"><span class="w1 h"></span></td>
-    <td align="right" class="TableTdBorBot">业务员：</td>
+    <td align="right" class="TableTdBorBot">业务人员：</td>
     <td colspan="3" class="TableTdBgColor" id="user">
         <span class="w1 h"></span>
     </td>

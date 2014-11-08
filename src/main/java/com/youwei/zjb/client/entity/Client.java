@@ -87,7 +87,8 @@ public class Client {
 	/**
 	 * 购房单价
 	 */
-	public Float djia;
+	public Float djiaFrom;
+	public Float djiaTo;
 	
 	public Integer zujinFrom;
 	public Integer zujinTo;

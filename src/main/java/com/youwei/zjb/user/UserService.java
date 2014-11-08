@@ -63,7 +63,28 @@ public class UserService {
 	@WebMethod
 	public ModelAndView groupUserByDept(int cid){
 		ModelAndView mv = new ModelAndView();
-		List<Map> users = dao.listAsMap("select u.did as did , u.id as uid, u.uname as uname,d.namea as dname from User u, Department d where u.did=d.id and u.cid=?" , cid);
+		List<Object> params = new ArrayList<Object>();
+		User me = ThreadSession.getUser();
+		StringBuilder hql = new StringBuilder("select u.did as did , u.id as uid, u.uname as uname,d.namea as dname from User u, Department d where u.did=d.id");
+		int level=1;
+		if(UserHelper.hasAuthority( me , "ky_data_dept")){
+			level=2;
+		}
+		if(UserHelper.hasAuthority( me , "ky_data_comp")){
+			level=3;
+		}
+		if(level==1){
+			hql.append(" and u.id=?");
+			params.add(me.id);
+		}else if (level==2){
+			hql.append(" and u.did=? ");
+			params.add(me.did);
+		}else{
+			hql.append(" and u.cid=? ");
+			params.add(me.cid);
+		}
+//		List<Map> users = dao.listAsMap("select u.did as did , u.id as uid, u.uname as uname,d.namea as dname from User u, Department d where u.did=d.id and u.cid=?" , cid);
+		List<Map> users = dao.listAsMap(hql.toString() , params.toArray());
 		JSONArray result = new JSONArray();
 		for(Map u : users){
 			Integer did =  (Integer) u.get("did");

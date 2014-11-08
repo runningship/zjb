@@ -112,6 +112,7 @@ public class ViewServlet extends HttpServlet{
 			}
 			html = html.replace("$${userId}", user.id.toString());
 			html = html.replace("$${cid}", user.cid.toString());
+			html = html.replace("$${did}", user.did.toString());
 			html = html.replace("$${myName}", String.valueOf(user.uname));
 			html = html.replace("$${myTel}", user.tel==null? "": user.tel);
 			doc = Jsoup.parse(html);

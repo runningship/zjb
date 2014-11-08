@@ -75,6 +75,19 @@
 			"text":"删除",
 			"type":"menu"
 		}]
+	},{
+		"name":"fy_data",
+		"text":"数据权限",
+		"type":"virtual",
+		"children":[{
+			"name":"ky_data_dept",
+			"text":"分店",
+			"type":"menu"
+		},{
+			"name":"ky_data_comp",
+			"text":"公司",
+			"type":"menu"
+		}]
 	}]
 },{
 	"name":"yw",

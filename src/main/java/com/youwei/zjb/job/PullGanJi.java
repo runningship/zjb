@@ -3,7 +3,6 @@ package com.youwei.zjb.job;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
@@ -12,7 +11,6 @@ import java.util.TimerTask;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
-import org.bc.sdak.utils.LogUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,18 +18,16 @@ import org.jsoup.select.Elements;
 
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
-import com.youwei.zjb.house.QuYu;
 import com.youwei.zjb.house.ZhuangXiu;
 import com.youwei.zjb.house.entity.ExpHouse;
-import com.youwei.zjb.util.DataHelper;
 
 public class PullGanJi {
 
 	static CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		pull("http://hf.ganji.com/fang5/1199668148x.htm");
-		start();
+		pull("http://hf.ganji.com//fang5/707596293x.htm","");
+//		start();
 	}
 	
 	public static void startJob(){
@@ -179,11 +175,11 @@ public class PullGanJi {
 					ehouse.zceng = arr[1];
 				}
 			}
-			Elements area = basicInfo.getElementsMatchingOwnText("小区");
+			Elements area = basicInfo.getElementsMatchingOwnText("小区：");
 			if(area!=null && area.first()!=null){
-				String str=area.first().nextElementSibling().ownText();
+				String str = area.first().parent().ownText();
 				if(StringUtils.isEmpty(str)){
-					str = area.first().parent().ownText();
+					str = area.first().nextElementSibling().ownText();
 				}
 				ehouse.area = str;
 				System.out.println("area="+ehouse.area);

@@ -61,7 +61,7 @@ function getlouceng(a,b){
   }else if (b==100000) {
     return '大于'+a;
   }else {
-    return a+'/'+b;
+    return a+'-'+b;
   }
 }
 
@@ -73,26 +73,13 @@ function getTel(tels){
     if (a.length==1) {
       return '<div class="KY-tel">'+a[0]+'</div>';
     }else{
-      return '<div class="KY-tel">'+a[0]+'<span>></span></div>';
+      return '<div class="KY-tel">'+a[0]+'<span>+</span></div>';
     }
   }
 }
 
-function deleteClient(id){
-  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
-  YW.ajax({
-    type: 'POST',
-    url: '/c/client/delete?id='+id,
-    mysuccess: function(data){
-      doSearch();
-      alert('删除成功');
-    }
-  });
-  },function(){},'warning');
-}
-
 function openAdd(){
-  art.dialog.open("/v/client/client_add.html",{id:'add_client',width:800,height:542,title:'添加客源'});
+  art.dialog.open("/v/client/client_add.html",{id:'add_client',width:800,height:585,title:'添加客源'});
 }
 
 function openDetail(id){
@@ -100,7 +87,7 @@ function openDetail(id){
 }
 
 function openEdit(id){
-  art.dialog.open("/v/client/client_edit.html?id="+id,{id:'client_edit',width:800,height:545,title:'客源修改'});
+  art.dialog.open("/v/client/client_edit.html?id="+id,{id:'client_edit',width:800,height:585,title:'客源修改'});
 }
 
 function needHouse(id){
@@ -169,19 +156,12 @@ $(document).ready(function() {
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
                    <ul class="InputMainLine KY_W not-select" style="margin-bottom:8px;">
                         <li><input class="input-sm w110" type="text" placeholder="姓名" name="name"/></li>
+                        <li><input class="input-sm w110" type="text" placeholder="电话" name="tel"/></li>
                         <li>
                             <span class="SpanName not-select">楼盘</span>
                             <input id="search" class="input-sm input-left w76" type="text" placeholder="" autocomplete="off" name="area" />
                         </li>
-                        <li>
-                            <span class="SpanName not-select">登记人</span>
-                            <select name="djrDid" id="djrDid" class="input-sm input-rightB w102 dept_select" >
-                              <option value="">所有</option>
-                            </select>
-                            <select name="djrId" id="djrId" class="input-sm input-left w102 user_select" >
-                              <option value="">所有</option>
-                            </select>
-                        </li>
+                        
                         <li>
                             <button class="selectMethod hand not-select"  type="button">区域<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
@@ -206,10 +186,16 @@ $(document).ready(function() {
                                 <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input text="${name}" class="hand" type="checkbox" name="zxiu" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
+                        <li>
+                            <span class="SpanName not-select">业务员</span>
+                            <select name="did" id="djrDid" class="input-sm input-rightB w102 dept_select" >
+                            </select>
+                            <select name="uid" id="djrId" class="input-sm input-left w102 user_select" >
+                            </select>
+                        </li>
                    </ul>
                    
                    <ul class="InputMainLine KY_W not-select">
-                        <li style="width:122px;"><input class="input-sm w110" type="text" placeholder="电话" name="tel" /><input class="input-sm w110" type="text" placeholder="编号" name="id" /></li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>面积</em></span>
                             <div class="DivBoxW1 Fleft">
@@ -222,6 +208,13 @@ $(document).ready(function() {
                             <div class="DivBoxW1 Fleft">
                             <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="zjiaStart" />
                             <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="zjiaEnd" />
+                            </div>
+                        </li>
+                        <li>
+                            <span class="SpanNameH2 not-select"><em>单价</em></span>
+                            <div class="DivBoxW1 Fleft">
+                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="djiaStart" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="djiaEnd" />
                             </div>
                         </li>
                         <li>
@@ -239,7 +232,7 @@ $(document).ready(function() {
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2 not-select"><em>发布<br />日期</em></span>
+                            <span class="SpanNameH2 not-select"><em>登记<br />日期</em></span>
                             <div class="DivBoxW1 Fleft">
         <input type="text" class="form-control input-sm input-left" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:70px">
         <input type="text" class="form-control input-sm input-left" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:70px">
@@ -272,10 +265,8 @@ $(document).ready(function() {
                            
                                    <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" style=" margin-bottom:-1px;">
                                     <tr>
-                                            <th width="60">编号</th>
                                             <th width="60">客户姓名</th>
                                             <th width="160">客户电话</th>
-                                            <th width="80">发布人</th>
                                             <!--<th style="width:200px; min-width:50px;">楼盘名称</th>-->
                                             <!-- <th width="50">楼型</th> -->
                                             <!-- <th width="60">户型</th> -->
@@ -284,7 +275,8 @@ $(document).ready(function() {
                                             <!-- <th width="50">单价</th> -->
                                             <th width="50">楼层</th>
                                             <!-- <th width="50">装潢</th> -->
-                                            <th width="70">发布时间</th>
+                                            <th width="80">业务员</th>
+                                            <th width="70">登记时间</th>
                                             <th width="120">操作</th>
                                             
                                      </tr>
@@ -298,11 +290,8 @@ $(document).ready(function() {
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
                     <tr data-hid="${id}" style="display:none;" class="id_client_list"  >
-                      <td width="60">${id}</td>
                       <td width="60"><strong>${name}</strong></td>
                       <td width="160" runscript = "true">getTel('${tels}')</td>
-                      
-                      <td width="80">${djrName}</td>
                       <!--<td style="width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">${areas}</div></td>-->
                       <!-- <td width="50">${lxings}</td> -->
                       <!-- <td width="60">${hxings}</td> -->
@@ -311,10 +300,12 @@ $(document).ready(function() {
                       <!-- <td width="50">7419</td> -->
                       <td width="50" runscript="true">getlouceng(${lcengFrom},${lcengTo})</td>
                       <!-- <td width="50">${zxius}</td> -->
+                      <td width="80">${dname}-${uname}</td>
                       <td width="70">${addtime}</td>
-                      <td width="120"><a href="###" onclick="openDetail(${id})">详情</a>
-                       <a auth="ky_edit" href="###" onclick="openEdit(${id})">修改</a> <a href="##" onclick="needHouse(${id});">房配客</a>
-                       <a auth="ky_del" href="#" onclick="deleteClient(${id});">删除</a></td>
+                      <td width="120"> <a href="##" onclick="needHouse(${id});">房配客</a>
+                        <a href="###" onclick="openDetail(${id})">查看</a>
+                       <a auth="ky_edit" href="###" onclick="openEdit(${id})">编辑</a>
+                       <!-- <a auth="ky_del" href="#" onclick="deleteClient(${id});">删除</a></td> -->
                     </tr>
                   </table>
                 </div>

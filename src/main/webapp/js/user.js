@@ -20,6 +20,9 @@ $(document).ready(function() {
 });
 function buildDepts(){
     var dept_select=$(".dept_select");
+    if(groupUserByDeptData.result.length>1){
+        dept_select.append('<option value="">所有</option>');
+    }
     $.each(groupUserByDeptData.result, function(index, item) {
         dept_select.append('<option value="'+item.did+'">'+item.dname+'</option>');
     });
@@ -39,6 +42,9 @@ function buildUsers(did){
     var user_select=$(".user_select");
     user_select.empty();
     if(users!=undefined){
+        if(users.length>1){
+            user_select.append('<option value="">所有</option>');
+        }
         for(var i=0;i<users.length;i++){
             var user = users[i];
             user_select.append('<option value="'+user.uid+'">'+user.uname+'</option>');

@@ -9,11 +9,11 @@ myFocus.pattern.extend({//*********************mF_slide3D******************
 		var $m12=$focus.addHtml('<div class="mask12"></div>');
 		var $m21=$focus.addHtml('<div class="mask21"></div>');
 		var $m22=$focus.addHtml('<div class="mask22"></div>');
-		var $nextBtn=$focus.addHtml('<div class="next"><a href="javascript:;">NEXT</a></div>');
+		var $nextBtn=$focus.addHtml('<div class="next"><a href="javascript:;">‰∏ã‰∏ÄÈ°µ</a></div>');
 		//PLAY
 		var w=settings.width,
 			h=settings.height,
-			d=Math.ceil(settings.height/6),//¡¢ÃÂ…Ó∂»
+			d=Math.ceil(settings.height/6),//√Å¬¢√å√•√â√Æ¬∂√à
 			halfW=w/2;
 		$focus.play(function(i){
 			$m11[0].style.cssText=$m12[0].style.cssText='border-width:0px '+halfW+'px;';
