@@ -185,7 +185,7 @@ function fillData(data){
 //读取
 function loadConfigAsJSON(){
 
-    var fs=null;
+    var fs;
     try{
         fs=require("fs");    
     }catch(e){
@@ -195,7 +195,7 @@ function loadConfigAsJSON(){
         fs.writeFileSync("config.data", "{}", 'utf8')
     }
     var data=fs.readFileSync("config.data","utf-8");
-    var json = null;
+    var json;
     try{
         json = JSON.parse(data);
     }catch(e){

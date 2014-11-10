@@ -119,7 +119,7 @@ function addMarker(point, index){
 }
 // 添加信息窗口
 function addInfoWindow(marker,poi,index){
-  var name = null;
+  var name = "";
     if(poi.type == BMAP_POI_TYPE_NORMAL){
         name = "地址:"
     }else if(poi.type == BMAP_POI_TYPE_BUSSTOP){

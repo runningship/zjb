@@ -220,7 +220,7 @@ function tableHover(){
 }
 
   //改善btn-group的操作感受
-    var btn_group_time=null;
+    var btn_group_time;;
     $(document).on('hide.bs.dropdown','.btn-group', function () {
       return false;
     }).on('show.bs.dropdown','.btn-group', function () {
@@ -288,7 +288,7 @@ function menuTopFuns(){
             return false;
         }
     });
-    var menuLi_time=null;
+    var menuLi_time;
     $('.menuLi').find('.dropdown-toggle').parents('.btn-group').hover(function() {
         var Thi=$(this);
         menuLi_time=setTimeout(function(){
@@ -735,7 +735,7 @@ function SetCookie(name,value){
 function GetCookie(name){
 	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
 	if(arr=document.cookie.match(reg)) return unescape(arr[2]);
-	else return null;
+	else return undefined;
 }
 //删除cookies
 function DelCookie(name){
