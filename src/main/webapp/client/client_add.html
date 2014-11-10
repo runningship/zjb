@@ -42,13 +42,15 @@ function close(){
   art.dialog.close();
 }
 
-function setSearchValue(index){
+function setSearchValue(index ,click){
     var ThiA=$('#autoCompleteBox').find('a');
     ThiA.removeClass('hover');
     var Vals=ThiA.eq(index).addClass('hover').attr('area');
     $('#areas').val(Vals);
-    houseAddMain();
-    $("#HouseBoxMore div i").click(function(){
+
+    if(click){
+      houseAddMain();  
+      $("#HouseBoxMore div i").click(function(){
               
       var telText = "";
       $("#HouseAreaAll").val("");
@@ -56,16 +58,20 @@ function setSearchValue(index){
       
       var divNumChange = $("#HouseBoxMore div").size();
       $("#HouseBoxMore div").each(function(i) {
-        if(i == (divNumChange-1)){
-         telText += $(this).find("span").text();
-        }else{
-         telText += $(this).find("span").text() + "/";
-        }
-      });
-      $("#HouseAreaAll").val(telText);
+          if(i == (divNumChange-1)){
+           telText += $(this).find("span").text();
+          }else{
+           telText += $(this).find("span").text() + "/";
+          }
+        });
+        $("#HouseAreaAll").val(telText);
 
-    });
+      });
+    }
+    
+    
 }
+
 
 function jianCe(a){
   var count = 0;
@@ -117,7 +123,7 @@ $(document).ready(function() {
   <tr>
     <td align="right" class="TableTdBorBot">楼盘：</td>
     <td class="TableTdBgColor" colspan="3">
-          <input type="text" class="w1" id="areas" name="areas" style="float:left;" /><input type="hidden" id="HouseAreaAll" />
+          <input type="text" class="w1" id="areas" style="float:left;" /><input type="hidden" name="areas" id="HouseAreaAll" />
           <div id="HouseBoxMore" style="margin: 5px 0 0 10px; float:left;"></div>
     </td>
   </tr>

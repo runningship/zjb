@@ -408,7 +408,7 @@ function autoComplete(id){
        ThisArea=This.attr('area'),
        ThisAddress=This.data('address'),
        ThisQuyu=This.data('quyu');
-       setSearchValue(ThisIndex);
+       setSearchValue(ThisIndex,true);
        return false;
     });
     Thi.on('keydown',function(event) {

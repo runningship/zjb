@@ -107,7 +107,7 @@ function addHouse(event){
       $("#HouseAreaAll").val("");
       $(this).parent("div").remove();
       $("#HouseBoxMore div").each(function() {
-         telText += $(this).find("span").text() + "/";
+         telText += $(this).find("span").text() + ",";
       });
       $("#HouseAreaAll").val(telText);
 
@@ -127,7 +127,7 @@ function houseAddMain(){
 
               $("#HouseBoxMore").append(text);
               if(divNum>0 && divNum <= 2){
-                houseall += "/"+ houseNum;
+                houseall += ","+ houseNum;
               }else{
                 houseall += houseNum;
               }

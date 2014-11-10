@@ -54,29 +54,32 @@ function deleteThis(){
   },function(){},'warning');
 }
 
-function setSearchValue(index){
+function setSearchValue(index , click){
     var ThiA=$('#autoCompleteBox').find('a');
     ThiA.removeClass('hover');
     var Vals=ThiA.eq(index).addClass('hover').attr('area');
     $('#areas').val(Vals);
-    houseAddMain();
-    $("#HouseBoxMore div i").click(function(){
-              
-      var telText = "";
-      $("#HouseAreaAll").val("");
-      $(this).parent("div").remove();
-      
-      var divNumChange = $("#HouseBoxMore div").size();
-      $("#HouseBoxMore div").each(function(i) {
-        if(i == (divNumChange-1)){
-         telText += $(this).find("span").text();
-        }else{
-         telText += $(this).find("span").text() + "/";
-        }
-      });
-      $("#HouseAreaAll").val(telText);
+    if(click){
+      houseAddMain();
+      $("#HouseBoxMore div i").click(function(){
+                
+        var telText = "";
+        $("#HouseAreaAll").val("");
+        $(this).parent("div").remove();
+        
+        var divNumChange = $("#HouseBoxMore div").size();
+        $("#HouseBoxMore div").each(function(i) {
+          if(i == (divNumChange-1)){
+           telText += $(this).find("span").text();
+          }else{
+           telText += $(this).find("span").text() + "/";
+          }
+        });
+        $("#HouseAreaAll").val(telText);
 
-    });
+      });  
+    }
+    
 }
 
 function getContent(){
@@ -101,9 +104,20 @@ function getContent(){
           addTel(event);
         }
       }
+      if(json['areas']!=undefined && json['areas']!=""){
+        var arr = json['areas'].split(',');
+        for(var i=0;i<arr.length;i++){
+          if(arr[i]==""){
+            continue;
+          }
+          $('#areas').focus();
+          $('#areas').val(arr[i]);
+          houseAddMain();
+        }
+      }
       $('#lcengFrom').val(json['lcengFrom']);
       $('#lcengTo').val(json['lcengTo']);
-      $('#areas').val(json['areas']);
+      // $('#areas').val(json['areas']);
       $('#mjiFrom').val(json['mjiFrom']);
       $('#mjiTo').val(json['mjiTo']);
       $('#jiageFrom').val(json['jiageFrom']);
