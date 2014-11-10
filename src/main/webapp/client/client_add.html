@@ -46,7 +46,25 @@ function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a');
     ThiA.removeClass('hover');
     var Vals=ThiA.eq(index).addClass('hover').attr('area');
-    $('#search').val(Vals);
+    $('#areas').val(Vals);
+    houseAddMain();
+    $("#HouseBoxMore div i").click(function(){
+              
+      var telText = "";
+      $("#HouseAreaAll").val("");
+      $(this).parent("div").remove();
+      
+      var divNumChange = $("#HouseBoxMore div").size();
+      $("#HouseBoxMore div").each(function(i) {
+        if(i == (divNumChange-1)){
+         telText += $(this).find("span").text();
+        }else{
+         telText += $(this).find("span").text() + "/";
+        }
+      });
+      $("#HouseAreaAll").val(telText);
+
+    });
 }
 
 function jianCe(a){
@@ -63,7 +81,7 @@ function jianCe(a){
 }
 
 $(document).ready(function() {
-  autoComplete($('#search'));
+  autoComplete($('#areas'));
     $.get('/c/config/getQueryOptions', function(data) {
         queryOptions=JSON.parse(data);
         buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
@@ -94,13 +112,14 @@ $(document).ready(function() {
     <td width="70" align="right" class="TableTdBorBot TableTdBorTop">姓名：</td>
     <td width="300" class="TableTdBgColor"><input type="text" class="w1" name="name" desc="客户姓名"/></td>
     <td width="70" align="right" class="TableTdBorBot TableTdBorTop">电话：</td>
-    <td width="356" class="TableTdBgColor" style="position:relative;"><div id="TelBoxMore" style="margin: 0 0 0 2px; top:10px; position:absolute;"></div><input type="text" id="tel" style="width:315px;"  placeholder=""  /><input type="hidden" value="" name="tels" id="TelAll"/></td>
+    <td width="356" class="TableTdBgColor" style="position:relative;"><div id="TelBoxMore" style="margin: 0 0 0 2px; top:10px; position:absolute;"></div><input type="text" id="tel" style="width:315px;"  placeholder="输入后‘Enter’键确认，仅限3个"  /><input type="hidden" value="" name="tels" id="TelAll"/></td>
   </tr><!-- onblur="checkTel();" --> 
   <tr>
     <td align="right" class="TableTdBorBot">楼盘：</td>
-    <td class="TableTdBgColor"><input id="search" type="text" class="w1" desc="" name="areas"/></td>
-    <td align="right" class="TableTdBorBot">楼层：</td>
-    <td class="TableTdBgColor"><input type="text" desc="楼层" class="w2" name="lcengFrom" />-<input type="text" desc="楼层" class="w2" name="lcengTo" /> 层</td>
+    <td class="TableTdBgColor" colspan="3">
+          <input type="text" class="w1" id="areas" name="areas" style="float:left;" /><input type="hidden" id="HouseAreaAll" />
+          <div id="HouseBoxMore" style="margin: 5px 0 0 10px; float:left;"></div>
+    </td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">楼型：</td>
@@ -131,6 +150,8 @@ $(document).ready(function() {
   <tr>
     <td align="right" class="TableTdBorBot">单价：</td>
     <td class="TableTdBgColor"><input type="text" class="w2" desc="单价" name="djiaFrom" />-<input type="text" desc="单价" class="w2"  name="djiaTo"/></td>
+    <td align="right" class="TableTdBorBot">楼层：</td>
+    <td class="TableTdBgColor"><input type="text" desc="楼层" class="w2" name="lcengFrom" />-<input type="text" desc="楼层" class="w2" name="lcengTo" /> 层</td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">年代：</td>

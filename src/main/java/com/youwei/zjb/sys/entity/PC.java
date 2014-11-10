@@ -50,6 +50,10 @@ public class PC {
 	@Column(name="code_cp")
 	public String uuid="";
 	
+	public String lic = "";
+	
+	public Long licCreateTime;
+	
 	@Column(name="regnumber")
 	public String authCode;
 	

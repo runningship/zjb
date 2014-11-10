@@ -204,12 +204,27 @@ function btnAction(){
                 param.authCode=getCode;
                 param.did=getDid[0];
                 param.beizhu=getBeizhu;
+                if(gui.App.manifest['--use_uuid_lic']){
+                    var data = readLic();
+                    if(data==undefined){
+                        var createTime = createLic();
+                        param.licCreateTime = createTime;    
+                    }else{
+                        param.licCreateTime = data.licCreateTime;
+                        param.lic = data.lic;
+                    }
+                }
+                
                 YW.ajax({
                     type: 'POST',
                     async:false,
                     url: '/c/pc/add',
                     data:param,
                     success: function(data){
+                        var json = JSON.parse(data);
+                        if(json.lic){
+                            setLic(json.lic);
+                        }
                         l.stop();
                         $('.view_fendian').text(getBeizhu);
                         goto_marTop(-getThiLiTop(Thi,ThiNext),function(){$('.getologin').focus();});
@@ -288,6 +303,7 @@ $(document).ready(function() {
     $('.view_city').text(cityNames);
 
     parent.dialogClose();
+
 });
 $(window).resize(function() {
     setDomSize();

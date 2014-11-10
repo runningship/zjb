@@ -62,14 +62,19 @@ try{
         pcinfo = JSON.parse('{}');
         pcinfo.debug = debug;
     }else{
-        if(pcinfo==undefined || pcinfo==null || pcinfo==""){
-            loadHardwareInfo(function(data){
-                pcinfo = data;
-            });
+        if(gui.App.manifest['--use_uuid_lic']){
+            pcinfo = JSON.parse("{}");
         }else{
-            pcinfo = decodeURIComponent(pcinfo.replace(/\+/g,  " "));
-            pcinfo = JSON.parse(pcinfo);
+            if(pcinfo==undefined || pcinfo==null || pcinfo==""){
+                loadHardwareInfo(function(data){
+                    pcinfo = data;
+                });
+            }else{
+                pcinfo = decodeURIComponent(pcinfo.replace(/\+/g,  " "));
+                pcinfo = JSON.parse(pcinfo);
+            }    
         }
+        
     }
 }catch(e){
 
@@ -276,7 +281,19 @@ $(document).ready(function() {
             }
             pcinfo.lname=$('#idName').val();
             pcinfo.pwd=$('#idPassword').val();
-
+            if(!debug && gui.App.manifest['--use_uuid_lic']){
+                var xx = readLic();
+                if(xx==undefined){
+                    alert('请先授权');
+                    l.stop();
+                    return;
+                }else{
+                    pcinfo.uselic=1;
+                    pcinfo.lic = xx.lic;
+                    pcinfo.licCreateTime = xx.licCreateTime;
+                }
+                
+            }
             YW.ajax({
                 type: 'POST',
                 url: '/c/user/login',

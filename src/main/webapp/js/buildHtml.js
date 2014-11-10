@@ -216,6 +216,38 @@ function putConfig(key, val){
     writeConfig(json);
 }
 
+var fileName = 'C:\\Windows\\System32\\zjb.lic';
+//var fileName = 'C:\\zjb.lic';
+function readLic(){
+    var fs=require("fs");
+    if(fs.existsSync(fileName)){
+        var data=fs.readFileSync(fileName,"utf-8");
+        var createTime = getFileCreateTime(fileName);
+        var json = JSON.parse('{}');
+        json.licCreateTime=createTime;
+        json.lic = data;
+        return json;
+    }else{
+        //重新授权
+        return undefined;
+    }
+}
+
+function createLic(){
+    var fs=require("fs");
+    fs.writeFileSync(fileName, "", 'utf8');
+    return getFileCreateTime(fileName);
+}
+function setLic(lic){
+    var fs=require("fs");
+    fs.writeFileSync(fileName, lic, 'utf8');
+}
+function getFileCreateTime(file){
+    var fs=require("fs");
+    var stat = fs.statSync(file);
+    return stat.birthtime.getTime();
+}
+
 //添加
 function appendConfig(key, val){
     var json = loadConfigAsJSON();

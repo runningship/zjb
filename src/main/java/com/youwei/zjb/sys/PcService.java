@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
@@ -38,7 +39,7 @@ public class PcService {
 			throw new GException(PlatformExceptionType.BusinessException, "请先填写店面信息");
 		}
 		
-		if(StringUtils.isEmpty(pc.mac) && StringUtils.isEmpty(pc.disk)){
+		if(StringUtils.isEmpty(pc.mac) && StringUtils.isEmpty(pc.disk) && pc.licCreateTime==null){
 			throw new GException(PlatformExceptionType.BusinessException, "机器码为空，不能授权，可能是由于您安装的是精简版的操作系统.");
 		}
 		Department comp =  dao.getUniqueByKeyValue(Department.class, "authCode", pc.authCode);
@@ -58,9 +59,22 @@ public class PcService {
 		if(pc.cpu!=null){
 			pc.cpu = pc.cpu.toLowerCase();
 		}
+		
 		pc.uuid = SecurityHelper.Md5(pc.cpu+pc.disk)+SecurityHelper.Md5(pc.mac);
-		PC po = dao.getUniqueByParams(PC.class, new String[]{"did","uuid"},	new Object[]{pc.did , pc.uuid});
+		PC po = null;
+		if(pc.licCreateTime!=null){
+			po = dao.getUniqueByParams(PC.class, new String[]{"did","lic","licCreateTime"},	new Object[]{pc.did , pc.lic , pc.licCreateTime});
+		}else{
+			po = dao.getUniqueByParams(PC.class, new String[]{"did","uuid"},	new Object[]{pc.did , pc.uuid});
+		}
+		
 		if(po==null){
+			if(pc.licCreateTime!=null){
+				if(StringUtils.isEmpty(pc.lic)){
+					pc.lic = UUID.randomUUID().toString();
+				}
+				mv.data.put("lic", pc.lic);
+			}
 			pc.addtime = new Date();
 			pc.lock=0;
 			pc.cid = comp.id;
