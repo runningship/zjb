@@ -61,7 +61,7 @@ public abstract class AbstractSee extends page{
 				elem.html(innerHtml);
 			}
 			String hql = "select gj.conts as conts , d.namea as dname , u.uname as uname , gj.addtime as addtime from GenJin gj , User u , "
-					+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=? order by addtime desc";
+					+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
 			List<Map> gjList = dao.listAsMap(hql, Integer.valueOf(id) , getChuzu());
 			Elements temp = doc.getElementsByClass("list");
 			buildHtmlWithJsonArray(temp.first() , JSONHelper.toJSONArray(gjList));
