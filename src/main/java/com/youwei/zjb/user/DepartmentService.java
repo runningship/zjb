@@ -34,7 +34,7 @@ public class DepartmentService {
 		}
 		Department po = dao.getUniqueByKeyValue(Department.class, "cnum", dept.cnum);
 		if(po!=null){
-			throw new GException(PlatformExceptionType.BusinessException, "公司代码重复");
+			throw new GException(PlatformExceptionType.BusinessException, "cnum","公司代码"+dept.cnum+"已存在");
 		}
 		po = dao.getUniqueByParams(Department.class, new String[]{"fid" , "namea"}, new Object[]{dept.fid , dept.namea});
 		if(po!=null){
