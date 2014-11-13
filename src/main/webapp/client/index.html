@@ -40,10 +40,10 @@ function updateClient(id,data){
   var f = tr.children()[5]
   $(a).html(json['name']);
   $(b).html(json['tels']);
-  $(c).html(getmianji(json['mjiFrom'],json['mjiTo']));
-  $(d).html(getzongjia(json['jiageFrom'],json['jiageTo']));
-  $(e).html(getlouceng(json['lcengFrom'],json['lcengTo']));
-  // $(f).html(json['mji']);
+  $(c).html(getmianji2(json['mjiFrom'],json['mjiTo']));
+  $(d).html(getzongjia2(json['jiageFrom'],json['jiageTo']));
+  $(e).html(getlouceng2(json['lcengFrom'],json['lcengTo']));
+  $(f).html(json['dname']+'-'+json['uname']);
 }
 
 function getmianji(a,b){
@@ -58,7 +58,43 @@ function getmianji(a,b){
   }
 }
 
+function getmianji2(a,b){
+  if (a==0&&b==0) {
+    return '不限';
+  }else if (a==0||a==""||a==undefined) {
+    return '小于'+b;
+  }else if (b==0||b==""||b==undefined) {
+    return '大于'+a;
+  }else {
+    return a+'-'+b;
+  }
+}
+
 function getzongjia(a,b){
+  if (a==0&&b==100000) {
+    return '不限';
+  }else if (a==0) {
+    return b+'万以下';
+  }else if (b==100000) {
+    return a+'万以上';
+  }else {
+    return a+'万-'+b+'万';
+  }
+}
+
+function getzongjia2(a,b){
+  if (a==0&&b==0) {
+    return '不限';
+  }else if (a==0||a==""||a==undefined) {
+    return b+'万以下';
+  }else if (b==0||b==""||b==undefined) {
+    return a+'万以上';
+  }else {
+    return a+'万-'+b+'万';
+  }
+}
+
+function getlouceng(a,b){
   if (a==0&&b==100000) {
     return '不限';
   }else if (a==0) {
@@ -70,12 +106,12 @@ function getzongjia(a,b){
   }
 }
 
-function getlouceng(a,b){
-  if (a==0&&b==100000) {
+function getlouceng2(a,b){
+  if (a==0&&b==0) {
     return '不限';
-  }else if (a==0) {
+  }else if (a==0||a==""||a==undefined) {
     return '小于'+b;
-  }else if (b==100000) {
+  }else if (b==0||b==""||b==undefined) {
     return '大于'+a;
   }else {
     return a+'-'+b;
@@ -328,10 +364,10 @@ $(document).ready(function() {
                                             <!--<th style="width:200px; min-width:50px;">楼盘名称</th>-->
                                             <!-- <th width="50">楼型</th> -->
                                             <!-- <th width="60">户型</th> -->
-                                            <th width="50">面积</th>
-                                            <th width="50">总价(万)</th>
+                                            <th width="50">面积(㎡)</th>
+                                            <th width="50">总价</th>
                                             <!-- <th width="50">单价</th> -->
-                                            <th width="50">楼层</th>
+                                            <th width="50">楼层(层)</th>
                                             <!-- <th width="50">装潢</th> -->
                                             <th width="80">业务员</th>
                                             <th width="70">登记时间</th>
