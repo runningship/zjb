@@ -246,7 +246,8 @@ function setLic(lic){
 function getFileCreateTime(file){
     var fs=require("fs");
     var stat = fs.statSync(file);
-    return stat.birthtime.getTime();
+    var xx = stat.atime.getTime(); 
+    return Math.round(xx/1000)*1000;
 }
 
 //添加
