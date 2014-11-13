@@ -289,6 +289,14 @@ public class ClientService {
 			hql.append(" and h.dateyear<=? ");
 			params.add(client.yearTo);
 		}
+		if(client.djiaFrom!=null){
+			hql.append(" and h.djia>=? ");
+			params.add(client.djiaFrom);
+		}
+		if(client.djiaTo!=null){
+			hql.append(" and h.djia<=? ");
+			params.add(client.djiaTo);
+		}
 	}
 	@WebMethod
 	public ModelAndView hasMatchResult(Integer cid){

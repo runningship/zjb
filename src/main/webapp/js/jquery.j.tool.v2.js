@@ -868,7 +868,7 @@ function check(s){
 function checkTel(){
     var reg = new RegExp(/^[0-9-/]+$/);
     var inputBox=$("#tel");
-    var value=inputBox.val();
+    var value=inputBox.val().trim();
     if(value.length == 0){ return true; }
     if(!reg.test(value)){
         infoAlert("输入错误！只能输入‘数字’或‘-’或‘/’");

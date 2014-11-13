@@ -111,8 +111,8 @@ function jianCe(a){
     count++;
     }
   });
-  if (count>3) {
+  if (count>5) {
     a.checked=false;
-    alert('最多只能选择三项');
+    alert('最多只能选择五项');
   };
 }
