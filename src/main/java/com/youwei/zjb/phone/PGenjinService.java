@@ -14,6 +14,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.house.GenJinService;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.House;
@@ -65,6 +66,14 @@ public class PGenjinService {
 		gj.cid = u.cid;
 		//TODO 关键词检查
 		gj.sh=1;
+		gj.sh=1;
+		//根据跟进内容片断
+		for(String kw : GenJinService.kwords){
+			if(gj.conts.contains(kw)){
+				gj.sh = 0;
+				break;
+			}
+		}
 		gj.flag = type;
 		gj.ztai = SellState.parse(String.valueOf(type)).toString();
 		Date lockdate = h.dategjlock;

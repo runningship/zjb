@@ -20,8 +20,8 @@ function save(){
     data:a,
     mysuccess: function(data){
       $('#conts').val('');
-      getContent2();
-      alert('发布成功');
+      getGenjins();
+      alert('跟进成功');
     }
   });
 }
@@ -37,24 +37,28 @@ function getContent(){
       $('#name').html(json['name']);
       $('#tel').html(json['tels']);
       panduan(json['lcengFrom'],json['lcengTo'],'层','#lceng');
-      // $('#lceng').html(json['lcengFrom']+'层 - '+json['lcengTo']+'层');
-      $('#areas').html(json['areas']);
+      panduan2(json['areas'],'#areas');
       panduan(json['mjiFrom'],json['mjiTo'],'㎡','#mji');
-      // $('#mji').html(json['mjiFrom']+'㎡ - '+json['mjiTo']+'㎡');
       panduan(json['jiageFrom'],json['jiageTo'],'万元','#jiage');
       panduan(json['djiaFrom'],json['djiaTo'],'元','#djia');
-      // $('#jiage').html(json['jiageFrom']+'万元 - '+json['jiageTo']+'万元');
-      panduan(json['yearFrom'],json['yearTo'],'年','#year');
-      // $('#year').html(json['yearFrom']+'年 - '+json['yearTo']+'年');
+      panduan3(json['yearFrom'],json['yearTo'],'#year');
       $('#beizhu').html(json['beizhu']);
-      $('#lxings').html(json['lxings']);
-      $('#zxius').html(json['zxius']);
-      $('#hxings').html(json['hxings']);
-      $('#quyus').html(json['quyus']);
+      panduan2(json['lxings'],'#lxings');
+      panduan2(json['zxius'],'#zxius');
+      panduan2(json['hxings'],'#hxings');
+      panduan2(json['quyus'],'#quyus');
       $('#user').html(json['dname']+' - '+json['uname']);
       $('#djr').html(json['djrDname']+' - '+json['djrName']);
     }
   })
+}
+
+function panduan2(a,d){
+  if (a==0||a==''||a==undefined) {
+    $(d).html('不限');
+  }else{
+    $(d).html(a);
+  }
 }
 
 function panduan(a,b,c,d){
@@ -69,7 +73,19 @@ function panduan(a,b,c,d){
   }
 }
 
-function getContent2(){
+function panduan3(a,b,d){
+  if (a==0&&b==0) {
+      $(d).html('不限');
+  }else if (a==0) {
+      $(d).html(b+'年前');
+  }else if (b==0) {
+      $(d).html(a+'年后');
+  }else {
+      $(d).html(a+'年-'+b+'年');
+  }
+}
+
+function getGenjins(){
   YW.ajax({
     type: 'get',
     url: '/c/client/gj/list?clientId='+id,
@@ -90,17 +106,8 @@ function setSearchValue(index){
 
 $(document).ready(function() {
   id = getParam('id');
-  // autoComplete($('#search'));
-    // $.get('/c/config/getQueryOptions', function(data) {
-    //     queryOptions=JSON.parse(data);
-    //     buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
-    //     buildHtmlWithJsonArray("id_zxiu",queryOptions['zhuangxiu'],true);
-    //     buildHtmlWithJsonArray("id_hxing",queryOptions['fxing'],true);
-    //     buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-    //     // getContent();
-    // });
-        getContent();
-        getContent2();
+  getContent();
+  getGenjins();
 });
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
@@ -182,7 +189,7 @@ $(document).ready(function() {
   
   <tr>
      <td colspan="4" class="TableTdBorBot" height="28">
-        <span style=" margin:0 5px;">跟进</span>
+        <span style=" margin:0 35px;">跟进</span>
      </td>
   </tr>
   <tr>

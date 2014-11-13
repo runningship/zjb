@@ -93,10 +93,12 @@ public class HouseService {
 		if(house.seeGX==null){
 			house.seeGX=0;
 		}
-		dao.saveOrUpdate(house);
 		String nbsp = String.valueOf((char)160);
 		if(StringUtils.isNotEmpty(house.tel)){
-			house.tel = house.tel.trim().replace("nbsp", "");
+			house.tel = house.tel.trim().replace(nbsp, "");
+		}
+		dao.saveOrUpdate(house);
+		if(StringUtils.isNotEmpty(house.tel)){
 			String[] arr = house.tel.split("/");
 			for(String tel : arr){
 				tel = tel.trim().replace(nbsp, "");
@@ -178,20 +180,22 @@ public class HouseService {
 			int jiage = (int) (po.zjia*10000/house.mji);
 			po.djia = (float) jiage;
 		}
-		if(house.tel!=null && !house.tel.equals(po.tel)){
-			//修改了电话号码
+		if(house.tel==null){
 			dao.execute("delete from HouseTel where hid = ?", house.id);
-			String[] arr = house.tel.split("/");
-			for(String tel : arr){
-				HouseTel ht = new HouseTel();
-				ht.hid = house.id;
-				ht.tel = tel;
-				dao.saveOrUpdate(ht);
-			}
 			po.tel = house.tel;
 		}else{
-			dao.execute("delete from HouseTel where hid = ?", house.id);
-			po.tel = house.tel;
+			if(!house.tel.equals(po.tel)){
+				//修改了电话号码
+				dao.execute("delete from HouseTel where hid = ?", house.id);
+				String[] arr = house.tel.split("/");
+				for(String tel : arr){
+					HouseTel ht = new HouseTel();
+					ht.hid = house.id;
+					ht.tel = tel;
+					dao.saveOrUpdate(ht);
+				}
+				po.tel = house.tel;
+			}
 		}
 		dao.saveOrUpdate(po);
 		User user = ThreadSession.getUser();
@@ -314,6 +318,7 @@ public class HouseService {
 //		}
 		if(StringUtils.isNotEmpty(query.tel)){
 //			hql = new StringBuilder(" select h  from House  h , (select hid from HouseTel where tel=? group by hid,tel) ht where h.id=ht.hid ");
+			query.tel = query.tel.trim();
 			if(query.useLike){
 				hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
 				params.add("%"+query.tel+"%");

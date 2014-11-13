@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
-import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
@@ -15,7 +14,6 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.DateSeparator;
-import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.HouseRent;
@@ -27,8 +25,13 @@ import com.youwei.zjb.util.JSONHelper;
 @Module(name="/genjin")
 public class GenJinService {
 
+	public static List<String> kwords = new ArrayList<String>();
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
+	static {
+		kwords.add("招聘");
+		kwords.add("提成");
+	}
 	@WebMethod
 	public ModelAndView add(GenJin gj){
 		ModelAndView mv = new ModelAndView();
@@ -44,6 +47,14 @@ public class GenJinService {
 			gj.cid = user.cid;
 			//默认审核通过
 			gj.sh=1;
+			//根据跟进内容片断
+			for(String kw : kwords){
+				if(gj.conts.contains(kw)){
+					gj.sh = 0;
+					break;
+				}
+			}
+			
 			gj.addtime = new Date();
 			HouseRent hr = dao.get(HouseRent.class, gj.hid);
 			gj.ztai = RentState.parse(hr.ztai)+"-"+RentState.parse(String.valueOf(gj.flag));

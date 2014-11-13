@@ -99,7 +99,8 @@ window.infoAlert = function(data){
         title:'提示',
         content:data,
         ok:true,
-        focus:true
+        focus:true,
+        padding:15
     });
 }
 YW={

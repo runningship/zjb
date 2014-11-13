@@ -104,7 +104,7 @@ public class PHouseService {
 		}
 		result.put("hxing", hxing);
 		if(house.dateyear==null){
-			house.dateyear="(未提供)";
+			house.dateyear=0;
 		}
 		
 		result.put("year", house.dateyear);

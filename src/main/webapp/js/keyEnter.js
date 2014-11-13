@@ -110,6 +110,16 @@ function addHouse(event){
          telText += $(this).find("span").text() + ",";
       });
       $("#HouseAreaAll").val(telText);
+	  
+	  var pleft = $("#HouseBoxMore").width() + 10 ;
+	  var wInput = 688 - pleft;
+	
+	  $("#areas").css({
+		"padding-left":pleft + 5,
+		"width":wInput
+	  });
+	  
+      $("#areas").focus();
 
   });
 
@@ -121,22 +131,39 @@ function houseAddMain(){
         var divNum = $("#HouseBoxMore div").size();
         var houseNum = $.trim($("#areas").val());
         var houseall = $.trim($("#HouseAreaAll").val());
-        var text = "<div style='border-radius:8px; float:left; background-color: #008765; padding:3px 18px 4px 0; color:#fff; margin:0px 2px 0 0; position:relative;'><i style=' display:block; width:13px; height:15px; line-height:13px; border-radius:5px; font-size:16px; color:#008765; background-color: #fff; right:3px; top:4px; font-style:normal; cursor:pointer;  position:absolute;'>×</i><span style='width:80px; padding-left:5px;'>"+houseNum+"</span></div>";
+        var text = "<div style='border-radius:8px; float:left; display:inline-block; background-color: #008765; padding:0 18px 0 0; height:20px; line-height:20px; color:#fff; margin:0px 2px 0 0; position:relative;'><i style=' display:block; width:13px; height:15px; line-height:13px; border-radius:5px; font-size:16px; color:#008765; background-color: #fff; right:3px; top:4px; font-style:normal; cursor:pointer; position:absolute; text-align:center;'>×</i><span style='width:80px; padding-left:5px;'>"+houseNum+"</span></div>";
 
-        if(divNum <= 2){
+		
+        if(divNum <= 4){
 
               $("#HouseBoxMore").append(text);
-              if(divNum>0 && divNum <= 2){
+              if(divNum>0 && divNum <= 4){
                 houseall += ","+ houseNum;
               }else{
                 houseall += houseNum;
               }
               $("#HouseAreaAll").val(houseall);
               $("#areas").val("");
+			  
+			  
+			 
+			  
+			  var pleft = $("#HouseBoxMore").width() + 10 ;
+			  var wInput = 688 - pleft;
+	  
+			  $("#areas").css({
+				"padding-left":pleft + 5,
+				"width":wInput
+			  });
+			  
+			  
+			  
+			  
+			  
         
         }else{
               $("#areas").val("");
-              alert("最多只能填写3个楼盘！");
+              alert("最多只能填写5个楼盘！");
         }
 
 }

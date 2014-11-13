@@ -34,7 +34,7 @@ public class ClientService {
 		List<Object> params = new ArrayList<Object>();
 		User u = ThreadSession.getUser();
 		StringBuilder hql = new StringBuilder("select c.name as name,c.tels as tels,c.mjiFrom as mjiFrom, c.mjiTo as mjiTo, c.jiageFrom as jiageFrom,"
-				+ "c.jiageTo as jiageTo,c.lcengFrom as lcengFrom ,c.lcengTo as lcengTo,d.namea as dname,c.uname as uname,c.addtime as addtime,c.id as id "
+				+ "c.jiageTo as jiageTo,c.lcengFrom as lcengFrom ,c.lcengTo as lcengTo,d.namea as dname,c.uname as uname,c.addtime as addtime,c.id as id ,c.uid as uid "
 				+ "from Client c,Department d where isdel=0 and d.id=c.did and c.cid=?");
 		params.add(u.cid);
 		if(StringUtils.isNotEmpty(query.name)){
@@ -82,6 +82,18 @@ public class ClientService {
 		params.add(query.lcengEnd);
 		params.add(query.lcengStart);
 		params.add(query.lcengEnd);
+		
+		if(query.djiaStart==null){
+			query.djiaStart=0f;
+		}
+		if(query.djiaEnd==null){
+			query.djiaEnd=(float)maxExpection;
+		}
+		hql.append(" and ((c.djiaFrom>= ? and c.djiaFrom<=?) or (c.djiaTo>= ? and c.djiaTo<=?))");
+		params.add(query.djiaStart);
+		params.add(query.djiaEnd);
+		params.add(query.djiaStart);
+		params.add(query.djiaEnd);
 		
 		//总价或租金
 		if(query.zjiaStart==null){
@@ -345,6 +357,12 @@ public class ClientService {
 		if(client.mjiTo==null){
 			client.mjiTo=(float)maxExpection;
 		}
+		if(client.djiaFrom==null){
+			client.djiaFrom=0f;
+		}
+		if(client.djiaTo==null){
+			client.djiaTo=(float)maxExpection;
+		}
 		if(client.yearFrom==null){
 			client.yearFrom=0;
 		}
@@ -427,7 +445,6 @@ public class ClientService {
 	
 	@WebMethod
 	public ModelAndView update(Client client){
-		ModelAndView mv = new ModelAndView();
 		Client po = dao.get(Client.class, client.id);
 		setDefaultValue(client);
 		po.name = client.name;
@@ -466,6 +483,7 @@ public class ClientService {
 			po.cname = ywy.Company().namea;
 		}
 		dao.saveOrUpdate(po);
+		ModelAndView mv = get(po.id);
 		return mv;
 	}
 }

@@ -11,6 +11,7 @@ import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.RentType;
+import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -38,7 +39,9 @@ public class houseSee_rent_v2 extends AbstractSee{
 		json.put("ywy", h.forlxr==null ? "":h.forlxr);
 		json.put("fortel", h.fortel==null ? "":h.fortel);
 		json.put("dname", dept==null? "":dept.namea);
-		json.put("ztai", RentState.parse(h.ztai));
+		RentState ztai = RentState.parse(h.ztai);
+		json.put("ztai", ztai==null ? "": ztai);
+//		json.put("ztai", RentState.parse(h.ztai));
 		RentType fs = RentType.parse(h.fangshi);
 		json.put("fangshi", fs==null ? "": fs.toString());
 		String favStr = "@"+ThreadSession.getUser().id+"|";

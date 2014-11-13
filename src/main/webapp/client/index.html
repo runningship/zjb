@@ -29,6 +29,23 @@ function doSearch(){
   });
 }
 
+function updateClient(id,data){
+  var json = JSON.parse(data);
+  var tr = $('tr[data-cid='+json['id']+']');
+  var a = tr.children()[0]
+  var b = tr.children()[1]
+  var c = tr.children()[2]
+  var d = tr.children()[3]
+  var e = tr.children()[4]
+  var f = tr.children()[5]
+  $(a).html(json['name']);
+  $(b).html(json['tels']);
+  $(c).html(getmianji(json['mjiFrom'],json['mjiTo']));
+  $(d).html(getzongjia(json['jiageFrom'],json['jiageTo']));
+  $(e).html(getlouceng(json['lcengFrom'],json['lcengTo']));
+  // $(f).html(json['mji']);
+}
+
 function getmianji(a,b){
   if (a==0&&b==100000) {
     return '不限';
@@ -99,15 +116,54 @@ function needHouse(id){
     if(json.count>0){
       art.dialog.open("/v/client/house.html?id="+id,{width:1100,height:600,title:'房配客'});
     }else {
-      infoAlert('没有匹配的房源');
+      infoAlert('没有找到匹配的房源');
     }
     }
   });
 }
 
+function setSearchValue(index , click){
+    var ThiA=$('#autoCompleteBox').find('a');
+    ThiA.removeClass('hover');
+    var Vals=ThiA.eq(index).addClass('hover').attr('area');
+    $('#search').val(Vals);
+    if(click){
+      houseAddMain();
+      $("#HouseBoxMore div i").click(function(){
+                
+        var telText = "";
+        $("#HouseAreaAll").val("");
+        $(this).parent("div").remove();
+        
+        var divNumChange = $("#HouseBoxMore div").size();
+        $("#HouseBoxMore div").each(function(i) {
+          if(i == (divNumChange-1)){
+           telText += $(this).find("span").text();
+          }else{
+           telText += $(this).find("span").text() + "/";
+          }
+        });
+        $("#HouseAreaAll").val(telText);
+    
+    var pleft = $("#HouseBoxMore").width() + 10 ;
+      var wInput = 688 - pleft;
+    
+      $("#search").css({
+      "padding-left":pleft + 5,
+      "width":wInput
+      });
+      
+      $("#search").focus();
+
+      });  
+    }
+    
+}
+
 $(document).ready(function() {
   ChangeW();
   Page.Init();
+  autoComplete($('#search'));
   $("button.selectMethod").parent().hover(function(){
     $(this).siblings().find("div.ulErMenu").hide();
     $(this).find("div.ulErMenu").show();
@@ -135,6 +191,9 @@ $(document).ready(function() {
 });
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
+<style type="text/css">
+  .aui_content{padding:10px 15px; font-size: 14px;}
+</style>
 </head>
 <body>
 
@@ -158,8 +217,7 @@ $(document).ready(function() {
                         <li><input class="input-sm w110" type="text" placeholder="姓名" name="name"/></li>
                         <li><input class="input-sm w110" type="text" placeholder="电话" name="tel"/></li>
                         <li>
-                            <span class="SpanName not-select">楼盘</span>
-                            <input id="search" class="input-sm input-left w76" type="text" placeholder="" autocomplete="off" name="area" />
+                            <input id="search" class="input-sm w110" type="text" placeholder="楼盘" autocomplete="off" name="area" />
                         </li>
                         
                         <li>
@@ -177,7 +235,7 @@ $(document).ready(function() {
                         <li>
                             <button class="selectMethod hand not-select" type="button">房型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input text="${value}" class="hand" type="checkbox" name="fxing" value="${value}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input text="${name}" class="hand" type="checkbox" name="fxing" value="${name}"> ${name}</label> </p> 
                             </div>
                         </li>
                         <li>
@@ -199,36 +257,36 @@ $(document).ready(function() {
                         <li>
                             <span class="SpanNameH2 not-select"><em>面积</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="mjiStart" />
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="mjiEnd" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="面积" placeholder="" name="mjiStart" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="面积" placeholder="" name="mjiEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>总价</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="zjiaStart" />
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="zjiaEnd" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="总价" placeholder="" name="zjiaStart" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="总价" placeholder="" name="zjiaEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>单价</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="djiaStart" />
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="djiaEnd" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="单价" placeholder="" name="djiaStart" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="单价" placeholder="" name="djiaEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>楼层</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="lcengStart" />
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="lcengEnd" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="楼层" placeholder="" name="lcengStart" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="楼层" placeholder="" name="lcengEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>建筑<br />年代</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="yearFrom" />
-                            <input id="search" class="input-sm input-left inputBox" type="text" placeholder="" name="yearTo" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="年代" placeholder="" name="yearFrom" />
+                            <input id="search" class="input-sm input-left inputBox" type="text" desc="年代" placeholder="" name="yearTo" />
                             </div>
                         </li>
                         <li>
@@ -289,7 +347,7 @@ $(document).ready(function() {
               <div class="MainRightConMain KY_W" style="display:table-row; position:relative; cursor:default;">
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
-                    <tr data-hid="${id}" style="display:none;" class="id_client_list"  >
+                    <tr data-cid="${id}" style="display:none;" class="id_client_list"  >
                       <td width="60"><strong>${name}</strong></td>
                       <td width="160" runscript = "true">getTel('${tels}')</td>
                       <!--<td style="width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">${areas}</div></td>-->
@@ -302,9 +360,10 @@ $(document).ready(function() {
                       <!-- <td width="50">${zxius}</td> -->
                       <td width="80">${dname}-${uname}</td>
                       <td width="70">${addtime}</td>
-                      <td width="120"> <a href="##" onclick="needHouse(${id});">房配客</a>
+                      <td width="120" style="text-align:left"> 
+                        <a style="padding-left:35%" href="##" onclick="needHouse(${id});">房配客</a>
                         <a href="###" onclick="openDetail(${id})">查看</a>
-                       <a auth="ky_edit" href="###" onclick="openEdit(${id})">编辑</a>
+                       <a href="###" show="$${auth} || $${userId}==${uid}" onclick="openEdit(${id})">编辑</a>
                        <!-- <a auth="ky_del" href="#" onclick="deleteClient(${id});">删除</a></td> -->
                     </tr>
                   </table>

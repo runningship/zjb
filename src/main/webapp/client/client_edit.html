@@ -9,6 +9,7 @@
 <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/user.js"></script>
 <script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
+<script src="/js/validate.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/keyEnter.js"></script>
 <script type="text/javascript">
 var lxingcont=0;
@@ -18,6 +19,12 @@ var quyucont=0;
 var cid=$${cid};
 var id;
 function save(){
+  if(checkDateyear($('#yearFrom'))==false){
+      return ;
+    }
+  if(checkDateyear($('#yearTo'))==false){
+      return ;
+    }
   if(checkTel()==false){
     return;
   }
@@ -29,7 +36,7 @@ function save(){
     mysuccess: function(data){
         // $('#saveBtn').removeAttr('disabled');
         art.dialog.close();
-        art.dialog.opener.doSearch();
+        art.dialog.opener.updateClient(id,data);
         alert('修改成功');
     }
   });
@@ -76,6 +83,16 @@ function setSearchValue(index , click){
           }
         });
         $("#HouseAreaAll").val(telText);
+		
+		var pleft = $("#HouseBoxMore").width() + 10 ;
+		  var wInput = 688 - pleft;
+		
+		  $("#areas").css({
+			"padding-left":pleft + 5,
+			"width":wInput
+		  });
+		  
+		  $("#areas").focus();
 
       });  
     }
@@ -150,19 +167,6 @@ function chaifen(val,name){
   }
 }
 
-function jianCe(a){
-  var count = 0;
-  $('input[name="'+a.name+'"]').each(function(i,obj){
-  if(obj.checked){
-    count++;
-    }
-  });
-  if (count>3) {
-    a.checked=false;
-    alert('最多只能选择三项');
-  };
-}
-
 $(document).ready(function() {
   id = getParam('id');
   // autoComplete($('#search'));
@@ -202,9 +206,9 @@ $(document).ready(function() {
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">楼盘：</td>
-    <td class="TableTdBgColor" colspan="3">
-          <input type="text" class="w1" id="areas" name="areas" style="float:left;" /><input type="hidden" id="HouseAreaAll" />
-          <div id="HouseBoxMore" style="margin: 5px 0 0 10px; float:left;"></div>
+    <td class="TableTdBgColor" colspan="3" width="726" height="33" style="position:relative;">
+          <input type="text" class="w1" id="areas" autocomplete="off" placeholder="仅限不超过3个楼盘" style="float:left; width:688px; position:absolute; left:8px; top:5px; z-index:1;" /><input type="hidden" name="areas" id="HouseAreaAll" />
+          <div id="HouseBoxMore" style=" top:8px; left:15px; position:absolute; z-index:10;"></div>
     </td>
     
   </tr>
@@ -230,19 +234,19 @@ $(document).ready(function() {
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">面积：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" desc="面积" id="mjiFrom" name="mjiFrom" />-<input type="text" desc="面积" class="w2" id="mjiTo" name="mjiTo"/> ㎡</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" desc="面积" onkeyup="checkmji(this)" id="mjiFrom" name="mjiFrom" />-<input type="text" desc="面积" class="w2" onkeyup="checkmji(this)" id="mjiTo" name="mjiTo"/> ㎡</td>
     <td align="right" class="TableTdBorBot">价格：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" desc="价格" id="jiageFrom" name="jiageFrom" />-<input type="text" class="w2" desc="价格" id="jiageTo" name="jiageTo"/> 万</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" desc="价格" onkeyup="checkzjia(this)" id="jiageFrom" name="jiageFrom" />-<input type="text" class="w2" desc="价格" onkeyup="checkzjia(this)" id="jiageTo" name="jiageTo"/> 万</td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">单价：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" desc="单价" id="djiaFrom" name="djiaFrom" />-<input type="text" desc="单价" class="w2" id="djiaTo" name="djiaTo"/></td>
+    <td class="TableTdBgColor"><input type="text" class="w2" desc="单价" onkeyup="checkdjia(this)" id="djiaFrom" name="djiaFrom" />-<input type="text" desc="单价" class="w2" onkeyup="checkdjia(this)" id="djiaTo" name="djiaTo"/></td>
     <td align="right" class="TableTdBorBot">楼层：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" id="lcengFrom" desc="楼层" name="lcengFrom" />-<input type="text" desc="楼层" class="w2" id="lcengTo" name="lcengTo" /> 层</td>
+    <td class="TableTdBgColor"><input type="text" class="w2" id="lcengFrom" onkeyup="checklceng(this)" desc="楼层" name="lcengFrom" />-<input type="text" desc="楼层" class="w2" onkeyup="checklceng(this)" id="lcengTo" name="lcengTo" /> 层</td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot">年代：</td>
-    <td class="TableTdBgColor"><input type="text" class="w2" id="yearFrom" desc="年代" name="yearFrom" />-<input type="text" class="w2" desc="年代" id="yearTo" name="yearTo"/></td>
+    <td class="TableTdBgColor"><input type="text" class="w2" onkeyup="checkyear(this)" id="yearFrom" desc="年代" name="yearFrom" />-<input type="text" class="w2" desc="年代" onkeyup="checkyear(this)" id="yearTo" name="yearTo"/></td>
     <td align="right" class="TableTdBorBot">业务员：</td>
     <td colspan="3" class="TableTdBgColor">
         <select name="did" id="did" class="input-sm input-rightB w3 dept_select">

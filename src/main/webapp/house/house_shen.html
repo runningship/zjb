@@ -27,7 +27,9 @@ var id;
 var queryOptions;
 id =getParam('id');
 function save(){
-   checkDateyear();
+	if(checkDateyear($('#dateyear')) == false){
+		  return;
+	  }
    if(checkTel()==false){
     return;
   }

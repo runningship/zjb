@@ -30,7 +30,9 @@ var parent = art.dialog.parent,       // 父页面window对象
 api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('.form1');
 function save(){
-   checkDateyear();
+	if(checkDateyear($('#dateyear')) == false){
+		  return;
+    }
    if(checkTel()==false){
     return;
   }
@@ -175,7 +177,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="dateyear" class="col-xs-4 control-label">建筑年代:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="dateyear" id="dateyear" placeholder="建筑年代" tabindex="10">
+                                <input type="text" class="form-control" value="" name="dateyear" id="dateyear"  desc="建筑年代" placeholder="建筑年代" tabindex="10">
                             </div>
                         </div>
                         <div class="form-group">

@@ -27,7 +27,9 @@ var id;
 var queryOptions;
 id =getParam('id');
 function save(){
-  checkDateyear();
+  if(checkDateyear($('#dateyear')) ==false){
+	  return;
+  }
   if(checkTel()==false){
     return;
   }
@@ -218,7 +220,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="idCnum" class="col-xs-4 control-label">建筑年代:</label>
                             <div class="col-xs-8">
-                                <input type="text" class="form-control" value="" name="dateyear" id="dateyear" placeholder="">
+                                <input type="text" class="form-control" value="" name="dateyear"  desc="建筑年代"  id="dateyear" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">

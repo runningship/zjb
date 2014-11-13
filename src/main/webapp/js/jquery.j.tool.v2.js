@@ -868,7 +868,7 @@ function check(s){
 function checkTel(){
     var reg = new RegExp(/^[0-9-/]+$/);
     var inputBox=$("#tel");
-    var value=inputBox.val().trim();
+    var value=inputBox.val();
     if(value.length == 0){ return true; }
     if(!reg.test(value)){
         infoAlert("输入错误！只能输入‘数字’或‘-’或‘/’");
@@ -887,17 +887,27 @@ function checkTel(){
     return true;
 }
 
-function checkDateyear(){
+function checkDateyear(input){
    //检查建筑年代
-  var year = $('#dateyear').val();
+  // var year = $('#dateyear').val();
+  var year = input.val();
   var reg = new RegExp(/^[0-9/]+$/);
   if(year.length>0){
     if(year.length!=4 || !reg.test(year)){
       art.dialog.tips("年代必须为4位数字");
-      $('#dateyear').focus();
-      return;
-    }  
+      input.focus();
+      // event.preventDefault();
+      return false;
+    }else{
+      var now = new Date();
+      if(year>now.getFullYear() || year<1900){
+        art.dialog.tips("年代因该在1900到"+now.getFullYear()+"之间");
+        input.focus();
+        return false;
+      }
+    }
   }
+  return true;
 }
 function openAddHouse(url){
   art.dialog.open(url,{id:'house_add',width:642,height:500});
