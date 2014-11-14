@@ -60,13 +60,13 @@ function setSideMenu(){
         var Thi=$(this),
         ThiPLi=Thi.parents('li'),
         ThiIndex=ThiPLi.index(),
-        ThiPLiH=ThiPLi.innerHeight(),
+        ThiPLiH=ThiPLi.height(),
         ThiTop=ThiPLi.position().top,
         ThiTopAct=0;
         if(ThiIndex<=menuerIndex){
-            ThiTopAct= ThiTop+(ThiPLiH/2)
+            ThiTopAct= ThiTop+(ThiPLiH/2)-10
         }else{
-            ThiTopAct= ThiTop+(ThiPLiH/2)-20
+            ThiTopAct= ThiTop+(ThiPLiH/2)-10
         }
         menuerBoxI.stop().animate({top:ThiTopAct},300);
         menuerIndex=ThiIndex;
@@ -101,9 +101,10 @@ $(function() {
 
 try{
     // $('#iframeBox').height($('#iframeBox').height()+40);
-    win.setMinimumSize(1040,660);
-    win.setMaximumSize(9020,9960);
+   
     try{
+        win.setMinimumSize(1040,660);
+        win.setMaximumSize(9020,9960);
         win.on('resize', function (stream) {
             if(screen.width-win.width<5){
                 WinMaxOrRev(0);

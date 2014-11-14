@@ -1,6 +1,9 @@
 package com.youwei.zjb.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +13,15 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Priority;
 import org.bc.sdak.utils.LogUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.youwei.zjb.ThreadSession;
 
 public class DataHelper {
 
@@ -85,5 +91,15 @@ public class DataHelper {
 			LogUtil.log(Level.WARN, "汉字["+hanzi+"]转拼音失败", e);
 		}
 		return "";
+	}
+	
+	public static List<String> getFilterWords(){
+		try {
+			List<String> lines = FileUtils.readLines(new File(ThreadSession.getHttpSession().getServletContext().getRealPath("/")+File.separator+"filter-words.txt"), "utf8");
+			return lines;
+		} catch (IOException e) {
+			LogUtil.log(Level.WARN, "load filter words failed ", e);
+			return new ArrayList<String>();
+		}
 	}
 }

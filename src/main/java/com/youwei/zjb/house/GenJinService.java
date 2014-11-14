@@ -19,19 +19,14 @@ import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.phone.PGenjinService;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/genjin")
 public class GenJinService {
 
-	public static List<String> kwords = new ArrayList<String>();
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
-	
-	static {
-		kwords.add("招聘");
-		kwords.add("提成");
-	}
 	@WebMethod
 	public ModelAndView add(GenJin gj){
 		ModelAndView mv = new ModelAndView();
@@ -48,7 +43,7 @@ public class GenJinService {
 			//默认审核通过
 			gj.sh=1;
 			//根据跟进内容片断
-			for(String kw : kwords){
+			for(String kw : DataHelper.getFilterWords()){
 				if(gj.conts.contains(kw)){
 					gj.sh = 0;
 					break;

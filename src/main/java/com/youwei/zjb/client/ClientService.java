@@ -186,6 +186,7 @@ public class ClientService {
 		}
 		page.orderBy = "c.addtime";
 		page.order = Page.DESC;
+		page.pageSize=25;
 		page = dao.findPage(page, hql.toString(), true,params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
 		return mv;

@@ -125,8 +125,8 @@ public class DistrictService {
 		String hql = "";
 		hql = "select distinct(h.name) as area , h.address as address , h.quyu as quyu  from District h where h.name like ? or h.pinyin like ? or h.pyShort like ?";
 		page.setPageSize(30);
-		search = "%"+search+"%";
-		page= service.findPage(page, hql, true, new Object[]{search , search , search});
+		search = search+"%";
+		page= service.findPage(page, hql, true, new Object[]{"%"+search , search , search});
 		mv.data.put("houses",JSONHelper.toJSONArray(page.getResult()));
 		return mv;
 	}

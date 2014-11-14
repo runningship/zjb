@@ -68,7 +68,7 @@ public class PGenjinService {
 		gj.sh=1;
 		gj.sh=1;
 		//根据跟进内容片断
-		for(String kw : GenJinService.kwords){
+		for(String kw : DataHelper.getFilterWords()){
 			if(gj.conts.contains(kw)){
 				gj.sh = 0;
 				break;
