@@ -33,16 +33,24 @@ function save(){
     return;
   }
   var a=$('form[name=form1]').serialize();
-  YW.ajax({
-    type: 'POST',
-    url: '/c/house/rent/update',
-    data:a,
-    mysuccess: function(data){
-        art.dialog.close();
-        art.dialog.opener.updateHouse(id,data);
-        alert('修改成功');
-    }
-  });
+  if ($('#tel').val()==undefined||$('#tel').val()=='') {
+    alert('请填写房主电话');
+  }else{
+      api.button({
+          name: '保存',
+          disabled:true
+       });
+      YW.ajax({
+        type: 'POST',
+        url: '/c/house/rent/update',
+        data:a,
+        mysuccess: function(data){
+            art.dialog.close();
+            art.dialog.opener.updateHouse(id,data);
+            alert('修改成功');
+        }
+      });
+  }
 }
 
 function getContent(){

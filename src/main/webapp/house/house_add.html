@@ -36,28 +36,32 @@ function save(){
    if(checkTel()==false){
     return;
   }
-  api.button({
-      name: '保存',
-      disabled:true
-  });
-  var a=$('form[name=form1]').serialize();
-  YW.ajax({
-    type: 'POST',
-    url: '/c/house/add',
-    data:a,
-    mysuccess: function(data){
-        // $('#saveBtn').removeAttr('disabled');
-        art.dialog.close();
-        art.dialog.opener.doSearchAndSelectFirst();
-        alert('发布成功');
-    },
-    complete:function(){
-        api.button({
-              name: '保存',
-              disabled:false
-          });
+var a=$('form[name=form1]').serialize();
+  if ($('#tel').val()==undefined||$('#tel').val()=='') {
+    alert('请填写房主电话');
+  }else{
+      api.button({
+          name: '保存',
+          disabled:true
+      });
+      YW.ajax({
+        type: 'POST',
+        url: '/c/house/add',
+        data:a,
+        mysuccess: function(data){
+            // $('#saveBtn').removeAttr('disabled');
+            art.dialog.close();
+            art.dialog.opener.doSearchAndSelectFirst();
+            alert('发布成功');
+        },
+        complete:function(){
+            api.button({
+                  name: '保存',
+                  disabled:false
+              });
+        }
+    });
     }
-  });
 }
 
 
