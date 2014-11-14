@@ -33,7 +33,7 @@ function checkmji(input){
       }
     }
   }else{
-    if(event.keyCode!=8 && event.keyCode!=37 && event.keyCode!=39){
+    if(isCtrlKey(event.keyCode)==false){
       // event.preventDefault();
       input.value=input.value.substring(0,input.value.length-1);
     }
@@ -49,7 +49,7 @@ function checkzjia(input){
       input.value=input.value.substring(0,input.value.length-1);
     }
   }else{
-    if(event.keyCode!=8 && event.keyCode!=37 && event.keyCode!=39){
+    if(isCtrlKey(event.keyCode)==false){
       // event.preventDefault();
       input.value=input.value.substring(0,input.value.length-1);
     }
@@ -65,7 +65,7 @@ function checkdjia(input){
       input.value=input.value.substring(0,input.value.length-1);
     }
   }else{
-    if(event.keyCode!=8 && event.keyCode!=37 && event.keyCode!=39){
+    if(isCtrlKey(event.keyCode)==false){
       // event.preventDefault();
       input.value=input.value.substring(0,input.value.length-1);
     }
@@ -81,7 +81,7 @@ function checklceng(input){
       input.value=input.value.substring(0,input.value.length-1);
     }
   }else{
-    if(event.keyCode!=8 && event.keyCode!=37 && event.keyCode!=39){
+    if(isCtrlKey(event.keyCode)==false){
       // event.preventDefault();
       input.value=input.value.substring(0,input.value.length-1);
     }
@@ -97,7 +97,7 @@ function checkyear(input){
       input.value=input.value.substring(0,input.value.length-1);
     }
   }else{
-    if(event.keyCode!=8){
+    if(isCtrlKey(event.keyCode)==false){
       // event.preventDefault();
       input.value=input.value.substring(0,input.value.length-1);
     }
@@ -115,4 +115,27 @@ function jianCe(a){
     a.checked=false;
     alert('最多只能选择五项');
   };
+}
+
+function isCtrlKey(keyCode) {
+    // 8        - 退格
+    // 9        - Tab
+    // 13       - 回车
+    // 16~18    - Shift, Ctrl, Alt
+    // 37~40    - 左上右下
+    // 35~36    - End Home
+    // 46       - Del
+    // 112~123  - F1-F12
+    switch (keyCode) {
+        case 8: case 9: case 13:
+        case 16: case 17: case 18:
+        case 37: case 38: case 39: case 40:
+        case 35: case 36: case 46:
+            return true;
+        default:
+            if (keyCode >= 112 && keyCode <= 123) {
+                return true;
+            }
+            return false;
+    }
 }

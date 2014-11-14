@@ -12,10 +12,10 @@ import com.youwei.zjb.user.entity.User;
 public class index {
 
 	public Document initPage(Document doc , HttpServletRequest req){
-		User u = ThreadSession.getUser();
-		boolean auth = UserHelper.hasAuthority(u, "");
-		String html = doc.html();
-		html = html.replace("$${auth}", String.valueOf(auth));
-		return Jsoup.parse(html);
+//		User u = ThreadSession.getUser();
+//		boolean auth = UserHelper.hasAuthority(u, "ky_edit");
+//		String html = doc.html();
+//		html = html.replace("$${auth}", String.valueOf(auth));
+		return doc;
 	}
 }

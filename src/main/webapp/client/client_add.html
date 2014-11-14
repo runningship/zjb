@@ -30,6 +30,8 @@ function save(){
   var a=$('form[name=form1]').serialize();
   if ($('#uid').val()==undefined||$('#uid').val()=='') {
     alert('请先选择业务员');
+  }else if ($('#TelAll').val()==undefined||$('#TelAll').val()=='') {
+    alert('请填写联系人电话');
   }else{
     YW.ajax({
       type: 'POST',
@@ -126,9 +128,9 @@ $(document).ready(function() {
     <td width="356" class="TableTdBgColor" style="position:relative;"><div id="TelBoxMore" style="margin: 0 0 0 2px; top:10px; position:absolute;"></div><input type="text" id="tel" style="width:315px;"  placeholder="输入后‘Enter’键确认，仅限3个"  /><input type="hidden" value="" name="tels" id="TelAll"/></td>
   </tr>
   <tr>
-    <td align="right" class="TableTdBorBot">楼盘：</td>
+    <td align="right" class="TableTdBorBot">期望楼盘：</td>
     <td class="TableTdBgColor" colspan="3" width="726" height="33" style="position:relative;">
-          <input type="text" class="w1" id="areas" autocomplete="off" placeholder="仅限不超过5个楼盘" style="float:left; width:688px; position:absolute; left:8px; top:5px; z-index:1;" /><input type="hidden" name="areas" id="HouseAreaAll" />
+          <input type="text" class="w1" id="areas" autocomplete="off" placeholder="仅限不超过5个楼盘" style="width:688px; position:absolute; left:8px; top:5px; z-index:1;" /><input type="hidden" name="areas" id="HouseAreaAll" />
           <div style=" top:8px; left:15px; position:absolute; z-index:10; max-width:680px; height:23px; overflow-x:auto;overflow-y:hidden;">
                <div id="HouseBoxMore"  style="height:23px; float:left; display:inline-block;"></div>
           </div>

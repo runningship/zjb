@@ -16,6 +16,9 @@
 <script type="text/javascript">
 var cid=$${cid};
 function doSearch(){
+  if(event==undefined || $(event.srcElement).attr('action')!='page'){
+    $('.pageInput').val(1);
+  }
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
@@ -98,9 +101,9 @@ function getlouceng(a,b){
   if (a==0&&b==100000) {
     return '不限';
   }else if (a==0) {
-    return '小于'+b;
+    return '高于'+b;
   }else if (b==100000) {
-    return '大于'+a;
+    return '低于'+a;
   }else {
     return a+'-'+b;
   }
@@ -164,7 +167,7 @@ function setSearchValue(index , click){
     var Vals=ThiA.eq(index).addClass('hover').attr('area');
     $('#search').val(Vals);
     if(click){
-      houseAddMain();
+      // houseAddMain();
       $("#HouseBoxMore div i").click(function(){
                 
         var telText = "";
@@ -335,7 +338,7 @@ $(document).ready(function() {
                         
                         <li class="LiBoxW1">
                              <button class="ButtonW1 ButtonS hand not-select" type="submit" onclick="doSearch();return false;" value="enter">搜索</button>
-                             <button class="ButtonW1 ButtonQ hand not-select" type="button">清空</button>
+                             <button class="ButtonW1 ButtonQ hand not-select" type="button" onclick="window.location.reload();">清空</button>
                         </li>
                    </ul>
               </form>
@@ -399,7 +402,7 @@ $(document).ready(function() {
                       <td width="120" style="text-align:left"> 
                         <a style="padding-left:35%" href="##" onclick="needHouse(${id});">房配客</a>
                         <a href="###" onclick="openDetail(${id})">查看</a>
-                       <a href="###" show="$${auth} || $${userId}==${uid}" onclick="openEdit(${id})">编辑</a>
+                       <a href="###" onclick="openEdit(${id})">编辑</a>
                        <!-- <a auth="ky_del" href="#" onclick="deleteClient(${id});">删除</a></td> -->
                     </tr>
                   </table>

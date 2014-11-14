@@ -17,8 +17,15 @@ $(function(){
     $("#tel").bind('keypress',function(event){ 
         addTel(event);
     });
-	
+	  $("#tel").bind('blur',function(event){
+        event.keyCode=13;
+        addTel(event);
+    });
 	$("#areas").bind('keypress',function(event){ 
+        addHouse(event);
+    });
+  $("#areas").bind('blur',function(event){
+        event.keyCode=13;
         addHouse(event);
     });
 });
@@ -29,8 +36,11 @@ function addTel(event){
          
                 var spanNum = $("#TelBoxMore div").size();
                 var telNum = $.trim($("#tel").val());
+                if(telNum==""){
+                  return;
+                }
                 var telall = $.trim($("#TelAll").val());
-                var text = "<div style=' width:105px; border-radius:8px; float:left; background-color: #008765; padding:3px 0 4px 0; color:#fff; margin:0px 2px 0 0; position:relative;'><i style=' display:block; height:14px; line-height:13px; border-radius:5px; font-size:16px; color:#008765; background-color: #fff; padding:0px 0px; right:2px; top:4px; font-style:normal; cursor:pointer;  position:absolute;'>×</i><span style='width:80px; padding-left:5px;'>"+telNum+"</span></div>";
+                var text = "<div style=' border-radius:8px; float:left; background-color: #008765; padding:3px 16px 4px 0; color:#fff; margin:0px 2px 0 0; position:relative;'><i style=' display:block; height:14px; line-height:13px; border-radius:5px; font-size:16px; color:#008765; background-color: #fff; padding:0px 0px; right:2px; top:4px; font-style:normal; cursor:pointer;  position:absolute;'>×</i><span style='width:80px; padding-left:5px;'>"+telNum+"</span></div>";
                 
                 if(spanNum <= 2){
                   if(checkTel()){
@@ -45,7 +55,7 @@ function addTel(event){
                     $("#tel").val("");
                     
                     
-                      var pleft = ($("#TelBoxMore div").width() + 2 ) * (spanNum + 1);
+                      var pleft = $("#TelBoxMore").width() + 2 ;
                       var wInput = 315 - pleft;
               
                       $("#tel").css({
@@ -130,6 +140,9 @@ function houseAddMain(){
 
         var divNum = $("#HouseBoxMore div").size();
         var houseNum = $.trim($("#areas").val());
+        if(houseNum==""){
+          return;
+        }
         var houseall = $.trim($("#HouseAreaAll").val());
         var text = "<div style='border-radius:8px; float:left; display:inline-block; background-color: #008765; padding:0 18px 0 0; height:20px; line-height:20px; color:#fff; margin:0px 2px 0 0; position:relative;'><i style=' display:block; width:13px; height:15px; line-height:13px; border-radius:5px; font-size:16px; color:#008765; background-color: #fff; right:3px; top:4px; font-style:normal; cursor:pointer; position:absolute; text-align:center;'>×</i><span style='width:80px; padding-left:5px;'>"+houseNum+"</span></div>";
 
