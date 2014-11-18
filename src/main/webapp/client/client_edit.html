@@ -59,8 +59,8 @@ function deleteThis(){
     type: 'POST',
     url: '/c/client/delete?id='+id,
     mysuccess: function(data){
+      art.dialog.opener.deleteClient();
       art.dialog.close();
-      art.dialog.opener.doSearch();
       alert('删除成功');
     }
   });

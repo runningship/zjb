@@ -609,7 +609,7 @@ if(I_SUCCESS==1){
     //extAlert(a,ms_data[1]+ms_data[2]);
     callback(ms_data[1]+ms_data[2])
 }else {
-    callback('查询失败');
+    callback('');
 }
 }
 })

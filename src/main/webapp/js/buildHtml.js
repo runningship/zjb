@@ -351,7 +351,6 @@ function ChangeW(){
   }
 }
 window.onresize = function(){
-   console.log(1);
   ChangeW();
 }
 
