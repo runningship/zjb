@@ -99,17 +99,6 @@ function sideBtnFun(){
             return false;
         }else if(ThiType=='map'){
             ThiArea=Thi.data('area');
-            // art.dialog.open(
-            //   'http://map.baidu.com',
-            //   {
-            //     id:'baidu_map',width:800,height:600,
-            //     init:function(e){
-            //       this.iframe.onload=function(xx){
-            //         alert(2);
-            //       };
-            //     }
-            //   });
-            // art.dialog.open('/house/house_see_map.html?area='+ThiArea,{id:'seemap'});
             art.dialog.open('/house/baidu_map.html?area='+ThiArea,{id:'seemap',width:800,height:600});
             return false;
         }else if(ThiType=='copy'){
@@ -154,7 +143,7 @@ $(document).ready(function() {
               }else{
                   thiLxr=lxrArr[0]
               }
-              TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" title="百度">&#xe64a;</span></p>';
+              TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span></p>';
           });
           TelBoxStr=TelBoxStr+'<i>^</i>'
         };
@@ -179,11 +168,17 @@ $(document).ready(function() {
         });
         ThiBox.on('click', 'span.baidu', function(event) {
             var ThiTel=$(this).parent().find('.tel').html();
-            art.dialog.open('http://www.baidu.com/s?wd='+ThiTel,{
-              title:'百度搜索',
-              height:'80%',
-              width:'80%'
-            })
+            // art.dialog.open('http://www.ip138.com:8080/search.asp?mobile='+ThiTel+'&action=mobile',{
+            //     title:'手机号码归属搜索',
+            //     height:230,
+            //     width:400
+            // });
+            window.top.gui.Shell.openExternal('http://www.baidu.com/s?wd='+ThiTel);
+            // art.dialog.open('http://www.baidu.com/s?wd='+ThiTel,{
+            //   title:'百度搜索',
+            //   height:'80%',
+            //   width:'80%'
+            // });
             return false;
         });
     }
