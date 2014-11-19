@@ -26,7 +26,14 @@ $(function(){
     });
   $("#areas").bind('blur',function(event){
         event.keyCode=13;
-        addHouse(event);
+		
+		var disNone = $("#autoCompleteBox").css("display");
+		
+		if(disNone == "none"){
+			addHouse(event);
+		}
+		
+        
     });
 });
 
@@ -149,7 +156,14 @@ function houseAddMain(){
 		
         if(divNum <= 4){
 
-              $("#HouseBoxMore").append(text);
+              
+			  if(houseall.indexOf(houseNum)>=0){
+				  $("#areas").val("");  
+				  alert("不能多次输入同一楼盘！");
+				  return false;
+			  }
+			  
+			  $("#HouseBoxMore").append(text);
               if(divNum>0 && divNum <= 4){
                 houseall += ","+ houseNum;
               }else{
@@ -168,9 +182,6 @@ function houseAddMain(){
 				"padding-left":pleft + 5,
 				"width":wInput
 			  });
-			  
-			  
-			  
 			  
 			  
         

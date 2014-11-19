@@ -411,8 +411,7 @@ function autoComplete(id){
        setSearchValue(ThisIndex,true);
        return false;
     });
-    Thi.on('keydown',function(event) {
-    }).on('keyup',function(event) {
+    Thi.on('keyup',function(event) {
         var This=$(this),
         ThisVal=This.val(),
         param={search:ThisVal};

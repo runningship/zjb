@@ -185,6 +185,8 @@ to {background: #007759; border:1px solid #00241b;}
 
 .InputMainLine li button{ height:30px; display:block; line-height:30px; padding:0 0; color:#555555;width:58px;}
 
+.InputMainLine li button:hover{background: -webkit-gradient(linear, 0 0, 0 100%, from(#00976a), to(#006249)); border: 1px solid #006249; color:#ffffff;}
+
 i.caret {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
@@ -412,7 +414,7 @@ ul.bottomAction, ul.bottomAction li{ margin:0; padding:0;}
 
 .layerTable1 td select.w3{ width:100px;}
 
-.layerTable1 td div{ display:inline-block; margin:2px 8px 2px 0;}
+.layerTable1 td div{ display:inline-block; margin:2px 5px 2px 0;}
 
 .layerTable1 td input[type="checkbox"]{
 	margin-top:2px; float:left;

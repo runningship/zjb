@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" style="height:570px;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
@@ -32,6 +32,7 @@ function save(){
     alert('请先选择业务员');
   }else if ($('#TelAll').val()==undefined||$('#TelAll').val()=='') {
     alert('请填写联系人电话');
+    $('#tel').focus();
   }else{
     YW.ajax({
       type: 'POST',
@@ -84,11 +85,11 @@ function setSearchValue(index ,click){
 			"width":wInput
 		  });
 		  
-		  $("#areas").focus();
+		  
 
       });
     }
-    
+    $("#areas").focus();
     
 }
 
@@ -111,7 +112,7 @@ $(document).ready(function() {
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 </head>
 
-<body>
+<body >
 
 <script>
 
@@ -128,9 +129,9 @@ $(document).ready(function() {
     <td width="356" class="TableTdBgColor" style="position:relative;"><div id="TelBoxMore" style="margin: 0 0 0 2px; top:10px; position:absolute;"></div><input type="text" id="tel" style="width:315px;"  placeholder="输入后‘Enter’键确认，仅限3个"  /><input type="hidden" value="" name="tels" id="TelAll"/></td>
   </tr>
   <tr>
-    <td align="right" class="TableTdBorBot">期望楼盘：</td>
-    <td class="TableTdBgColor" colspan="3" width="726" height="33" style="position:relative;">
-          <input type="text" class="w1" id="areas" autocomplete="off" placeholder="仅限不超过5个楼盘" style="width:688px; position:absolute; left:8px; top:5px; z-index:1;" /><input type="hidden" name="areas" id="HouseAreaAll" />
+    <td align="right" class="TableTdBorBot" style="white-space:nowrap;"><span style="margin-right:12px;">期望</span><br />楼盘：</td>
+    <td class="TableTdBgColor" colspan="3" width="726" height="35" style="position:relative;">
+          <input type="text" class="w1" id="areas" autocomplete="off" placeholder="添加楼盘，回车" style="width:690px; position:absolute; left:8px; top:5px; z-index:1;" /><input type="hidden" name="areas" id="HouseAreaAll" />
           <div style=" top:8px; left:15px; position:absolute; z-index:10; max-width:680px; height:23px; overflow-x:auto;overflow-y:hidden;">
                <div id="HouseBoxMore"  style="height:23px; float:left; display:inline-block;"></div>
           </div>
@@ -171,7 +172,7 @@ $(document).ready(function() {
   <tr>
     <td align="right" class="TableTdBorBot">年代：</td>
     <td class="TableTdBgColor"><input type="text" class="w2" desc="年代" name="yearFrom" id="yearFrom" onkeyup="checkyear(this)" />-<input type="text" desc="年代" class="w2"  name="yearTo" id="yearTo" onkeyup="checkyear(this)"/></td>
-    <td align="right" class="TableTdBorBot">业务员：</td>
+    <td align="right" class="TableTdBorBot" style="white-space:nowrap;">业务员：</td>
     <td colspan="3" class="TableTdBgColor">
         <select name="did" id="did" class="input-sm input-rightB w3 dept_select">
 	    </select>
@@ -187,7 +188,7 @@ $(document).ready(function() {
   </tr>
   <tr>
     <td align="right" class="" style=" background-color:#e9e9e9;"> </td>
-    <td colspan="3" class="" height="50" style=" background-color:#e9e9e9;">
+    <td colspan="3" class="" height="45" style=" background-color:#e9e9e9;">
        <button onclick="save();return false;" class="save btn btn-primary btn-block" >保存</button>
        <!-- <button class="cancel" onclick="close();">取消</button> -->
     </td>

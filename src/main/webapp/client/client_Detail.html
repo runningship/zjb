@@ -110,6 +110,7 @@ function setSearchValue(index){
 }
 
 $(document).ready(function() {
+  $('#conts').focus();
   id = getParam('id');
   getContent();
   getGenjins();
@@ -209,7 +210,7 @@ function contsChange(val){
   </tr>
   <tr>
      <td colspan="4" class="TableTdBorBot" height="33" bgcolor="#ffffff">
-      <textarea type="text" style=" margin-left:35px; width:600px;height:60px;resize:none; border:1px solid #dddddd; float:left;" id="conts" onkeyup="contsChange(this.value);" name="conts" /><button id="btn_submit" style=" width:80px; height:33px;margin-top:28px; border:1px solid #dddddd; color:#333333; border-radius:0; float:left;margin-left:3px;" onclick="save();return false;" >提交</button>
+      <textarea type="text" placeholder="好记性不如多跟进" style=" margin-left:35px; width:600px;height:50px; padding:5px; resize:none; border:1px solid #b6b6b6; float:left;" id="conts" onkeyup="contsChange(this.value);" name="conts" /><button id="btn_submit" style=" width:80px; height:33px;margin-top:28px; border:1px solid #dddddd; color:#333333; border-radius:0; float:left;margin-left:3px;" onclick="save();return false;" >提交</button>
      </td>
   </tr>
         <table class="TableMainLGj " width="100%">
