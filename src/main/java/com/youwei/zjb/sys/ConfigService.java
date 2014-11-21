@@ -4,6 +4,8 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.biz.LeaveStatus;
+import com.youwei.zjb.biz.LeaveType;
 import com.youwei.zjb.house.ChaoXiang;
 import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.house.LouXing;
@@ -32,6 +34,8 @@ public class ConfigService {
 		mv.data.put("shenhe", ShenHe.toJsonArray());
 		mv.data.put("zhuangxiu", ZhuangXiu.toJsonArray());
 		mv.data.put("rent_type", RentType.toJsonArray());
+		mv.data.put("leaveType", LeaveType.toJsonArray());
+		mv.data.put("leaveStatus", LeaveStatus.toJsonArray());
 		return mv;
 	}
 }

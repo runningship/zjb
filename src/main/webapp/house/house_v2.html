@@ -205,12 +205,7 @@ $(document).ready(function(){
 		 
 });
 
-function crashTest(){
-  gui.App.setCrashDumpDir("d:\\");
-  alert(gui.App.dataPath);
-  App.crashRenderer();
-  App.crashBrowser();
-}
+
 </script>
 <style type="text/css">
   .selected{
@@ -238,8 +233,8 @@ function crashTest(){
                   <li class="line"></li>
                   <li class="nobar" onclick="window.location='/v/house/house_rent_v2.html'"><i class="i2"></i>出租</li>
                   <li class="line"></li>
-                  <li class="MenuBox nobar" style="position:relative;">
-                       <i class="i3"></i>登记
+                  <li class="MenuBox nobar" style="position:relative;" onclick="openAddHouse('/v/house/house_add.html?act=add&chuzu=0')">
+                       <i class="i3" ></i>登记
                        <div class="topMenuChid">
                             <span></span>
                             <a href="javascript:void(0)" onclick="openAddHouse('/v/house/house_add.html?act=add&chuzu=0')">出售登记</a> 

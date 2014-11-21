@@ -15,9 +15,11 @@
 <script type="text/javascript">
 var cid=$${cid};
 var rowId;
-function doSearch(callback){
+function doSearch(callback,isdel){
   if(event==undefined || $(event.srcElement).attr('action')!='page'){
-    $('.pageInput').val(1);
+    if(isdel==false){
+      $('.pageInput').val(1);
+    }
   }
   var a=$('form[name=form1]').serialize();
   YW.ajax({
@@ -59,7 +61,7 @@ function deleteClient(){
     }else {
       $('#KY_TableListKy').find('tr')[rowId].click();
     }
-  });
+  },true);
 }
 
 function getmianji(a,b){
@@ -156,6 +158,7 @@ function openDetail(id){
 }
 
 function openEdit(id,row){
+  // page
   rowId = row;
   art.dialog.open("/v/client/client_edit.html?id="+id,{id:'client_edit',width:800,height:575,title:'客源修改'});
 }
@@ -408,7 +411,6 @@ $(document).ready(function() {
                         <a style="padding-left:35%" href="##" onclick="needHouse(${id});">客配房</a>
                         <a href="###" onclick="openDetail(${id})">查看</a>
                        <a href="###" onclick="openEdit(${id},${rowIndex})">编辑</a>
-                       <!-- <a auth="ky_del" href="#" onclick="deleteClient(${id});">删除</a></td> -->
                     </tr>
                   </table>
                 </div>

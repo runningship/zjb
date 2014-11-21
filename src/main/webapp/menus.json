@@ -66,12 +66,7 @@
 			"name":"ky_on",
 			"text":"开启客源功能",
 			"type":"menu"
-		}]
-	},{
-		"name":"fy_data",
-		"text":"数据权限",
-		"type":"virtual",
-		"children":[{
+		},{
 			"name":"ky_data_dept",
 			"text":"分店",
 			"type":"menu"
@@ -87,11 +82,66 @@
 	"text":"业务管理",
 	"children":[{
 		"name":"yw_module",
-		"text":"业务",
+		"text":"",
 		"type":"virtual",
 		"children":[{
 			"name":"yw_on",
 			"text":"开启业务功能",
+			"type":"menu"
+		}]
+	},{
+		"name":"yw_leave",
+		"text":"请假",
+		"type":"virtual",
+		"children":[{
+			"name":"yw_leave_sh",
+			"text":"审批",
+			"type":"menu"
+		},{
+			"name":"yw_leave_delete",
+			"text":"删除",
+			"type":"menu"
+		},{
+			"name":"yw_leave_data_dept",
+			"text":"分店",
+			"type":"menu"
+		},{
+			"name":"yw_leave_data_comp",
+			"text":"公司",
+			"type":"menu"
+		}]
+	},{
+		"name":"yw_outhouse",
+		"text":"外出看房",
+		"type":"virtual",
+		"children":[{
+			"name":"yw_outhouse_sh",
+			"text":"审批",
+			"type":"menu"
+		},{
+			"name":"yw_outhouse_data_dept",
+			"text":"分店",
+			"type":"menu"
+		},{
+			"name":"yw_outhouse_data_comp",
+			"text":"公司",
+			"type":"menu"
+		}]
+	},{
+		"name":"yw_outbiz",
+		"text":"外出公事",
+		"type":"virtual",
+		"children":[{
+			"name":"yw_outbiz_sh",
+			"text":"审批",
+			"type":"menu"
+		},{
+			"name":"yw_outbiz_data_dept",
+			"text":"分店",
+			"type":"menu"
+		},{
+			"name":"yw_outbiz_data_comp",
+			"text":"公司",
 			"type":"menu"
 		}]
 	}]

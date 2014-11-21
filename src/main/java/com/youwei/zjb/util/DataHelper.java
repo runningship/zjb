@@ -28,6 +28,7 @@ public class DataHelper {
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static SimpleDateFormat dateSdf = new SimpleDateFormat("yyyy-MM-dd");
 	public static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	public static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	public static final String User_Default_Password = "123456";
 	private static final HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
 	static{

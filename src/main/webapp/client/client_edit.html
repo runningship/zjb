@@ -72,7 +72,7 @@ function setSearchValue(index , click){
     ThiA.removeClass('hover');
     var Vals=ThiA.eq(index).addClass('hover').attr('area');
     $('#areas').val(Vals);
-    if(click){
+  //  if(click){
       houseAddMain();
       $("#HouseBoxMore div i").click(function(){
                 
@@ -101,7 +101,7 @@ function setSearchValue(index , click){
 		  $("#areas").focus();
 
       });  
-    }
+  //  }
     
 }
 
@@ -135,7 +135,7 @@ function getContent(){
           }
           $('#areas').focus();
           $('#areas').val(arr[i]);
-          houseAddMain();
+          addHouse(event);
         }
       }
       $('#lcengFrom').val(json['lcengFrom']);
@@ -185,7 +185,14 @@ $(document).ready(function() {
     getContent();
     autoComplete($('#areas'));
   });
+  
+  
+   
+  
+  
+  
 });
+
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 </head>

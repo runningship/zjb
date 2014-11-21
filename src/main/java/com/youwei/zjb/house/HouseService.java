@@ -1,5 +1,11 @@
 package com.youwei.zjb.house;
 
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +14,7 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
@@ -123,10 +130,17 @@ public class HouseService {
 	}
 	
 	private void addDistrictIfNotExist(House house){
+		User u = ThreadSession.getUser();
+		
 		//检查楼盘是否在楼盘字典中，如果没有，则添加
 		String hql = "from District  where name = ? and address=?";
 		List<District> list = dao.listByParams(District.class, hql, house.area,house.address);
 		if(list.isEmpty()){
+			if(u.cid!=1){
+				//只有中介宝用户才可以
+				setMessageToMetis("出现新的楼盘: "+house.id+","+house.area+","+house.quyu+","+house.address);
+				return;
+			}
 			District d= new District();
 			d.address = house.address;
 			d.name = house.area;
@@ -138,6 +152,36 @@ public class HouseService {
 			dao.saveOrUpdate(d);
 		}
 	}
+	
+	public void setMessageToMetis(final String msg){
+		
+		Thread t = new Thread(){
+			@Override
+			public void run() {
+				try{
+					URL url = new URL("http://60.169.1.32:8888/chat");
+//					URL url = new URL("http://localhost:8888/chat");
+					HttpURLConnection http = (HttpURLConnection) url.openConnection();
+					http.setRequestMethod("POST");
+					http.setConnectTimeout(0);
+					http.setInstanceFollowRedirects(true);
+					http.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+					http.setDefaultUseCaches(false);
+					http.setDoOutput(true);
+					
+					PrintWriter out = new PrintWriter(http.getOutputStream());
+					out.print("qq=253187898&msg="+msg);//传入参数
+					out.close();
+					http.connect();//连接
+					http.getInputStream();//返回流
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
+		};
+		t.start();
+	}
+	
 	@WebMethod
 	public ModelAndView update(House house , String hxing){
 		validte(house);
@@ -341,6 +385,9 @@ public class HouseService {
 		}else if("comp".equals(query.scope)){
 			hql.append(" and h.cid=? ");
 			params.add(u.cid);
+		}else if("fav".equals(query.scope)){
+			String favStr = "@"+u.id+"|";
+			query.favStr = favStr;
 		}
 		if(StringUtils.isNotEmpty(query.ztai)){
 			hql.append(" and h.ztai like ? ");

@@ -141,6 +141,13 @@ to {background: #007759; border:1px solid #00241b;}
 
 .MainRightTop li i.i5{ background-position:0 -258px;}
 .MainRightTop li:hover i.i5, .MainRightTop li.slect i.i5{ background-position:0 -280px;}
+.MainRightTop li i.i6{ background-position:0 -312px;}
+.MainRightTop li:hover i.i6, .MainRightTop li.slect i.i6{ background-position:0 -334px;}
+.MainRightTop li i.i7{ background-position:0 -358px;}
+.MainRightTop li:hover i.i7, .MainRightTop li.slect i.i7{ background-position:0 -380px;}
+.MainRightTop li i.i8{ background-position:0 -407px;}
+.MainRightTop li:hover i.i8, .MainRightTop li.slect i.i8{ background-position:0 -429px;}
+
 
 
 .MainRightInputMain{ display:inline-block;background:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f6f6f6)); border-bottom:1px solid #b2b2b2; padding:8px 0 8px 8px;-moz-user-select: none; -khtml-user-select: none; user-select: none;}
@@ -183,9 +190,9 @@ to {background: #007759; border:1px solid #00241b;}
 .InputMainLine li span.Rnone{ border-bottom-right-radius: 0; border-top-left-right: 0;}
 
 
-.InputMainLine li button{ height:30px; display:block; line-height:30px; padding:0 0; color:#555555;width:58px;}
+.InputMainLine li button{ height:30px; display:block; line-height:26px; padding:0 0; color:#555555;width:58px;}
 
-.InputMainLine li button:hover{background: -webkit-gradient(linear, 0 0, 0 100%, from(#00976a), to(#006249)); border: 1px solid #006249; color:#ffffff;}
+.InputMainLine li button:hover, .InputMainLine li button.bgBox{background: -webkit-gradient(linear, 0 0, 0 100%, from(#00976a), to(#006249)); border: 1px solid #006249; color:#ffffff;}
 
 i.caret {
     border-left: 4px solid transparent;
@@ -413,6 +420,7 @@ ul.bottomAction, ul.bottomAction li{ margin:0; padding:0;}
 .layerTable1 td input.w2{ width:87px;}
 
 .layerTable1 td select.w3{ width:100px;}
+.layerTable1 td select.w112{ width:112px;}
 
 .layerTable1 td div{ display:inline-block; margin:2px 5px 2px 0;}
 
@@ -548,3 +556,12 @@ background-color: #6FBEFF; color:#000;
 
 .titlebar{-webkit-app-region:drag;}
 .nobar{-webkit-app-region:no-drag;z-index: 9999}
+
+.addMoreStyle{ padding:0 2px; height:16px; line-height:14px; border-radius: 3px; background-color:#bbbbbb; font-weight:bold; cursor:pointer; color:#ffffff; font-size:16px; text-align:center;}
+
+.addMoreStyle:hover{ background-color:#00976a;}
+
+
+.addClientNameBox td{ border-bottom:1px solid #e9e9e9;}
+
+.sekectClitNameBtn{ background:#008765; border:none; padding:3px 7px; color:#ffffff; width:auto; border-radius:3px; font-size:12px;}
