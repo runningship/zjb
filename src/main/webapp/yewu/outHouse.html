@@ -193,7 +193,7 @@ $(document).ready(function() {
                               <option value="">所有</option>
                               <option value="0">带看</option>
                               <option value="1">陪看</option>
-                              <option value="1">自看</option>
+                              <option value="2">自看</option>
                             </select>
                         </li>
                         <li>
@@ -277,7 +277,7 @@ $(document).ready(function() {
                       <!-- <td width="50">${zxius}</td> -->
                       <td width="120"> 
                        <a href="###" show="$${userId}==${uid}" onclick="openEdit(${id})">编辑</a>
-                       <a href="###" onclick="openDelete(${id})">删除</a>
+                       <a href="###" show="$${userId}==${uid}" onclick="openDelete(${id})">删除</a>
                     </tr>
                   </table>
                 </div>
