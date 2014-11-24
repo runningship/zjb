@@ -117,8 +117,8 @@ $(document).ready(function() {
   <tr>
     <td align="right" class="TableTdBorBot">时间：</td>
     
-    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px">
-    <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
+    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px">
+    <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
     
   </tr>
   

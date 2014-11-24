@@ -28,7 +28,7 @@ function save(finish){
       mysuccess: function(data){
           // $('#saveBtn').removeAttr('disabled');
           art.dialog.close();
-          art.dialog.opener.doSearch();
+          art.dialog.opener.updateOutHouse(id,data);
           alert('发布成功');
       }
     });
@@ -43,6 +43,9 @@ function getContent(){
       var json = JSON.parse(result);
       if(json['status']=='待返回'){
         $('#finish').css('display','');
+      }
+      if(json['type']==0){
+        $('#client_select_tr').css('display','');
       }
       $('#id').val(json['id']);
       $('#clientId').val(json['clientId']);
@@ -117,7 +120,7 @@ $(document).ready(function() {
       
     </td>
   </tr>
-  <tr>
+  <tr id="client_select_tr" style="display:none">
     <td align="right" width="70" class="TableTdBorBot">选择客户：</td>
     <td class="TableTdBgColor"><input type="text" id="clientName" name="clientName" style="width:100px" /><div class="addMoreStyle" onclick="openAddCliter();">+</div></td>
   </tr>
@@ -137,8 +140,8 @@ $(document).ready(function() {
   <tr>
     <td align="right" class="TableTdBorBot">时间：</td>
     
-    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px">
-    <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
+    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px">
+    <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
     
   </tr>
   

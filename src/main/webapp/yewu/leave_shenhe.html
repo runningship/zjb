@@ -11,6 +11,7 @@
 <script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 var id;
+var row;
 var cid=$${cid};
 function save(sh){
   if($('#conts').val()==""){
@@ -60,11 +61,17 @@ function getGenjins(){
   });
 }
 
+function deleteLeave(){
+  art.dialog.opener.deleteThis(id,row);
+  art.dialog.opener.deleteLeave();
+  art.dialog.opener.close();
+}
+
 $(document).ready(function() {
   $('#conts').focus();
   id = getParam('id');
+  row = getParam('row');
   getContent();
-  // getGenjins();
 });
 
 </script>
@@ -74,12 +81,11 @@ $(document).ready(function() {
 <body>
 
 <script>
-   $(document).keypress(function(e) { 
-    // 回车键事件 
-       if(e.which == 13) { 
-          jQuery(".confirmButton").click(); 
-       } 
-   }); 
+   // $(document).keypress(function(e) {
+   //     if(e.which == 13) { 
+   //        jQuery(".confirmButton").click(); 
+   //     } 
+   // }); 
 </script>
 <form name="form1" role="form">
 <input type="hidden" name="clientId" id="id"/>
@@ -113,6 +119,7 @@ $(document).ready(function() {
     <td colspan="3"> 
       <button onclick="save(1);return false;" class="save btn btn-primary btn-block" >通过</button>
       <button onclick="save(2);return false;" class="save btn btn-primary btn-block" >不通过</button>
+      <button onclick="deleteLeave();return false;" class="save btn btn-primary btn-block" >删除</button>
     </td>
   </tr>
 </table>

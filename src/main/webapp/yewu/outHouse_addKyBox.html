@@ -94,11 +94,16 @@ $(document).ready(function() {
               <div class="MainRightInputMain KY_W not-select" style=" padding:0; border-bottom:1px solid #cccccc;">
               
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
+              <input type="hidden" name="uid"  value="$${userId}"/>
                    <ul class="InputMainLine KY_W not-select" style=" padding:5px 5px; border-top:1px solid #cccccc; background-color:#eeeeee;">
                         <li><input class="input-sm w110" type="text" placeholder="姓名" name="name"/></li>
                         <li><input class="input-sm w110" type="text" placeholder="电话" name="tel"/></li>
                         <li class="LiBoxW1">
                              <button class="ButtonW1 ButtonS hand not-select iframeBtn" type="submit" onclick="doSearch();return false;" value="enter">搜索</button>
+                        </li>
+                        <li style="font-size:12px; line-height:28px;">
+                        <a href="#" style="color:#369a7e;">添加新客户</a>
+                        
                         </li>
                    </ul>
                    

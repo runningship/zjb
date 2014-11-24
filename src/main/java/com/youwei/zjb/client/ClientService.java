@@ -494,7 +494,7 @@ public class ClientService {
 		dao.saveOrUpdate(po);
 		
 		//update outHouse记录
-		dao.execute("update OutHouse set clientName=? and ctels=? where clientId=? ", po.name,po.tels , po.id);
+		dao.execute("update OutHouse set clientName=? , ctels=? where clientId=? ", po.name,po.tels , po.id);
 		ModelAndView mv = get(po.id);
 		return mv;
 	}

@@ -40,12 +40,14 @@ function doSearch(callback,isdel){
 function updateBiz(id,data){
   var json = JSON.parse(data);
   var tr = $('tr[data-cid='+json['id']+']');
-  var a = tr.children()[0]
-  var b = tr.children()[1]
-  var f = tr.children()[5]
-  $(a).html(json['name']);
-  $(b).html(json['tels']);
-  $(f).html(json['dname']+'-'+json['uname']);
+  var a = tr.children()[1]
+  var b = tr.children()[2]
+  var c = tr.children()[3]
+  var d = tr.children()[4]
+  $(a).html(json['reason']);
+  $(b).html(json['outtime']);
+  $(c).html(json['backtime']);
+  $(d).html(json['status']);
 }
 
 function openAdd(){
@@ -59,6 +61,10 @@ function openDetail(id){
 
 function openEdit(id){
   art.dialog.open("/v/yewu/outBiz_edit.html?id="+id,{id:'outbiz_edit',width:600,height:332,title:'修改外出公事'});
+}
+
+function openpiyue(id,row){
+  art.dialog.open("/v/yewu/outBiz_piyue.html?row="+row+"&id="+id,{id:'outbiz_piyue',width:600,height:332,title:'批阅外出公事'});
 }
 
 function openDelete(id,row){
@@ -95,6 +101,9 @@ $(document).ready(function() {
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 <style type="text/css">
   .aui_content{padding:10px 15px; font-size: 14px;}
+  .待返回{color: red}
+  .已完成{color: green}
+  .已批阅{color: gray}
 </style>
 </head>
 <body>
@@ -135,6 +144,7 @@ $(document).ready(function() {
                               <option value="">所有</option>
                               <option value="待返回">待返回</option>
                               <option value="已完成">已完成</option>
+                              <option value="已批阅">已批阅</option>
                             </select>
                             <!-- <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('quyus')" class="id_ztai"><label><input text="${name}" class="hand" type="checkbox" name="ztai" value="${name}"> ${name}</label> </p> 
@@ -185,18 +195,18 @@ $(document).ready(function() {
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
                     <tr data-cid="${id}" style="display:none;" class="id_biz_list"  >
-                      <td width="60"><strong>${dname}-${uname}</strong></td>
+                      <td width="60" height="20"><strong>${dname}-${uname}</strong></td>
                       <td width="160">${reason}</td>
                       <td width="60">${outtime}</td>
                       <td width="60">${backtime}</td>
-                      <td width="60">
+                      <td width="60" class="${ztai}">
                         ${ztai}
                       </td>
-                      <td width="120" style="text-align:left"> 
-                        <!-- <a style="padding-left:35%" href="##" onclick="openpiyue(${id});">批阅</a> -->
+                      <td width="120" style="text-align:center"> 
+                        <a show="'${ztai}'!='待返回'" href="##" onclick="openpiyue(${id},${rowIndex});" style="color:#0081db;">批阅</a>
                         <!-- <a href="###" onclick="openDetail(${id})">查看</a> -->
-                        <a href="###" show="$${userId}==${uid} && '${ztai}'!='已完成'" onclick="openEdit(${id})">编辑</a>
-                        <a show="$${userId}==${uid} && '${ztai}'!='已完成'" href="###" onclick="openDelete(${id},${rowIndex})">删除</a>
+                        <a href="###" show="$${userId}==${uid} && '${ztai}'=='待返回'" onclick="openEdit(${id},${rowIndex})">编辑</a>
+                        <a show="$${userId}==${uid} && '${ztai}'=='待返回'" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;">删除</a>
                       </td>
                     </tr>
                   </table>

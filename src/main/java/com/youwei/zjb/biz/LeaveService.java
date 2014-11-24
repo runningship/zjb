@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.converters.StringArrayConverter;
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
@@ -20,6 +21,7 @@ import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.biz.entity.Leave;
 import com.youwei.zjb.biz.entity.OutBiz;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
@@ -45,13 +47,14 @@ public class LeaveService {
 		leave.status = "未审批";
 		leave.createtime = new Date();
 		dao.saveOrUpdate(leave);
+		
 		return mv;
 	}
 	
 	@WebMethod
 	public ModelAndView list(Page<Map> page, BizQuery query){
 		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder("select u.uname as uname, d.namea as dname, lea.id as id, lea.reason as reason,lea.starttime as starttime ,lea.endtime as endtime"
+		StringBuilder hql = new StringBuilder("select u.uname as uname, d.namea as dname, lea.id as id, SubString(lea.reason,1,50) as reason,lea.starttime as starttime ,lea.endtime as endtime"
 				+ ",lea.hours as hours, lea.type as type,lea.sh as sh,lea.uid as uid from User u ,Department d, Leave lea where lea.uid=u.id and lea.did=d.id and lea.cid=? ");
 		List<Object> params = new ArrayList<Object>();
 		params.add(ThreadSession.getUser().cid);
@@ -83,7 +86,7 @@ public class LeaveService {
 		page.order = Page.DESC;
 		page.orderBy = "lea.createtime";
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
-		mv.data.put("page", JSONHelper.toJSON(page));
+		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.sdf3.toPattern()));
 		return mv;
 	}
 	
@@ -117,7 +120,7 @@ public class LeaveService {
 		ModelAndView mv = new ModelAndView();
 		Leave po = dao.get(Leave.class, id);
 		User u = dao.get(User.class, po.uid);
-		mv.data = JSONHelper.toJSON(po);
+		mv.data = JSONHelper.toJSON(po,DataHelper.sdf3.toPattern());
 		mv.data.put("uname", u.uname);
 		mv.data.put("dname", u.Department().namea);
 		mv.data.put("tel", u.tel);
@@ -126,7 +129,6 @@ public class LeaveService {
 	
 	@WebMethod
 	public ModelAndView update(Leave leave){
-		ModelAndView mv = new ModelAndView();
 		Leave po = dao.get(Leave.class, leave.id);
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
@@ -139,6 +141,6 @@ public class LeaveService {
 		po.sh = leave.sh;
 		po.conts = leave.conts;
 		dao.saveOrUpdate(po);
-		return mv;
+		return get(po.id);
 	}
 }

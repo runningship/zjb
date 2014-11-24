@@ -1,6 +1,7 @@
 package com.youwei.zjb.biz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,11 @@ import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.biz.entity.Leave;
+import com.youwei.zjb.biz.entity.OutBiz;
 import com.youwei.zjb.biz.entity.OutHouse;
 import com.youwei.zjb.client.entity.Client;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
@@ -116,17 +119,31 @@ public class OutHouseService {
 		OutHouse po = dao.get(OutHouse.class, id);
 		User u = dao.get(User.class, po.uid);
 		Client client = dao.get(Client.class, po.clientId);
-		mv.data = JSONHelper.toJSON(po);
+		mv.data = JSONHelper.toJSON(po,DataHelper.sdf3.toPattern());
 		mv.data.put("uname", u.uname);
 		mv.data.put("dname", u.Department().namea);
 		mv.data.put("tel", u.tel);
-		mv.data.put("clientName",client.name);
+		if(client!=null){
+			mv.data.put("clientName",client.name);
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView shenpi(OutHouse oh){
+		ModelAndView mv = new ModelAndView();
+		OutHouse po = dao.get(OutHouse.class, oh.id);
+		if(po==null){
+			throw new GException(PlatformExceptionType.BusinessException, "外出看房不存在或已被删除");
+		}
+		po.status = "已批阅";
+		po.pyyj = oh.pyyj;
+		dao.saveOrUpdate(po);
 		return mv;
 	}
 	
 	@WebMethod
 	public ModelAndView update(OutHouse oh){
-		ModelAndView mv = new ModelAndView();
 		OutHouse po = dao.get(OutHouse.class, oh.id);
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
@@ -147,7 +164,7 @@ public class OutHouseService {
 			po.status = oh.status;
 		}
 		dao.saveOrUpdate(po);
-		return mv;
+		return get(po.id);
 	}
 	
 	@WebMethod

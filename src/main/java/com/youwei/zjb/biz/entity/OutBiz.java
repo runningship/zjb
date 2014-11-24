@@ -32,4 +32,7 @@ public class OutBiz {
 	
 	//总结
 	public String conts;
+	
+	//批阅意见
+	public String pyyj;
 }

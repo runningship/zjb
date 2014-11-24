@@ -191,6 +191,7 @@ function setSelected(){
               <div class="MainRightInputMain KY_W not-select" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                     <!-- <input type="hidden" id="sh" name="sh" value="$${sh}"> -->
+                    <input type="hidden" name="ztai" value="4">
                    <ul class="InputMainLine KY_W not-select" style=" margin-bottom:8px;">
                    
                         <li><input class="input-sm w110" type="text" placeholder="电话" name="tel" /></li>
@@ -228,12 +229,10 @@ function setSelected(){
                             </div>
                         </li>
                         <li>
-                            <button class="selectMethod not-select" type="button">综合<i class="caret"></i> </button>
-                            <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="" name="scope" value="all" checked="checked" >所有</label> </p> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="公司" name="scope" value="comp" >公司</label> </p> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="共享" name="scope" value="seeGX" >共享</label> </p>
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="我的收藏" name="scope" value="fav" >我的收藏</label> </p> 
+                            <button class="selectMethod not-select sh" type="button">综合<i class="caret"></i> </button>
+                            <div class="ulErMenu" style="background-color:#ff6c00; border:1px solid #cf5800;"> 
+                                <p onclick="addQueryStr('scope')" style=" border-bottom:1px solid #cf5800;"><label><input type="radio" text="" name="scope" value="all" checked="checked" >所有</label> </p>
+                                <p onclick="addQueryStr('scope')" style=" border-bottom:1px solid #cf5800;"><label><input type="radio" text="我的收藏" name="scope" value="fav" >我的收藏</label> </p> 
                             </div>
                         </li>
                    </ul>
@@ -307,7 +306,7 @@ function setSelected(){
                                      
                                              <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain">
                                                     <tr>
-                                                      <th width="30"><a href="#" onclick="doSelect()">选择</a></th>
+                                                      <th width="50"><button class="sz" onclick="doSelect()">选择</button></th>
                                                       <th width="50">编号</th>
                                                       <th width="50">状态</th>
                                                       <th width="60">区域</th>
@@ -333,7 +332,7 @@ function setSelected(){
                                                 <div style="height:100%; width:100%; float:left; overflow:hidden; overflow-y:auto;">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover">
                                                         <tr data-hid="${id}" style="display:none;" class="id_House_list" >
-                                                          <td width="30"><input id="${id}" type="checkbox" value="${id}" onclick="jiancha(this,${rowIndex})" /></td>
+                                                          <td width="50"><input id="${id}" type="checkbox" value="${id}" onclick="jiancha(this,${rowIndex})" /></td>
                                                           <td width="50">${id}</td>
                                                           <td width="50" class="ztai_${ztai}">${ztai}</td>
                                                           <td width="60">${quyu}</td>

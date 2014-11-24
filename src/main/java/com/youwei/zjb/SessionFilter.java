@@ -41,6 +41,7 @@ public class SessionFilter implements Filter{
 		excludes.add("/v/pay/return_url.html");
 		excludes.add("/c/feedback/reportError");
 		excludes.add("/v/pay/submit.html");
+		excludes.add("/swq/index_new.html");
 		
 	}
 	@Override
