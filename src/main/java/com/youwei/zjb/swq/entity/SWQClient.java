@@ -14,7 +14,7 @@ public class SWQClient {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
-	public String uuid;
+	public String lic;
 	
 	public Date createtime;
 	

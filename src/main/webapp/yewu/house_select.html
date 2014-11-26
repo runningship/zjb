@@ -154,14 +154,34 @@ $(document).ready(function(){
   
 });
 
+var selectInit=false;
+
 function setSelected(){
-  var ids = art.dialog.opener.getSelectedHouseIds();
+  if(!selectInit){
+    var ids = art.dialog.opener.getSelectedHouseIds();
+    var infos = art.dialog.opener.getSelectedHouseInfos();
+    if(ids!=""){
+      Ids = ids.split(',');
+      Areas = infos.split(',');  
+    }
+    // for(var i=0;i<houseData['page']['data'].length;i++){
+    //   var row = houseData['page']['data'][i];
+    //   if(ids.indexOf(row.id)>-1){
+    //     $('#'+row.id).attr('checked',true);
+    //     Ids.push(row.id);
+    //     Areas.push(row.area+' '+row.dhao+'-'+row.fhao);
+    //   }
+    // }
+    selectInit=true;
+  }
+  
+  //
   for(var i=0;i<houseData['page']['data'].length;i++){
     var row = houseData['page']['data'][i];
-    if(ids.indexOf(row.id)>-1){
-      $('#'+row.id).attr('checked',true);
-      Ids.push(row.id);
-      Areas.push(row.area+' '+row.dhao+'-'+row.fhao);
+    for(var j=0;j<Ids.length;j++){
+      if(Ids[j]==row.id){
+        $('#'+row.id).attr('checked',true);  
+      }
     }
   }
 }

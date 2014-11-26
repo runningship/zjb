@@ -15,8 +15,21 @@
 <script type="text/javascript">
 var cid=$${cid};
 var id;
+var dataScope = "yw_leave";
 function save(){
   var a=$('form[name=form1]').serialize();
+  if ($('#hours').val()==undefined||$('#hours').val()=='') {
+    alert('请填写工时');
+    return ;
+  };
+  if ($('#idTime').val()==undefined||$('#idTime').val()=='') {
+    alert('请填写请假时间');
+    return ;
+  };
+  if ($('#idTimes').val()==undefined||$('#idTimes').val()=='') {
+    alert('请填写请假时间');
+    return ;
+  };
     YW.ajax({
       type: 'POST',
       url: '/c/leave/update?id='+id,

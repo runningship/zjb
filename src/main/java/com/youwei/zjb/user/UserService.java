@@ -61,16 +61,16 @@ public class UserService {
 	}
 	
 	@WebMethod
-	public ModelAndView groupUserByDept(int cid){
+	public ModelAndView groupUserByDept(int cid , String dataScope){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		User me = ThreadSession.getUser();
 		StringBuilder hql = new StringBuilder("select u.did as did , u.id as uid, u.uname as uname,d.namea as dname from User u, Department d where u.did=d.id");
 		int level=1;
-		if(UserHelper.hasAuthority( me , "ky_data_dept")){
+		if(UserHelper.hasAuthority( me , dataScope+"_data_dept")){
 			level=2;
 		}
-		if(UserHelper.hasAuthority( me , "ky_data_comp")){
+		if(UserHelper.hasAuthority( me , dataScope+"ky_data_comp")){
 			level=3;
 		}
 		if(level==1){

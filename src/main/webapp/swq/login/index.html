@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+	*{margin:0px;padding:0px;}
+    button{ width:117px; height:38px; border:none; cursor:pointer; position:absolute; bottom:32px;}
+</style>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script type="text/javascript" src="/swq/login/lic.js"></script>
+<script type="text/javascript">
+var xx;
+$(function(){
+try{
+	var gui = require('nw.gui');
+    var win = gui.Window.get();
+	win.setMinimumSize(400,250);
+    win.setMaximumSize(400,250);
+    win.width=400;
+    win.height=250;
+    
+    xx = readLic();
+    if(xx==null || xx==undefined || xx.lic==""){
+    	$('#lic').text('未注册');
+    }else{
+    	
+    }
+}catch(e){
+
+}	
+});
+
+
+function login (){
+	xx = readLic();
+	if(!xx || xx.lic==""){
+		alert('请先注册');
+		return;
+	}
+	var param = JSON.parse('{}');
+	param.lic = xx.lic;
+	param.createtimeInLong = xx.licCreateTime;
+	$.ajax({
+        type: 'POST',
+        async:false,
+        url: '/c/swq/login',
+        data:param,
+        success: function(data){
+            window.location="/v/swq/index.html";
+        },error:function(data){
+            var r = JSON.parse(data.responseText);
+            alert(r.msg);
+        }
+    });
+}
+function registe(){
+	var param = JSON.parse('{}');
+	xx = readLic();
+	if(!xx){
+		var createTime = createLic();
+		param.createtimeInLong = createTime;	
+	}else{
+		param.createtimeInLong = xx.licCreateTime;
+		if(xx.lic!=""){
+			param.lic = xx.lic;
+		}
+	}
+	
+	$.ajax({
+        type: 'POST',
+        async:false,
+        url: '/c/swq/add',
+        data:param,
+        success: function(data){
+            var json = JSON.parse(data);
+            if(json.lic){
+                setLic(json.lic);
+                alert('注册成功，等待审核');
+                $('#lic').text(json.lic);
+            }
+        },error:function(data){
+        	var r = JSON.parse(data.responseText);
+            alert(r.msg);
+        }
+    });
+}
+
+</script>
+</head>
+
+<body>
+
+<div style=" width:400px; height:250px; position:relative; overflow:hidden; background:url(images/loginBg.jpg) no-repeat;">
+	<div style="width:400px; height:170px; -webkit-app-region:drag"></div>
+    <button style=" background:url(images/dl.png) no-repeat; left:60px;" onclick="login();"></button>
+    <button style=" background:url(images/zc.png) no-repeat; right:60px; " onclick="registe();"></button>
+    <div style=" position: absolute; bottom: 0px; left: 17px;width: 364px;text-align: center;" id="lic"></div>
+</div>
+
+</body>
+</html>

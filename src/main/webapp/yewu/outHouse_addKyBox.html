@@ -57,7 +57,9 @@ function doSelect(cid,cname){
 }
 
 
-
+function openAddClient(){
+ art.dialog.open("/v/client/client_add.html",{width:980,height:550,title:'添加客源'}); 
+}
 
 
 $(document).ready(function() {
@@ -72,9 +74,6 @@ $(document).ready(function() {
       
   // });
   doSearch();
-  
-  
-
   
 });
 </script>
@@ -102,7 +101,7 @@ $(document).ready(function() {
                              <button class="ButtonW1 ButtonS hand not-select iframeBtn" type="submit" onclick="doSearch();return false;" value="enter">搜索</button>
                         </li>
                         <li style="font-size:12px; line-height:28px;">
-                        <a href="#" style="color:#369a7e;">添加新客户</a>
+                        <a href="#" style="color:#369a7e;" onclick="openAddClient();">添加新客户</a>
                         
                         </li>
                    </ul>

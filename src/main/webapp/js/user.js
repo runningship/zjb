@@ -6,7 +6,7 @@ $(document).ready(function() {
     //cid应该在调用页面中定义好
     //var cid=$${cid};
     YW.ajax({
-        url:'/c/user/groupUserByDept?cid='+cid,
+        url:'/c/user/groupUserByDept?cid='+cid+'&dataScope='+dataScope,
         timeout:3000,
         async:false,
         dataType:'json',
