@@ -70,7 +70,7 @@ public class UserService {
 		if(UserHelper.hasAuthority( me , dataScope+"_data_dept")){
 			level=2;
 		}
-		if(UserHelper.hasAuthority( me , dataScope+"ky_data_comp")){
+		if(UserHelper.hasAuthority( me , dataScope+"_data_comp")){
 			level=3;
 		}
 		if(level==1){

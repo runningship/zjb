@@ -41,9 +41,9 @@ function doSearch(){
         buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
         Page.setPageInfo(houseData['page']);
         setTableFix();
-        if(event==undefined || $(event.srcElement).attr('action')!='page'){
-          $('.pageInput').val(1);
-        }
+        // if(event==undefined || $(event.srcElement).attr('action')!='page'){
+        //   $('.pageInput').val(1);
+        // }
         if(houseData['page']['data']<=0){
           $('.id_House_list').parents('.maxHW').addClass('list_noThing');
         }else{
