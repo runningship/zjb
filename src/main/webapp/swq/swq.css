@@ -1,0 +1,60 @@
+.titlebar {-webkit-app-region: drag;}
+html,body{ height: 100%;padding:0;margin: 0; overflow: hidden;}
+.html {height: 100%;display: table;width: 100%;margin: 0 auto;position: relative;}
+.tr {display: table-row;}
+.tr>.td {display: table-cell;vertical-align: middle;}
+.welcome{ height: 100%; background-color: #09F;background:-webkit-gradient(radial,30% 20%,0,50% 50%,500,from(#66CCFF),to(#0173E3)); font-family: 'microsoft yahei'}
+.welcome{ text-align: center;}
+.loginBox{ font-size: 20px; color: #FFF; padding-top: 50%;}
+.loginBox i{ width: 30px; display: inline-block;}
+.loginBox p{height: 30px; display:block; font-size: 12px;}
+#isHttping{display: none;}
+.sorry { color:#FFF; padding-top: 15%; display: none;}
+.sorry .yes{display: none;}
+.btn-group a{ color: #FFF; background: rgba(255,255,255,0.3);border:1px solid;border-color:rgba(255.255.255,0.5); border-radius: 3px; text-decoration: none; padding: 2px 5px;}
+.btn-group a:hover{ color:#fff; background: rgba(255,255,255,0.5);border:1px solid rgba(255.255.255,0.7); }
+
+.logo i{ font-size: 50px; color: #FFF;}
+.sider{ background: rgba(0,0,0,0.5); width: 80px; box-shadow:0px 0px 10px #000; border-right: 1px solid rgba(0,0,0,0.2); }
+
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+a.seeHas{ color: rgba(255,255,255,0.3);}
+
+.listbox{ list-style: none;padding-left: 8px; height:526px; overflow: hidden; overflow-y: auto; margin:0; }
+.listbox li{height: 22px;line-height: 22px; overflow: hidden;}
+.listbox li:hover{ background: rgba(0,0,0,0.3);}
+.listbox li h5{ text-align:left; color: #FFF;margin: 0;height: 22px;line-height: 22px; padding-left: 7px;}
+.listbox li span{ float: right; padding-right: 20px;}
+.listbox li a{ color: #FFF;}
+
+.listbox li,
+.view_tips,
+.list_see_box{ text-shadow: 0 0 5px rgba(0,0,0,0.6)}
+
+.view_tips{ color: #FFF; }
+.view_tips b{ font-weight: normal; }
+
+.sider_top{ height: 80px;}
+.td.sider_main a { display: block; margin-top: 1px; padding: 10px 0;}
+.td.sider_main a:hover { background:rgba(0,0,0,0.1); color: #FFF;}
+.td.sider_main a i { font-size: 30px;padding: 0px 0 0px;display: block;}
+.td.sider_main a span { display: block;}
+.sider_foot{ height: 100px;}
+.td.sider_main,
+.td.mainer_top,
+.td.mainer_foot{ vertical-align: top;overflow: hidden;}
+.mainer{}
+.mainer_foot{ border-top: 1px solid rgba(255,255,255,0.3);}
+.mainer_foot .listbox{ height: 200px;}
+
+.righter{ width: 200px; border-left: 1px solid rgba(255,255,255,0.3);}
+
+.list_see_box{ text-align: left; color: #FFF;}
+
+.about{position: absolute; bottom: 5px; right: 10px; z-index: 999;}
+.about a{ color:#FFF;}
+.about a:hover{ color: rgba(255,255,255,0.7);}
+
+.seeHas{ color: rgba(255,255,255,0.5);}
+.selected{ background:rgba(0,0,0,0.2); }

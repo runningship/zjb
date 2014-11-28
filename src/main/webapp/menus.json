@@ -119,6 +119,10 @@
 			"text":"审批",
 			"type":"menu"
 		},{
+			"name":"yw_outhouse_del",
+			"text":"删除",
+			"type":"menu"
+		},{
 			"name":"yw_outhouse_data_dept",
 			"text":"分店",
 			"type":"menu"

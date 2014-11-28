@@ -56,7 +56,7 @@ public class OutHouseService {
 		if(outHouse.clientId==null && outHouse.type==0){
 			throw new GException(PlatformExceptionType.BusinessException, "请先选择客源");
 		}
-		if(outHouse.houseIds==null && StringUtils.isEmpty(outHouse.houseInfos)){
+		if(StringUtils.isEmpty(outHouse.houseIds) && StringUtils.isEmpty(outHouse.remarks)){
 			throw new GException(PlatformExceptionType.BusinessException, "请先选择房源");
 		}
 		if(outHouse.uid==null){
@@ -119,7 +119,7 @@ public class OutHouseService {
 		OutHouse po = dao.get(OutHouse.class, id);
 		User u = dao.get(User.class, po.uid);
 		Client client = dao.get(Client.class, po.clientId);
-		mv.data = JSONHelper.toJSON(po,DataHelper.sdf3.toPattern());
+		mv.data = JSONHelper.toJSON(po);
 		mv.data.put("uname", u.uname);
 		mv.data.put("dname", u.Department().namea);
 		mv.data.put("tel", u.tel);
@@ -163,6 +163,21 @@ public class OutHouseService {
 		if(StringUtils.isNotEmpty(oh.status)){
 			po.status = oh.status;
 		}
+		dao.saveOrUpdate(po);
+		return get(po.id);
+	}
+	
+	@WebMethod
+	public ModelAndView back(OutHouse oh){
+		OutHouse po = dao.get(OutHouse.class, oh.id);
+		if(po==null){
+			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
+		}
+		po.backtime = oh.backtime;
+		if(StringUtils.isNotEmpty(oh.status)){
+			po.status = oh.status;
+		}
+		po.conts = oh.conts;
 		dao.saveOrUpdate(po);
 		return get(po.id);
 	}

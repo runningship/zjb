@@ -19,18 +19,18 @@ var id;
 function save(finish){
   var status="";
   if(finish){
-    status = '已完成';
+    status = '已返回';
   }
   var a=$('form[name=form1]').serialize();
     YW.ajax({
       type: 'POST',
-      url: '/c/outHouse/update?status='+status,
+      url: '/c/outHouse/back?status='+status,
       data:a,
       mysuccess: function(data){
           // $('#saveBtn').removeAttr('disabled');
           art.dialog.close();
-          art.dialog.opener.updateOutHouse(id,data);
-          alert('发布成功');
+          art.dialog.opener.doSearchAndSelect();
+          alert('操作成功');
       }
     });
 }
@@ -43,7 +43,12 @@ function getContent(){
     mysuccess: function(result){
       var json = JSON.parse(result);
       if(json['status']=='待返回'){
-        $('#finish').css('display','');
+        if(json['uid']==$${userId}){
+          //是我自己
+          $('#finish').css('display','');
+        }
+      }else if(json['status']=='已批阅'){
+        $('#pyyj_tr').css('display','');
       }
       if(json['type']==0){
         $('#client_select_tr').css('display','');
@@ -56,11 +61,14 @@ function getContent(){
       $('#idTime').val(json['backtime']);
       $('#clientName').val(json['clientName']);
       $('#remarks').val(json['remarks']);
+      $('#conts').val(json['conts']);
+      $('#pyyj').val(json['pyyj']);
       $('#type').val(json['type']);
       $('#did').val('$${did}');
       $('#did').change();
       $('#uid').val('$${userId}');
 
+      art.dialog.open.api.size($(document).width(),$(document).height());
     }
   });
 }
@@ -78,6 +86,9 @@ function openHouseSelect(){
 function getSelectedHouseIds(){
   return $('#houseIds').val();
 }
+function getSelectedHouseInfos(){
+  return $('#houseInfos').val();
+}
 
 function doSelectClient(cid,cname){
   $('#clientName').val(cname);
@@ -89,10 +100,15 @@ function selectHouse(ids,areas){
   $('#houseInfos').val(areas);
 }
 
-$(document).ready(function() {
+$(function(){
   id = getParam('id');
   getContent();
 });
+
+// function docReady(){
+//   art.dialog.open.api.size(600,$(this.form1).height()+110);
+// }
+
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 </head>
@@ -111,6 +127,12 @@ $(document).ready(function() {
 <input type="hidden" id="houseIds" name="houseIds" />
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="layerTable1 TableBgColor1" style=" border-top:4px solid #e9e9e9;">
   <tr>
+    <td align="right" class="TableTdBorBot">外出时间：</td>
+    
+    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px"></div></td>
+    
+  </tr>
+  <tr>
     <td align="right" class="TableTdBorBot" style="white-space:nowrap;">看房方式：</td>
     <td class="TableTdBgColor">
       <select name="type" id="type" disabled="disabled" class="input-sm input-rightB w112">
@@ -123,11 +145,15 @@ $(document).ready(function() {
   </tr>
   <tr id="client_select_tr" style="display:none">
     <td align="right" width="70" class="TableTdBorBot">选择客户：</td>
-    <td class="TableTdBgColor"><input type="text" id="clientName" name="clientName" style="width:100px" /><div class="addMoreStyle" onclick="openAddCliter();">+</div></td>
+    <td class="TableTdBgColor"><input type="text" id="clientName" name="clientName" style="width:100px" />
+    <!-- <div class="addMoreStyle" onclick="openAddCliter();">+</div> -->
+    </td>
   </tr>
   <tr>
     <td align="right" width="70" class="TableTdBorBot">选择房源：</td>
-    <td class="TableTdBgColor"><input type="text" style="width:450px" name="houseInfos" id="houseInfos"><div class="addMoreStyle" onclick="openHouseSelect();">+</div></td>
+    <td class="TableTdBgColor"><input type="text" style="width:450px" name="houseInfos" id="houseInfos">
+    <!-- <div class="addMoreStyle" onclick="openHouseSelect();">+</div> -->
+    </td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot" style="white-space:nowrap;">业务员：</td>
@@ -138,26 +164,46 @@ $(document).ready(function() {
         </select>
     </td>
   </tr>
+
   <tr>
-    <td align="right" class="TableTdBorBot">时间：</td>
-    
-    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px">
-    <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
-    
+    <td align="right" class="TableTdBorBot">补充说明：</td>
+    <td class="TableTdBgColor">
+      <textarea class="TA" name="remarks" id="remarks"></textarea>
+    </td>
   </tr>
-  
-  
+
   <tr>
-    <td align="right" class="TableTdBorBot">备注：</td>
+    <td align="right" class="TableTdBorBot">返回时间：</td>
+    
+    <td class="TableTdBgColor">
+    <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
+  </tr>
+  <tr>
+    <td align="right" class="TableTdBorBot">看房总结：</td>
+    <td class="TableTdBgColor">
+       <textarea class="TA" name="conts" id="conts" style="width:450px;"></textarea>
+    </td>
+  </tr>
+  <!-- <tr>
+    <td align="right" class="TableTdBorBot">看房总结：</td>
     <td class="TableTdBgColor">
        <textarea class="TA" name="remarks" id="remarks" style="width:450px;"></textarea>
+       <div class="TA" style="min-height:30px;" name="conts" id="conts"> </div>
+    </td>
+  </tr> -->
+  <tr id="pyyj_tr" style="display:none">
+    <td align="right" class="TableTdBorBot">批阅意见：</td>
+    <td class="TableTdBgColor">
+       <textarea class="TA" name="pyyj" id="pyyj" style="width:450px;"></textarea>
+       <!-- <div class="TA" style="min-height:30px;" name="pyyj" id="pyyj"> </div> -->
     </td>
   </tr>
   <tr>
     <td align="right" class="" style=" background-color:#e9e9e9;"> </td>
     <td class="" height="45" style=" background-color:#e9e9e9;">
-       <button onclick="save();return false;" class="save btn btn-primary btn-block" >保存</button>
-       <button id="finish" onclick="save(true);return false;" style="display:none" class="save btn btn-primary btn-block" >完成</button>
+       <!-- <button onclick="save();return false;" class="save btn btn-primary btn-block" >保存</button> -->
+       <button id="finish" onclick="save(true);return false;" style="display:none" class="save btn btn-primary btn-block" >看房返回</button>
+       <button onclick="art.dialog.close();" class="save btn btn-primary btn-block" >关闭</button>
     </td>
   </tr>
   

@@ -22,7 +22,6 @@ function save(){
       url: '/c/outHouse/add',
       data:a,
       mysuccess: function(data){
-          // $('#saveBtn').removeAttr('disabled');
           art.dialog.close();
           art.dialog.opener.doSearch();
           alert('发布成功');
@@ -67,9 +66,10 @@ function setType(sel){
 }
 
 $(document).ready(function() {
-    $('#did').val('$${did}');
-    $('#did').change();
-    $('#uid').val('$${userId}');
+  $('#did').val('$${did}');
+  $('#did').change();
+  $('#uid').val('$${userId}');
+  art.dialog.open.api.size($(document).width(),$(document).height());
 });
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
@@ -103,8 +103,10 @@ $(document).ready(function() {
     <td class="TableTdBgColor"><input type="text" id="cname" style="width:100px" /><div class="addMoreStyle" onclick="openAddCliter();">+</div></td>
   </tr>
   <tr>
-    <td align="right" width="70" class="TableTdBorBot">选择房源：</td>
-    <td class="TableTdBgColor"><input type="text" style="width:450px" name="houseInfos" id="houseInfos"><div class="addMoreStyle" onclick="openHouseSelect();">+</div></td>
+    <td align="right" width="70" class="TableTdBorBot" >选择房源：</td>
+    <td class="TableTdBgColor" style="position:relative"><input type="text" style="width:450px;margin-right:12px;" name="houseInfos" id="houseInfos">
+      <div style="position:absolute;right:-5px;top:11px;" class="addMoreStyle" onclick="openHouseSelect();">+</div>
+    </td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot" style="white-space:nowrap;">业务员：</td>
@@ -125,9 +127,9 @@ $(document).ready(function() {
   
   
   <tr>
-    <td align="right" class="TableTdBorBot">备注：</td>
+    <td align="right" class="TableTdBorBot">补充说明：</td>
     <td class="TableTdBgColor">
-       <textarea class="TA" name="reason" style="width:450px;"></textarea>
+       <textarea class="TA" name="remarks" style="width:450px;"></textarea>
     </td>
   </tr>
   <tr>

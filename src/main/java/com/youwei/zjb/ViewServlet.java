@@ -89,21 +89,32 @@ public class ViewServlet extends HttpServlet{
 //						target = target.replace("$${authParent}", authParent);
 //					}
 					boolean auth = false;
-					for(RoleAuthority ra : authList){
-						if(target.contains("|")){
-							//或操作
-							if(target.contains(ra.name)){
-								auth = true;
-								break;
-							}
-						}else{
-							if(ra.name.equals(target)){
-								auth = true;
+					if(target.startsWith("!")){
+						auth = true;
+						for(RoleAuthority ra : authList){
+							if(("!"+ra.name).equals(target)){
+								auth = false;
 								break;
 							}
 						}
-						
+					}else{
+						for(RoleAuthority ra : authList){
+							if(target.contains("|")){
+								//或操作
+								if(target.contains(ra.name)){
+									auth = true;
+									break;
+								}
+							}else{
+								if(ra.name.equals(target)){
+									auth = true;
+									break;
+								}
+							}
+							
+						}
 					}
+					
 					if(auth==false){
 						e.remove();
 					}

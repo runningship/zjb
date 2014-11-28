@@ -49,6 +49,7 @@ function doSearch(callback){
 }
 
 function doSearchAndSelectFirst(){
+  // saveQuery();
   doSearch(function(){
     if(houseData.page.data.length>0){
       $('.TableB').find('tr')[1].click();
@@ -56,6 +57,19 @@ function doSearchAndSelectFirst(){
   });
 }
 
+function saveQuery(){
+  $('form input').each(function(index,obj){
+    if(obj.type=='text' || obj.type=='hidden'){
+      $(obj).attr('value',$(obj).val());
+    }else if(obj.type=='checkbox'){
+      if(obj.checked){
+        $(obj).attr('checked','checked');
+      }else{
+        $(obj).removeAttr('checked');
+      }
+    }
+  });
+}
 function getShenHeText(lock){
   if(lock==1){
     return "审";
@@ -202,10 +216,32 @@ $(document).ready(function(){
         window.top.hasShowAds=true;
       }
     }
+	
+	 
+	// $(document).bind("contextmenu",function(e){
+	// 		  return false;
+	// });
+	
+	
+	 
+	// $(document).bind("mousedown",function(e){
+	// 	if(e.which == 3){
+	// 		$("#GoAndBack").css({"display":"block","top":e.pageY+5,"left":e.pageX+5});
+	// 	}
+	// 	if(e.which == 1){
+	// 		$("#GoAndBack").hide();
+	// 	}
+	// });
+	
+
+	
+	
 		 
 });
 
 
+										 
+								
 </script>
 <style type="text/css">
   .selected{
@@ -216,10 +252,22 @@ $(document).ready(function(){
 .ztai_已售{color:red;}
 .ztai_在售{color:blue;}
 .ztai_停售{color:orange;}
+
+.GaB{ position:absolute; width:100px; display:none; top:100px; left:100px; z-index:99999999; background-color:#ffffff;box-shadow: #666666 0px 0px 8px;}
+.GaB a{ display:block; width:100%; float:left; padding:8px 0; color:#05684c; font-family:"宋体"; text-align:center; border-bottom:1px solid #cccccc; font-size:12px;}
+.GaB a:hover{ background-color:#05684c; color:#ffffff;}
+.GaB a span{ margin:0 15px;}
 </style>
 </head>
 
 <body>
+
+<div id="GoAndBack" class="GaB">
+
+     <a href="#"><span>前进</span></a>
+     <a href="#"><span>后退</span></a>
+
+</div>
 
 <div class="KY_Main KY_W">
 

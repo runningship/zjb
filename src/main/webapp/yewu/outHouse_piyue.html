@@ -23,7 +23,7 @@ function save(){
       mysuccess: function(data){
           art.dialog.close();
           // art.dialog.opener.updateBiz(id,data);
-          art.dialog.opener.doSearch();
+          art.dialog.opener.doSearchAndSelect();
           alert('批阅成功');
       }
     });
@@ -39,12 +39,15 @@ function getContent(){
       $('#id').val(json['id']);
       $('#name').html(json['clientName']+'-'+json['clientName']);
       $('#houseInfo').html(json['houseInfos']);
-      $('#time').html(json['outtime']+' - '+json['backtime']);
+      $('#outtime').html(json['outtime']);
+      $('#backtime').html(json['backtime']);
       getSeeType(json['type']);
       $('#conts').html(json['conts']);
       $('#remarks').html(json['remarks']);
       $('#status').html(json['status']);
       $('#pyyj').val(json['pyyj']);
+
+      art.dialog.open.api.size($(document).width(),$(document).height());
     }
   })
 }
@@ -68,7 +71,6 @@ function deleteoutBiz(){
 $(document).ready(function() {
   $('#conts').focus();
   id = getParam('id');
-  row = getParam('row');
   getContent();
 });
 
@@ -88,44 +90,49 @@ $(document).ready(function() {
 </script>
 <form name="form1" role="form">
 <input type="hidden" name="id" id="id"/>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="layerTable1 TableBgColor1" style=" border-top:4px solid #e9e9e9;float:none;">
+<table width="520" border="0" cellspacing="0" cellpadding="0" class="layerTable1 TableBgColor1" style=" border-top:4px solid #e9e9e9;float:none;">
   <tr>
-    <td width="60" height="33" align="right" class="TableTdBorBot TableTdBorTop">客户：</td>
-    <td colspan="3" class="TableTdBgColor" id="name"><span class="w1 h"></span></td>
+    <td width="60" align="right" height="33"wid class="TableTdBorBot">外出时间：</td>
+    <td class="TableTdBgColor" id="outtime"><span class="w1 h"></span></td>
+  </tr>
+  <tr>
+    <td height="33" align="right" class="TableTdBorBot TableTdBorTop">客户：</td>
+    <td class="TableTdBgColor" id="name"><span class="w1 h"></span></td>
   </tr>
   <tr>
     <td height="33" align="right" class="TableTdBorBot TableTdBorTop">房源：</td>
-    <td colspan="3" width="318" class="TableTdBgColor" id="houseInfo"><span class="w1 h"></span></td>
+    <td class="TableTdBgColor" id="houseInfo"><span class="w1 h"></span></td>
   </tr>
   <tr>
-    <td height="40" align="right" class="TableTdBorBot TableTdBorTop"><span style="margin-right:12px;">看房</span><br />方式：</td>
-    <td colspan="3" class="TableTdBgColor" id="seetype"><span class="w1 h"></span></td>
+    <td height="40" align="right" class="TableTdBorBot TableTdBorTop">看房方式：</td>
+    <td class="TableTdBgColor" id="seetype"><span class="w1 h"></span></td>
   </tr>
+  
   <tr>
-    <td align="right" height="33"  class="TableTdBorBot">时间：</td>
-    <td colspan="3" class="TableTdBgColor" id="time"><span class="w1 h"></span></td>
-  </tr>
-  <tr>
-    <td align="right" height="40" class="TableTdBorBot"><span style="margin-right:12px;">看房</span><br />总结：</td>
-    <td colspan="3" class="TableTdBgColor" id="conts">
+    <td align="right" height="33" class="TableTdBorBot">补充说明：</td>
+    <td class="TableTdBgColor" id="remarks">
        <span class="w1 h" style=""></span>
     </td>
   </tr>
   <tr>
-    <td align="right" height="33" class="TableTdBorBot">备注：</td>
-    <td colspan="3" class="TableTdBgColor" id="remarks">
+    <td align="right" height="33"  class="TableTdBorBot">返回时间：</td>
+    <td class="TableTdBgColor" id="backtime"><span class="w1 h"></span></td>
+  </tr>
+  <tr>
+    <td align="right" height="40" class="TableTdBorBot">看房总结：</td>
+    <td class="TableTdBgColor" id="conts">
        <span class="w1 h" style=""></span>
     </td>
   </tr>
   <tr>
-    <td align="right" class="TableTdBorBot"><span style="margin-right:12px;">批阅</span><br />意见：</td>
+    <td align="right" class="TableTdBorBot">批阅意见：</td>
     <td colspan="3" class="TableTdBgColor">
-       <textarea class="TA" id="pyyj" name="pyyj" style="width:450px;"></textarea>
+       <textarea class="TA" id="pyyj" name="pyyj" style="width:400px;"></textarea>
     </td>
   </tr>
   <tr>
     <td align="right" class="" style=" background-color:#e9e9e9;"> </td>
-    <td colspan="3" class="" height="45" style=" background-color:#e9e9e9;">
+    <td class="" height="45" style=" background-color:#e9e9e9;">
       <button onclick="save();return false;" class="save btn btn-primary btn-block" >披阅</button>
       <!-- <button onclick="deleteoutBiz();return false;" class="save btn btn-primary btn-block" >删除</button> -->
     </td>
