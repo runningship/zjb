@@ -115,7 +115,7 @@ try{
     }catch(e){
         console.error(e);
     }
-    
+    setTimeout(notify,3000);
     setSideMenu();
     // 添加winBox边框
     WinBoxBorder();
@@ -123,6 +123,7 @@ try{
         quit();
     });
     WinMax();
+    
 }catch(e){
     console.error(e);
 };
@@ -163,11 +164,20 @@ function resetPwd(){
 function fankui(){
   art.dialog.open('/v/plugin/fankui.html');
 }
+
 function pay(){
   art.dialog.open('/v/pay/order.html');
 }
 
-
+function notify(){
+  art.dialog.notice({
+    title: '小助手',
+    width: 140,
+    content: '<a style="font-size:13px;" href="#" onclick="">您有一条新的消息</a>',
+    padding:'0px 15px 20px 15px',
+    time:5000
+  }); 
+}
 
 
 </script>
@@ -204,6 +214,7 @@ function pay(){
                     <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:40px;"></div>
                     <div class="wintool title nobar">
                         <ul class="wintools">
+                            <li><a href="#" class="winBtn black winBtnMin" style=" display:block; width:15px; height:15px; line-height:15px; font-size:10px; font-family:Verdana; margin-top:6px; text-align:center; border-radius:8px; background-color:#332d2c; color:#ffffff;" onclick="fankui();" data-q="">?</a></li>
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -217,7 +228,7 @@ function pay(){
                                     <li class="hidden"><a href="javascript:void(0)"><i class="iconfont">&#xe623;</i> 到期: 30 天  <span class="badge">支付</span></a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="resetPwd();">修改密码</a></li>
-                                    <li><a href="javascript:void(0)" onclick="fankui();">建议反馈</a></li>
+                                    <!-- <li><a href="javascript:void(0)" onclick="fankui();">建议反馈</a></li> -->
                                     <li><a href="javascript:void(0)" onclick="relogin();">重新登录</a></li>
                                     <!-- <li><a href="javascript:void(0)" onclick="pay();">在线付费</a></li> -->
                                 </ul>

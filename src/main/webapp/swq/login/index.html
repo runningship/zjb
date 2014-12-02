@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
+<title>扫网器 登录</title>
 <style type="text/css">
 	*{margin:0px;padding:0px;}
     button{ width:117px; height:38px; border:none; cursor:pointer; position:absolute; bottom:32px;}
@@ -49,7 +49,7 @@ function login (){
         url: '/c/swq/login',
         data:param,
         success: function(data){
-            window.location="/v/swq/index_58.html";
+            window.location="/swq/jump.html";
         },error:function(data){
             var r = JSON.parse(data.responseText);
             alert(r.msg);
@@ -97,6 +97,12 @@ function registe(){
 	<div style="width:400px; height:170px; -webkit-app-region:drag"></div>
     <button style=" background:url(images/dl.png) no-repeat; left:60px;" onclick="login();"></button>
     <button style=" background:url(images/zc.png) no-repeat; right:60px; " onclick="registe();"></button>
+   <!--  <div>
+        <select name="site" id="site" style="position: absolute;left: 17px;bottom: 0px;">
+            <option value="58">58</option>
+            <option value="ganji">赶集</option>
+        </select>
+    </div> -->
     <div style=" position: absolute; bottom: 0px; left: 17px;width: 364px;text-align: center;" id="lic"></div>
 </div>
 

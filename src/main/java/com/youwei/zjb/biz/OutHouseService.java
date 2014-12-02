@@ -134,7 +134,7 @@ public class OutHouseService {
 		ModelAndView mv = new ModelAndView();
 		OutHouse po = dao.get(OutHouse.class, oh.id);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "外出看房不存在或已被删除");
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
 		}
 		po.status = "已批阅";
 		po.pyyj = oh.pyyj;
@@ -146,7 +146,7 @@ public class OutHouseService {
 	public ModelAndView update(OutHouse oh){
 		OutHouse po = dao.get(OutHouse.class, oh.id);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
 		}
 		validate(oh);
 		if(oh.clientId!=null){
@@ -171,7 +171,7 @@ public class OutHouseService {
 	public ModelAndView back(OutHouse oh){
 		OutHouse po = dao.get(OutHouse.class, oh.id);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
 		}
 		po.backtime = oh.backtime;
 		if(StringUtils.isNotEmpty(oh.status)){
@@ -187,7 +187,7 @@ public class OutHouseService {
 		ModelAndView mv = new ModelAndView();
 		OutHouse po = dao.get(OutHouse.class, id);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
 		}
 		dao.delete(po);
 		return mv;

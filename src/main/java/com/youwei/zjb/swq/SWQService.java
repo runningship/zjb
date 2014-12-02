@@ -25,6 +25,9 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		ModelAndView mv = new ModelAndView();
 		SWQClient po = dao.getUniqueByParams(SWQClient.class, new String[] {"lic"}, new Object[]{swq.lic});
 		if(po!=null){
+			if(po.sh==1){
+				throw new GException(PlatformExceptionType.BusinessException, "已成功注册,可以登录了");
+			}
 			mv.data.put("lic", po.lic);
 			return mv;
 		}

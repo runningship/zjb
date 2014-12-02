@@ -77,6 +77,10 @@ function deleteThis(id,row){
   },function(){},'warning');
 }
 
+function fankui(){
+  art.dialog.open('/v/plugin/fankui.html');
+}
+
 function openAdd(){
   event.cancelBubble=true;
   art.dialog.open("/v/yewu/leave_add.html",{id:'add_leave',width:600,height:233,title:'添加请假记录'});
@@ -144,10 +148,6 @@ $(document).ready(function() {
               <ul class="MainRightTop KY_W">
                   <li onclick="window.location='/v/yewu/outHouse.html'" class="MenuBox" style="position:relative;">
                       <i class="i5"></i>外出看房
-                      <div class="topMenuChid">
-                            <span></span>
-                            <a href="javascript:void(0)">添加新记录</a> 
-                      </div>
                   </li>
                   <li class="line"></li>
                   <li onclick="window.location='/v/yewu/outBiz.html'"><i class="i5"></i>外出公事</li>
@@ -160,6 +160,8 @@ $(document).ready(function() {
                      </div>
                   </li>
                   <li class="line"></li>
+                  <!-- <li onclick="fankui()"><i class="i3"></i>反馈</li>
+                  <li class="line"></li> -->
               </ul>
             </div>
               <div class="MainRightInputMain KY_W not-select">
@@ -237,10 +239,10 @@ $(document).ready(function() {
                       <td width="50">${hours}</td>
                       <td width="50">${type}</td>
                       <td width="50" runscript=true class="shen_he_${sh}" >getShenhe(${sh})</td>
-                      <td width="120" style="text-align:left">
-                       <a href="javascript:void(0)" show="$${userId}==${uid} && ${sh}==0" onclick="openEdit(${id},${rowIndex})">编辑</a>
-                       <a href="javascript:void(0)" show="$${userId}==${uid} && ${sh}==0" onclick="deleteThis(${id},${rowIndex})" style="color:#ee4e00;">撤销</a>
-                       <a auth="yw_leave_sh" href="javascript:void(0)" onclick="openshenhe(${id},${rowIndex})" style="color:#0081db;">审核</a>
+                      <td width="120" style="text-align:center">
+                       <a href="javascript:void(0)" show="$${userId}==${uid} && ${sh}==0" onclick="openEdit(${id},${rowIndex})" title="编辑" class="bj_iconColor">编辑</a>
+                       <a href="javascript:void(0)" show="$${userId}==${uid} && ${sh}==0" onclick="deleteThis(${id},${rowIndex})" title="撤销" class="cx_iconColor" style="color:#ee4e00;">撤销</a>
+                       <a auth="yw_leave_sh" href="javascript:void(0)" onclick="openshenhe(${id},${rowIndex})" style="color:#0081db;" title="批阅" class="py_iconColor">审核</a>
                        </td>
                     </tr>
                   </table>

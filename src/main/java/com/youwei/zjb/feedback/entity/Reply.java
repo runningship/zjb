@@ -20,7 +20,9 @@ public class Reply {
 	
 	public Integer uid;
 	
-	public Integer uname;
+	public String uname;
 	
 	public Integer fbId;
+	
+	public Integer hasRead;
 }

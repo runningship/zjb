@@ -31,7 +31,7 @@ function submits(){
     data:a,
     mysuccess: function(data){
         art.dialog.close();
-        alert('添加成功');
+        alert('反馈成功,感谢您的支持.');
     }
   });
 }
@@ -45,7 +45,7 @@ $(document).ready(function() {
     api.title('感谢您的反馈：')
     // 自定义按钮
       .button({
-          name: '保存',
+          name: '提交',
           callback: function () {
             form1.submit();
             return false;

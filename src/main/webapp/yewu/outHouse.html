@@ -51,6 +51,9 @@ function getTel(tels){
   }
 }
 
+function fankui(){
+  art.dialog.open('/v/plugin/fankui.html');
+}
 
 function openAddHouse(){
   event.cancelBubble=true;
@@ -69,7 +72,7 @@ function openpiyue(id,row){
 
 function fanhui(id,row){
   rowId = row;
-  art.dialog.open("/v/yewu/outHouse_fanhui.html?id="+id,{id:'fanhui_out_house',title:'修改看房记录'});
+  art.dialog.open("/v/yewu/outHouse_fanhui.html?id="+id,{id:'fanhui_out_house',title:'外出看房返回'});
 }
 
 function doSearchAndSelect(){
@@ -176,6 +179,8 @@ $(document).ready(function() {
                   <li class="line"></li>
                   <li onclick="window.location='/v/yewu/leave.html'"><i class="i8"></i>请假记录</li>
                   <li class="line"></li>
+                  <!-- <li onclick="fankui()"><i class="i3"></i>反馈</li>
+                  <li class="line"></li> -->
               </ul>
             </div>
               <div class="MainRightInputMain KY_W not-select" style="margin-bottom:8px;">
@@ -280,7 +285,7 @@ $(document).ready(function() {
                       <td style="text-align:left">${houseInfos}</td>
                       <td width="80" runscript=true>gettype(${type})</td>
                       <td width="80">
-                        <span class="${status} hand" show="$${userId}==${uid} && '${status}'=='待返回'" onclick="fanhui(${id},${rowIndex});">${status}</span>
+                        <span style="text-decoration:underline;" class="${status} hand" show="$${userId}==${uid} && '${status}'=='待返回'" onclick="fanhui(${id},${rowIndex});">${status}</span>
                         <span class="${status}" show="$${userId}!=${uid} && '${status}'=='待返回'" >${status}</span>
                         <span class="${status}" show="'${status}'!='待返回'" >${status}</span>
                       </td>
@@ -289,13 +294,13 @@ $(document).ready(function() {
                       <td style="text-align:left" width="120">${dname}-${uname}</td>
                       <!-- <td width="50">${zxius}</td> -->
                       <td width="120" align="left">
-                        <a auth="yw_outhouse_sh" show="'${status}'!='待返回'" href="##" onclick="openpiyue(${id},${rowIndex});" style="color:#0081db;">批阅</a>
+                        <a auth="yw_outhouse_sh" show="'${status}'!='待返回'" href="##" onclick="openpiyue(${id},${rowIndex});" title="批阅" class="py_iconColor" style="color:#0081db;">批阅</a>
                         <!-- 查看只要有数据权限就可以操作 -->
-                       <a href="###" onclick="openEdit(${id},${rowIndex})">查看</a>
+                       <a href="###" onclick="openEdit(${id},${rowIndex})" class="ck_iconColor" title="查看">查看</a>
                        <!-- 无删除权限只能删除自己的且状态为未批阅的 -->
-                       <a auth="!yw_outhouse_del" href="###" show="$${userId}==${uid} && '${status}'!='已批阅'" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;">删除</a>
+                       <a auth="!yw_outhouse_del" href="###" show="$${userId}==${uid} && '${status}'!='已批阅'" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
                        <!-- 有删除权限的可以删除任何状态的 -->
-                       <a auth="yw_outhouse_del" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;">删除</a>
+                       <a auth="yw_outhouse_del" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
                       </td>
                     </tr>
                   </table>

@@ -108,6 +108,7 @@ $(document).ready(function() {
     $('#did').val('$${did}');
     $('#did').change();
     $('#uid').val('$${userId}');
+    $('#name').focus();
 });
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
@@ -125,7 +126,7 @@ $(document).ready(function() {
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="layerTable1 TableBgColor1" style=" border-top:4px solid #e9e9e9;">
   <tr>
     <td width="70" align="right" class="TableTdBorBot TableTdBorTop">姓名：</td>
-    <td width="300" class="TableTdBgColor"><input type="text" class="w1" name="name" desc="客户姓名"/></td>
+    <td width="300" class="TableTdBgColor"><input type="text" class="w1" name="name" id="name" desc="客户姓名"/></td>
     <td width="70" align="right" class="TableTdBorBot TableTdBorTop">电话：</td>
     <td width="356" class="TableTdBgColor" style="position:relative;"><div id="TelBoxMore" style="margin: 0 0 0 2px; top:10px; position:absolute;"></div><input type="text" id="tel" style="width:315px;"  placeholder="输入后‘Enter’键确认，仅限3个"  /><input type="hidden" value="" name="tels" id="TelAll"/></td>
   </tr>

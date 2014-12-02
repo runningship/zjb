@@ -147,6 +147,8 @@ to {background: #007759; border:1px solid #00241b;}
 .MainRightTop li:hover i.i7, .MainRightTop li.slect i.i7{ background-position:0 -380px;}
 .MainRightTop li i.i8{ background-position:0 -407px;}
 .MainRightTop li:hover i.i8, .MainRightTop li.slect i.i8{ background-position:0 -429px;}
+.MainRightTop li i.i9{ background-position:0 -455px;}
+.MainRightTop li:hover i.i9, .MainRightTop li.slect i.i9{ background-position:0 -478px;}
 
 
 
@@ -571,3 +573,16 @@ background-color: #6FBEFF; color:#000;
 .addClientNameBox td{ border-bottom:1px solid #e9e9e9;}
 
 .sekectClitNameBtn{ background:#008765; border:none; padding:3px 7px; color:#ffffff; width:auto; border-radius:3px; font-size:12px;}
+
+
+
+
+.ck_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -32px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+
+.sc_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -6px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+
+.py_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -57px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+
+.bj_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -85px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+
+.cx_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -115px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}

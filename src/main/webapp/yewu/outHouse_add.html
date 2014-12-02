@@ -69,6 +69,7 @@ $(document).ready(function() {
   $('#did').val('$${did}');
   $('#did').change();
   $('#uid').val('$${userId}');
+  $('#cname').focus();
   art.dialog.open.api.size($(document).width(),$(document).height());
 });
 </script>
@@ -118,10 +119,10 @@ $(document).ready(function() {
     </td>
   </tr>
   <tr>
-    <td align="right" class="TableTdBorBot">时间：</td>
+    <td align="right" class="TableTdBorBot">外出时间：</td>
     
-    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px">
-    <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
+    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTimes');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTimes.focus();},maxDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px">
+    </div></td>
     
   </tr>
   

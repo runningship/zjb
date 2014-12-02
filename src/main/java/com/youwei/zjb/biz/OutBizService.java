@@ -20,6 +20,7 @@ import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.biz.entity.Leave;
 import com.youwei.zjb.biz.entity.OutBiz;
+import com.youwei.zjb.biz.entity.OutHouse;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
@@ -50,10 +51,25 @@ public class OutBizService {
 	}
 	
 	@WebMethod
+	public ModelAndView back(OutBiz biz){
+		OutBiz po = dao.get(OutBiz.class, biz.id);
+		if(po==null){
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
+		}
+		po.backtime = biz.backtime;
+		if(StringUtils.isNotEmpty(biz.status)){
+			po.status = biz.status;
+		}
+		po.conts = biz.conts;
+		dao.saveOrUpdate(po);
+		return get(po.id);
+	}
+	
+	@WebMethod
 	public ModelAndView list(Page<Map> page, BizQuery query){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder("select u.uname as uname, d.namea as dname, biz.id as id, SubString(biz.reason,1,50) as reason,biz.outtime as outtime ,biz.backtime as backtime"
-				+ ", biz.status as ztai , biz.uid as uid from User u ,Department d, OutBiz biz where biz.uid=u.id and biz.did=d.id and biz.cid=? ");
+				+ ", biz.status as status , biz.uid as uid from User u ,Department d, OutBiz biz where biz.uid=u.id and biz.did=d.id and biz.cid=? ");
 		List<Object> params = new ArrayList<Object>();
 		params.add(ThreadSession.getUser().cid);
 		if(query.uid!=null){
@@ -84,7 +100,7 @@ public class OutBizService {
 		ModelAndView mv = new ModelAndView();
 		OutBiz po = dao.get(OutBiz.class, id);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
 		}
 		dao.delete(po);
 		return mv;
@@ -95,7 +111,7 @@ public class OutBizService {
 		ModelAndView mv = new ModelAndView();
 		OutBiz po = dao.get(OutBiz.class, id);
 		User u = dao.get(User.class, po.uid);
-		mv.data = JSONHelper.toJSON(po , DataHelper.sdf3.toPattern());
+		mv.data = JSONHelper.toJSON(po);
 		mv.data.put("uname", u.uname);
 		mv.data.put("dname", u.Department().namea);
 		mv.data.put("tel", u.tel);
@@ -107,7 +123,7 @@ public class OutBizService {
 		ModelAndView mv = new ModelAndView();
 		OutBiz po = dao.get(OutBiz.class, biz.id);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "外出公事记录不存在或已被删除");
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
 		}
 		po.status = "已批阅";
 		po.pyyj = biz.pyyj;
@@ -119,7 +135,7 @@ public class OutBizService {
 	public ModelAndView update(OutBiz biz){
 		OutBiz po = dao.get(OutBiz.class, biz.id);
 		if(po==null){
-			throw new GException(PlatformExceptionType.BusinessException, "请假记录不存在或已被删除");
+			throw new GException(PlatformExceptionType.BusinessException, "记录不存在或已被删除");
 		}
 		po.reason = biz.reason;
 		po.outtime = biz.outtime;

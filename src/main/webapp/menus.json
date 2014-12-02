@@ -90,27 +90,6 @@
 			"type":"menu"
 		}]
 	},{
-		"name":"yw_leave",
-		"text":"请假",
-		"type":"virtual",
-		"children":[{
-			"name":"yw_leave_sh",
-			"text":"审批",
-			"type":"menu"
-		},{
-			"name":"yw_leave_delete",
-			"text":"删除",
-			"type":"menu"
-		},{
-			"name":"yw_leave_data_dept",
-			"text":"分店",
-			"type":"menu"
-		},{
-			"name":"yw_leave_data_comp",
-			"text":"公司",
-			"type":"menu"
-		}]
-	},{
 		"name":"yw_outhouse",
 		"text":"外出看房",
 		"type":"virtual",
@@ -140,11 +119,36 @@
 			"text":"审批",
 			"type":"menu"
 		},{
+			"name":"yw_outbiz_del",
+			"text":"删除",
+			"type":"menu"
+		},{
 			"name":"yw_outbiz_data_dept",
 			"text":"分店",
 			"type":"menu"
 		},{
 			"name":"yw_outbiz_data_comp",
+			"text":"公司",
+			"type":"menu"
+		}]
+	},{
+		"name":"yw_leave",
+		"text":"请假",
+		"type":"virtual",
+		"children":[{
+			"name":"yw_leave_sh",
+			"text":"审批",
+			"type":"menu"
+		},{
+			"name":"yw_leave_delete",
+			"text":"删除",
+			"type":"menu"
+		},{
+			"name":"yw_leave_data_dept",
+			"text":"分店",
+			"type":"menu"
+		},{
+			"name":"yw_leave_data_comp",
 			"text":"公司",
 			"type":"menu"
 		}]
@@ -313,6 +317,17 @@
 		"children":[{
 			"name":"sz_area_on",
 			"text":"开启楼盘字典",
+			"zjb-only":true,
+			"type":"menu"
+		}]
+	},{
+		"name":"sz_feedback",
+		"text":"意见反馈",
+		"zjb-only":true,
+		"type":"virtual",
+		"children":[{
+			"name":"sz_feedback_on",
+			"text":"开启意见反馈管理",
 			"zjb-only":true,
 			"type":"menu"
 		}]

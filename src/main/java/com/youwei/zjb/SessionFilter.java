@@ -51,7 +51,7 @@ public class SessionFilter implements Filter{
 		excludes.add("/swq/login/index.html");
 		excludes.add("/c/swq/add");
 		excludes.add("/c/swq/login");
-		
+		excludes.add("/swq/jump.html");
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

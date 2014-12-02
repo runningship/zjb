@@ -31,6 +31,9 @@ public class FeedBackService {
 		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,30) as conts ,fb.addtime as addtime , u.uname as uname, d.namea as deptName from FeedBack fb, User u, "
 				+ "Department d where fb.userId=u.id and u.did=d.id");
 		List<Object> params = new ArrayList<Object>();
+		page.orderBy = "fb.addtime";
+		page.order = Page.DESC;
+		page.pageSize=25;
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
@@ -55,7 +58,7 @@ public class FeedBackService {
 	@WebMethod
 	public ModelAndView add(FeedBack fb){
 		if(fb.conts==null){
-			throw new GException(PlatformExceptionType.BusinessException, "请先填写反馈已经");
+			throw new GException(PlatformExceptionType.BusinessException, "请先填写反馈内容");
 		}
 		fb.addtime = new Date();
 		fb.userId = ThreadSession.getUser().id;

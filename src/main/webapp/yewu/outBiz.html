@@ -51,6 +51,10 @@ function updateBiz(id,data){
   $(d).html(json['status']);
 }
 
+function fankui(){
+  art.dialog.open('/v/plugin/fankui.html');
+}
+
 function openAdd(){
   event.cancelBubble=true;
   art.dialog.open("/v/yewu/outBiz_add.html",{id:'add_outbiz',width:600,height:232,title:'添加外出公事'});
@@ -68,6 +72,11 @@ function openpiyue(id,row){
   art.dialog.open("/v/yewu/outBiz_piyue.html?row="+row+"&id="+id,{id:'outbiz_piyue',width:600,height:332,title:'批阅外出公事'});
 }
 
+function fanhui(id,row){
+  rowId = row;
+  art.dialog.open("/v/yewu/outBiz_fanhui.html?id="+id,{id:'fanhui_out_house',title:'外出公事返回'});
+}
+
 function openDelete(id,row){
   rowId = row;
   art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
@@ -80,6 +89,12 @@ function openDelete(id,row){
     }
   });
   },function(){},'warning');
+}
+
+function doSearchAndSelect(){
+  doSearch(function(){
+    $('#KY_TableListKy').find('tr')[rowId+1].click();
+  },true);
 }
 
 function deleteBiz(){
@@ -132,6 +147,8 @@ $(document).ready(function() {
                     <i class="i5"></i>请假记录
                   </li>
                   <li class="line"></li>
+                  <!-- <li onclick="fankui()"><i class="i3"></i>反馈</li>
+                  <li class="line"></li> -->
               </ul>
             </div>
               <div class="MainRightInputMain KY_W not-select">
@@ -147,9 +164,6 @@ $(document).ready(function() {
                               <option value="已完成">已完成</option>
                               <option value="已批阅">已批阅</option>
                             </select>
-                            <!-- <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('quyus')" class="id_ztai"><label><input text="${name}" class="hand" type="checkbox" name="ztai" value="${name}"> ${name}</label> </p> 
-                            </div> -->
                         </li>
                         <li>
                             <span class="SpanName not-select">业务员</span>
@@ -196,18 +210,24 @@ $(document).ready(function() {
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
                     <tr data-cid="${id}" style="display:none;" class="id_biz_list"  >
-                      <td width="60" height="20"><strong>${dname}-${uname}</strong></td>
+                      <td width="60" height="20" style="text-align:center"><strong>${dname}-${uname}</strong></td>
                       <td width="160">${reason}</td>
                       <td width="60">${outtime}</td>
                       <td width="60">${backtime}</td>
-                      <td width="60" class="${ztai}">
-                        ${ztai}
+                      <td width="60" class="${status}">
+                        <span style="text-decoration:underline;" class="${status} hand" show="$${userId}==${uid} && '${status}'=='待返回'" onclick="fanhui(${id},${rowIndex});">${status}</span>
+                        <span class="${status}" show="$${userId}!=${uid} && '${status}'=='待返回'" >${status}</span>
+                        <span class="${status}" show="'${status}'!='待返回'" >${status}</span>
                       </td>
                       <td width="120" style="text-align:center"> 
-                        <a show="'${ztai}'!='待返回'" href="##" onclick="openpiyue(${id},${rowIndex});" style="color:#0081db;">批阅</a>
-                        <!-- <a href="###" onclick="openDetail(${id})">查看</a> -->
-                        <a href="###" show="$${userId}==${uid} && '${ztai}'=='待返回'" onclick="openEdit(${id},${rowIndex})">编辑</a>
-                        <a show="$${userId}==${uid} && '${ztai}'=='待返回'" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;">删除</a>
+                        <a auth="yw_outbiz_sh" show="'${status}'!='待返回'" href="##" onclick="openpiyue(${id},${rowIndex});" style="color:#0081db;" title="批阅" class="py_iconColor">批阅</a>
+                        <a href="###" show="$${userId}==${uid} && '${status}'=='待返回'" onclick="openEdit(${id},${rowIndex})" class="ck_iconColor" title="查看">查看</a>
+                        <!-- <a show="$${userId}==${uid} && '${status}'=='待返回'" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;">删除</a> -->
+
+                        <!-- 无删除权限只能删除自己的且状态为未批阅的 -->
+                        <a auth="!yw_outbiz_del" href="###" show="$${userId}==${uid} && '${status}'!='已批阅'" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
+                       <!-- 有删除权限的可以删除任何状态的 -->
+                        <a auth="yw_outbiz_del" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
                       </td>
                     </tr>
                   </table>
@@ -216,7 +236,6 @@ $(document).ready(function() {
               
               
               <div style="display:table-row; height:33px;">
-                                
                    <div class="divPage"  style=" width:99%; margin:0 0.5%;">
                    
                         <div class="pageMain footer">

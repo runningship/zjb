@@ -150,6 +150,10 @@ function getTel(tels){
   }
 }
 
+function fankui(){
+  art.dialog.open('/v/plugin/fankui.html');
+}
+
 function openAdd(){
   art.dialog.open("/v/client/client_add.html",{id:'add_client',width:800,height:578,title:'添加客源'});
 }
@@ -256,6 +260,8 @@ $(document).ready(function() {
                   <li class="line"></li>
                   <li onclick="openAdd()"><i class="i3"></i>登记</li>
                   <li class="line"></li>
+                  <!-- <li onclick="fankui()"><i class="i3"></i>反馈</li>
+                  <li class="line"></li> -->
               </ul>
             </div>
               <div class="MainRightInputMain KY_W not-select">
