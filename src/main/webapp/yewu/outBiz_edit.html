@@ -75,32 +75,36 @@ $(document).ready(function() {
 <input type="hidden" name="id" id="id"/>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="layerTable1 TableBgColor1" style=" border-top:4px solid #e9e9e9;">
   <tr>
-    <td align="right" class="TableTdBorBot">时间：</td>
-    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px">
+    <td align="right" width="70" class="TableTdBorBot">外出时间：</td>
+    <td class="TableTdBgColor"><input type="text" class="form-control input-sm input-left" name="outtime" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px"></div></td>
+  </tr>
+  <tr>
+    <td align="right" class="TableTdBorBot">返回时间：</td>
+    <td class="TableTdBgColor">
     <input type="text" class="form-control input-sm input-left" name="backtime" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px"></div></td>
   </tr>
   <tr>
     <td align="right" class="TableTdBorBot" style="white-space:nowrap;">业务员：</td>
-    <td colspan="3" class="TableTdBgColor">
+    <td class="TableTdBgColor">
         <select name="did" id="did" disabled="disabled" class="input-sm input-rightB w112 dept_select"></select>
       <select name="uid" id="uid" disabled="disabled" class="input-sm input-left w112 user_select"></select>
     </td>
   </tr>
   <tr>
-    <td align="right" class="TableTdBorBot">原因：</td>
-    <td colspan="3" class="TableTdBgColor">
-       <textarea class="TA" id="reason" name="reason"></textarea>
+    <td align="right" class="TableTdBorBot">外出原因：</td>
+    <td class="TableTdBgColor">
+       <textarea class="TA" style="width:90%" id="reason" name="reason"></textarea>
     </td>
   </tr>
   <tr>
-    <td align="right" class="TableTdBorBot">总结：</td>
-    <td colspan="3" class="TableTdBgColor">
-       <textarea class="TA" id="conts" name="conts"></textarea>
+    <td align="right" class="TableTdBorBot">外出总结：</td>
+    <td class="TableTdBgColor">
+       <textarea class="TA" style="width:90%" id="conts" name="conts"></textarea>
     </td>
   </tr>
   <tr>
     <td align="right" class="" style=" background-color:#e9e9e9;"> </td>
-    <td colspan="3" class="" height="45" style=" background-color:#e9e9e9;">
+    <td class="" height="45" style=" background-color:#e9e9e9;">
        <button onclick="save();return false;" class="save btn btn-primary btn-block" >保存</button>
        <button onclick="save(true);return false;" id="finish" style="display:none" class="save btn btn-primary btn-block" >公事返回</button>
     </td>
