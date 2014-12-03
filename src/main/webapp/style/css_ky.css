@@ -196,7 +196,7 @@ to {background: #007759; border:1px solid #00241b;}
 
 .InputMainLine li button:hover, .InputMainLine li button.bgBox{background: -webkit-gradient(linear, 0 0, 0 100%, from(#00976a), to(#006249)); border: 1px solid #006249; color:#ffffff;}
 
-.InputMainLine li button.sh:hover{background: -webkit-gradient(linear, 0 0, 0 100%, from(#ff9600), to(#ff6c00)); border: 1px solid #cf5800; color:#ffffff;}
+.InputMainLine li button.sh:hover{background:#ffffff; color:#555555; border:1px solid #cccccc;}
 
 button.sz{background: -webkit-gradient(linear, 0 0, 0 100%, from(#ff9000), to(#ff6000)); border: 1px solid #cf5800; color:#ffffff;border-radius: 3px; font-size:12px; padding:2px 5px; }
 

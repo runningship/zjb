@@ -43,6 +43,21 @@ public class ReplyService {
 	}
 	
 	@WebMethod
+	public ModelAndView getUnReadReply(){
+		StringBuilder hql = new StringBuilder("select fbId as fbId from Reply where threadUid=? and hasRead=0 and uid<>? group by fbId");
+		List<Object> params = new ArrayList<Object>();
+		params.add(ThreadSession.getUser().id);
+		params.add(ThreadSession.getUser().id);
+		List<Map> list = dao.listAsMap(hql.toString(), params.toArray());
+		ModelAndView mv = new ModelAndView();
+		int id=-1;
+		if(!list.isEmpty()){
+			id = (int) list.get(0).get("fbId");
+		}
+		mv.data.put("unReadFbId", id);
+		return mv;
+	}
+	@WebMethod
 	public ModelAndView add(Reply reply){
 		if(reply.conts==null){
 			throw new GException(PlatformExceptionType.BusinessException, "请先填写回复内容");
@@ -51,6 +66,8 @@ public class ReplyService {
 		reply.uid = ThreadSession.getUser().id;
 		reply.uname = ThreadSession.getUser().uname;
 		reply.hasRead =0;
+		FeedBack fb = dao.get(FeedBack.class, reply.fbId);
+		reply.threadUid = fb.userId;
 		dao.saveOrUpdate(reply);
 		return new ModelAndView();
 	}
@@ -60,6 +77,23 @@ public class ReplyService {
 		ModelAndView mv = new ModelAndView();
 		FeedBack po = dao.get(FeedBack.class, id);
 		mv.data.put("feedback", JSONHelper.toJSON(po));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView setRead(int fbId){
+		ModelAndView mv = new ModelAndView();
+		dao.execute("update Reply set hasRead=1 where fbId=?", fbId);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView delete(int id){
+		ModelAndView mv = new ModelAndView();
+		Reply po = dao.get(Reply.class, id);
+		if(po!=null){
+			dao.delete(po);
+		}
 		return mv;
 	}
 }

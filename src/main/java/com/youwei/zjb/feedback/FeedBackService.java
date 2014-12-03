@@ -43,8 +43,7 @@ public class FeedBackService {
 	public ModelAndView listMy(Page<Map> page , String search){
 		ModelAndView mv = new ModelAndView();
 		//id>117表示是5.0以后的反馈
-		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,30) as conts ,fb.addtime as addtime  from FeedBack fb "
-				+ " where userId=? and fb.conts like ? and id>117");
+		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,30) as conts ,fb.addtime as addtime  from FeedBack fb where userId=? and fb.conts like ? ");
 		List<Object> params = new ArrayList<Object>();
 		params.add(ThreadSession.getUser().id);
 		params.add("%"+search+"%");

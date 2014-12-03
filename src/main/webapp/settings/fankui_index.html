@@ -44,12 +44,12 @@ function doSearch(){
 }
 
 function editFeedBack(id){
-  art.dialog.open('/v/settings/feedback_huifu.html?id='+id,{
+  art.dialog.open('/v/settings/feedback_huifu.html?showDel=true&id='+id,{
       id:'EditHouse',
       title:'回复反馈',
       width:600,
       height:350
-    })
+    });
 }
 
 $(document).ready(function() {

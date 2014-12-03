@@ -169,14 +169,40 @@ function pay(){
   art.dialog.open('/v/pay/order.html');
 }
 
+function openFeedBack(fbId){
+    art.dialog.open('/v/settings/feedback_huifu.html?id='+fbId,{
+      id:'fbReply',
+      title:'反馈'
+    });
+    //设置已读
+    YW.ajax({
+        type: 'get',
+        datatype: 'json',
+        url: '/c/reply/setRead?fbId='+fbId
+      });
+}
+
 function notify(){
-  art.dialog.notice({
-    title: '小助手',
-    width: 140,
-    content: '<a style="font-size:13px;" href="#" onclick="">您有一条新的消息</a>',
-    padding:'0px 15px 20px 15px',
-    time:5000
-  }); 
+   YW.ajax({
+    type: 'get',
+    datatype: 'json',
+    url: '/c/reply/getUnReadReply',
+    mysuccess: function(data){
+        var json = JSON.parse(data);
+      if(json.unReadFbId==-1){
+        return;
+      }
+      art.dialog.notice({
+        title: '小助手',
+        width: 140,
+        content: '<a style="font-size:13px;" href="#" onclick="openFeedBack('+json.unReadFbId+')">您有一条新的消息</a>',
+        padding:'0px 15px 20px 15px',
+        time:5000
+      }); 
+    }
+  });
+
+  
 }
 
 

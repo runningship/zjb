@@ -22,6 +22,7 @@
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript">
 var id;
+var showDel;
 function save(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
@@ -29,9 +30,9 @@ function save(){
     url: '/c/reply/add',
     data:a,
     mysuccess: function(data){
-      getContent2()
-      art.dialog.opener.doSearch();
       $('#fb_conts').val('');
+      getContent2();
+      // art.dialog.opener.doSearch();
       alert('回复成功');    
     }
   });
@@ -40,11 +41,12 @@ function save(){
 function getContent2(){
   YW.ajax({
     type: 'get',
-    url: '/c/reply/list?fbId='+id,
+    url: '/c/reply/list?fbId='+fbId,
     data:'',
     mysuccess: function(result){
       var json = JSON.parse(result);
       buildHtmlWithJsonArray("see_FeedBack_genjin",json['page']['data']);
+      api.size(600,350);
     }
   });
 }
@@ -52,7 +54,7 @@ function getContent2(){
 function getContent(){
   YW.ajax({
     type: 'get',
-    url: '/c/reply/get?id='+id,
+    url: '/c/reply/get?id='+fbId,
     data:'',
     mysuccess: function(result){
       var json = JSON.parse(result);
@@ -62,22 +64,32 @@ function getContent(){
   });
 }
 
+function deletehuifu(id){
+  event.preventDefault();
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+  YW.ajax({
+    type: 'POST',
+    url: '/c/reply/delete?id='+id,
+    mysuccess: function(data){
+      getContent2();
+      alert('删除成功');
+    }
+  });
+  },function(){},'warning');
+}
 
 var parent = art.dialog.parent,       // 父页面window对象
 api = art.dialog.open.api,  //      art.dialog.open扩展方法
 form1=$('.form1');
-// 操作对话框
-    api.title('回复反馈')
-// 自定义按钮
-    .button({
-      name: '回复',
-      callback: function () {
-        save();
-        return false;
-      },focus: true
-    },{
-      name: '取消'
-    });
+api.button({
+    name: '回复',
+    callback: function () {
+      save();
+      return false;
+    },focus: true
+  },{
+    name: '关闭'
+  });
 // autocomplete 必加
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a'),
@@ -89,10 +101,8 @@ function setSearchValue(index){
     $('#quyu option[value="'+ThiAH.data('quyu')+'"]').attr('selected',true);
 }
 $(document).ready(function() {
-  id = getParam('id');
-  if(id==null || id==""){
-    alert("未指明的分类");
-  }
+  fbId = getParam('id');
+  showDel = getParam('showDel');
   getContent();
   getContent2();
   $('#fb_conts').focus();
@@ -124,10 +134,16 @@ $(document).ready(function() {
         <table class="TableMainLGj " width="100%">
           <tbody width="100%">
             <tr class="see_FeedBack_genjin list" style="display:none;">
-              <td style="border-bottom:1px solid #eeeeee;"><div style="padding:8px 20px 0;">
+              <td style="border-bottom:1px solid #eeeeee;"><div style="padding:8px 0px 0px 20px;">
                 ${conts}
-                <p style="font-size:12px; padding-top:8px; color:#bbbbbb;">${uname}<span style="float:right;">${addtime}</span></p>
+                <p style="font-size:12px; padding-top:8px; color:#bbbbbb;">${uname}
+                  <span  style="background-color:#eee;cursor:pointer;margin-left:10px;float:right" show="showDel" onclick="deletehuifu(${id})">×</span>
+                  <span style="float:right;">${addtime}</span>
+
+                </p>
+                
                 </div>
+
               </td>
             </tr>
           </tbody>

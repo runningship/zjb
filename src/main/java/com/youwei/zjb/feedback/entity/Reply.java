@@ -24,5 +24,7 @@ public class Reply {
 	
 	public Integer fbId;
 	
+	public Integer threadUid;
+	
 	public Integer hasRead;
 }

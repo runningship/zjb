@@ -56,7 +56,7 @@ public class OutHouseService {
 		if(outHouse.clientId==null && outHouse.type==0){
 			throw new GException(PlatformExceptionType.BusinessException, "请先选择客源");
 		}
-		if(StringUtils.isEmpty(outHouse.houseIds) && StringUtils.isEmpty(outHouse.remarks)){
+		if(StringUtils.isEmpty(outHouse.houseIds) && StringUtils.isEmpty(outHouse.houseInfos)){
 			throw new GException(PlatformExceptionType.BusinessException, "请先选择房源");
 		}
 		if(outHouse.uid==null){

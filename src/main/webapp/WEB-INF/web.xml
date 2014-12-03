@@ -56,6 +56,15 @@
 	    <url-pattern>/file/download/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+        <servlet-name>weixin</servlet-name>
+        <servlet-class> com.youwei.zjb.WeiXinServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>weixin</servlet-name>
+	    <url-pattern>/weixin/*</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
 		<filter-name>session</filter-name>
 		<filter-class>com.youwei.zjb.SessionFilter</filter-class>
