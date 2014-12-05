@@ -445,9 +445,12 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .list.addSide .bodyer .sideCont .sideFoot, 
 .list.addSide .bodyer .sideCont .sideFoot ul,
 .list.addSide .bodyer .sideCont .sideFoot ul li,
-.list.addSide .bodyer .sideCont .sideFoot ul li a{ height: 45px; line-height: 34px;}
-.list.addSide .bodyer .sideCont .sideFoot ul li a{ display: inline-block; padding:0 5px; margin:0; color: #F00;}
-.list.addSide .bodyer .sideCont .sideFoot ul li a:hover{ background-color: #EEE;}
+.list.addSide .bodyer .sideCont .sideFoot ul li a{ height: 40px; line-height: 40px;}
+/*.list.addSide .bodyer .sideCont .sideFoot ul li a{ display: inline-block; padding:0 5px; margin:0; color: #F00;}*/
+.list.addSide .bodyer .sideCont .sideFoot ul li a{ width:33.3333%; float:left; display:block; font-size:12px; text-align:center; font-family:"宋体"; color:#005d46; border-left:1px solid #dddddd; border-right:1px solid #dddddd; margin-left:-1px;}
+.list.addSide .bodyer .sideCont .sideFoot ul li a:hover{ color:#fff; background:-webkit-gradient(linear, 0 0, 0 100%, from(#009c75), to(#005d46)); font-size:12px;}
+
+.list.addSide .bodyer .sideCont .sideFoot ul li a:hover i{ font-weight:normal; border:none;-webkit-text-stroke-width:0;}
 
 .list.addSide .mainCont{ padding-left: 270px;}
 .list.addSide .mainCont th{font-weight: bold;}
@@ -515,3 +518,8 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 
 
 .ibtn{ width:100%; padding:16px 0;}
+
+
+.glyphicon-plus:before {
+content: "\2b";
+}

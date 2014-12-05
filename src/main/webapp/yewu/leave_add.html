@@ -18,14 +18,17 @@ var dataScope = "yw_leave";
 function save(){
   var a=$('form[name=form1]').serialize();
   if ($('#hours').val()==undefined||$('#hours').val()=='') {
+    $('#hours').focus();
     alert('请填写工时');
     return ;
   };
   if ($('#idTime').val()==undefined||$('#idTime').val()=='') {
+    $('#idTime').focus();
     alert('请填写请假时间');
     return ;
   };
   if ($('#idTimes').val()==undefined||$('#idTimes').val()=='') {
+    $('#idTimes').focus();
     alert('请填写请假时间');
     return ;
   };

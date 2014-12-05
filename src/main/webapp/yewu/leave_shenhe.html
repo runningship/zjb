@@ -62,9 +62,17 @@ function getGenjins(){
 }
 
 function deleteLeave(){
-  art.dialog.opener.deleteThis(id,row);
-  art.dialog.opener.deleteLeave();
-  art.dialog.opener.close();
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+    YW.ajax({
+      type: 'POST',
+      url: '/c/leave/delete?id='+id,
+      mysuccess: function(data){
+        art.dialog.opener.deleteLeave(row);
+        alert('删除成功');
+        art.dialog.close();
+      }
+    });
+  },function(){},'warning');
 }
 
 $(document).ready(function() {

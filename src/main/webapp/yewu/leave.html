@@ -53,7 +53,8 @@ function updateLeave(id,data){
   $(e).html(json['type']);
 }
 
-function deleteLeave(){
+function deleteLeave(row){
+  rowId = Number.parseInt(row);
   doSearch(function(){
     if(houseData.page.data.length>rowId){
       $('#KY_TableListKy').find('tr')[rowId+1].click();
@@ -64,13 +65,12 @@ function deleteLeave(){
 }
 
 function deleteThis(id,row){
-  rowId = row;
   art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
   YW.ajax({
     type: 'POST',
     url: '/c/leave/delete?id='+id,
     mysuccess: function(data){
-      deleteLeave();
+      deleteLeave(row);
       alert('删除成功');
     }
   });

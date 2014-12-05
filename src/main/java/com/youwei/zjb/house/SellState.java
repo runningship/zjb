@@ -8,8 +8,8 @@ import net.sf.json.JSONObject;
 public enum SellState {
 	在售(4),
 	已售(6),
-	停售(7),
-	未知(8);
+	停售(7);
+//	未知(8);
 	private int code;
 	
 	private SellState( int code){
