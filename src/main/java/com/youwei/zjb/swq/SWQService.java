@@ -3,9 +3,11 @@ package com.youwei.zjb.swq;
 import java.util.Date;
 import java.util.UUID;
 
+import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -44,6 +46,7 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		ModelAndView mv = new ModelAndView();
 		SWQClient po = dao.getUniqueByParams(SWQClient.class, new String[] {"lic" , "createtimeInLong"}, new Object[]{swq.lic , swq.createtimeInLong});
 		if(po==null){
+			LogUtil.log(Level.ERROR, "swq login fail[lic="+swq.lic+",createTime=]"+swq.createtimeInLong , null);
 			throw new GException(PlatformExceptionType.BusinessException, "请先注册");
 		}else if(po.sh==null || po.sh==0){
 			throw new GException(PlatformExceptionType.BusinessException, "等待审核");

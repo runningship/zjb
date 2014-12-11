@@ -73,10 +73,10 @@ try{
 //     win.title = "已查看";
 // });
 function setWindowTit(){
-    win.title = "365扫网器";
+    win.title = "365";
 }
 //扫网间隔时间 
-var TimeXunhuan=5000;   
+var TimeXunhuan=2000;   
 var isStart=false;      
 var sys_date;           
 var sys_url='http://hf.sell.house365.com/district_i1/';
@@ -108,7 +108,7 @@ function getHtml(){
                 sys_err_num++;
             }
             var list_box=$('#list_yes');
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < 5; i++) {
                 var name_url = $$doc.find('#JS_listPag .name')[i];
                 var link = name_url.children[0].href;
                 if (houseList.indexOf(link)>-1) {
@@ -175,37 +175,69 @@ function getHouseDetailInfo(url){
             $('.list_see_box').html('loading...');
         },
         success: function(html){
-            var list_box=$('#list_yes');
             var $$cont_doc = $$(html);
-            var xq = $$cont_doc.find('dt:contains("小区")')[0];
-            var area = xq.nextElementSibling;
-            var areastr = area.textContent.split('(')[0].trim();
-            var hx = $$cont_doc.find('dt:contains("户型")')[0];
-            var hxing = hx.nextElementSibling;
-            var mj = $$cont_doc.find('dt:contains("面积")')[0];
-            var mji = mj.nextElementSibling;
-            var lxrtel = $$cont_doc.find('#fd_telephone');
-            var lxr = $$cont_doc.find('#personal .name');
+            var str_shoujia,
+                str_hx,
+                str_gk,
+                str_area,
+                str_mji,
+                str_zxiu,
+                str_tel,
+                str_lxr,
+                str_year,
+                str_lc;
+            var list_box=$('#list_yes');
             var zjia = $$cont_doc.find('dt:contains("总价")')[0];
             var shoujia = zjia.nextElementSibling;
+            str_shoujia = shoujia.textContent.trim();
+            var xq = $$cont_doc.find('dt:contains("小区")')[0];
+            var area = xq.nextElementSibling;
+            str_area = area.textContent.split('(')[0].trim();
+            var hx = $$cont_doc.find('dt:contains("户型")')[0];
+            var str_hx="";
+            if(hx){
+                str_hx = hx.nextElementSibling.textContent.trim();    
+            }
+            
+            var lc = $$cont_doc.find('dt:contains("楼层")')[0];
+            var zlc = lc.nextElementSibling;
+            str_lc = zlc.textContent.trim();
+            var mj = $$cont_doc.find('dt:contains("面积")')[0];
+            var mji = mj.nextElementSibling;
+            str_mji = mji.textContent.trim();
+            var lxrtel = $$cont_doc.find('#fd_telephone');
+            str_tel = lxrtel.text().trim().replace(/ /g,'');
+            var lxr = $$cont_doc.find('#personal .name');
+            str_lxr = lxr.text().trim();
             var zx = $$cont_doc.find('dt:contains("装修")')[0];
             var zxiu = zx.nextElementSibling;
+            str_zxiu = zxiu.textContent.trim();
             var dz = $$cont_doc.find('dt:contains("地址：")')[0];
             var addr = "未填";
             if (dz) {
                 addr = dz.nextElementSibling.textContent.trim();
             };
             var gaik = $$cont_doc.find('.titleT .h2');
-
-            var title=""+areastr+" "+hxing.textContent+" "+mji.textContent;
-            var addListStr='<li data-title="'+title+'"><span>'
+            str_gk = gaik.text().trim();
+            var title=""+str_area+" "+str_hx+" "+str_mji;
+            var addListStr='<li data-url="'+url+'" data-title="'+title+'"><span>'
                 +'<a href="#" class="btns" data-type="list_see_url" ><i class="iconfont">&#xe675;</i></a>'
                 +'<a href="#" class="btns" data-type="list_see" ><i class="iconfont">&#xe672;</i></a>'
                 +'</span><h5>'+title+'</h5></li>';
             
             list_box.prepend(addListStr);
+            var thisHtml='<p>售价：'+str_shoujia+'</p>'
+                +'<p>户型：'+str_hx+'</p>'
+                +'<p>装修：'+str_zxiu+'</p>'
+                +'<p>概况：'+str_gk+'</p>'
+                +'<p>楼层：'+str_lc+'</p>'
+                +'<p>小区：'+str_area+'</p>'
+                +'<p>地址：'+addr+'</p>'
+                +'<p>联系人：'+str_lxr+'</p>'
+                +'<p>电话：'+str_tel+'</p>'
+            $('.list_see_box').html(thisHtml);
 
-            allContent = '{"area":"'+areastr+'","addr":"'+addr+'","hxing":"'+hxing.textContent+'","lxr":"'+lxr.text()+'","shoujia":"'+shoujia.textContent+'","zxiu":"'+zxiu.textContent+'","gaik":"'+gaik.text()+'","tel":"'+lxrtel.text()+'","url":"'+url+'"}';
+            allContent = '{"area":"'+str_area+'","addr":"'+addr+'","hxing":"'+str_hx+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
             openMessageBox(allContent);
         },
         error: function(){
