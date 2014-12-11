@@ -20,18 +20,21 @@
 var show=true;
 var houseList = [];
 var allContent = '{}';
-
+var exec = require('child_process').execFile;
+function setWindowTit(){
+    win.title = "365";
+}
 function openMessageBox(ziDuan){
     
     try{
-    var exec = require('child_process').execFile;
     var command = 'swq.exe';
     var xx = exec(command,[ziDuan], function(err, stdout, stderr) {
        console.log(err);
         console.log(stderr);
     });
+    xx=null;
     }catch(e){
-        blockAlert(e);
+        console.log(e);
     }
 }
 
@@ -50,21 +53,21 @@ try{
         title: '系统托盘',
         icon: 'images/logo.png'
     });
-    win.on('minimize', function() {
-      win.setShowInTaskbar(false);
-      win.hide();
-      show = false;
-    });
-    tray.on('click', function() {
-        if(show){
-            win.hide();
-            win.setShowInTaskbar(false); 
-        }else{
-            win.show();
-            win.setShowInTaskbar(true);
-        }
-        show=!show;
-      });
+    // win.on('minimize', function() {
+    //   win.setShowInTaskbar(false);
+    //   win.hide();
+    //   show = false;
+    // });
+    // tray.on('click', function() {
+    //     if(show){
+    //         win.hide();
+    //         win.setShowInTaskbar(false); 
+    //     }else{
+    //         win.show();
+    //         win.setShowInTaskbar(true);
+    //     }
+    //     show=!show;
+    //   });
     
 }catch(e){
     window.location.href="/"
@@ -79,7 +82,7 @@ function setWindowTit(){
 var TimeXunhuan=2000;   
 var isStart=false;      
 var sys_date;           
-var sys_url='http://hf.sell.house365.com/district_i1/';
+var sys_url='http://hf.sell.house365.com/district_i1/dl_n11.html';
 //扫网成功数
 var sys_err_num=0;      
 //扫网失败数
@@ -108,7 +111,8 @@ function getHtml(){
                 sys_err_num++;
             }
             var list_box=$('#list_yes');
-            for (var i = 0; i < 5; i++) {
+            sys_yes_num++;
+            for (var i = 4; i >= 0 ; i--) {
                 var name_url = $$doc.find('#JS_listPag .name')[i];
                 var link = name_url.children[0].href;
                 if (houseList.indexOf(link)>-1) {
@@ -117,18 +121,8 @@ function getHtml(){
                 getHouseDetailInfo(link);
                 houseList.push(link);
             };
-            // var area =$(item).find('.info')[0].children[1].children[0];
-            // var hxing =$(item).find('.info')[0].children[1].children[0];
-            // var mji = $(item).find('.acreage');
-
-            // var title=""+area.textContent+" "+mji.text();
-            // var addListStr='<li data-title="'+title+'"><span>'
-            //     +'<a href="#" class="btns" data-type="list_see_url" ><i class="iconfont">&#xe675;</i></a>'
-            //     +'<a href="#" class="btns" data-type="list_see" ><i class="iconfont">&#xe672;</i></a>'
-            //     +'</span><h5>'+title+'</h5></li>';
-            
-            // list_box.prepend(addListStr);
-            // alert(area);
+            $$doc=null;
+            html=null;
         },
         error: function(data){
             console.log('error');
@@ -137,6 +131,8 @@ function getHtml(){
         },
         complete: function(data){
             console.log('complete');
+            $('.view_err_num').text(sys_err_num);
+            $('.view_yes_num').text(sys_yes_num);
             //设置下次采集定时器
             if(isStart){
                 var setTimeouts=setTimeout(function(){
@@ -147,20 +143,6 @@ function getHtml(){
         }
     });
 
-}
-
-
-
-function replaceAlls(str){
-    str = str.replace(/<\/?[^>]*>/g,''); 
-    str = str.replace(/（套内\/?[^>]*）/g,'');
-    str = str.replace(/[ | ]*\n/g,'\n');
-    str = str.replace(/\n[\s| | ]*\r/g,'\n');
-    str = str.replace(/&nbsp;/ig,'');
-    str = str.replace(/\s+/g, "")
-    str = $.trim(str);
-    str.replace(' ','');
-    return str;
 }
 
 
@@ -238,6 +220,8 @@ function getHouseDetailInfo(url){
             $('.list_see_box').html(thisHtml);
 
             allContent = '{"area":"'+str_area+'","addr":"'+addr+'","hxing":"'+str_hx+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
+            $$cont_doc=null;
+            html=null;
             openMessageBox(allContent);
         },
         error: function(){
@@ -286,12 +270,12 @@ $(document).on('click', '.btns', function(event) {
 $(document).ready(function() {
     $('[data-type="cj_stop"]').hide();
     //显示系统时间，以及扫网状态
-    setInterval(function(){
-        sys_date = new Date();
-        $('.view_time').text(sys_date.toLocaleTimeString());
-        $('.view_err_num').text(sys_err_num);
-        $('.view_yes_num').text(sys_yes_num);
-    });
+    // setInterval(function(){
+    //     sys_date = new Date();
+    //     $('.view_time').text(sys_date.toLocaleTimeString());
+    //     $('.view_err_num').text(sys_err_num);
+    //     $('.view_yes_num').text(sys_yes_num);
+    // });
     setWindowTit()
 });
 
@@ -336,11 +320,11 @@ $(document).ready(function() {
                 <div class="tr">
                     <div class="td mainer_foot">
                         <p class="view_tips">
-                            推广: <b class="view_tui_num">15</b>
-                            置顶: <b class="view_ding_num">15</b>
-                            当前时间: <b class="view_time">15</b>
-                            错误: <b class="view_err_num">15</b>
-                            成功: <b class="view_yes_num">15</b>
+                            推广: <b class="view_tui_num">0</b>
+                            置顶: <b class="view_ding_num">0</b>
+                            <!-- 当前时间: <b class="view_time">0</b> -->
+                            错误: <b class="view_err_num">0</b>
+                            成功: <b class="view_yes_num">0</b>
                         </p>
                     </div>
                 </div>

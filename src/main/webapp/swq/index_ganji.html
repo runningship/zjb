@@ -19,16 +19,15 @@
 var show=true;
 
 var allContent = '{}';
-
+var exec = require('child_process').execFile;
 function openMessageBox(ziDuan){
-    
     try{
-        var exec = require('child_process').execFile;
         var command = 'swq.exe';
         var xx = exec(command,[ziDuan], function(err, stdout, stderr) {
            console.log(err);
             console.log(stderr);
         });
+        xx=null;
     }catch(e){
         console.log(e);
     }
@@ -80,7 +79,7 @@ function setWindowTit(){
 var iconum_all=0;       
 var iconum_ding=0;      
 var iconum_tui=0;       
-var TimeXunhuan=3000;   
+var TimeXunhuan=2000;   
 var isStart=false;      
 var sys_date;           
 var sys_url='http://hf.ganji.com/fang5/a1';
@@ -165,6 +164,7 @@ function getHtml(){
                 win.show();
                 // show=true;
                 // win.setShowInTaskbar(true);
+                $('#cj_stop').click();
                 $('#setAlwaysOnTop').attr('checked','checked');
                 win.setAlwaysOnTop(true);
                 win.title = "赶集:输入验证码";
@@ -175,6 +175,8 @@ function getHtml(){
             if(html.indexOf("去上一级页面看看")>0){
                 console.log('提示：找不到页面，正在尝试重新采集...');
                 sys_err_num++;
+                $('#cj_stop').click();
+                console.log(html);
             }
             
             $$doc.find("span.ico-hot").each(function(i,project){
@@ -189,14 +191,14 @@ function getHtml(){
             $('.view_ding_num').text(iconum_ding);
             sys_yes_num++;
 
+
             if(iconum_all>0){
-                isListTree($$doc,iconum_all);
-                isListTree($$doc,iconum_all+1);
-                isListTree($$doc,iconum_all+2);
-                isListTree($$doc,iconum_all+3);
-                isListTree($$doc,iconum_all+4);
+                for(var i=4;i>=0;i--){
+                    isListTree($$doc,iconum_all+i);
+                }    
             }
-                
+            $$doc=null;
+            html=null;
         },
         error: function(){
             console.log('error');
@@ -205,6 +207,8 @@ function getHtml(){
         },
         complete: function(){
             console.log('complete');
+            $('.view_err_num').text(sys_err_num);
+            $('.view_yes_num').text(sys_yes_num);
             if(isStart){
                 var setTimeouts=setTimeout(function(){
                     getHtml();
@@ -325,6 +329,8 @@ function get1Html(url){
 
            
             allContent = '{"area":"'+cont_xq+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel_num":"'+cont_tels+'","url":"'+url+'"}';
+            $$cont_doc=null;
+            html=null;
             openMessageBox(allContent);
         },
         error: function(){
@@ -374,12 +380,12 @@ $(document).on('click', '.btns', function(event) {
 
 $(document).ready(function() {
     $('[data-type="cj_stop"]').hide();
-    setInterval(function(){
-        sys_date = new Date();
-        $('.view_time').text(sys_date.toLocaleTimeString());
-        $('.view_err_num').text(sys_err_num);
-        $('.view_yes_num').text(sys_yes_num);
-    });
+    // setInterval(function(){
+    //     sys_date = new Date();
+    //     $('.view_time').text(sys_date.toLocaleTimeString());
+    //     $('.view_err_num').text(sys_err_num);
+    //     $('.view_yes_num').text(sys_yes_num);
+    // });
     setWindowTit()
 });
 
@@ -492,14 +498,14 @@ a.seeHas{ color: rgba(255,255,255,0.3);}
                 <div class="tr">
                     <div class="td mainer_foot">
                         <p class="view_tips">
-                            推广: <b class="view_tui_num">15</b>
-                            置顶: <b class="view_ding_num">15</b>
-                            当前时间: <b class="view_time">15</b>
-                            错误: <b class="view_err_num">15</b>
-                            成功: <b class="view_yes_num">15</b>
+                            推广: <b class="view_tui_num">0</b>
+                            置顶: <b class="view_ding_num">0</b>
+                            <!-- 当前时间: <b class="view_time">0</b> -->
+                            错误: <b class="view_err_num">0</b>
+                            成功: <b class="view_yes_num">0</b>
                         </p>
                         <p class="view_tips">
-                            <input type="checkbox" id="setAlwaysOnTop" onclick="setAlwaysOnTop(this);" style="float:left;margin-left:55px;" /><span style="float:left;margin-top:2px;">最前端显示</span>
+                            <input type="checkbox" id="setAlwaysOnTop" onclick="setAlwaysOnTop(this);" style="float:left;margin-left:123px;" /><span style="float:left;margin-top:2px;">最前端显示</span>
                         </p>
                     </div>
                 </div>

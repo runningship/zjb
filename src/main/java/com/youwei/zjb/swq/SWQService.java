@@ -14,7 +14,6 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.biz.entity.Leave;
 import com.youwei.zjb.swq.entity.SWQClient;
 
 @Module(name="/swq/")
@@ -44,12 +43,16 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 	@WebMethod
 	public ModelAndView login(SWQClient swq){
 		ModelAndView mv = new ModelAndView();
-		SWQClient po = dao.getUniqueByParams(SWQClient.class, new String[] {"lic" , "createtimeInLong"}, new Object[]{swq.lic , swq.createtimeInLong});
+		SWQClient po2 = dao.getUniqueByParams(SWQClient.class, new String[] {"lic" , "createtimeInLong"}, new Object[]{swq.lic , swq.createtimeInLong});
+		SWQClient po = dao.getUniqueByParams(SWQClient.class, new String[] {"lic"}, new Object[]{swq.lic});
 		if(po==null){
-			LogUtil.log(Level.ERROR, "swq login fail[lic="+swq.lic+",createTime=]"+swq.createtimeInLong , null);
+			LogUtil.log(Level.ERROR, "swq login fail with lic only,[lic="+swq.lic+",createTime=]"+swq.createtimeInLong , null);
 			throw new GException(PlatformExceptionType.BusinessException, "请先注册");
 		}else if(po.sh==null || po.sh==0){
 			throw new GException(PlatformExceptionType.BusinessException, "等待审核");
+		}
+		if(po2==null){
+			LogUtil.log(Level.ERROR, "swq login with lic only,[lic="+swq.lic+",createTime=]"+swq.createtimeInLong , null);
 		}
 		ThreadSession.getHttpSession().setAttribute("swq", true);
 		return mv;

@@ -14,25 +14,38 @@
 <script type="text/javascript">
 var xx;
 $(function(){
-try{
-	var gui = require('nw.gui');
-    var win = gui.Window.get();
-	win.setMinimumSize(400,250);
-    win.setMaximumSize(400,250);
-    win.width=400;
-    win.height=250;
     
-    xx = readLic();
-    if(xx==null || xx==undefined || xx.lic==""){
-    	$('#lic').text('未注册');
-    }else{
-    	
-    }
-}catch(e){
+    try{
+        var gui = require('nw.gui');
+        var win = gui.Window.get();
+    	win.setMinimumSize(400,250);
+        win.setMaximumSize(400,250);
+        win.width=400;
+        win.height=250;
+        //addJSFlags();
+        xx = readLic();
+        if(xx==null || xx==undefined || xx.lic==""){
+        	$('#lic').text('未注册');
+        }else{
+        	
+        }
+    }catch(e){
 
-}	
+    }
 });
 
+function addJSFlags(){
+    try{
+        var gui = require('nw.gui');
+        var fos=require("fs");
+        if(gui.App.manifest['--js-flags']==undefined){
+            gui.App.manifest['--js-flags']='--nouse_idle_notification';
+            fos.writeFileSync("package.json", JSON.stringify(gui.App.manifest , null , '\t'), 'utf8');
+        }
+    }catch(e){
+        console.log("add js flags fail."+e);
+    }
+}
 
 function login (){
 	xx = readLic();

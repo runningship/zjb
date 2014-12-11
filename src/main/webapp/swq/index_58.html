@@ -19,18 +19,18 @@
 var show=true;
 
 var allContent = '{}';
-
+var exec = require('child_process').execFile;
 function openMessageBox(ziDuan){
     
     try{
-    var exec = require('child_process').execFile;
-    var command = 'swq.exe';
-    var xx = exec(command,[ziDuan], function(err, stdout, stderr) {
-       console.log(err);
-        console.log(stderr);
-    });
+        var command = 'swq.exe';
+        var xx = exec(command,[ziDuan], function(err, stdout, stderr) {
+           console.log(err);
+            console.log(stderr);
+        });
+        xx=null;
     }catch(e){
-        blockAlert(e);
+        console.log(e);
     }
 }
 
@@ -80,7 +80,7 @@ function setWindowTit(){
 var iconum_all=0;       
 var iconum_ding=0;      
 var iconum_tui=0;       
-var TimeXunhuan=1000;   
+var TimeXunhuan=3000;   
 var isStart=false;      
 var sys_date;           
 var sys_url='http://hf.58.com/ershoufang/0/';
@@ -136,6 +136,54 @@ function isListTree(obj,num){
     //getIsHtml($$obj)
 }
 
+function getListPageSuccess(html){
+    var $$doc = $$(html);
+    if(html.indexOf("对不起")>0){
+        console.log(html);
+        var lastLi=$('#list_yes').children('li').last();
+        // if(lastLi.data('url')=='error'){
+        //    //lastLi.html('<h5>Error '+list_this_err_num+' '+sys_date.toLocaleTimeString()+'</h5>')
+        //    lastLi.html('<h5>Error：<a href="'+sys_url+'" class="btns" data-type="list_see_url"  >请点此前去输入验证码</a></h5>');
+        // }else{
+        //    $('#list_yes').append('<li data-url="error"><h5>Error：<a href="'+sys_url+'" class="btns" data-type="list_see_url"  >请点此前去输入验证码</a></h5></li>');
+        // }
+        $('#cj_stop').click();
+        window.top.gui.Shell.openExternal(sys_url);
+        win.show();
+        // show=true;
+        // win.setShowInTaskbar(true);
+        $('#setAlwaysOnTop').attr('checked','checked');
+        win.setAlwaysOnTop(true);
+        win.title = "58:输入验证码";
+        console.log('提示：找不到页面，正在尝试重新采集...');
+        sys_err_num++;
+        return false;
+    }
+    if(html.indexOf("去上一级页面看看")>0){
+        console.log('提示：找不到页面，正在尝试重新采集...');
+        sys_err_num++;
+    }
+    console.log("success");
+    $$doc.find("span.ico.ding").each(function(i,project){
+        iconum_ding++;
+    });
+    $$doc.find("span.ico.tui").each(function(i,project){
+        iconum_tui++;
+    });
+    iconum_all=iconum_ding+iconum_tui;
+    console.log(iconum_all+'='+iconum_ding+'+'+iconum_tui);
+    $('.view_tui_num').text(iconum_tui);
+    $('.view_ding_num').text(iconum_ding);
+    sys_yes_num++;
+
+    if(iconum_all>0){
+        for(var i=4;i>=0;i--){
+            isListTree($$doc,iconum_all+i);    
+        }
+    }
+    $$doc=null;
+    html=null;
+}
 function getHtml(){
     iconum_all=0;
     iconum_ding=0;
@@ -148,56 +196,7 @@ function getHtml(){
         data: {},
         timeout:3000,
         beforeSend: function(){},
-        success: function(html){
-            
-            var $$doc = $$(html);
-            if(html.indexOf("对不起")>0){
-                console.log(html);
-                var lastLi=$('#list_yes').children('li').last();
-                // if(lastLi.data('url')=='error'){
-                //    //lastLi.html('<h5>Error '+list_this_err_num+' '+sys_date.toLocaleTimeString()+'</h5>')
-                //    lastLi.html('<h5>Error：<a href="'+sys_url+'" class="btns" data-type="list_see_url"  >请点此前去输入验证码</a></h5>');
-                // }else{
-                //    $('#list_yes').append('<li data-url="error"><h5>Error：<a href="'+sys_url+'" class="btns" data-type="list_see_url"  >请点此前去输入验证码</a></h5></li>');
-                // }
-                $('#cj_stop').click();
-                window.top.gui.Shell.openExternal(sys_url);
-                win.show();
-                // show=true;
-                // win.setShowInTaskbar(true);
-                $('#setAlwaysOnTop').attr('checked','checked');
-                win.setAlwaysOnTop(true);
-                win.title = "58:输入验证码";
-                console.log('提示：找不到页面，正在尝试重新采集...');
-                sys_err_num++;
-                return false;
-            }
-            if(html.indexOf("去上一级页面看看")>0){
-                console.log('提示：找不到页面，正在尝试重新采集...');
-                sys_err_num++;
-            }
-            console.log("success");
-            $$doc.find("span.ico.ding").each(function(i,project){
-                iconum_ding++;
-            });
-            $$doc.find("span.ico.tui").each(function(i,project){
-                iconum_tui++;
-            });
-            iconum_all=iconum_ding+iconum_tui;
-            console.log(iconum_all+'='+iconum_ding+'+'+iconum_tui);
-            $('.view_tui_num').text(iconum_tui);
-            $('.view_ding_num').text(iconum_ding);
-            sys_yes_num++;
-
-            if(iconum_all>0){
-                isListTree($$doc,iconum_all);
-                isListTree($$doc,iconum_all+1);
-                isListTree($$doc,iconum_all+2);
-                isListTree($$doc,iconum_all+3);
-                isListTree($$doc,iconum_all+4);
-            }
-                
-        },
+        success: getListPageSuccess,
         error: function(data){
             console.log('error for access '+sys_url+':'+data);
             sys_err_num++;
@@ -205,6 +204,8 @@ function getHtml(){
         },
         complete: function(){
             console.log('complete');
+            $('.view_err_num').text(sys_err_num);
+            $('.view_yes_num').text(sys_yes_num);
             if(isStart){
                 var setTimeouts=setTimeout(function(){
                     getHtml();
@@ -230,7 +231,64 @@ function replaceAlls(str){
     return str;
 }
 
+function getDetailPageSuccess(html,url){
+    var $$cont_doc = $$(html);
+    var cont_title=replaceAlls($$cont_doc.find(".bigtitle h1").text());
 
+    var cont_tit,
+        cont_hx,
+        cont_gk,
+        cont_zx,
+        cont_wz,
+        cont_lxr,
+        cont_tels=html.substring(html.indexOf('document.write("') + 16,html.indexOf('")</script')),
+        cont_telTan=cont_tels.substring(cont_tels.indexOf('<img src=') + 10,cont_tels.indexOf('\' />'));
+
+
+    var conTentAll =$$cont_doc.find(".sumary ul .su_tit");
+    var conTentSize = conTentAll.size();
+    
+    for(var i=0;i<=conTentSize;i++){
+        var CameFrom = $$cont_doc.find(".sumary ul .su_tit").eq(i);
+        conTentCon = replaceAlls(CameFrom.text());
+        var su_coninFor = CameFrom.siblings(".su_con");
+       // var wzInfor= CameFrom.siblings(".su_con");
+        var lxrInfor= CameFrom.siblings(".su_con").children("span").find("a");
+        
+        switch (conTentCon) {
+          case "售价：": cont_tit = replaceAlls(su_coninFor.text());/*obj.replace(a,b)*/
+            break;
+          case "户型：": cont_hx = replaceAlls(su_coninFor.text());
+            break;
+          case "概况：": cont_gk = replaceAlls(su_coninFor.text());
+            break;
+          case "装修：": cont_zx = replaceAlls(su_coninFor.text());
+            break;
+          case "地址：": cont_wz = replaceAlls(su_coninFor.text());
+            break;
+          case "联系人：": cont_lxr = replaceAlls(lxrInfor.text());
+            break;
+          default: break;
+        }
+    };
+
+
+    //    if(cont_lxr.indexOf('归属地')){cont_lxr='';}
+    var thisHtml='<p>'+cont_title+'</p>'
+        +'<p>'+cont_tit+'</p>'
+        +'<p>'+cont_hx+'</p>'
+        +'<p>'+cont_zx+'</p>'
+        +'<p>'+cont_wz+'</p>'
+        +'<p>'+cont_lxr+'</p>'
+        +'<p>'+cont_tels+'</p>'
+    $('.list_see_box').html(thisHtml);  
+
+   
+    allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
+    $$cont_doc=null;
+    html=null;
+    openMessageBox(allContent);
+}
 
 function get1Html(url){
     $$.ajax({url: url,
@@ -242,60 +300,7 @@ function get1Html(url){
             $('.list_see_box').html('loading...');
         },
         success: function(html){
-            var $$cont_doc = $$(html);
-            var cont_title=replaceAlls($$cont_doc.find(".bigtitle h1").text());
-
-            var cont_tit,
-                cont_hx,
-                cont_gk,
-                cont_zx,
-                cont_wz,
-                cont_lxr,
-                cont_tels=html.substring(html.indexOf('document.write("') + 16,html.indexOf('")</script')),
-                cont_telTan=cont_tels.substring(cont_tels.indexOf('<img src=') + 10,cont_tels.indexOf('\' />'));
-
-
-            var conTentAll =$$cont_doc.find(".sumary ul .su_tit");
-            var conTentSize = conTentAll.size();
-            
-            for(var i=0;i<=conTentSize;i++){
-                var CameFrom = $$cont_doc.find(".sumary ul .su_tit").eq(i);
-                conTentCon = replaceAlls(CameFrom.text());
-                var su_coninFor = CameFrom.siblings(".su_con");
-               // var wzInfor= CameFrom.siblings(".su_con");
-                var lxrInfor= CameFrom.siblings(".su_con").children("span").find("a");
-                
-                switch (conTentCon) {
-                  case "售价：": cont_tit = replaceAlls(su_coninFor.text());/*obj.replace(a,b)*/
-                    break;
-                  case "户型：": cont_hx = replaceAlls(su_coninFor.text());
-                    break;
-                  case "概况：": cont_gk = replaceAlls(su_coninFor.text());
-                    break;
-                  case "装修：": cont_zx = replaceAlls(su_coninFor.text());
-                    break;
-                  case "地址：": cont_wz = replaceAlls(su_coninFor.text());
-                    break;
-                  case "联系人：": cont_lxr = replaceAlls(lxrInfor.text());
-                    break;
-                  default: break;
-                }
-            };
-
-
-            //    if(cont_lxr.indexOf('归属地')){cont_lxr='';}
-            var thisHtml='<p>'+cont_title+'</p>'
-                +'<p>'+cont_tit+'</p>'
-                +'<p>'+cont_hx+'</p>'
-                +'<p>'+cont_zx+'</p>'
-                +'<p>'+cont_wz+'</p>'
-                +'<p>'+cont_lxr+'</p>'
-                +'<p>'+cont_tels+'</p>'
-            $('.list_see_box').html(thisHtml);  
-
-           
-            allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
-            openMessageBox(allContent);
+            getDetailPageSuccess(html,url);
         },
         error: function(){
             $('.list_see_box').html('半路遇到威震天，装死中...<br><br>请重新加载...');
@@ -344,12 +349,12 @@ $(document).on('click', '.btns', function(event) {
 
 $(document).ready(function() {
     $('[data-type="cj_stop"]').hide();
-    setInterval(function(){
-        sys_date = new Date();
-        $('.view_time').text(sys_date.toLocaleTimeString());
-        $('.view_err_num').text(sys_err_num);
-        $('.view_yes_num').text(sys_yes_num);
-    });
+    // setInterval(function(){
+    //     sys_date = new Date();
+    //     $('.view_time').text(sys_date.toLocaleTimeString());
+    //     $('.view_err_num').text(sys_err_num);
+    //     $('.view_yes_num').text(sys_yes_num);
+    // });
     setWindowTit()
 });
 
@@ -463,14 +468,13 @@ a.seeHas{ color: rgba(255,255,255,0.3);}
                 <div class="tr">
                     <div class="td mainer_foot">
                         <p class="view_tips">
-                            推广: <b class="view_tui_num">15</b>
-                            置顶: <b class="view_ding_num">15</b>
-                            当前时间: <b class="view_time">15</b>
-                            错误: <b class="view_err_num">15</b>
-                            成功: <b class="view_yes_num">15</b>
+                            推广: <b class="view_tui_num">0</b>
+                            置顶: <b class="view_ding_num">0</b>
+                            错误: <b class="view_err_num">0</b>
+                            成功: <b class="view_yes_num">0</b>
                         </p>
                         <p class="view_tips">
-                            <input type="checkbox" id="setAlwaysOnTop" onclick="setAlwaysOnTop(this);" style="float:left;margin-left:55px;" /><span style="float:left;margin-top:2px;">最前端显示</span>
+                            <input type="checkbox" id="setAlwaysOnTop" onclick="setAlwaysOnTop(this);" style="float:left;margin-left:120px;" /><span style="float:left;margin-top:2px;">最前端显示</span>
                         </p>
                     </div>
                 </div>
