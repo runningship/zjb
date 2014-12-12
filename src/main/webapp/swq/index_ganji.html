@@ -79,7 +79,7 @@ function setWindowTit(){
 var iconum_all=0;       
 var iconum_ding=0;      
 var iconum_tui=0;       
-var TimeXunhuan=2000;   
+var TimeXunhuan=3000;   
 var isStart=false;      
 var sys_date;           
 var sys_url='http://hf.ganji.com/fang5/a1';
@@ -149,7 +149,6 @@ function getHtml(){
         timeout:3000,
         beforeSend: function(){},
         success: function(html){
-            console.log("success");
             var $$doc = $$(html);
             if(html.indexOf("您的访问速度太快了")>0){
                 // var lastLi=$('#list_yes').children('li').last();
@@ -159,12 +158,11 @@ function getHtml(){
                 // }else{
                 //    $('#list_yes').append('<li data-url="error"><h5>Error：<a href="'+sys_url+'" class="btns" data-type="list_see_url"  >请点此前去输入验证码</a></h5></li>');
                 // }
-
+                $('#cj_stop').click();
                 window.top.gui.Shell.openExternal(sys_url);
                 win.show();
                 // show=true;
                 // win.setShowInTaskbar(true);
-                $('#cj_stop').click();
                 $('#setAlwaysOnTop').attr('checked','checked');
                 win.setAlwaysOnTop(true);
                 win.title = "赶集:输入验证码";
@@ -175,8 +173,8 @@ function getHtml(){
             if(html.indexOf("去上一级页面看看")>0){
                 console.log('提示：找不到页面，正在尝试重新采集...');
                 sys_err_num++;
-                $('#cj_stop').click();
-                console.log(html);
+               /* $('#cj_stop').click();
+                console.log(html);*/
             }
             
             $$doc.find("span.ico-hot").each(function(i,project){

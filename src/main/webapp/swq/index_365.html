@@ -24,6 +24,14 @@ var exec = require('child_process').execFile;
 function setWindowTit(){
     win.title = "365";
 }
+function drawImage2(x,y){
+    console.log('drawImage2');
+    return;
+}
+function drawImage(x,y){
+    console.log('drawImage');
+    return;
+}
 function openMessageBox(ziDuan){
     
     try{
@@ -79,7 +87,7 @@ function setWindowTit(){
     win.title = "365";
 }
 //扫网间隔时间 
-var TimeXunhuan=2000;   
+var TimeXunhuan=4000;   
 var isStart=false;      
 var sys_date;           
 var sys_url='http://hf.sell.house365.com/district_i1/dl_n11.html';
@@ -118,7 +126,7 @@ function getHtml(){
                 if (houseList.indexOf(link)>-1) {
                     continue;
                 };
-                getHouseDetailInfo(link);
+                getHouseDetailInfo(link,true);
                 houseList.push(link);
             };
             $$doc=null;
@@ -147,7 +155,7 @@ function getHtml(){
 
 
 //房源详细信息
-function getHouseDetailInfo(url){
+function getHouseDetailInfo(url,addToBox){
     $$.ajax({url: url,
         type: 'GET',
         dataType: 'html',
@@ -207,7 +215,10 @@ function getHouseDetailInfo(url){
                 +'<a href="#" class="btns" data-type="list_see" ><i class="iconfont">&#xe672;</i></a>'
                 +'</span><h5>'+title+'</h5></li>';
             
-            list_box.prepend(addListStr);
+            if(addToBox) {
+                list_box.prepend(addListStr);
+            }
+            
             var thisHtml='<p>售价：'+str_shoujia+'</p>'
                 +'<p>户型：'+str_hx+'</p>'
                 +'<p>装修：'+str_zxiu+'</p>'
@@ -218,11 +229,12 @@ function getHouseDetailInfo(url){
                 +'<p>联系人：'+str_lxr+'</p>'
                 +'<p>电话：'+str_tel+'</p>'
             $('.list_see_box').html(thisHtml);
-
-            allContent = '{"area":"'+str_area+'","addr":"'+addr+'","hxing":"'+str_hx+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
+            if(addToBox){
+                allContent = '{"area":"'+str_area+'","addr":"'+addr+'","hxing":"'+str_hx+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
+                openMessageBox(allContent);
+            }
             $$cont_doc=null;
             html=null;
-            openMessageBox(allContent);
         },
         error: function(){
             $('.list_see_box').html('半路遇到威震天，装死中...<br><br>请重新加载...');
