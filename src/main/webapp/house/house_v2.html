@@ -16,6 +16,8 @@
 var houseData;
 var houseGJbox;
 var searching=false;
+var formHtml=[];
+var formPos=-1;
 var chuzu=getParam('chuzu');
 function doSearch(callback){
   if(searching){
@@ -48,20 +50,23 @@ function doSearch(callback){
   });
 }
 
-function doSearchAndSelectFirst(){
-  // saveQuery();
+function doSearchAndSelectFirst(notFresh){
+  //saveQuery();
   doSearch(function(){
     if(houseData.page.data.length>0){
       $('.TableB').find('tr')[1].click();
     }
   });
+  if(notFresh==false || notFresh==undefined){
+    formPos = formHtml.length-1;
+  }
 }
 
 function saveQuery(){
   $('form input').each(function(index,obj){
     if(obj.type=='text' || obj.type=='hidden'){
       $(obj).attr('value',$(obj).val());
-    }else if(obj.type=='checkbox'){
+    }else if(obj.type=='checkbox' || obj.type=='radio'){
       if(obj.checked){
         $(obj).attr('checked','checked');
       }else{
@@ -69,7 +74,29 @@ function saveQuery(){
       }
     }
   });
+  formHtml.push($('form').html());
+  // console.log($('form').html());
 }
+
+function goAhread(){
+  if(formPos>=formHtml.length-1){
+    return;
+  }
+  formPos++;
+  $('form').html(formHtml[formPos]);
+  doSearchAndSelectFirst(true);
+  
+}
+
+function goBack(){
+  if(formPos<=0 || formHtml.length<1){
+    return;
+  }
+  formPos--;
+  $('form').html(formHtml[formPos]);
+  doSearchAndSelectFirst(true);
+}
+
 function getShenHeText(lock){
   if(lock==1){
     return "审";
@@ -218,24 +245,32 @@ $(document).ready(function(){
     }
 	
 	 
-	// $(document).bind("contextmenu",function(e){
-	// 		  return false;
-	// });
-	
+	$(document).bind("contextmenu",function(e){
+			  return false;
+	});
 	
 	 
 	// $(document).bind("mousedown",function(e){
 	// 	if(e.which == 3){
-	// 		$("#GoAndBack").css({"display":"block","top":e.pageY+5,"left":e.pageX+5});
+ //  		$("#goAhread").css('display','');
+ //  		$("#goBack").css('display','');
+ //      if(formPos<=0){
+ //        $("#goBack").css('display','none');
+ //      }
+ //      if(formPos<0 || formPos>=formHtml.length-1){
+ //        $("#goAhread").css('display','none');
+ //      }
+ //      $("#GoAndBack").css({"display":"block","top":e.pageY+5,"left":e.pageX+5});
 	// 	}
-	// 	if(e.which == 1){
-	// 		$("#GoAndBack").hide();
-	// 	}
+		
 	// });
 	
-
-	
-	
+ //  $(document).bind("mouseup",function(e){
+ //    if(e.which == 1){
+ //      $("#GoAndBack").hide();
+ //    }
+    
+ //  });
 		 
 });
 
@@ -264,8 +299,8 @@ $(document).ready(function(){
 
 <div id="GoAndBack" class="GaB">
 
-     <a href="#"><span>前进</span></a>
-     <a href="#"><span>后退</span></a>
+     <a href="#" id="goAhread" disabled=true onclick="goAhread();"><span>前进</span></a>
+     <a href="#" id="goBack" onclick="goBack();"><span>后退</span></a>
 
 </div>
 
