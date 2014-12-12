@@ -198,9 +198,12 @@ function getHtml(){
         beforeSend: function(){},
         success: getListPageSuccess,
         error: function(data){
-            console.log('error for access '+sys_url+':'+data);
-            sys_err_num++;
-            list_this_err_num++;
+            if(data.statusText!='timeout'){
+                console.log('error for access '+sys_url+':'+data.statusText);
+                sys_err_num++;
+                list_this_err_num++;    
+            }
+            
         },
         complete: function(){
             console.log('complete');
