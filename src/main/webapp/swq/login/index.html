@@ -64,8 +64,8 @@ function login (){
         success: function(data){
             window.location="/swq/jump.html";
         },error:function(data){
-            var r = JSON.parse(data.responseText);
-            alert(r.msg);
+            // var r = JSON.parse(data.responseText);
+            alert(data.responseText);
         }
     });
 }

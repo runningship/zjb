@@ -246,6 +246,9 @@ function getHouseDetailInfo(url,addToBox){
     });
 }
 
+function switchSite(value){
+    window.location='/v/swq/index_365_'+value+'.html';
+}
 
 $(document).on('click', '.btns', function(event) {
     event.preventDefault();
@@ -359,8 +362,14 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="tr">
-                    <div class="td sider_foot">
-                        <h1 class="logo"></h1>
+                    <div class="td sider_foot" style="float:left;padding-top:35px;">
+                        <div>
+                            城市:
+                            <select onchange="switchSite(this.value);">
+                                <option value="hefei">合肥</option>
+                                <option value="wuhu">芜湖</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

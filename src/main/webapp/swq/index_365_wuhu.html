@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="/swq/iconfont.css">
 <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/buildHtml.js"></script>
 <link rel="stylesheet" type="text/css" href="/swq/swq.css">
 <script type="text/javascript">
 var show=true;
@@ -91,6 +90,7 @@ function setWindowTit(){
 var TimeXunhuan=4000;   
 var isStart=false;      
 var sys_date;           
+var sys_url='http://wh.sell.house365.com/district_i1/dl_n11.html';
 //扫网成功数
 var sys_err_num=0;      
 //扫网失败数
@@ -121,8 +121,8 @@ function getHtml(){
             var list_box=$('#list_yes');
             sys_yes_num++;
             for (var i = 4; i >= 0 ; i--) {
-                var name_url = $$doc.find('#JS_listPag .name')[i];
-                var link = name_url.children[0].href;
+                var name_url = $$doc.find('.list_item .title_fy a')[i];
+                var link = name_url.href;
                 if (houseList.indexOf(link)>-1) {
                     continue;
                 };
@@ -176,40 +176,38 @@ function getHouseDetailInfo(url,addToBox){
                 str_lxr,
                 str_year,
                 str_lc;
+                str_dz = "";
             var list_box=$('#list_yes');
-            var zjia = $$cont_doc.find('dt:contains("总价")')[0];
-            var shoujia = zjia.nextElementSibling;
-            str_shoujia = shoujia.textContent.trim();
-            var xq = $$cont_doc.find('dt:contains("小区")')[0];
-            var area = xq.nextElementSibling;
-            str_area = area.textContent.split('(')[0].trim();
-            var hx = $$cont_doc.find('dt:contains("户型")')[0];
-            var str_hx="";
-            if(hx){
-                str_hx = hx.nextElementSibling.textContent.trim();    
+            var zjia = $$cont_doc.find('.dash_line:contains("售价：")');
+            var shoujia = zjia.find('span');
+            str_shoujia = shoujia.text().trim();
+            var xq = $$cont_doc.find('.dash_line:contains("小区：")');
+            var area = xq.find('a');
+            if (area.length==0) {
+                str_area = xq.text().split('：')[1].trim();
+            }else{
+                str_area = area.text().trim();
+                str_dz = xq.next().text().trim();
             }
-            
-            var lc = $$cont_doc.find('dt:contains("楼层")')[0];
-            var zlc = lc.nextElementSibling;
-            str_lc = zlc.textContent.trim();
-            var mj = $$cont_doc.find('dt:contains("面积")')[0];
-            var mji = mj.nextElementSibling;
-            str_mji = mji.textContent.trim();
-            var lxrtel = $$cont_doc.find('#fd_telephone');
-            str_tel = lxrtel.text().trim().replace(/ /g,'');
-            var lxr = $$cont_doc.find('#personal .name');
-            str_lxr = lxr.text().trim();
-            var zx = $$cont_doc.find('dt:contains("装修")')[0];
-            var zxiu = zx.nextElementSibling;
-            str_zxiu = zxiu.textContent.trim();
-            var dz = $$cont_doc.find('dt:contains("地址：")')[0];
-            var addr = "未填";
-            if (dz) {
-                addr = dz.nextElementSibling.textContent.trim();
+            var hx = $$cont_doc.find('.dash_line:contains("户型：")');
+            var str_hx="";
+            if (hx.length>0) {
+                str_hx = hx.text().split('：')[1].trim();
             };
-            var gaik = $$cont_doc.find('.titleT .h2');
+            var lc = $$cont_doc.find('.dash_line:contains("楼层：")');
+            str_lc = lc.text().split('：')[1].trim();
+            var mj = $$cont_doc.find('.dash_line:contains("面积：")');
+            var mji = mj.find('span');
+            str_mji = mji.text().trim();
+            var zx = $$cont_doc.find('.dash_line:contains("装修")');
+            str_zxiu = zx.text().split('：')[1].trim();
+            var lxrtel = $$cont_doc.find('.gs_name:contains("电话：")');
+            str_tel = lxrtel.text().split('：')[1].trim()
+            var lxr = $$cont_doc.find('.gs_name:contains("联系人：")');
+            str_lxr = lxr.text().split('：')[1].trim()
+            var gaik = $$cont_doc.find('#remark');
             str_gk = gaik.text().trim();
-            var title=""+str_area+" "+str_hx+" "+str_mji;
+            var title=""+str_area+" "+str_hx+" "+str_mji+"平";
             var addListStr='<li data-url="'+url+'" data-title="'+title+'"><span>'
                 +'<a href="#" class="btns" data-type="list_see_url" ><i class="iconfont">&#xe675;</i></a>'
                 +'<a href="#" class="btns" data-type="list_see" ><i class="iconfont">&#xe672;</i></a>'
@@ -225,12 +223,12 @@ function getHouseDetailInfo(url,addToBox){
                 +'<p>概况：'+str_gk+'</p>'
                 +'<p>楼层：'+str_lc+'</p>'
                 +'<p>小区：'+str_area+'</p>'
-                +'<p>地址：'+addr+'</p>'
+                +'<p>地址：'+str_dz+'</p>'
                 +'<p>联系人：'+str_lxr+'</p>'
                 +'<p>电话：'+str_tel+'</p>'
             $('.list_see_box').html(thisHtml);
             if(addToBox){
-                allContent = '{"area":"'+str_area+'","addr":"'+addr+'","hxing":"'+str_hx+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
+                allContent = '{"area":"'+str_area+'","addr":"'+str_dz+'","hxing":"'+str_hx+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
                 openMessageBox(allContent);
             }
             $$cont_doc=null;
@@ -246,6 +244,9 @@ function getHouseDetailInfo(url,addToBox){
     });
 }
 
+function switchSite(value){
+    window.location='/v/swq/index_365_'+value+'.html';
+}
 
 $(document).on('click', '.btns', function(event) {
     event.preventDefault();
@@ -289,11 +290,6 @@ $(document).ready(function() {
     //     $('.view_yes_num').text(sys_yes_num);
     // });
     setWindowTit()
-    var city = getParam('city');
-    if (!city) {
-        city = 'hf';
-    };
-    sys_url='http://'+city+'.sell.house365.com/district_i1/dl_n11.html';
 });
 
 </script>
@@ -359,8 +355,14 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="tr">
-                    <div class="td sider_foot">
-                        <h1 class="logo"></h1>
+                    <div class="td sider_foot" style="float:left;padding-top:35px;">
+                        <div>
+                            城市:
+                            <select onchange="switchSite(this.value);">
+                                <option value="wuhu">芜湖</option>
+                                <option value="hefei">合肥</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
