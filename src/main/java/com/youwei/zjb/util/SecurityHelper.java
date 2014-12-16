@@ -67,8 +67,8 @@ public class SecurityHelper {
 		throw new GException(PlatformExceptionType.BusinessException, "授权审核中...");
 	}
 	public static PC validateByLic(PC target , User u) {
-		PC pc= SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(PC.class, new String[]{"did","lic" , "licCreateTime"},
-				new Object[]{target.did ,target.lic, target.licCreateTime});
+		PC pc= SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(PC.class, new String[]{"did","lic"},
+				new Object[]{target.did ,target.lic});
 		if(pc==null){
 			LogUtil.warning("机器未授权,lic="+target.lic+",did="+target.did);
 			throw new GException(PlatformExceptionType.BusinessException, "机器未授权,请先授权...");
