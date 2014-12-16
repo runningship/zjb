@@ -294,6 +294,10 @@ $(document).ready(function() {
                 }
                 
             }
+            pcinfo.domain=json.city_py;
+            if(!pcinfo.domain){
+                pcinfo.domain = "hefei";
+            }
             YW.ajax({
                 type: 'POST',
                 url: '/c/user/login',
@@ -386,6 +390,9 @@ $(window).resize(function(e) {
 function menuerBoxCurr(menuerBoxI,leftNum){
     menuerBoxI.stop().animate({left:leftNum},300);
 }
+function changeCity(){
+    window.location='/welcome.html?pcinfo='+JSON.stringify(pcinfo);
+}
 $(function(){
 var menuerBox=$('.menuer'),
 menuerBoxW=menuerBox.innerWidth(),
@@ -455,10 +462,11 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
                         <div class="col-xs-8">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label for="idCity" class="col-xs-2 control-label" onclick="alert(win.width)">城市:</label>
+                                    <label for="idCity" class="col-xs-2 control-label" >城市:</label>
                                     <div class="col-xs-8">
                                         <input type="text" class="form-control" value="" id="idCity" placeholder="" readonly>
                                     </div>
+                                    <a class="col-xs-2 btn btn-link" onclick="changeCity()">切换城市</a>
                                 </div>
                                 <div class="form-group">
                                     <label for="idName" class="col-xs-2 control-label">账号:</label>
