@@ -89,6 +89,10 @@ public class User {
 	 */
 	public String orgpath;
 	
+	public Integer avatar;
+	
+	public transient String domain;
+	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}
