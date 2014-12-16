@@ -16,6 +16,8 @@ public class OutBiz {
 	
 	public Integer uid;
 	
+	public Integer pyUid;
+	
 	public int did;
 	
 	public int cid;

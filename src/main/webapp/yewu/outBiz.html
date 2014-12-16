@@ -61,7 +61,7 @@ function openAdd(){
 }
 
 function openDetail(id){
-  art.dialog.open("/v/yewu/outBiz_Detail.html?id="+id,{id:'outbiz_Detail',width:500,height:300,title:'外出公事信息'});
+  art.dialog.open("/v/yewu/outBiz_Detail.html?id="+id,{id:'outbiz_Detail',width:450,height:310,title:'外出公事信息'});
 }
 
 function openEdit(id){
@@ -69,7 +69,7 @@ function openEdit(id){
 }
 
 function openpiyue(id,row){
-  art.dialog.open("/v/yewu/outBiz_piyue.html?row="+row+"&id="+id,{id:'outbiz_piyue',width:600,height:365,title:'批阅外出公事'});
+  art.dialog.open("/v/yewu/outBiz_piyue.html?row="+row+"&id="+id,{id:'outbiz_piyue',width:600,height:410,title:'批阅外出公事'});
 }
 
 function fanhui(id,row){
@@ -211,7 +211,10 @@ $(document).ready(function() {
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
                     <tr data-cid="${id}" style="display:none;" class="id_biz_list"  >
                       <td width="60" height="20" style="text-align:center"><strong>${dname}-${uname}</strong></td>
-                      <td width="160">${reason}</td>
+                      <td width="160">
+                      	<span show="'${status}'!='已批阅'">${reason}</span>
+                      	<a href="#" onclick="openDetail(${id})" show="'${status}'=='已批阅'">${reason}</a>
+                      </td>
                       <td width="60">${outtime}</td>
                       <td width="60">${backtime}</td>
                       <td width="60" class="${status}">

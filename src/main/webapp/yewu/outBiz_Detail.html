@@ -22,9 +22,12 @@ function getContent(){
       var json = JSON.parse(result);
       $('#id').val(json['id']);
       $('#name').html(json['dname']+'-'+json['uname']);
-      $('#time').html(json['outtime']+' - '+json['backtime']);
+      $('#outtime').html(json['outtime']);
+      $('#backtime').html(json['backtime']);
       $('#reason').html(json['reason']);
       $('#conts').html(json['conts']);
+      $('#pyyj').html(json['pyyj']);
+      $('#pyr').html(json['pyr']);
     }
   })
 }
@@ -57,8 +60,12 @@ $(document).ready(function() {
     <td colspan="3" width="318" class="TableTdBgColor" id="name"><span class="w1 h"></span></td>
   </tr>
   <tr>
-    <td align="right" class="TableTdBorBot">时间：</td>
-    <td colspan="3" class="TableTdBgColor" id="time"><span class="w1 h"></span></td>
+    <td align="right" height="33" class="TableTdBorBot">外出时间：</td>
+    <td colspan="3" class="TableTdBgColor" id="outtime"><span class="w1 h"></span></td>
+  </tr>
+  <tr>
+    <td align="right" height="33" class="TableTdBorBot">返回时间：</td>
+    <td colspan="3" class="TableTdBgColor" id="backtime"><span class="w1 h"></span></td>
   </tr>
   <tr>
     <td align="right" height="33" class="TableTdBorBot">事由：</td>
@@ -69,6 +76,18 @@ $(document).ready(function() {
   <tr>
     <td align="right" height="33" class="TableTdBorBot">总结：</td>
     <td colspan="3" class="TableTdBgColor" id="conts">
+       <span class="w1 h" style=""></span>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" height="33" class="TableTdBorBot">批阅意见：</td>
+    <td colspan="3" class="TableTdBgColor" id="pyyj">
+       <span class="w1 h" style=""></span>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" height="33" class="TableTdBorBot">批阅人：</td>
+    <td colspan="3" class="TableTdBgColor" id="pyr">
        <span class="w1 h" style=""></span>
     </td>
   </tr>

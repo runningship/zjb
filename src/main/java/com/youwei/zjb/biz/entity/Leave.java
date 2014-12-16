@@ -18,6 +18,8 @@ public class Leave {
 	
 	public int did;
 	
+	public Integer pyUid;
+	
 	public int cid;
 	
 	public Date starttime;

@@ -14,8 +14,9 @@ var id;
 var row;
 var cid=$${cid};
 function save(sh){
-  if($('#conts').val()==""){
-    event.preventDefault();
+  if($('#conts').val()==""||$('#conts').val()==null){
+    alert('请填写意见');
+    $('#pyyj').focus();
     return false;
   }
   var a=$('form[name=form1]').serialize();
@@ -45,6 +46,7 @@ function getContent(){
       $('#time').html(json['starttime']+'---'+json['endtime']);
       $('#reason').html(json['reason']);
       $('#conts').html(json['conts']);
+      $('#pyr').html(json['pyr']);
     }
   })
 }
@@ -120,6 +122,12 @@ $(document).ready(function() {
     <td align="right" height="33" class="TableTdBorBot">意见：</td>
     <td colspan="3" class="TableTdBorBot" height="33" bgcolor="#ffffff">
       <textarea type="text" style=" margin-left:5px; width:500px;height:50px; padding:5px; resize:none; border:1px solid #b6b6b6; float:left;" id="conts" name="conts" ></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" height="33" class="TableTdBorBot">批阅人：</td>
+    <td colspan="3" class="TableTdBgColor" id="pyr">
+       <span class="w1 h" style=""></span>
     </td>
   </tr>
   <tr>

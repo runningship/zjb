@@ -115,6 +115,12 @@ public class OutBizService {
 		mv.data.put("uname", u.uname);
 		mv.data.put("dname", u.Department().namea);
 		mv.data.put("tel", u.tel);
+		User py = dao.get(User.class, po.pyUid);
+		if(py!=null){
+			mv.data.put("pyr", py.uname);
+		}else{
+			mv.data.put("pyr", ThreadSession.getUser().uname);
+		}
 		return mv;
 	}
 	
@@ -127,6 +133,7 @@ public class OutBizService {
 		}
 		po.status = "已批阅";
 		po.pyyj = biz.pyyj;
+		po.pyUid = ThreadSession.getUser().id;
 		dao.saveOrUpdate(po);
 		return mv;
 	}

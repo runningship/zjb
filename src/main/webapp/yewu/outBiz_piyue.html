@@ -16,6 +16,11 @@ var cid=$${cid};
 
 function save(){
   var a=$('form[name=form1]').serialize();
+  if ($('#pyyj').val()==""||$('#pyyj').val()==null) {
+    alert('请填写批阅意见');
+    $('#pyyj').focus();
+    return;
+  };
     YW.ajax({
       type: 'POST',
       url: '/c/outBiz/shenpi?id'+id,
@@ -44,6 +49,7 @@ function getContent(){
       $('#conts').html(json['conts']);
       $('#status').html(json['status']);
       $('#pyyj').val(json['pyyj']);
+      $('#pyr').html(json['pyr']);
     }
   })
 }
@@ -100,6 +106,12 @@ $(document).ready(function() {
     <td align="right" class="TableTdBorBot">批阅意见：</td>
     <td class="TableTdBgColor">
        <textarea class="TA" style="width:90%" id="pyyj" name="pyyj"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" height="33" class="TableTdBorBot">批阅人：</td>
+    <td colspan="3" class="TableTdBgColor" id="pyr">
+       <span class="w1 h" style=""></span>
     </td>
   </tr>
   <tr>
