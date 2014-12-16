@@ -42,9 +42,16 @@ public class SessionFilter implements Filter{
 		excludes.add("/c/feedback/reportError");
 		excludes.add("/v/pay/submit.html");
 		excludes.add("/v/swq/index_58.html");
-		excludes.add("/v/swq/index_365.html");
 		excludes.add("/swq/index_58.html");
-		excludes.add("/swq/index_365.html");
+		
+		excludes.add("/swq/index_58.html");
+		excludes.add("/v/swq/index_58.html");
+		
+		excludes.add("/v/swq/index_365_hefei.html");
+		excludes.add("/swq/index_365_hefei.html");
+		excludes.add("/v/swq/index_365_wuhu.html");
+		excludes.add("/swq/index_365_wuhu.html");
+		
 		excludes.add("/swq/index_ganji.html");
 		excludes.add("/v/swq/index_ganji.html");
 		

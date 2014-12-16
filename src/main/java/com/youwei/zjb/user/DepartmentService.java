@@ -20,6 +20,7 @@ import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.DeptGroup;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 
@@ -146,6 +147,38 @@ public class DepartmentService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView getUserTree(){
+		ModelAndView mv = new ModelAndView();
+		JSONArray result = new JSONArray();
+		Department comp = ThreadSession.getUser().Company();
+		JSONObject com = new JSONObject();
+		com.put("id", "d_"+comp.id);
+		com.put("pId", "0");
+		com.put("name", comp.namea);
+		com.put("type", "comp");
+		result.add(com);
+		List<User> users = dao.listByParams(User.class, "from User where cid=? ", ThreadSession.getUser().cid);
+		for(User u : users){
+			JSONObject json = new JSONObject();
+			json.put("id", "u_"+u.id);
+			json.put("pId", "d_"+u.did);
+			json.put("name", u.uname);
+			json.put("type", "dept");
+			result.add(json);
+		}
+		List<Department> depts = dao.listByParams(Department.class, "from Department where fid=?", ThreadSession.getUser().cid);
+		for(Department d : depts){
+			JSONObject json = new JSONObject();
+			json.put("id", "d_"+d.id);
+			json.put("pId", "d_"+d.fid);
+			json.put("name", d.namea);
+			json.put("type", "comp");
+			result.add(json);
+		}
+		mv.data.put("result", result.toArray());
+		return mv;
+	}
 	@WebMethod
 	public ModelAndView getDeptTree(Integer cid){
 		ModelAndView mv = new ModelAndView();

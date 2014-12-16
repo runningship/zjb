@@ -1,12 +1,17 @@
 package com.youwei.zjb.sys;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
 
+import net.sf.json.JSONArray;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -24,8 +29,14 @@ public class CityService {
 	@WebMethod
 	public ModelAndView list(){
 		ModelAndView mv = new ModelAndView();
-		List<City> list = dao.listByParams(City.class, "from City ", new Object[]{});
-		mv.data.put("citys", JSONHelper.toJSONArray(list));
+		try {
+			String path = ConfigCache.get("citys_file", "");
+			String text = FileUtils.readFileToString(new File(path), "utf8");
+			mv.data.put("citys", JSONArray.fromObject(text));
+		} catch (IOException e) {
+			LogUtil.log(Level.WARN, "load filter words failed ", e);
+			mv.data.put("citys", new JSONArray());
+		}
 		return mv;
 	}
 	

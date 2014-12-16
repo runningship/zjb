@@ -4,12 +4,14 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.biz.LeaveStatus;
 import com.youwei.zjb.biz.LeaveType;
 import com.youwei.zjb.house.ChaoXiang;
 import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.house.LouXing;
 import com.youwei.zjb.house.QuYu;
+import com.youwei.zjb.house.WuhuQuYu;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.SellState;
@@ -28,7 +30,13 @@ public class ConfigService {
 //		mv.data.put("xingzhi", HouseAttribute.toJsonArray());
 //		mv.data.put("leibie", HouseType.toJsonArray());
 		mv.data.put("lxing", LouXing.toJsonArray());
-		mv.data.put("quyu", QuYu.toJsonArray());
+		String domain=ThreadSession.getDomain();
+		if("wuhu".equals(domain)){
+			mv.data.put("quyu", WuhuQuYu.toJsonArray());
+		}else{
+			mv.data.put("quyu", QuYu.toJsonArray());
+		}
+		
 		mv.data.put("ztai_sell", SellState.toJsonArray());	
 		mv.data.put("ztai_rent", RentState.toJsonArray());
 		mv.data.put("shenhe", ShenHe.toJsonArray());

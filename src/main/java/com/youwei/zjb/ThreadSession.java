@@ -2,6 +2,8 @@ package com.youwei.zjb;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.youwei.zjb.user.entity.User;
 public class ThreadSession {
 
@@ -37,5 +39,16 @@ public class ThreadSession {
     public static String getIp(){
     	HttpSession session = HttpSession.get();
     	return (String)session.getAttribute("ip");
+    }
+    
+    public static String getDomain(){
+    	if(ThreadSession.getUser()==null){
+    		return "hefei";
+    	}
+    	String domain = (String)ThreadSession.getUser().domain;
+		if(StringUtils.isEmpty(domain)){
+			domain="hefei";
+		}
+		return domain;
     }
 }
