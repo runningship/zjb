@@ -349,6 +349,7 @@ public class UserService {
 		po.lasttime = new Date();
 		dao.saveOrUpdate(po);
 		po.domain = user.domain;
+		po.city = user.city;
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
 		ThreadSession.getHttpSession().setAttribute("pc", pcpo);
 		String operConts = "["+po.Department().namea+"-"+po.uname+ "] 登录成功";

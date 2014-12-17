@@ -93,6 +93,8 @@ public class User {
 	
 	public transient String domain;
 	
+	public transient String city;
+	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}

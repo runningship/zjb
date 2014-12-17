@@ -19,15 +19,17 @@
 	<session-config>
 	  <session-timeout>30</session-timeout>
 	 </session-config>
-  	<servlet>
-        <servlet-name>grand</servlet-name>
-        <servlet-class>com.youwei.zjb.GrandServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>grand</servlet-name>
-	    <url-pattern>/c/*</url-pattern>
-	    <url-pattern>/phone/*</url-pattern>
-	</servlet-mapping>
+	 
+<!--   	<servlet> -->
+<!--         <servlet-name>grand</servlet-name> -->
+<!--         <servlet-class>com.youwei.zjb.GrandServlet</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 	    <servlet-name>grand</servlet-name> -->
+<!-- 	    <url-pattern>/c/*</url-pattern> -->
+<!-- 	    <url-pattern>/phone/*</url-pattern> -->
+<!-- 	    <url-pattern>*.jsp</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 	
 	<servlet>
         <servlet-name>view</servlet-name>
@@ -74,4 +76,18 @@
 		<url-pattern>/c/*</url-pattern>
 		<url-pattern>*.html</url-pattern>
 	</filter-mapping>
+	
+	<filter>
+    	<filter-name>grandFilter</filter-name>
+    	<filter-class>com.youwei.zjb.GrandFilter</filter-class>
+    	<init-param>
+    		<param-name>encoding</param-name>
+    		<param-value>utf-8</param-value>
+    	</init-param>
+    </filter>
+    <filter-mapping>
+    	<filter-name>grandFilter</filter-name>
+    	<url-pattern>*.jsp</url-pattern>
+    	<url-pattern>/c/*</url-pattern>
+    </filter-mapping>
 </web-app>

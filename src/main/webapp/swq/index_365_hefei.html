@@ -202,6 +202,9 @@ function getHouseDetailInfo(url,addToBox){
             var zx = $$cont_doc.find('dt:contains("装修")')[0];
             var zxiu = zx.nextElementSibling;
             str_zxiu = zxiu.textContent.trim();
+            var nd = $$cont_doc.find('dt:contains("年代")')[0];
+            var year = nd.nextElementSibling;
+            str_year = year.textContent.trim();
             var dz = $$cont_doc.find('dt:contains("地址：")')[0];
             var addr = "未填";
             if (dz) {
@@ -221,10 +224,12 @@ function getHouseDetailInfo(url,addToBox){
             
             var thisHtml='<p>售价：'+str_shoujia+'</p>'
                 +'<p>户型：'+str_hx+'</p>'
+                +'<p>面积：'+str_mji+'</p>'
                 +'<p>装修：'+str_zxiu+'</p>'
                 +'<p>概况：'+str_gk+'</p>'
                 +'<p>楼层：'+str_lc+'</p>'
                 +'<p>小区：'+str_area+'</p>'
+                +'<p>年代：'+str_year+'</p>'
                 +'<p>地址：'+addr+'</p>'
                 +'<p>联系人：'+str_lxr+'</p>'
                 +'<p>电话：'+str_tel+'</p>'

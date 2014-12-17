@@ -295,8 +295,12 @@ $(document).ready(function() {
                 
             }
             pcinfo.domain=json.city_py;
+            pcinfo.city=json.coodinate;
             if(!pcinfo.domain){
                 pcinfo.domain = "hefei";
+            }
+            if(!pcinfo.city){
+                pcinfo.city = "117.23355, 31.827258";
             }
             YW.ajax({
                 type: 'POST',

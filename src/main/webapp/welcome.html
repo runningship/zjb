@@ -57,6 +57,7 @@ $(document).ready(function() {
             putConfig("domain",ThiVal);
             putConfig("cityName",ThiTxt);
             putConfig("city_py",Thi.attr('city_py'));
+            putConfig("coodinate",Thi.attr('coodinate'));
             window.location='/login/?cityName='+ThiTxt+'&domain='+ThiVal+'&goto=1&pcinfo='+pcinfo;
         }
         return false;
@@ -88,7 +89,7 @@ $(document).ready(function() {
         <div class="td tbody">
             <ul>
                 <li style="display:none" class="set_citys nobar">
-                    <a href="" class="a_demo_one jbtn ${status}" status="${status}" city_py="${py}" data-val="${domain}">${name}</a>
+                    <a href="" class="a_demo_one jbtn ${status}" coodinate="${coodinate}" status="${status}" city_py="${py}" data-val="${domain}">${name}</a>
                 </li>
             </ul>
         </div>

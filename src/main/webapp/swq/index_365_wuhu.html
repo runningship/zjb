@@ -201,13 +201,15 @@ function getHouseDetailInfo(url,addToBox){
             str_mji = mji.text().trim();
             var zx = $$cont_doc.find('.dash_line:contains("装修")');
             str_zxiu = zx.text().split('：')[1].trim();
+            var year = $$cont_doc.find('.dash_line:contains("年代")');
+            str_year = year.text().split('：')[1].trim();
             var lxrtel = $$cont_doc.find('.gs_name:contains("电话：")');
             str_tel = lxrtel.text().split('：')[1].trim()
             var lxr = $$cont_doc.find('.gs_name:contains("联系人：")');
             str_lxr = lxr.text().split('：')[1].trim()
             var gaik = $$cont_doc.find('#remark');
             str_gk = gaik.text().trim();
-            var title=""+str_area+" "+str_hx+" "+str_mji+"平";
+            var title=""+str_area+" "+str_hx+" "+str_mji+"㎡";
             var addListStr='<li data-url="'+url+'" data-title="'+title+'"><span>'
                 +'<a href="#" class="btns" data-type="list_see_url" ><i class="iconfont">&#xe675;</i></a>'
                 +'<a href="#" class="btns" data-type="list_see" ><i class="iconfont">&#xe672;</i></a>'
@@ -219,10 +221,12 @@ function getHouseDetailInfo(url,addToBox){
             
             var thisHtml='<p>售价：'+str_shoujia+'</p>'
                 +'<p>户型：'+str_hx+'</p>'
+                +'<p>面积：'+str_mji+"㎡"+'</p>'
                 +'<p>装修：'+str_zxiu+'</p>'
                 +'<p>概况：'+str_gk+'</p>'
                 +'<p>楼层：'+str_lc+'</p>'
                 +'<p>小区：'+str_area+'</p>'
+                +'<p>年代：'+str_year+'</p>'
                 +'<p>地址：'+str_dz+'</p>'
                 +'<p>联系人：'+str_lxr+'</p>'
                 +'<p>电话：'+str_tel+'</p>'

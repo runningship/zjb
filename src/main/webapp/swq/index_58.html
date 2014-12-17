@@ -237,6 +237,7 @@ function replaceAlls(str){
     str = str.replace(/\n[\s| | ]*\r/g,'\n');
     str = str.replace(/&nbsp;/ig,'');
     str = str.replace(/\s+/g, "")
+    str = str.replace(/(地图▪街景)/g, "")
     str = $.trim(str);
     str.replace(' ','');
     return str;

@@ -73,8 +73,13 @@ function registe(){
 	var param = JSON.parse('{}');
 	xx = readLic();
 	if(!xx){
-		var createTime = createLic();
-		param.createtimeInLong = createTime;	
+        try{
+    		var createTime = createLic();
+    		param.createtimeInLong = createTime;
+        }catch(e){
+            alert('请右键选择以管理员身份打开');
+            return;
+        }
 	}else{
 		param.createtimeInLong = xx.licCreateTime;
 		if(xx.lic!=""){

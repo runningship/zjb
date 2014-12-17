@@ -51,4 +51,16 @@ public class ThreadSession {
 		}
 		return domain;
     }
+    
+    public static String getCity(){
+    	if(ThreadSession.getUser()==null){
+    		//合肥
+    		return "117.23355, 31.827258";
+    	}
+    	String city = (String)ThreadSession.getUser().city;
+		if(StringUtils.isEmpty(city)){
+			city="117.23355, 31.827258";
+		}
+		return city;
+    }
 }
