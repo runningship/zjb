@@ -52,6 +52,9 @@ public class ThreadSession {
 		return domain;
     }
     
+    /**
+     * @return 城市坐标
+     */
     public static String getCity(){
     	if(ThreadSession.getUser()==null){
     		//合肥

@@ -151,6 +151,11 @@ $(document).on('click', '.ibtn', function(event) {
 //点击第一个菜单
 $('.menuSide').find('.curr a').click();
 
+//start IM	
+	var ws = new WebSocket('ws://192.168.1.111:9099?uid=$${userId}&city=$${city}');
+	ws.onopen = function() {
+		console.log('we are on line');
+	};
 });
 
 $(window).resize(function() {
@@ -209,6 +214,11 @@ function notify(){
 </script>
 </head>
 <body>
+<div style=" position:absolute; bottom:0; right:0;cursor:pointer;width:50px; height:50px; overflow:hidden; z-index:999999999;">
+     <span><img onclick="showCoCo();" src="/style/images/litFox.png" width="50"></span>
+</div>
+
+
 <div class="html default table MainLeft">
     <div class="tr">
         <div class="lefter td title">
@@ -223,7 +233,7 @@ function notify(){
                         <li auth="yw_on"><a href="/v/yewu/outHouse.html" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span><!--业务--></span></a></li>
                         <li auth="ht_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="hetong" data-toggle="tooltip" data-placement="right" title="合同"><i class="iconfont">&#xe614;</i><span>合同</span></a></li>
                         <li auth="cw_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="caiwu" data-toggle="tooltip" data-placement="right" title="财务"><i class="iconfont">&#xe613;</i><span>财务</span></a></li>
-                        <li auth="oa_on"><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
+                        <li ><a href="/oa/index.jsp" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         <li auth="sz_on" class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                     </ul>
                 </div>

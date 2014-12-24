@@ -91,9 +91,15 @@ public class User {
 	
 	public Integer avatar;
 	
-	public transient String domain;
+	/**
+	 * 城市域名,如hefei,wuhu
+	 */
+	public String domain;
 	
-	public transient String city;
+	/**
+	 * 城市坐标
+	 */
+	public String city;
 	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);

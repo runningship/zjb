@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -347,9 +348,13 @@ public class UserService {
 		mv.data.put("result", "0");
 		mv.data.put("msg", "登录成功");
 		po.lasttime = new Date();
-		dao.saveOrUpdate(po);
 		po.domain = user.domain;
 		po.city = user.city;
+		if(po.avatar==null){
+			Random r = new Random();
+			int avatar = r.nextInt(95)+1;
+		}
+		dao.saveOrUpdate(po);
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
 		ThreadSession.getHttpSession().setAttribute("pc", pcpo);
 		String operConts = "["+po.Department().namea+"-"+po.uname+ "] 登录成功";

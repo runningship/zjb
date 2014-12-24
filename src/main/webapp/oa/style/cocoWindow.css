@@ -1,0 +1,91 @@
+
+
+.cocoWin{ width:660px; height:560px; position:absolute; top:70px; left:100px; box-shadow: #666 0px 0px 10px; border-radius:3px; font-family:"宋体"; z-index:111;}
+
+.cocoWintit{ width:100%; height:32px; line-height:32px; background:url(/oa/cocoImages/titBg.png) repeat-x; border-radius:3px 3px 0 0; position:relative; cursor:default;}
+
+.cocoWintit span{ color:#006566; font-size:12px; margin-left:15px;}
+
+.cocoWintit i.closeBg{ width:20px; height:21px; background:url(/oa/cocoImages/close.png) no-repeat; position:absolute;}
+
+.cocoWintit i.closeX{ background-position:0 0; top:6px; right:10px;}
+.cocoWintit i.closeX:hover{ background-position:-25px 0;}
+
+.cocoWintit i.none{ background-position:0 -23px; top:6px; right:35px;}
+.cocoWintit i.none:hover{ background-position:-25px -23px;}
+
+
+
+.cocoWinContent{ width:100%; height:528px; float:left; background-color:#ffffff;}
+
+.cocoWinContentLxr{ width:150px; float:left; height:528px;overflow-y: scroll; background-color:#1c3748; border-radius:0 0 0 3px; overflow:hidden; overflow-y:auto;}
+
+
+
+.cocoWinLxrList{ width:100%; margin-top:15px;}
+
+.cocoWinLxrList li{ width:100%; float:left; position:relative; padding:5px 0; margin-bottom:8px;}
+
+.cocoWinLxrList li:hover{ background-color:#122f41;}
+
+.cocoWinLxrList li.now{ background-color:#051c2b;}
+
+.cocoWinLxrListTx{ width:35px; height:35px; margin-left:10px;}
+.cocoWinLxrListTx img{ width:35px; height:35px; border-radius:20px;}
+
+.cocoWinLxrListPerInfo{ width:90px; margin-left:8px; font-family:"宋体"; white-space:nowrap;}
+
+.cocoWinLxrListPerInfo .name{ color:#299da3; font-size:12px; margin:2px 0;}
+.cocoWinLxrListPerInfo .txt{ color:#356684; font-size:12px;}
+
+.cocoWinNewsNum{ display:none;}
+.cocoWinLxrList li:hover .cocoWinNewsNum{ display:inline-block; height:13px; width:13px; padding-left:1px; text-align:center; border-radius:8px; background-color:#0c2535; line-height:15px; position:absolute; right:5px; top:7px; font-size:12px; color:#345971;}
+
+.cocoWinLxrList li:hover .cocoWinNewsNum:hover{background-color:#0c2535;  color:#299da3;}
+
+.cocoWinInfoListShow{ width:510px; height:100%; float:left; background-color:#ffffff;}
+
+.WinInfoListShowMainBox{ width:510px; height:410px; float:left; overflow:hidden; overflow-y:auto; border-bottom:1px solid #e5e5e5;position: relative;}
+
+.WinInfoListAppend{ width:100%; display:inline-block; position:relative; margin-top:20px;}
+
+.WinInfoListAppend .txImg{ width:35px; height:35px; top:0; left:20px; position:absolute;}
+.WinInfoListAppend .txImg img{ width:35px; height:35px; border-radius:20px;}
+
+.WinInfoListAppend .txImgRight{ width:35px; height:35px; top:0; right:20px; position:absolute;}
+.WinInfoListAppend .txImgRight img{ width:35px; height:35px; border-radius:20px;}
+
+.WinInfoListAppend .newsAppend{ margin:0 70px; width:360px; display:inline-block;}
+
+.WinInfoListAppend .newsAppendBox{ background-color:#efefef; border-radius:5px; padding:10px 15px; position:relative;}
+
+.WinInfoListAppend .newsAppendBox img{ max-width:200px;}
+
+.WinInfoListAppend .newsAppendBox .conTxt{ width:100%; font-size:12px; color:#0b202d; line-height:18px; white-space:pre;}
+
+.WinInfoListAppend .newsAppendBox .conTime{ width:100%; font-size:12px; color:#a8b6be; margin-top:10px;}
+
+.WinInfoListAppend .newsAppendBox .conTime i.clock{ float:left; margin-right:5px; width:13px; height:13px; background:url(/oa/cocoImages/timeClock.png) no-repeat;}
+
+.WinInfoListAppend .newsAppendBox .sanjiaoLeft{ position:absolute; z-index:10; top:10px; left:-8px; width:0; height:0; border-top: 5px solid transparent;border-right: 8px solid #efefef; border-bottom: 5px solid transparent;}
+
+.WinInfoListAppend .newsAppendBox .sanjiaoRight{ position:absolute; z-index:10; top:10px; right:-8px; width:0; height:0; border-top: 5px solid transparent;border-left: 8px solid #efefef; border-bottom: 5px solid transparent;}
+
+
+
+
+
+
+.WinInfoSend{ width:100%; float:left; height:117px; background-color:#efefef; border-top:1px solid #ffffff;}
+
+.WinInfoSendWrite{ width:428px; height:117px; margin-left:2px; float:left; background-color:#ffffff; overflow:hidden;}
+
+.fontStyleNewsWrite{ width:425px; height:101px; background-color:#fff; float:left; font-size:12px; color:#636f80; background:none; border:none; outline: none;resize: none;}
+
+.WinInfoSendBtn{ width:80px; height:111px; float:left;}
+
+.WinInfoSendBtnAddPhoto{ width:100%; height:61px; background:url(/oa/cocoImages/photoAdd.png) center no-repeat; border:none; cursor:pointer;}
+.WinInfoSendBtnMessage{ width:100%; height:56px; background-color:#058d8f; border:none; color:#ffffff; font-size:16px; font-family:"微软雅黑";}
+.msg_more{
+	position: absolute;top: 0px;width: 100px;font-size: 10px;right: 200px;
+}

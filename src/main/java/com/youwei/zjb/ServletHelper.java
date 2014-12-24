@@ -236,6 +236,9 @@ public class ServletHelper {
 		for(Object key : mv.data.keySet()){
 			req.setAttribute(String.valueOf(key), mv.data.get(key));
 		}
+		for(Object key : mv.jspData.keySet()){
+			req.setAttribute(String.valueOf(key), mv.jspData.get(key));
+		}
 	}
 	
 	public static String getModule(String path){

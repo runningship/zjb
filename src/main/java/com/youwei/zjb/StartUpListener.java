@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.jsp.JspFactory;
 
 import org.bc.sdak.MutilSessionFactoryBuilder;
 import org.bc.sdak.SessionFactoryMapper;
@@ -12,16 +13,25 @@ import org.bc.web.ModuleManager;
 import org.hibernate.cfg.AvailableSettings;
 
 import com.youwei.zjb.cache.ConfigCache;
+import com.youwei.zjb.im.IMServer;
 
 public class StartUpListener implements ServletContextListener{
 
 	public void contextDestroyed(ServletContextEvent arg0) {
 	}
 
-	public void contextInitialized(ServletContextEvent arg0) {
+	public void contextInitialized(ServletContextEvent event) {
 		initDataSource();
 		initModule();
-//		Pull58.startJob();
+		JspFactory.getDefaultFactory()
+        .getJspApplicationContext(event.getServletContext())
+        .addELResolver(new PublicFieldSupportingELResolver());
+		try {
+			IMServer.startUp();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void initModule() {

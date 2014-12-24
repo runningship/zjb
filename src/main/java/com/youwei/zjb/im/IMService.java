@@ -1,14 +1,11 @@
 package com.youwei.zjb.im;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
@@ -18,8 +15,8 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.im.entity.Contact;
+import com.youwei.zjb.im.entity.Message;
 import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -27,28 +24,14 @@ import com.youwei.zjb.util.JSONHelper;
 public class IMService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
-
 	
 	@WebMethod
-	public ModelAndView getContacts(int userId) {
+	public ModelAndView getHistory(Page<Message> page , Integer contactId) {
 		ModelAndView mv = new ModelAndView();
-		//and u.flag=0 离职的由用户自行从好友列表中删除
-		List<Map> list = dao.listAsMap("select c.id as id ,c.ownerId as ownerId ,c.contactId as contactId ,c.ugroup as group ,u.uname as contactName, "
-				+ " u.tel as contactTel,d.namea as deptName,u.avatar as avatar from User u,Contact c,Department d where c.contactId=u.id and d.id=u.deptId and u.sh=1  and c.ownerId=?", new Object[] { userId });
-		for(Map map : list){
-			int uid = (int) map.get("contactId");
-			if(IMServer.isUserOnline(uid)){
-				map.put("state", "在线");
-				map.put("state_class", "online");
-			}else{
-				map.put("state", "离线");
-				map.put("state_class", "offline");
-			}
-		}
-		DataHelper.fillDefaultValue(list, "avatar", 0);
-		mv.data.put("contacts",JSONHelper.toJSONArray(list));
-		List<Map> list2 = countUnReadMessage(userId);
-		mv.data.put("unreads", JSONHelper.toJSONArray(list2));
+		page.setPageSize(5);
+		Integer myId = ThreadSession.getUser().id;
+		page = dao.findPage(page ,"from Message where (senderId=? and receiverId=?) or (senderId=? and receiverId=?) order by sendtime desc", myId , contactId , contactId , myId);
+		mv.data.put("history", JSONHelper.toJSONArray(page.getResult()));
 		return mv;
 	}
 	public List<Map> countUnReadMessage(int userId){
@@ -74,7 +57,8 @@ public class IMService {
 	public ModelAndView status(){
 		ModelAndView mv = new ModelAndView();
 		JSONArray arr = new JSONArray();
-		for(Integer uid : IMServer.conns.keySet()){
+		String domian = ThreadSession.getDomain();
+		for(Integer uid : IMServer.conns.get(domian).keySet()){
 			User u = dao.get(User.class, uid);
 			if(u!=null){
 				arr.add(u.uname);

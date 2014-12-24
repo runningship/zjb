@@ -75,6 +75,7 @@
 		<filter-name>session</filter-name>
 		<url-pattern>/c/*</url-pattern>
 		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	
 	<filter>

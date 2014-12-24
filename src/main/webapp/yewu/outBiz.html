@@ -161,7 +161,7 @@ $(document).ready(function() {
                             <select name="status" id="status" class="input-sm input-rightB w102" >
                               <option value="">所有</option>
                               <option value="待返回">待返回</option>
-                              <option value="已完成">已完成</option>
+                              <option value="已返回">已返回</option>
                               <option value="已批阅">已批阅</option>
                             </select>
                         </li>
@@ -224,7 +224,6 @@ $(document).ready(function() {
                       </td>
                       <td width="120" style="text-align:center"> 
                         <a auth="yw_outbiz_sh" show="'${status}'!='待返回'" href="##" onclick="openpiyue(${id},${rowIndex});" style="color:#0081db;" title="批阅" class="py_iconColor">批阅</a>
-                        <a href="###" show="$${userId}==${uid} && '${status}'=='待返回'" onclick="openEdit(${id},${rowIndex})" class="ck_iconColor" title="查看">查看</a>
                         <!-- <a show="$${userId}==${uid} && '${status}'=='待返回'" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;">删除</a> -->
 
                         <!-- 无删除权限只能删除自己的且状态为未批阅的 -->

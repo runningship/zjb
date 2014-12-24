@@ -235,7 +235,7 @@ function getHouseDetailInfo(url,addToBox){
                 +'<p>电话：'+str_tel+'</p>'
             $('.list_see_box').html(thisHtml);
             if(addToBox){
-                allContent = '{"area":"'+str_area+'","addr":"'+addr+'","hxing":"'+str_hx+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
+                allContent = '{"area":"'+str_area+'","addr":"'+addr+'","hxing":"'+str_hx+' '+str_lc+'层'+'","lxr":"'+str_lxr+'","shoujia":"'+str_shoujia+'","zxiu":"'+str_zxiu+'","gaik":"'+str_gk+'","tel_num":"'+str_tel+'","url":"'+url+'"}';
                 openMessageBox(allContent);
             }
             $$cont_doc=null;

@@ -26,4 +26,9 @@ public class Notice {
 	public Date addtime;
 	
 	public int isPublic;
+	
+	//点赞数量
+	public Integer zans;
+	
+	public Integer orderx;
 }

@@ -17,4 +17,6 @@ public class NoticeReceiver {
 	public Integer noticeId;
 	
 	public Integer hasRead;
+	
+	public Integer zan;
 }

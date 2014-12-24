@@ -14,7 +14,7 @@ public class Message {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
-	public String content;
+	public String conts;
 	
 	public Date sendtime;
 	
@@ -22,7 +22,9 @@ public class Message {
 	
 	public Integer receiverId;
 	
-	public Integer receiverType;
+//	public Integer receiverType;
 	
 	public Integer hasRead;
+	
+	public String chatId;
 }

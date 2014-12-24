@@ -25,9 +25,7 @@ lats="",
 areas = "",
 contall = "";
 lngs="117.260429",
-lats="31.881385",
-areas = "华府俊园",
-contall = "华府俊园de dizhi ";
+lats="31.881385";
 var map;
 
 
@@ -92,9 +90,9 @@ function addMarker_nothing(lngs,lats,contall){
   var content = contall;
   //创建检索信息窗口对象
     var searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
-        title  : areas,      //标题
-        //width  : 290,             //宽度
-        //height : 105,              //高度
+        title  : area,      //标题
+        width  : 290,             //宽度
+        // height : 105,              //高度
         panel  : "panel",         //检索结果面板
         enableAutoPan : true,     //自动平移
         searchTypes   :[
@@ -136,28 +134,11 @@ function getArea(search){
       var getAreas=JSON.parse(data);
       dataArr = getAreas['areas'];
       if(dataArr.length>0){
-        buildHtmlWithJsonArray("id_House_list",dataArr);
         $.each(dataArr, function(index, obj) {
           if(obj.maplng || obj.maplat){
-            addMarker(obj.maplng, obj.maplat,obj.name,obj.address);
+            addMarker_nothing(obj.maplng, obj.maplat,obj.address);
           }
         });
-        $('#id_House_list').find('tr').each(function(index, el) {
-          var Thi=$(this),
-          ThiLng=Thi.data('lng'),
-          ThiLat=Thi.data('lat');
-
-          if(ThiLat || ThiLng){
-            Thi.data('nulls', '1')
-          }else{
-            Thi.data('nulls', '0')
-            Thi.addClass('class_name')
-          }
-          
-        });
-
-      }else{
-          window.location.href='house_see_map_web.html?area='+area;
       }
     }
   })
@@ -196,73 +177,38 @@ try{
   if (!api) return;
   // 操作对话框
   api.title('地图查看');
-  // 自定义按钮
-    // .button({
-    //     name: '保存',
-    //     callback: function () {
-    //       form1.submit();
-    //       return false;
-    //     },focus: true
-    // },{
-    //     name: '取消'
-    // });
 }catch(e){
 
 }
 
-    initMap();//创建和初始化地图
+  initMap();//创建和初始化地图
   if(area){
     var search={area:area}
     getArea(search);
   }
 //  onSubmit_Form();
-  BtnAreaList();
+  // BtnAreaList();
 });
 </script>
 <style type="text/css">
-  #mapIn{position:absolute;right:12px;top:50px;height:90%;background-color:white;}
   .input-group, .btn-group {float: none;margin-bottom: 5px;}
   #mapDiv{ height: 400px; width:800px; position: relative;}
   #map{ height: 100%; margin-right: 200px;}
   div.mapInfo{ position: absolute; top: 30px; right: 0px; bottom: 0px;overflow:none; overflow-y: auto;  z-index: 9999; background-color: #FFF; box-shadow: 0px 0px 5px #000; width: 200px;}
   #loading{ display: none;}
-  .MapDiv1{ display: none;}
-  .MapDiv2{ position: absolute; top: 0; right: 0; bottom:0; left: 0; z-index: 0;}
   .btn-group{ position: absolute; top: 0; right: 0px; z-index: 99999;}
-  .btn-group .btn{ width: 200px;}
+  .btn-group .btn{ width: 100px;}
 </style>
 </head>
 <body>
   <div id="mapDiv">
     <div id="map"></div>
-    <div id="mapIn info" class="mapInfo">
-      <table class="table table-hover table_bodyer" >
-        <tbody>
-        <tr class="id_House_list" data-id="${id}" data-quyu="${quyu}" data-area="${name}" data-luduan="${address}" data-short="${pyShort}" data-pinyin="${pinyin}" data-lat="${maplat}" data-lng="${maplng}">
-          <td>${name} <span class="label label-info">${quyu}</span><div style="color:#999;">${address}</div></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    
   </div>
 
-  <div class="btn-group">
-    <bottom class="btn btn-primary" data-type="mapGo" data-mgo="bd">切换到百度地图数据</bottom>
-  </div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
 <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
-<script type="text/javascript">
-$(document).ready(function() {
-});
-  $(document).on('click', '.btn', function(event) {
-    var Thi=$(this),
-    ThiType=Thi.data('type');
-    if(ThiType=='mapGo'){
-      var ThiMGo=Thi.data('mgo');
-      window.location.href='house_see_map_web.html?area='+area;
-    }
-  });
-</script>
+
 </body>
 </html>

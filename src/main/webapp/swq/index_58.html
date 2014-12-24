@@ -238,6 +238,7 @@ function replaceAlls(str){
     str = str.replace(/&nbsp;/ig,'');
     str = str.replace(/\s+/g, "")
     str = str.replace(/(地图▪街景)/g, "")
+    str = str.replace(/联系我时，请说是在58同城上看到的，谢谢！/g, "")
     str = $.trim(str);
     str.replace(' ','');
     return str;
@@ -249,9 +250,10 @@ function getDetailPageSuccess(html,url){
 
     var cont_tit,
         cont_hx,
+        cont_lc,
         cont_gk,
         cont_zx,
-        cont_wz,
+        cont_wz = '',
         cont_lxr,
         cont_tels=html.substring(html.indexOf('document.write("') + 16,html.indexOf('")</script')),
         cont_telTan=cont_tels.substring(cont_tels.indexOf('<img src=') + 10,cont_tels.indexOf('\' />'));
@@ -272,10 +274,6 @@ function getDetailPageSuccess(html,url){
             break;
           case "户型：": cont_hx = replaceAlls(su_coninFor.text());
             break;
-          case "概况：": cont_gk = replaceAlls(su_coninFor.text());
-            break;
-          case "装修：": cont_zx = replaceAlls(su_coninFor.text());
-            break;
           case "地址：": cont_wz = replaceAlls(su_coninFor.text());
             break;
           case "联系人：": cont_lxr = replaceAlls(lxrInfor.text());
@@ -284,11 +282,21 @@ function getDetailPageSuccess(html,url){
         }
     };
 
+        var zx = $$cont_doc.find('.des_bgtit:contains("装修程度：")')[0];
+        var zxiu = zx.nextElementSibling;
+        cont_zx = zxiu.textContent;
+        var lc = $$cont_doc.find('.des_bgtit:contains("房屋楼层：")')[0];
+        var zlc = lc.nextElementSibling;
+        cont_lc = zlc.textContent;
+        var gk = $$cont_doc.find('.description_con')[0];
+        var gaik= gk.textContent;
+        cont_gk = replaceAlls(gaik);
 
     //    if(cont_lxr.indexOf('归属地')){cont_lxr='';}
     var thisHtml='<p>'+cont_title+'</p>'
         +'<p>'+cont_tit+'</p>'
         +'<p>'+cont_hx+'</p>'
+        +'<p>'+cont_lc+'</p>'
         +'<p>'+cont_zx+'</p>'
         +'<p>'+cont_wz+'</p>'
         +'<p>'+cont_lxr+'</p>'
@@ -296,7 +304,7 @@ function getDetailPageSuccess(html,url){
     $('.list_see_box').html(thisHtml);  
 
    
-    allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
+    allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+' '+cont_lc+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
     $$cont_doc=null;
     html=null;
     openMessageBox(allContent);

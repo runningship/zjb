@@ -24,7 +24,7 @@ public class home_v2 {
 		Role role = u.getRole();
 		html = html.replace("$${role}", role==null?"":role.title);
 		html = html.replace("$${tel}", u.tel==null? "" : u.tel);
-		
+		html = html.replace("$${city}", ThreadSession.getDomain());
 		html = html.replace("$${version}", "5.0.1024");
 		return Jsoup.parse(html);
 	}

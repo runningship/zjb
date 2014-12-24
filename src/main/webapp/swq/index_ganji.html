@@ -79,7 +79,7 @@ function setWindowTit(){
 var iconum_all=0;       
 var iconum_ding=0;      
 var iconum_tui=0;       
-var TimeXunhuan=3000;   
+var TimeXunhuan=4000;   
 var isStart=false;      
 var sys_date;           
 var sys_url='http://hf.ganji.com/fang5/a1';
@@ -183,6 +183,8 @@ function getHtml(){
             $$doc.find("span.ico-security").each(function(i,project){
                 iconum_tui++;
             });
+            iconum_ding+= $$doc.find("em[title='置顶信息，效果更好']").length;
+            iconum_ding+= $$doc.find("em[title='高级置顶信息，效果更好']").length;
             iconum_all=iconum_ding+iconum_tui;
             console.log(iconum_all+'='+iconum_ding+'+'+iconum_tui);
             $('.view_tui_num').text(iconum_tui);

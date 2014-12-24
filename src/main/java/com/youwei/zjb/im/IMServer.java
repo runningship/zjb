@@ -1,6 +1,7 @@
 package com.youwei.zjb.im;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -11,23 +12,27 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
-import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.entity.Contact;
+import com.youwei.zjb.im.entity.GroupMessage;
+import com.youwei.zjb.im.entity.GroupMessageStatus;
 import com.youwei.zjb.im.entity.Message;
 import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.JSONHelper;
+import com.youwei.zjb.util.DataHelper;
+import com.youwei.zjb.util.URLUtil;
 
 public class IMServer extends WebSocketServer{
 
 	private static IMServer instance =null;
-	static Map<Integer,WebSocket> conns = new HashMap<Integer,WebSocket>();
+	static Map<Integer,WebSocket> pool = new HashMap<Integer,WebSocket>();
+	static Map<String,Map<Integer,WebSocket>> conns = new HashMap<String,Map<Integer,WebSocket>>();
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 //	private static InetSocketAddress socket = new InetSocketAddress("localhost", 9099); 
 	private IMServer() throws UnknownHostException {
@@ -56,21 +61,40 @@ public class IMServer extends WebSocketServer{
 	@Override
 	public void onOpen(WebSocket conn, ClientHandshake handshake) {
 		//希望在这个地方就实现用户信息的确认
+		String path = handshake.getResourceDescriptor();
+		path = path.replace("/?", "");
+		try {
+			Map<String, Object> map = URLUtil.parseQuery(path);
+			Integer uid = Integer.valueOf(map.get("uid").toString());
+			User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, uid);
+			String city = (String)map.get("city");
+			conn.getAttributes().put("city", city);
+			conn.getAttributes().put("uid", uid);
+			conn.getAttributes().put("cid", user.cid);
+			conn.getAttributes().put("uname", user.uname);
+			if(!conns.containsKey(city)){
+				Map<Integer,WebSocket> ap = new HashMap<Integer,WebSocket>();
+				conns.put(city, ap);
+			}
+			Map<Integer,WebSocket>  ap = conns.get(city);
+			ap.put(uid, conn);
+			
+			nofityStatus(city,conn, 1);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		System.out.println(conn);
 	}
 
 	@Override
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-		Integer removed = null;
-		for(Integer key : conns.keySet()){
-			if(conns.get(key) == conn){
-				removed = key;
-				break;
-			}
-		}
+		String city = (String) conn.getAttributes().get("city");
+		Integer uid = (Integer) conn.getAttributes().get("uid");
+		Map<Integer, WebSocket> ap = conns.get(city);
+		WebSocket removed = ap.remove(uid);
 		if(removed!=null){
 			conns.remove(removed);
-			nofityStatus(removed, 0);
+			nofityStatus(city,conn, 0);
 		}
 		System.out.println(conn+" removed ");
 	}
@@ -79,101 +103,102 @@ public class IMServer extends WebSocketServer{
 	public void onMessage(WebSocket conn, String message) {
 		LogUtil.info(message);
 		JSONObject data = JSONObject.fromObject(message);
-		if("login".equals(data.getString("type"))){
-			int userId = data.getInt("userId");
-//			if(conns.containsKey(userId)){
-//				kickUser(userId);
-//			}
-			conns.put(userId, conn);
-			User user = dao.get(User.class,userId);
-			if(user.avatar==null){
-				user.avatar=0;
+		String city = (String) conn.getAttributes().get("city");
+		Integer senderId = Integer.valueOf(conn.getAttributes().get("uid").toString());
+		if("msg".equals(data.getString("type"))){
+			int recvId = data.getInt("contactId");
+			//接收人自己的信息没有必要发送，以免混淆
+			data.remove("contactId");
+			data.remove("contactName");
+			data.remove("avatar");
+			sendMsg(city,senderId,recvId,data , false);
+		}else if("groupmsg".equals(data.getString("type"))){
+			Integer groupId = data.getInt("groupId");
+			//get users of group
+			List<Map> list = SimpDaoTool.getGlobalCommonDaoService().listAsMap("select uid as uid from User where cid=? or did=?", groupId);
+			Map<Integer, WebSocket> ap = conns.get(city);
+			//save group message
+			GroupMessage gMsg = new GroupMessage();
+			gMsg.content = data.getString("content");
+			gMsg.senderId = senderId;
+			gMsg.groupId = groupId;
+			gMsg.sendtime = new Date();
+			dao.saveOrUpdate(gMsg);
+			for(Map map : list){
+				Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
+				conn = ap.get(recvId);
+				if(conn!=null){
+					//send group message
+					sendMsg(city,senderId , recvId,data,true);
+				}
+				//save group message status
+				GroupMessageStatus gms = new GroupMessageStatus();
+				gms.groupMsgId = gMsg.id;
+				gms.hasRead = 0;
+				gms.receiverId = recvId;
 			}
-			JSONObject jobj = new JSONObject();
-			jobj.put("username", user.uname);
-			jobj.put("type", "userprofile");
-			jobj.put("avatarId", user.avatar);
-			conn.send(jobj.toString());
-			nofityStatus(userId , 1);
-		}else if("msg".equals(data.getString("type"))){
-			sendMsg(conn,data);
-		}else if("history".equals(data.getString("type"))){
-			Page<Message> page = new Page<Message>();
-			page.setPageSize(10);
-			page.setCurrentPageNo(data.getInt("page"));
-			page = dao.findPage(page ,"from Message where (senderId=? and  receiverId=?) or (senderId=? and  receiverId=?) order by sendtime desc", 
-					data.getInt("myId"), data.getInt("contactId") ,data.getInt("contactId"), data.getInt("myId") );
-			data.put("history", JSONHelper.toJSONArray(page.getResult()));
-			data.put("contactId", data.getInt("contactId") );
-			data.put("more", data.get("more"));
-			conn.send(data.toString());
-		}else if("countUnRead".equals(data.getString("type"))){
-			
 		}
 	}
 
-	private void nofityStatus(int ownerId , int status) {
-		List<Contact> contacts = dao.listByParams(Contact.class, new String[]{"ownerId"}, new Object[]{ownerId});
+	private void nofityStatus(String city,WebSocket from , int status) {
+		Object fromCid = from.getAttributes().get("cid");
+		Object fromUid = from.getAttributes().get("uid");
+		Object fromUname = from.getAttributes().get("uname");
+		//通知的我好友，目前是同一个公司下的所有
+		Map<Integer, WebSocket> ap = conns.get(city);
 		JSONObject jobj = new JSONObject();
-		jobj.put("type", "status");
-		if(status==1){
-			jobj.put("status", "在线");
-		}else{
-			jobj.put("status", "离线");
-		}
-		for(Contact cont : contacts){
-			WebSocket conn = conns.get(cont.contactId);
-			if(conn==null){
+		jobj.put("type", "user_status");
+		jobj.put("status", status);
+		jobj.put("contactId", fromUid);
+		jobj.put("contactName", fromUname);
+		for(WebSocket socket : ap.values()){
+			Object cid = socket.getAttributes().get("cid");
+			Object uid = socket.getAttributes().get("uid");
+			if(uid.equals(fromUid)){
 				continue;
 			}
-			jobj.put("contactId", ownerId);
-			conn.send(jobj.toString());
+			if(fromCid.equals(cid)){
+				//通知
+				socket.send(jobj.toString());
+			}
 		}
 	}
 
-	private void sendMsg(WebSocket conn, JSONObject data) {
-		Integer recvId = data.getInt("receiverId");
-		if(recvId==null){
-			conn.send("无效的消息体，接受者不能为空");
-		}
-		data.put("sendTime", System.currentTimeMillis());
-		WebSocket recv = conns.get(recvId);
+	private void sendMsg(String city ,Integer senderId , Integer recvId , JSONObject data , boolean isGroup) {
 		
-		Integer recvType = data.getInt("receiverType");
-		
-		Message dbMsg = new Message();
-		dbMsg.sendtime = new Date();
-		dbMsg.content = data.getString("content");
-		dbMsg.senderId = data.getInt("senderId");
-		dbMsg.receiverId = recvId;
-		dbMsg.receiverType=1;
-		dbMsg.hasRead=0;
-		try{
-			dao.saveOrUpdate(dbMsg);
-		}catch(Exception ex){
-			ex.printStackTrace();
+		data.put("sendtime", DataHelper.sdf3.format(new Date()));
+		Map<Integer, WebSocket> ap = conns.get(city);
+		WebSocket recv = ap.get(recvId);
+		if(!isGroup){
+			Message dbMsg = new Message();
+			dbMsg.sendtime = new Date();
+			dbMsg.conts = data.getString("msg");
+			dbMsg.senderId = senderId;
+			dbMsg.receiverId = recvId;
+			dbMsg.hasRead=0;
+			try{
+				dao.saveOrUpdate(dbMsg);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
 		}
-		if(recvType==1 && recv!=null){
-			//个人
+		data.put("senderId", senderId);
+		if(recv!=null){
 			recv.send(data.toString());
 		}
 	}
 
-	public static void kickUser(int userId){
-		WebSocket conn = conns.get(userId);
-		if(conn!=null){
-			JSONObject msg = new JSONObject();
-			msg.put("type", "kickuser");
-			conn.send(msg.toString());
-		}
-	}
+	
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
 		ex.printStackTrace();
 	}
 	
-	public static boolean isUserOnline(int userId){
-		return conns.keySet().contains(userId);
+	public static boolean isUserOnline(String city , int userId){
+		if(conns.containsKey(city)){
+			return conns.get(city).containsKey(userId);
+		}
+		return false;
 	}
 
 }

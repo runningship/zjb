@@ -19,10 +19,11 @@ import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.oa.entity.Notice;
 import com.youwei.zjb.oa.entity.NoticeReceiver;
+import com.youwei.zjb.oa.entity.Site;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
 
-@Module(name="/oa/notice")
+@Module(name="/oa")
 public class NoticeService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
@@ -37,12 +38,49 @@ public class NoticeService {
 		return mv;
 	}
 	
+
+	@WebMethod
+	public ModelAndView index(){
+		ModelAndView mv = new ModelAndView();
+		//文化墙
+		List<Map> articleList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime "
+				+ ",n.zans as zans ,nr.zan as zan from Notice n , NoticeReceiver nr where n.id=nr.noticeId and isPublic=1 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
+		//公告
+		List<Map> noticeList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
+				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
+		mv.jspData.put("articleList", articleList);
+		mv.jspData.put("noticeList", noticeList);
+		
+		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSession.getUser().id);
+		List<Site> shareList = dao.listByParams(Site.class, "from Site where uid is null");
+		mv.jspData.put("personalList", JSONHelper.toJSONArray(personalList));
+		mv.jspData.put("shareList", JSONHelper.toJSONArray(shareList));
+		return mv;
+	}
+	
 	@WebMethod
 	public ModelAndView get(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
 		dao.execute("update NoticeReceiver set hasRead=1 where noticeId=? and receiverId=?", id,ThreadSession.getUser().id);
 		mv.data.put("notice", JSONHelper.toJSON(po));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView toggleZan(int id){
+		ModelAndView mv = new ModelAndView();
+		Notice po = dao.get(Notice.class, id);
+		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{ id , ThreadSession.getUser().id});
+		if(nr.zan==0){
+			nr.zan=1;
+			po.zans++;
+		}else{
+			nr.zan=0;
+			po.zans--;
+		}
+		dao.saveOrUpdate(po);
+		dao.saveOrUpdate(nr);
 		return mv;
 	}
 	
@@ -75,11 +113,18 @@ public class NoticeService {
 		}
 		return mv;
 	}
-	@WebMethod
-	public ModelAndView add(Notice notice , String receivers){
+	@WebMethod(name="notice/save")
+	@Transactional
+	public ModelAndView save(Notice notice , String receivers){
 		ModelAndView mv = new ModelAndView();
 		if(StringUtils.isEmpty(receivers)){
-			throw new GException(PlatformExceptionType.BusinessException, "请先选择接收人");
+			receivers = "";
+//			throw new GException(PlatformExceptionType.BusinessException, "请先选择接收人");
+			//先发给所有人
+			List<Map> uids = dao.listAsMap("select id as uid from User where cid=?", ThreadSession.getUser().cid);
+			for(Map map : uids){
+				receivers+=map.get("uid")+",";
+			}
 		}
 		Notice po = dao.getUniqueByKeyValue(Notice.class, "title", notice.title);
 		if(po!=null){
@@ -88,6 +133,7 @@ public class NoticeService {
 		User user = ThreadSession.getUser();
 		notice.senderId = user.id;
 		notice.addtime = new Date();
+		notice.zans=0;
 		dao.saveOrUpdate(notice);
 		if(!receivers.contains(user.id.toString())){
 			receivers +=","+user.id;
@@ -97,6 +143,7 @@ public class NoticeService {
 			nr.noticeId = notice.id;
 			nr.hasRead = 0;
 			nr.receiverId = Integer.valueOf(receiver);
+			nr.zan=0;
 			dao.saveOrUpdate(nr);
 		}
 		mv.data.put("noticeId", notice.id);

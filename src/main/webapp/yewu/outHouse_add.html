@@ -16,6 +16,10 @@
 var dataScope = "yw_outhouse";
 var cid=$${cid};
 function save(){
+  if ($('#idTimes').val()==''||$('#idTimes').val()==undefined) {
+    alert('请填写外出时间');
+    return ;
+  };
   var a=$('form[name=form1]').serialize();
     YW.ajax({
       type: 'POST',
