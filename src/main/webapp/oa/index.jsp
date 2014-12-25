@@ -26,6 +26,7 @@ function selectZan(id,obj){
     }
   });
 }
+
 </script>
 <body>
 <div class="oa_Main oa_W">
@@ -49,7 +50,7 @@ function selectZan(id,obj){
             <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft"></i></div>  <a href="#">更多></a>  
           </div>
           <div class="td oaInfoTit">
-            <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft" onclick="LayerShowBox('cocoLayerWebLine')" ></i></div><a href="#" style="margin-right:25px;">更多></a></div>
+            <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','660','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;">更多></a></div>
           </div>
           <div class="tr w100">
             <div class="td" style="width:50%; height:100%;overflow:hidden;">
@@ -96,7 +97,7 @@ function selectZan(id,obj){
                             <!-- <p><span class="marginLeft10 con">${notice.conts}</span></p> -->
                           </div>
                           <div class="ggBoxCaozuo">
-                            <i class="Bg xgSel">修改</i>
+                            <i class="Bg xgSel" onclick="openNewWin('editGg','660','编辑公告','notice/edit.jsp?id=${notice.id}')">修改</i>
                             <i class="Bg zanSel">点赞</i>
                             <i class="Bg hfSel">回复</i>
                           </div>
@@ -117,8 +118,8 @@ function selectZan(id,obj){
       </div>
 </div>
 
-<div class="cocoLayer" id="cocoLayerWebLine" style="width:660px; display:none;height:800px;">
-   <!--
+<!-- <div class="cocoLayer" id="cocoLayerWebLine" style="width:660px; display:none;height:800px;">
+   
    <div class="cocoLayerTit"><span>编辑我的个人网址</span><i class="closeBg close" onclick="LayerCloseBox('cocoLayerWebLine')" title="关闭"></i></div>
    
    <div class="cocoLayerMain">
@@ -143,10 +144,12 @@ function selectZan(id,obj){
     </div>
     
    </div>
-   -->
+   
    <div class="cocoLayerTit"><span>发布公告</span><i class="closeBg close" onclick="LayerCloseBox('cocoLayerWebLine')" title="关闭"></i></div>
    <iframe src="notice/add.jsp" style="width:100%;border:0px;height:410px;"></iframe>
-</div>
+   <div class="cocoLayerTit"><span>修改公告</span><i class="closeBg close" onclick="noticeEdit('${notice.id}')" title="关闭"></i></div>
+   <iframe src="notice/edit.jsp" style="width:100%;border:0px;height:410px;"></iframe>
+</div> -->
 
 </body>
 </html>

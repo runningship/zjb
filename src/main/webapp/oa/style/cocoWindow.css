@@ -2,7 +2,7 @@
 
 .cocoWin{ width:660px; height:560px; position:absolute; top:70px; left:100px; box-shadow: #666 0px 0px 10px; border-radius:3px; font-family:"宋体"; z-index:111;}
 
-.cocoWintit{ width:100%; height:32px; line-height:32px; background:url(/oa/cocoImages/titBg.png) repeat-x; border-radius:3px 3px 0 0; position:relative; cursor:default;}
+.cocoWintit{ width:100%; height:32px; line-height:30px; background:url(/oa/cocoImages/titBg.png) repeat-x; border-radius:3px 3px 0 0; position:relative; cursor:default;}
 
 .cocoWintit span{ color:#006566; font-size:12px; margin-left:15px;}
 

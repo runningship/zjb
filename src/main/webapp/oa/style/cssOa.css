@@ -242,7 +242,11 @@ i.add:hover{ background-position:-38px -100px;}
 
 .cocoMainTit{ height:50px; text-align:center; vertical-align:middle;}
 
-.cocoMainTit img{ max-width:100%; max-height:50px;}
+.cocoMainTit img{ width:40px; height:40px; border-radius:5px; margin:0 10px; margin-top:5px; float:left;}
+
+.cocoMainTit .mainInfo{ width:180px; float:left; text-align:left; font-family:"宋体";}
+.cocoMainTit .mainName{ font-size:14px; color:#1c3748; margin-top:7px; margin-bottom:4px;}
+.cocoMainTit .mainabout{ font-size:12px; color:#b0e4e7;}
 
 .cocoMainSelect{ height:50px; background-color:#d8dfe3;}
 
@@ -296,3 +300,21 @@ i.add:hover{ background-position:-38px -100px;}
 
 
 
+
+.qunBox{ position:absolute; top:0; right:-150px; width:150px; height:561px; background-color:#f6f6f6; border-radius:0 3px 3px 0; box-shadow: #999 3px 0px 8px; z-index:2;}
+
+.qunBoxTit{ width:100%; height:32px; line-height:32px; background: url(../cocoImages/titBg.png) repeat-x; float:left; font-size:12px; border-radius:3px 3px 0 0;}
+
+.qunBoxTit span{ margin-left:12px; color:#006566;}
+
+.qunBoxList{ width:100%; float:left;}
+
+.qunBoxList ul{ width:100%; float:left;}
+.qunBoxList ul li{ width:130px; float:left; margin:0 10px; padding:5px 0; border-bottom:1px dashed #dddddd;}
+
+.qunTxImg{ width:22px; height:22px; margin-left:2px;}
+.qunTxImg img{ width:22px; height:22px; border-radius:2px;}
+
+.qunLxrInfo{ height:18px; line-height:18px; width:90px; margin-left:8px; font-family:"宋体"; white-space:nowrap;}
+
+.qunLxrInfo .name{ color:#606f79; font-size:12px; margin:2px 0;}

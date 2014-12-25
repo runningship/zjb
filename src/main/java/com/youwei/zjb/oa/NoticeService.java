@@ -59,11 +59,19 @@ public class NoticeService {
 	}
 	
 	@WebMethod
-	public ModelAndView get(int id){
+	public ModelAndView view(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
 		dao.execute("update NoticeReceiver set hasRead=1 where noticeId=? and receiverId=?", id,ThreadSession.getUser().id);
 		mv.data.put("notice", JSONHelper.toJSON(po));
+		return mv;
+	}
+	
+	@WebMethod(name="notice/edit")
+	public ModelAndView edit(int id){
+		ModelAndView mv = new ModelAndView();
+		Notice po = dao.get(Notice.class, id);
+		mv.jspData.put("notice", po);
 		return mv;
 	}
 	
@@ -84,33 +92,19 @@ public class NoticeService {
 		return mv;
 	}
 	
-	@WebMethod
+	@WebMethod(name="notice/update")
 	@Transactional
-	public ModelAndView update(Notice notice , String receivers){
+	public ModelAndView update(Notice notice){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, notice.id);
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException,"公告已经不存在");
 		}
-		if(StringUtils.isEmpty(receivers)){
-			throw new GException(PlatformExceptionType.BusinessException, "请先选择接受人");
-		}
 		po.title = notice.title;
 		po.conts = notice.conts;
+		po.orderx = notice.orderx;
 		dao.saveOrUpdate(po);
-		dao.execute("delete from NoticeReceiver where noticeId=? ", po.id);
 		
-		User user = ThreadSession.getUser();
-		if(!receivers.contains(user.id.toString())){
-			receivers +=","+user.id;
-		}
-		for(String receiver: receivers.split(",")){
-			NoticeReceiver nr = new NoticeReceiver();
-			nr.noticeId = notice.id;
-			nr.hasRead = 0;
-			nr.receiverId = Integer.valueOf(receiver);
-			dao.saveOrUpdate(nr);
-		}
 		return mv;
 	}
 	@WebMethod(name="notice/save")

@@ -49,7 +49,7 @@ function save(){
 <style type="text/css">
 
 .tableleft{ width:100px;}
-.addSureBtn{ padding:6px 25px; background-color:#f55252; border-radius:2px; color:#ffffff; border:none; cursor:pointer;}
+.addSureBtn{ padding:6px 25px; background-color:#f55252; border-radius:2px; color:#ffffff; border:none; cursor:pointer; margin-top:12px;}
 
 .addSureBtn:hover{ background-color:#de2a2a;}
 
@@ -57,7 +57,6 @@ function save(){
 </head>
 <body>
 <form name="form1" method="post" class="definewidth m20">
-<input name="fid" id="fid" type="hidden">
 <input name="receivers" id="receivers" type="hidden">
 <table class="table table-bordered table-hover m10" style="width:100%; height:395px; font-family:'宋体'; font-size:13px; padding-top:15px;">
     <tr>
@@ -81,7 +80,7 @@ function save(){
     </tr>
     
     <tr>
-        <td align="right" valign="middle" class="tableleft"></td>
+        <td align="right" valign="middle" class="tableleft" height="50"></td>
         <td valign="middle">
           <button class="addSureBtn" type="button" onclick="save();return false;">保存</button>
         </td>

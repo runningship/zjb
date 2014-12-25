@@ -353,6 +353,10 @@ public class UserService {
 		if(po.avatar==null){
 			Random r = new Random();
 			int avatar = r.nextInt(95)+1;
+			po.avatar = avatar;
+		}
+		if(StringUtils.isEmpty(po.uname)){
+			po.uname="我还没想好名字";
 		}
 		dao.saveOrUpdate(po);
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);

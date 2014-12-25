@@ -19,7 +19,7 @@ function openChat(contactId,contactName,avatar){
 	}
 	// 添加联系人
 	var lxrHtml=	'<li avatar="'+avatar+'" cname="'+contactName+'" cid="'+contactId+'" id="chat_'+contactId+'" class="now" onclick="selectChat(this)">'
-                    +   '<div class="cocoWinLxrListTx Fleft"><img src="/oa/images/avatar/'+avatar+'.jpg" /></div>'
+                    +   '<div  class="cocoWinLxrListTx Fleft"><img src="/oa/images/avatar/'+avatar+'.jpg" /></div>'
                     +   '<div class="cocoWinLxrListPerInfo Fleft">'
                     +   '   <p class="name">'+contactName+'</p>'
                     +   '</div>'
@@ -70,7 +70,10 @@ function buildHistory(history){
 		var top = container.children()[0];
 		offsetTop +=$(top).height();
 	}
-	container.scrollTop(offsetTop);
+	if(container){
+		container.scrollTop(offsetTop);	
+	}
+	
 }
 function send(){
 	var chat = getCurrentChat();
@@ -116,7 +119,22 @@ function buildSentMessage(text,time){
                     +          '</div>'
                     +     '</div>'
                     +'</div>';
-    return sentMsgHtml;
+    var obj =  $(sentMsgHtml);
+    obj.find('img').on('dblclick',function(){
+    	showBigImg(this);
+    });
+    return obj;
+    
+}
+//var idNum = 0;
+function showBigImg(img){
+	
+	//var id="imgBigSee"+idNum;
+	var htmlText = "<div id='imgBigSee' onclick='$(this).remove()' style='display:block; position:absolute; background-color:#ffffff; z-index:9999999999; box-shadow:#666 0px 0px 10px; border-radius:3px; font-family:'宋体'; background-color:#ffffff;'>"+ img.outerHTML +"</div>";
+	$("body").append(htmlText);
+	layerShowBox("imgBigSee");
+	idNum++;
+	
 }
 
 function buildRecvMessage(senderAvatar , msg , time){
@@ -130,7 +148,11 @@ function buildRecvMessage(senderAvatar , msg , time){
                     +          '</div>'
                     +     '</div>'
                     +'</div>';
-    return recvMsgHtml;
+    var obj= $(recvMsgHtml);
+    obj.find('img').on('dblclick',function(){
+    	showBigImg(this);
+    });
+    return obj;
 }
 function onSendMsg(text,chat){
 	var now = new Date();
@@ -138,6 +160,11 @@ function onSendMsg(text,chat){
     $('#msgContainer_'+chat.contactId).append(buildSentMessage(text,time));
 }
 
+function notifyNewChat(contactId,msgCount){
+	// $('#user_avatar_'+contactId).css();
+	// $('#user_avatar_'+contactId).addClass();
+	// sort contacts panel
+}
 function onReceiveMsg(msg){
 	var data = JSON.parse(msg);
 	if(data.type=='user_status'){
@@ -150,9 +177,8 @@ function onReceiveMsg(msg){
 	if(chat.length==0){
 		openChat(data.senderId,data.senderName,data.senderAvatar);
 		//给消息提醒
+		notifyNewChat();
 		return;
-	}else{
-		
 	}
     $('#msgContainer_'+data.senderId).append(buildRecvMessage(data.senderAvatar,data.msg , data.sendtime));
 
@@ -212,10 +238,21 @@ function setUserStatus(json){
 	console.log(json.contactName+'状态: '+json.status);
 }
 
-function msgAreaKeyup(){
+function msgAreaKeyup(event){
 	if(event.keyCode==13 && event.ctrlKey){
 		send();
 	}
+}
+
+function getUnReadChats(){
+	YW.ajax({
+		type: 'get',
+		dataType: 'json',
+		url: '/c/im/getUnReadChats',
+		mysuccess:function(data){
+
+		}
+	});
 }
 
 function closeChat(contactId){
@@ -256,4 +293,32 @@ function appendFaceToMsg(face){
 	var url = "http://forum.csdn.net/PointForum/ui/scripts/csdn/Plugin/001/face/"+face+".gif";
 	$('#msg_textarea').val($('#msg_textarea').val()+url);
 	$('#facePanel').css('display','none');
+}
+
+function startChangeName(){
+	$('#user_name_div').css('display','none');
+	$('#user_name_input').css('display','');
+	$('#user_name_input').val($('#user_name_div').text());
+}
+
+function endChangeName(){
+	$('#user_name_div').css('display','');
+	$('#user_name_input').css('display','none');
+	$('#user_name_div').text($('#user_name_input').val());
+	var a = JSON.parse('{}');
+	a.name=$('#user_name_input').val();
+	YW.ajax({
+		type: 'get',
+		dataType: 'json',
+		data:a,
+		url: '/c/im/setUserName',
+		mysuccess:function(data){
+
+		}
+	});
+}
+
+function selectAvatar(i){
+	my_avatar = i;
+	$('#avatarId').attr('src','/oa/images/avatar/'+i+'.jpg')
 }

@@ -60,9 +60,9 @@
 		 }
 	  }
 	  
-	  function LayerShowBox(id){
+	  function LayerShow(id){
 		 
-		 $("#"+id).css("display","block");
+		// $("#"+id).css("display","block");
 		 layerShowBox(id);
 		 
 		    $("#"+id).children(".cocoLayerTit").mousedown(function(e){  
@@ -85,7 +85,7 @@
 			});  
 		 
 	  }
-	  
+
 	  function LayerCloseBox(id){
 		 
 		 $("#"+id).css("display","none");
@@ -116,6 +116,26 @@
 	  }
 	  
 	 /*联系人排序*/ 
+	 
+	 
+	 
+	 function LayerRemoveBox(id){
+		 
+		 $("#"+id).remove();
+		   
+	  }
+	  
+	 function openNewWin(id,w,tit,s){
+		if ($('#'+id).length>0) {
+			return;
+		};
+	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; display:block;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:410px; margin-bottom:20px;'></iframe></div>";
+			 
+			 $("body").append(htmlText);
+			 
+			 LayerShow(id);
+		  
+	  }
 	  
 	  
 	  

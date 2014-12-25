@@ -11,9 +11,14 @@
 $(function(){
     ue_text_editor = UE.getEditor('editor', {
         toolbars: [
-            ['fontfamily','simpleupload','emotion','spechars','forecolor','backcolor']
+            ['simpleupload','emotion','spechars','forecolor']
         ],
         autoHeightEnabled: false
+    });
+    ue_text_editor.addListener( 'ready', function( editor ) {
+      ue_text_editor.document.onkeyup=function(e){
+          msgAreaKeyup(e);
+        }
     });
 });
 
@@ -21,8 +26,17 @@ $(function(){
 <div class="cocoMain" style="z-index:9999999">
      
     <div class="table w100 h100">
+        
          <div class="tr w100">
-              <div class="td cocoMainTit oaTitBgCoco"><img src="/oa/images/coco.png" /></div>
+
+              <div class="td cocoMainTit oaTitBgCoco">
+                <div class=""><img src="/oa/images/avatar/${me.avatar}.jpg" id="avatarId" onclick="openNewWin('changeAvatar','660','修改头像','oa/avatar.jsp');" />
+                    <div title="点击修改" class="mainInfo mainName" onclick="startChangeName()" id="user_name_div">${me.uname}</div>
+                    <input id="user_name_input" style="display:none;margin-top:5px;" onblur="endChangeName();" />
+                    <div class="mainInfo mainabout">${dname}</div>
+                </div>
+                <!-- <img src="/oa/images/coco.png" /> -->
+            </div>
          </div>
          <div class="tr w100">
               <div class="td cocoMainSelect">
@@ -39,7 +53,7 @@ $(function(){
                          <ul class="cocoList" id="cocoList" >
                             <c:forEach items="${contacts}" var="contact">
                             	 <li onclick="openChat(${contact.uid},'${contact.uname }',${contact.avatar})">
-	                                 <div class="cocoTx Fleft"><img src="/oa/images/avatar/${contact.avatar}.jpg" /></div>
+	                                 <div id="user_avatar_${contact.uid}" class="cocoTx Fleft"><img src="/oa/images/avatar/${contact.avatar}.jpg" /></div>
 	                                 <div class="cocoPerInfo Fleft">
 	                                     <p class="name">${contact.uname }</p>
 	                                     <p class="txt">${contact.dname }</p>
@@ -117,6 +131,36 @@ $(function(){
                
                </div>
            </div>
+           
+           
+           
+           <div class="qunBox">
+               
+               <div class="qunBoxTit"><span>群组成员</span></div>
+               <div class="qunBoxList">
+               
+                   <ul>
+                   
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/1.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">冷文卿</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/2.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">慕容冲</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/3.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">景茵梦</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/4.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">柳婵诗</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/5.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">夏舒征</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/6.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">冷文卿</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/7.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">慕容冲</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/8.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">景茵梦</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/9.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">柳婵诗</p></div></li>
+                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/10.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">夏舒征</p></div></li>
+                   
+                   </ul>
+               
+               </div>
+          
+          </div>
+           
+           
+           
+           
            
      </div>
 

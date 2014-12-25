@@ -34,6 +34,16 @@ public class IMService {
 		mv.data.put("history", JSONHelper.toJSONArray(page.getResult()));
 		return mv;
 	}
+	
+	@WebMethod
+	public ModelAndView getUnReadChats() {
+		ModelAndView mv = new ModelAndView();
+		Integer myId = ThreadSession.getUser().id;
+		List<Map> list = dao.listAsMap("select senderId as senderId ,COUNT(*) as total from Message where  receiverId=? and hasRead=0 group by senderId", myId);
+		mv.data.put("unReads", JSONHelper.toJSONArray(list));
+		return mv;
+	}
+	
 	public List<Map> countUnReadMessage(int userId){
 		//需要过滤掉不在自己好友列表里面的
 		String hql = "select count(*) as total, m.senderId as senderId from Message m,Contact c where c.contactId=m.senderId and c.ownerId=? "
@@ -41,16 +51,14 @@ public class IMService {
 		List<Map> list = dao.listAsMap(hql, userId , userId);
 		return list;
 	}
-	
+
 	@WebMethod
-	public ModelAndView close(){
+	public ModelAndView setUserName(String name){
 		ModelAndView mv = new ModelAndView();
-		try {
-			IMServer.forceStop();
-		} catch (Exception e) {
-			throw new RuntimeException("try to close IM Server fail.",e);
-		}
-		mv.data.put("msg","IM Server closed.");
+		ThreadSession.getUser().uname = name;
+		User po = dao.get(User.class, ThreadSession.getUser().id);
+		po.uname = name;
+		dao.saveOrUpdate(po);
 		return mv;
 	}
 	@WebMethod
@@ -65,17 +73,6 @@ public class IMService {
 			}
 		}
 		mv.data.put("onlien users", arr);
-		return mv;
-	}
-	@WebMethod
-	public ModelAndView start(){
-		ModelAndView mv = new ModelAndView();
-		try {
-			IMServer.startUp();
-		} catch (Throwable e) {
-			throw new RuntimeException("try to start IM Server fail.",e);
-		}
-		mv.data.put("msg","IM Server started.");
 		return mv;
 	}
 	
