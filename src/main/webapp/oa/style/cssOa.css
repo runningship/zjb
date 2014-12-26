@@ -266,23 +266,31 @@ i.add:hover{ background-position:-38px -100px;}
 
 
 
-.cocoMainCon{ background-color:#ffffff; width:100%; height:100%;}
+.cocoMainCon{ background-color:#ffffff; width:100%; height:100%; overflow:hidden; position:relative;}
 
-.cocoMainConBox{ margin:0 0 0 0; height:100%;}
+.cocoMainConBox{ margin:0 0 0 0; height:100%; width:240px; position:absolute; top:0; left:0; background-color:#ffffff;}
 
-.cocoList{ width:100%; margin-top:15px; float:left;}
+.cocoList{ width:230px; margin-top:15px; float:left;}
 
-.cocoList li{ width:100%; float:left; position:relative; margin-bottom:15px; padding:7px 0 0 0;}
+.cocoList li{ width:230px; float:left; position:relative; margin-bottom:15px; padding:5px 0;}
 
 .cocoList li:hover{ background-color:#1c3748;}
 
 .cocoTx{ width:35px; height:35px; margin-left:15px;}
-.cocoTx img{ width:35px; height:35px; border-radius:20px;}
+.cocoTx img{ width:35px; height:35px; border-radius:20px; border:2px solid #ffffff;box-shadow: #bbbbbb 0px 0px 5px;}
 
-.cocoPerInfo{ width:160px; margin-left:10px; font-family:"宋体"; white-space:nowrap;}
+
+.qunTx{ width:32px; height:32px; margin-left:15px; overflow:hidden;}
+.qunTx img{ width:15px; height:15px; float:left; border-radius:3px; margin-left:1px; margin-bottom:1px;box-shadow: #999 0px 0px 3px;}
+
+.cocoPerInfo, .cocoQunInfo{ width:160px; margin-left:10px; font-family:"宋体"; white-space:nowrap;}
+
+.cocoQunInfo .name{ color:#5b7585; font-size:12px; margin:0px 0;}
+.cocoQunInfo .txt{ color:#bbbbbb; font-size:12px;}
 
 .cocoPerInfo .name{ color:#5b7585; font-size:12px; margin:2px 0;}
-.cocoPerInfo .txt{ color:#bbbbbb; font-size:12px;}
+.cocoPerInfo .txt{ color:#bbbbbb; font-size:12px; margin:0;}
+
 
 .cocoOnline{ width:10px; height:10px; border-radius:8px; background-color:#22c5c7; position:absolute; right:5px; top:10px;}
 

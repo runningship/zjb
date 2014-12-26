@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="/oa/style/cssOa.css" />
 <link rel="stylesheet" type="text/css" href="/oa/style/cocoWindow.css" />
 <link rel="stylesheet" type="text/css" href="/oa/style/cocoWinLayer.css" />
+<link rel="stylesheet" type="text/css" href="/oa/style/im.css" />
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/js/buildHtml.js" type="text/javascript"></script>
 <script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>

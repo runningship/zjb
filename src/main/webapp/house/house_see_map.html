@@ -96,7 +96,7 @@ function addMarker_nothing(lngs,lats,contall){
         panel  : "panel",         //检索结果面板
         enableAutoPan : true,     //自动平移
         searchTypes   :[
-            BMAPLIB_TAB_SEARCH,   //周边检索
+            // BMAPLIB_TAB_SEARCH,   //周边检索
             BMAPLIB_TAB_TO_HERE,  //到这里去
             BMAPLIB_TAB_FROM_HERE //从这里出发
         ]
@@ -192,8 +192,8 @@ try{
 </script>
 <style type="text/css">
   .input-group, .btn-group {float: none;margin-bottom: 5px;}
-  #mapDiv{ height: 400px; width:800px; position: relative;}
-  #map{ height: 100%; margin-right: 200px;}
+  #mapDiv{ height: 100%; width:800px; position: relative;}
+  #map{ height: 100%;}
   div.mapInfo{ position: absolute; top: 30px; right: 0px; bottom: 0px;overflow:none; overflow-y: auto;  z-index: 9999; background-color: #FFF; box-shadow: 0px 0px 5px #000; width: 200px;}
   #loading{ display: none;}
   .btn-group{ position: absolute; top: 0; right: 0px; z-index: 99999;}

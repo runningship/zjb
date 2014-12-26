@@ -36,6 +36,23 @@ public class IMService {
 	}
 	
 	@WebMethod
+	public ModelAndView getGroupHistory(Page<Message> page , Integer groupId) {
+		ModelAndView mv = new ModelAndView();
+		page.setPageSize(5);
+		page = dao.findPage(page ,"from GroupMessage where groupId=? order by sendtime desc", groupId);
+		mv.data.put("history", JSONHelper.toJSONArray(page.getResult()));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView getGroupMembers(Integer groupId) {
+		ModelAndView mv = new ModelAndView();
+		List<Map> list = dao.listAsMap("select id as uid , avatar as avatar , uname as uname from User where did=? or cid=?", groupId , groupId);
+		mv.data.put("members", JSONHelper.toJSONArray(list));
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView getUnReadChats() {
 		ModelAndView mv = new ModelAndView();
 		Integer myId = ThreadSession.getUser().id;
@@ -77,24 +94,11 @@ public class IMService {
 	}
 	
 	@WebMethod
-	public ModelAndView allAvatars(){
+	public ModelAndView setAvatar(int avatarId){
 		ModelAndView mv = new ModelAndView();
-		JSONArray arr = new JSONArray();
-		for(int i=1;i<90;i++){
-			JSONObject jobj = new JSONObject();
-			jobj.put("avatarId", i);
-			arr.add(jobj);
-		}
-		mv.data.put("avatars",arr);
-		return mv;
-	}
-	
-	@WebMethod
-	public ModelAndView setAvatar(int userId,int avatarId){
-		ModelAndView mv = new ModelAndView();
-		User user = dao.get(User.class, userId);
-		user.avatar = avatarId;
-		dao.saveOrUpdate(user);
+		User po = dao.get(User.class, ThreadSession.getUser().id);
+		dao.saveOrUpdate(po);
+		ThreadSession.getUser().avatar = avatarId;
 		return mv;
 	}
 	

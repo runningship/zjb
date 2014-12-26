@@ -30,8 +30,8 @@
 
 .cocoWinLxrList li.now{ background-color:#051c2b;}
 
-.cocoWinLxrListTx{ width:35px; height:35px; margin-left:10px;}
-.cocoWinLxrListTx img{ width:35px; height:35px; border-radius:20px;}
+.cocoWinLxrListTx{ width:39px; height:39px; margin-left:10px;}
+.cocoWinLxrListTx img{ width:35px; height:35px; border-radius:20px; border:2px solid rgba(255,255,255,0.2);}
 
 .cocoWinLxrListPerInfo{ width:90px; margin-left:8px; font-family:"宋体"; white-space:nowrap;}
 
@@ -49,13 +49,15 @@
 
 .WinInfoListAppend{ width:100%; display:inline-block; position:relative; margin-top:20px;}
 
-.WinInfoListAppend .txImg{ width:35px; height:35px; top:0; left:20px; position:absolute;}
-.WinInfoListAppend .txImg img{ width:35px; height:35px; border-radius:20px;}
+.WinInfoListAppend .txImg{ width:39px; height:39px; top:0; left:20px; position:absolute;}
+.WinInfoListAppend .txImg img{ width:35px; height:35px; border-radius:20px; border-radius:20px; border:2px solid #ffffff;box-shadow: #bbbbbb 0px 0px 5px;}
 
-.WinInfoListAppend .txImgRight{ width:35px; height:35px; top:0; right:20px; position:absolute;}
-.WinInfoListAppend .txImgRight img{ width:35px; height:35px; border-radius:20px;}
+.WinInfoListAppend .txImgRight{ width:39px; height:39px; top:0; right:20px; position:absolute;}
+.WinInfoListAppend .txImgRight img{ width:35px; height:35px; border-radius:20px; border:2px solid #ffffff;box-shadow: #bbbbbb 0px 0px 5px;}
 
-.WinInfoListAppend .newsAppend{ margin:0 70px; width:360px; display:inline-block;}
+.WinInfoListAppend .newsAppend{ margin:0 70px; width:360px; display:inline-block; position:relative;}
+
+.WinInfoListAppend .newsAppendName{ position:absolute; top:0; left:0;}
 
 .WinInfoListAppend .newsAppendBox{ background-color:#efefef; border-radius:5px; padding:10px 15px; position:relative;}
 

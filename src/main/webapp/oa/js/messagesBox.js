@@ -98,18 +98,18 @@
 	  
 	/*联系人排序*/  
 	  
-	  function lxrzaixian(){
+	  function lxrzaixian(id){
 		  
-			  var $lxrNum = $("ul#cocoList li").size(); 
-			  var $online = $("ul#cocoList li"); 
+			  var $lxrNum = $("ul#"+ id +" li").size(); 
+			  var $online = $("ul#"+ id +" li"); 
 			  
-			  var $firstUnlineLi = $("ul#cocoList li").eq(0);
+			  var $firstUnlineLi = $("ul#"+ id +" li").eq(0);
 			  
 			  for( var i=0;i<$lxrNum;i++){
 				 
-				 var x = $("ul#cocoList li").eq(i).find(".cocoOnline").size();
+				 var x = $("ul#"+ id +" li").eq(i).find(".cocoOnline").size();
 				 if(x>0){
-					 $("ul#cocoList li").eq(i).insertBefore($firstUnlineLi);
+					 $("ul#"+ id +" li").eq(i).insertBefore($firstUnlineLi);
 				 }
 			  }  
 			  
@@ -141,7 +141,8 @@
 	  
 $(function(){
 	
-	  lxrzaixian();
+	  lxrzaixian("cocoList");
+	  lxrzaixian("cocoQunList");
 	  
 	  //$("#msgContainer_36").ScrollintoView();
 	

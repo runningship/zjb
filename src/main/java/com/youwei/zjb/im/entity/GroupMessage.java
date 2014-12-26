@@ -14,7 +14,7 @@ public class GroupMessage {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
-	public String content;
+	public String conts;
 	
 	public Date sendtime;
 	

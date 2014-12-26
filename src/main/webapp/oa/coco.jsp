@@ -3,6 +3,7 @@
 
 <script type="text/javascript" src="/oa/js/messagesBox.js"></script>
 <script type="text/javascript" src="/oa/js/chat.js"></script>
+<script type="text/javascript" src="/oa/js/select.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.js"> </script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/lang/zh-cn/zh-cn.js"></script>
@@ -39,21 +40,23 @@ $(function(){
             </div>
          </div>
          <div class="tr w100">
-              <div class="td cocoMainSelect">
-                   <span class="sle"><i class="Bg lxr"></i></span>
-                   <span><i class="Bg qun"></i></span>
+              <div class="td cocoMainSelect" id="cocoMainSelectId">
+                   <span class="sle" onclick="selBoxCge('lxrList')"><i class="Bg lxr"></i></span>
+                   <span onclick="selBoxCge('qunList')"><i class="Bg qun"></i></span>
                    <span><i class="Bg ldq"></i></span>
               </div>
          </div>
          <div class="tr w100">
               <div class="td cocoMainCon">
                     
-                    <div class="cocoMainConBox" style="height:100%; overflow:hidden; overflow-y:auto;">
+                    <div id="lxrList" class="cocoMainConBox" style="height:100%; overflow:hidden; overflow-y:auto; z-index:1;">
                     
                          <ul class="cocoList" id="cocoList" >
                             <c:forEach items="${contacts}" var="contact">
                             	 <li onclick="openChat(${contact.uid},'${contact.uname }',${contact.avatar})">
-	                                 <div id="user_avatar_${contact.uid}" class="cocoTx Fleft"><img src="/oa/images/avatar/${contact.avatar}.jpg" /></div>
+	                                 <div id="user_avatar_${contact.uid}" class="cocoTx Fleft">
+                                     <img  user_avatar_img="${contact.avatar}" src="/oa/images/avatar/${contact.avatar}.jpg" class="user_avatar_img_${contact.uid} <c:if test="${!contact.online}">user_offline_filter</c:if>" />
+                                     </div>
 	                                 <div class="cocoPerInfo Fleft">
 	                                     <p class="name">${contact.uname }</p>
 	                                     <p class="txt">${contact.dname }</p>
@@ -66,6 +69,31 @@ $(function(){
                          </ul>
                     
                     </div>
+                    
+                    <div id="qunList" class="cocoMainConBox" style="height:100%; overflow:hidden; overflow-y:auto; left:-100%;">
+                    
+                         <ul class="cocoList" id="cocoQunList" >
+                            <c:forEach items="${depts}" var="dept">
+                            	<c:if test="${dept.totalUsers>0 }">
+                            		<li onclick="openGroupChat(${dept.did},'${dept.dname }')">
+	                                 <div id="group_avatar_${dept.did}" class="qunTx Fleft">
+                                        <c:forEach items="${dept.users}" var="user">
+                                            <img src="/oa/images/avatar/${user.avatar}.jpg">
+                                        </c:forEach>
+                                     </div>
+	                                 <div class="cocoQunInfo Fleft">
+	                                     <p class="name">${dept.dname } <span>(${dept.totalUsers})</span></p>
+	                                 </div>
+                             		</li>
+                            	</c:if>
+                            	 
+                            </c:forEach>
+                            
+                         
+                         </ul>
+                    
+                    </div>
+                    
                     
               </div>
          </div>
@@ -134,27 +162,17 @@ $(function(){
            
            
            
-           <div class="qunBox">
+           <div class="qunBox" style="display:none">
                
                <div class="qunBoxTit"><span>群组成员</span></div>
-               <div class="qunBoxList">
-               
+                <div class="qunBoxList">
+
                    <ul>
                    
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/1.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">冷文卿</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/2.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">慕容冲</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/3.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">景茵梦</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/4.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">柳婵诗</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/5.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">夏舒征</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/6.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">冷文卿</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/7.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">慕容冲</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/8.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">景茵梦</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/9.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">柳婵诗</p></div></li>
-                       <li><div class="qunTxImg Fleft"><img src="/oa/images/avatar/10.jpg"></div><div class="qunLxrInfo Fleft"><p class="name">夏舒征</p></div></li>
-                   
                    </ul>
-               
-               </div>
+
+                </div>
+
           
           </div>
            

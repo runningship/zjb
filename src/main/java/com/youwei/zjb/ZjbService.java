@@ -1,16 +1,19 @@
 package com.youwei.zjb;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.im.IMServer;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 
 @Module(name="/")
@@ -52,6 +55,35 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		mv.jspData.put("dname", me.Department().namea);
 		//按在线优先排序
 		mv.jspData.put("contacts",users);
+		
+		Page<Map> page = new Page<Map>();
+		page.setPageSize(4);
+		//群组(分店)
+		//加载生成群组头像
+		List<Map> depts = dao.listAsMap("select id as did ,namea as dname from Department where fid=?", me.cid);
+		long compUsers = 0;
+		for(Map dept : depts){
+			Object did = dept.get("did");
+			page = dao.findPage(page, "select avatar as avatar from User where did=?", true, new Object[]{did});
+			dept.put("users", page.getResult());
+			
+			//群组人数统计
+			long count = dao.countHql("select count(*) from User where did=?", did);
+			compUsers+=count;
+			dept.put("totalUsers", count);
+		}
+		//群组(全公司)
+		Department com = me.Company();
+		Map<String,Object> comp = new HashMap<String,Object>();
+		comp.put("dname", com.namea);
+		comp.put("did", com.id);
+		comp.put("totalUsers", compUsers);
+		page = dao.findPage(page, "select avatar as avatar from User where cid=?", true, new Object[]{me.cid});
+		comp.put("users", page.getResult());
+		depts.add(0,comp);
+		mv.jspData.put("depts",depts);
+		
+		
 		return mv;
 	}
 }

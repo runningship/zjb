@@ -113,19 +113,22 @@ public class IMServer extends WebSocketServer{
 			data.remove("avatar");
 			sendMsg(city,senderId,recvId,data , false);
 		}else if("groupmsg".equals(data.getString("type"))){
-			Integer groupId = data.getInt("groupId");
+			Integer groupId = data.getInt("contactId");
 			//get users of group
-			List<Map> list = SimpDaoTool.getGlobalCommonDaoService().listAsMap("select uid as uid from User where cid=? or did=?", groupId);
+			List<Map> list = SimpDaoTool.getGlobalCommonDaoService().listAsMap("select id as uid from User where cid=? or did=?", groupId , groupId);
 			Map<Integer, WebSocket> ap = conns.get(city);
 			//save group message
 			GroupMessage gMsg = new GroupMessage();
-			gMsg.content = data.getString("content");
+			gMsg.conts = data.getString("msg");
 			gMsg.senderId = senderId;
 			gMsg.groupId = groupId;
 			gMsg.sendtime = new Date();
 			dao.saveOrUpdate(gMsg);
 			for(Map map : list){
 				Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
+				if(recvId.equals(senderId)){
+					continue;
+				}
 				conn = ap.get(recvId);
 				if(conn!=null){
 					//send group message
@@ -136,6 +139,7 @@ public class IMServer extends WebSocketServer{
 				gms.groupMsgId = gMsg.id;
 				gms.hasRead = 0;
 				gms.receiverId = recvId;
+				dao.saveOrUpdate(gms);
 			}
 		}
 	}
