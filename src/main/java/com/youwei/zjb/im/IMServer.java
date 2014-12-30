@@ -22,7 +22,7 @@ import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.entity.Contact;
 import com.youwei.zjb.im.entity.GroupMessage;
-import com.youwei.zjb.im.entity.GroupMessageStatus;
+import com.youwei.zjb.im.entity.UserGroupStatus;
 import com.youwei.zjb.im.entity.Message;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
@@ -38,7 +38,7 @@ public class IMServer extends WebSocketServer{
 	private IMServer() throws UnknownHostException {
 //		super(new InetSocketAddress(Inet4Address.getByName("localhost"), 9099));
 //		super(new InetSocketAddress("192.168.1.125", 9099));
-		super(new InetSocketAddress(ConfigCache.get("domainName" , "192.168.1.111"), 9099));
+		super(new InetSocketAddress(ConfigCache.get("domainName" , "www.zhongjiebao.com"), 9099));
 //		super(socket);
 	}
 
@@ -124,23 +124,34 @@ public class IMServer extends WebSocketServer{
 			gMsg.groupId = groupId;
 			gMsg.sendtime = new Date();
 			dao.saveOrUpdate(gMsg);
-			for(Map map : list){
-				Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
-				if(recvId.equals(senderId)){
-					continue;
-				}
-				conn = ap.get(recvId);
-				if(conn!=null){
-					//send group message
-					sendMsg(city,senderId , recvId,data,true);
-				}
-				//save group message status
-				GroupMessageStatus gms = new GroupMessageStatus();
-				gms.groupMsgId = gMsg.id;
-				gms.hasRead = 0;
-				gms.receiverId = recvId;
-				dao.saveOrUpdate(gms);
+			UserGroupStatus ugs = dao.getUniqueByParams(UserGroupStatus.class, new String[]{"groupId" , "receiverId"}, new Object[]{groupId , senderId});
+			if(ugs==null){
+				ugs = new UserGroupStatus();
+				ugs.groupId = groupId;
+				ugs.receiverId = senderId;
+				ugs.lasttime = new Date();
+			}else{
+				ugs.lasttime = new Date();
 			}
+			dao.saveOrUpdate(ugs);
+//			for(Map map : list){
+//				Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
+//				if(recvId.equals(senderId)){
+//					continue;
+//				}
+//				conn = ap.get(recvId);
+//				if(conn!=null){
+//					//send group message
+//					sendMsg(city,senderId , recvId,data,true);
+//				}
+//				//save group message status
+//				UserGroupStatus gms = new UserGroupStatus();
+//				gms.groupMsgId = gMsg.id;
+//				gms.hasRead = 0;
+//				gms.receiverId = recvId;
+//				gms.groupId = groupId;
+//				dao.saveOrUpdate(gms);
+//			}
 		}
 	}
 
@@ -170,7 +181,7 @@ public class IMServer extends WebSocketServer{
 
 	private void sendMsg(String city ,Integer senderId , Integer recvId , JSONObject data , boolean isGroup) {
 		
-		data.put("sendtime", DataHelper.sdf3.format(new Date()));
+		data.put("sendtime", DataHelper.sdf4.format(new Date()));
 		Map<Integer, WebSocket> ap = conns.get(city);
 		WebSocket recv = ap.get(recvId);
 		if(!isGroup){

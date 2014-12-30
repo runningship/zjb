@@ -31,7 +31,7 @@ function openChat(contactId,contactName,avatar){
                     +   '   <p class="name">'+contactName+'</p>'
                     +   '</div>'
                     +	'<div class="new_msg_count"></div>'
-					+	'<div class="cocoWinNewsNum" onclick="closeChat('+contactId+')">×</div>'
+					+	'<div class="msgClose" onclick="closeChat('+contactId+')">×</div>'
                     +'</li>';
 	
 	// 添加聊天内容窗口
@@ -44,9 +44,38 @@ function openChat(contactId,contactName,avatar){
 	// 显示最新聊天
 	$('.cocoWinLxrList li').removeClass('now');
 	$('.cocoWinLxrList').prepend(lxrHtml);
+	$('.qunBox').css('display','none');
 
 	loadHistory(contactId,1);
 	// $('.msgContainer').css('display','');
+	// 清空当前联系人未读消息提醒
+	var jmsgCount = $('#lxr_'+contactId).find('.new_msg_count');
+	jmsgCount.text('');
+	jmsgCount.removeClass('cocoWinNewsNum');
+	$('.user_avatar_img_'+contactId).removeClass('doudong');
+
+	//设置已读
+	setSigleChatRead(contactId);
+}
+
+function setSigleChatRead(contactId){
+	YW.ajax({
+		type: 'get',
+		dataType: 'json',
+		url: '/c/im/setSingleChatRead?contactId='+contactId,
+		mysuccess:function(data){
+		}
+	});
+}
+
+function setGroupChatRead(groupId){
+	YW.ajax({
+		type: 'get',
+		dataType: 'json',
+		url: '/c/im/setGroupChatRead?groupId='+groupId,
+		mysuccess:function(data){
+		}
+	});
 }
 
 function openGroupChat(groupId,groupName){
@@ -69,7 +98,7 @@ function openGroupChat(groupId,groupName){
                     +   '   <p class="name">'+groupName+'</p>'
                     +   '</div>'
                     +	'<div class="new_msg_count"></div>'
-					+	'<div class="cocoWinNewsNum" onclick="closeChat('+groupId+','+groupId+')">×</div>'
+					+	'<div class="msgClose" onclick="closeChat('+groupId+','+groupId+')">×</div>'
                     +'</li>';
 	
 	// 添加聊天内容窗口
@@ -92,6 +121,13 @@ function openGroupChat(groupId,groupName){
 	$('.qunBox').css('display','');
 	$('.qunBox ul').css('display','none');
 	$('#group_members_'+groupId).css('display','');
+	//清空消息提醒
+	var jmsgCount = $('#group_'+groupId).find('.new_msg_count');
+	jmsgCount.text('');
+	jmsgCount.removeClass('cocoQunNewsNum');
+
+	//设置已读
+	setGroupChatRead(groupId);
 	//加载组成员
 	loadGroupMembers(groupId);
 }
@@ -145,8 +181,10 @@ function buildHistory(history,groupId){
 	for(var i=0;i<history.length;i++){
 		var msg = history[i];
 		var container;
+		var senderName;
 		if(groupId){
 			container = $('#msgContainer_group_'+groupId);
+			senderName = getContactNameByUid(msg.senderId);
 		}else{
 			container = $('#msgContainer_'+chat.contactId);
 		}
@@ -157,7 +195,7 @@ function buildHistory(history,groupId){
 			container.prepend(html);
 		}else{
 			var senderAvatar = getAvatarByUid(msg.senderId);
-			var html = buildRecvMessage(senderAvatar,msg.conts , msg.sendtime);
+			var html = buildRecvMessage(senderAvatar,msg.conts , msg.sendtime , senderName);
 			// var html = "";
 			// if(groupId){
 			// 	buildRecvMessage(msg.senderId,msg.conts , msg.sendtime);
@@ -180,10 +218,17 @@ function getAvatarByUid(uid){
 	var img = $('#user_avatar_'+uid+' img');
 	return img.attr('user_avatar_img');
 }
+function getContactNameByUid(uid){
+	var name = $('#lxr_'+uid+' .name');
+	return name.text();
+}
 function send(){
-	var chat = getCurrentChat();
-
 	var text = ue_text_editor.getContent();
+	if(text==""){
+		return;
+	}
+	var chat = getCurrentChat();
+	
 	onSendMsg(text,chat);
 	chat.msg = text;
 	sendToServer(chat);
@@ -228,10 +273,15 @@ function selectChat(li,groupId){
 	}
 }
 
-function buildSentMessage(text,time){
+function buildSentMessage(text,time , senderName){
+	var senderHtml = "";
+	if(senderName){
+		senderHtml = '<div class="lxrName pright">'+senderName+'</div>';
+	}
 	var sentMsgHtml='<div class="WinInfoListAppend">'
                     +     '<div class="txImgRight"><img src="/oa/images/avatar/'+my_avatar+'.jpg" /></div>'
                     +     '<div class="newsAppend">'
+                    +     		senderHtml
                     +          '<div class="newsAppendBox Fright">'
                     +               '<div class="conTxt">'+text+'</div>'
                     +               '<div class="conTime"><i class="clock"></i>'+time+'</div>'
@@ -268,10 +318,15 @@ function showBigAvatar(img,event){
     $("#avatarBigSee").css("top",parent.position().top + event.clientY);
 }
 
-function buildRecvMessage(senderAvatar , msg , time){
+function buildRecvMessage(senderAvatar , msg , time , senderName){
+	var senderHtml="";
+	if(senderName){
+		senderHtml='<div class="lxrName pleft">'+senderName+'</div>';
+	}
 	var recvMsgHtml='<div class="WinInfoListAppend">'
                     +     '<div class="txImg"><img src="/oa/images/avatar/'+senderAvatar+'.jpg" /></div>'
                     +     '<div class="newsAppend">'
+                    +         	senderHtml
                     +          '<div class="newsAppendBox Fleft">'
                     +               '<div class="conTxt">'+msg+'</div>'
                     +               '<div class="conTime"><i class="clock"></i>'+time+'</div>'
@@ -287,7 +342,7 @@ function buildRecvMessage(senderAvatar , msg , time){
 }
 function onSendMsg(text,chat){
 	var now = new Date();
-	var time = now.getHours()+':'+now.getMinutes();
+	var time = now.getMonth()+'-'+now.getDate()+' ' + now.getHours()+':'+now.getMinutes() + ':'+now.getSeconds();
 	if(chat.type=='groupmsg'){
 		$('#msgContainer_group_'+chat.contactId).append(buildSentMessage(text,time));
 	}else{
@@ -296,10 +351,45 @@ function onSendMsg(text,chat){
     
 }
 
+function notifyGroupNews(groupId,msgCount){
+	var jmsgCount = $('#group_'+groupId).find('.new_msg_count');
+	if(msgCount){
+		jmsgCount.text(msgCount);
+	}else{
+		if(msgCount==0){
+			return;
+		}
+		var num_msg_count = 0;
+		if(jmsgCount.text()!=''){
+			num_msg_count = Number.parseInt(jmsgCount.text());
+		}
+		num_msg_count++;
+		jmsgCount.text(num_msg_count);
+	}
+	
+	jmsgCount.addClass('cocoQunNewsNum');
+
+	// $('#user_avatar_img_'+groupId).addClass('doudong');
+	requestWindowAttention();
+}
 function notifyNewChat(contactId,msgCount){
-	// $('#user_avatar_'+contactId).css();
-	// $('#user_avatar_'+contactId).addClass();
-	// sort contacts panel
+	var jmsgCount = $('#lxr_'+contactId).find('.new_msg_count');
+	if(msgCount){
+		jmsgCount.text(msgCount);
+	}else{
+		//未读消息数量++
+		var num_msg_count = 0;
+		if(jmsgCount.text()!=''){
+			num_msg_count = Number.parseInt(jmsgCount.text());
+		}
+		num_msg_count++;
+		jmsgCount.text(num_msg_count);
+	}
+	
+	jmsgCount.addClass('cocoWinNewsNum');
+
+	$('.user_avatar_img_'+contactId).addClass('doudong');
+	requestWindowAttention();
 }
 function onReceiveMsg(msg){
 	var data = JSON.parse(msg);
@@ -315,9 +405,8 @@ function onReceiveMsg(msg){
 	// 判断是否新会话
 	var chat = $('#chat_'+data.senderId);
 	if(chat.length==0){
-		openChat(data.senderId,data.senderName,data.senderAvatar);
 		//给消息提醒
-		notifyNewChat();
+		notifyNewChat(data.senderId);
 		return;
 	}
     $('#msgContainer_'+data.senderId).append(buildRecvMessage(data.senderAvatar,data.msg , data.sendtime));
@@ -338,20 +427,26 @@ function onReceiveMsg(msg){
     	//滚动到最新消息
     	scrollToLatestNews();
     }
+
+    //设置已读
+    setSigleChatRead(data.senderId);
 }
 
 function onReceiveGroupMsg(msg){
+	//判断是否给小红点
+	if($('.sle #qunbox_dot').length==0){
+		$('#qunbox_dot').addClass('alertDot');
+	}
 	var data = JSON.parse(msg);
 	// 判断是否新会话
 	var chat = $('#group_chat_'+data.contactId);
 	if(chat.length==0){
-		openGroupChat(data.contactId,data.contactName);
-		// openChat(data.senderId,data.senderName,data.senderAvatar);
 		//给消息提醒
-		notifyNewChat();
+		notifyGroupNews(data.contactId);
 		return;
 	}
-    $('#msgContainer_group_'+data.contactId).append(buildRecvMessage(data.senderAvatar,data.msg , data.sendtime));
+
+    $('#msgContainer_group_'+data.contactId).append(buildRecvMessage(data.senderAvatar,data.msg , data.sendtime , data.senderName));
 
     //判断是否当前会话
     var curr = getCurrentChat();
@@ -426,7 +521,9 @@ function setUserStatus(json){
 		statusDom.addClass('cocoOnline');
 		$('.user_avatar_img_'+json.contactId).removeClass('user_offline_filter');
 	}
+
 	console.log(json.contactName+'状态: '+json.status);
+	lxrzaixian('cocoList');
 }
 
 function msgAreaKeyup(event){
@@ -441,9 +538,27 @@ function getUnReadChats(){
 		dataType: 'json',
 		url: '/c/im/getUnReadChats',
 		mysuccess:function(data){
-
+			buildSingleChatUnreads(data.unReadSingleChats);
+			buildGroupChatUnreads(data.unReadGroupChats);
+			lxrzaixian('cocoList');
 		}
 	});
+}
+
+function buildSingleChatUnreads(unReads){
+	if(unReads){
+		for(var i=0;i<unReads.length;i++){
+			notifyNewChat(unReads[i].senderId,unReads[i].total);
+		}	
+	}
+}
+function buildGroupChatUnreads(unReads){
+	if(unReads){
+		for(var i=0;i<unReads.length;i++){
+			notifyGroupNews(unReads[i].groupId,unReads[i].total);
+		}	
+	}
+	
 }
 
 function closeChat(contactId,groupId){
@@ -482,9 +597,12 @@ function closeAllChat(){
 
 function recoverChatPanel(){
 	if($('.cocoWinLxrList li').length>0){
-		showBox();	
+		if($("#layerBoxDj").css("display")=='none'){
+			showBox();
+		}else{
+			closeBox();
+		}
 	}
-	
 }
 
 function showCoco(){
@@ -534,4 +652,16 @@ function selectAvatar(i){
           alert('操作成功');
       }
     });
+}
+
+function requestWindowAttention(){
+	try{
+		var win = gui.Window.get();
+		if(!win.isFocus){
+			win.title="您有新的消息";
+			win.requestAttention(true);
+		}
+	}catch(e){
+
+	}
 }

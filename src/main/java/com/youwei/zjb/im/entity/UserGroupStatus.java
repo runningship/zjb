@@ -8,17 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class GroupMessageStatus {
+public class UserGroupStatus {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 	
-	public Date readtime;
+	public Date lasttime;
 	
 	public Integer receiverId;
 	
-	public Integer groupMsgId;
-	
-	public Integer hasRead;
+	public Integer groupId;
 }

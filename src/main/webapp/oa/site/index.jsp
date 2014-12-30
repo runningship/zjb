@@ -18,6 +18,16 @@ function showSites(id){
 }
 
 function addSite(){
+	if ($('#site_title').val()==null||$('#site_title').val()==undefined||$('#site_title').val().trim()=='') {
+		alert('名称不能为空');
+		$('#site_title').focus();
+		return;
+	};
+	if ($('#site_url').val()==null||$('#site_url').val()==undefined||$('#site_url').val().trim()=='') {
+		alert('网址不能为空');
+		$('#site_url').focus();
+		return;
+	};
 	var a=$('form[name=siteForm]').serialize();
 	YW.ajax({
 	    type: 'POST',

@@ -47,7 +47,7 @@ function selectZan(id,obj){
       </div>
       <div class="tr w100">
           <div class="td oaInfoTit">
-            <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft"></i></div>  <a href="#">更多></a>  
+            <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft" onclick="openNewWin('addArt','660','添加文章','article/add.jsp')"></i></div>  <a href="#">更多></a>  
           </div>
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','660','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;">更多></a></div>
@@ -66,9 +66,9 @@ function selectZan(id,obj){
                           <p><a href="#" class="tit">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
-                          <i class="Bg xg">修改</i>
+                          <i class="Bg xg" onclick="openNewWin('editArt','660','编辑文章','article/edit.jsp?id=${article.id}')">修改</i>
                           <i class="Bg <c:if test="${article.zan==0}">zan</c:if> <c:if test="${article.zan==1}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
-                          <span class="zan_count">123</span>
+                          <span class="zan_count">${article.zans}</span>
                           <i class="Bg hf">回复</i>
                         </div>
                       </div>

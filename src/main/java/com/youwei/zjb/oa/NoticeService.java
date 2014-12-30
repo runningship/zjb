@@ -68,10 +68,18 @@ public class NoticeService {
 	}
 	
 	@WebMethod(name="notice/edit")
-	public ModelAndView edit(int id){
+	public ModelAndView editNotice(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
 		mv.jspData.put("notice", po);
+		return mv;
+	}
+	
+	@WebMethod(name="article/edit")
+	public ModelAndView editArticle(int id){
+		ModelAndView mv = new ModelAndView();
+		Notice po = dao.get(Notice.class, id);
+		mv.jspData.put("article", po);
 		return mv;
 	}
 	

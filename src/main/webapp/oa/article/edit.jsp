@@ -13,7 +13,7 @@
 <script type="text/javascript" src="/js/dialog/jquery.artDialog.source.js?skin=default"></script>
 <script type="text/javascript" src="/js/dialog/plugins/iframeTools.source.js"></script>
 <script type="text/javascript">
-
+var id;
 $(function(){
 	var ue = UE.getEditor('editor',{
         toolbars: [
@@ -21,40 +21,31 @@ $(function(){
             ]
         ],
   });
-    // var ue = UE.getEditor('editor', {});
-    // ue.setHeight('100%');
-	initUserTree('receiverTree');
+    id = getParam('id');
+    ue.addListener( 'ready', function( editor ) {
+        ue.setContent('${article.conts}');
+    });
+    // getContent();
 });
 
 function save(){
-    var treeObj = $.fn.zTree.getZTreeObj("receiverTree");
-    var nodes = treeObj.getCheckedNodes(true);
-    var receivers = '';
-    for (var i = nodes.length - 1; i >= 0; i--) {
-        if (nodes[i].id.indexOf('d_')>-1) {
-            continue;
-        }else{
-            receivers+=nodes[i].id+',' ;
-        }
-    }
-    var receiver = receivers.replace(/u_/g,'');
-    $('#receivers').val(receiver);
     var a=$('form[name=form1]').serialize();
     YW.ajax({
         type: 'POST',
-        url: '/c/oa/notice/save',
+        url: '/c/oa/notice/update',
         data:a,
         mysuccess: function(data){
-            alert('发布成功');
+            alert('修改成功');
         }
     });
 }
+
 </script>
 
 <style type="text/css">
 
 .tableleft{ width:100px;}
-.addSureBtn{ padding:6px 25px; background-color:#f55252; border-radius:2px; color:#ffffff; border:none; cursor:pointer; margin-top:12px;}
+.addSureBtn{ padding:6px 25px; background-color:#f55252; border-radius:2px; color:#ffffff; border:none; cursor:pointer;}
 
 .addSureBtn:hover{ background-color:#de2a2a;}
 
@@ -62,20 +53,21 @@ function save(){
 </head>
 <body>
 <form name="form1" method="post" class="definewidth m20">
-<input name="receivers" id="receivers" type="hidden">
+<input name="isPublic"type="hidden" value="1">
+<input name="id" id="id" type="hidden" value="${article.id}">
 <table class="table table-bordered table-hover m10" style="width:100%; height:395px; font-family:'宋体'; font-size:13px; padding-top:15px;">
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">标题:</span></td>
-      <td valign="middle"><input type="text" name="title" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" /></td>
+      <td valign="middle"><input type="text" name="title" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" value="${article.title}"/></td>
     </tr>
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">序号:</span></td>
-      <td valign="middle"><input type="text" name="orderx" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;"/></td>
+      <td valign="middle"><input type="text" name="orderx" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" value="${article.orderx}"/></td>
     </tr>
-    <tr>
+    <!-- <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">接受人:</span></td>
       <td valign="middle"><ul id="receiverTree" class="ztree jtree"></ul></td>
-    </tr>
+    </tr> -->
     
     <tr>
         <td align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">正文:</span></td>
@@ -85,7 +77,7 @@ function save(){
     </tr>
     
     <tr>
-        <td align="right" valign="middle" class="tableleft" height="50"></td>
+        <td align="right" valign="middle" class="tableleft"></td>
         <td valign="middle">
           <button class="addSureBtn" type="button" onclick="save();return false;">保存</button>
         </td>

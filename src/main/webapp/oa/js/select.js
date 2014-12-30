@@ -9,7 +9,9 @@ function selBoxCge(id){
 		   left:'0px'
 		},"fast").css("z-index","1");
 
-	
+	if(id=='qunList'){
+		$('#qunbox_dot').removeClass('alertDot');
+	}
 }
 	 
 /*	 $("button").click(function(){

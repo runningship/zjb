@@ -5,7 +5,7 @@
 <script type="text/javascript" src="/oa/js/chat.js"></script>
 <script type="text/javascript" src="/oa/js/select.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.yw.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 
@@ -21,6 +21,8 @@ $(function(){
           msgAreaKeyup(e);
         }
     });
+
+    getUnReadChats();
 });
 
 </script>
@@ -31,10 +33,11 @@ $(function(){
          <div class="tr w100">
 
               <div class="td cocoMainTit oaTitBgCoco">
-                <div class=""><img src="/oa/images/avatar/${me.avatar}.jpg" id="avatarId" onclick="openNewWin('changeAvatar','660','修改头像','oa/avatar.jsp');" />
-                    <div title="点击修改" class="mainInfo mainName" onclick="startChangeName()" id="user_name_div">${me.uname}</div>
+                <div class=""><img src="/oa/images/avatar/${me.avatar}.jpg" class="user_offline_filter" id="avatarId" onclick="openNewWin('changeAvatar','660','修改头像','oa/avatar.jsp');" />
+                    <div title="" class="mainInfo mainName" id="user_name_div">${me.uname}</div>
                     <input id="user_name_input" style="display:none;margin-top:5px;" onblur="endChangeName();" />
                     <div class="mainInfo mainabout">${dname}</div>
+                    <div class="turnLit" onclick="$('.cocoMain').toggleClass('hide');">-</div>
                 </div>
                 <!-- <img src="/oa/images/coco.png" /> -->
             </div>
@@ -42,7 +45,7 @@ $(function(){
          <div class="tr w100">
               <div class="td cocoMainSelect" id="cocoMainSelectId">
                    <span class="sle" onclick="selBoxCge('lxrList')"><i class="Bg lxr"></i></span>
-                   <span onclick="selBoxCge('qunList')"><i class="Bg qun"></i></span>
+                   <span onclick="selBoxCge('qunList')"><i class="Bg qun"></i><em id="qunbox_dot" class=""></em></span>
                    <span><i class="Bg ldq"></i></span>
               </div>
          </div>
@@ -53,7 +56,7 @@ $(function(){
                     
                          <ul class="cocoList" id="cocoList" >
                             <c:forEach items="${contacts}" var="contact">
-                            	 <li onclick="openChat(${contact.uid},'${contact.uname }',${contact.avatar})">
+                            	 <li id="lxr_${contact.uid}" onclick="openChat(${contact.uid},'${contact.uname }',${contact.avatar})">
 	                                 <div id="user_avatar_${contact.uid}" class="cocoTx Fleft">
                                      <img  user_avatar_img="${contact.avatar}" src="/oa/images/avatar/${contact.avatar}.jpg" class="user_avatar_img_${contact.uid} <c:if test="${!contact.online}">user_offline_filter</c:if>" />
                                      </div>
@@ -62,6 +65,7 @@ $(function(){
 	                                     <p class="txt">${contact.dname }</p>
 	                                 </div>
 	                                 <div class='user_status_${contact.uid} <c:if test="${contact.online}">cocoOnline</c:if> <c:if test="${!contact.online}">cocoLeave</c:if> ' ></div>
+                                     <div class="new_msg_count "></div>
                              	</li>
                             </c:forEach>
                             
@@ -75,7 +79,7 @@ $(function(){
                          <ul class="cocoList" id="cocoQunList" >
                             <c:forEach items="${depts}" var="dept">
                             	<c:if test="${dept.totalUsers>0 }">
-                            		<li onclick="openGroupChat(${dept.did},'${dept.dname }')">
+                            		<li id="group_${dept.did}" onclick="openGroupChat(${dept.did},'${dept.dname }')">
 	                                 <div id="group_avatar_${dept.did}" class="qunTx Fleft">
                                         <c:forEach items="${dept.users}" var="user">
                                             <img src="/oa/images/avatar/${user.avatar}.jpg">
@@ -84,6 +88,7 @@ $(function(){
 	                                 <div class="cocoQunInfo Fleft">
 	                                     <p class="name">${dept.dname } <span>(${dept.totalUsers})</span></p>
 	                                 </div>
+                                     <div class="new_msg_count"></div>
                              		</li>
                             	</c:if>
                             	 
@@ -101,7 +106,9 @@ $(function(){
          <div class="tr w100">
               <div class="td">
                    
-                   <div onclick="recoverChatPanel();" class="cocoNews"><span class="name chat_title"></span><i class="Bg close"></i></div>
+                   <div onclick="recoverChatPanel();" class="cocoNews"><span class="name chat_title"></span>
+                   <!-- <i class="Bg close"></i> -->
+                   </div>
                    
               </div>
          </div>
@@ -111,9 +118,9 @@ $(function(){
 
 </div>
 
-<div style=" position:absolute; bottom:0; right:0;cursor:pointer;width:50px; height:50px; overflow:hidden; z-index:9999999;">
-     <span><img onclick=" $('.cocoMain').toggleClass('hide');" src="/style/images/litFox.png" width="50"></span>
-</div>
+<!-- <div style=" position:absolute; bottom:0; right:0;cursor:pointer;width:50px; height:50px; overflow:hidden; z-index:9999999;"> -->
+<!--      <span><img onclick=" $('.cocoMain').toggleClass('hide');" src="/style/images/litFox.png" width="50"></span> -->
+<!-- </div> -->
 
 
 

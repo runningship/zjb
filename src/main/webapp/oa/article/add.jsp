@@ -27,18 +27,6 @@ $(function(){
 });
 
 function save(){
-    var treeObj = $.fn.zTree.getZTreeObj("receiverTree");
-    var nodes = treeObj.getCheckedNodes(true);
-    var receivers = '';
-    for (var i = nodes.length - 1; i >= 0; i--) {
-        if (nodes[i].id.indexOf('d_')>-1) {
-            continue;
-        }else{
-            receivers+=nodes[i].id+',' ;
-        }
-    }
-    var receiver = receivers.replace(/u_/g,'');
-    $('#receivers').val(receiver);
     var a=$('form[name=form1]').serialize();
     YW.ajax({
         type: 'POST',
@@ -62,7 +50,7 @@ function save(){
 </head>
 <body>
 <form name="form1" method="post" class="definewidth m20">
-<input name="receivers" id="receivers" type="hidden">
+<input name="isPublic"type="hidden" value="1">
 <table class="table table-bordered table-hover m10" style="width:100%; height:395px; font-family:'宋体'; font-size:13px; padding-top:15px;">
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">标题:</span></td>
@@ -72,11 +60,6 @@ function save(){
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">序号:</span></td>
       <td valign="middle"><input type="text" name="orderx" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;"/></td>
     </tr>
-    <tr>
-        <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">接受人:</span></td>
-      <td valign="middle"><ul id="receiverTree" class="ztree jtree"></ul></td>
-    </tr>
-    
     <tr>
         <td align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">正文:</span></td>
         <td valign="middle">

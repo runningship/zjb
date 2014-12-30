@@ -8,14 +8,19 @@
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.yw.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript" src="/js/dialog/jquery.artDialog.source.js?skin=default"></script>
 <script type="text/javascript" src="/js/dialog/plugins/iframeTools.source.js"></script>
 <script type="text/javascript">
 var id;
 $(function(){
-	var ue = UE.getEditor('editor');
+	var ue = UE.getEditor('editor',{
+        toolbars: [
+            ['forecolor', 'simpleupload','emotion','spechars', 'attachment', '|', 'fontfamily', 'fontsize', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'formatmatch', 'pasteplain', '|', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', 'indent', 'rowspacingtop', 'rowspacingbottom', 'lineheight',
+            ]
+        ],
+  });
     // var ue = UE.getEditor('editor', {});
     // ue.setHeight('100%');
 	initUserTree('receiverTree');
@@ -33,7 +38,7 @@ function save(){
         url: '/c/oa/notice/update',
         data:a,
         mysuccess: function(data){
-            alert('发布成功');
+            alert('修改成功');
         }
     });
 }

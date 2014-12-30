@@ -115,9 +115,15 @@ public class PcService {
 			hql.append(" and pc.cid=? ");
 			params.add(query.cid);
 		}
+		if(StringUtils.isEmpty(page.orderBy)){
+			page.orderBy = "pc.addtime";
+		}else{
+			page.orderBy = "pc."+page.orderBy;
+		}
+		if(StringUtils.isEmpty(page.order)){
+			page.order = Page.DESC;
+		}
 		
-		page.orderBy = "pc.addtime";
-		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;

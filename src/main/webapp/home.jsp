@@ -40,6 +40,7 @@ function setSideMenuCurr(){
 }
 var selectedFrame;
 var hasShowAds=false;
+var web_socket_on=false;
 function setSideMenu(){
     var menuerBox=$('.menuSide'),
     menuerIndex=0,
@@ -117,7 +118,14 @@ try{
             }else{
                 WinMaxOrRev(1);  
             }
-        }); 
+        });
+        win.window.onblur=function(){
+            win.isFocus=false;
+        };
+        win.window.onfocus=function(){
+            win.title="中介宝";
+            win.isFocus=true;
+        };
     }catch(e){
         console.error(e);
     }
@@ -137,6 +145,7 @@ try{
 // window.onresize = function(){
 //   $('#iframeBox').height($('#iframeBox').height()+40);
 // }
+
 $(document).on('click', '.ibtn', function(event) {
     var Thi=$(this),
     ThiType=Thi.data('type'),
@@ -154,26 +163,44 @@ $(document).on('click', '.ibtn', function(event) {
     return false;
 });
 
-
 //点击第一个菜单
 $('.menuSide').find('.curr a').click();
     my_uid=${me.id};
     my_avatar=${me.avatar};
     my_name = '${me.uname}';
     //start IM	
-	coco_ws = new WebSocket('ws://192.168.1.111:9099?uid=${me.id}&city=${me.domain}');
-	coco_ws.onopen = function() {
-		console.log('we are on line');
-	};
+	connectWebSocket();
+});
+
+function connectWebSocket(){
+    if(web_socket_on){
+        return;
+    }
+    coco_ws = new WebSocket('ws://${domainName}:9099?uid=${me.id}&city=${me.domain}');
+    console.log('正在连接...');
+    coco_ws.onopen = function() {
+        web_socket_on = true;
+        console.log('登录成功');
+        $('#avatarId').removeClass('user_offline_filter');
+    };
     coco_ws.close = function() {
+        web_socket_on = false;
         console.log('we are getting offline');
+        //掉线重连
+        setTimeout(connectWebSocket,10*1000);
+        $('#avatarId').addClass('user_offline_filter');
     };
     coco_ws.onmessage = function(e) {
         console.log('收到消息:'+e.data);
         onReceiveMsg(e.data);
     };
-});
-
+    coco_ws.onerror = function(e) {
+        console.log('连接失败:10秒后重新连接.'+e);
+        //掉线重连
+        setTimeout(connectWebSocket,10*1000);
+        $('#avatarId').addClass('user_offline_filter');
+    };
+}
 $(window).resize(function() {
     setSideMenuCurr();
 });
@@ -265,7 +292,7 @@ function notify(){
                 <div class="tr thead title">
                     <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:40px;"></div>
                     <div class="wintool title nobar">
-                        <ul class="wintools">
+                        <ul class="wintools" style="padding-left:50px;">
                             <li><a href="#" class="winBtn black winBtnMin" style=" display:block; width:15px; height:15px; line-height:15px; font-size:10px; font-family:Verdana; margin-top:6px; text-align:center; border-radius:8px; background-color:#332d2c; color:#ffffff;" onclick="fankui();" data-q="">?</a></li>
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>

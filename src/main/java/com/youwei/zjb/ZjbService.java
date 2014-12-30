@@ -12,6 +12,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.IMServer;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -41,7 +42,7 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 				user.put("online", false);
 			}
 			if(user.get("avatar")==null){
-				int avatar = r.nextInt(95)+1;
+				int avatar = r.nextInt(168)+1;
 				user.put("avatar", avatar);
 				User u = dao.get(User.class, uid);
 				u.avatar = avatar;
@@ -60,8 +61,7 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		page.setPageSize(4);
 		//群组(分店)
 		//加载生成群组头像
-		List<Map> depts = dao.listAsMap("select id as did ,namea as dname from Department where fid=?", me.cid);
-		long compUsers = 0;
+		List<Map> depts = dao.listAsMap("select d.id as did ,d.namea as dname from Department d , User u where u.did=d.id and u.id=?", me.cid);
 		for(Map dept : depts){
 			Object did = dept.get("did");
 			page = dao.findPage(page, "select avatar as avatar from User where did=?", true, new Object[]{did});
@@ -69,7 +69,6 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 			
 			//群组人数统计
 			long count = dao.countHql("select count(*) from User where did=?", did);
-			compUsers+=count;
 			dept.put("totalUsers", count);
 		}
 		//群组(全公司)
@@ -77,13 +76,14 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		Map<String,Object> comp = new HashMap<String,Object>();
 		comp.put("dname", com.namea);
 		comp.put("did", com.id);
+		long compUsers = dao.countHql("select count(*) from User where cid=?", me.cid);
 		comp.put("totalUsers", compUsers);
 		page = dao.findPage(page, "select avatar as avatar from User where cid=?", true, new Object[]{me.cid});
 		comp.put("users", page.getResult());
 		depts.add(0,comp);
 		mv.jspData.put("depts",depts);
 		
-		
+		mv.jspData.put("domainName", ConfigCache.get("domainName" , "www.zhongjiebao.com"));
 		return mv;
 	}
 }

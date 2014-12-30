@@ -105,13 +105,53 @@
 			  
 			  var $firstUnlineLi = $("ul#"+ id +" li").eq(0);
 			  
-			  for( var i=0;i<$lxrNum;i++){
+			  
+			  
+			  
+			  for( var i=1;i<$lxrNum;i++){//在线排序
 				 
-				 var x = $("ul#"+ id +" li").eq(i).find(".cocoOnline").size();
-				 if(x>0){
+				 
+				 var x = $online.eq(i).find(".cocoOnline").size();
+				 var y = $online.eq(i).find(".cocoWinNewsNum").size();
+				 var z = $online.eq(i).find(".cocoLeave").size();
+				 
+				 if(x>0){//在线的上去
+					 $online.eq(i).insertBefore($firstUnlineLi);
+				 }
+				 if(z>0){//不在线的下去去
+					 $online.eq(i).insertAfter($firstUnlineLi);
+				 }
+				 
+				 
+			  } 
+			  
+			  for( var i=1;i<$lxrNum;i++){
+				  
+				 var y = $online.eq(i).find(".cocoWinNewsNum").size();
+				 if(y>0){
+					 $online.eq(i).insertBefore($firstUnlineLi);
+				 }
+			  }
+			  
+			  for( var i=0;i<$lxrNum;i++){//在线有消息排序排序
+				  
+				 var x = $online.eq(i).find(".cocoOnline").size();
+				 var y = $online.eq(i).find(".cocoWinNewsNum").size();
+				 
+				 if(x>0 && y>0){
 					 $("ul#"+ id +" li").eq(i).insertBefore($firstUnlineLi);
 				 }
-			  }  
+				 
+			  }
+/*			  
+			  for( var i=0;i<$lxrNum;i++){
+				 
+				 var y = $("ul#"+ id +" li").eq(i).find(".cocoWinNewsNum").size();
+				
+				 if(y>0){
+					 $("ul#"+ id +" li").eq(i).insertBefore($firstUnlineLi);
+				 }
+			  } */
 			  
 	  }
 	  
@@ -144,7 +184,6 @@ $(function(){
 	  lxrzaixian("cocoList");
 	  lxrzaixian("cocoQunList");
 	  
-	  //$("#msgContainer_36").ScrollintoView();
 	
 });  
 

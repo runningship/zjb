@@ -352,7 +352,7 @@ public class UserService {
 		po.city = user.city;
 		if(po.avatar==null){
 			Random r = new Random();
-			int avatar = r.nextInt(95)+1;
+			int avatar = r.nextInt(168)+1;
 			po.avatar = avatar;
 		}
 		if(StringUtils.isEmpty(po.uname)){
