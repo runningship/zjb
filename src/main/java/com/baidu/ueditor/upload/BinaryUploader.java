@@ -40,7 +40,7 @@ public class BinaryUploader {
 
 		try {
 			FileItemIterator iterator = upload.getItemIterator(request);
-
+			
 			while (iterator.hasNext()) {
 				fileStream = iterator.next();
 
@@ -54,6 +54,9 @@ public class BinaryUploader {
 			}
 
 			String savePath = (String) conf.get("savePath");
+			if(!request.getSession().getServletContext().getServerInfo().startsWith("jetty")){
+				savePath = "/../"+savePath;
+			}
 			String originFileName = fileStream.getName();
 			String suffix = FileType.getSuffixByFilename(originFileName);
 

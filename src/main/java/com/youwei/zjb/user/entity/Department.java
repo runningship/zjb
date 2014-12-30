@@ -78,6 +78,8 @@ public class Department {
 	 */
 	public Integer price;
 	
+	public Integer useIm;
+	
 	//服务过期时间
 	public Date deadline;
 	

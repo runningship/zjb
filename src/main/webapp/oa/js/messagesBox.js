@@ -63,7 +63,6 @@
 	  function LayerShow(id){
 		 
 		// $("#"+id).css("display","block");
-		 layerShowBox(id);
 		 
 		    $("#"+id).children(".cocoLayerTit").mousedown(function(e){  
 				_move=true;  
@@ -143,15 +142,7 @@
 				 }
 				 
 			  }
-/*			  
-			  for( var i=0;i<$lxrNum;i++){
-				 
-				 var y = $("ul#"+ id +" li").eq(i).find(".cocoWinNewsNum").size();
-				
-				 if(y>0){
-					 $("ul#"+ id +" li").eq(i).insertBefore($firstUnlineLi);
-				 }
-			  } */
+
 			  
 	  }
 	  
@@ -173,9 +164,26 @@
 			 
 			 $("body").append(htmlText);
 			 
+		     layerShowBox(id);
+			 
 			 LayerShow(id);
 		  
 	  }
+	  
+	  
+	  function openListWin(id,w,h,tit,s){// 调用方式：onclick="openNewWin('addGg','980','650','全部公告','gg.html')"
+		 
+	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div>";
+			 
+			 $("body").append(htmlText);
+			 
+			 layerShowBox(id);
+	  
+			  $(window).resize(function() {
+				  layerShowBox(id);
+			  });		  
+	  }
+
 	  
 	  
 	  

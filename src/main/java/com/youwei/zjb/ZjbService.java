@@ -84,6 +84,7 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		mv.jspData.put("depts",depts);
 		
 		mv.jspData.put("domainName", ConfigCache.get("domainName" , "www.zhongjiebao.com"));
+		mv.jspData.put("use_im", me.Company().useIm);
 		return mv;
 	}
 }

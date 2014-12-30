@@ -168,39 +168,12 @@ $('.menuSide').find('.curr a').click();
     my_uid=${me.id};
     my_avatar=${me.avatar};
     my_name = '${me.uname}';
+    ws_url = 'ws://${domainName}:9099?uid=${me.id}&city=${me.domain}';
     //start IM	
-	connectWebSocket();
+	
 });
 
-function connectWebSocket(){
-    if(web_socket_on){
-        return;
-    }
-    coco_ws = new WebSocket('ws://${domainName}:9099?uid=${me.id}&city=${me.domain}');
-    console.log('正在连接...');
-    coco_ws.onopen = function() {
-        web_socket_on = true;
-        console.log('登录成功');
-        $('#avatarId').removeClass('user_offline_filter');
-    };
-    coco_ws.close = function() {
-        web_socket_on = false;
-        console.log('we are getting offline');
-        //掉线重连
-        setTimeout(connectWebSocket,10*1000);
-        $('#avatarId').addClass('user_offline_filter');
-    };
-    coco_ws.onmessage = function(e) {
-        console.log('收到消息:'+e.data);
-        onReceiveMsg(e.data);
-    };
-    coco_ws.onerror = function(e) {
-        console.log('连接失败:10秒后重新连接.'+e);
-        //掉线重连
-        setTimeout(connectWebSocket,10*1000);
-        $('#avatarId').addClass('user_offline_filter');
-    };
-}
+
 $(window).resize(function() {
     setSideMenuCurr();
 });
@@ -257,10 +230,12 @@ function notify(){
 </script>
 </head>
 <body>
+<c:if test="${use_im==1}">
+    <div>
+        <jsp:include page="oa/coco.jsp"></jsp:include>
+    </div>
+</c:if>
 
-<div>
-	<jsp:include page="oa/coco.jsp"></jsp:include>
-</div>
 
 <div class="html default table MainLeft">
     <div class="tr">

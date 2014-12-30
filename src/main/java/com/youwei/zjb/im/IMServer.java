@@ -63,6 +63,7 @@ public class IMServer extends WebSocketServer{
 		//希望在这个地方就实现用户信息的确认
 		String path = handshake.getResourceDescriptor();
 		path = path.replace("/?", "");
+		System.out.println("web socket connector path is: "+path);
 		try {
 			Map<String, Object> map = URLUtil.parseQuery(path);
 			Integer uid = Integer.valueOf(map.get("uid").toString());

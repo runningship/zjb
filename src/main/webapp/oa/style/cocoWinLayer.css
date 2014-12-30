@@ -3,7 +3,7 @@
 
 .cocoLayer{ width:100%; max-height:450px; position:absolute; top:70px; left:100px; box-shadow: #666 0px 0px 10px; border-radius:3px; font-family:"宋体"; background-color:#ffffff; z-index:99999;}
 
-.cocoLayerTit{ width:100%; height:32px; background-color:#1c3748; line-height:32px; border-radius:3px 3px 0 0;}
+.cocoLayerTit{ width:100%; height:32px; background-color:#1c3748; line-height:32px; border-radius:3px 3px 0 0; z-index:10;}
 
 .cocoLayerTit span{ color:#76e4e5; font-size:13px; margin-left:15px;}
 
@@ -39,3 +39,117 @@
 .cocoLayerMain .btnMain .scBtn{ padding:6px 25px; background-color:#f55252; border-radius:2px; color:#ffffff; border:none; cursor:pointer;}
 
 .cocoLayerMain .btnMain .scBtn:hover{ background-color:#de2a2a;}
+
+
+
+
+
+
+
+.ggLayerMain{font-size:12px; width:100%; height:100%; background-color:#e2e2e2;  position:relative; overflow: hidden; overflow-y:auto;}
+
+.ggLayerMainScol{ float:left; margin-bottom:50px; width:100%;}
+
+.ggListBox{ width:47%; height:45px; float:left; margin:20px 0 0 2%; font-family:"宋体";}
+
+.ggListBoxTit{ width:100%; height:45px; background-color:#f0f0f0; float:left; border-radius:3px;}
+
+.ggBorLeftRed{ border-left:3px solid #ef4f4f;}
+.ggBorLeftBlue{ border-left:3px solid #1bacae;}
+.ggBorLeftGreen{ border-left:3px solid #6cb95b;}
+.ggBorLeftGrey{ border-left:3px solid #8497a3;}
+
+.ggListBoxTit .tit { margin-left:15px; color: #2a404e; float:left;}
+
+.ggListBoxTit .tit h2{ font-weight:normal; line-height:28px; margin-left:0px; font-size: 13px;}
+
+.ggListBoxTit i{ padding-left:18px; font-style:normal; font-size: 12px}
+
+.ggListBoxTit .conTime { height:13px; line-height:13px; font-size: 12px;color: #a8b6be;}
+.ggListBoxTit i.clock{ float:left; margin-left:15px; height:13px; background:url(../cocoImages/timeClock.png) no-repeat;}
+.ggListBoxTit i.person{ float:left; margin-right:5px; height:13px; background:url(../images/person.png) no-repeat;}
+
+.ggListBoxBot{ float:right; height:15px; margin-top:5px;}
+
+.ggListBoxBot i {height: 15px; line-height:15px;cursor: pointer; padding-left:18px; margin:0 10px 0 5px; font-size:12px; font-style:normal; font-family:"微软雅黑"; color:#b3c0c7;}
+
+.ggListBoxBot i.zan {background-position: -4px -232px;}
+.ggListBoxBot i.zan:hover, .ggListBoxBot i.zanSel{ background-position:-38px -232px;}
+
+.ggListBoxBot i.hf {background-position: -4px -201px;}
+.ggListBoxBot i.hf:hover, .ggListBoxBot i.hfSel{ background-position:-38px -201px;}
+
+
+.ggLayerMainPage{ position:fixed; bottom:0; left:0; width:100%; height:50px; background-color:#e2e2e2; border-top:1px solid #dddddd;}
+
+.ggLayerMainPageCon{ width:520px; height:28px; margin:0 auto; margin-top:15px; text-align:center; background:url(../images/pageBg.png) no-repeat center bottom; font-family:"宋体";}
+
+.ggLayerMainPageCon button{ background:none; border:none; cursor:pointer; width:31px; text-align:center; height:21px; line-height:21px;}
+
+.ggLayerMainPageCon .moreBox{ font-weight:bold; color:#068d90;}
+
+.ggLayerMainPageCon .numBox{ font-family:Arial; font-size:13px;  color:#5e6b73;}
+
+.ggLayerMainPageCon button.numBox:hover{ background:url(../images/numBg.png) no-repeat center bottom; color:#ffffff;}
+
+
+.textMoeInfoMain{ width:96%; margin:20px 2%; padding-bottom:50px; float:left; font-family:"宋体";}
+
+.layerInfoBox{ width:100%; padding-bottom:20px; position:relative;}
+
+.layerInfoBoxTit{ height:60px; width:100%; position:relative; display:inline-block; line-height:23px; padding-top:10px; background-color:#ffffff;}
+
+.layerInfoBoxImg{ width:56px; height:48px; overflow:hidden; margin:0 16px;}
+
+.layerInfoBoxTit .yh{ color:#899ba5; font-size:12px;}
+
+.layerInfoBoxTit .time{ color:#899ba5; font-size:12px; margin-left:30px;}
+
+.layerInfoBoxTit .tit{ color:#3e525e; font-size:15px;}
+
+.layerInfoBoxTit a.tit:hover{ color:#2b92cc;}
+
+.layerInfoCaozuo{ position:absolute; top:10px; right:0;}
+
+.layerInfoCaozuo i{ width:15px; height:15px; overflow:hidden; text-indent:999999px; margin-right:15px; cursor:pointer;}
+
+.layerInfoCaozuo i.xg{ background-position:-4px -133px;}
+.layerInfoCaozuo i.xg:hover, .layerInfoCaozuo i.xgSel{ background-position:-38px -133px;}
+.layerInfoCaozuo i.zan{ background-position:-4px -168px;}
+.layerInfoCaozuo i.zan:hover, .layerInfoCaozuo i.zanSel{ background-position:-38px -168px;}
+.layerInfoCaozuo i.hf{ background-position:-4px -201px;}
+.layerInfoCaozuo i.hf:hover, .layerInfoCaozuo i.hfSel{ background-position:-38px -201px;}
+
+.layerInfoBoxContent{ height:30px; width:100%; line-height:30px; background-color:#07b5be; font-size:12px; color:#fff;}
+
+.layerInfoBoxContent a.back{ color:#ffffff; margin-right:15px;}
+.layerInfoBoxContent a.back:hover{ text-decoration:underline;}
+
+.layerInfoBoxConInfo{ width:96%; padding:10px 2%; background-color:#ffffff; font-size:12px; line-height:25px; color:#2a404e;}
+
+.layerInfoBoxConInfo p{ text-indent:25px;}
+
+.layerAddHf{ width:100%; background-color:#ffffff; margin-top:15px; float:left;}
+
+.layerAddHfSendWrite{ width:600px; height:50px; padding:5px; margin:5px 0; margin-left:5px; float:left; background-color:#f7f7f7; border:1px solid #ececec;}
+
+.layerAddHfNewsWrite{ width:600px; height:50px; font-size:12px; color:#636f80; background:none; border:none;outline: none;resize: none;}
+
+.layerSendBtnMessage{ width:80px; height:62px; background-color:#058d8f; border:1px solid #058d8f; margin-top:5px; color:#ffffff; font-size:16px; font-family:"微软雅黑";}
+
+
+.layerInfoHfList{ width:100%; background-color:#ffffff; margin-top:15px; float:left; padding:10px 0;}
+
+.layerInfoHfCon{ margin:0 3%; width:94%; float:left; position:relative; border-left:2px solid #c8d2d7;}
+
+.layerInfoHfCon .tit{ width:100%; float:left; color:#2a404e; margin:15px 0 10px 0;}
+
+.layerInfoHfCon .titText{ margin-left:20px;}
+.layerInfoHfCon .titTime{ color:#899ba5;}
+
+.layerInfoHfCon .con{ width:100%; float:left; line-height:20px; padding-bottom:10px; color:#96a3ac; border-bottom:1px dashed #cdd7dd;}
+
+.layerInfoHfCon .con .conMain{ margin-left:20px; display:block;}
+
+
+.layerInfoBoxLine img {margin-top: 12px;width: 24px;height: 24px;border-radius: 13px; border:2px solid #ffffff; position:absolute;left:-15px;top: -2px;}

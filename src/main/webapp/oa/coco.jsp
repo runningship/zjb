@@ -10,6 +10,8 @@
 <script type="text/javascript">
 
 $(function(){
+    connectWebSocket();
+    
     ue_text_editor = UE.getEditor('editor', {
         toolbars: [
             ['simpleupload','emotion','spechars','forecolor']
@@ -118,9 +120,9 @@ $(function(){
 
 </div>
 
-<!-- <div style=" position:absolute; bottom:0; right:0;cursor:pointer;width:50px; height:50px; overflow:hidden; z-index:9999999;"> -->
-<!--      <span><img onclick=" $('.cocoMain').toggleClass('hide');" src="/style/images/litFox.png" width="50"></span> -->
-<!-- </div> -->
+<div style=" position:absolute; bottom:0; right:0;cursor:pointer;width:50px; height:50px; overflow:hidden; z-index:9999999;">
+     <span><img onclick=" $('.cocoMain').toggleClass('hide');" src="/style/images/litFox.png" width="50"></span>
+</div>
 
 
 
