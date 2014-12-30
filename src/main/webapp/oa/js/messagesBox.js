@@ -167,7 +167,7 @@
 			 
 		     layerShowBox(id);
 			 
-			/* LayerShow(id);*/
+			 LayerShow(id);
 		  
 	  }
 	  
