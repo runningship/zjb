@@ -135,24 +135,17 @@ public class IMServer extends WebSocketServer{
 				ugs.lasttime = new Date();
 			}
 			dao.saveOrUpdate(ugs);
-//			for(Map map : list){
-//				Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
-//				if(recvId.equals(senderId)){
-//					continue;
-//				}
-//				conn = ap.get(recvId);
-//				if(conn!=null){
-//					//send group message
-//					sendMsg(city,senderId , recvId,data,true);
-//				}
-//				//save group message status
-//				UserGroupStatus gms = new UserGroupStatus();
-//				gms.groupMsgId = gMsg.id;
-//				gms.hasRead = 0;
-//				gms.receiverId = recvId;
-//				gms.groupId = groupId;
-//				dao.saveOrUpdate(gms);
-//			}
+			for(Map map : list){
+				Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
+				if(recvId.equals(senderId)){
+					continue;
+				}
+				conn = ap.get(recvId);
+				if(conn!=null){
+					//send group message
+					sendMsg(city,senderId , recvId,data,true);
+				}
+			}
 		}
 	}
 
