@@ -17,8 +17,10 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.feedback.entity.Reply;
 import com.youwei.zjb.oa.entity.Notice;
 import com.youwei.zjb.oa.entity.NoticeReceiver;
+import com.youwei.zjb.oa.entity.NoticeReply;
 import com.youwei.zjb.oa.entity.Site;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.JSONHelper;
@@ -58,12 +60,18 @@ public class NoticeService {
 		return mv;
 	}
 	
+	@Transactional
 	@WebMethod
 	public ModelAndView view(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
-		dao.execute("update NoticeReceiver set hasRead=1 where noticeId=? and receiverId=?", id,ThreadSession.getUser().id);
-		mv.data.put("notice", JSONHelper.toJSON(po));
+		po.reads++;
+		dao.saveOrUpdate(po);
+		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{id , ThreadSession.getUser().id});
+		if(nr!=null){
+			nr.hasRead=1;
+		}
+		mv.jspData.put("notice", JSONHelper.toJSON(po));
 		return mv;
 	}
 	
@@ -152,12 +160,15 @@ public class NoticeService {
 		return mv;
 	}
 	
-	@WebMethod
+	@WebMethod(name="notice/list")
 	public ModelAndView list(OAQuery query, Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		User user = ThreadSession.getUser();
-		StringBuilder hql = new StringBuilder("select nr.hasRead as hasRead,n.id as id, n.title as title, n.addtime as addtime, nc.fenlei as classTitle, u.uname as uname from Notice n, NoticeReceiver nr , NoticeClass nc , User u where n.id=nr.noticeId and n.claid=nc.id and u.id=n.userId and nr.receiverId=?");
+		StringBuilder hql = new StringBuilder("select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, n.reads as reads, n.replys as replys, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
+				+ " NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=? and nr.receiverId=? ");
+		
+		params.add(query.isPublic);
 		params.add(user.id);
 		page.orderBy = "n.addtime";
 		page.order = Page.DESC;
@@ -179,4 +190,16 @@ public class NoticeService {
 		mv.data.put("msg", "删除成功");
 		return mv;
 	}
+	
+	@WebMethod
+	@Transactional
+	public ModelAndView addReply(NoticeReply reply){
+		ModelAndView mv = new ModelAndView();
+		Notice po = dao.get(Notice.class, reply.noticeId);
+		po.replys++;
+		dao.saveOrUpdate(reply);
+		dao.saveOrUpdate(po);
+		return mv;
+	}
+	
 }

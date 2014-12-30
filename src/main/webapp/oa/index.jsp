@@ -47,10 +47,10 @@ function selectZan(id,obj){
       </div>
       <div class="tr w100">
           <div class="td oaInfoTit">
-            <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft" onclick="openNewWin('addArt','700','添加文章','article/add.jsp')"></i></div>  <a href="#">更多></a>  
+            <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft" onclick="openNewWin('addArt','600','430','添加文章','article/add.jsp')"></i></div>  <a href="#">更多></a>  
           </div>
           <div class="td oaInfoTit">
-            <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','700','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','650','800','全部公告','notice/list.jsp')">更多></a></div>
+            <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','600','480','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','980','650','全部公告','notice/list.html')">更多></a></div>
           </div>
           <div class="tr w100">
             <div class="td" style="width:50%; height:100%;overflow:hidden;">
@@ -66,7 +66,7 @@ function selectZan(id,obj){
                           <p><a href="#" class="tit">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
-                          <i class="Bg xg" onclick="openNewWin('editArt','700','编辑文章','article/edit.jsp?id=${article.id}')">修改</i>
+                          <i class="Bg xg" onclick="openNewWin('editArt','700','450','编辑文章','article/edit.jsp?id=${article.id}')">修改</i>
                           <i class="Bg <c:if test="${article.zan==0}">zan</c:if> <c:if test="${article.zan==1}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
                           <span class="zan_count">${article.zans}</span>
                           <i class="Bg hf">回复</i>
@@ -97,8 +97,8 @@ function selectZan(id,obj){
                             <!-- <p><span class="marginLeft10 con">${notice.conts}</span></p> -->
                           </div>
                           <div class="ggBoxCaozuo">
-                            <i class="Bg xgSel" onclick="openNewWin('editGg','700','编辑公告','notice/edit.jsp?id=${notice.id}')">修改</i>
-                            <i class="Bg zanSel">点赞</i>
+                            <i class="Bg xgSel" onclick="openNewWin('editGg','700','450','编辑公告','notice/edit.jsp?id=${notice.id}')">修改</i>
+                            <i class="Bg zanSel" onclick="openNewWin('viewGg','700','450','查看公告','notice/view.jsp?id=${notice.id}')">点赞</i>
                             <i class="Bg hfSel">回复</i>
                           </div>
                         </div>
@@ -117,6 +117,7 @@ function selectZan(id,obj){
         </div>
       </div>
 </div>
+
 
 <!-- <div class="cocoLayer" id="cocoLayerWebLine" style="width:700px; display:none;height:800px;">
    
@@ -150,6 +151,8 @@ function selectZan(id,obj){
    <div class="cocoLayerTit"><span>修改公告</span><i class="closeBg close" onclick="noticeEdit('${notice.id}')" title="关闭"></i></div>
    <iframe src="notice/edit.jsp" style="width:100%;border:0px;height:410px;"></iframe>
 </div> -->
+
+
 
 </body>
 </html>

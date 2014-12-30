@@ -13,7 +13,9 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.cache.ConfigCache;
+import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.im.IMServer;
+import com.youwei.zjb.sys.AuthorityService;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 
@@ -85,6 +87,15 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		
 		mv.jspData.put("domainName", ConfigCache.get("domainName" , "www.zhongjiebao.com"));
 		mv.jspData.put("use_im", me.Company().useIm);
+		
+		StringBuilder auths = new StringBuilder();
+		if(me.getRole()!=null){
+			for(RoleAuthority ra : me.getRole().Authorities()){
+				auths.append(ra.name).append(",");
+			}
+		}
+		mv.jspData.put("auths", auths);
+//		auths.toString().indexOf("cw_on");
 		return mv;
 	}
 }

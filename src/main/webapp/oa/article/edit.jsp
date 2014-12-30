@@ -45,7 +45,7 @@ function save(){
 <style type="text/css">
 
 .tableleft{ width:100px;}
-.addSureBtn{ padding:6px 25px; background-color:#f55252; border-radius:2px; color:#ffffff; border:none; cursor:pointer;}
+.addSureBtn{ padding:6px 25px; background-color:#f55252; border-radius:2px; color:#ffffff; border:none; cursor:pointer;margin-top: 12px;}
 
 .addSureBtn:hover{ background-color:#de2a2a;}
 
@@ -55,7 +55,7 @@ function save(){
 <form name="form1" method="post" class="definewidth m20">
 <input name="isPublic"type="hidden" value="1">
 <input name="id" id="id" type="hidden" value="${article.id}">
-<table class="table table-bordered table-hover m10" style="width:100%; height:395px; font-family:'宋体'; font-size:13px; padding-top:15px;">
+<table class="table table-bordered table-hover m10" style="width:100%; height:100%; font-family:'宋体'; font-size:13px; padding-top:15px;">
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">标题:</span></td>
       <td valign="middle"><input type="text" name="title" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" value="${article.title}"/></td>
@@ -77,7 +77,7 @@ function save(){
     </tr>
     
     <tr>
-        <td align="right" valign="middle" class="tableleft"></td>
+        <td align="right" valign="middle" class="tableleft" height="50"></td>
         <td valign="middle">
           <button class="addSureBtn" type="button" onclick="save();return false;">保存</button>
         </td>

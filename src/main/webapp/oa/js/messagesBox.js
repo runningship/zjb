@@ -65,6 +65,7 @@
 		// $("#"+id).css("display","block");
 		 
 		    $("#"+id).children(".cocoLayerTit").mousedown(function(e){  
+			
 				_move=true;  
 				_x=e.pageX-parseInt($("#"+id).css("left"));  
 				_y=e.pageY-parseInt($("#"+id).css("top"));  
@@ -156,17 +157,17 @@
 		   
 	  }
 	  
-	 function openNewWin(id,w,tit,s){
+	 function openNewWin(id,w,h,tit,s){
 		if ($('#'+id).length>0) {
 			return;
 		};
-	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; display:block;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:410px; margin-bottom:20px;'></iframe></div>";
+	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block;'><div class='cocoLayerTit' onclick='LayerShow(id)'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px; margin-bottom:20px;'></iframe></div>";
 			 
 			 $("body").append(htmlText);
 			 
 		     layerShowBox(id);
 			 
-			 LayerShow(id);
+			/* LayerShow(id);*/
 		  
 	  }
 	  

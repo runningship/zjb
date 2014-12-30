@@ -35,7 +35,7 @@ $(function(){
          <div class="tr w100">
 
               <div class="td cocoMainTit oaTitBgCoco">
-                <div class=""><img src="/oa/images/avatar/${me.avatar}.jpg" class="user_offline_filter" id="avatarId" onclick="openNewWin('changeAvatar','660','修改头像','oa/avatar.jsp');" />
+                <div class=""><img src="/oa/images/avatar/${me.avatar}.jpg" class="user_offline_filter" id="avatarId" onclick="openNewWin('changeAvatar','690','500','修改头像','oa/avatar.jsp');" />
                     <div title="" class="mainInfo mainName" id="user_name_div">${me.uname}</div>
                     <input id="user_name_input" style="display:none;margin-top:5px;" onblur="endChangeName();" />
                     <div class="mainInfo mainabout">${dname}</div>
@@ -120,8 +120,11 @@ $(function(){
 
 </div>
 
-<div style=" position:absolute; bottom:0; right:0;cursor:pointer;width:50px; height:50px; overflow:hidden; z-index:9999999;">
-     <span><img onclick=" $('.cocoMain').toggleClass('hide');" src="/style/images/litFox.png" width="50"></span>
+<div style=" position:absolute; bottom:1px; right:15px;cursor:pointer;width:30px; height:30px; overflow:hidden; z-index:99999992;">
+     <span><img onclick=" $('.cocoMain').toggleClass('hide');" src="/style/images/litFox.png" width="30"></span>
+</div>
+<div style="position:absolute; bottom:0; right:10px; width:231px; height:46px; z-index:99999991;" onselectstart="return false;">
+     <div onclick="recoverChatPanel();" class="cocoNews" style="text-align:center;"><span class="name chat_title">COCO 聊天</span></div>
 </div>
 
 

@@ -63,7 +63,7 @@ function save(){
 <body>
 <form name="form1" method="post" class="definewidth m20">
 <input name="receivers" id="receivers" type="hidden">
-<table class="table table-bordered table-hover m10" style="width:100%; height:395px; font-family:'宋体'; font-size:13px; padding-top:15px;">
+<table class="table table-bordered table-hover m10" style="width:100%; height:100%; font-family:'宋体'; font-size:13px; padding-top:15px;">
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">标题:</span></td>
       <td valign="middle"><input type="text" name="title" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" /></td>
