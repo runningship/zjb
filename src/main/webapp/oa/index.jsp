@@ -50,7 +50,7 @@ function selectZan(id,obj){
             <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft" onclick="openNewWin('addArt','700','添加文章','article/add.jsp')"></i></div>  <a href="#">更多></a>  
           </div>
           <div class="td oaInfoTit">
-            <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','700','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','980','650','全部公告','notice/list.jsp')">更多></a></div>
+            <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','700','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','650','800','全部公告','notice/list.jsp')">更多></a></div>
           </div>
           <div class="tr w100">
             <div class="td" style="width:50%; height:100%;overflow:hidden;">
