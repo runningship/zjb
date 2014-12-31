@@ -103,6 +103,9 @@ public class IMServer extends WebSocketServer{
 	@Override
 	public void onMessage(WebSocket conn, String message) {
 		LogUtil.info(message);
+		if("ping".equals(message)){
+			return;
+		}
 		JSONObject data = JSONObject.fromObject(message);
 		String city = (String) conn.getAttributes().get("city");
 		Integer senderId = Integer.valueOf(conn.getAttributes().get("uid").toString());

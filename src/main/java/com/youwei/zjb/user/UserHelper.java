@@ -2,11 +2,14 @@ package com.youwei.zjb.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
+import com.youwei.zjb.im.IMServer;
 import com.youwei.zjb.user.entity.User;
 
 public class UserHelper {
@@ -59,5 +62,22 @@ public class UserHelper {
 			}
 		}
 		return false;
+	}
+	
+	public static List<Map> getOnlineContacts(int userId){
+		User me = SimpDaoTool.getGlobalCommonDaoService().get(User.class, userId);
+		List<Map> users = SimpDaoTool.getGlobalCommonDaoService().listAsMap("select id as uid from User where cid=?", me.cid);
+		for(Map user : users){
+			Integer uid = (Integer)user.get("uid");
+			if(userId==uid){
+				continue;
+			}
+			if(IMServer.isUserOnline(me.domain, uid)){
+				user.put("online", true);
+			}else{
+				user.put("online", false);
+			}
+		}
+		return users;
 	}
 }

@@ -691,9 +691,17 @@ function connectWebSocket(){
         onReceiveMsg(e.data);
     };
     coco_ws.onerror = function(e) {
+    	web_socket_on = false;
         console.log('连接失败:10秒后重新连接.'+e);
         //掉线重连
         setTimeout(connectWebSocket,10*1000);
         $('#avatarId').addClass('user_offline_filter');
     };
+}
+
+function heartBeat(){
+	if(coco_ws && web_socket_on){
+		coco_ws.send("ping");
+	}
+	setTimeout(heartBeat,300*1000);
 }

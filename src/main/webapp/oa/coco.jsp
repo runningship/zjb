@@ -25,6 +25,7 @@ $(function(){
     });
 
     getUnReadChats();
+    heartBeat();
 });
 
 </script>
@@ -131,7 +132,7 @@ $(function(){
 
 <div class="cocoWin" id="layerBoxDj" style=" display:none;">
 
-     <div class="cocoWintit" id="cocoWintit"><span class="chat_title"></span><i class="closeBg none" onclick="closeBox()" title="最小化"></i><i class="closeBg closeX" onclick="closeBox(closeAllChat)" title="关闭"></i></div>
+     <div class="cocoWintit" id="cocoWintit" style="-webkit-user-select:none;"><span class="chat_title Fleft"></span><i class="closeBg none" onclick="closeBox()" title="最小化"></i><i class="closeBg closeX" onclick="closeBox(closeAllChat)" title="关闭"></i></div>
      
      <div class="cocoWinContent">
      

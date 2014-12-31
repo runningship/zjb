@@ -51,14 +51,12 @@
                 
                 <div class="layerInfoBoxContent">
                 
-                     <span class="marginRight55 marginLeft20"><span>阅读：102</span> &nbsp;&nbsp;&nbsp; <span>留言：${replys}</span><span class="Fright"><a href="gg.html" class="back">返回公告列表</a></span></span>
+                     <span class="marginRight55 marginLeft20"><span>阅读：${notice.reads}</span> &nbsp;&nbsp;&nbsp; <span>留言：${notice.replys}</span><span class="Fright"><a href="gg.html" class="back">返回公告列表</a></span></span>
                 
                 </div>
                 <div class="layerInfoBoxConInfo">
                 
-                     <p>新华网北京12月29日电 第二十三次全国高等学校党的建设工作会议28日至29日在京召开。中共中央总书记、国家主席、中央军委主席习近平作出重要指示强调，高校肩负着学习研究宣传马克思主义、培养中国特色社会主义事业建设者和接班人的重大任务。加强党对高校的领导，加强和改进高校党的建设，是办好中国特色社会主义大学的根本保证。</p>
-
-　　<p>习近平指出，办好中国特色社会主义大学，要坚持立德树人，把培育和践行社会主义核心价值观融入教书育人全过程；强化思想引领，牢牢把握高校意识形态工作领导权；坚持和完善党委领导下的校长负责制，不断改革和完善高校体制机制；全面推进党的建设各项工作，有效发挥基层党组织战斗堡垒作用和共产党员先锋模范作用。各级党委和宣传思想部门、组织部门、教育部门要加强对高校党的建设工作的领导和指导，坚持党的教育方针，坚持社会主义办学方向，加强和改进思想政治工作，切实把党要管党、从严治党落到实处。</p>
+                     <p>${notice.conts}</p>
                 
                 </div>
                 

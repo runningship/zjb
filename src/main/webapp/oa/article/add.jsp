@@ -33,6 +33,9 @@ function save(){
         url: '/c/oa/notice/save',
         data:a,
         mysuccess: function(data){
+
+            window.parent.doSearch();
+            window.parent.LayerRemoveBox("addArt");
             alert('发布成功');
         }
     });

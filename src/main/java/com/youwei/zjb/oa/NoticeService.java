@@ -45,24 +45,33 @@ public class NoticeService {
 	public ModelAndView index(){
 		ModelAndView mv = new ModelAndView();
 		//文化墙
-		List<Map> articleList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime "
-				+ ",n.zans as zans ,nr.zan as zan from Notice n , NoticeReceiver nr where n.id=nr.noticeId and isPublic=1 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
+//		List<Map> articleList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime "
+//				+ ",n.zans as zans ,nr.zan as zan from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
 		//公告
-		List<Map> noticeList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
-				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
-		mv.jspData.put("articleList", articleList);
-		mv.jspData.put("noticeList", noticeList);
+		Page<Map> page = new Page<Map>();
+		page.setPageSize(6);
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
+				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
+//		List<Map> noticeList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
+//				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
+		mv.jspData.put("noticeList", page.getResult());
+		
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime "
+				+ ",n.zans as zans ,nr.zan as zan from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
+		mv.jspData.put("articleList", page.getResult());
+		
 		
 		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSession.getUser().id);
 		List<Site> shareList = dao.listByParams(Site.class, "from Site where uid is null");
 		mv.jspData.put("personalList", JSONHelper.toJSONArray(personalList));
 		mv.jspData.put("shareList", JSONHelper.toJSONArray(shareList));
+		mv.jspData.put("myId", ThreadSession.getUser().id);
 		return mv;
 	}
 	
 	@Transactional
-	@WebMethod
-	public ModelAndView view(int id){
+	@WebMethod(name="notice/get")
+	public ModelAndView get(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
 		po.reads++;
@@ -71,7 +80,19 @@ public class NoticeService {
 		if(nr!=null){
 			nr.hasRead=1;
 		}
-		mv.jspData.put("notice", JSONHelper.toJSON(po));
+		User sender = dao.get(User.class, po.senderId);
+		po.senderName = sender.uname;
+		po.senderAvatar = sender.avatar;
+		mv.data.put("notice", JSONHelper.toJSON(po));
+		mv.data.put("nr", JSONHelper.toJSON(nr));
+		return mv;
+	}
+	
+	@WebMethod(name="notice/reply/list")
+	public ModelAndView listReply(Page<Map> page , int noticeId){
+		ModelAndView mv = new ModelAndView();
+		page = dao.findPage(page, "select u.uname as replyUname, u.avatar as replyAvatar , reply.conts as conts ,reply.addtime as replytime from NoticeReply reply ,User u where u.id=reply.replyUid and noticeId=?",true, new Object[]{noticeId});
+		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}
 	
@@ -144,6 +165,8 @@ public class NoticeService {
 		notice.senderId = user.id;
 		notice.addtime = new Date();
 		notice.zans=0;
+		notice.reads = 0;
+		notice.replys = 0;
 		dao.saveOrUpdate(notice);
 		if(!receivers.contains(user.id.toString())){
 			receivers +=","+user.id;
@@ -191,12 +214,14 @@ public class NoticeService {
 		return mv;
 	}
 	
-	@WebMethod
+	@WebMethod(name="notice/reply/add")
 	@Transactional
 	public ModelAndView addReply(NoticeReply reply){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, reply.noticeId);
 		po.replys++;
+		reply.replyUid = ThreadSession.getUser().id;
+		reply.addtime = new Date();
 		dao.saveOrUpdate(reply);
 		dao.saveOrUpdate(po);
 		return mv;

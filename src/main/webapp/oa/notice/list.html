@@ -61,7 +61,7 @@ $(function(){
           <div class="ggListBox id_notice_list">
                <div class="ggListBoxTit ggBorLeftRed">
                     <div class="tit">
-                        <h2>${title}</h2>
+                        <h2 onclick="window.location='/oa/notice/view.html?id=${id}'">${title}</h2>
                         <div class="conTime"><i class="person">${senderName}</i><i class="clock">${addtime}</i></div>
                     </div>
                     <div class="ggListBoxBot"><i class="Bg zan" onclick="selectZan(${article.id},this);return false;">${hasRead}</i><i class="Bg hfSel">${replys}</i></div>
@@ -71,7 +71,7 @@ $(function(){
         <div class="ggLayerMainPage">
               <div style="display:table-row; height:33px;">
                                 
-                   <div class="divPage"  style=" width:99%; margin:0 0.5%;">
+                   <div class="divPage"  style=" width:100%; float:left;">
                    
                         <div class="pageMain footer">
                           <div class="maxHW mainCont ymx_page foot_page_box"></div>

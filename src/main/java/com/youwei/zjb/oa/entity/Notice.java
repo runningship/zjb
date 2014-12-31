@@ -36,4 +36,7 @@ public class Notice {
 	public Integer replys;
 	
 	public Integer orderx;
+	
+	public transient String senderName;
+	public transient Integer senderAvatar;
 }

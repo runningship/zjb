@@ -27,6 +27,12 @@ function selectZan(id,obj){
   });
 }
 
+function doSearch(){
+  setTimeout(function(){
+    window.location.reload();
+  },1000);
+}
+
 </script>
 <body>
 <div class="oa_Main oa_W">
@@ -37,9 +43,9 @@ function selectZan(id,obj){
           <ul class="titBox">
             <li><i class=" Bg whq"></i><span class="color1">文化墙</span></li>
             <li><span class="line"></span></li>
-            <li><i class=" Bg gg"></i><span class="color2">文化墙</span></li>
+            <li><i class=" Bg gg"></i><span class="color2">公告</span></li>
             <li><span class="line"></span></li>
-            <li><i class=" Bg wzsc"></i><span class="color3">文化墙</span></li>
+            <li><i class=" Bg wzsc"></i><span class="color3">网址收藏</span></li>
           </ul>
         </div>
         <div class="td oaTit oaTitBgInfo">
@@ -47,7 +53,7 @@ function selectZan(id,obj){
       </div>
       <div class="tr w100">
           <div class="td oaInfoTit">
-            <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft" onclick="openNewWin('addArt','600','430','添加文章','article/add.jsp')"></i></div>  <a href="#">更多></a>  
+            <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span><i class="Bg add Fleft" onclick="openNewWin('addArt','600','430','添加文章','article/add.jsp')"></i></div>  <a href="#" onclick="openListWin('listArticle','980','650','全部文章','article/list.html')">更多></a>  
           </div>
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','600','480','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','980','650','全部公告','notice/list.html')">更多></a></div>
@@ -60,16 +66,19 @@ function selectZan(id,obj){
                     <div class="textInfoBox">
                       <div class="infoBoxLine"><img src="images/pageLineicon.png" /></div>
                       <div class="infoBoxTit">
-                        <div class="infoListImg Fleft"><img src="images/mr.jpg" /></div>
+                        <div class="infoListImg Fleft"><img src="/oa/images/avatar/${article.senderAvatar }.jpg" /></div>
                         <div class="Fleft">      
-                          <p><span class="yh">${article.senderId }</span><span class="time">${article.addtime }</span></p>
-                          <p><a href="#" class="tit">${article.title }</a></p>
+                          <p><span class="yh">${article.senderName }</span><span class="time"><fmt:formatDate value="${article.addtime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
+                          <p><a href="#" class="tit" onclick="openNewWin('viewGg','980','650','查看文章','notice/view.html?id=${article.id}')">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
-                          <i class="Bg xg" onclick="openNewWin('editArt','700','450','编辑文章','article/edit.jsp?id=${article.id}')">修改</i>
+                          <c:if test="${article.senderId==myId}">
+                            <i class="Bg xgSel" onclick="openNewWin('editArt','700','450','编辑文章','article/edit.jsp?id=${article.id}')">修改</i>  
+                          </c:if>
+                          
                           <i class="Bg <c:if test="${article.zan==0}">zan</c:if> <c:if test="${article.zan==1}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
                           <span class="zan_count">${article.zans}</span>
-                          <i class="Bg hf">回复</i>
+                          <!-- <i class="Bg hf">回复</i> -->
                         </div>
                       </div>
                       <div class="infoBoxContent">
@@ -93,13 +102,15 @@ function selectZan(id,obj){
                             <p class="day"><fmt:formatDate value="${notice.addtime}" pattern="dd"/></p>
                           </div>
                           <div class="ggBoxContent">
-                            <p><span class="titL marginLeft10">Tit:</span><span class="tit marginLeft10">${notice.title}</span></p>
+                            <p><span class="titL marginLeft10">Tit:</span><span class="tit marginLeft10" onclick="openNewWin('viewGg','980','650','查看公告','notice/view.html?id=${notice.id}')">${notice.title}</span></p>
                             <!-- <p><span class="marginLeft10 con">${notice.conts}</span></p> -->
                           </div>
                           <div class="ggBoxCaozuo">
-                            <i class="Bg xgSel" onclick="openNewWin('editGg','700','450','编辑公告','notice/edit.jsp?id=${notice.id}')">修改</i>
-                            <i class="Bg zanSel" onclick="openNewWin('viewGg','700','450','查看公告','notice/view.jsp?id=${notice.id}')">点赞</i>
-                            <i class="Bg hfSel">回复</i>
+                            <c:if test="${notice.senderId==myId}">
+                              <i class="Bg xgSel" onclick="openNewWin('editGg','700','450','编辑公告','notice/edit.jsp?id=${notice.id}')">修改</i>
+                            </c:if>
+                            <i class="Bg zanSel">查看</i>
+                            <!-- <i class="Bg hfSel">回复</i> -->
                           </div>
                         </div>
                       </c:forEach>

@@ -17,7 +17,6 @@ public class NoticeReply {
 	//回复人
 	public Integer replyUid;
 	
-	//发送人
 	public Integer noticeId;
 	
 	public String conts;

@@ -135,7 +135,9 @@ i.add:hover{ background-position:-38px -100px;}
 
 .infoBoxTit{ height:60px; width:100%; position:relative; display:inline-block; line-height:23px; padding-top:10px; border-radius:5px 5px 0 0; background-color:#ffffff;}
 
-.infoListImg{ width:56px; height:48px; overflow:hidden; margin:0 16px;}
+.infoListImg{ width:48px; height:48px; margin:0 16px; margin-top:2px;}
+
+.infoListImg img{ width:48px; border-radius:4px;/* box-shadow:#999 0px 0px 5px;*/}
 
 .infoBoxTit .yh{ color:#899ba5; font-size:12px; font-family:"宋体";}
 
@@ -182,7 +184,7 @@ i.add:hover{ background-position:-38px -100px;}
 
 .ggBoxContent .titL{ color:#96babc; line-height:30px; font-size:12px;}
 
-.ggBoxContent .tit{ color:#3e525e; line-height:30px; font-size:13px;}
+.ggBoxContent .tit{ color:#3e525e; line-height:30px; font-size:13px; cursor:pointer;}
 
 .ggBoxContent .con{ color:#92a7b4; font-size:12px;}
 
@@ -279,7 +281,7 @@ i.add:hover{ background-position:-38px -100px;}
 
 .cocoList{ width:230px; margin-top:15px; float:left;}
 
-.cocoList li{ width:230px; float:left; position:relative; margin-bottom:15px; padding:5px 0;}
+.cocoList li{ width:230px; float:left; position:relative; margin-bottom:15px; padding:5px 0;-webkit-user-select:none;}
 
 .cocoList li:hover{ background-color:#1c3748;}
 
@@ -322,7 +324,7 @@ i.add:hover{ background-position:-38px -100px;}
 
 .qunBoxTit span{ margin-left:12px; color:#006566;}
 
-.qunBoxList{ width:100%; float:left;}
+.qunBoxList{ width:100%; float:left; height:529px; overflow:hidden; overflow-y:auto;}
 
 .qunBoxList ul{ width:100%; float:left;}
 .qunBoxList ul li{ width:130px; float:left; margin:0 10px; padding:5px 0; border-bottom:1px dashed #dddddd;}
