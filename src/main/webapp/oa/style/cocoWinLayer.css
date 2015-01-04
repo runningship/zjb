@@ -101,7 +101,9 @@
 
 .layerInfoBoxTit{ height:60px; width:100%; position:relative; display:inline-block; line-height:23px; padding-top:10px; background-color:#ffffff;}
 
-.layerInfoBoxImg{ width:56px; height:48px; overflow:hidden; margin:0 16px;}
+.layerInfoBoxImg{ width:48px; height:48px; overflow:hidden; margin:0 16px;}
+
+.layerInfoBoxImg{ width:48px; border-radius:4px;}
 
 .layerInfoBoxTit .yh{ color:#899ba5; font-size:12px;}
 
@@ -139,7 +141,7 @@
 
 .layerAddHfNewsWrite{ width:600px; height:50px; font-size:12px; color:#636f80; background:none; border:none;outline: none;resize: none;}
 
-.layerSendBtnMessage{ width:80px; height:62px; background-color:#058d8f; border:1px solid #058d8f; margin-top:5px; color:#ffffff; font-size:16px; font-family:"微软雅黑";}
+.layerSendBtnMessage{ width:80px; height:62px; cursor:pointer; background-color:#058d8f; border:1px solid #058d8f; margin-top:5px; color:#ffffff; font-size:16px; font-family:"微软雅黑";}
 
 
 .layerInfoHfList{ width:100%; background-color:#ffffff; margin-top:15px; float:left; padding:10px 0;}

@@ -50,13 +50,13 @@ public class NoticeService {
 		//公告
 		Page<Map> page = new Page<Map>();
 		page.setPageSize(6);
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime , SubString(n.conts,1,50) as conts from Notice n ,"
 				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
 //		List<Map> noticeList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
 //				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
 		mv.jspData.put("noticeList", page.getResult());
 		
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime "
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime ,SubString(n.conts,1,50) as conts "
 				+ ",n.zans as zans ,nr.zan as zan from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
 		mv.jspData.put("articleList", page.getResult());
 		
@@ -120,9 +120,11 @@ public class NoticeService {
 		if(nr.zan==0){
 			nr.zan=1;
 			po.zans++;
+			mv.data.put("zan", 1);
 		}else{
 			nr.zan=0;
 			po.zans--;
+			mv.data.put("zan", -1);
 		}
 		dao.saveOrUpdate(po);
 		dao.saveOrUpdate(nr);

@@ -37,13 +37,28 @@ function addSite(){
 	    	alert('保存成功');
 	    	var len = $('#'+siteAreaId).children().length;
 	    	len++;
-	    	var html = '<a href="'+$('#site_url').val()+'" class="a green marginLeft15 color_'+len%4+'">'+$('#site_title').val()+'</a>';
+	    	var html = '<a href="'+$('#site_url').val()+'" onclick="openSite(this);" class="a green marginLeft15 color_'+len%4+'">'+$('#site_title').val()+'</a>';
 	    	$('#'+siteAreaId).append(html);
 	    	$('form input').val('');
 	    }
 	});
 }
 
+function openSite(a){
+	if(a.href){
+		event.preventDefault();
+		var href=$(a).attr('href');
+		if(href.indexOf('http')<=0){
+			href="http://"+href;
+		}
+		try{
+			window.top.gui.Shell.openExternal(href);
+		}catch(e){
+
+		}
+		
+	}
+}
 function editSite(a){
 	if (a==0) {
 		$('.site_del').css('display', '');
@@ -57,7 +72,8 @@ function editSite(a){
 }
 
 function delSite(site,id){
-			event.preventDefault();
+	event.preventDefault();
+	event.cancelBubble=true;
 	YW.ajax({
 	    type: 'POST',
 	    url: '/c/oa/site/delete?id='+id,
@@ -73,12 +89,12 @@ function delSite(site,id){
     <div class="weblineTit"><span onclick="showSites('share')" class="sel">公共导航网址</span><span onclick="showSites('personal')">我的个人网址</span><a href="#" onclick="editSite(0);" class="marginRight15 over">编辑</a><a href="#" onclick="editSite(1);" class="marginRight15 editSite" style="display:none">完成</a></div>
     <div class="webLineCon" id="share">
     	<c:forEach items="${shareList}"  var="site" varStatus="status">
-    		<a href="${site.url }" class="a grey marginLeft15 color_${status.count%4}">${site.title } <i class="site_del" style="display:none" onclick="delSite(this,${site.id});" >×</i></a>
+    		<a href="${site.url }" onclick="openSite(this)" class="a grey marginLeft15 color_${status.count%4}">${site.title } <i class="site_del" style="display:none" onclick="delSite(this,${site.id});" >×</i></a>
     	</c:forEach>
     </div>
     <div class="webLineCon" id="personal" style="display:none">
          <c:forEach items="${personalList}"  var="site" varStatus="status">
-    		<a href="${site.url }" class="a grey marginLeft15 color_${status.count%4}">${site.title } <i class="site_del" style="display:none" onclick="delSite(this,${site.id});" >×</i></a>
+    		<a href="${site.url }" onclick="openSite(this)" class="a grey marginLeft15 color_${status.count%4}">${site.title } <i class="site_del" style="display:none" onclick="delSite(this,${site.id});" >×</i></a>
     	</c:forEach>
     </div>
     <div class="weblineAdd">

@@ -13,9 +13,9 @@
 <script type="text/javascript" src="/js/dialog/jquery.artDialog.source.js?skin=default"></script>
 <script type="text/javascript" src="/js/dialog/plugins/iframeTools.source.js"></script>
 <script type="text/javascript">
-
+var ue;
 $(function(){
-	var ue = UE.getEditor('editor',{
+	ue = UE.getEditor('editor',{
         toolbars: [
             ['forecolor', 'simpleupload','emotion','spechars', 'attachment', '|', 'fontfamily', 'fontsize', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'formatmatch', 'pasteplain', '|', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', 'indent', 'rowspacingtop', 'rowspacingbottom', 'lineheight',
             ]
@@ -27,6 +27,16 @@ $(function(){
 });
 
 function save(){
+    var tit=$('#title').val();
+    if (tit==null||tit==undefined||tit.trim()=='') {
+       alert('请填写标题'); 
+       return;
+    };
+    if (ue.getContent()=='') {
+        alert('内容不能为空');
+        $('#editor').focus();
+        return;
+    };
     var a=$('form[name=form1]').serialize();
     YW.ajax({
         type: 'POST',
@@ -56,7 +66,7 @@ function save(){
 <table class="table table-bordered table-hover m10" style="width:100%; height:100%; font-family:'宋体'; font-size:13px; padding-top:15px;">
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">标题:</span></td>
-      <td valign="middle"><input type="text" name="title" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" /></td>
+      <td valign="middle"><input type="text" name="title" id="title" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" /></td>
     </tr>
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">序号:</span></td>

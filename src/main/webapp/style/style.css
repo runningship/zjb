@@ -6,7 +6,7 @@
 html,body{ height: 100%; overflow: hidden;}
  */
 html{overflow: hidden;}
-body{font:14px "microsoft yahei",Arial,Verdana,Tahoma,"宋体"; background: none;}
+body{font:14px "microsoft yahei",Arial,Verdana,Tahoma,"宋体"; background: none; -webkit-user-select: none;}
 a{text-decoration:none;-webkit-transition:all .3s;}
 a:hover,a:active{text-decoration:none;}
 /*a,a:hover,a:active,a:visited { color: #333;}*/
@@ -389,7 +389,7 @@ opacity:1}
 .default .righter>.table .thead{ height: 27px;}
 
 .default .logo{ display: inline-block; margin:5px 0 0 5px; height: 40px; width: 40px; background: #FFF url('images/logo.png') no-repeat center; background-size: 100% 100%; border-radius: 3px; box-shadow: 0 0 5px #666;}
-.default .menuSide { position: relative; height: 100%;}
+.default .menuSide { position: relative; height: 100%;-webkit-user-select: none;}
 .default .menuSide .iconfont{ width: 100%; display: inline-block; text-align: center; line-height: 20px; font-size: 22px;}
 .default .menuSide li,
 .default .menuSideTool li { position: relative; text-align: center;-webkit-transition:all .3s; text-shadow: 0 0 10px #555;}

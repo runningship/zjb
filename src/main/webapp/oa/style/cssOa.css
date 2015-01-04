@@ -75,7 +75,9 @@ html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体;}
 
 .Fright{ float:right;}
 
-.oaMain{ /*margin-right:240px;*/ height:100%;}
+.oaMain{ /*margin-right:240px;*/ height:100%;-webkit-user-select: none;}
+
+.userSelectTrue{-webkit-user-select: text;}
 
 .cocoMain{ width:240px; position:absolute; top:0px; right:0; height:100%; background-color:#ffffff;}
 
@@ -154,7 +156,7 @@ i.add:hover{ background-position:-38px -100px;}
 .infoCaozuo i.xg{ background-position:-4px -133px;}
 .infoCaozuo i.xg:hover, .infoCaozuo i.xgSel{ background-position:-38px -133px;}
 .infoCaozuo i.zan{ background-position:-4px -168px;margin-right: -5px;}
-.infoCaozuo i.zan:hover, .infoCaozuo i.zanSel{ background-position:-38px -168px;margin-right: -5px;}
+/*.infoCaozuo i.zan:hover, */.infoCaozuo i.zanSel{ background-position:-38px -168px;margin-right: -5px;}
 .infoCaozuo i.hf{ background-position:-4px -201px;}
 .infoCaozuo i.hf:hover, .infoCaozuo i.hfSel{ background-position:-38px -201px;}
 

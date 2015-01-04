@@ -55,7 +55,7 @@ $(function(){
 
    
    <div class="ggLayerMain">
-        
+      <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
         <div class="ggLayerMainScol">
           
           <div class="ggListBox id_notice_list">
@@ -67,6 +67,9 @@ $(function(){
                     <div class="ggListBoxBot"><i class="Bg zan" onclick="selectZan(${article.id},this);return false;">${hasRead}</i><i class="Bg hfSel">${replys}</i></div>
                </div>
           </div>
+        </div>
+        <div>
+             <button class="" type="submit" onclick="doSearch();return false;" value="enter" style="display:none;">搜索</button>
         </div>
         <div class="ggLayerMainPage">
               <div style="display:table-row; height:33px;">
@@ -83,6 +86,7 @@ $(function(){
               
               
          </div>
+        </form>
    </div>
    
 

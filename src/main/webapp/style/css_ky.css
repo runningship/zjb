@@ -8,7 +8,7 @@ a{ text-decoration:none;}
 
 em{ font-style:normal;}
 
-html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体;}
+html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体; -webkit-user-select: none;}
 
 
 

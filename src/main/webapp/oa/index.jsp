@@ -21,8 +21,11 @@ function selectZan(id,obj){
   YW.ajax({
     type: 'POST',
     url: '/c/oa/toggleZan?id='+id,
+    dataType:'json',
     mysuccess: function(data){
-    	
+      var b = $(obj).next();
+      var c =Number.parseInt(b.text()) + data.zan;
+      b.text(c);
     }
   });
 }
@@ -59,6 +62,15 @@ function doSearch(){
             <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span><i class="Bg add Fleft"  onclick="openNewWin('addGg','600','480','添加公告','notice/add.jsp')" ></i></div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','980','650','全部公告','notice/list.html')">更多></a></div>
           </div>
           <div class="tr w100">
+          
+            <script>
+				$(function(){
+					  var conNum = $(".WZcon").size();
+					  for(var i=0;i<conNum;i++){
+						  $(".WZcon").eq(i).attr("id","WZcon"+i);
+					  }
+				});
+			</script>
             <div class="td" style="width:50%; height:100%;overflow:hidden;">
               <div class="oaInfomain" style="overflow:hidden; overflow-y:auto;">
                 <div class="whqMain" style="padding-bottom:10px;">
@@ -67,9 +79,9 @@ function doSearch(){
                       <div class="infoBoxLine"><img src="images/pageLineicon.png" /></div>
                       <div class="infoBoxTit">
                         <div class="infoListImg Fleft"><img src="/oa/images/avatar/${article.senderAvatar }.jpg" /></div>
-                        <div class="Fleft">      
+                        <div class="Fleft userSelectTrue">      
                           <p><span class="yh">${article.senderName }</span><span class="time"><fmt:formatDate value="${article.addtime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
-                          <p><a href="#" class="tit" onclick="openNewWin('viewGg','980','650','查看文章','notice/view.html?id=${article.id}')">${article.title }</a></p>
+                          <p><a href="#" class="tit" onclick="openNewWin('viewGg','980','650','查看文章','article/view.html?id=${article.id}')">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
                           <c:if test="${article.senderId==myId}">
@@ -77,19 +89,41 @@ function doSearch(){
                           </c:if>
                           
                           <i class="Bg <c:if test="${article.zan==0}">zan</c:if> <c:if test="${article.zan==1}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
-                          <span class="zan_count">${article.zans}</span>
+                          <span class="zan_count" >${article.zans}</span>
                           <!-- <i class="Bg hf">回复</i> -->
                         </div>
                       </div>
-                      <div class="infoBoxContent">
-                        <span class="marginRight55 marginLeft20">${article.conts}</span>
+                      <div class="infoBoxContent userSelectTrue">
+                        <!--<span class="marginRight55 marginLeft20">${article.conts}</span>-->
+                        <span class="WZcon" style="display:none">${article.conts}</span>
                         <span class="infoMore">...</span>                
                       </div>
                     </div>
                   </c:forEach>
+                  
+                      <script>
+								 /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
+								 $(function(){
+										  var conNum = $(".WZcon").size();
+										  for(var i=0;i<conNum;i++){
+											  $("#WZcon"+i).parent().append("<p><span class='marginLeft10 con'>"+$("#WZcon"+i).text()+"</span></p>");
+										  }
+								 });
+					  </script>
+                  
+                  
                 </div>
               </div>
             </div>
+            
+		  <script>
+		    $(function(){
+				  var conNum = $(".GGcon").size();
+				  for(var i=0;i<conNum;i++){
+					  $(".GGcon").eq(i).attr("id","GGcon"+i);
+				  }
+			});
+          </script>
             <div class="td" style="width:50%; vertical-align:top;">
               <div class="oaInfomain table">
                 <div class="tr">
@@ -102,8 +136,10 @@ function doSearch(){
                             <p class="day"><fmt:formatDate value="${notice.addtime}" pattern="dd"/></p>
                           </div>
                           <div class="ggBoxContent">
-                            <p><span class="titL marginLeft10">Tit:</span><span class="tit marginLeft10" onclick="openNewWin('viewGg','980','650','查看公告','notice/view.html?id=${notice.id}')">${notice.title}</span></p>
-                            <!-- <p><span class="marginLeft10 con">${notice.conts}</span></p> -->
+                            <p><span class="titL marginLeft10">Tit:</span><span class="tit marginLeft10 userSelectTrue" onclick="openNewWin('viewGg','980','650','查看公告','notice/view.html?id=${notice.id}')">${notice.title}</span></p><!--
+                            <p><span class="marginLeft10 con">${notice.conts}</span></p>-->
+                            <span class="GGcon" style="display:none">${notice.conts}</span>
+							
                           </div>
                           <div class="ggBoxCaozuo">
                             <c:if test="${notice.senderId==myId}">
@@ -114,6 +150,19 @@ function doSearch(){
                           </div>
                         </div>
                       </c:forEach>
+                      <script>
+								 /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
+								 $(function(){
+										  var conNum = $(".GGcon").size();
+										  for(var i=0;i<conNum;i++){
+											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");
+											 // $(".GGcon"+i).text();
+											  /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
+										  }
+								 });
+					  </script>
+
+                      
                     </div>
                   </div>
                 </div>
@@ -128,42 +177,6 @@ function doSearch(){
         </div>
       </div>
 </div>
-
-
-<!-- <div class="cocoLayer" id="cocoLayerWebLine" style="width:700px; display:none;height:800px;">
-   
-   <div class="cocoLayerTit"><span>编辑我的个人网址</span><i class="closeBg close" onclick="LayerCloseBox('cocoLayerWebLine')" title="关闭"></i></div>
-   
-   <div class="cocoLayerMain">
-   
-     <div class="mainTit"><span class="select"><input type="checkbox" /></span><span class="webSiteName">网站名称</span><span class="webSiteLine">网址链接</span><span class="caozuo">操作</span></div>
-     <ul class="mainCon">
-    
-        <li><span class="select"><input type="checkbox" /></span><span class="webSiteName">百度</span><span class="webSiteLine">www.baidu.com</span><span class="caozuo"><i>×</i></span></li>
-        <li><span class="select"><input type="checkbox" /></span><span class="webSiteName">百度</span><span class="webSiteLine">www.baidu.com</span><span class="caozuo"><i>×</i></span></li>
-        <li><span class="select"><input type="checkbox" /></span><span class="webSiteName">百度</span><span class="webSiteLine">www.baidu.com</span><span class="caozuo"><i>×</i></span></li>
-        <li><span class="select"><input type="checkbox" /></span><span class="webSiteName">百度</span><span class="webSiteLine">www.baidu.com</span><span class="caozuo"><i>×</i></span></li>
-        <li><span class="select"><input type="checkbox" /></span><span class="webSiteName">百度</span><span class="webSiteLine">www.baidu.com</span><span class="caozuo"><i>×</i></span></li>
-        <li><span class="select"><input type="checkbox" /></span><span class="webSiteName">百度</span><span class="webSiteLine">www.baidu.com</span><span class="caozuo"><i>×</i></span></li>
-       
-        
-    </ul>
-    
-    <div class="btnMain">
-         
-         <button class="scBtn">删除</button>
-    
-    </div>
-    
-   </div>
-   
-   <div class="cocoLayerTit"><span>发布公告</span><i class="closeBg close" onclick="LayerCloseBox('cocoLayerWebLine')" title="关闭"></i></div>
-   <iframe src="notice/add.jsp" style="width:100%;border:0px;height:410px;"></iframe>
-   <div class="cocoLayerTit"><span>修改公告</span><i class="closeBg close" onclick="noticeEdit('${notice.id}')" title="关闭"></i></div>
-   <iframe src="notice/edit.jsp" style="width:100%;border:0px;height:410px;"></iframe>
-</div> -->
-
-
 
 </body>
 </html>

@@ -343,7 +343,7 @@ function buildRecvMessage(senderAvatar , msg , time , senderName){
 }
 function onSendMsg(text,chat){
 	var now = new Date();
-	var time = now.getMonth()+'-'+now.getDate()+' ' + now.getHours()+':'+now.getMinutes() + ':'+now.getSeconds();
+	var time = now.getMonth()+1+'-'+now.getDate()+' ' + now.getHours()+':'+now.getMinutes() + ':'+now.getSeconds();
 	if(chat.type=='groupmsg'){
 		$('#msgContainer_group_'+chat.contactId).append(buildSentMessage(text,time));
 	}else{
@@ -403,6 +403,10 @@ function onReceiveMsg(msg){
 		return;
 	}
 
+	//最小化栏给出消息提醒
+	if($('.cocoMain').hasClass('hide')){
+		
+	}
 	// 判断是否新会话
 	var chat = $('#chat_'+data.senderId);
 	if(chat.length==0){
@@ -590,10 +594,12 @@ function closeChat(contactId,groupId){
 		}
 		
 	}
+	
 }
 function closeAllChat(){
 	$('.cocoWinLxrList').empty();
 	$('.cocoWinInfoListShow').empty();
+	$('.chat_title').text('COCO 聊天');
 }
 
 function recoverChatPanel(){
