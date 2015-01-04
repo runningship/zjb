@@ -17,6 +17,7 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.feedback.entity.Reply;
 import com.youwei.zjb.oa.entity.Notice;
 import com.youwei.zjb.oa.entity.NoticeReceiver;
@@ -66,6 +67,15 @@ public class NoticeService {
 		mv.jspData.put("personalList", JSONHelper.toJSONArray(personalList));
 		mv.jspData.put("shareList", JSONHelper.toJSONArray(shareList));
 		mv.jspData.put("myId", ThreadSession.getUser().id);
+		
+		User me = ThreadSession.getUser();
+		StringBuilder auths = new StringBuilder();
+		if(me.getRole()!=null){
+			for(RoleAuthority ra : me.getRole().Authorities()){
+				auths.append(ra.name).append(",");
+			}
+		}
+		mv.jspData.put("auths", auths);
 		return mv;
 	}
 	

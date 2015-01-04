@@ -187,11 +187,19 @@
 	"text":"OA管理",
 	"children":[{
 		"name":"oa_module",
-		"text":"客源",
+		"text":"OA",
 		"type":"virtual",
 		"children":[{
 			"name":"oa_on",
 			"text":"开启OA功能",
+			"type":"menu"
+		},{
+			"name":"oa_notice_add",
+			"text":"发布公告",
+			"type":"menu"
+		},{
+			"name":"oa_article_add",
+			"text":"发布文章",
 			"type":"menu"
 		}]
 	}]
