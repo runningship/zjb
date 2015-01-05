@@ -118,7 +118,7 @@ public class HouseService {
 		mv.data.put("msg", "发布成功");
 		mv.data.put("result", 0);
 		
-		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 添加了房源["+house.area+"],id="+house.id;
+		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 添加了房源["+house.area+"],id="+house.id+",seeGX="+house.seeGX;
 		operService.add(OperatorType.房源记录, operConts);
 		
 		try{

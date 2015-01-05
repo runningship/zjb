@@ -4,6 +4,7 @@ var my_name;
 var my_uid;
 var ue_text_editor;
 var ws_url;
+var unread_stack = [];
 //http://pub.idqqimg.com/lib/qqface/0.gif
 function openChat(contactId,contactName,avatar){
 	//打开聊天面板
@@ -55,6 +56,7 @@ function openChat(contactId,contactName,avatar){
 	jmsgCount.removeClass('cocoWinNewsNum');
 	$('.user_avatar_img_'+contactId).removeClass('doudong');
 
+	reCacuUnreadStack(contactId,'chat');
 	//设置已读
 	setSigleChatRead(contactId);
 }
@@ -126,6 +128,8 @@ function openGroupChat(groupId,groupName){
 	var jmsgCount = $('#group_'+groupId).find('.new_msg_count');
 	jmsgCount.text('');
 	jmsgCount.removeClass('cocoQunNewsNum');
+
+	reCacuUnreadStack(groupId,'group');
 
 	//设置已读
 	setGroupChatRead(groupId);
@@ -223,6 +227,16 @@ function getContactNameByUid(uid){
 	var name = $('#lxr_'+uid+' .name');
 	return name.text();
 }
+function getGroupNameByGid(gid){
+	var name = $('#group_name_'+gid);
+	var tmp = name.text();
+	if(tmp){
+		return tmp.split('(')[0].trim();
+	}else{
+		return name.text();	
+	}
+	
+}
 function send(){
 	var text = ue_text_editor.getContent();
 	if(text==""){
@@ -254,7 +268,9 @@ function selectChat(li,groupId){
 	}
 	$('.cocoWinLxrList li').removeClass('now');
 	$(li).toggleClass('now');
-	$('.chat_title').text('与 '+$(li).find('p').text()+'... 聊天中');
+	if(unread_stack.length<=0){
+		$('.chat_title').text('与 '+$(li).find('p').text()+'... 聊天中');	
+	}
 	
 	$('.WinInfoListShowMainBox').css('display','none');
 	
@@ -366,12 +382,17 @@ function notifyGroupNews(groupId,msgCount){
 		}
 		num_msg_count++;
 		jmsgCount.text(num_msg_count);
+
 	}
 	
 	jmsgCount.addClass('cocoQunNewsNum');
 
+	//判断是否给小红点
+	if($('.sle #qunbox_dot').length==0){
+		$('#qunbox_dot').addClass('alertDot');
+	}
 	// $('#user_avatar_img_'+groupId).addClass('doudong');
-	requestWindowAttention();
+	requestWindowAttention(groupId,'group');
 }
 function notifyNewChat(contactId,msgCount){
 	var jmsgCount = $('#lxr_'+contactId).find('.new_msg_count');
@@ -390,7 +411,8 @@ function notifyNewChat(contactId,msgCount){
 	jmsgCount.addClass('cocoWinNewsNum');
 
 	$('.user_avatar_img_'+contactId).addClass('doudong');
-	requestWindowAttention();
+
+	requestWindowAttention(contactId,'chat');
 }
 function onReceiveMsg(msg){
 	var data = JSON.parse(msg);
@@ -403,10 +425,10 @@ function onReceiveMsg(msg){
 		return;
 	}
 
-	//最小化栏给出消息提醒
-	if($('.cocoMain').hasClass('hide')){
-		
-	}
+	if($("#layerBoxDj").css('display')=='none'){
+    	requestFoxBarAttention(data.senderId,'chat');
+    }
+
 	// 判断是否新会话
 	var chat = $('#chat_'+data.senderId);
 	if(chat.length==0){
@@ -433,7 +455,8 @@ function onReceiveMsg(msg){
     	scrollToLatestNews();
     }
 
-    //设置已读
+    
+    //设置已读,TODO,注意，此处可能要调整
     setSigleChatRead(data.senderId);
 }
 
@@ -442,7 +465,12 @@ function onReceiveGroupMsg(msg){
 	if($('.sle #qunbox_dot').length==0){
 		$('#qunbox_dot').addClass('alertDot');
 	}
+	
+
 	var data = JSON.parse(msg);
+	if($("#layerBoxDj").css('display')=='none'){
+    	requestFoxBarAttention(data.contactId,'group');
+    }
 	// 判断是否新会话
 	var chat = $('#group_chat_'+data.contactId);
 	if(chat.length==0){
@@ -450,7 +478,6 @@ function onReceiveGroupMsg(msg){
 		notifyGroupNews(data.contactId);
 		return;
 	}
-
     $('#msgContainer_group_'+data.contactId).append(buildRecvMessage(data.senderAvatar,data.msg , data.sendtime , data.senderName));
 
     //判断是否当前会话
@@ -466,9 +493,11 @@ function onReceiveGroupMsg(msg){
 		jmsgCount.text(num_msg_count);
 		jmsgCount.addClass('cocoWinNewsNum');
     }else{
+    	//是当前会话
     	//滚动到最新消息
     	scrollToLatestNews();
     }
+    
 }
 
 function scrollToLatestNews(){
@@ -561,7 +590,8 @@ function buildGroupChatUnreads(unReads){
 	if(unReads){
 		for(var i=0;i<unReads.length;i++){
 			notifyGroupNews(unReads[i].groupId,unReads[i].total);
-		}	
+		}
+
 	}
 	
 }
@@ -602,14 +632,51 @@ function closeAllChat(){
 	$('.chat_title').text('COCO 聊天');
 }
 
-function recoverChatPanel(){
-	if($('.cocoWinLxrList li').length>0){
-		if($("#layerBoxDj").css("display")=='none'){
-			showBox();
-		}else{
-			closeBox();
+function reCacuUnreadStack(senderId,type){
+	var pos;
+	for(var i=0;i<unread_stack.length;i++){
+		var tmp = unread_stack[i];
+		if(tmp.type==type && tmp.senderId==senderId){
+			pos = i;
 		}
 	}
+	if(pos!=undefined){
+		unread_stack = unread_stack.splice(pos+1,1);
+	}
+	//检查还有没有新消息
+	if(unread_stack.length>0){
+		var json2 = unread_stack[unread_stack.length-1];
+		$('.cocoNews span').text(json2.senderName+"...的新消息");
+	}else{
+		$('.cocoNews').removeClass('cocoNewsAlert');
+	}
+}
+
+function recoverChatPanel(){
+	if(unread_stack.length>0){
+		var json = unread_stack.pop();
+		if(json.type=='chat'){
+		 	openChat(json.senderId,json.senderName , getAvatarByUid(json.senderId));
+		}else{
+			openGroupChat(json.senderId , json.senderName);
+		}
+		//检查还有没有新消息
+		if(unread_stack.length>0){
+			var json2 = unread_stack[unread_stack.length-1];
+			$('.cocoNews span').text(json2.senderName+"...的新消息");
+		}else{
+			$('.cocoNews').removeClass('cocoNewsAlert');
+		}
+	}else{
+		if($('.cocoWinLxrList li').length>0){
+			if($("#layerBoxDj").css("display")=='none'){
+				showBox();
+			}else{
+				closeBox();
+			}
+		}
+	}
+	
 }
 
 function showCoco(){
@@ -661,7 +728,33 @@ function selectAvatar(i){
     });
 }
 
-function requestWindowAttention(){
+function requestFoxBarAttention(senderId , type){
+	//判断是否重复
+	for(var i=0;i<unread_stack.length;i++){
+		var tmp = unread_stack[i];
+		if(tmp.type==type && tmp.senderId==senderId){
+			return;
+		}
+	}
+	var senderName = "";
+	if('chat'==type){
+		senderName = getContactNameByUid(senderId);	
+	}else{
+		senderName = getGroupNameByGid(senderId);
+	}
+	var json = JSON.parse('{}');
+	json.senderId = senderId;
+	json.senderName = senderName;
+	json.type = type;
+	unread_stack.push(json);
+	//判断是否在最小化栏闪动
+	// if($('.cocoMain').hasClass('hide')){
+		$('.cocoNews').addClass('cocoNewsAlert');
+		$('.cocoNews span').text(senderName+'...的新消息');
+	// }
+}
+function requestWindowAttention(senderId , type){
+	requestFoxBarAttention(senderId,type);
 	try{
 		var win = gui.Window.get();
 		if(!win.isFocus){
@@ -671,6 +764,7 @@ function requestWindowAttention(){
 	}catch(e){
 
 	}
+
 }
 
 function connectWebSocket(){

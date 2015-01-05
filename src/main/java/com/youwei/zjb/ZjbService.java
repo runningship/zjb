@@ -63,7 +63,7 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 		page.setPageSize(4);
 		//群组(分店)
 		//加载生成群组头像
-		List<Map> depts = dao.listAsMap("select d.id as did ,d.namea as dname from Department d , User u where u.did=d.id and u.id=?", me.cid);
+		List<Map> depts = dao.listAsMap("select d.id as did ,d.namea as dname from Department d , User u where u.did=d.id and u.id=?", me.id);
 		for(Map dept : depts){
 			Object did = dept.get("did");
 			page = dao.findPage(page, "select avatar as avatar from User where did=?", true, new Object[]{did});
@@ -72,12 +72,14 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 			//群组人数统计
 			long count = dao.countHql("select count(*) from User where did=?", did);
 			dept.put("totalUsers", count);
+			dept.put("type", "部门");
 		}
 		//群组(全公司)
 		Department com = me.Company();
 		Map<String,Object> comp = new HashMap<String,Object>();
 		comp.put("dname", com.namea);
 		comp.put("did", com.id);
+		comp.put("type", "公司");
 		long compUsers = dao.countHql("select count(*) from User where cid=?", me.cid);
 		comp.put("totalUsers", compUsers);
 		page = dao.findPage(page, "select avatar as avatar from User where cid=?", true, new Object[]{me.cid});

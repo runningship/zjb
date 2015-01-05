@@ -76,6 +76,8 @@ public class NoticeService {
 			}
 		}
 		mv.jspData.put("auths", auths);
+		
+		mv.jspData.put("addPublicSite", me.id==1);
 		return mv;
 	}
 	
@@ -169,10 +171,10 @@ public class NoticeService {
 				receivers+=map.get("uid")+",";
 			}
 		}
-		Notice po = dao.getUniqueByKeyValue(Notice.class, "title", notice.title);
-		if(po!=null){
-			throw new GException(PlatformExceptionType.BusinessException,"该标题已存在");
-		}
+//		Notice po = dao.getUniqueByKeyValue(Notice.class, "title", notice.title);
+//		if(po!=null){
+//			throw new GException(PlatformExceptionType.BusinessException,"该标题已存在");
+//		}
 		User user = ThreadSession.getUser();
 		notice.senderId = user.id;
 		notice.addtime = new Date();
@@ -206,6 +208,7 @@ public class NoticeService {
 		params.add(query.isPublic);
 		params.add(user.id);
 		page.orderBy = "n.addtime";
+		page.setPageSize(20);
 		page.order = Page.DESC;
 		page = dao.findPage(page , hql.toString() , true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));

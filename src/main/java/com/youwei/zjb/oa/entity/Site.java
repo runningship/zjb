@@ -15,6 +15,8 @@ public class Site {
 	//收藏人
 	public Integer uid;
 	
+	public Integer cid;
+	
 	public String title;
 	
 	public String url;

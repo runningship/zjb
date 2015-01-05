@@ -136,8 +136,8 @@ $(function(){
                 
                 <div class="layerInfoBoxContent">
                 
-                     <span class="marginRight55 marginLeft20"><span>阅读：<i name="reads" id="reads"></i></span> &nbsp;&nbsp;&nbsp; <span>留言：<i name="replys" id="replys"></i></span><span class="Fright"><a href="#" class="back" onclick="window.location='/oa/notice/list.html'">返回公告列表</a></span></span>
-                
+                     <span class="marginRight55 marginLeft20"><span>阅读：<i name="reads" id="reads"></i></span> &nbsp;&nbsp;&nbsp; <span>留言：<i name="replys" id="replys"></i></span><span class="Fright"><a href="/oa/notice/list.html" target="_self" class="back">返回公告列表</a></span></span>
+                <!-- onclick="window.location='/oa/notice/list.html'"-->
                 </div>
                 <div class="layerInfoBoxConInfo">
                 
@@ -149,10 +149,10 @@ $(function(){
                 <div class="layerInfoHfList">
                 
                      <div class="layerInfoHfCon id_reply_list" style="display:none;">
-                          <div class="layerInfoBoxLine"><img src="/oa/images/avatar/${replyAvatar}.jpg" /></div>
-                          <div class="tit"><span class="titText Fleft">${replyUname}</span>       <span class="Fright titTime">${replytime}</span></div>
+                          <div class="layerInfoBoxLine"><img src="/oa/images/avatar/$[replyAvatar].jpg" /></div>
+                          <div class="tit"><span class="titText Fleft">$[replyUname]</span>       <span class="Fright titTime">$[replytime]</span></div>
                           <div class="con">
-                             <span class="conMain">${conts}</span>
+                             <span class="conMain">$[conts]</span>
                           </div>
                      </div>
                      

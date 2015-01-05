@@ -209,27 +209,27 @@ $(document).ready(function() {
               <div class="MainRightConMain KY_W" style="display:table-row; position:relative; cursor:default;">
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
-                    <tr data-cid="${id}" style="display:none;" class="id_biz_list"  >
-                      <td width="60" height="20" style="text-align:center"><strong>${dname}-${uname}</strong></td>
+                    <tr data-cid="$[id]" style="display:none;" class="id_biz_list"  >
+                      <td width="60" height="20" style="text-align:center"><strong>$[dname]-$[uname]</strong></td>
                       <td width="160">
-                      	<span show="'${status}'!='已批阅'">${reason}</span>
-                      	<a href="#" onclick="openDetail(${id})" show="'${status}'=='已批阅'">${reason}</a>
+                        <span show="'$[status]'!='已批阅'">$[reason]</span>
+                        <a href="#" onclick="openDetail($[id])" show="'$[status]'=='已批阅'">$[reason]</a>
                       </td>
-                      <td width="60">${outtime}</td>
-                      <td width="60">${backtime}</td>
-                      <td width="60" class="${status}">
-                        <span style="text-decoration:underline;" class="${status} hand" show="$${userId}==${uid} && '${status}'=='待返回'" onclick="fanhui(${id},${rowIndex});">${status}</span>
-                        <span class="${status}" show="$${userId}!=${uid} && '${status}'=='待返回'" >${status}</span>
-                        <span class="${status}" show="'${status}'!='待返回'" >${status}</span>
+                      <td width="60">$[outtime]</td>
+                      <td width="60">$[backtime]</td>
+                      <td width="60" class="$[status]">
+                        <span style="text-decoration:underline;" class="$[status] hand" show="$${userId}==$[uid] && '$[status]'=='待返回'" onclick="fanhui($[id],$[rowIndex]);">$[status]</span>
+                        <span class="$[status]" show="$${userId}!=$[uid] && '$[status]'=='待返回'" >$[status]</span>
+                        <span class="$[status]" show="'$[status]'!='待返回'" >$[status]</span>
                       </td>
                       <td width="120" style="text-align:center"> 
-                        <a auth="yw_outbiz_sh" show="'${status}'!='待返回'" href="##" onclick="openpiyue(${id},${rowIndex});" style="color:#0081db;" title="批阅" class="py_iconColor">批阅</a>
-                        <!-- <a show="$${userId}==${uid} && '${status}'=='待返回'" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;">删除</a> -->
+                        <a auth="yw_outbiz_sh" show="'$[status]'!='待返回'" href="##" onclick="openpiyue($[id],$[rowIndex]);" style="color:#0081db;" title="批阅" class="py_iconColor">批阅</a>
+                        <!-- <a show="$${userId}==$[uid] && '$[status]'=='待返回'" href="###" onclick="openDelete($[id],$[rowIndex])" style="color:#ff0000;">删除</a> -->
 
                         <!-- 无删除权限只能删除自己的且状态为未批阅的 -->
-                        <a auth="!yw_outbiz_del" href="###" show="$${userId}==${uid} && '${status}'!='已批阅'" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
+                        <a auth="!yw_outbiz_del" href="###" show="$${userId}==$[uid] && '$[status]'!='已批阅'" onclick="openDelete($[id],$[rowIndex])" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
                        <!-- 有删除权限的可以删除任何状态的 -->
-                        <a auth="yw_outbiz_del" href="###" onclick="openDelete(${id},${rowIndex})" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
+                        <a auth="yw_outbiz_del" href="###" onclick="openDelete($[id],$[rowIndex])" style="color:#ff0000;" class="sc_iconColor" title="删除">删除</a>
                       </td>
                     </tr>
                   </table>

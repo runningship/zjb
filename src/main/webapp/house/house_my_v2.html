@@ -247,32 +247,32 @@ $(document).ready(function(){
                         <li>
                             <button class="selectMethod hand"  type="button">区域<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('quyus')" class="id_quyu"><label><input class="hand" text="${name}" type="checkbox" name="quyus" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('quyus')" class="id_quyu"><label><input class="hand" text="$[name]" type="checkbox" name="quyus" value="$[name]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand" type="button">楼型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('lxing')" class="id_lxing"><label><input class="hand" text="${name}" type="checkbox" name="lxing" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('lxing')" class="id_lxing"><label><input class="hand" text="$[name]" type="checkbox" name="lxing" value="$[name]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand" type="button">房型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" text="${name}" type="checkbox" name="fxing" value="${value}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" text="$[name]" type="checkbox" name="fxing" value="$[value]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand" type="button">装潢<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input class="hand" text="${name}" type="checkbox" name="zxiu" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input class="hand" text="$[name]" type="checkbox" name="zxiu" value="$[name]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod" type="button">方式<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('fangshi')"><label><input type="radio" name="fangshi" text="" value="" checked="checked" > 不限</label> </p> 
-                                <p onclick="addQueryStr('fangshi')" class="id_fangshi"  ><label><input text="${name}" type="radio" name="fangshi" value="${code}"> ${name}</p>
+                                <p onclick="addQueryStr('fangshi')" class="id_fangshi"  ><label><input text="$[name]" type="radio" name="fangshi" value="$[code]"> $[name]</p>
                             </div>
                         </li>
                         <li>
@@ -287,7 +287,7 @@ $(document).ready(function(){
                             <button class="selectMethod" type="button" >状态<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('ztai')"><label><input type="radio" name="ztai" text="" value="" checked="checked"> 所有</label> </p> 
-                                <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input text="${name}" type="radio" name="ztai" value="${code}"> ${name}</p>
+                                <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input text="$[name]" type="radio" name="ztai" value="$[code]"> $[name]</p>
                             </div>
                         </li>
                         <li auth="fy_sh">
@@ -410,23 +410,23 @@ $(document).ready(function(){
                     <div class="FY_RCon" style=" width:100%; display:table-cell;">
                       <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">
                         <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover" id="KY_TableMain">
-                          <tr data-hid="${id}" style="display:none;" class="id_House_list" >
-                            <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}" style="display:none"> </span>${id}</td>
+                          <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
+                            <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
                             <td  width="75" class="shc">
-                              <a href="javascript.void(0)" class="delete" data-hid="${id}" data-rel="del" onclick="favDelete(${id});">取消收藏</a></td>
-                            <td width="50" class="ztai_${ztai}">${ztai}</td>
-                            <td width="50" runscript="true" class="shenhe_${sh}">getShenHeText(${sh})</td>
-                            <td width="60">${quyu}</td>
-                            <!-- <td class="br_area">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></td> -->
-                            <td class="br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></div></td>
-                            <td width="50">${lxing}</td>
-                            <td width="60">${hxf}-${hxt}-${hxw}</td>
-                            <td width="50">${mji}</td>
-                            <td width="50">${zjia}</td>
-                            <td width="50" class="chushou">${djia}</td>
-                            <td width="50">${lceng}/${zceng}</td>
-                            <td width="50">${zxiu}</td>
-                            <td width="90" class="sy" runscript="true" title="${dateadd}">'${dateadd}'.split(' ')[0]</td>
+                              <a href="javascript.void(0)" class="delete" data-hid="$[id]" data-rel="del" onclick="favDelete($[id]);">取消收藏</a></td>
+                            <td width="50" class="ztai_$[ztai]">$[ztai]</td>
+                            <td width="50" runscript="true" class="shenhe_$[sh]">getShenHeText($[sh])</td>
+                            <td width="60">$[quyu]</td>
+                            <!-- <td class="br_area">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></td> -->
+                            <td class="br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></div></td>
+                            <td width="50">$[lxing]</td>
+                            <td width="60">$[hxf]-$[hxt]-$[hxw]</td>
+                            <td width="50">$[mji]</td>
+                            <td width="50">$[zjia]</td>
+                            <td width="50" class="chushou">$[djia]</td>
+                            <td width="50">$[lceng]/$[zceng]</td>
+                            <td width="50">$[zxiu]</td>
+                            <td width="90" class="sy" runscript="true" title="$[dateadd]">'$[dateadd]'.split(' ')[0]</td>
                           </tr>
                         </table>
                        </div>

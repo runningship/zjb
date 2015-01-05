@@ -232,7 +232,7 @@ public class DepartmentService {
 				JSONObject json = new JSONObject();
 				json.put("id", dept.id);
 				json.put("sh", dept.sh);
-				if(dept.id==cid){
+				if(dept.id.equals(cid)){
 					json.put("pId", 0);
 					json.put("open", true);
 					json.put("type", "comp");

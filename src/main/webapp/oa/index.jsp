@@ -47,8 +47,8 @@ function doSearch(){
             <li><i class=" Bg whq"></i><span class="color1">文化墙</span></li>
             <li><span class="line"></span></li>
             <li><i class=" Bg gg"></i><span class="color2">公告</span></li>
-            <li><span class="line"></span></li>
-            <li><i class=" Bg wzsc"></i><span class="color3">网址收藏</span></li>
+            <!-- <li><span class="line"></span></li>
+            <li><i class=" Bg wzsc"></i><span class="color3">网址收藏</span></li> -->
           </ul>
         </div>
         <div class="td oaTit oaTitBgInfo">
@@ -103,8 +103,8 @@ function doSearch(){
                       </div>
                       <div class="infoBoxContent userSelectTrue">
                         <!--<span class="marginRight55 marginLeft20">${article.conts}</span>-->
-                        <span class="WZcon" style="display:none">${article.conts}</span>
-                        <span class="infoMore">...</span>                
+                        <span class="WZcon" style="display:none;"><pre>${article.conts}</pre></span>
+                        <div class="infoMore">...</div>
                       </div>
                     </div>
                   </c:forEach>
@@ -114,7 +114,8 @@ function doSearch(){
 								 $(function(){
 										  var conNum = $(".WZcon").size();
 										  for(var i=0;i<conNum;i++){
-											  $("#WZcon"+i).parent().append("<p><span class='marginLeft10 con'>"+$("#WZcon"+i).text()+"</span></p>");
+											  $("#WZcon"+i).parent().append("<span class='marginLeft10 con' style=' white-space:nowrap;'>"+$("#WZcon"+i).text()+"</span>");
+											  //$("#WZcon"+i).remove();
 										  }
 								 });
 					  </script>
@@ -153,7 +154,7 @@ function doSearch(){
                             <c:if test="${notice.senderId==myId}">
                               <i class="Bg xgSel" onclick="openNewWin('editGg','700','450','编辑公告','notice/edit.jsp?id=${notice.id}')">修改</i>
                             </c:if>
-                            <i class="Bg zanSel">查看</i>
+                            <!-- <i class="Bg zanSel">查看</i> -->
                             <!-- <i class="Bg hfSel">回复</i> -->
                           </div>
                         </div>

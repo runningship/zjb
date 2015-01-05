@@ -45,7 +45,7 @@ public class SiteService {
 	@WebMethod
 	public ModelAndView listShare(Site site){
 		ModelAndView mv = new ModelAndView();
-		List<Site> list = dao.listByParams(Site.class, "from Site where uid is null");
+		List<Site> list = dao.listByParams(Site.class, "from Site where uid is null ");
 		mv.data.put("sites", JSONHelper.toJSONArray(list));
 		return mv;
 	}
@@ -58,6 +58,7 @@ public class SiteService {
 			throw new GException(PlatformExceptionType.BusinessException,"存在重复的网址，你修改后再保存");
 		}
 		site.uid = ThreadSession.getUser().id;
+		site.cid = ThreadSession.getUser().cid;
 		dao.saveOrUpdate(site);
 		return mv;
 	}
@@ -66,6 +67,7 @@ public class SiteService {
 	public ModelAndView addShare(Site site){
 		ModelAndView mv = new ModelAndView();
 		site.uid = null;
+		site.cid = ThreadSession.getUser().cid;
 		dao.saveOrUpdate(site);
 		return mv;
 	}

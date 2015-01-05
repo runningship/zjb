@@ -163,7 +163,7 @@
 		if ($('#'+id).length>0) {
 			return;
 		};
-	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px; margin-bottom:20px;'></iframe></div>";
+	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div>";
 			 
 			 $("body").append(htmlText);
 			 

@@ -66,8 +66,9 @@ function buildHtmlWithJson(temp,json , rowIndex){
         if(v==null){
             v="";
         }
-        dhtml = dhtml.replace("${rowIndex}",rowIndex);
-        dhtml = dhtml.replace(new RegExp("\\${"+key+"}","gm"),v);
+        dhtml = dhtml.replace("$[rowIndex]",rowIndex);
+        // dhtml = dhtml.replace(/\$\[name\]/g,v);
+        dhtml = dhtml.replace(new RegExp("\\$\\["+key+"\\]","gm"),v);
     }
     return dhtml;
 }

@@ -163,19 +163,19 @@ $(document).ready(function(){
                                             <div class="FY_RCon" style=" width:100%; display:table-cell;">
                                                 <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover" id="KY_TableMain">
-                                                        <tr data-hid="${id}" style="display:none;height:33px;" class="id_House_list">
-                                                          <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}" style="display:none"> </span>${id}</td>
-                                                          <td width="50" class="ztai_${ztai}">${ztai}</td>
-                                                          <td width="60">${quyu}</td>
-                                                          <td class="br_area">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></td>
-                                                          <td width="50">${lxing}</td>
-                                                          <td width="60">${hxf}-${hxt}-${hxw}</td>
-                                                          <td width="50">${mji}</td>
-                                                          <td width="50">${zjia}</td>
-                                                          <td width="50" class="cs">${djia}</td>
-                                                          <td width="50">${lceng}/${zceng}</td>
-                                                          <td width="50">${zxiu}</td>
-                                                          <td width="90" class="sy" runscript="true" title="${dateadd}">'${dateadd}'.split(' ')[0]</td>
+                                                        <tr data-hid="$[id]" style="display:none;height:33px;" class="id_House_list">
+                                                          <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
+                                                          <td width="50" class="ztai_$[ztai]">$[ztai]</td>
+                                                          <td width="60">$[quyu]</td>
+                                                          <td class="br_area">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></td>
+                                                          <td width="50">$[lxing]</td>
+                                                          <td width="60">$[hxf]-$[hxt]-$[hxw]</td>
+                                                          <td width="50">$[mji]</td>
+                                                          <td width="50">$[zjia]</td>
+                                                          <td width="50" class="cs">$[djia]</td>
+                                                          <td width="50">$[lceng]/$[zceng]</td>
+                                                          <td width="50">$[zxiu]</td>
+                                                          <td width="90" class="sy" runscript="true" title="$[dateadd]">'$[dateadd]'.split(' ')[0]</td>
                                                       </tr>
                                                     </table>
                                                 </div>
