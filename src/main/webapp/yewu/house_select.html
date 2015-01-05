@@ -227,25 +227,25 @@ function setSelected(){
                         <li>
                             <button class="selectMethod hand not-select"  type="button">区域<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('quyus')" class="id_quyu"><label><input class="hand" text="${name}" type="checkbox" name="quyus" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('quyus')" class="id_quyu"><label><input class="hand" text="$[name]" type="checkbox" name="quyus" value="$[name]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand not-select" type="button">楼型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('lxing')" class="id_lxing"><label><input class="hand" text="${name}" type="checkbox" name="lxing" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('lxing')" class="id_lxing"><label><input class="hand" text="$[name]" type="checkbox" name="lxing" value="$[name]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand not-select" type="button">房型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" text="${value}" type="checkbox" name="fxing" value="${value}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" text="$[value]" type="checkbox" name="fxing" value="$[value]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
                             <button class="selectMethod hand not-select" type="button">装潢<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input class="hand" text="${name}" type="checkbox" name="zxiu" value="${name}"> ${name}</label> </p> 
+                                <p onclick="addQueryStr('zxiu')" class="id_zhuangxiu"><label><input class="hand" text="$[name]" type="checkbox" name="zxiu" value="$[name]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
@@ -351,20 +351,20 @@ function setSelected(){
                                             <div class="FY_RCon" style=" width:100%; display:table-cell;">
                                                 <div style="height:100%; width:100%; float:left; overflow:hidden; overflow-y:auto;">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover">
-                                                        <tr data-hid="${id}" style="display:none;" class="id_House_list" >
-                                                          <td width="50"><input id="${id}" type="checkbox" value="${id}" onclick="jiancha(this,${rowIndex})" /></td>
-                                                          <td width="50">${id}</td>
-                                                          <td width="50" class="ztai_${ztai}">${ztai}</td>
-                                                          <td width="60">${quyu}</td>
-                                                          <td class="br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">${area} <span show="${seeFH}==1">${dhao}-${fhao}</span></div></td>
-                                                          <td width="50">${lxing}</td>
-                                                          <td width="60">${hxf}-${hxt}-${hxw}</td>
-                                                          <td width="50">${mji}</td>
-                                                          <td width="50">${zjia}</td>
-                                                          <td width="50" class="cs">${djia}</td>
-                                                          <td width="50">${lceng}/${zceng}</td>
-                                                          <td width="50">${zxiu}</td>
-                                                          <td width="90" class="sy" runscript="true" title="${dateadd}" style="padding-right:7px;">'${dateadd}'.split(' ')[0]</td>
+                                                        <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
+                                                          <td width="50"><input id="$[id]" type="checkbox" value="$[id]" onclick="jiancha(this,$[rowIndex])" /></td>
+                                                          <td width="50">$[id]</td>
+                                                          <td width="50" class="ztai_$[ztai]">$[ztai]</td>
+                                                          <td width="60">$[quyu]</td>
+                                                          <td class="br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></div></td>
+                                                          <td width="50">$[lxing]</td>
+                                                          <td width="60">$[hxf]-$[hxt]-$[hxw]</td>
+                                                          <td width="50">$[mji]</td>
+                                                          <td width="50">$[zjia]</td>
+                                                          <td width="50" class="cs">$[djia]</td>
+                                                          <td width="50">$[lceng]/$[zceng]</td>
+                                                          <td width="50">$[zxiu]</td>
+                                                          <td width="90" class="sy" runscript="true" title="$[dateadd]" style="padding-right:7px;">'$[dateadd]'.split(' ')[0]</td>
                                                       </tr>
                                                     </table>
                                                 </div>

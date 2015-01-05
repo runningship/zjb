@@ -192,13 +192,13 @@ $(document).ready(function() {
                         <li>
                             <span class="SpanName" >类别</span>
                               <select id="leaveType" name="leaveType" class="input-sm input-rightB" style="width:75px;">
-                                <option value="${name}" class="leaveType">${name}</option>
+                                <option value="$[name]" class="leaveType">$[name]</option>
                               </select>
                         </li>
                         <li>
                             <span class=" SpanName" >状态</span>
                               <select id="leaveStatus" name="sh" class="input-sm input-rightB" style="width:75px;">
-                                <option value="${value}" class="leaveStatus">${name}</option>
+                                <option value="$[value]" class="leaveStatus">$[name]</option>
                               </select>
                         </li>
                         <li class="LiBoxW1" style="width: 130px;">
@@ -231,18 +231,18 @@ $(document).ready(function() {
               <div class="MainRightConMain KY_W" style="display:table-row; position:relative; cursor:default;">
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
-                    <tr data-cid="${id}" style="display:none;" class="id_leave_list"  >
-                      <td width="60" height="20"><strong>${dname}-${uname}</strong></td>
-                      <td width="80">${reason}</td>
-                      <td width="50">${starttime}</td>
-                      <td width="50">${endtime}</td>
-                      <td width="50">${hours}</td>
-                      <td width="50">${type}</td>
-                      <td width="50" runscript=true class="shen_he_${sh}" >getShenhe(${sh})</td>
+                    <tr data-cid="$[id]" style="display:none;" class="id_leave_list"  >
+                      <td width="60" height="20"><strong>$[dname]-$[uname]</strong></td>
+                      <td width="80">$[reason]</td>
+                      <td width="50">$[starttime]</td>
+                      <td width="50">$[endtime]</td>
+                      <td width="50">$[hours]</td>
+                      <td width="50">$[type]</td>
+                      <td width="50" runscript=true class="shen_he_$[sh]" >getShenhe($[sh])</td>
                       <td width="120" style="text-align:center">
-                       <a href="javascript:void(0)" show="$${userId}==${uid} && ${sh}==0" onclick="openEdit(${id},${rowIndex})" title="编辑" class="bj_iconColor">编辑</a>
-                       <a href="javascript:void(0)" show="$${userId}==${uid} && ${sh}==0" onclick="deleteThis(${id},${rowIndex})" title="撤销" class="cx_iconColor" style="color:#ee4e00;">撤销</a>
-                       <a auth="yw_leave_sh" href="javascript:void(0)" onclick="openshenhe(${id},${rowIndex})" style="color:#0081db;" title="批阅" class="py_iconColor">审核</a>
+                       <a href="javascript:void(0)" show="$$[userId]==$[uid] && $[sh]==0" onclick="openEdit($[id],$[rowIndex])" title="编辑" class="bj_iconColor">编辑</a>
+                       <a href="javascript:void(0)" show="$$[userId]==$[uid] && $[sh]==0" onclick="deleteThis($[id],$[rowIndex])" title="撤销" class="cx_iconColor" style="color:#ee4e00;">撤销</a>
+                       <a auth="yw_leave_sh" href="javascript:void(0)" onclick="openshenhe($[id],$[rowIndex])" style="color:#0081db;" title="批阅" class="py_iconColor">审核</a>
                        </td>
                     </tr>
                   </table>

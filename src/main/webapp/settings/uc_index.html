@@ -154,16 +154,16 @@ $(window).resize(function() {      //类别
 
         <table class="table table-hover table-striped table-nopadding TableB" >
           <tbody>
-          <tr data-hid="${id}" style="display:none;" class="id_House_list">
-            <td>${lname}</td>
-            <td>${uname}</td>
-            <td>${tel}</td>
-            <td>${dname}-${role}</td>
-            <td>${lasttime}</td>
-            <td>${ip}</td>
+          <tr data-hid="$[id]" style="display:none;" class="id_House_list">
+            <td>$[lname]</td>
+            <td>$[uname]</td>
+            <td>$[tel]</td>
+            <td>$[dname]-$[role]</td>
+            <td>$[lasttime]</td>
+            <td>$[ip]</td>
             <td><span class="btn-group null-float">
-              <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit(${uid})">编辑</a>
-              <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="uc_delete(${uid})">删除</a>
+              <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit($[uid])">编辑</a>
+              <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="uc_delete($[uid])">删除</a>
               </span>
             </td>
           </tr>

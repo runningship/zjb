@@ -127,11 +127,11 @@ $(document).ready(function() {
               <div class="MainRightConMain KY_W" style="display:table-row; position:relative; cursor:default;">
                 <div class="KY_MainRCon" style="height:100%; margin:0; width:100%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
-                    <tr data-cid="${id}" style="display:none;" class="id_client_list"  >
-                      <td width="60"><strong>${name}</strong></td>
-                      <td runscript = "true">getTel('${tels}')</td>
+                    <tr data-cid="$[id]" style="display:none;" class="id_client_list"  >
+                      <td width="60"><strong>$[name]</strong></td>
+                      <td runscript = "true">getTel('$[tels]')</td>
                       <td width="70" align="center"> 
-                         <button class="ButtonW1 sekectClitNameBtn hand not-select" type="submit" onclick="doSelect('${id}','${name}');return false;" value="enter">选择</button>
+                         <button class="ButtonW1 sekectClitNameBtn hand not-select" type="submit" onclick="doSelect('$[id]','$[name]');return false;" value="enter">选择</button>
                       </td>
                     </tr>
                   </table>

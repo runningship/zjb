@@ -40,23 +40,23 @@ function getSider(id){
 function buildAuthorities(modules){
   buildHtmlWithJsonArray("auth_first",modules);
   var tmps = $('.auth_second_tmp');
-  tmps.attr('name','${name}');
-  tmps.attr('value','${text}');
-   tmps.text('${text}');
+  tmps.attr('name','$[name]');
+  tmps.attr('value','$[text]');
+   tmps.text('$[text]');
   
   for(var i=0; i<modules.length;i++){
     var module = modules[i];
-    $('.auth_third_'+i).addClass('auth_third_'+i+'_${rowIndex}');
+    $('.auth_third_'+i).addClass('auth_third_'+i+'_$[rowIndex]');
     buildHtmlWithJsonArray("auth_second_"+i,module.children);
     
   }
 
 
   tmps = $('.auth_third_tmp');
-  tmps.attr('name','${name}');
-  tmps.attr('value','${text}');
-  // tmps.attr('checked','${checked}');
-  tmps.text('${text}');
+  tmps.attr('name','$[name]');
+  tmps.attr('value','$[text]');
+  // tmps.attr('checked','$[checked]');
+  tmps.text('$[text]');
   for(var i=0; i<modules.length;i++){
     var module = modules[i];
     // if(module['checked']=='checked'){
@@ -132,19 +132,19 @@ $(document).ready(function() {
         <div class="maxHW" style="min-width: 700px;">
           <table class="table table-hover table-striped table-nopadding TableB" >
             <tbody>
-            <tr data-hid="${id}" style="display:none;" class="id_purview_list auth_first">
+            <tr data-hid="$[id]" style="display:none;" class="id_purview_list auth_first">
               <td class="purview_title">
                 <ul class="purview_list">
-                  <li><label>${text}</label></li>
+                  <li><label>$[text]</label></li>
                 </ul>
               </td>
               <td>
                 <ul class="purview_cont clearfix">
-                  <li class="auth_second_${rowIndex} clearfix">
+                  <li class="auth_second_$[rowIndex] clearfix">
                       <dl class="purview_conts clearfix">
                         <dt><label><span class="auth_second_tmp"></span></label></dt>
                         <dd>
-                          <label class="auth_third_${rowIndex}"><input onclick="setAuthority(this)" class="auth_third_tmp" type="checkbox" name="" value=""> <span class="auth_third_tmp"></span></label>
+                          <label class="auth_third_$[rowIndex]"><input onclick="setAuthority(this)" class="auth_third_tmp" type="checkbox" name="" value=""> <span class="auth_third_tmp"></span></label>
                         </dd>
                       </dl>
                   </li>

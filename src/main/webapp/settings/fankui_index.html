@@ -113,14 +113,14 @@ $(window).resize(function() {      //类别
 
         <table class="table table-hover table-striped table-nopadding TableB" >
           <tbody>
-          <tr data-hid="${id}" style="display:none;" class="id_Feedback_list">
-            <td style="width:200px">${conts}</td>
-            <td style="width:100px">${deptName}-${uname}</td>
-            <td style="width:100px">${addtime}</td>
-            <!-- <td style="width:50px">${province}</td> -->
+          <tr data-hid="$[id]" style="display:none;" class="id_Feedback_list">
+            <td style="width:200px">$[conts]</td>
+            <td style="width:100px">$[deptName]-$[uname]</td>
+            <td style="width:100px">$[addtime]</td>
+            <!-- <td style="width:50px">$[province]</td> -->
             <td style="width:100px">
-              <a href="javascript:void(0)" class="btns" data-type="edit" onclick="editFeedBack(${id})">回复</a>
-              <!-- <a href="javascript:void(0)" class="btns" data-type="del" onclick="deleteCity(${id})">删除</a> -->
+              <a href="javascript:void(0)" class="btns" data-type="edit" onclick="editFeedBack($[id])">回复</a>
+              <!-- <a href="javascript:void(0)" class="btns" data-type="del" onclick="deleteCity($[id])">删除</a> -->
             </td>
           </tr>
           </tbody>

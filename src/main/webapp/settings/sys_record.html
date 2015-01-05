@@ -111,12 +111,12 @@ $(window).resize(function() {      //类别
 
   <table class="table table-hover table-striped table-nopadding TableB" >
     <tbody>
-    <tr data-hid="${id}" style="display:none;" class="id_House_list" >
-      <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
-      <td>${ip}</td>
-      <td style="text-align:left;width:400px;">${conts}<div style="color:gray">${pcma}</div></td>
-      <td>${cname}-${dname}-${uname}</td>
-      <td>${addtime}</td>
+    <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
+      <td><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]"> </span>$[id]</td>
+      <td>$[ip]</td>
+      <td style="text-align:left;width:400px;">$[conts]<div style="color:gray">$[pcma]</div></td>
+      <td>$[cname]-$[dname]-$[uname]</td>
+      <td>$[addtime]</td>
     </tr>
     </tbody>
   </table>

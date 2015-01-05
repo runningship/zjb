@@ -166,17 +166,17 @@ function getShenHeText(lock){
 
   <table class="table table-hover table-striped table-nopadding TableB" >
     <tbody>
-    <tr data-hid="${id}" style="display:none;" class="id_House_list">
-      <td>${pcname}</td>
-      <td>${dname}</td>
-      <td><div class="div1">${uuid}</div></td>
-      <td>${addtime}</td>
-      <td>${lasttime}</td>
-      <td>${ip}</td>
-      <td>${beizhu}</td>
+    <tr data-hid="$[id]" style="display:none;" class="id_House_list">
+      <td>$[pcname]</td>
+      <td>$[dname]</td>
+      <td><div class="div1">$[uuid]</div></td>
+      <td>$[addtime]</td>
+      <td>$[lasttime]</td>
+      <td>$[ip]</td>
+      <td>$[beizhu]</td>
       <td><span class="btn-group null-float">
-        <a href="##" auth="sz_pc_sh" class="btn btn-xs shenhe-${lock}" data-hid="${id}" data-rel="del" runscript="true" onclick="shenhePC(${id})" >getShenHeText(${lock})</a>
-        <a href="##" auth="sz_pc_del" class="btn btn-xs btn-danger del" data-hid="${id}" data-rel="del" onclick="delPC(${id})">删</a>
+        <a href="##" auth="sz_pc_sh" class="btn btn-xs shenhe-$[lock]" data-hid="$[id]" data-rel="del" runscript="true" onclick="shenhePC($[id])" >getShenHeText($[lock])</a>
+        <a href="##" auth="sz_pc_del" class="btn btn-xs btn-danger del" data-hid="$[id]" data-rel="del" onclick="delPC($[id])">删</a>
         </span>
       </td>
     </tr>

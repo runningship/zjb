@@ -178,17 +178,17 @@ $(document).ready(function() {
 
   <table class="table table-hover table-striped table-nopadding TableB" >
     <tbody>
-    <tr data-hid="${id}" style="display:none;" class="id_House_list" >
-      <td><span class="piliang hidden"><input type="checkbox" name="ids" value="${id}"> </span>${id}</td>
+    <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
+      <td><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]"> </span>$[id]</td>
       <td>
-        <a href="##" auth="gj_sh" class="del shenhe_${sh}" runscript="true" data-hid="${id}" data-rel="del" onclick="shenheGj(${id},this)">getShenHeText(${sh})</a>
-        <a href="##" auth="gj_dels" class="del" data-hid="${id}" data-rel="del" onclick="deletegenjin(${id})">删</a>
+        <a href="##" auth="gj_sh" class="del shenhe_$[sh]" runscript="true" data-hid="$[id]" data-rel="del" onclick="shenheGj($[id],this)">getShenHeText($[sh])</a>
+        <a href="##" auth="gj_dels" class="del" data-hid="$[id]" data-rel="del" onclick="deletegenjin($[id])">删</a>
       </td>
-      <td>${houseId}</td>
-      <td>${ztai}</td>
-      <td style="text-align:left;width:400px;word-break:break-all">${conts}</td>
-      <td>${cname}-${dname}-${uname}</td>
-      <td>${addtime}</td>
+      <td>$[houseId]</td>
+      <td>$[ztai]</td>
+      <td style="text-align:left;width:400px;word-break:break-all">$[conts]</td>
+      <td>$[cname]-$[dname]-$[uname]</td>
+      <td>$[addtime]</td>
     </tr>
     </tbody>
   </table>
