@@ -41,24 +41,46 @@ public class NoticeService {
 		return mv;
 	}
 	
-
 	@WebMethod
-	public ModelAndView index(){
+	public ModelAndView listNotice(Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		//文化墙
-//		List<Map> articleList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime "
-//				+ ",n.zans as zans ,nr.zan as zan from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
-		//公告
-		Page<Map> page = new Page<Map>();
+		mv.data.put("page", JSONHelper.toJSON(innerListNotice(page)));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView listArticle(Page<Map> page){
+		ModelAndView mv = new ModelAndView();
+		mv.data.put("page", JSONHelper.toJSON(innerListArticle(page)));
+		return mv;
+	}
+	
+	private Page<Map> innerListNotice(Page<Map> page){
 		page.setPageSize(6);
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime , SubString(n.conts,1,50) as conts from Notice n ,"
 				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
-//		List<Map> noticeList = dao.listAsMap("select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
-//				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc" , ThreadSession.getUser().id);
-		mv.jspData.put("noticeList", page.getResult());
-		
+		return page;
+	}
+	
+	private Page innerListArticle(Page<Map> page){
+		page.setPageSize(6);
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime ,SubString(n.conts,1,50) as conts "
 				+ ",n.zans as zans ,nr.zan as zan from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
+		return page;
+	}
+	
+	@WebMethod
+	public ModelAndView index(){
+		ModelAndView mv = new ModelAndView();
+		
+		//公告
+		Page<Map> page = new Page<Map>();
+		page.setPageSize(6);
+		page = innerListNotice(page);
+		mv.jspData.put("noticeList", page.getResult());
+		
+		//文化墙
+		page = innerListArticle(page);
 		mv.jspData.put("articleList", page.getResult());
 		
 		

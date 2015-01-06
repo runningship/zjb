@@ -189,12 +189,12 @@ UE.I18N['zh-cn'] = {
         'redandblue':'红蓝相间',
         'threecolorgradient':'三色渐变',
         'copy':"复制(Ctrl + c)",
-        'copymsg': "浏览器不支持,请使用 'Ctrl + c'",
+        'copymsg': "请使用 'Ctrl + c'",
         'paste':"粘贴(Ctrl + v)",
-         'pastemsg': "浏览器不支持,请使用 'Ctrl + v'"
+         'pastemsg': "请使用 'Ctrl + v'"
     },
-    'copymsg': "浏览器不支持,请使用 'Ctrl + c'",
-    'pastemsg': "浏览器不支持,请使用 'Ctrl + v'",
+    'copymsg': "请使用 'Ctrl + c'",
+    'pastemsg': "请使用 'Ctrl + v'",
     'anthorMsg':"链接",
     'clearColor':'清空颜色',
     'standardColor':'标准颜色',

@@ -5,7 +5,8 @@
 <script type="text/javascript" src="/oa/js/chat.js"></script>
 <script type="text/javascript" src="/oa/js/select.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.yw.min.js"> </script>
+<!--<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.yw.min.js"> </script>-->
+<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.js"> </script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 
@@ -19,9 +20,13 @@ $(function(){
         autoHeightEnabled: false
     });
     ue_text_editor.addListener( 'ready', function( editor ) {
-      ue_text_editor.document.onkeyup=function(e){
+        ue_text_editor.document.onkeyup=function(e){
           msgAreaKeyup(e);
-        }
+        };
+        ue_text_editor.document.onpaste=function(e){
+          // onPasteHandler(ue,e);
+          console.log(e);
+        };
     });
 
     getUnReadChats();
@@ -167,7 +172,7 @@ $(function(){
                     
                     <div class="WinInfoSendBtn">
                     
-                         <button class="WinInfoSendBtnAddPhoto Fleft" title="选择图片"></button>
+                         <button class="WinInfoSendBtnAddPhoto Fleft" title=""></button>
                          <button class="WinInfoSendBtnMessage Fleft" onclick="send();">发送</button>
                     
                     </div>

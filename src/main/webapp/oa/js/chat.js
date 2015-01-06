@@ -5,6 +5,7 @@ var my_uid;
 var ue_text_editor;
 var ws_url;
 var unread_stack = [];
+var chat_conts=[];
 //http://pub.idqqimg.com/lib/qqface/0.gif
 function openChat(contactId,contactName,avatar){
 	//打开聊天面板
@@ -12,11 +13,12 @@ function openChat(contactId,contactName,avatar){
 	$('.chat_title').text('与 '+contactName+'... 聊天中');
 	// 判断chat是否已经存在
 	if($('#chat_'+contactId).length>0){
-		$('.cocoWinLxrList li').removeClass('now');
-		$('#chat_'+contactId).toggleClass('now');
+		// $('.cocoWinLxrList li').removeClass('now');
+		// $('#chat_'+contactId).toggleClass('now');
 
-		$('.WinInfoListShowMainBox').css('display','none');
-		$('#msgContainer_'+contactId).css('display','');
+		// $('.WinInfoListShowMainBox').css('display','none');
+		// $('#msgContainer_'+contactId).css('display','');
+		selectChat($('#chat_'+contactId));
 		return;
 	}
 	//判断当前用户是否在线
@@ -27,7 +29,7 @@ function openChat(contactId,contactName,avatar){
 		imgFilterClass = 'user_offline_filter';
 	}
 	// 添加联系人
-	var lxrHtml=	'<li type="msg" avatar="'+avatar+'" cname="'+contactName+'" cid="'+contactId+'" id="chat_'+contactId+'" class="now" onclick="selectChat(this)">'
+	var lxrHtml=	'<li type="msg" avatar="'+avatar+'" cname="'+contactName+'" cid="'+contactId+'" id="chat_'+contactId+'" onclick="selectChat(this)">'
                     +   '<div  class="cocoWinLxrListTx Fleft"><img class="'+imgFilterClass+' user_avatar_img_'+contactId+'" src="/oa/images/avatar/'+avatar+'.jpg" /></div>'
                     +   '<div class="cocoWinLxrListPerInfo Fleft">'
                     +   '   <p class="name">'+contactName+'</p>'
@@ -44,9 +46,10 @@ function openChat(contactId,contactName,avatar){
 	$('.cocoWinInfoListShow').prepend(msgContainer);
 	
 	// 显示最新聊天
-	$('.cocoWinLxrList li').removeClass('now');
+	// $('.cocoWinLxrList li').removeClass('now');
 	$('.cocoWinLxrList').prepend(lxrHtml);
 	$('.qunBox').css('display','none');
+	selectChat($('#chat_'+contactId));
 
 	loadHistory(contactId,1);
 	// $('.msgContainer').css('display','');
@@ -87,15 +90,16 @@ function openGroupChat(groupId,groupName){
 	$('.chat_title').text('与 '+groupName+'... 聊天中');
 	// 判断chat是否已经存在
 	if($('#group_chat_'+groupId).length>0){
-		$('.cocoWinLxrList li').removeClass('now');
-		$('#group_chat_'+groupId).toggleClass('now');
+		// $('.cocoWinLxrList li').removeClass('now');
+		// $('#group_chat_'+groupId).toggleClass('now');
 
-		$('.WinInfoListShowMainBox').css('display','none');
-		$('#msgContainer_group_'+groupId).css('display','');
+		// $('.WinInfoListShowMainBox').css('display','none');
+		// $('#msgContainer_group_'+groupId).css('display','');
+		selectChat($('#group_chat_'+groupId),groupId);
 		return;
 	}
 	// 添加联系人
-	var lxrHtml=	'<li type="groupmsg" cname="'+groupName+'" cid="'+groupId+'" id="group_chat_'+groupId+'" class="now" onclick="selectChat(this,'+groupId+')">'
+	var lxrHtml=	'<li type="groupmsg" cname="'+groupName+'" cid="'+groupId+'" id="group_chat_'+groupId+'" onclick="selectChat(this,'+groupId+')">'
                     +   '<div  class="qunTx Fleft">'+$('#group_avatar_'+groupId).html()+'</div>'
                     +   '<div class="cocoWinLxrListPerInfo Fleft">'
                     +   '   <p class="name">'+groupName+'</p>'
@@ -112,8 +116,9 @@ function openGroupChat(groupId,groupName){
 	$('.cocoWinInfoListShow').prepend(msgContainer);
 	
 	// 显示最新聊天
-	$('.cocoWinLxrList li').removeClass('now');
+	// $('.cocoWinLxrList li').removeClass('now');
 	$('.cocoWinLxrList').prepend(lxrHtml);
+	selectChat($('#group_chat_'+groupId),groupId);
 
 	loadGroupHistory(groupId,1);
 
@@ -260,6 +265,19 @@ function sendToServer(chat){
 	coco_ws.send(JSON.stringify(chat));
 }
 function selectChat(li,groupId){
+	//保存当前窗口内容
+	var conts = ue_text_editor.getContent();
+	var oldChat = $('.now');
+	if(oldChat.length>0){
+		if(oldChat.attr('type')=='groupmsg'){
+			pushChatConts(oldChat.attr('cid') , 'group',conts);
+		}else{
+			pushChatConts(oldChat.attr('cid'),'chat',conts);
+		}	
+	}
+	
+
+
 	var msgContainer;
 	if(groupId){
 		 msgContainer = $('#msgContainer_group_'+groupId);
@@ -288,8 +306,44 @@ function selectChat(li,groupId){
 	}else{
 		$('.qunBox').css('display','none');
 	}
+
+	//切换消息窗口内容
+	var oldConts = "";
+	if(groupId){
+		oldConts = getChatConts(groupId, 'group');
+	}else{
+		oldConts = getChatConts($(li).attr('cid'), 'chat');
+	}
+	ue_text_editor.setContent(oldConts);
 }
 
+function pushChatConts(senderId , type , conts){
+	if(!senderId){
+		return;
+	}
+	for(var i=0;i<chat_conts.length;i++){
+		var tmp = chat_conts[i];
+		if(tmp.senderId==senderId && tmp.type==type){
+			tmp.conts = conts;
+			return;
+		}
+	}
+	var json = JSON.parse('{}');
+	json.senderId = senderId;
+	json.type = type;
+	json.conts = conts;
+	chat_conts.push(json);
+}
+
+function getChatConts(senderId , type){
+	for(var i=0;i<chat_conts.length;i++){
+		var tmp = chat_conts[i];
+		if(tmp.senderId==senderId && tmp.type==type){
+			return tmp.conts;
+		}
+	}
+	return "";
+}
 function buildSentMessage(text,time , senderName){
 	var senderHtml = "";
 	if(senderName){

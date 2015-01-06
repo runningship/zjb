@@ -230,14 +230,19 @@ function notify(){
 </script>
 </head>
 <body>
+<div style="width:100%; height:100%; overflow:hidden; position:relative;">
+
 <c:if test="${use_im==1}">
     <div>
         <jsp:include page="oa/coco.jsp"></jsp:include>
     </div>
 </c:if>
 
-
 <div class="html default table MainLeft">
+
+
+
+
     <div class="tr">
         <div class="lefter td title">
             <div class="table">
@@ -316,5 +321,7 @@ function notify(){
 
 
 
+
+</div>
 </body>
 </html>

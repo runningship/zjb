@@ -264,7 +264,7 @@ $(document).ready(function(){
                         <li>
                             <button class="selectMethod hand" type="button">房型<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" text="${value}" type="checkbox" name="fxing" value="${value}"> $[name]</label> </p> 
+                                <p onclick="addQueryStr('fxing')" class="id_fxing"><label><input class="hand" text="$[value]" type="checkbox" name="fxing" value="$[value]"> $[name]</label> </p> 
                             </div>
                         </li>
                         <li>
@@ -277,7 +277,7 @@ $(document).ready(function(){
                             <button class="selectMethod" type="button">方式<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('fangshi')"><label><input type="radio" name="fangshi" text="" value="" checked="checked"> 不限</label> </p> 
-                                <p onclick="addQueryStr('fangshi')" class="id_fangshi"  ><label><input text="$[name]" type="radio" name="fangshi" value="${code}"> $[name]</p>
+                                <p onclick="addQueryStr('fangshi')" class="id_fangshi"  ><label><input text="$[name]" type="radio" name="fangshi" value="$[code]"> $[name]</p>
                             </div>
                         </li>
                         <li>
@@ -292,7 +292,7 @@ $(document).ready(function(){
                             <button class="selectMethod" type="button" >状态<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('ztai')"><label><input type="radio" name="ztai" text="" value="" checked="checked" > 所有</label> </p> 
-                                <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input text="$[name]" type="radio" name="ztai" value="${code}"> $[name]</p>
+                                <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input text="$[name]" type="radio" name="ztai" value="$[code]"> $[name]</p>
                             </div>
                         </li>
                         <li auth="fy_sh">

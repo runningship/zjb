@@ -33,20 +33,27 @@
 				_move=true;  
 				_x=e.pageX-parseInt($("#layerBoxDj").css("left"));  
 				_y=e.pageY-parseInt($("#layerBoxDj").css("top"));  
-				$("#layerBoxDj").fadeTo(10, 0.75);//点击后开始拖动并透明显示  
+				$("#layerBoxDj").fadeTo(1, 0.75);//点击后开始拖动并透明显示  
+				
+				$(document).mousemove(function(e){  
+					$(document).bind("selectstart",function(){return false;});  
+					if(_move){  
+						var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
+						var y=e.pageY-_y;  
+						$("#layerBoxDj").css({top:y,left:x});//控件新位置  
+					}  
+				});
+				
+			}).mouseup(function(){  
+				_move=false;  
+				$("#layerBoxDj").fadeTo(1, 1);//松开鼠标后停止移动并恢复成不透明  
 			});  
-			$("#layerBoxDj").mousemove(function(e){  
-				if(_move){  
-					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
-					var y=e.pageY-_y;  
-					$(this).css({top:y,left:x});//控件新位置  
-				}  
-			});
 			
-			 $("#cocoWintit").mouseup(function(){  
+			
+/*			 $("#cocoWintit").mouseup(function(){  
 				_move=false;  
 				$("#layerBoxDj").fadeTo(10, 1);//松开鼠标后停止移动并恢复成不透明  
-			});  
+			});  */
 		 
 		   
 	  }
@@ -70,21 +77,22 @@
 				$("#"+id).css({"z-index":"+="+100});
 				_x=e.pageX-parseInt($("#"+id).css("left"));  
 				_y=e.pageY-parseInt($("#"+id).css("top"));  
-				$("#"+id).fadeTo(10, 0.75);//点击后开始拖动并透明显示  
-			});  
-			$("#"+id).mousemove(function(e){  
-			    $(document).bind("selectstart",function(){return false;});  
-				if(_move){  
-					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
-					var y=e.pageY-_y;  
-					$(this).css({top:y,left:x});//控件新位置  
-				}  
-			});
-			
-			 $("#"+id).children(".cocoLayerTit").mouseup(function(){  
+				$("#"+id).fadeTo(1, 0.75);//点击后开始拖动并透明显示  
+				
+				$("#"+id).mousemove(function(e){  
+					$(document).bind("onselectstart",function(){return false;});  
+					if(_move){  
+						var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
+						var y=e.pageY-_y;  
+						$(this).css({top:y,left:x});//控件新位置  
+					}  
+				});
+			}).mouseup(function(){  
 				_move=false;  
+				//$("#"+id).css({top:y,left:x});//控件新位置 
 				$("#"+id).fadeTo(10, 1);//松开鼠标后停止移动并恢复成不透明  
 			});  
+	
 		 
 	  }
 

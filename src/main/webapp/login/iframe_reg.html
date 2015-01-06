@@ -249,7 +249,7 @@ function btnAction(){
                         $('#authCode').val('');
                         $('textarea[name=beizhu]').val('');
                         $('select[name=fendian]').empty();
-                        $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
+                        $('select[name=fendian]').append('<option class="fendian" value="$[id]">$[name]</option>');
                     }
                 });
                 return false;
@@ -268,7 +268,7 @@ function btnAction(){
 
             }else if(ThiFormId=="idFendian"){
                 $('select[name=fendian]').empty();
-                $('select[name=fendian]').append('<option class="fendian" value="${id}">${name}</option>');
+                $('select[name=fendian]').append('<option class="fendian" value="$[id]">$[name]</option>');
             }else if(ThiFormId=="idBeizhu"){
 
             }
@@ -366,7 +366,7 @@ $(window).resize(function() {
                         <label for="city" class="col-xs-3 control-label">选择门店：</label>
                         <div class="col-xs-6">
                             <select class="form-control" multiple size="6" name="fendian">
-                                <option class="fendian" value="${id}">${name}</option>
+                                <option class="fendian" value="$[id]">$[name]</option>
                             </select>
                         </div>
                     </div>

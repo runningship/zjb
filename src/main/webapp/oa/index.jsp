@@ -15,6 +15,7 @@
 <link rel="stylesheet" type="text/css" href="style/cocoWinLayer.css" />
 </head>
 <script type="text/javascript">
+var artPage = 1;
 function selectZan(id,obj){
   $(obj).toggleClass('zan');
   $(obj).toggleClass('zanSel');
@@ -36,6 +37,55 @@ function doSearch(){
   },1000);
 }
 
+function getMore(){
+  $('.jzMore').text('加载中...');
+  artPage ++;
+  YW.ajax({
+    type: 'POST',
+    url: '/c/oa/listArticle?currentPageNo='+artPage,
+    dataType:'json',
+    mysuccess: function(data){
+      buildArticle(data);
+      $('.jzMore').text('点击加载更多');
+    }
+  });
+}
+
+function buildArticle(page){
+  var json = page['page']['data'];
+  for (var i = 0; i < json.length; i++) {
+    var conTxt = json[i]['conts'];
+	
+	//return false;
+	//conTxt = conTxt.text();
+    var html = '<div class="textInfoBox">'
+             +  ' <div class="infoBoxLine"><img src="images/pageLineicon.png"></div>'
+             +   '<div class="infoBoxTit">'
+             +    ' <div class="infoListImg Fleft"><img src="/oa/images/avatar/'+json[i]['senderAvatar']+'.jpg"></div>'
+             +    ' <div class="Fleft userSelectTrue">    '  
+             +       '<p><span class="yh">'+json[i]['senderName']+'</span><span class="time">'+json[i]['addtime']+'</span></p>'
+             +       '<p><a href="#" class="tit" onclick="openNewWin(\'viewGg\',\'980\',\'650\',\'查看文章\',\'article/view.html?id='+json[i]['id']+'\')">'+json[i]['title']+'</a></p>'
+             +     '</div>'
+             +     '<div class="infoCaozuo">';
+    if(json[i].zan==0){
+      html  +=     '<i class="Bg zan " style="margin-right:3px" onclick="selectZan('+json[i]['id']+',this);return false;">点赞</i>';
+    }else{
+      html  +=     '<i class="Bg zanSel " style="margin-right:3px" onclick="selectZan('+json[i]['id']+',this);return false;">点赞</i>';
+    }
+    html = html+       '<span class="zan_count">'+json[i]['zans']+'</span>'
+             +     '</div>'
+             +   '</div>'
+             +   '<div class="infoBoxContent userSelectTrue">'
+             +     '<span class="WZcon" style="display:none;" id="WZconAdd'+ i +'"><pre>'+conTxt+'</pre></span><div class="infoMore">...</div>'
+             +   '</div>'
+             + '</div>';
+    $('.whqMain').append(html);
+	
+	$("#WZconAdd"+i).parent().append("<span class='marginLeft10 con' style=' white-space:nowrap;'>"+$("#WZconAdd"+i).text()+"</span>");
+	$("#WZconAdd"+i).remove();
+  }
+}
+
 </script>
 <body>
 <div class="oa_Main oa_W">
@@ -44,9 +94,9 @@ function doSearch(){
       <div class="tr w100">
         <div class="td oaTit oaTitBgInfo">
           <ul class="titBox">
-            <li><i class=" Bg whq"></i><span class="color1">文化墙</span></li>
+            <li href="#" onclick="openListWin('listArticle','980','650','全部文章','article/list.html')"><i class=" Bg whq"></i><span class="color1">文化墙</span></li>
             <li><span class="line"></span></li>
-            <li><i class=" Bg gg"></i><span class="color2">公告</span></li>
+            <li href="#" onclick="openListWin('listGg','980','650','全部公告','notice/list.html')"><i class=" Bg gg"></i><span class="color2">公告</span></li>
             <!-- <li><span class="line"></span></li>
             <li><i class=" Bg wzsc"></i><span class="color3">网址收藏</span></li> -->
           </ul>
@@ -79,7 +129,8 @@ function doSearch(){
 					  }
 				});
 			</script>
-            <div class="td" style="width:50%; height:100%;overflow:hidden;">
+            <div class="td" style="width:50%; height:100%;overflow:hidden; position:relative;">
+              
               <div class="oaInfomain" style="overflow:hidden; overflow-y:auto;">
                 <div class="whqMain" style="padding-bottom:10px;">
                   <c:forEach items="${articleList}"  var="article">
@@ -109,6 +160,7 @@ function doSearch(){
                     </div>
                   </c:forEach>
                   
+                  <div class="jzMore" onclick="getMore();">点击加载更多</div>
                       <script>
 								 /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
 								 $(function(){
@@ -145,7 +197,7 @@ function doSearch(){
                             <p class="day"><fmt:formatDate value="${notice.addtime}" pattern="dd"/></p>
                           </div>
                           <div class="ggBoxContent">
-                            <p><span class="titL marginLeft10">Tit:</span><span class="tit marginLeft10 userSelectTrue" onclick="openNewWin('viewGg','980','650','查看公告','notice/view.html?id=${notice.id}')">${notice.title}</span></p>
+                            <p><span class="titL marginLeft10">Tit:</span><a href="#" class="tit marginLeft10 userSelectTrue" onclick="openNewWin('viewGg','980','650','查看公告','notice/view.html?id=${notice.id}')">${notice.title}</a></p>
                             <!--<p><span class="marginLeft10 con">${notice.conts}</span></p>-->
                             <span class="GGcon" style="display:none">${notice.conts}</span>
 							

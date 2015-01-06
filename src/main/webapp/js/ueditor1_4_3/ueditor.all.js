@@ -14764,14 +14764,18 @@ UE.plugins['paste'] = function () {
 
     me.commands['paste'] = {
         execCommand: function (cmd) {
-            if (browser.ie) {
-                getClipboardData.call(me, function (div) {
-                    filter(div);
-                });
-                me.document.execCommand('paste');
-            } else {
-                alert(me.getLang('pastemsg'));
-            }
+        	getClipboardData.call(me, function (div) {
+                filter(div);
+            });
+            me.document.execCommand('paste');
+//            if (browser.ie) {
+//                getClipboardData.call(me, function (div) {
+//                    filter(div);
+//                });
+//                me.document.execCommand('paste');
+//            } else {
+//                alert(me.getLang('pastemsg'));
+//            }
         }
     }
 };
