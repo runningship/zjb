@@ -216,7 +216,7 @@ function buildArticle(page){
 								 $(function(){
 										  var conNum = $(".GGcon").size();
 										  for(var i=0;i<conNum;i++){
-											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con userSelectTrue' style='font-family:\"宋体\";'>"+$("#GGcon"+i).text()+"</span></p>");
+											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con userSelectTrue' style='font-family:\"宋体\"; line-height:18px;'>"+$("#GGcon"+i).text()+"</span></p>");
 											 // $(".GGcon"+i).text();
 											  /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
 										  }
