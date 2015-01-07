@@ -132,7 +132,7 @@ function buildArticle(page){
             <div class="td" style="width:50%; height:100%;overflow:hidden; position:relative;">
               
               <div class="oaInfomain" style="overflow:hidden; overflow-y:auto;">
-                <div class="whqMain" style="padding-bottom:10px;">
+                <div class="whqMain" style="padding-bottom:9px;">
                   <c:forEach items="${articleList}"  var="article">
                     <div class="textInfoBox">
                       <div class="infoBoxLine"><img src="images/pageLineicon.png" /></div>
@@ -216,7 +216,7 @@ function buildArticle(page){
 								 $(function(){
 										  var conNum = $(".GGcon").size();
 										  for(var i=0;i<conNum;i++){
-											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");
+											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con userSelectTrue'>"+$("#GGcon"+i).text()+"</span></p>");
 											 // $(".GGcon"+i).text();
 											  /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
 										  }

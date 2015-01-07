@@ -5,8 +5,8 @@
 <script type="text/javascript" src="/oa/js/chat.js"></script>
 <script type="text/javascript" src="/oa/js/select.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.config.js"></script>
-<!--<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.yw.min.js"> </script>-->
-<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.yw.min.js"> </script>
+<!--<script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.js"> </script>-->
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 
@@ -57,6 +57,16 @@ $(function(){
                    <span><i class="Bg ldq"></i></span>
               </div>
          </div>
+         
+         <div class="tr w100">
+              <div class="td cocoMainSearch">
+              
+                   <input type="text" class="cocoMainSearchBox" value="搜索联系人" />
+              
+              </div>
+         </div>
+         
+         
          <div class="tr w100">
               <div class="td cocoMainCon">
                     
@@ -137,20 +147,23 @@ $(function(){
 
 
 
+           <iframe class="mask"></iframe>  
+           <div class="mask"></div>  
 <div class="cocoWin" id="layerBoxDj" style=" display:none;">
 
      <div class="cocoWintit" id="cocoWintit" style="-webkit-user-select:none;"><span class="chat_title Fleft"></span><i class="closeBg none" onclick="closeBox()" title="最小化"></i><i class="closeBg closeX" onclick="closeBox(closeAllChat)" title="关闭"></i></div>
      
      <div class="cocoWinContent">
      
-          <div class="cocoWinContentLxr">
+          <div class="cocoWinContentLxr" style="-webkit-user-select:none;">
                
-               <ul class="cocoWinLxrList" >
+               <ul class="cocoWinLxrList">
                                     
                </ul>
                
           </div>
-          <div style=" width:510px; float:left; height:100%;">
+          
+          <div style=" width:510px; float:left; height:100%;-webkit-user-select:text;">
               <div class="cocoWinInfoListShow" style="height:411px;">
               
                    
@@ -179,6 +192,7 @@ $(function(){
                
                </div>
            </div>
+           
            
            
            

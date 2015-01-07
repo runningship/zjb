@@ -15,7 +15,6 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.im.IMServer;
-import com.youwei.zjb.sys.AuthorityService;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 
@@ -27,7 +26,7 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 	@WebMethod
 	public ModelAndView home(){
 		ModelAndView mv = new ModelAndView();
-		List<Map> users = dao.listAsMap("select u.avatar as avatar, u.uname as uname , d.namea as dname ,u.id as uid from User u, Department d where cid=? and u.did=d.id order by u.uname", ThreadSession.getUser().cid);
+		List<Map> users = dao.listAsMap("select u.avatar as avatar, u.uname as uname , d.namea as dname ,u.id as uid from User u, Department d where u.cid=? and u.lock=1 and u.did=d.id order by u.uname", ThreadSession.getUser().cid);
 		//随机头像
 		Random  r = new Random();
 		User me = ThreadSession.getUser();

@@ -26,29 +26,46 @@
 		 
 		 $("#layerBoxDj").css("display","block");
 		 //layerShowBox("layerBoxDj");
-		 
+		 var w = $("#layerBoxDj").width();
+		 var h = $("#layerBoxDj").height();
 		 
 		 
 		    $("#cocoWintit").mousedown(function(e){  
 				_move=true;  
+				
+				$("#layerBoxDj").css({"z-index":artDialog.defaults.zIndex++});
+				
+				$(".mask").show();
+				
 				_x=e.pageX-parseInt($("#layerBoxDj").css("left"));  
 				_y=e.pageY-parseInt($("#layerBoxDj").css("top"));  
-				$("#layerBoxDj").fadeTo(1, 0.75);//点击后开始拖动并透明显示  
+				$("#layerBoxDj").fadeTo(0, 0.75);//点击后开始拖动并透明显示  
 				
-				$(document).mousemove(function(e){  
-					$(document).bind("selectstart",function(){return false;});  
-					if(_move){  
-						var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
-						var y=e.pageY-_y;  
-						$("#layerBoxDj").css({top:y,left:x});//控件新位置  
-					}  
-				});
-				
-			}).mouseup(function(){  
-				_move=false;  
-				$("#layerBoxDj").fadeTo(1, 1);//松开鼠标后停止移动并恢复成不透明  
 			});  
 			
+			$(document).mousemove(function(e){  
+			//	$(document).bind("selectstart",function(){return false;});  
+				if(_move){  
+					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
+					var y=e.pageY-_y;
+					
+					
+					x = x<=0?10:x;
+					x = x>=$(window).width()-300?$(window).width()-300:x;
+					
+					y = y<=0?10:y;
+					y = y>=$(window).height()-100?$(window).height()-100:y;
+					
+					
+					$("#layerBoxDj").css({top:y,left:x});//控件新位置
+				}  
+			});
+			
+			$("#cocoWintit").mouseup(function(){  
+				_move=false;  
+				$("#layerBoxDj").fadeTo(0, 1);//松开鼠标后停止移动并恢复成不透明
+				$(".mask").hide();  
+			})
 			
 /*			 $("#cocoWintit").mouseup(function(){  
 				_move=false;  
@@ -69,30 +86,34 @@
 	  
 	  function LayerShow(id){
 		 
-		// $("#"+id).css("display","block");
 		 
 		    $("#"+id).children(".cocoLayerTit").mousedown(function(e){  
 				_move=true;  
-				$(".cocoLayerTit").parent().css({"z-index":"120"}); 
-				$("#"+id).css({"z-index":"+="+100});
+				//$(".cocoLayerTit").parent().css({"z-index":"120"}); 
+				$("#"+id).css({"z-index":artDialog.defaults.zIndex++});
+				
+				$(".mask").show();
+				
 				_x=e.pageX-parseInt($("#"+id).css("left"));  
 				_y=e.pageY-parseInt($("#"+id).css("top"));  
-				$("#"+id).fadeTo(1, 0.75);//点击后开始拖动并透明显示  
+				$("#"+id).fadeTo(0, 0.75);//点击后开始拖动并透明显示  
 				
-				$("#"+id).mousemove(function(e){  
-					$(document).bind("onselectstart",function(){return false;});  
-					if(_move){  
-						var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
-						var y=e.pageY-_y;  
-						$(this).css({top:y,left:x});//控件新位置  
-					}  
-				});
-			}).mouseup(function(){  
-				_move=false;  
-				//$("#"+id).css({top:y,left:x});//控件新位置 
-				$("#"+id).fadeTo(10, 1);//松开鼠标后停止移动并恢复成不透明  
-			});  
+			});
 	
+			$(document).mousemove(function(e){  
+				//$(document).bind("onselectstart",function(){return false;});  
+				if(_move){  
+					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
+					var y=e.pageY-_y;  
+					$("#"+id).css({top:y,left:x});//控件新位置  
+				}  
+			});
+			
+			$("#"+id).children(".cocoLayerTit").mouseup(function(){  
+				_move=false;  
+				$(".mask").hide();  
+				$("#"+id).fadeTo(0, 1);//松开鼠标后停止移动并恢复成不透明  
+			});
 		 
 	  }
 
@@ -171,7 +192,7 @@
 		if ($('#'+id).length>0) {
 			return;
 		};
-	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div>";
+	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div><iframe class='mask'></iframe><div class='mask'></div>";
 			 
 			 $("body").append(htmlText);
 			 
@@ -184,7 +205,7 @@
 	  
 	  function openListWin(id,w,h,tit,s){// 调用方式：onclick="openNewWin('addGg','980','650','全部公告','gg.html')"
 		 
-	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div>";
+	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div><iframe class='mask'></iframe><div class='mask'></div>";
 			 
 			 $("body").append(htmlText);
 			 

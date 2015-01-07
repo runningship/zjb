@@ -263,6 +263,10 @@ i.add:hover{ background-position:-38px -100px;}
 
 .cocoMainSelect{ height:50px; background-color:#d8dfe3;}
 
+.cocoMainSearch{ height:30px; background-color:#f2f4f6;}
+
+.cocoMainSearchBox{ width:200px; height:20px; margin:5px 8px; color:#aaa; border:none; background:none; font-size:12px; font-family:"宋体"; outline:none;}
+
 .cocoMainSelect span{ width:33.33333333334%; float:left; text-align:center; height:100%; overflow:hidden; position:relative;}
 .cocoMainSelect span:hover, .cocoMainSelect span.sle{ background-color:#f2f4f6;}
 .cocoMainSelect span i { margin-top:15px;}
@@ -503,4 +507,16 @@ i.add:hover{ background-position:-38px -100px;}
 	  -moz-animation: icon-bounce 0.4s infinite;
 	  -o-animation: icon-bounce 0.4s infinite;
 	  animation: icon-bounce 0.4s infinite;
+}
+
+.mask {  
+    background:#000;  
+    display:none;  
+    opacity:0.0;/*FF*/  
+    width:100%;  
+    height:100%;  
+    position:fixed;  
+    top:0;  
+    left:0;  
+    z-index:1980;  
 }
