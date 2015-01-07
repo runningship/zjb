@@ -3,9 +3,9 @@ package com.youwei.zjb.user;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import com.youwei.zjb.SimpDaoTool;
+import org.bc.sdak.SimpDaoTool;
+
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;

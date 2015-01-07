@@ -66,7 +66,7 @@ html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体;}
 
 
 .oa_Main{
-	 height: 100%; min-width:960px; min-height:400px; overflow:hidden; 
+	 height: 100%; min-width:960px; min-height:400px; overflow:hidden; position:relative;
 }
 
 .oa_W{ width:100%;}

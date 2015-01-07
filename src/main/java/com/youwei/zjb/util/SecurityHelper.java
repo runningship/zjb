@@ -2,13 +2,12 @@ package com.youwei.zjb.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 import org.bc.sdak.GException;
+import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.utils.LogUtil;
+import org.bc.web.PlatformExceptionType;
 
-import com.youwei.zjb.PlatformExceptionType;
-import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.sys.entity.PC;
 import com.youwei.zjb.user.entity.User;
 

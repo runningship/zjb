@@ -5,13 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.SimpDaoTool;
 import org.jsoup.nodes.Document;
 
-import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.RentType;
-import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;

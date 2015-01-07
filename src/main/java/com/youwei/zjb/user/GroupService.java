@@ -7,9 +7,9 @@ import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.PlatformExceptionType;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.DeptGroup;

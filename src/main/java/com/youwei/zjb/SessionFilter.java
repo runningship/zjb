@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.bc.sdak.SimpDaoTool;
 
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.UserSession;

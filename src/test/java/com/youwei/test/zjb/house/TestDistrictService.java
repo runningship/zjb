@@ -1,9 +1,9 @@
 package com.youwei.test.zjb.house;
 
+import org.bc.sdak.SimpDaoTool;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.DistrictService;
 import com.youwei.zjb.house.entity.District;

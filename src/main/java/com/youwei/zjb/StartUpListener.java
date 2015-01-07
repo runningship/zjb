@@ -8,8 +8,10 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.jsp.JspFactory;
 
 import org.bc.sdak.MutilSessionFactoryBuilder;
+import org.bc.sdak.SQL2008Dialect;
 import org.bc.sdak.SessionFactoryMapper;
 import org.bc.web.ModuleManager;
+import org.bc.web.PublicFieldSupportingELResolver;
 import org.hibernate.cfg.AvailableSettings;
 
 import com.youwei.zjb.cache.ConfigCache;

@@ -10,10 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
+import org.bc.sdak.SimpDaoTool;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.youwei.zjb.SimpDaoTool;
 
 /**
  * 

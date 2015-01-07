@@ -10,10 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.bc.sdak.SimpDaoTool;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import com.youwei.zjb.SimpDaoTool;
 
 /**
  * fid为0 表示公司，其他表示分公司

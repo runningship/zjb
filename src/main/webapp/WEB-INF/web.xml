@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>zhongbang</display-name>
+  <display-name>zjb</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -14,7 +14,7 @@
 	    <listener-class>com.youwei.zjb.StartUpListener</listener-class>
 	</listener>
 	<listener>
-	    <listener-class>com.youwei.zjb.RequestListener</listener-class>
+	    <listener-class>org.bc.web.RequestListener</listener-class>
 	</listener>
 	<session-config>
 	  <session-timeout>1440</session-timeout>
@@ -40,23 +40,23 @@
 	    <url-pattern>/v/*</url-pattern>
 	</servlet-mapping>
 	
-	<servlet>
-        <servlet-name>fileup</servlet-name>
-        <servlet-class> com.youwei.zjb.files.FileUploadServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>fileup</servlet-name>
-	    <url-pattern>/file/upload/*</url-pattern>
-	</servlet-mapping>
+<!-- 	<servlet> -->
+<!--         <servlet-name>fileup</servlet-name> -->
+<!--         <servlet-class> com.youwei.zjb.files.FileUploadServlet</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 	    <servlet-name>fileup</servlet-name> -->
+<!-- 	    <url-pattern>/file/upload/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 	
-	<servlet>
-        <servlet-name>filedown</servlet-name>
-        <servlet-class> com.youwei.zjb.files.FileDownloadServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>filedown</servlet-name>
-	    <url-pattern>/file/download/*</url-pattern>
-	</servlet-mapping>
+<!-- 	<servlet> -->
+<!--         <servlet-name>filedown</servlet-name> -->
+<!--         <servlet-class> com.youwei.zjb.files.FileDownloadServlet</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 	    <servlet-name>filedown</servlet-name> -->
+<!-- 	    <url-pattern>/file/download/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 	
 	<servlet>
         <servlet-name>weixin</servlet-name>
@@ -80,7 +80,7 @@
 	
 	<filter>
     	<filter-name>grandFilter</filter-name>
-    	<filter-class>com.youwei.zjb.GrandFilter</filter-class>
+    	<filter-class>org.bc.web.GrandFilter</filter-class>
     	<init-param>
     		<param-name>encoding</param-name>
     		<param-value>utf-8</param-value>

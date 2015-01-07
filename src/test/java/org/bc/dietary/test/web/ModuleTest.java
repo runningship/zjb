@@ -7,10 +7,10 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 import org.bc.sdak.Page;
+import org.bc.sdak.SimpDaoTool;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.house.entity.District;

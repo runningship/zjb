@@ -13,8 +13,7 @@ import javax.persistence.FetchType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.bc.sdak.utils.LogUtil;
-
-import com.youwei.zjb.DateSeparator;
+import org.bc.web.DateSeparator;
 
 public class HqlHelper {
 

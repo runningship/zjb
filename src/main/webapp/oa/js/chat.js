@@ -10,6 +10,8 @@ var chat_conts=[];
 function openChat(contactId,contactName,avatar){
 	//打开聊天面板
 	showBox();
+	//设置zIndex
+	$("#layerBoxDj").css({"z-index":artDialog.defaults.zIndex++});
 	$('.chat_title').text('与 '+contactName+'... 聊天中');
 	// 判断chat是否已经存在
 	if($('#chat_'+contactId).length>0){
@@ -721,10 +723,12 @@ function recoverChatPanel(){
 		}else{
 			$('.cocoNews').removeClass('cocoNewsAlert');
 		}
+		$("#layerBoxDj").css({"z-index":artDialog.defaults.zIndex++});
 	}else{
 		if($('.cocoWinLxrList li').length>0){
 			if($("#layerBoxDj").css("display")=='none'){
 				showBox();
+				$("#layerBoxDj").css({"z-index":artDialog.defaults.zIndex++});
 			}else{
 				closeBox();
 			}

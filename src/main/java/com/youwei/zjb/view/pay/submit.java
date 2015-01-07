@@ -7,10 +7,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.bc.sdak.SimpDaoTool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;

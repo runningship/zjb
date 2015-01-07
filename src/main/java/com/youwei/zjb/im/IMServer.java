@@ -12,13 +12,13 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.entity.Contact;
 import com.youwei.zjb.im.entity.GroupMessage;

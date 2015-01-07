@@ -9,11 +9,11 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.DateSeparator;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.HouseRent;

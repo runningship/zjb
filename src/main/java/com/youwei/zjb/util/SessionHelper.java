@@ -4,7 +4,8 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
-import com.youwei.zjb.SimpDaoTool;
+import org.bc.sdak.SimpDaoTool;
+
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.UserSession;
 

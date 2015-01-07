@@ -3,20 +3,18 @@ package com.youwei.zjb.job;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.io.IOUtils;
 import org.bc.sdak.CommonDaoService;
-import org.bc.sdak.utils.LogUtil;
+import org.bc.sdak.SimpDaoTool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.youwei.zjb.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.QuYu;
 import com.youwei.zjb.house.ZhuangXiu;
