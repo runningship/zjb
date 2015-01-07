@@ -26,8 +26,6 @@
 		 
 		 $("#layerBoxDj").css("display","block");
 		 //layerShowBox("layerBoxDj");
-		 var w = $("#layerBoxDj").width();
-		 var h = $("#layerBoxDj").height();
 		 
 		 
 		    $("#cocoWintit").mousedown(function(e){  
@@ -98,27 +96,21 @@
 				_x=e.pageX-parseInt($("#"+id).css("left"));  
 				_y=e.pageY-parseInt($("#"+id).css("top"));  
 				$("#"+id).fadeTo(0, 0.75);//点击后开始拖动并透明显示  
-				
+				//$(document).bind("selectstart",function(){return false;});  
 			});
 	
-			$(document).mousemove(function(e){  
-				$(document).bind("selectstart",function(){return false;});  
+			$("#"+id).mousemove(function(e){  
+				
 				if(_move){  
 					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
 					var y=e.pageY-_y;  
-					
-					x = x<=0?10:x;
-					x = x>=$(".oa_Main").width()-300?$(".oa_Main").width()-300:x;
-					
-					y = y<=0?10:y;
-					y = y>=$(".oa_Main").height()-100?$(".oa_Main").height()-100:y;
-					
 					
 					$("#"+id).css({top:y,left:x});//控件新位置  
 				}  
 			});
 			
 			$id.mouseup(function(){  
+				//$(document).bind("selectstart",function(){return true;});  
 				_move=false;  
 				$(".mask").hide();  
 				$("#"+id).fadeTo(0, 1);//松开鼠标后停止移动并恢复成不透明  
@@ -201,9 +193,9 @@
 		if ($('#'+id).length>0) {
 			return;
 		};
-	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div><iframe class='mask'></iframe><div class='mask'></div>";
+	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
-			 $(".oa_Main").append(htmlText);
+			 $("body").append(htmlText);
 			 
 		     layerShowBox(id);
 			 
@@ -218,9 +210,9 @@
 				return;
 			};
 			
-	    	 var htmlText = "<div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:120;-webkit-user-select:none;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;'></iframe></div><iframe class='mask'></iframe><div class='mask'></div>";
+	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
-			 $(".oa_Main").append(htmlText);
+			 $("body").append(htmlText);
 			 
 			 layerShowBox(id);
 			 

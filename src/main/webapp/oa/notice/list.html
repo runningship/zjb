@@ -67,7 +67,10 @@ $(function(){
                         <h2 onclick="window.location='/oa/notice/view.html?id=$[id]'">$[title]</h2>
                         <div class="conTime"><i class="person">$[senderName]</i><i class="clock">$[addtime]</i></div>
                     </div>
-                    <div class="ggListBoxBot"><i class="Bg zan" onclick="selectZan($[id],this);return false;">$[hasRead]</i><i class="Bg hfSel" onclick="deleteThis($[id]);return false;" >$[replys]</i></div>
+                    <div class="ggListBoxBot"><i class="Bg zan" onclick="selectZan($[id],this);return false;">$[hasRead]</i>
+                    <i auth="oa_notice_del" class="Bg hfSel" onclick="deleteThis($[id]);return false;" >$[replys]</i>
+                    <i auth="!oa_notice_del" show="$${userId}==$[senderId]" class="Bg hfSel" onclick="deleteThis($[id]);return false;" >$[replys]</i>
+                    </div>
                </div>
           </div>
         </div>

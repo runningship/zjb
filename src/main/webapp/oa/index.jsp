@@ -81,7 +81,7 @@ function buildArticle(page){
              + '</div>';
     $('.whqMain').append(html);
 	
-	$("#WZconAdd"+i).parent().append("<span class='marginLeft10 con' style=' white-space:nowrap;'>"+$("#WZconAdd"+i).text()+"</span>");
+	$("#WZconAdd"+i).parent().append("<span class='marginLeft10 con' style=' white-space:nowrap; max-width:500px; overflow:hidden; display:inline-block;'>"+$("#WZconAdd"+i).text()+"</span>");
 	$("#WZconAdd"+i).remove();
   }
 }
@@ -94,9 +94,9 @@ function buildArticle(page){
       <div class="tr w100">
         <div class="td oaTit oaTitBgInfo">
           <ul class="titBox">
-            <li href="#" onclick="openListWin('listArticle','980','650','全部文章','article/list.html')"><i class=" Bg whq"></i><span class="color1">文化墙</span></li>
+            <li href="#" onclick="window.location.reload()"><i class=" Bg whq"></i><span class="color1">文化墙</span></li>
             <li><span class="line"></span></li>
-            <li href="#" onclick="openListWin('listGg','980','650','全部公告','notice/list.html')"><i class=" Bg gg"></i><span class="color2">公告</span></li>
+            <li href="#" onclick="window.location.reload()"><i class=" Bg gg"></i><span class="color2">公告</span></li>
             <!-- <li><span class="line"></span></li>
             <li><i class=" Bg wzsc"></i><span class="color3">网址收藏</span></li> -->
           </ul>
@@ -110,14 +110,14 @@ function buildArticle(page){
             <c:if test="${auths.indexOf('oa_article_add')>-1}">
               <i class="Bg add Fleft" onclick="openNewWin('addArt','600','430','添加文章','article/add.jsp')"></i>
             </c:if>
-            </div>  <a href="#" onclick="openListWin('listArticle','980','650','全部文章','article/list.html')">更多></a>  
+            </div>  <a href="#" onclick="openListWin('listArticle','980','650','全部文章','/v/oa/article/list.html')">更多></a>  
           </div>
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span>
             <c:if test="${auths.indexOf('oa_notice_add')>-1}">
               <i class="Bg add Fleft"  onclick="openNewWin('addGg','600','480','添加公告','notice/add.jsp')" ></i>
             </c:if>
-            </div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','980','650','全部公告','notice/list.html')">更多></a></div>
+            </div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','980','650','全部公告','/v/oa/notice/list.html')">更多></a></div>
           </div>
           <div class="tr w100">
           
@@ -166,7 +166,7 @@ function buildArticle(page){
 								 $(function(){
 										  var conNum = $(".WZcon").size();
 										  for(var i=0;i<conNum;i++){
-											  $("#WZcon"+i).parent().append("<span class='marginLeft10 con' style=' white-space:nowrap;'>"+$("#WZcon"+i).text()+"</span>");
+											  $("#WZcon"+i).parent().append("<span class='marginLeft10 con' style=''>"+$("#WZcon"+i).text()+"</span>");
 											  //$("#WZcon"+i).remove();
 										  }
 								 });
@@ -216,7 +216,7 @@ function buildArticle(page){
 								 $(function(){
 										  var conNum = $(".GGcon").size();
 										  for(var i=0;i<conNum;i++){
-											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con userSelectTrue'>"+$("#GGcon"+i).text()+"</span></p>");
+											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con userSelectTrue' style='font-family:\"宋体\";'>"+$("#GGcon"+i).text()+"</span></p>");
 											 // $(".GGcon"+i).text();
 											  /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
 										  }

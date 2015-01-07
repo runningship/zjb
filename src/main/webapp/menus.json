@@ -201,6 +201,14 @@
 			"name":"oa_article_add",
 			"text":"发布文章",
 			"type":"menu"
+		},{
+			"name":"oa_article_del",
+			"text":"删除文章",
+			"type":"menu"
+		},{
+			"name":"oa_notice_del",
+			"text":"删除公告",
+			"type":"menu"
 		}]
 	}]
 },{
