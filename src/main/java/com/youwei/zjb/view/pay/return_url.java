@@ -1,7 +1,5 @@
 package com.youwei.zjb.view.pay;
 
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;

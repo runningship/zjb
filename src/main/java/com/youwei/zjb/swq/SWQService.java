@@ -57,4 +57,14 @@ public class SWQService {
 		ThreadSession.getHttpSession().setAttribute("swq", true);
 		return mv;
 	}
+	
+	@WebMethod
+	public ModelAndView index_58(){
+		ModelAndView mv = new ModelAndView();
+		boolean swq = (Boolean)ThreadSession.getHttpSession().getAttribute("swq");
+		if(swq){
+			mv.jspData.put("${pass}", "1");
+		}
+		return mv;
+	}
 }
