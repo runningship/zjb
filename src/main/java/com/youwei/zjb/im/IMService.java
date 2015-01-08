@@ -53,7 +53,7 @@ public class IMService {
 	@WebMethod
 	public ModelAndView getGroupMembers(Integer groupId) {
 		ModelAndView mv = new ModelAndView();
-		List<Map> list = dao.listAsMap("select id as uid , avatar as avatar , uname as uname from User where did=? or cid=?", groupId , groupId);
+		List<Map> list = dao.listAsMap("select id as uid , avatar as avatar , uname as uname from User where (did=? or cid=?) and lock=1", groupId , groupId);
 		mv.data.put("members", JSONHelper.toJSONArray(list));
 		return mv;
 	}

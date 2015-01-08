@@ -255,9 +255,21 @@ function getDetailPageSuccess(html,url){
         cont_zx,
         cont_wz = '',
         cont_lxr,
-        cont_tels=html.substring(html.indexOf('document.write("') + 16,html.indexOf('")</script')),
-        cont_telTan=cont_tels.substring(cont_tels.indexOf('<img src=') + 10,cont_tels.indexOf('\' />'));
+        tels=html.substring(html.indexOf('document.write("') + 16,html.indexOf('")</script')),
+        telTan=tels.substring(tels.indexOf('<img src=') + 10,tels.indexOf('\' />')),
+        cont_tels,
+        cont_telTan,
+        cont_tel_num;
 
+var tel = $$cont_doc.find('.callTips_con');
+if (tel.length>0) {
+    cont_tels = tel.text().trim();
+    cont_tel_num = tel.text().trim();
+}else {
+    cont_tels = tels;
+    cont_telTan = telTan;
+    cont_tel_num = '';
+}
 
     var conTentAll =$$cont_doc.find(".sumary ul .su_tit");
     var conTentSize = conTentAll.size();
@@ -303,8 +315,12 @@ function getDetailPageSuccess(html,url){
         +'<p>'+cont_tels+'</p>'
     $('.list_see_box').html(thisHtml);  
 
-   
-    allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+' '+cont_lc+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
+    if(cont_tel_num==""){
+        allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+' '+cont_lc+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
+    }else{
+        allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+' '+cont_lc+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel_num":"'+cont_tel_num+'","url":"'+url+'"}';
+    }
+    
     $$cont_doc=null;
     html=null;
     openMessageBox(allContent);
@@ -381,7 +397,8 @@ $(document).ready(function() {
         city = 'hf';
     };
     $('#city').val(city);
-    sys_url='http://'+city+'.58.com/ershoufang/0/';
+    // sys_url='http://wuhu.58.com/ershoufang/0/?PGTID=14207001658910.9101886455900967&ClickID=0&key=%2525u5F20%2525u5BB6%2525u5C71&sourcetype=5';
+    sys_url='http://'+city+'.58.com/ershoufang/0/pn3/';
 });
 
 function geturl(city){

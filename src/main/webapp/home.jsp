@@ -228,9 +228,15 @@ function notify(){
 
 
 </script>
+<script>
+/*function popup(childFrame,callback){
+    childFrame[callback].call(childFrame,returnValue);
+}*/
+//$("body").find("iframe#iframe_oa")[0].contentWindow.LayerShow();
+</script>
 </head>
 <body>
-<div style="width:100%; height:100%; overflow:hidden; position:relative;">
+<div id="allMainBoxer" style="width:100%; height:100%; overflow:hidden; position:relative;">
 
 <c:if test="${use_im==1}">
     <div>

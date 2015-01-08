@@ -5,8 +5,11 @@
 	  
 	  function layerShowBox(id){
 		  
-		  var w = $("#"+id).width();
-		  var h = $("#"+id).height();
+		 // var $mainId = $(window.top.document).find("#"+id);
+		    var $mainId =  $("#"+id);
+		  
+		  var w = $mainId.width();
+		  var h = $mainId.height();
 		  var winW = $(window).width();
 		  var winH = $(window).height();
 		  var L = (winW - w)/2;
@@ -15,8 +18,8 @@
 		  if(L<=0) L=0;
 		  if(T<=0) T=0;
 		  
-		  $("#"+id).css("left",L);
-		  $("#"+id).css("top",T);
+		  $mainId.css("left",L);
+		  $mainId.css("top",T);
 		  
 		  
 		  
@@ -25,7 +28,6 @@
 	  function showBox(){
 		 
 		 $("#layerBoxDj").css("display","block");
-		 //layerShowBox("layerBoxDj");
 		 
 		 
 		    $("#cocoWintit").mousedown(function(e){  
@@ -48,10 +50,10 @@
 					var y=e.pageY-_y;
 					
 					
-					x = x<=0?10:x;
+					x = x<=10?10:x;
 					x = x>=$(window).width()-300?$(window).width()-300:x;
 					
-					y = y<=0?10:y;
+					y = y<=50?50:y;
 					y = y>=$(window).height()-100?$(window).height()-100:y;
 					
 					
@@ -84,36 +86,41 @@
 	  
 	  function LayerShow(id){
 		 
-		    var $id = $("#"+id).children(".cocoLayerTit");
+			//var $mainId = $(window.top.document).find("#"+id);
+			var $mainId =$("#"+id);
+		    var $id = $mainId.children(".cocoLayerTit");
 			
-		    $id.mousedown(function(e){  
+		    $id.mousedown(function(e){ 
 				_move=true;  
-				//$(".cocoLayerTit").parent().css({"z-index":"120"}); 
-				$("#"+id).css({"z-index":artDialog.defaults.zIndex++});
+				$mainId.css({"z-index":artDialog.defaults.zIndex++});
 				
-				$(".mask").show();
+				$(".maskLayer").show();
 				
-				_x=e.pageX-parseInt($("#"+id).css("left"));  
-				_y=e.pageY-parseInt($("#"+id).css("top"));  
-				$("#"+id).fadeTo(0, 0.75);//点击后开始拖动并透明显示  
-				//$(document).bind("selectstart",function(){return false;});  
+				_x=e.pageX-parseInt($mainId.css("left"));  
+				_y=e.pageY-parseInt($mainId.css("top"));  
+				$mainId.fadeTo(0, 0.75);//点击后开始拖动并透明显示  
 			});
 	
-			$("#"+id).mousemove(function(e){  
-				
+			$(document).mousemove(function(e){  
 				if(_move){  
 					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
 					var y=e.pageY-_y;  
 					
-					$("#"+id).css({top:y,left:x});//控件新位置  
+					x = x<=10?10:x;
+					x = x>=$(window).width()-300?$(window).width()-300:x;
+					
+					y = y<=50?50:y;
+					y = y>=$(window).height()-100?$(window).height()-100:y;
+					
+					$mainId.css({top:y,left:x});//控件新位置  
 				}  
 			});
 			
 			$id.mouseup(function(){  
 				//$(document).bind("selectstart",function(){return true;});  
 				_move=false;  
-				$(".mask").hide();  
-				$("#"+id).fadeTo(0, 1);//松开鼠标后停止移动并恢复成不透明  
+				$(".maskLayer").hide();  
+				$mainId.fadeTo(0, 1);//松开鼠标后停止移动并恢复成不透明
 			});
 		 
 	  }
@@ -189,19 +196,37 @@
 		   
 	  }
 	  
-	 function openNewWin(id,w,h,tit,s){
+	  
+	  function openNewWin(id,w,h,tit,s){
+		if ($('#'+id).length>0) {
+			return;
+		};
+	    	 var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
+			 
+			
+			
+			 //$(window.top.document).find("body").eq(0).find("div#allMainBoxer").append(htmlText);
+			 $("body").append(htmlText);
+				 layerShowBox(id);
+		     	 LayerShow(id);
+		     
+		  
+	  }
+	 /*function openNewWin(id,w,h,tit,s){
 		if ($('#'+id).length>0) {
 			return;
 		};
 	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
+			
+			
+			// $(window.top.document).find("body").eq(0).append(htmlText);
 			 $("body").append(htmlText);
-			 
-		     layerShowBox(id);
-			 
-			 LayerShow(id);
+				 layerShowBox(id);
+		     	 LayerShow(id);
+		     
 		  
-	  }
+	  }*/
 	  /*cocoListLayerTit*/
 	  
 	  function openListWin(id,w,h,tit,s){// 调用方式：onclick="openNewWin('addGg','980','650','全部公告','gg.html')"
@@ -213,6 +238,7 @@
 	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
 			 $("body").append(htmlText);
+			// $(window.top.document).find("body").eq(0).find("div#allMainBoxer").append(htmlText);
 			 
 			 layerShowBox(id);
 			 

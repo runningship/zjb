@@ -183,6 +183,9 @@ function loadHistory(contactId , currentPageNo){
     url: '/c/im/getHistory?contactId='+contactId+'&currentPageNo='+currentPageNo,
     success:function(data){
     	buildHistory(data.history);
+    	if(data.history.length<10){
+    		$('#msgContainer_'+contactId+' .msg_more').css('display','none');
+    	}
     }
   });
 }

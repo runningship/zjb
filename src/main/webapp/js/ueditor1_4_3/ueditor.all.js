@@ -25875,6 +25875,7 @@ UE.ui = baidu.editor.ui = {};
         _onButtonClick: function (){
             if (!this.isDisabled()) {
                 this.fireEvent('buttonclick');
+                $('#edui_fixedlayer').css('z-index',9999);
             }
         }
     };
