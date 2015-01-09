@@ -72,7 +72,7 @@ function save(){
     <tr>
         <td align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">正文:</span></td>
         <td valign="middle">
-        	<span id="editor" type="text/plain" name="conts" style="height:200px;width:90%"></span>
+        	<span id="editor" type="text/plain" name="conts" style="height:400px;width:95%"></span>
         </td>
     </tr>
     

@@ -75,8 +75,8 @@
 
 .ggListBoxBot i {height: 15px; cursor: pointer; font-size:12px;0 padding-left:18px; font-style:normal; font-family:"微软雅黑"; color:#b3c0c7;}
 
-.ggListBoxBot i.zan {background-position: -4px -232px; margin:0;}
-.ggListBoxBot i.zan:hover, .ggListBoxBot i.zanSel{ background-position:-38px -232px;}
+.ggListBoxBot i.zan {background-position: -4px -201px; margin:0;}
+.ggListBoxBot i.zan:hover, .ggListBoxBot i.zanSel{ background-position:-38px -201px;}
 
 /*.ggListBoxBot i.hf {background-position: -4px -201px;}
 .ggListBoxBot i.hf:hover, .ggListBoxBot i.hfSel{ background-position:-38px -201px;}*/

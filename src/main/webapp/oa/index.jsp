@@ -117,14 +117,14 @@ function buildArticle(page){
           <div class="td oaInfoTit">
             <div class="txt Fleft"><span class="Fleft">文化墙最新文章</span>
             <c:if test="${auths.indexOf('oa_article_add')>-1}">
-              <i class="Bg add Fleft" onclick="openNewWin('addArt','600','430','添加文章','/oa/article/add.jsp')"></i>
+              <i class="Bg add Fleft" onclick="openNewWin('addArt','800','600','添加文章','/oa/article/add.jsp')"></i>
             </c:if>
             </div>  <a href="#" onclick="openListWin('listArticle','980','650','全部文章','/v/oa/article/list.html')">更多></a>  
           </div>
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">最近发布公告</span>
             <c:if test="${auths.indexOf('oa_notice_add')>-1}">
-              <i class="Bg add Fleft"  onclick="openNewWin('addGg','600','480','添加公告','/oa/notice/add.jsp')" ></i>
+              <i class="Bg add Fleft"  onclick="openNewWin('addGg','800','600','添加公告','/oa/notice/add.jsp')" ></i>
             </c:if>
             </div><a href="#" style="margin-right:25px;" onclick="openListWin('listGg','980','650','全部公告','/v/oa/notice/list.html')">更多></a></div>
           </div>
@@ -153,7 +153,7 @@ function buildArticle(page){
                         </div>
                         <div class="infoCaozuo">
                           <c:if test="${article.senderId==myId}">
-                            <i class="Bg xgSel" onclick="openNewWin('editArt','700','450','编辑文章','/oa/article/edit.jsp?id=${article.id}')">修改</i>  
+                            <i class="Bg xgSel" onclick="openNewWin('editArt','800','600','编辑文章','/oa/article/edit.jsp?id=${article.id}')">修改</i>  
                           </c:if>
                           
                           <i class="Bg <c:if test="${article.zan==0}">zan</c:if> <c:if test="${article.zan==1}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
@@ -213,7 +213,7 @@ function buildArticle(page){
                           </div>
                           <div class="ggBoxCaozuo">
                             <c:if test="${notice.senderId==myId}">
-                              <i class="Bg xgSel" onclick="openNewWin('editGg','700','450','编辑公告','/oa/notice/edit.jsp?id=${notice.id}')">修改</i>
+                              <i class="Bg xgSel" onclick="openNewWin('editGg','800','600','编辑公告','/oa/notice/edit.jsp?id=${notice.id}')">修改</i>
                             </c:if>
                             <!-- <i class="Bg zanSel">查看</i> -->
                             <!-- <i class="Bg hfSel">回复</i> -->

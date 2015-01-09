@@ -194,7 +194,7 @@ i.add:hover{ background-position:-38px -100px;}
 
 .ggBoxContent a.tit:hover{ color:#2b92cc;}
 
-.ggBoxContent .con{ color:#92a7b4; font-size:12px;white-space: pre;}
+.ggBoxContent .con{ color:#92a7b4; font-size:12px; display:inline-block; width:90%; height:18px; overflow:hidden;}
 
 .ggBoxCaozuo{ position:absolute; top:6px; right:5px;}
 
