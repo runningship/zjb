@@ -17,6 +17,22 @@ myFocus.set({
   auto:false,
   loadIMGTimeout:0
 });
+
+function openSite(a){
+  if(a.href){
+    event.preventDefault();
+    // var href=$(a).attr('href');
+    // if(href.indexOf('http')<=0){
+    //   href="http://"+href;
+    // }
+    try{
+      window.top.gui.Shell.openExternal(a.href);
+    }catch(e){
+
+    }
+    
+  }
+}
 </script>
 <style type="text/css">
   .mF_slide3D_wrap{padding:0px;}
@@ -27,12 +43,10 @@ myFocus.set({
   <div class="loading"><img src="img/loading.gif" alt="请稍候..." /></div><!--载入画面(可删除)-->
   <div class="pic"><!--图片列表-->
   	<ul>
-        <li><a href="#1"><img src="img/suzhou/1.jpg" thumb="" /></a></li>
-        <li><a href="#2"><img src="img/suzhou/2.jpg" thumb="" /></a></li>
-        <li><a href="#3"><img src="img/suzhou/3.jpg" thumb="" /></a></li>
-        <li><a href="#3"><img src="img/suzhou/4.jpg" thumb="" /></a></li>
-        <li><a href="#3"><img src="img/suzhou/5.jpg" thumb="" /></a></li>
-        <li><a href="#3"><img src="img/suzhou/6.jpg" thumb="" /></a></li>
+        <li><a onclick="openSite(this)" href="http://hf.sell.house365.com/"><img src="img/365/1.jpg" thumb="" /></a></li>
+        <li><a onclick="openSite(this)" href="http://sell.hf.house365.com/project/hf/hfzsb/"><img src="img/365/2.jpg" thumb="" /></a></li>
+        <li><a ><img src="img/365/3.jpg" thumb="" /></a></li>
+        <li><a onclick="openSite(this)" href="http://hf.sell.house365.com/zhuanti/8000000/2014/12/29/152016/"><img src="img/365/4.jpg" thumb="" /></a></li>
   	</ul>
   </div>
 </div>
