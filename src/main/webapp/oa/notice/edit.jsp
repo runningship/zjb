@@ -38,6 +38,8 @@ function save(){
         url: '/c/oa/notice/update',
         data:a,
         mysuccess: function(data){
+            window.parent.doSearch();
+            window.parent.LayerRemoveBox("editGg");
             alert('修改成功');
         }
     });
@@ -61,10 +63,6 @@ function save(){
     <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">标题:</span></td>
       <td valign="middle"><input type="text" name="title" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" value="${notice.title}"/></td>
-    </tr>
-    <tr>
-        <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">序号:</span></td>
-      <td valign="middle"><input type="text" name="orderx" style="border:1px solid #d4d4d4; padding:4px 3px; border-radius:3px;" value="${notice.orderx}"/></td>
     </tr>
     <!-- <tr>
         <td height="30" align="right" valign="middle" class="tableleft"><span style="margin-right:10px;">接受人:</span></td>

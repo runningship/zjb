@@ -15,8 +15,14 @@
 		  var L = (winW - w)/2;
 		  var T = (winH - h)/2;
 		  
-		  if(L<=0) L=0;
-		  if(T<=0) T=0;
+/*		  if(L<=0) L=0;
+		  if(T<=0) T=0;*/
+		  
+		  T = T<=50?50:T;
+		  T = T>=winH-200?winH-200:T;
+					
+					L = L<=10?10:L;
+					L = L>=winW-300?$winW-300:L;
 		  
 		  $mainId.css("left",L);
 		  $mainId.css("top",T);
@@ -206,7 +212,7 @@
 			
 			
 			 //$(window.top.document).find("body").eq(0).find("div#allMainBoxer").append(htmlText);
-			 $("body").append(htmlText);
+			 $("body").find("#oaMainPage").append(htmlText);
 				 layerShowBox(id);
 		     	 LayerShow(id);
 		     
@@ -237,7 +243,7 @@
 			
 	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
-			 $("body").append(htmlText);
+			 $("body").find("#oaMainPage").append(htmlText);
 			// $(window.top.document).find("body").eq(0).find("div#allMainBoxer").append(htmlText);
 			 
 			 layerShowBox(id);

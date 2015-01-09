@@ -68,9 +68,9 @@ $(function(){
                         <div class="conTime"><i class="person">$[senderName]</i><i class="clock">$[addtime]</i></div>
                     </div>
                     <div class="ggListBoxBot">
+                    <span class="tuBox"><i class="Bg zan" onclick="selectZan($[id],this);return false;"></i>$[reads]</span>
                     <i auth="oa_notice_del" class="Bg hfSel" onclick="deleteThis($[id]);return false;" ></i>
-                    <i auth="!oa_notice_del" show="$${userId}==$[senderId]" class="Bg hfSel" onclick="deleteThis($[id]);return false;" ></i>
-                    <i class="Bg zan" onclick="selectZan($[id],this);return false;">$[reads]</i>
+                    <i auth="!oa_notice_del" show="$${userId}==$[senderId]" class="Bg hf" onclick="deleteThis($[id]);return false;" ></i>
                     </div>
                </div>
           </div>

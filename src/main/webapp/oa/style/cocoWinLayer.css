@@ -61,7 +61,7 @@
 
 .ggListBoxTit .tit { margin-left:15px; color: #2a404e; float:left;}
 
-.ggListBoxTit .tit h2{ font-weight:normal; line-height:28px; margin-left:0px; font-size: 13px; cursor:pointer;}
+.ggListBoxTit .tit h2{ font-weight:normal; line-height:28px; margin-left:0px; max-width:350px; overflow:hidden; font-size: 13px; cursor:pointer;}
 
 .ggListBoxTit .tit h2:hover{ color:#008b8d;}
 
@@ -71,17 +71,22 @@
 .ggListBoxTit i.clock{ float:left; margin-left:15px; height:13px; background:url(../cocoImages/timeClock.png) no-repeat;}
 .ggListBoxTit i.person{ float:left; margin-right:5px; height:13px; background:url(../images/person.png) no-repeat;}
 
-.ggListBoxBot{ float:right; height:15px; margin-top:5px;}
+.ggListBoxBot{ width:75px; float:right; height:15px; margin-top:5px;}
 
-.ggListBoxBot i {height: 15px; line-height:15px;cursor: pointer; padding-left:18px; margin:0 10px 0 5px; font-size:12px; font-style:normal; font-family:"微软雅黑"; color:#b3c0c7;}
+.ggListBoxBot i {height: 15px; cursor: pointer; font-size:12px;0 padding-left:18px; font-style:normal; font-family:"微软雅黑"; color:#b3c0c7;}
 
-.ggListBoxBot i.zan {background-position: -4px -232px;}
+.ggListBoxBot i.zan {background-position: -4px -232px; margin:0;}
 .ggListBoxBot i.zan:hover, .ggListBoxBot i.zanSel{ background-position:-38px -232px;}
 
 /*.ggListBoxBot i.hf {background-position: -4px -201px;}
 .ggListBoxBot i.hf:hover, .ggListBoxBot i.hfSel{ background-position:-38px -201px;}*/
 .ggListBoxBot i.hf { background:url(../images/delete.png) no-repeat;}
 .ggListBoxBot i.hf:hover, .ggListBoxBot i.hfSel{ background:url(../images/delete.png) no-repeat;}
+
+.ggListBoxBot .tuBox{ height:15px; width:43px; line-height:16px; margin-right:2px; display:inline-block; color:#a8b6be; float:left;}
+
+.ggListBoxBot .tuBox i{ float:left;}
+
 
 
 .ggLayerMainPage{ position:fixed; z-index:1100; bottom:0; left:0; width:100%; display:table; height:34px; background-color:#e2e2e2; border-top:1px solid #dddddd;}

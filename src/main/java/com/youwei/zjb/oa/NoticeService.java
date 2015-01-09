@@ -58,7 +58,7 @@ public class NoticeService {
 	
 	private Page<Map> innerListNotice(Page<Map> page){
 		page.setPageSize(6);
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime , SubString(n.conts,1,180) as conts ,n.reads as reads,n.replys as replys from Notice n ,"
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime , SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n ,"
 				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.orderx desc, n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");

@@ -53,6 +53,9 @@ function getMore(){
 
 function buildArticle(page){
   var json = page['page']['data'];
+  if(json.length==0){
+    $('.jzMore').css('display','none');
+  }
   for (var i = 0; i < json.length; i++) {
     var conTxt = json[i]['conts'];
 	
@@ -70,6 +73,9 @@ function buildArticle(page){
              // +     '<c:if test="${article.senderId==myId}">'
              // +        '<i class="Bg xgSel" onclick="openNewWin('editArt','700','450','编辑文章','/oa/article/edit.jsp?id=json[i]['id']')">修改</i>'  
              // +     '</c:if>'
+    if(json[i].senderId==${myId}){
+      html+='<i class="Bg xgSel" onclick="openNewWin(\'editArt\',\'700\',\'450\',\'编辑文章\',\'/oa/article/edit.jsp?id='+json[i].id+'\')">修改</i>';
+    }
     if(json[i].zan==0){
       html  +=     '<i class="Bg zan " style="margin-right:3px" onclick="selectZan('+json[i]['id']+',this);return false;">点赞</i>';
     }else{
@@ -91,7 +97,7 @@ function buildArticle(page){
 
 </script>
 <body>
-<div class="oa_Main oa_W">
+<div class="oa_Main oa_W" id="oaMainPage">
   <div class="oaMain">
     <div class="table w100 h100">
       <div class="tr w100">

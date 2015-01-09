@@ -34,7 +34,7 @@ public class houseSee_rent_v2 extends AbstractSee{
 		JSONObject json = JSONHelper.toJSON(h);
 		Department dept = dao.get(Department.class, h.did);
 		User user = dao.get(User.class, h.uid);
-		json.put("fbr", user.uname==null ? "":user.uname);
+		json.put("fbr", (user==null || user.uname==null) ? "":user.uname);
 		json.put("ywy", h.forlxr==null ? "":h.forlxr);
 		json.put("fortel", h.fortel==null ? "":h.fortel);
 		json.put("dname", dept==null? "":dept.namea);

@@ -396,7 +396,7 @@ opacity:1}
 .default .menuSide li a,
 .default .menuSideTool li a{ display: block;}
 .default .menuSide li a span,
-.default .menuSideTool li a span{ display: block; height: auto; overflow: hidden;}
+.default .menuSideTool li a span{ display: block; height: auto; overflow: hidden; font-size:12px;}
 
 
 .default .menuSide li span{ font-size:24px;}
@@ -517,7 +517,7 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 /* 其他 */
 
 
-.ibtn{ width:100%; padding:16px 0;}
+.ibtn{ width:100%; padding:10px 0;}
 
 
 .glyphicon-plus:before {

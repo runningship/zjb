@@ -75,11 +75,11 @@ html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体;}
 
 .Fright{ float:right;}
 
-.oaMain{ /*margin-right:240px;*/ height:100%;-webkit-user-select: none;}
+.oaMain{ /*margin-right:240px;*/ height:100%;-webkit-user-select: none; width:100%; overflow:hidden; position:relative;}
 
 .userSelectTrue{-webkit-user-select: text;}
 
-.cocoMain{ width:240px; position:absolute; top:0px; right:0; height:100%; background-color:#ffffff;}
+.cocoMain{ width:210px; position:absolute; top:0px; right:0; height:100%; background-color:#ffffff;}
 
 .oaTit{ height:50px; width:50%;}
 
@@ -183,7 +183,7 @@ i.add:hover{ background-position:-38px -100px;}
 
 .ggBoxTime{ position:absolute; width:55px; height:55px; top:0; left:0; text-align:center; overflow:hidden; background-color:#ffffff; border-radius:5px;}
 
-.ggBoxTime .month{ font-family:Arial; color:#abc8ca; font-size:15px; margin-top:5px; }
+.ggBoxTime .month{ font-family:Arial; color:#abc8ca; font-size:15px; margin-top:5px; text-transform:uppercase; }
 .ggBoxTime .day{ font-family:Arial; color:#07b5be; font-size:28px;}
 
 .ggBoxContent{ height:55px; margin-left:65px; background-color:#ffffff; border-radius:5px; }
@@ -194,7 +194,7 @@ i.add:hover{ background-position:-38px -100px;}
 
 .ggBoxContent a.tit:hover{ color:#2b92cc;}
 
-.ggBoxContent .con{ color:#92a7b4; font-size:12px;}
+.ggBoxContent .con{ color:#92a7b4; font-size:12px;white-space: pre;}
 
 .ggBoxCaozuo{ position:absolute; top:6px; right:5px;}
 
@@ -254,7 +254,7 @@ i.add:hover{ background-position:-38px -100px;}
 
 .cocoMainTit img{ width:40px; height:40px; border-radius:5px; margin:0 10px; margin-top:5px; float:left;}
 
-.cocoMainTit .mainInfo{ width:180px; float:left; text-align:left; font-family:"宋体";}
+.cocoMainTit .mainInfo{ width:150px; float:left; text-align:left; font-family:"宋体";}
 .cocoMainTit .mainName{ font-size:14px; color:#1c3748; margin-top:7px; margin-bottom:4px;}
 .cocoMainTit .mainabout{ font-size:12px; color:#b0e4e7;}
 
@@ -263,7 +263,7 @@ i.add:hover{ background-position:-38px -100px;}
 .cocoMainTit .turnLit:hover{ background-color:#32798b; color:#5fe6ed;}
 
 
-.cocoMainSelect{ height:50px; background-color:#d8dfe3;}
+.cocoMainSelect{ height:45px; background-color:#d8dfe3;}
 
 .cocoMainSearch{ height:30px; background-color:#f2f4f6;}
 
@@ -289,22 +289,22 @@ i.add:hover{ background-position:-38px -100px;}
 
 .cocoMainCon{ background-color:#ffffff; width:100%; height:100%; overflow:hidden; position:relative;}
 
-.cocoMainConBox{ margin:0 0 0 0; height:100%; width:240px; position:absolute; top:0; left:0; background-color:#ffffff;}
+.cocoMainConBox{ margin:0 0 0 0; height:100%; width:210px; position:absolute; top:0; left:0; background-color:#ffffff;}
 
-.cocoList{ width:230px; margin-top:15px; float:left;}
+.cocoList{ width:200px; margin-top:15px; float:left;}
 
-.cocoList li{ width:230px; float:left; position:relative; margin-bottom:15px; padding:5px 0;-webkit-user-select:none;}
+.cocoList li{ width:200px; float:left; position:relative; margin-bottom:15px; padding:5px 0;-webkit-user-select:none;}
 
 .cocoList li:hover{ background-color:#1c3748;}
 
-.cocoTx{ width:35px; height:35px; margin-left:15px;}
+.cocoTx{ width:35px; height:35px; margin-left:10px;}
 .cocoTx img{ width:35px; height:35px; border-radius:20px; border:2px solid #ffffff;box-shadow: #bbbbbb 0px 0px 5px;}
 
 
-.qunTx{ width:32px; height:32px; margin-left:15px; overflow:hidden;}
+.qunTx{ width:32px; height:32px; margin-left:10px; overflow:hidden;}
 .qunTx img{ width:15px; height:15px; float:left; border-radius:3px; margin-left:1px; margin-bottom:1px;box-shadow: #999 0px 0px 3px;}
 
-.cocoPerInfo, .cocoQunInfo{ width:160px; margin-left:10px; font-family:"宋体"; white-space:nowrap;}
+.cocoPerInfo, .cocoQunInfo{ width:130px; margin-left:10px; font-family:"宋体"; white-space:nowrap;}
 
 .cocoQunInfo .name{ color:#5b7585; font-size:12px; margin:0px 0;}
 .cocoQunInfo .txt{ color:#bbbbbb; font-size:12px;}
@@ -318,7 +318,7 @@ i.add:hover{ background-position:-38px -100px;}
 .cocoLeave{ width:10px; height:10px; border-radius:8px; background-color:#b3c0c7; position:absolute; right:5px; top:10px;}
 
 
-.cocoNews{ height:36px; width:231px; margin-top:10px; background:url(../images/newsAlertsBg.png) no-repeat; position:relative; margin-left:5px;cursor: pointer;}
+.cocoNews{ height:36px; width:201px; margin-top:10px; background:url(../images/newsAlertsBg.png) no-repeat; position:relative; margin-left:5px;cursor: pointer;}
 .cocoNewsAlert{ background:url(../images/newsAlertsBgAlert.gif) no-repeat;}
 
 

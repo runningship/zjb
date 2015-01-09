@@ -69,7 +69,7 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 			dept.put("users", page.getResult());
 			
 			//群组人数统计
-			long count = dao.countHql("select count(*) from User where did=?", did);
+			long count = dao.countHql("select count(*) from User where did=? and lock=1", did);
 			dept.put("totalUsers", count);
 			dept.put("type", "部门");
 		}

@@ -61,7 +61,7 @@ $(function(){
          <div class="tr w100">
               <div class="td cocoMainSearch">
               
-                   <input type="text" class="cocoMainSearchBox" value="搜索联系人" />
+                   <input type="text" class="cocoMainSearchBox" placeholder="搜索联系人" />
               
               </div>
          </div>
@@ -141,7 +141,7 @@ $(function(){
 <div style=" position:absolute; bottom:1px; right:15px;cursor:pointer;width:30px; height:30px; overflow:hidden; z-index:99999992;">
      <span><img onclick=" $('.cocoMain').toggleClass('hide');" src="/style/images/litFox.png" width="32" /></span>
 </div>
-<div style="position:absolute; bottom:0; right:10px; width:231px; height:36px; z-index:99999991;" onselectstart="return false;">
+<div style="position:absolute; bottom:0; right:10px; width:201px; height:36px; z-index:99999991;" onselectstart="return false;">
      <div onclick="recoverChatPanel();" class="cocoNews " style="text-align:center; margin-top:0;"><span class="name chat_title">CoCo 聊天</span></div>
 </div>
 
@@ -186,7 +186,7 @@ $(function(){
                     <div class="WinInfoSendBtn">
                     
                          <button class="WinInfoSendBtnAddPhoto Fleft" title=""></button>
-                         <button class="WinInfoSendBtnMessage Fleft" onclick="send();">发送</button>
+                         <button title="ctrl+enter 直接发送" class="WinInfoSendBtnMessage Fleft" onclick="send();">发送</button>
                     
                     </div>
                

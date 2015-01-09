@@ -257,12 +257,12 @@ function notify(){
                 </div>
                 <div class="tr tbody">
                     <ul class="menuSide">
-                        <li class="curr"><a href="/v/house/house_v2.html" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span><!--房源--></span></a></li>
+                        <li class="curr"><a href="/v/house/house_v2.html" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span>房源</span></a></li>
                         <c:if test="${auths.indexOf('ky_on')>-1}">
-                        <li ><a href="/v/client/index.html" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span><!--客源--></span></a></li>
+                        <li ><a href="/v/client/index.html" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span>客源</span></a></li>
                         </c:if>
                         <c:if test="${auths.indexOf('yw_on')>-1}">
-                        <li ><a href="/v/yewu/outHouse.html" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span><!--业务--></span></a></li>
+                        <li ><a href="/v/yewu/outHouse.html" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span>业务</span></a></li>
                         </c:if>
                         <c:if test="${auths.indexOf('ht_on')>-1}">
                         <li ><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="hetong" data-toggle="tooltip" data-placement="right" title="合同"><i class="iconfont">&#xe614;</i><span>合同</span></a></li>
@@ -271,7 +271,7 @@ function notify(){
                             <li><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="caiwu" data-toggle="tooltip" data-placement="right" title="财务"><i class="iconfont">&#xe613;</i><span>财务</span></a></li>    
                         </c:if>
                         <c:if test="${auths.indexOf('oa_on')>-1}">
-                            <li ><a href="/oa/index.jsp" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span></span></a></li>
+                            <li ><a href="/oa/index.jsp" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         </c:if>
                         <c:if test="${auths.indexOf('sz_on')>-1}">
                             <li auth="sz_on" class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
