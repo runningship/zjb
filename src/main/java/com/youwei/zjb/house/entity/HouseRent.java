@@ -148,4 +148,20 @@ public class HouseRent {
 	
 	public Integer seeFH;
 
+	public String href;
+	
+	public String site;
+	
+//	public String code;
+	
+//	public String repeat;
+	
+	public String wo;
+	
+	public String xianzhi;
+	
+	public String peizhi;
+	
+	public String title;
+	public String telImg;
 }

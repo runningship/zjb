@@ -313,9 +313,9 @@ i.add:hover{ background-position:-38px -100px;}
 .cocoPerInfo .txt{ color:#bbbbbb; font-size:12px; margin:0;}
 
 
-.cocoOnline{ width:10px; height:10px; border-radius:8px; background-color:#22c5c7; position:absolute; right:5px; top:10px;}
+.cocoOnline{ width:10px; height:10px; border-radius:8px; background-color:#f46868; position:absolute; right:5px; top:10px;}
 
-.cocoLeave{ width:10px; height:10px; border-radius:8px; background-color:#b3c0c7; position:absolute; right:5px; top:10px;}
+.cocoLeave{ width:10px; height:10px; border-radius:8px; background-color:#d1d9dd; position:absolute; right:5px; top:10px;}
 
 
 .cocoNews{ height:36px; width:201px; margin-top:10px; background:url(../images/newsAlertsBg.png) no-repeat; position:relative; margin-left:5px;cursor: pointer;}
