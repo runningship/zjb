@@ -19,8 +19,8 @@ public class PullGJRentAction implements PullRentHouseAction{
 	@Override
 	public String getArea(Element elem) {
 		Elements ar = elem.getElementsMatchingOwnText("小区：");
-		Element area = ar.first().nextElementSibling().child(0);
-		return area.text().trim();
+		String area = ar.first().nextElementSibling().text();
+		return area.split(" ")[0].trim();
 	}
 
 	private Element getElementsByMatchingText(Element elem,String text){
@@ -113,8 +113,8 @@ public class PullGJRentAction implements PullRentHouseAction{
 	@Override
 	public String getAddress(Element elem) {
 		Element add = elem.getElementsMatchingOwnText("位置：").first();
-		Element address = add.parent().nextElementSibling().child(1);
-		return address.text().trim();
+		String address = add.parent().nextElementSibling().child(1).text();
+		return address.split("\\(")[0].trim();
 	}
 
 	@Override

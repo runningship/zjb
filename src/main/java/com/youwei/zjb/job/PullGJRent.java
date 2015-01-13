@@ -29,7 +29,7 @@ public class PullGJRent{
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
 		PullGJRent job = new PullGJRent();
-//		HouseRent hr = PullDataHelper.pullDetail(job.action , "http://hf.ganji.com/fang1/1321622679x.htm" , null ,RentType.整租);
+//		HouseRent hr = PullDataHelper.pullDetail(job.action , "http://hf.ganji.com/fang1/1350251348x.htm" , null ,RentType.整租);
 		job.start();
 //		dao.saveOrUpdate(hr);
 //		int a=0;
