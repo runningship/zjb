@@ -102,5 +102,5 @@ public interface PullRentHouseAction {
 	/**
 	 * 发布时间
 	 */
-	public Date getPubTime();
+	public Date getPubTime(Element elem);
 }

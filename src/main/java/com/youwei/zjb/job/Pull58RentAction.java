@@ -301,7 +301,7 @@ public class Pull58RentAction implements PullRentHouseAction{
 
 
 	@Override
-	public Date getPubTime() {
+	public Date getPubTime(Element elem) {
 		return new Date();
 	}
 }
