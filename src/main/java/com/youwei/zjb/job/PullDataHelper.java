@@ -21,19 +21,7 @@ public class PullDataHelper {
 	public static HouseRent pullDetail(PullRentHouseAction action ,String hlink , Date pubTime , RentType rentType){
 		System.out.println("pulling "+hlink);
 		try{
-			URL url = new URL(hlink);
-			URLConnection conn = url.openConnection();
-			conn.setConnectTimeout(10000);
-			conn.setReadTimeout(10000);
-			String result = IOUtils.toString(conn.getInputStream(),"utf-8");
-			Document doc = Jsoup.parse(result);
-			if(doc.getElementsMatchingOwnText("页面可能被删除").isEmpty()==false){
-				return null;
-			}
-			Element sumary = doc.getElementsByClass("col_sub sumary").first();
-			if(sumary==null){
-				sumary = doc.getElementsByClass("detailPrimary").first();
-			}
+			Element sumary = action.getDetailSumary(hlink);
 			HouseRent hr = new HouseRent();
 			hr.beizhu="";
 			hr.site = "58";

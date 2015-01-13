@@ -1,6 +1,15 @@
 package com.youwei.zjb.job;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Date;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -267,5 +276,32 @@ public class Pull58RentAction implements PullRentHouseAction{
 	@Override
 	public String getTitle(Element elem) {
 		return elem.getElementsByClass("bigtitle").text();
+	}
+
+
+
+	@Override
+	public Element getDetailSumary(String hlink) throws IOException {
+		URL url = new URL(hlink);
+		URLConnection conn = url.openConnection();
+		conn.setConnectTimeout(10000);
+		conn.setReadTimeout(10000);
+		String result = IOUtils.toString(conn.getInputStream(),"utf-8");
+		Document doc = Jsoup.parse(result);
+		if(doc.getElementsMatchingOwnText("页面可能被删除").isEmpty()==false){
+			return null;
+		}
+		Element sumary = doc.getElementsByClass("col_sub sumary").first();
+		if(sumary==null){
+			sumary = doc.getElementsByClass("detailPrimary").first();
+		}
+		return sumary;
+	}
+
+
+
+	@Override
+	public Date getPubTime() {
+		return new Date();
 	}
 }

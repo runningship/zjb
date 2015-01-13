@@ -1,5 +1,8 @@
 package com.youwei.zjb.job;
 
+import java.io.IOException;
+import java.util.Date;
+
 import org.jsoup.nodes.Element;
 
 public interface PullRentHouseAction {
@@ -93,4 +96,11 @@ public interface PullRentHouseAction {
 	 * 配置，设施
 	 */
 	public String getTitle(Element doc);
+	
+	public Element getDetailSumary(String url) throws IOException;
+	
+	/**
+	 * 发布时间
+	 */
+	public Date getPubTime();
 }
