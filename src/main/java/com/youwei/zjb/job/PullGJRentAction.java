@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.util.DataHelper;
 
 public class PullGJRentAction implements PullRentHouseAction{
@@ -125,9 +126,9 @@ public class PullGJRentAction implements PullRentHouseAction{
 	}
 
 	@Override
-	public String getTelImg(Element elem) {
+	public void getTel(HouseRent house , Element elem) {
 		String phone = elem.getElementsByClass("talk-btn").attr("data-phone");
-		return phone.trim();
+		house.tel = phone.trim();
 	}
 
 	@Override
@@ -195,6 +196,11 @@ public class PullGJRentAction implements PullRentHouseAction{
 			e.printStackTrace();
 			return new Date();
 		}
+	}
+
+	@Override
+	public String getSiteName() {
+		return "赶集";
 	}
 
 }

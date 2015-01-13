@@ -1,5 +1,10 @@
 package com.youwei.zjb.house;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -34,5 +39,15 @@ public enum LouXing {
 			arr.add(jobj);
 		}
 		return arr;
+	}
+	
+	public static List<Map<String,Object>> toList(){
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		for(LouXing state : LouXing.values()){
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("name", state.name());
+			list.add(map);
+		}
+		return list;
 	}
 }

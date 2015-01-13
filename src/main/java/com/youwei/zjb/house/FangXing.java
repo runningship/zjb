@@ -1,5 +1,10 @@
 package com.youwei.zjb.house;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bc.sdak.utils.LogUtil;
 
 import net.sf.json.JSONArray;
@@ -20,6 +25,8 @@ public enum FangXing {
 	房3厅1卫2("3房1厅2卫",3,1,2),
 	房3厅2卫1("3房2厅1卫",3,2,1),
 	房3厅2卫2("3房2厅2卫",3,2,2),
+	房4厅1卫1("4房1厅1卫",4,1,1),
+	房4厅1卫2("4房1厅2卫",4,1,2),
 	房4厅2卫1("4房2厅1卫",4,2,1),
 	房4厅2卫2("4房2厅2卫",4,2,2),
 	房4厅2卫3("4房2厅3卫",4,2,3),
@@ -71,7 +78,16 @@ public enum FangXing {
 		return null;
 	}
 	
-	public static FangXing parse(int  f , int t , int w){
+	public static FangXing parse(Integer  f , Integer t , Integer w){
+		if(f==null){
+			f=0;
+		}
+		if(t==null){
+			t=0;
+		}
+		if(w==null){
+			w=0;
+		}
 		for(FangXing fx : FangXing.values()){
 			if(fx.hxf==f && fx.hxt==t && fx.hxw==w){
 				return fx;
@@ -82,5 +98,15 @@ public enum FangXing {
 
 	public String getName() {
 		return name;
+	}
+	
+	public static List<Map<String,Object>> toList(){
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		for(FangXing state : FangXing.values()){
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("name", state.name);
+			list.add(map);
+		}
+		return list;
 	}
 }

@@ -1,5 +1,10 @@
 package com.youwei.zjb.house;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bc.sdak.utils.LogUtil;
 
 import net.sf.json.JSONArray;
@@ -43,5 +48,16 @@ public enum RentState {
 			LogUtil.warning("state with error code "+ code);
 		}
 		return null;
+	}
+	
+	public static List<Map<String,Object>> toList(){
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		for(RentState state : RentState.values()){
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("name", state.name());
+			map.put("code", state.code);
+			list.add(map);
+		}
+		return list;
 	}
 }

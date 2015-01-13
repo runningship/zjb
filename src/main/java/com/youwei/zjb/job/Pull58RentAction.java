@@ -14,6 +14,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.youwei.zjb.house.ZhuangXiu;
+import com.youwei.zjb.house.entity.HouseRent;
 
 public class Pull58RentAction implements PullRentHouseAction{
 
@@ -145,7 +146,7 @@ public class Pull58RentAction implements PullRentHouseAction{
 	}
 
 	@Override
-	public String getTelImg(Element elem) {
+	public void getTel(HouseRent house ,Element elem) {
 		Element phone = elem.getElementById("t_phone");
 		Elements img = phone.getElementsByTag("script");
 		if(img!=null && img.first()!=null){
@@ -156,12 +157,10 @@ public class Pull58RentAction implements PullRentHouseAction{
 				arr = str.split("'");
 				if(arr.length>2){
 					str = arr[1];
-					System.out.println("tel="+str);
-					return str;
+					house.telImg = str;
 				}
 			}
 		}
-		return "";
 	}
 
 	@Override
@@ -303,5 +302,12 @@ public class Pull58RentAction implements PullRentHouseAction{
 	@Override
 	public Date getPubTime(Element elem) {
 		return new Date();
+	}
+
+
+
+	@Override
+	public String getSiteName() {
+		return "58";
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.jsoup.nodes.Element;
 
+import com.youwei.zjb.house.entity.HouseRent;
+
 public interface PullRentHouseAction {
 
 	/**
@@ -75,7 +77,7 @@ public interface PullRentHouseAction {
 	/**
 	 * 获取电话号码图片地址
 	 */
-	public String getTelImg(Element elem);
+	public void getTel(HouseRent house,Element elem);
 	
 	/**
 	 * 主卧，次卧..
@@ -103,4 +105,6 @@ public interface PullRentHouseAction {
 	 * 发布时间
 	 */
 	public Date getPubTime(Element elem);
+	
+	public String getSiteName();
 }

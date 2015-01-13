@@ -90,6 +90,10 @@ function houseEdit(id){
   art.dialog.open("/house/house_rent_edit.html?id="+id)
 }
 
+function ruku(id){
+  art.dialog.open("/house/editRent.jsp?id="+id)
+}
+
 function shenheFy(id , obj){
   // event.cancelBubble=true;
   YW.ajax({
@@ -410,6 +414,7 @@ $(document).ready(function(){
                                                             <a href="##" auth="fy_sh" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
                                                             <a href="#" auth="fy_edit" show="showAction($[cid],$${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
                                                             <a href="##" auth="fy_del" show="showAction($[cid],$${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
+                                                            <a href="#" onclick="ruku($[id])">入库</a>
                                                           </td>
                                                           <td width="50" class="ztai_$[ztai]">$[ztai]</td>
                                                           <td width="60">$[quyu]</td>

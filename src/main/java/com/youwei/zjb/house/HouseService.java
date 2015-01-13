@@ -7,6 +7,8 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
@@ -31,6 +34,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
@@ -619,6 +623,26 @@ public class HouseService {
 			System.out.println(index);
 		}
 		return new ModelAndView();
+	}
+	
+	@WebMethod
+	public ModelAndView editRent(int id){
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = dao.get(HouseRent.class, id);
+		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
+		if(fxing!=null){
+			mv.jspData.put("hxing", fxing.getName());
+		}else{
+			mv.jspData.put("hxing", "");
+		}
+		mv.jspData.put("fangshi", RentType.toList());
+		mv.jspData.put("quyus", QuYu.toList());
+		mv.jspData.put("lxing", LouXing.toList());
+		mv.jspData.put("zxius", ZhuangXiu.toList());
+		mv.jspData.put("hxings", FangXing.toList());
+		mv.jspData.put("ztais", RentState.toList());
+		mv.jspData.put("house", po);
+		return mv;
 	}
 	
 	@WebMethod

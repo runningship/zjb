@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.youwei.zjb.house.FangXing;
+import com.youwei.zjb.house.LouXing;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
@@ -24,7 +25,7 @@ public class PullDataHelper {
 			Element sumary = action.getDetailSumary(hlink);
 			HouseRent hr = new HouseRent();
 			hr.beizhu="";
-			hr.site = "58";
+			hr.site = action.getSiteName();
 			hr.href = hlink;
 			hr.address = action.getAddress(sumary);
 			hr.area = action.getArea(sumary);
@@ -48,7 +49,7 @@ public class PullDataHelper {
 			}
 			hr.fangshi = rentType.getCode();
 			hr.lxr = action.getLxr(sumary);
-			hr.telImg = action.getTelImg(sumary);
+			action.getTel(hr,sumary);
 			String hx = action.getHxing(sumary);
 			try{
 				FangXing hxEnum = FangXing.parse(hx);
@@ -70,6 +71,13 @@ public class PullDataHelper {
 			}
 			try{
 				hr.zceng = Integer.valueOf(zceng);
+				if(hr.zceng<=7){
+					hr.lxing = LouXing.多层.name();
+				}else if(hr.zceng<=18){
+					hr.lxing = LouXing.小高层.name();
+				}else if(hr.zceng<=35){
+					hr.lxing = LouXing.高层.name();
+				}
 			}catch(NumberFormatException ex){
 				if(StringUtils.isNotEmpty(zceng)){
 					hr.beizhu += " 总层："+zceng+"";
