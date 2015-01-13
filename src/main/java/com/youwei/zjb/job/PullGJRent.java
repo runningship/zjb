@@ -29,10 +29,10 @@ public class PullGJRent{
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
 		PullGJRent job = new PullGJRent();
-		HouseRent hr = PullDataHelper.pullDetail(job.action , "http://hf.ganji.com/fang1/1321622679x.htm" , null ,RentType.整租);
-//		job.start();
-		dao.saveOrUpdate(hr);
-		int a=0;
+//		HouseRent hr = PullDataHelper.pullDetail(job.action , "http://hf.ganji.com/fang1/1321622679x.htm" , null ,RentType.整租);
+		job.start();
+//		dao.saveOrUpdate(hr);
+//		int a=0;
 	}
 	
 	private Elements getRepeats(Document doc){
@@ -68,10 +68,10 @@ public class PullGJRent{
 					continue;
 				}
 				HouseRent hr = PullDataHelper.pullDetail(action , link , null ,getRentType(e));
-//				if(hr!=null){
-//					dao.saveOrUpdate(hr);
-//				}
-//				count++;
+				if(hr!=null){
+					dao.saveOrUpdate(hr);
+				}
+				count++;
 			}
 			System.out.println("共处理房源数:"+count);
 		}catch(Exception ex){
