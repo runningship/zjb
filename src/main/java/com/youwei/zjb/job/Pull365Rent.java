@@ -61,7 +61,7 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 					continue;
 				}
 				Date pubTime = getPubTime(e);
-				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) ,"");
+				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) ,getAddress(e));
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 				}
@@ -72,7 +72,16 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 			ex.printStackTrace();
 		}
 	}
-	
+
+	public String getAddress(Element elem) {
+		String address = elem.getElementsByClass("info").first().child(1).ownText();
+		if(elem.getElementsByClass("info").first().child(1).children().isEmpty()){
+			return "";
+		}else {
+			return address.trim();
+		}
+	}
+
 	private String getLink(Element elem){
 		return elem.getElementsByClass("info").first().child(0).child(0).attr("href");
 	}
