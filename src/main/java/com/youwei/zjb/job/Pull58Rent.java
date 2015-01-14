@@ -89,11 +89,10 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 				count++;
 				Thread.sleep(this.getDetailPageInterval());
 			}
-			System.out.println("共处理房源数:"+count);
+			System.out.println("共处理"+action.getSiteName()+"房源数:"+count);
 		}catch(Exception ex){
 			String msg = action.getSiteName()+"扫网任务失败，reason="+ex.getMessage();
-			IMServer.sendMsgToUser(537, msg);
-			IMServer.sendMsgToUser(373, msg);
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 			ex.printStackTrace();
 		}
 	}

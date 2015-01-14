@@ -41,15 +41,25 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 	public void work(){
 		try{
 			System.out.print(action.getSiteName()+"正在运行");
+//			CloseableHttpClient client = HttpClientBuilder.create().build(); 
+//			RequestConfig requestConfig = RequestConfig.custom()  
+//		    .setConnectionRequestTimeout(10000).setConnectTimeout(10000)
+//		    .setSocketTimeout(10000).build();
+//		    HttpGet request = new HttpGet(listPageUrl);
+//		    request.setConfig(requestConfig);
+//			CloseableHttpResponse response = client.execute(request);
+//			String result = EntityUtils.toString(response.getEntity() , "utf-8");
+//			response.close();
+			
 			URL url = new URL(listPageUrl);
 			URLConnection conn = url.openConnection();
+			conn.getHeaderField("Set-Cookie");
 			conn.setConnectTimeout(10000);
 			conn.setReadTimeout(10000);
 			String result = IOUtils.toString(conn.getInputStream(),"utf-8");
 			Document doc = Jsoup.parse(result);
 			if(result.contains("您的访问速度太快了")){
-				IMServer.sendMsgToUser(537, "赶集访问速度太快了");
-				IMServer.sendMsgToUser(373, "赶集访问速度太快了");
+				IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "赶集又要输入验证码了。。");
 				return;
 			}
 			Elements list = getRepeats(doc);
@@ -81,14 +91,15 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 					dao.saveOrUpdate(hr);
 				}
 				count++;
+				if(count>5){
+					break;
+				}
 				Thread.sleep(this.getDetailPageInterval());
 			}
-			System.out.println("共处理房源数:"+count);
+			System.out.println("共处理"+action.getSiteName()+"房源数:"+count);
 		}catch(Exception ex){
 			String msg = action.getSiteName()+"扫网任务失败，reason="+ex.getMessage();
-			IMServer.sendMsgToUser(537, msg);
-			IMServer.sendMsgToUser(373, msg);
-			ex.printStackTrace();
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 		}
 	}
 	

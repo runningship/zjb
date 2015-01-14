@@ -211,7 +211,7 @@
 			 
 			
 			
-			 //$(window.top.document).find("body").eq(0).find("div#allMainBoxer").append(htmlText);
+			// window.top.document.children("body").find("#oaMainPage").append(htmlText);
 			 $("body").find("#oaMainPage").append(htmlText);
 				 layerShowBox(id);
 		     	 LayerShow(id);

@@ -13,25 +13,33 @@ public class AssistantService {
 		if(StringUtils.isEmpty(cmd)){
 			msg="你要做什么?";
 		}
+		if("status".equals(cmd)){
+			msg = schedule.getStatus();
+			return msg;
+		}
 		String[] arr = cmd.split(" ");
 		if(arr.length==1){
 			msg = "然后呢";
 		}
-		if(arr[0].equals("开始扫网")){
+		if(arr[0].equals("start")){
 			schedule.start(arr[1]);
-		}else if(arr[0].equals("停止扫网")){
+		}else if(arr[0].equals("stop")){
 			schedule.stop(arr[1]);
-		}else if(arr[0].equals("设置58间隔")){
-			try{
-				Integer interval = Integer.valueOf(arr[1]);
-				schedule.setListPageInterval("58", interval);
-			}catch(NumberFormatException ex){
-				msg = "时间间隔必须是数字";
+		}else if(arr[0].equals("set")){
+			if(arr.length<4){
+				msg = "命令不完整";
+				return msg;
 			}
-		}else if(arr[0].equals("开始赶集间隔")){
 			try{
-				Integer interval = Integer.valueOf(arr[1]);
-				schedule.setListPageInterval("赶集", interval);
+				String jobName = arr[1];
+				String intervalName  = arr[2];
+				Integer interval = Integer.valueOf(arr[3]);
+				if("detailPageInterval".equals(intervalName)){
+					schedule.setDetailPageInterval(jobName, interval);
+				}else if("listPageInterval".equals(intervalName)){
+					schedule.setListPageInterval(jobName, interval);
+				}
+				msg = "设置成功";
 			}catch(NumberFormatException ex){
 				msg = "时间间隔必须是数字";
 			}

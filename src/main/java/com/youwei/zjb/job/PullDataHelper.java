@@ -15,6 +15,7 @@ import com.youwei.zjb.im.IMServer;
 
 public class PullDataHelper {
 
+	public final static int errorReportUserId= 36;
 	public static HouseRent pullDetail(PullRentHouseAction action ,String hlink , Date pubTime , RentType rentType, String address){
 		System.out.println("pulling "+hlink);
 		Element sumary =null;
@@ -111,8 +112,7 @@ public class PullDataHelper {
 			throw ex;
 		}catch(Exception ex){
 			String msg = "扫网"+hlink+"失败，reason="+ex.getMessage();
-			IMServer.sendMsgToUser(537, msg);
-			IMServer.sendMsgToUser(373, msg);
+			IMServer.sendMsgToUser(errorReportUserId, msg);
 			ex.printStackTrace();
 		}
 		return null;

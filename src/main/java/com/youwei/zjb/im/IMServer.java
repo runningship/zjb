@@ -179,21 +179,6 @@ public class IMServer extends WebSocketServer{
 	}
 
 	private void sendMsg(WebSocket senderSocket,String city ,Integer senderId , Integer recvId , JSONObject data , boolean isGroup) {
-		if(recvId==ZjbService.AssistantUid){
-			String msg = assistantService.doAction(data.getString("msg"));
-			JSONObject jobj = new JSONObject();
-			jobj.put("senderId", ZjbService.AssistantUid);
-			jobj.put("sendtime", DataHelper.sdf4.format(new Date()));
-			jobj.put("type", "msg");
-			jobj.put("msg", msg);
-			jobj.put("senderAvatar", ZjbService.AssistantAvatar);
-			jobj.put("senderName", ZjbService.AssistantName);
-			senderSocket.send(jobj.toString());
-			return;
-		}
-		data.put("sendtime", DataHelper.sdf4.format(new Date()));
-		Map<Integer, WebSocket> ap = conns.get(city);
-		WebSocket recv = ap.get(recvId);
 		if(!isGroup){
 			Message dbMsg = new Message();
 			dbMsg.sendtime = new Date();
@@ -207,6 +192,30 @@ public class IMServer extends WebSocketServer{
 				ex.printStackTrace();
 			}
 		}
+		if(recvId==ZjbService.AssistantUid){
+			String msg = assistantService.doAction(data.getString("msg"));
+			JSONObject jobj = new JSONObject();
+			jobj.put("senderId", ZjbService.AssistantUid);
+			jobj.put("sendtime", DataHelper.sdf4.format(new Date()));
+			jobj.put("type", "msg");
+			jobj.put("msg", msg);
+			jobj.put("senderAvatar", ZjbService.AssistantAvatar);
+			jobj.put("senderName", ZjbService.AssistantName);
+			senderSocket.send(jobj.toString());
+			
+			//保存小助手回复的消息
+			Message dbMsg = new Message();
+			dbMsg.sendtime = new Date();
+			dbMsg.conts = msg;
+			dbMsg.senderId = ZjbService.AssistantUid;
+			dbMsg.receiverId = senderId;
+			dbMsg.hasRead=0;
+			instance.dao.saveOrUpdate(dbMsg);
+			return;
+		}
+		data.put("sendtime", DataHelper.sdf4.format(new Date()));
+		Map<Integer, WebSocket> ap = conns.get(city);
+		WebSocket recv = ap.get(recvId);
 		data.put("senderId", senderId);
 		if(recv!=null){
 			recv.send(data.toString());
@@ -243,5 +252,13 @@ public class IMServer extends WebSocketServer{
 		jobj.put("senderAvatar", ZjbService.AssistantAvatar);
 		jobj.put("senderName", ZjbService.AssistantName);
 		conn.send(jobj.toString());
+		
+		Message dbMsg = new Message();
+		dbMsg.sendtime = new Date();
+		dbMsg.conts = msg;
+		dbMsg.senderId = ZjbService.AssistantUid;
+		dbMsg.receiverId = userId;
+		dbMsg.hasRead=0;
+		instance.dao.saveOrUpdate(dbMsg);
 	}
 }

@@ -157,8 +157,8 @@ public class HouseRentService {
 		Department dept = service.get(Department.class, h.did);
 		User user = service.get(User.class, h.uid);
 		mv.jspData.put("fbr", (user==null || user.uname==null) ? "":user.uname);
-		mv.jspData.put("ywyUname", h.forlxr==null ? "":h.forlxr);
-		mv.jspData.put("ywyTel", h.fortel==null ? "":h.fortel);
+//		mv.jspData.put("ywyUname", h.forlxr==null ? "":h.forlxr);
+//		mv.jspData.put("ywyTel", h.fortel==null ? "":h.fortel);
 		mv.jspData.put("dname", dept==null? "":dept.namea);
 		RentState ztai = RentState.parse(h.ztai);
 		mv.jspData.put("ztai", ztai==null ? "": ztai);

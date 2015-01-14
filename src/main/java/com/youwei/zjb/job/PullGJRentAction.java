@@ -200,7 +200,7 @@ public class PullGJRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getSiteName() {
-		return "赶集";
+		return "ganji";
 	}
 
 }

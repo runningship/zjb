@@ -15,8 +15,13 @@ public class JobScheduler extends Thread{
 		jobs.put(job58.getJobName(), job58);
 		
 		PullGJRent jobGJ = new PullGJRent();
+		jobGJ.setDetailPageInterval(3000);
+		jobGJ.setListPageInterval(20000);
 		jobs.put(jobGJ.getJobName(), jobGJ);
 		
+		Pull365Rent job365 = new Pull365Rent();
+		job365.setDetailPageInterval(100);
+		jobs.put(job365.getJobName(), job365);
 		this.start();
 	}
 	
@@ -81,5 +86,26 @@ public class JobScheduler extends Thread{
 	
 	public void setDetailPageInterval(String jobName,int interval){
 		jobs.get(jobName).setDetailPageInterval(interval);
+	}
+	
+	public String getStatus(){
+		StringBuilder sb = new StringBuilder();
+		for(HouseRentJob job : jobs.values()){
+			sb.append(job.getJobName()).append(": ");
+			if(job.isAllowRun()){
+				sb.append("已经启动");
+			}else{
+				sb.append("已经停止");
+			}
+			if(job.isRunning()){
+				sb.append(" 正在运行");
+			}else{
+				sb.append(" 处于运行间隔期");
+			}
+			sb.append(",列表页面刷新间隔为").append(job.getListPageInterval()/1000f).append("秒");
+			sb.append(",详情页面打开时间间隔为").append(job.getDetailPageInterval()/1000f).append("秒");
+			sb.append("<br/>");
+		}
+		return sb.toString();
 	}
 }

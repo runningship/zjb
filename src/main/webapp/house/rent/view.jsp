@@ -267,7 +267,7 @@ $('#area').on('click',function(){
               </table>
             </td>
           </tr>
-          <c:if test="${house.peizhi!=''}">
+          <c:if test="${!empty house.peizhi}">
           <tr>
             <td colspan="2" class="Zuo">
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
@@ -309,7 +309,9 @@ $('#area').on('click',function(){
                     	<c:if test="${house.seeHM==1}">
                     	  <tr>
 	                        <td class="biaoti">房主：</td>
-	                        <td >${house.tel}</td>
+	                        <td >${house.lxr} <c:if test="${house.site==58}"><img src="${house.telImg}" /> </c:if>
+	                        	<c:if test="${house.site!=58}">${house.tel}</c:if>
+	                        </td>
 	                      </tr>		
                     	</c:if>
                       
@@ -320,7 +322,7 @@ $('#area').on('click',function(){
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
                 <tr>
                   <td class="biaoti biaotiMax">业务人员：</td>
-                  <td class="neirong TextColor1">${ywyUname} ${ywyTel}&nbsp;</td>
+                  <td class="neirong TextColor1">${house.forlxr} ${house.fortel}&nbsp;</td>
                 </tr>
               </table>
             </td>
