@@ -19,20 +19,19 @@ import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
 
-public class Pull58Rent{
+public class Pull58Rent extends AbstractJob implements HouseRentJob{
 
 	static CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
-	
+	private static Pull58Rent instance = new Pull58Rent();
 	private Pull58RentAction action = new Pull58RentAction();
 	private final String listPageUrl= "http://hf.58.com/chuzu/0/";
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-		Pull58Rent job = new Pull58Rent();
 //		job.pullDetail("http://hf.58.com/zufang/20614401441800x.shtml", new Date(), RentType.整租);
-		job.start();
+		instance.work();
 	}
-	
+
 	private Elements getRepeats(Document doc){
 		Element table = null;
 		Element infoList = doc.getElementById("infolist");
@@ -51,8 +50,10 @@ public class Pull58Rent{
 		}
 		return null;
 	}
-	private void start(){
+	
+	public void work(){
 		try{
+			System.out.print(action.getSiteName()+"正在运行");
 			URL url = new URL(listPageUrl);
 			URLConnection conn = url.openConnection();
 			conn.setConnectTimeout(10000);
@@ -137,6 +138,11 @@ public class Pull58Rent{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public String getJobName() {
+		return action.getSiteName();
 	}
 	
 }

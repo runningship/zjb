@@ -2,8 +2,6 @@ package com.youwei.zjb.job;
 
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Calendar;
-import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -19,28 +17,29 @@ import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
 
-public class PullGJRent{
+public class PullGJRent extends AbstractJob implements HouseRentJob{
 
 	static CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
-	
+	private static PullGJRent instance = new PullGJRent();
+	//默认60秒
 	private PullGJRentAction action = new PullGJRentAction();
 	private final String listPageUrl= "http://hf.ganji.com/fang1/a1/";
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-		PullGJRent job = new PullGJRent();
 //		HouseRent hr = PullDataHelper.pullDetail(job.action , "http://hf.ganji.com/fang1/1350251348x.htm" , null ,RentType.整租);
-		job.start();
 //		dao.saveOrUpdate(hr);
-//		int a=0;
+		instance.work();
 	}
 	
 	private Elements getRepeats(Document doc){
 		Elements infoList = doc.getElementsByClass("listBox").select("li");
 		return infoList;
 	}
-	private void start(){
+	
+	public void work(){
 		try{
+			System.out.print(action.getSiteName()+"正在运行");
 			URL url = new URL(listPageUrl);
 			URLConnection conn = url.openConnection();
 			conn.setConnectTimeout(10000);
@@ -95,5 +94,10 @@ public class PullGJRent{
 			return RentType.整租;
 		}
 	}
-	
+
+	@Override
+	public String getJobName() {
+		return action.getSiteName();
+	}
+
 }

@@ -21,8 +21,11 @@ import com.youwei.zjb.user.entity.User;
 @Module(name="/")
 public class ZjbService {
 
-CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
+	public static final int AssistantUid=-999;
+	public static final int AssistantAvatar=116;
+	public static final String AssistantName="小助手";
 	@WebMethod
 	public ModelAndView home(){
 		ModelAndView mv = new ModelAndView();
@@ -51,6 +54,17 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 			}
 		}
 		users.remove(mySelf);
+		if(me.cid==1){
+			// 小助手
+			Map<String,Object> ass = new HashMap<String,Object>();
+			ass.put("avatar", AssistantAvatar);
+			ass.put("uname", AssistantName);
+			ass.put("dname", "系统服务中心");
+			ass.put("uid", AssistantUid);
+			ass.put("online", true);
+			users.add(ass);
+		}
+		
 		mv.jspData.put("role", me.getRole());
 		mv.jspData.put("me", me);
 		mv.jspData.put("cname", me.Company().namea);

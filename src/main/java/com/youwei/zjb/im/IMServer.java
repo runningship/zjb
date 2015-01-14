@@ -19,6 +19,7 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import com.youwei.zjb.ZjbService;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.entity.Contact;
 import com.youwei.zjb.im.entity.GroupMessage;
@@ -35,6 +36,7 @@ public class IMServer extends WebSocketServer{
 	static Map<String,Map<Integer,WebSocket>> conns = new HashMap<String,Map<Integer,WebSocket>>();
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 //	private static InetSocketAddress socket = new InetSocketAddress("localhost", 9099); 
+	private AssistantService assistantService = new AssistantService();
 	private IMServer() throws UnknownHostException {
 //		super(new InetSocketAddress(Inet4Address.getByName("localhost"), 9099));
 //		super(new InetSocketAddress("192.168.1.125", 9099));
@@ -115,7 +117,7 @@ public class IMServer extends WebSocketServer{
 			data.remove("contactId");
 			data.remove("contactName");
 			data.remove("avatar");
-			sendMsg(city,senderId,recvId,data , false);
+			sendMsg(conn,city,senderId,recvId,data , false);
 		}else if("groupmsg".equals(data.getString("type"))){
 			Integer groupId = data.getInt("contactId");
 			//get users of group
@@ -146,7 +148,7 @@ public class IMServer extends WebSocketServer{
 				conn = ap.get(recvId);
 				if(conn!=null){
 					//send group message
-					sendMsg(city,senderId , recvId,data,true);
+					sendMsg(conn,city,senderId , recvId,data,true);
 				}
 			}
 		}
@@ -176,8 +178,19 @@ public class IMServer extends WebSocketServer{
 		}
 	}
 
-	private void sendMsg(String city ,Integer senderId , Integer recvId , JSONObject data , boolean isGroup) {
-		
+	private void sendMsg(WebSocket senderSocket,String city ,Integer senderId , Integer recvId , JSONObject data , boolean isGroup) {
+		if(recvId==ZjbService.AssistantUid){
+			String msg = assistantService.doAction(data.getString("msg"));
+			JSONObject jobj = new JSONObject();
+			jobj.put("senderId", ZjbService.AssistantUid);
+			jobj.put("sendtime", DataHelper.sdf4.format(new Date()));
+			jobj.put("type", "msg");
+			jobj.put("msg", msg);
+			jobj.put("senderAvatar", ZjbService.AssistantAvatar);
+			jobj.put("senderName", ZjbService.AssistantName);
+			senderSocket.send(jobj.toString());
+			return;
+		}
 		data.put("sendtime", DataHelper.sdf4.format(new Date()));
 		Map<Integer, WebSocket> ap = conns.get(city);
 		WebSocket recv = ap.get(recvId);
