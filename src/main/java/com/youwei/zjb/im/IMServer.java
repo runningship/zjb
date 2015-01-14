@@ -226,4 +226,22 @@ public class IMServer extends WebSocketServer{
 		return false;
 	}
 
+	public static void sendMsgToUser(int userId,String msg){
+		Map<Integer, WebSocket> ap = conns.get("hefei");
+		if(ap==null){
+			return;
+		}
+		WebSocket conn = ap.get(userId);
+		if(conn==null){
+			return;
+		}
+		JSONObject jobj = new JSONObject();
+		jobj.put("senderId", ZjbService.AssistantUid);
+		jobj.put("sendtime", DataHelper.sdf4.format(new Date()));
+		jobj.put("type", "msg");
+		jobj.put("msg", msg);
+		jobj.put("senderAvatar", ZjbService.AssistantAvatar);
+		jobj.put("senderName", ZjbService.AssistantName);
+		conn.send(jobj.toString());
+	}
 }

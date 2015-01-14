@@ -1,14 +1,9 @@
 package com.youwei.zjb.job;
 
 import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Date;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.youwei.zjb.house.FangXing;
@@ -16,18 +11,25 @@ import com.youwei.zjb.house.LouXing;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.im.IMServer;
 
 public class PullDataHelper {
 
-	public static HouseRent pullDetail(PullRentHouseAction action ,String hlink , Date pubTime , RentType rentType){
+	public static HouseRent pullDetail(PullRentHouseAction action ,String hlink , Date pubTime , RentType rentType, String address){
 		System.out.println("pulling "+hlink);
+		Element sumary =null;
 		try{
-			Element sumary = action.getDetailSumary(hlink);
+			sumary = action.getDetailSumary(hlink);
 			HouseRent hr = new HouseRent();
 			hr.beizhu="";
 			hr.site = action.getSiteName();
 			hr.href = hlink;
-			hr.address = action.getAddress(sumary);
+			if(address==null){
+				hr.address = action.getAddress(sumary);
+			}else{
+				hr.address = address;
+			}
+			
 			hr.area = action.getArea(sumary);
 			//中介宝
 			hr.cid = 1;
@@ -105,7 +107,12 @@ public class PullDataHelper {
 			return hr;
 		}catch(SocketTimeoutException ex){
 			System.err.println("请求超时");
+		}catch(TooFastException ex){
+			throw ex;
 		}catch(Exception ex){
+			String msg = "扫网"+hlink+"失败，reason="+ex.getMessage();
+			IMServer.sendMsgToUser(537, msg);
+			IMServer.sendMsgToUser(373, msg);
 			ex.printStackTrace();
 		}
 		return null;

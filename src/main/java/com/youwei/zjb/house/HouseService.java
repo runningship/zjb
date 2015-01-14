@@ -625,25 +625,6 @@ public class HouseService {
 		return new ModelAndView();
 	}
 	
-	@WebMethod
-	public ModelAndView editRent(int id){
-		ModelAndView mv = new ModelAndView();
-		HouseRent po = dao.get(HouseRent.class, id);
-		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
-		if(fxing!=null){
-			mv.jspData.put("hxing", fxing.getName());
-		}else{
-			mv.jspData.put("hxing", "");
-		}
-		mv.jspData.put("fangshi", RentType.toList());
-		mv.jspData.put("quyus", QuYu.toList());
-		mv.jspData.put("lxing", LouXing.toList());
-		mv.jspData.put("zxius", ZhuangXiu.toList());
-		mv.jspData.put("hxings", FangXing.toList());
-		mv.jspData.put("ztais", RentState.toList());
-		mv.jspData.put("house", po);
-		return mv;
-	}
 	
 	@WebMethod
 	public ModelAndView splitHouseTel(){

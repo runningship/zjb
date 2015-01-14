@@ -44,11 +44,12 @@ function save(){
        });
       YW.ajax({
         type: 'POST',
-        url: '/c/house/rent/update',
+        url: '/c/house/rent/doRuku',
         data:a,
         mysuccess: function(data){
             art.dialog.close();
-            art.dialog.opener.updateHouse(id,data);
+            // art.dialog.opener.updateHouse(id,data);
+            art.dialog.opener.doSearch();
             alert('修改成功');
         }
       });
@@ -109,7 +110,7 @@ $(document).ready(function() {
         <div class="maxHW">
 
             <form class="form-horizontal form_label_right form1" name="form1" role="form" onsubmit="submits();return false;">
-                <input type="hidden" name="id" id="id"/>
+                <input type="hidden" name="id" id="id" value="${house.id}"/>
                 <div class="row">
                     <div class="col-xs-6">
 

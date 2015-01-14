@@ -19,6 +19,10 @@
 			"text":"删除",
 			"type":"menu"
 		},{
+			"name":"fy_ruku",
+			"text":"入库",
+			"type":"menu"
+		},{
 			"name":"fy_dels",
 			"text":"回收站删除",
 			"type":"menu"

@@ -1,7 +1,6 @@
 package com.youwei.zjb.job;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
@@ -24,7 +23,7 @@ public class Pull58RentAction implements PullRentHouseAction{
 		if(arr.length<=1){
 			return "";
 		}
-		return arr[arr.length-1];
+		return arr[arr.length-1]+"区";
 	}
 
 	

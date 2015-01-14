@@ -3,6 +3,7 @@ package com.youwei.zjb.house;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -23,6 +24,7 @@ import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.HqlHelper;
@@ -84,6 +86,22 @@ public class HouseRentService {
 	public ModelAndView update(HouseRent house , String hxing){
 		ModelAndView mv = new ModelAndView();
 		HouseRent po = service.get(HouseRent.class, house.id);
+		innerUpdateHouse(po,house,hxing);
+		service.saveOrUpdate(po);
+		User user = ThreadSession.getUser();
+		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
+		operService.add(OperatorType.房源记录, operConts);
+		mv.data.put("msg", "修改成功");
+		mv.data.put("house", JSONHelper.toJSON(po , DataHelper.dateSdf.toPattern()));
+		RentState state = RentState.parse(po.ztai);
+		if(state!=null){
+			mv.data.getJSONObject("house").put("ztai", state.toString());
+		}
+		mv.data.put("result", 0);
+		return mv;
+	}
+	
+	private void innerUpdateHouse(HouseRent po ,HouseRent house ,String hxing){
 		po.area = house.area;
 		po.address = house.address;
 		po.ztai = house.ztai;
@@ -119,25 +137,74 @@ public class HouseRentService {
 		po.seeFH = house.seeFH;
 		po.seeGX	= house.seeGX;
 		po.seeHM = house.seeHM;
-		
-		service.saveOrUpdate(po);
-		User user = ThreadSession.getUser();
-		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
-		operService.add(OperatorType.房源记录, operConts);
-		mv.data.put("msg", "修改成功");
-		mv.data.put("house", JSONHelper.toJSON(po , DataHelper.dateSdf.toPattern()));
-		RentState state = RentState.parse(po.ztai);
-		if(state!=null){
-			mv.data.getJSONObject("house").put("ztai", state.toString());
-		}
-		mv.data.put("result", 0);
-		return mv;
 	}
-	
 	@WebMethod
 	public ModelAndView get(Integer id){
 		ModelAndView mv = new ModelAndView();
 		HouseRent po = service.get(HouseRent.class, id);
+		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
+		mv.data = JSONHelper.toJSON(po);
+		mv.data.put("hxing", fxing.getName());
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView view(Integer id){
+		ModelAndView mv = new ModelAndView();
+		HouseRent h = service.get(HouseRent.class, id);
+		mv.jspData.put("house", h);
+		
+		Department dept = service.get(Department.class, h.did);
+		User user = service.get(User.class, h.uid);
+		mv.jspData.put("fbr", (user==null || user.uname==null) ? "":user.uname);
+		mv.jspData.put("ywyUname", h.forlxr==null ? "":h.forlxr);
+		mv.jspData.put("ywyTel", h.fortel==null ? "":h.fortel);
+		mv.jspData.put("dname", dept==null? "":dept.namea);
+		RentState ztai = RentState.parse(h.ztai);
+		mv.jspData.put("ztai", ztai==null ? "": ztai);
+		RentType fs = RentType.parse(h.fangshi);
+		mv.jspData.put("fangshi", fs==null ? "": fs.toString());
+		String favStr = "@"+ThreadSession.getUser().id+"|";
+		if(h.fav!=null && h.fav.contains(favStr)){
+			mv.jspData.put("fav", "1");
+		}else{
+			mv.jspData.put("fav", "0");
+		}
+		
+		String hql = "select gj.conts as conts , d.namea as dname , u.uname as uname , gj.addtime as addtime from GenJin gj , User u , "
+				+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
+		List<Map> gjList = service.listAsMap(hql, Integer.valueOf(id) , 1);
+		mv.jspData.put("gjList", gjList);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView ruku(int id){
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = service.get(HouseRent.class, id);
+		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
+		if(fxing!=null){
+			mv.jspData.put("hxing", fxing.getName());
+		}else{
+			mv.jspData.put("hxing", "");
+		}
+		mv.jspData.put("fangshi", RentType.toList());
+		mv.jspData.put("quyus", QuYu.toList());
+		mv.jspData.put("lxing", LouXing.toList());
+		mv.jspData.put("zxius", ZhuangXiu.toList());
+		mv.jspData.put("hxings", FangXing.toList());
+		mv.jspData.put("ztais", RentState.toList());
+		mv.jspData.put("house", po);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView doRuku(HouseRent house , String hxing){
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = service.get(HouseRent.class, house.id);
+		this.innerUpdateHouse(po, house, hxing);
+		po.ruku=1;
+		service.saveOrUpdate(po);
 		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
 		mv.data = JSONHelper.toJSON(po);
 		mv.data.put("hxing", fxing.getName());
@@ -185,6 +252,9 @@ public class HouseRentService {
 			hql = new StringBuilder(" select h  from HouseRent  h where 1=1 ");
 		}
 		User u = ThreadSession.getUser();
+		if(u.cid!=1){
+			hql.append(" and ruku=1");
+		}
 		if("all".equals(query.scope)){
 			hql.append(" and (h.cid=? or h.seeGX=?) ");
 			params.add(u.cid);

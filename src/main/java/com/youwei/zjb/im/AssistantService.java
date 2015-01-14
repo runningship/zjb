@@ -1,7 +1,6 @@
 package com.youwei.zjb.im;
 
 import org.apache.commons.lang.StringUtils;
-import org.jsoup.examples.HtmlToPlainText;
 
 import com.youwei.zjb.job.JobScheduler;
 import com.youwei.zjb.util.HTMLSpirit;
@@ -25,14 +24,14 @@ public class AssistantService {
 		}else if(arr[0].equals("设置58间隔")){
 			try{
 				Integer interval = Integer.valueOf(arr[1]);
-				schedule.setInterval("58", interval);
+				schedule.setListPageInterval("58", interval);
 			}catch(NumberFormatException ex){
 				msg = "时间间隔必须是数字";
 			}
 		}else if(arr[0].equals("开始赶集间隔")){
 			try{
 				Integer interval = Integer.valueOf(arr[1]);
-				schedule.setInterval("赶集", interval);
+				schedule.setListPageInterval("赶集", interval);
 			}catch(NumberFormatException ex){
 				msg = "时间间隔必须是数字";
 			}

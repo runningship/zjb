@@ -18,6 +18,7 @@ import org.jsoup.select.Elements;
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.im.IMServer;
 
 public class Pull58Rent extends AbstractJob implements HouseRentJob{
 
@@ -81,14 +82,18 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 					continue;
 				}
 				Date pubTime = getPubTime(e);
-				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e));
+				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) , null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 				}
 				count++;
+				Thread.sleep(this.getDetailPageInterval());
 			}
 			System.out.println("共处理房源数:"+count);
 		}catch(Exception ex){
+			String msg = action.getSiteName()+"扫网任务失败，reason="+ex.getMessage();
+			IMServer.sendMsgToUser(537, msg);
+			IMServer.sendMsgToUser(373, msg);
 			ex.printStackTrace();
 		}
 	}

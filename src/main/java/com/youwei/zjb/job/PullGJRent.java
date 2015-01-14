@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.im.IMServer;
 
 public class PullGJRent extends AbstractJob implements HouseRentJob{
 
@@ -23,7 +24,7 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 	private static PullGJRent instance = new PullGJRent();
 	//默认60秒
 	private PullGJRentAction action = new PullGJRentAction();
-	private final String listPageUrl= "http://hf.ganji.com/fang1/a1/";
+	private final String listPageUrl= "http://hf.ganji.com/fang1/";
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
@@ -46,6 +47,11 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 			conn.setReadTimeout(10000);
 			String result = IOUtils.toString(conn.getInputStream(),"utf-8");
 			Document doc = Jsoup.parse(result);
+			if(result.contains("您的访问速度太快了")){
+				IMServer.sendMsgToUser(537, "赶集访问速度太快了");
+				IMServer.sendMsgToUser(373, "赶集访问速度太快了");
+				return;
+			}
 			Elements list = getRepeats(doc);
 			if(list==null){
 				LogUtil.warning("获取房源列表信息失败，等待下次重试.");
@@ -61,19 +67,27 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 				if(dings!=null && dings.isEmpty()==false){
 					continue;
 				}
+				Elements hots = e.getElementsByClass("ico-hot");
+				if(hots!=null && hots.isEmpty()==false){
+					continue;
+				}
 				String link = getLink(e);
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){
 					continue;
 				}
-				HouseRent hr = PullDataHelper.pullDetail(action , link , null ,getRentType(e));
+				HouseRent hr = PullDataHelper.pullDetail(action , link , null ,getRentType(e),null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 				}
 				count++;
+				Thread.sleep(this.getDetailPageInterval());
 			}
 			System.out.println("共处理房源数:"+count);
 		}catch(Exception ex){
+			String msg = action.getSiteName()+"扫网任务失败，reason="+ex.getMessage();
+			IMServer.sendMsgToUser(537, msg);
+			IMServer.sendMsgToUser(373, msg);
 			ex.printStackTrace();
 		}
 	}

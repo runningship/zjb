@@ -11,6 +11,7 @@ public class JobScheduler extends Thread{
 	
 	public JobScheduler(){
 		Pull58Rent job58 = new Pull58Rent();
+		job58.setDetailPageInterval(100);
 		jobs.put(job58.getJobName(), job58);
 		
 		PullGJRent jobGJ = new PullGJRent();
@@ -37,13 +38,15 @@ public class JobScheduler extends Thread{
 
 	private void schedule(String jobName) {
 		final HouseRentJob job = jobs.get(jobName);
-		if(job.isAllowRun()){
-			if(job.getLastRunTime()==-1 || System.currentTimeMillis()-job.getLastRunTime()>job.getInterval()){
+		if(job.isAllowRun() && job.isRunning()==false){
+			if(job.getLastRunTime()==-1 || System.currentTimeMillis()-job.getLastRunTime()>job.getListPageInterval()){
 				new Thread(){
 
 					@Override
 					public void run() {
+						job.setRunning(true);
 						job.work();
+						job.setRunning(false);
 						job.setLastRunTime(System.currentTimeMillis());
 					}
 				}.start();
@@ -69,10 +72,14 @@ public class JobScheduler extends Thread{
 		}
 	}
 	
-	public void setInterval(String jobName,int interval){
+	public void setListPageInterval(String jobName,int interval){
 		if(interval<30*1000){
 			interval=30*1000;
 		}
-		jobs.get(jobName).setInterval(interval);
+		jobs.get(jobName).setListPageInterval(interval);
+	}
+	
+	public void setDetailPageInterval(String jobName,int interval){
+		jobs.get(jobName).setDetailPageInterval(interval);
 	}
 }

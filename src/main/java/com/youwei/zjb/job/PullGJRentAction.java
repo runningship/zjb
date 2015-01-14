@@ -178,8 +178,8 @@ public class PullGJRentAction implements PullRentHouseAction{
 		conn.setReadTimeout(10000);
 		String result = IOUtils.toString(conn.getInputStream(),"utf-8");
 		Document doc = Jsoup.parse(result);
-		if(doc.getElementsMatchingOwnText("页面可能被删除").isEmpty()==false){
-			return null;
+		if(doc.getElementsMatchingOwnText("您的访问速度太快了").isEmpty()==false){
+			throw new TooFastException("扫网速度太快了");
 		}
 		Element sumary = doc.getElementsByClass("leftBox").first();
 		return sumary;

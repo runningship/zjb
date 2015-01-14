@@ -164,4 +164,7 @@ public class HouseRent {
 	
 	public String title;
 	public String telImg;
+	
+	public int ruku;
+	
 }

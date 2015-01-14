@@ -80,7 +80,7 @@ function showAction(hcid,cid , seeGX){
 
 function getSider(id){
     if(id){
-        $('#sideCont').attr('src','/v/house/houseSee_rent_v2.html?id='+id+'&chuzu=1');
+        $('#sideCont').attr('src','/house/rent/view.jsp?id='+id+'&chuzu=1');
     }
 }
 
@@ -91,7 +91,7 @@ function houseEdit(id){
 }
 
 function ruku(id){
-  art.dialog.open("/house/editRent.jsp?id="+id)
+  art.dialog.open("/house/rent/ruku.jsp?id="+id)
 }
 
 function shenheFy(id , obj){
@@ -414,7 +414,7 @@ $(document).ready(function(){
                                                             <a href="##" auth="fy_sh" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
                                                             <a href="#" auth="fy_edit" show="showAction($[cid],$${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
                                                             <a href="##" auth="fy_del" show="showAction($[cid],$${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
-                                                            <a href="#" onclick="ruku($[id])">入库</a>
+                                                            <a auth="fy_ruku" href="#" show="$[ruku]==0" onclick="ruku($[id])">入库</a>
                                                           </td>
                                                           <td width="50" class="ztai_$[ztai]">$[ztai]</td>
                                                           <td width="60">$[quyu]</td>

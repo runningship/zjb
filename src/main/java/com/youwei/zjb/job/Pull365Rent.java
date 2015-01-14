@@ -61,7 +61,7 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 					continue;
 				}
 				Date pubTime = getPubTime(e);
-				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e));
+				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) ,"");
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 				}

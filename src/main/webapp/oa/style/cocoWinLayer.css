@@ -78,12 +78,14 @@
 .ggListBoxBot i.zan {background-position: -4px -201px; margin:0;}
 .ggListBoxBot i.zan:hover, .ggListBoxBot i.zanSel{ background-position:-38px -201px;}
 
+.ggListBoxBot i.xg{ background-position:-4px -133px;}
+.ggListBoxBot i.xg:hover, .ggListBoxBot i.xgSel{ background-position:-38px -133px;}
 /*.ggListBoxBot i.hf {background-position: -4px -201px;}
 .ggListBoxBot i.hf:hover, .ggListBoxBot i.hfSel{ background-position:-38px -201px;}*/
 .ggListBoxBot i.hf { background:url(../images/delete.png) no-repeat;}
 .ggListBoxBot i.hf:hover, .ggListBoxBot i.hfSel{ background:url(../images/delete.png) no-repeat;}
 
-.ggListBoxBot .tuBox{ height:15px; width:43px; line-height:16px; margin-right:2px; display:inline-block; color:#a8b6be; float:left;}
+.ggListBoxBot .tuBox{ height:15px; /*width:43px;*/ line-height:16px; margin-right:2px; display:inline-block; color:#a8b6be; float:left;}
 
 .ggListBoxBot .tuBox i{ float:left;}
 
