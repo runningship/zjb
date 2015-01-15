@@ -39,6 +39,7 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 	}
 	
 	public void work(){
+		String hlink = "";
 		try{
 			System.out.print(action.getSiteName()+"正在运行");
 //			CloseableHttpClient client = HttpClientBuilder.create().build(); 
@@ -51,12 +52,13 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 //			String result = EntityUtils.toString(response.getEntity() , "utf-8");
 //			response.close();
 			
-			URL url = new URL(listPageUrl);
-			URLConnection conn = url.openConnection();
-			conn.getHeaderField("Set-Cookie");
-			conn.setConnectTimeout(10000);
-			conn.setReadTimeout(10000);
-			String result = IOUtils.toString(conn.getInputStream(),"utf-8");
+//			URL url = new URL(listPageUrl);
+//			URLConnection conn = url.openConnection();
+//			conn.getHeaderField("Set-Cookie");
+//			conn.setConnectTimeout(10000);
+//			conn.setReadTimeout(10000);
+//			String result = IOUtils.toString(conn.getInputStream(),"utf-8");
+			String result = PullDataHelper.getHttpData(listPageUrl,action.getSiteName() , "utf8");
 			Document doc = Jsoup.parse(result);
 			if(result.contains("您的访问速度太快了")){
 				IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "赶集又要输入验证码了。。");
@@ -81,24 +83,25 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 				if(hots!=null && hots.isEmpty()==false){
 					continue;
 				}
-				String link = getLink(e);
-				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
+				hlink = getLink(e);
+				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", hlink);
 				if(po!=null){
 					continue;
 				}
-				HouseRent hr = PullDataHelper.pullDetail(action , link , null ,getRentType(e),null);
+				HouseRent hr = PullDataHelper.pullDetail(action , hlink , null ,getRentType(e),null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 				}
 				count++;
-				if(count>5){
+				if(count>=1){
 					break;
 				}
 				Thread.sleep(this.getDetailPageInterval());
 			}
-			System.out.println("共处理"+action.getSiteName()+"房源数:"+count);
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);
 		}catch(Exception ex){
-			String msg = action.getSiteName()+"扫网任务失败，reason="+ex.getMessage();
+			StackTraceElement stack = ex.getStackTrace()[0];
+			String msg = "扫网"+hlink+"失败，href="+hlink+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
 			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 		}
 	}

@@ -119,8 +119,10 @@ public class Pull365RentAction implements PullRentHouseAction{
 
 	@Override
 	public void getTel(HouseRent house , Element elem) {
-		String phone = elem.getElementsByClass("fd_telephone").text();
-		house.tel = phone.trim();
+		Elements tel = elem.select(".telephoneBoxBottom .tel");
+		if(!tel.isEmpty()){
+			house.tel = tel.first().ownText();
+		}
 	}
 
 	@Override
@@ -155,11 +157,12 @@ public class Pull365RentAction implements PullRentHouseAction{
 
 	@Override
 	public Element getDetailSumary(String url) throws IOException {
-		URL url1 = new URL(url);
-		URLConnection conn = url1.openConnection();
-		conn.setConnectTimeout(10000);
-		conn.setReadTimeout(10000);
-		String result = IOUtils.toString(conn.getInputStream(),"GBK");
+//		URL url1 = new URL(url);
+//		URLConnection conn = url1.openConnection();
+//		conn.setConnectTimeout(10000);
+//		conn.setReadTimeout(10000);
+//		String result = IOUtils.toString(conn.getInputStream(),"GBK");
+		String result = PullDataHelper.getHttpData(url, getSiteName() ,"gbk");
 //		System.out.print(result);
 		Document doc = Jsoup.parse(result);
 		if(doc.getElementsMatchingOwnText("页面可能被删除").isEmpty()==false){

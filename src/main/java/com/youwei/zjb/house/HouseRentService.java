@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
+import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
@@ -201,6 +202,11 @@ public class HouseRentService {
 	@WebMethod
 	public ModelAndView doRuku(HouseRent house , String hxing){
 		ModelAndView mv = new ModelAndView();
+		long count = service.countHqlResult("select count(*) from HouseRent where tel=?", house.tel);
+		if(count>0){
+			throw new GException(PlatformExceptionType.BusinessException,"tel","存在相同的房主电话，可能为重复房源");
+		}
+		
 		HouseRent po = service.get(HouseRent.class, house.id);
 		this.innerUpdateHouse(po, house, hxing);
 		po.ruku=1;
@@ -458,6 +464,24 @@ public class HouseRentService {
 				service.saveOrUpdate(po);
 				mv.data.put("sh", po.sh);
 			}
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView list365(Page<Map> page){
+		ModelAndView mv = new ModelAndView();
+		page = service.findPage(page, "select id as id, href as href,site as site from HouseRent where site=? and ruku=0 and tel is null", true , new Object[]{"365"});
+		mv.data.put("houses", JSONHelper.toJSONArray(page.getResult()));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView updateTel(Integer hid , String tel){
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = service.get(HouseRent.class, hid);
+		if(po!=null){
+			po.tel = tel;
 		}
 		return mv;
 	}

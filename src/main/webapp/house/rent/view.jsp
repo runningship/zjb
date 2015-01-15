@@ -309,8 +309,18 @@ $('#area').on('click',function(){
                     	<c:if test="${house.seeHM==1}">
                     	  <tr>
 	                        <td class="biaoti">房主：</td>
-	                        <td >${house.lxr} <c:if test="${house.site==58}"><img src="${house.telImg}" /> </c:if>
-	                        	<c:if test="${house.site!=58}">${house.tel}</c:if>
+	                        <td >${house.lxr} 
+                            <c:choose> 
+                              <c:when test="${house.site==58 && empty house.tel}">   
+                                <img src="${house.telImg}" />
+                              </c:when> 
+                              <c:when test="${house.site==58 && house.tel!=''}">
+                                ${house.tel}
+                              </c:when> 
+                              <c:otherwise>
+                                ${house.tel}
+                              </c:otherwise> 
+                            </c:choose>
 	                        </td>
 	                      </tr>		
                     	</c:if>

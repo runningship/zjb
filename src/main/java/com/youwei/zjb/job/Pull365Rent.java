@@ -19,6 +19,7 @@ import org.jsoup.select.Elements;
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.im.IMServer;
 import com.youwei.zjb.util.DataHelper;
 
 public class Pull365Rent extends AbstractJob implements HouseRentJob{
@@ -40,13 +41,10 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 	}
 	
 	public void work(){
+		String link = "";
 		try{
 			System.out.print(action.getSiteName()+"正在运行");
-			URL url = new URL(listPageUrl);
-			URLConnection conn = url.openConnection();
-			conn.setConnectTimeout(10000);
-			conn.setReadTimeout(10000);
-			String result = IOUtils.toString(conn.getInputStream(),"GBK");
+			String result = PullDataHelper.getHttpData(listPageUrl,action.getSiteName() , "gbk");
 			Document doc = Jsoup.parse(result);
 			Elements list = getRepeats(doc);
 			if(list==null){
@@ -55,7 +53,7 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 			}
 			int count=0;
 			for(Element e : list){
-				String link = getLink(e);
+				link = getLink(e);
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){
 					continue;
@@ -67,9 +65,11 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 				}
 				count++;
 			}
-			System.out.println("共处理房源数:"+count);
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "共处365理房源数:"+count);
 		}catch(Exception ex){
-			ex.printStackTrace();
+			StackTraceElement stack = ex.getStackTrace()[0];
+			String msg = action.getSiteName()+"扫网任务失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 		}
 	}
 

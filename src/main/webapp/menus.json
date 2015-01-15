@@ -21,6 +21,7 @@
 		},{
 			"name":"fy_ruku",
 			"text":"入库",
+			"zjb-only":true,
 			"type":"menu"
 		},{
 			"name":"fy_dels",

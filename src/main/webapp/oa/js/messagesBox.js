@@ -6,12 +6,12 @@
 	  function layerShowBox(id){
 		  
 		 // var $mainId = $(window.top.document).find("#"+id);
-		    var $mainId =  $("#"+id);
-		  
+		var $mainId =$("#iframe_oa",window.top.document).contents().find("#"+id);
+		 // var $mainId =  $("#"+id);
 		  var w = $mainId.width();
 		  var h = $mainId.height();
-		  var winW = $(window).width();
-		  var winH = $(window).height();
+		  var winW = $("#iframe_oa",window.top.document).width();
+		  var winH = $("#iframe_oa",window.top.document).height();
 		  var L = (winW - w)/2;
 		  var T = (winH - h)/2;
 		  
@@ -26,7 +26,6 @@
 		  
 		  $mainId.css("left",L);
 		  $mainId.css("top",T);
-		  
 		  
 		  
 	  }
@@ -91,14 +90,18 @@
 	  }
 	  
 	  function LayerShow(id){
-		 
 			//var $mainId = $(window.top.document).find("#"+id);
-			var $mainId =$("#"+id);
+			//$("#iframe_oa",window.top.document).contents()
+			var $mainId =$("#iframe_oa",window.top.document).contents().find("#"+id);
+			//var $mainId =$("#"+id);
 		    var $id = $mainId.children(".cocoLayerTit");
 			
 		    $id.mousedown(function(e){ 
 				_move=true;  
-				$mainId.css({"z-index":artDialog.defaults.zIndex++});
+				//$mainId.css({"z-index":artDialog.defaults.zIndex++});
+				$id.parent().siblings().css({"z-index":"1990"});
+				
+				$(this).parent().css({"z-index":"2000"});
 				
 				$(".maskLayer").show();
 				
@@ -107,16 +110,17 @@
 				$mainId.fadeTo(0, 0.75);//点击后开始拖动并透明显示  
 			});
 	
-			$(document).mousemove(function(e){  
+		  //  alert("22");
+			$("#iframe_oa",window.top.document).contents().find("#"+id).mousemove(function(e){  
 				if(_move){  
 					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
 					var y=e.pageY-_y;  
 					
 					x = x<=10?10:x;
-					x = x>=$(window).width()-300?$(window).width()-300:x;
+					x = x>=$("#iframe_oa",window.top.document).width()-300?$("#iframe_oa",window.top.document).width()-300:x;
 					
 					y = y<=50?50:y;
-					y = y>=$(window).height()-100?$(window).height()-100:y;
+					y = y>=$("#iframe_oa",window.top.document).height()-100?$("#iframe_oa",window.top.document).height()-100:y;
 					
 					$mainId.css({top:y,left:x});//控件新位置  
 				}  
@@ -199,20 +203,25 @@
 	 function LayerRemoveBox(id){
 		 
 		 $("#"+id).remove();
+		 $(".maskLayer").remove();
 		   
 	  }
 	  
 	  
 	  function openNewWin(id,w,h,tit,s){
-		if ($('#'+id).length>0) {
+		  
+		//window.showModalDialog("www.baidu.com"); 
+		if ($("#iframe_oa",window.top.document).contents().find('#'+id).length>0) {
 			return;
 		};
-	    	 var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
+	    	 var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:2001;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
 			
 			
 			// window.top.document.children("body").find("#oaMainPage").append(htmlText);
-			 $("body").find("#oaMainPage").append(htmlText);
+			//$(window.parent.document)
+			//$("#iframe_oa", window.top.document);
+			     $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
 				 layerShowBox(id);
 		     	 LayerShow(id);
 		     

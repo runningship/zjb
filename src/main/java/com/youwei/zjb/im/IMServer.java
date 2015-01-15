@@ -119,41 +119,49 @@ public class IMServer extends WebSocketServer{
 			data.remove("avatar");
 			sendMsg(conn,city,senderId,recvId,data , false);
 		}else if("groupmsg".equals(data.getString("type"))){
-			Integer groupId = data.getInt("contactId");
-			//get users of group
-			List<Map> list = SimpDaoTool.getGlobalCommonDaoService().listAsMap("select id as uid from User where cid=? or did=?", groupId , groupId);
-			Map<Integer, WebSocket> ap = conns.get(city);
-			//save group message
-			GroupMessage gMsg = new GroupMessage();
-			gMsg.conts = data.getString("msg");
-			gMsg.senderId = senderId;
-			gMsg.groupId = groupId;
-			gMsg.sendtime = new Date();
-			dao.saveOrUpdate(gMsg);
-			UserGroupStatus ugs = dao.getUniqueByParams(UserGroupStatus.class, new String[]{"groupId" , "receiverId"}, new Object[]{groupId , senderId});
-			if(ugs==null){
-				ugs = new UserGroupStatus();
-				ugs.groupId = groupId;
-				ugs.receiverId = senderId;
-				ugs.lasttime = new Date();
-			}else{
-				ugs.lasttime = new Date();
-			}
-			dao.saveOrUpdate(ugs);
-			for(Map map : list){
-				Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
-				if(recvId.equals(senderId)){
-					continue;
-				}
-				conn = ap.get(recvId);
-				if(conn!=null){
-					//send group message
-					sendMsg(conn,city,senderId , recvId,data,true);
-				}
-			}
+			onReceiveGroupMsg(data,city,senderId);
 		}
 	}
 
+	private void onReceiveGroupMsg(JSONObject data , String city , int senderId){
+
+		Integer groupId = data.getInt("contactId");
+		//get users of group
+		List<Map> list = SimpDaoTool.getGlobalCommonDaoService().listAsMap("select id as uid from User where cid=? or did=?", groupId , groupId);
+		Map<Integer, WebSocket> ap = conns.get(city);
+		//save group message
+		GroupMessage gMsg = new GroupMessage();
+		gMsg.conts = data.getString("msg");
+		gMsg.senderId = senderId;
+		gMsg.groupId = groupId;
+		gMsg.sendtime = new Date();
+		dao.saveOrUpdate(gMsg);
+		UserGroupStatus ugs = dao.getUniqueByParams(UserGroupStatus.class, new String[]{"groupId" , "receiverId"}, new Object[]{groupId , senderId});
+		if(ugs==null){
+			ugs = new UserGroupStatus();
+			ugs.groupId = groupId;
+			ugs.receiverId = senderId;
+			ugs.lasttime = new Date();
+		}else{
+			ugs.lasttime = new Date();
+		}
+		dao.saveOrUpdate(ugs);
+		for(Map map : list){
+			Integer recvId = Integer.valueOf(String.valueOf(map.get("uid")));
+			if(recvId.equals(senderId)){
+				continue;
+			}
+			WebSocket conn = ap.get(recvId);
+			if(conn!=null){
+				//send group message
+				data.put("sendtime", DataHelper.sdf4.format(new Date()));
+				data.put("senderId", senderId);
+				conn.send(data.toString());
+//				sendMsg(conn,city,senderId , recvId,data,true);
+			}
+		}
+	
+	}
 	private void nofityStatus(String city,WebSocket from , int status) {
 		Object fromCid = from.getAttributes().get("cid");
 		Object fromUid = from.getAttributes().get("uid");
@@ -233,6 +241,17 @@ public class IMServer extends WebSocketServer{
 			return conns.get(city).containsKey(userId);
 		}
 		return false;
+	}
+	
+	public static void sendMsgToGroup(int groupId, String msg){
+		//{"contactId":"1","type":"groupmsg","contactName":"中介宝","currentPageNo":"1","msg":"<p>srui<\/p>","senderAvatar":157,"senderName":"孟浩"}
+		JSONObject data = new JSONObject();
+		data.put("msg", msg);
+		data.put("type", "groupmsg");
+		data.put("contactId", groupId);
+		data.put("senderAvatar", ZjbService.AssistantAvatar);
+		data.put("senderName", ZjbService.AssistantName);
+		instance.onReceiveGroupMsg(data, "hefei", ZjbService.AssistantUid);
 	}
 
 	public static void sendMsgToUser(int userId,String msg){

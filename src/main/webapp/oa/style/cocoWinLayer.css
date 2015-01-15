@@ -61,7 +61,7 @@
 
 .ggListBoxTit .tit { margin-left:15px; color: #2a404e; float:left;}
 
-.ggListBoxTit .tit h2{ font-weight:normal; line-height:28px; margin-left:0px; max-width:350px; overflow:hidden; font-size: 13px; cursor:pointer;}
+.ggListBoxTit .tit h2{ font-weight:normal; width:325px; height:28px; line-height:28px; margin-left:0px; max-width:350px; overflow:hidden; font-size: 13px; cursor:pointer;}
 
 .ggListBoxTit .tit h2:hover{ color:#008b8d;}
 

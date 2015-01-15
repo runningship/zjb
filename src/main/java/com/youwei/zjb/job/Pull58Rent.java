@@ -29,8 +29,9 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		job.pullDetail("http://hf.58.com/zufang/20614401441800x.shtml", new Date(), RentType.整租);
-		instance.work();
+//		instance.pullDetail("http://hf.58.com/hezu/20645432802570x.shtml", new Date(), RentType.整租);
+		PullDataHelper.pullDetail(instance.action , "http://hf.58.com/hezu/20645432802570x.shtml" ,  new Date(), RentType.整租 , null);
+//		instance.work();
 	}
 
 	private Elements getRepeats(Document doc){
@@ -53,6 +54,8 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 	}
 	
 	public void work(){
+		String link ="";
+		HouseRent hr = null;
 		try{
 			System.out.print(action.getSiteName()+"正在运行");
 			URL url = new URL(listPageUrl);
@@ -67,6 +70,7 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 				return;
 			}
 			int count=0;
+			
 			for(Element e : list){
 				Elements duns = e.getElementsByClass("dun");
 				if(duns!=null && duns.isEmpty()==false){
@@ -76,22 +80,23 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 				if(dings!=null && dings.isEmpty()==false){
 					continue;
 				}
-				String link = getLink(e);
+				link = getLink(e);
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){
 					continue;
 				}
 				Date pubTime = getPubTime(e);
-				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) , null);
+				hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) , null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 				}
 				count++;
 				Thread.sleep(this.getDetailPageInterval());
 			}
-			System.out.println("共处理"+action.getSiteName()+"房源数:"+count);
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);
 		}catch(Exception ex){
-			String msg = action.getSiteName()+"扫网任务失败，reason="+ex.getMessage();
+			StackTraceElement stack = ex.getStackTrace()[0];
+			String msg = action.getSiteName()+"扫网任务失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
 			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 			ex.printStackTrace();
 		}

@@ -48,8 +48,8 @@ function save(){
         data:a,
         mysuccess: function(data){
             art.dialog.close();
-            // art.dialog.opener.updateHouse(id,data);
-            art.dialog.opener.doSearch();
+            art.dialog.opener.updateHouse(id,data);
+            // art.dialog.opener.doSearch();
             alert('修改成功');
         }
       });
