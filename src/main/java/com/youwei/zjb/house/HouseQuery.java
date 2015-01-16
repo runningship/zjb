@@ -49,4 +49,5 @@ public class HouseQuery{
 	public Integer page;
 	public String specArea;
 	public String search;
+	public String site;
 }

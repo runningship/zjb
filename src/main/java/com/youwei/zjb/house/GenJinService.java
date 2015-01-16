@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.HqlHelper;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
@@ -20,7 +21,6 @@ import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.phone.PGenjinService;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
-import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/genjin")

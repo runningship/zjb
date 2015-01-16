@@ -22,7 +22,7 @@
 		  T = T>=winH-200?winH-200:T;
 					
 					L = L<=10?10:L;
-					L = L>=winW-300?$winW-300:L;
+					L = L>=winW-300?winW-300:L;
 		  
 		  $mainId.css("left",L);
 		  $mainId.css("top",T);

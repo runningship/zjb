@@ -63,10 +63,10 @@ public class PullAJKRent extends AbstractJob implements HouseRentJob{
 				HouseRent hr = PullDataHelper.pullDetail(action , link , null ,getRentType(e),null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
+					count++;
 				}
-				count++;
 			}
-			System.out.println("共处理房源数:"+count);
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

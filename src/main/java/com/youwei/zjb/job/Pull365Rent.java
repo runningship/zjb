@@ -62,8 +62,10 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 				HouseRent hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) ,getAddress(e));
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
+					count++;
+				}else{
+					
 				}
-				count++;
 			}
 			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "共处365理房源数:"+count);
 		}catch(Exception ex){

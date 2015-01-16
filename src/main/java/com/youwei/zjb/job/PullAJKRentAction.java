@@ -185,7 +185,7 @@ public class PullAJKRentAction implements PullRentHouseAction{
 	public Date getPubTime(Element elem) {
 		Element time = elem.getElementsByClass("pinfo").first();
 		String Time = time.child(2).child(1).child(3).text();
-		String text = Time.split("发布时间：")[1].replace("年", "-").replace("月", "-").replace("日", "-");
+		String text = Time.split("发布时间：")[1].replace("年", "-").replace("月", "-").replace("日", " ");
 		try {
 			return DataHelper.sdf3.parse(text);
 		} catch (ParseException e) {

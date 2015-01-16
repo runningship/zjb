@@ -1,15 +1,15 @@
 package com.youwei.zjb.job;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -50,7 +50,7 @@ public class PullDataHelper {
 			//信息中心
 			hr.did = 90;
 			if(pubTime==null){
-				hr.dateadd = new Date();
+				hr.dateadd = action.getPubTime(sumary);
 			}else{
 				hr.dateadd = pubTime;
 			}
@@ -119,9 +119,10 @@ public class PullDataHelper {
 			hr.title = action.getTitle(sumary);
 			hr.isdel = 0;
 			if(StringUtils.isNotEmpty(hr.tel)){
-				HouseRent po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByKeyValue(HouseRent.class, "tel", hr.tel);
+				HouseRent po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseRent.class, new String[]{"area","lceng","zceng" , "hxf" , "hxt" , "hxw"},
+						new Object[]{hr.area, hr.lceng, hr.zceng, hr.hxf , hr.hxt , hr.hxw});
 				if(po!=null){
-					LogUtil.info("房源"+hlink+"重复");
+					LogUtil.info("房源"+hlink+"重复,id="+po.id);
 					return null;
 				}
 			}
@@ -172,4 +173,21 @@ public class PullDataHelper {
 		
 		return result;
 	}
+	
+	public static String uncompress(String str) throws IOException {   
+	    if (str == null || str.length() == 0) {   
+	      return str;   
+	  }   
+	   ByteArrayOutputStream out = new ByteArrayOutputStream();   
+	   ByteArrayInputStream in = new ByteArrayInputStream(str   
+	        .getBytes("ISO-8859-1"));   
+	    GZIPInputStream gunzip = new GZIPInputStream(in);   
+	    byte[] buffer = new byte[256];   
+	    int n;   
+	   while ((n = gunzip.read(buffer))>= 0) {   
+	    out.write(buffer, 0, n);   
+	    }   
+	    // toString()使用平台默认编码，也可以显式的指定如toString(&quot;GBK&quot;)   
+	    return out.toString();   
+	  } 
 }

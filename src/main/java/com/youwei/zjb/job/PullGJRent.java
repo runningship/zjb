@@ -91,9 +91,10 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 				HouseRent hr = PullDataHelper.pullDetail(action , hlink , null ,getRentType(e),null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
+					count++;
 				}
-				count++;
-				if(count>=1){
+				
+				if(count>=2){
 					break;
 				}
 				Thread.sleep(this.getDetailPageInterval());

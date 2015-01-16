@@ -108,7 +108,7 @@ public class PullGJRentAction implements PullRentHouseAction{
 	public String getQuyu(Element elem) {
 		Elements qy = elem.getElementsMatchingOwnText("位置：");
 		Element quyu = qy.first().parent().child(2);
-		return quyu.text().trim();
+		return quyu.text().trim()+"区";
 	}
 
 	@Override

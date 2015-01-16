@@ -23,7 +23,7 @@ public class Pull58RentAction implements PullRentHouseAction{
 		if(arr.length<=1){
 			return "";
 		}
-		return arr[arr.length-1]+"区";
+		return arr[arr.length-1];
 	}
 
 	
@@ -120,7 +120,7 @@ public class Pull58RentAction implements PullRentHouseAction{
 		String text = getQuyuText(elem);
 		String[] arr = text.split("-");
 		if(arr.length>=1){
-			return arr[0];
+			return arr[0]+"区";
 		}
 		return "";
 	}

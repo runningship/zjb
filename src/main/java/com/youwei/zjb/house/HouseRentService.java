@@ -12,8 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
-import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.HqlHelper;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
@@ -28,7 +28,6 @@ import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
-import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/house/rent/")
@@ -275,7 +274,10 @@ public class HouseRentService {
 			hql.append(" and h.ztai = ? ");
 			params.add(query.ztai);
 		}
-		
+		if(StringUtils.isNotEmpty(query.site)){
+			hql.append(" and h.site = ? ");
+			params.add(query.site);
+		}
 		if(StringUtils.isNotEmpty(query.search)){
 			hql.append(" and (h.area like ? or h.address like ? or h.tel like ?");
 			params.add("%"+query.search+"%");
@@ -469,9 +471,9 @@ public class HouseRentService {
 	}
 	
 	@WebMethod
-	public ModelAndView list365(Page<Map> page){
+	public ModelAndView listNoTel(Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		page = service.findPage(page, "select id as id, href as href,site as site from HouseRent where site=? and ruku=0 and tel is null", true , new Object[]{"365"});
+		page = service.findPage(page, "select id as id, href as href,site as site from HouseRent where site=? and ruku=0 and tel is null", true , new Object[]{"baixing"});
 		mv.data.put("houses", JSONHelper.toJSONArray(page.getResult()));
 		return mv;
 	}

@@ -255,6 +255,7 @@ public class IMServer extends WebSocketServer{
 	}
 
 	public static void sendMsgToUser(int userId,String msg){
+		System.out.println(msg);
 		Map<Integer, WebSocket> ap = conns.get("hefei");
 		if(ap==null){
 			return;

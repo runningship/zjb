@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.converters.StringArrayConverter;
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.HqlHelper;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
@@ -18,12 +18,9 @@ import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.biz.entity.Leave;
 import com.youwei.zjb.biz.entity.OutBiz;
-import com.youwei.zjb.biz.entity.OutHouse;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
-import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 

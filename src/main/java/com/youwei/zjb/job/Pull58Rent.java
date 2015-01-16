@@ -89,8 +89,8 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 				hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) , null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
+					count++;
 				}
-				count++;
 				Thread.sleep(this.getDetailPageInterval());
 			}
 			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);

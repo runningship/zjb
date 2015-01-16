@@ -60,7 +60,7 @@ public class SessionFilter implements Filter{
 		excludes.add("/c/swq/add");
 		excludes.add("/c/swq/login");
 		excludes.add("/swq/jump.html");
-		excludes.add("/c/house/rent/list365");
+		excludes.add("/c/house/rent/listNoTel");
 		excludes.add("/c/house/rent/updateTel");
 		excludes.add("/c/trial/add");
 	}

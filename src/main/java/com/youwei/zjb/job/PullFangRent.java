@@ -7,6 +7,12 @@ import java.net.URLConnection;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.utils.LogUtil;
@@ -42,23 +48,18 @@ public class PullFangRent extends AbstractJob implements HouseRentJob{
 	public void work(){
 		try{
 			System.out.print(action.getSiteName()+"正在运行");
-			URL url = new URL(listPageUrl);
-			URLConnection conn = url.openConnection();
-//			conn.getHeaderField("Set-Cookie");
-			conn.setConnectTimeout(10000);
-			conn.setReadTimeout(10000);
-//			String result = IOUtils.toString(conn.getInputStream(),"GBK");
-			BufferedReader bufferedReader = new BufferedReader(
-					new InputStreamReader(conn.getInputStream())); 
-			StringBuffer temp = new StringBuffer(); 
-			String line = bufferedReader.readLine(); 
-			while (line != null) { 
-			temp.append(line).append("\r\n"); 
-			line = bufferedReader.readLine(); 
-			} 
-			bufferedReader.close(); 
-			String result = new String(temp.toString().getBytes(), "gb2312"); 
-//			String txt = new String(result.toString().getBytes("iso8859-1"), "utf-8");
+			
+			CloseableHttpClient client = HttpClientBuilder.create().build(); 
+			RequestConfig requestConfig = RequestConfig.custom()  
+		    .setConnectionRequestTimeout(10000).setConnectTimeout(10000)
+		    .setSocketTimeout(10000).build();
+		    HttpGet request = new HttpGet(listPageUrl);
+		    request.setConfig(requestConfig);
+			CloseableHttpResponse response = client.execute(request);
+			String result = EntityUtils.toString(response.getEntity() , "utf-8");
+			response.close();
+			client.close();
+			
 			Document doc = Jsoup.parse(result);
 			Elements list = getRepeats(doc);
 			if(list==null){

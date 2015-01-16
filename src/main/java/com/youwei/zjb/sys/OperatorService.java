@@ -3,13 +3,13 @@ package com.youwei.zjb.sys;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.HqlHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
@@ -19,9 +19,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.sys.entity.OperRecord;
 import com.youwei.zjb.sys.entity.PC;
-import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.HqlHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/oper/")
