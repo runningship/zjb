@@ -11,7 +11,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.oa.entity.Site;
 import com.youwei.zjb.util.JSONHelper;
 
@@ -24,8 +24,8 @@ public class SiteService {
 	public ModelAndView index(){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		params.add(ThreadSession.getUser().id);
-		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSession.getUser().id);
+		params.add(ThreadSessionHelper.getUser().id);
+		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSessionHelper.getUser().id);
 		List<Site> shareList = dao.listByParams(Site.class, "from Site where uid is null");
 		mv.jspData.put("personalList", JSONHelper.toJSONArray(personalList));
 		mv.jspData.put("shareList", JSONHelper.toJSONArray(shareList));
@@ -36,7 +36,7 @@ public class SiteService {
 	public ModelAndView listMy(Site site){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		params.add(ThreadSession.getUser().id);
+		params.add(ThreadSessionHelper.getUser().id);
 		List<Site> list = dao.listByParams(Site.class, "from Site where uid=?", params.toArray());
 		mv.data.put("sites", JSONHelper.toJSONArray(list));
 		return mv;
@@ -57,8 +57,8 @@ public class SiteService {
 		if(po!=null){
 			throw new GException(PlatformExceptionType.BusinessException,"存在重复的网址，你修改后再保存");
 		}
-		site.uid = ThreadSession.getUser().id;
-		site.cid = ThreadSession.getUser().cid;
+		site.uid = ThreadSessionHelper.getUser().id;
+		site.cid = ThreadSessionHelper.getUser().cid;
 		dao.saveOrUpdate(site);
 		return mv;
 	}
@@ -67,7 +67,7 @@ public class SiteService {
 	public ModelAndView addShare(Site site){
 		ModelAndView mv = new ModelAndView();
 		site.uid = null;
-		site.cid = ThreadSession.getUser().cid;
+		site.cid = ThreadSessionHelper.getUser().cid;
 		dao.saveOrUpdate(site);
 		return mv;
 	}

@@ -16,12 +16,10 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
-import org.apache.log4j.Priority;
 import org.bc.sdak.utils.LogUtil;
+import org.bc.web.ThreadSession;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import com.youwei.zjb.ThreadSession;
 
 public class DataHelper {
 
@@ -30,6 +28,7 @@ public class DataHelper {
 	public static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	public static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	public static SimpleDateFormat sdf4 = new SimpleDateFormat("MM-dd HH:mm:ss");
+	public static SimpleDateFormat sdf5 = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
 	public static final String User_Default_Password = "123456";
 	private static final HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
 	static{

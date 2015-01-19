@@ -85,7 +85,7 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 				if(po!=null){
 					continue;
 				}
-				Date pubTime = getPubTime(e);
+				Date pubTime = PullDataHelper.getPubTime(e);
 				hr = PullDataHelper.pullDetail(action , link , pubTime ,getRentType(e) , null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
@@ -118,36 +118,6 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 		}
 	}
 	
-	private Date getPubTime(Element elem){
-		try{
-			String text = elem.getElementsByClass("qj-renaddr").first().ownText();
-			if(StringUtils.isEmpty(text)){
-				return null;
-			}
-			for(String str : text.split(" ")){
-				if(str.contains("分钟") || str.contains("小时")){
-					text = str;
-					break;
-				}
-			}
-			if(text.endsWith("分钟")){
-				text = text.replace("分钟","");
-				Calendar ca = Calendar.getInstance();
-				ca.add(Calendar.MINUTE, Integer.valueOf(text));
-				return ca.getTime();
-			}else if (text.endsWith("小时")){
-				text = text.replace("小时","");
-				Calendar ca = Calendar.getInstance();
-				ca.add(Calendar.HOUR_OF_DAY, Integer.valueOf(text));
-				return ca.getTime();
-			}
-		}catch(Exception ex){
-			LogUtil.warning("获取发布时间失败,"+ elem.outerHtml());
-			return null;
-		}
-		
-		return null;
-	}
 
 	@Override
 	public String getJobName() {

@@ -14,7 +14,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.feedback.entity.FeedBack;
 import com.youwei.zjb.feedback.entity.FeedbackQuery;
 import com.youwei.zjb.feedback.entity.Reply;
@@ -46,8 +46,8 @@ public class ReplyService {
 	public ModelAndView getUnReadReply(){
 		StringBuilder hql = new StringBuilder("select fbId as fbId from Reply where threadUid=? and hasRead=0 and uid<>? group by fbId");
 		List<Object> params = new ArrayList<Object>();
-		params.add(ThreadSession.getUser().id);
-		params.add(ThreadSession.getUser().id);
+		params.add(ThreadSessionHelper.getUser().id);
+		params.add(ThreadSessionHelper.getUser().id);
 		List<Map> list = dao.listAsMap(hql.toString(), params.toArray());
 		ModelAndView mv = new ModelAndView();
 		int id=-1;
@@ -63,8 +63,8 @@ public class ReplyService {
 			throw new GException(PlatformExceptionType.BusinessException, "请先填写回复内容");
 		}
 		reply.addtime = new Date();
-		reply.uid = ThreadSession.getUser().id;
-		reply.uname = ThreadSession.getUser().uname;
+		reply.uid = ThreadSessionHelper.getUser().id;
+		reply.uname = ThreadSessionHelper.getUser().uname;
 		reply.hasRead =0;
 		FeedBack fb = dao.get(FeedBack.class, reply.fbId);
 		reply.threadUid = fb.userId;

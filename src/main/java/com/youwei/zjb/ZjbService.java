@@ -10,6 +10,7 @@ import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.cache.ConfigCache;
@@ -29,10 +30,10 @@ public class ZjbService {
 	@WebMethod
 	public ModelAndView home(){
 		ModelAndView mv = new ModelAndView();
-		List<Map> users = dao.listAsMap("select u.avatar as avatar, u.uname as uname , d.namea as dname ,u.id as uid from User u, Department d where u.cid=? and u.lock=1 and u.did=d.id order by u.uname", ThreadSession.getUser().cid);
+		List<Map> users = dao.listAsMap("select u.avatar as avatar, u.uname as uname , d.namea as dname ,u.id as uid from User u, Department d where u.cid=? and u.lock=1 and u.did=d.id order by u.uname", ThreadSessionHelper.getUser().cid);
 		//随机头像
 		Random  r = new Random();
-		User me = ThreadSession.getUser();
+		User me = ThreadSessionHelper.getUser();
 		Map mySelf = null;
 		for(Map user : users){
 			Integer uid = (Integer)user.get("uid");

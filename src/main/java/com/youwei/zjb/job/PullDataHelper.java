@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +50,7 @@ public class PullDataHelper {
 			hr.cid = 1;
 			//信息中心
 			hr.did = 90;
-			if(pubTime==null){
-				hr.dateadd = action.getPubTime(sumary);
-			}else{
-				hr.dateadd = pubTime;
-			}
+			
 			hr.dateyear = action.getYear(sumary);
 			hr.dhao = "";
 			hr.fhao="";
@@ -126,6 +123,11 @@ public class PullDataHelper {
 					return null;
 				}
 			}
+			if(pubTime==null){
+				hr.dateadd = action.getPubTime(sumary);
+			}else{
+				hr.dateadd = pubTime;
+			}
 			return hr;
 		}catch(SocketTimeoutException ex){
 			System.err.println("请求超时");
@@ -189,5 +191,35 @@ public class PullDataHelper {
 	    }   
 	    // toString()使用平台默认编码，也可以显式的指定如toString(&quot;GBK&quot;)   
 	    return out.toString();   
-	  } 
+	  }
+	
+	public static Date getPubTime(Element elem){
+		try{
+			String text = elem.getElementsByClass("qj-renaddr").first().ownText();
+			if(StringUtils.isEmpty(text)){
+				return null;
+			}
+			for(String str : text.split(" ")){
+				if(str.contains("分钟") || str.contains("小时")){
+					text = str;
+					break;
+				}
+			}
+			if(text.endsWith("分钟")){
+				text = text.replace("分钟","");
+				Calendar ca = Calendar.getInstance();
+				ca.add(Calendar.MINUTE, Integer.valueOf(text));
+				return ca.getTime();
+			}else if (text.endsWith("小时")){
+				text = text.replace("小时","");
+				Calendar ca = Calendar.getInstance();
+				ca.add(Calendar.HOUR_OF_DAY, Integer.valueOf(text));
+				return ca.getTime();
+			}
+		}catch(Exception ex){
+			LogUtil.warning("获取发布时间失败,"+ elem.outerHtml());
+			return null;
+		}
+		return null;
+	}
 }

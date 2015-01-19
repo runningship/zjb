@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.bc.sdak.utils.LogUtil;
+import org.bc.web.ThreadSession;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -44,7 +45,7 @@ public class ViewServlet extends HttpServlet{
 		if(!path.endsWith(".html")){
 			return;
 		}
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String filePath = req.getServletContext().getRealPath("/")+path;
 		String html = FileUtils.readFileToString(new File(filePath),"utf-8");
 		Document doc = Jsoup.parse(html);

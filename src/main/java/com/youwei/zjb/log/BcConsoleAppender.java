@@ -4,7 +4,7 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.user.entity.User;
 
 public class BcConsoleAppender extends ConsoleAppender{
@@ -15,7 +15,7 @@ public class BcConsoleAppender extends ConsoleAppender{
 		if("org.hibernate.hql.internal.ast.HqlSqlWalker".equals(event.getLoggerName()) && msg.contains("DEPRECATION")){
 			return;
 		}
-		User me = ThreadSession.getUser();
+		User me = ThreadSessionHelper.getUser();
 		if(me!=null){
 			msg = me.uname+",id="+me.id+",cid="+me.cid+","+msg;
 		}

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -19,7 +19,7 @@ public class order {
 //	static final String sign_type="MD5";
 	public Document initPage(Document doc , HttpServletRequest req){
 		String html = doc.html();
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		Department d = u.Department();
 		Department c = d.Company();
 		String cname=c.namea==null?"":c.namea;

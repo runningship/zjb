@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.bc.sdak.SimpDaoTool;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.im.IMServer;
@@ -16,9 +16,9 @@ public class UserHelper {
 
 	public static List<User> getUserWithAuthority(String authName){
 		String hql = "select u from User u, RoleAuthority ra where u.roleId=ra.roleId and ra.name='"+authName+"' and u.cid=?";
-		List<User> list1 = SimpDaoTool.getGlobalCommonDaoService().listByParams(User.class, hql , ThreadSession.getUser().cid);
+		List<User> list1 = SimpDaoTool.getGlobalCommonDaoService().listByParams(User.class, hql , ThreadSessionHelper.getUser().cid);
 		String hql2 = "select u from User u , Purview p  where u.roleId=p.unid and fy like ? and u.cid=?";
-		List<User> list2 = SimpDaoTool.getGlobalCommonDaoService().listByParams(User.class, hql2, "%"+authName+"%" ,ThreadSession.getUser().cid);
+		List<User> list2 = SimpDaoTool.getGlobalCommonDaoService().listByParams(User.class, hql2, "%"+authName+"%" ,ThreadSessionHelper.getUser().cid);
 		if(list2.isEmpty()){
 			return list1;
 		}

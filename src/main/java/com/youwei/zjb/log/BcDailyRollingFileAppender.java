@@ -17,22 +17,22 @@
 
 package com.youwei.zjb.log;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.spi.LoggingEvent;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.user.entity.User;
 
 /**
@@ -359,7 +359,7 @@ public class BcDailyRollingFileAppender extends FileAppender {
 		if ("org.hibernate.hql.internal.ast.HqlSqlWalker".equals(event.getLoggerName()) && msg.contains("DEPRECATION")) {
 			return;
 		}
-		User me = ThreadSession.getUser();
+		User me = ThreadSessionHelper.getUser();
 		if (me != null) {
 			msg = me.uname + ",id=" + me.id + ",cid="+me.cid+"," + msg;
 		}

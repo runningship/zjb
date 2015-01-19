@@ -20,7 +20,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.OperatorService;
@@ -40,7 +40,7 @@ public class HouseRentService {
 	@WebMethod
 	public ModelAndView add(HouseRent house , String hxing){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		if(house.mji==null){
 			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
 		}
@@ -88,7 +88,7 @@ public class HouseRentService {
 		HouseRent po = service.get(HouseRent.class, house.id);
 		innerUpdateHouse(po,house,hxing);
 		service.saveOrUpdate(po);
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
 		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "修改成功");
@@ -164,7 +164,7 @@ public class HouseRentService {
 		mv.jspData.put("ztai", ztai==null ? "": ztai);
 		RentType fs = RentType.parse(h.fangshi);
 		mv.jspData.put("fangshi", fs==null ? "": fs.toString());
-		String favStr = "@"+ThreadSession.getUser().id+"|";
+		String favStr = "@"+ThreadSessionHelper.getUser().id+"|";
 		if(h.fav!=null && h.fav.contains(favStr)){
 			mv.jspData.put("fav", "1");
 		}else{
@@ -233,7 +233,7 @@ public class HouseRentService {
 	
 	@WebMethod
 	public ModelAndView listMyFav(HouseQuery query ,Page<HouseRent> page){
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String favStr = "@"+user.id+"|";
 		query.favStr = favStr;
 		return listAll(query ,page);
@@ -241,7 +241,7 @@ public class HouseRentService {
 	
 	@WebMethod
 	public ModelAndView listMyAdd(HouseQuery query ,Page<HouseRent> page){
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		query.userid = user.id;
 		return listAll(query ,page);
 	}
@@ -256,7 +256,7 @@ public class HouseRentService {
 		}else{
 			hql = new StringBuilder(" select h  from HouseRent  h where 1=1 ");
 		}
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		if(u.cid!=1){
 			hql.append(" and ruku=1");
 		}

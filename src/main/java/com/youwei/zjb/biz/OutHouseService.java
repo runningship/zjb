@@ -17,7 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.biz.entity.OutHouse;
 import com.youwei.zjb.client.entity.Client;
 import com.youwei.zjb.user.entity.User;
@@ -69,7 +69,7 @@ public class OutHouseService {
 //				+ " , oh.type as type,c.name as clientName, c.tels as ctels,oh.houseInfos as houseInfos from OutHouse  oh left join client c on oh.clientId=c.id where oh.cid=? ");
 //		
 		List<Object> params = new ArrayList<Object>();
-		params.add(ThreadSession.getUser().cid);
+		params.add(ThreadSessionHelper.getUser().cid);
 		if(query.uid!=null){
 			hql.append(" and oh.uid=? ");
 			params.add(query.uid);

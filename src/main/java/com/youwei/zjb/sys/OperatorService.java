@@ -14,9 +14,10 @@ import org.bc.sdak.utils.LogUtil;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.sys.entity.OperRecord;
 import com.youwei.zjb.sys.entity.PC;
 import com.youwei.zjb.user.entity.User;
@@ -30,14 +31,14 @@ public class OperatorService {
 	public void add(OperatorType operType , String conts){
 		OperRecord oper = new OperRecord();
 		oper.addtime = new Date();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		oper.uid = user.id;
 		oper.type = operType.getCode();
-		oper.ip = ThreadSession.getIp();
+		oper.ip = ThreadSessionHelper.getIp();
 		oper.did = user.did;
 		oper.cid = user.cid;
 		oper.uname = user.uname;
-		oper.ip = ThreadSession.getIp();
+		oper.ip = ThreadSessionHelper.getIp();
 		oper.dname = user.Department().namea;
 		oper.cname = user.Company().namea;
 		oper.yesno=1;

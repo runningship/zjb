@@ -4,10 +4,9 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
-import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.User;
@@ -20,7 +19,7 @@ public class FavoriteService2 {
 	
 	@WebMethod
 	public ModelAndView add(Integer houseId){
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		Favorite po = service.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{user.id,houseId});
 		if(po==null){
 			Favorite fav = new Favorite();
@@ -34,7 +33,7 @@ public class FavoriteService2 {
 	@WebMethod
 	public ModelAndView delete(Integer houseId){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		Favorite po = service.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{user.id,houseId});
 		if(po!=null){
 			service.delete(po);
@@ -46,7 +45,7 @@ public class FavoriteService2 {
 	@WebMethod
 	public ModelAndView list(HouseQuery query){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		StringBuilder hql = new StringBuilder("select h from House h,Favorite f where h.id=f.houseId and f.userId="+user.id);
 		Page<House> page = new Page<House>();
 		page = service.findPage(page, hql.toString());

@@ -25,7 +25,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseTel;
@@ -54,10 +54,10 @@ public class HouseService {
 		params.add(fhao);
 		if(StringUtils.isEmpty(seeGX) || "0".equals(seeGX)){
 			hql.append(" and cid= ? ");
-			params.add(ThreadSession.getUser().cid);
+			params.add(ThreadSessionHelper.getUser().cid);
 		}else{
 			hql.append(" and (seeGX=1 or cid=?)");
-			params.add(ThreadSession.getUser().cid);
+			params.add(ThreadSessionHelper.getUser().cid);
 		}
 		List<House> list = dao.listByParams(House.class, hql.toString(), params.toArray());
 		if(list==null || list.isEmpty()){
@@ -72,7 +72,7 @@ public class HouseService {
 	public ModelAndView add(House house , String hxing){
 		ModelAndView mv = new ModelAndView();
 		validte(house);
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		house.isdel = 0;
 		house.dateadd = new Date();
 		house.uid = user.id;
@@ -126,7 +126,7 @@ public class HouseService {
 	}
 	
 	private void addDistrictIfNotExist(House house){
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		
 		//检查楼盘是否在楼盘字典中，如果没有，则添加
 		String hql = "from District  where name = ? and address=?";
@@ -238,7 +238,7 @@ public class HouseService {
 			}
 		}
 		dao.saveOrUpdate(po);
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了房源["+house.id+"]";
 		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "修改成功");
@@ -254,7 +254,7 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView toggleShenHe(Integer id){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		if(id!=null){
 			House po = dao.get(House.class, id);
 			String state="";
@@ -328,7 +328,7 @@ public class HouseService {
 	
 	@WebMethod
 	public ModelAndView listMyFav(HouseQuery query ,Page<House> page){
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String favStr = "@"+user.id+"|";
 		query.favStr = favStr;
 		return listAll(query ,page);
@@ -336,7 +336,7 @@ public class HouseService {
 	
 	@WebMethod
 	public ModelAndView listMyAdd(HouseQuery query ,Page<House> page){
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		query.userid = user.id;
 		return listAll(query ,page);
 	}
@@ -371,7 +371,7 @@ public class HouseService {
 			hql = new StringBuilder(" select h  from House  h where 1=1");
 		}
 		
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		if("all".equals(query.scope)){
 			hql.append(" and (h.cid=? or h.seeGX=?) ");
 			params.add(u.cid);

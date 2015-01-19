@@ -17,7 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.sys.entity.PC;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.util.JSONHelper;
@@ -78,7 +78,7 @@ public class PcService {
 			pc.addtime = new Date();
 			pc.lock=0;
 			pc.cid = comp.id;
-			pc.lastip = ThreadSession.getIp();
+			pc.lastip = ThreadSessionHelper.getIp();
 			dao.saveOrUpdate(pc);
 		}else{
 			throw new GException(PlatformExceptionType.BusinessException, "您已经申请过授权，无需重复申请");

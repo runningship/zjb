@@ -14,7 +14,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.feedback.entity.ErrorReport;
 import com.youwei.zjb.feedback.entity.FeedBack;
 import com.youwei.zjb.user.entity.User;
@@ -45,7 +45,7 @@ public class FeedBackService {
 		//id>117表示是5.0以后的反馈
 		StringBuilder hql = new StringBuilder("select fb.id as id, SubString(fb.conts,1,30) as conts ,fb.addtime as addtime  from FeedBack fb where userId=? and fb.conts like ? ");
 		List<Object> params = new ArrayList<Object>();
-		params.add(ThreadSession.getUser().id);
+		params.add(ThreadSessionHelper.getUser().id);
 		params.add("%"+search+"%");
 		page.orderBy = "fb.addtime";
 		page.order = Page.DESC;
@@ -60,7 +60,7 @@ public class FeedBackService {
 			throw new GException(PlatformExceptionType.BusinessException, "请先填写反馈内容");
 		}
 		fb.addtime = new Date();
-		fb.userId = ThreadSession.getUser().id;
+		fb.userId = ThreadSessionHelper.getUser().id;
 		dao.saveOrUpdate(fb);
 		return new ModelAndView();
 	}
@@ -68,7 +68,7 @@ public class FeedBackService {
 	@WebMethod
 	public ModelAndView reportError(String host , String stack){
 		System.out.println(stack);
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		ErrorReport err = new ErrorReport();
 		err.stack = stack;
 		err.host = host;

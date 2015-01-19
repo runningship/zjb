@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.SimpDaoTool;
+import org.bc.web.ThreadSession;
 
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.UserSession;
@@ -89,7 +90,7 @@ public class SessionFilter implements Filter{
 			chain.doFilter(request, response);
 			return;
 		}
-		if(ThreadSession.getUser()==null){
+		if(ThreadSessionHelper.getUser()==null){
 			if(StringUtils.isEmpty(oldSessionId)){
 				relogin(req,resp);
 				return;

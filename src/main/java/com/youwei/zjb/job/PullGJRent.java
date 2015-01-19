@@ -2,6 +2,8 @@ package com.youwei.zjb.job;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -28,9 +30,9 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		HouseRent hr = PullDataHelper.pullDetail(job.action , "http://hf.ganji.com/fang1/1350251348x.htm" , null ,RentType.整租);
+		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.ganji.com/fang3/1333437732x.htm" ,null ,RentType.整租 ,null);
 //		dao.saveOrUpdate(hr);
-		instance.work();
+//		instance.work();
 	}
 	
 	private Elements getRepeats(Document doc){
@@ -88,7 +90,8 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 				if(po!=null){
 					continue;
 				}
-				HouseRent hr = PullDataHelper.pullDetail(action , hlink , null ,getRentType(e),null);
+				Date pubTime =getPubTime(e);
+				HouseRent hr = PullDataHelper.pullDetail(action , hlink , pubTime ,getRentType(e),null);
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 					count++;
@@ -129,4 +132,33 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 		return action.getSiteName();
 	}
 
+	private Date getPubTime(Element elem){
+		try{
+			String text = elem.getElementsByClass("list-word").text();
+			if(StringUtils.isEmpty(text)){
+				return null;
+			}
+			for(String str : text.split("/")){
+				if(str.contains("分钟") || str.contains("小时")){
+					text = str;
+					break;
+				}
+			}
+			if(text.endsWith("分钟内")){
+				text = text.replace("分钟内","");
+				Calendar ca = Calendar.getInstance();
+				ca.add(Calendar.MINUTE, Integer.valueOf(text));
+				return ca.getTime();
+			}else if (text.endsWith("小时内")){
+				text = text.replace("小时内","");
+				Calendar ca = Calendar.getInstance();
+				ca.add(Calendar.HOUR_OF_DAY, Integer.valueOf(text));
+				return ca.getTime();
+			}
+		}catch(Exception ex){
+			LogUtil.warning("获取发布时间失败,"+ elem.outerHtml());
+			return null;
+		}
+		return null;
+	}
 }

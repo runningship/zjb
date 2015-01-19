@@ -19,9 +19,10 @@ import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.sys.OperatorService;
@@ -44,7 +45,7 @@ public class UserService {
 	@WebMethod
 	public ModelAndView initIndex(){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		try{
 			mv.data.put("username", user.uname);
 		}catch(Exception ex){
@@ -62,7 +63,7 @@ public class UserService {
 	public ModelAndView groupUserByDept(int cid , String dataScope){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		User me = ThreadSession.getUser();
+		User me = ThreadSessionHelper.getUser();
 		StringBuilder hql = new StringBuilder("select u.did as did , u.id as uid, u.uname as uname,d.namea as dname from User u, Department d where u.did=d.id");
 		int level=1;
 		if(UserHelper.hasAuthority( me , dataScope+"_data_dept")){
@@ -115,7 +116,7 @@ public class UserService {
 	
 	public ModelAndView authorities(){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		mv.data.put("authorities", JSONHelper.toJSONArray(user.getRole().Authorities()));
 		return mv;
 	}
@@ -146,7 +147,7 @@ public class UserService {
 		if(!newPwd.equals(newPwdRepeat)){
 			throw new GException(PlatformExceptionType.BusinessException, "两次输入的新密码不一样");
 		}
-		User po = dao.get(User.class, ThreadSession.getUser().id);
+		User po = dao.get(User.class, ThreadSessionHelper.getUser().id);
 		if(!SecurityHelper.Md5(oldPwd).equals(po.pwd)){
 			throw new GException(PlatformExceptionType.BusinessException, "原密码错误");
 		}
@@ -219,7 +220,7 @@ public class UserService {
 //		user.orgpath = dept.path+user.id;
 		dao.saveOrUpdate(user);
 
-		User operUser = ThreadSession.getUser();
+		User operUser = ThreadSessionHelper.getUser();
 		String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 添加了用户["+user.Department().namea+"-"+user.uname+"]";
 		operService.add(OperatorType.人事记录, operConts);
 		mv.data.put("msg", "添加用户成功");
@@ -338,10 +339,10 @@ public class UserService {
 		}
 		if(pcpo!=null){
 			pcpo.lasttime = new Date();
-			pcpo.lastip = ThreadSession.getIp();
+			pcpo.lastip = ThreadSessionHelper.getIp();
 			dao.saveOrUpdate(pcpo);
 		}
-		po.ip = ThreadSession.getIp();
+		po.ip = ThreadSessionHelper.getIp();
 		mv.data.put("result", "0");
 		mv.data.put("msg", "登录成功");
 		po.lasttime = new Date();
@@ -367,8 +368,8 @@ public class UserService {
 	public ModelAndView logout(PC pc){
 		ModelAndView mv = new ModelAndView();
 		//httpsession timeout & remove sessionid from db
-		if(ThreadSession.getUser()!=null){
-			dao.execute("delete from UserSession where userid=? and sessionId=?", ThreadSession.getUser().id, ThreadSession.getHttpSession().getId());
+		if(ThreadSessionHelper.getUser()!=null){
+			dao.execute("delete from UserSession where userid=? and sessionId=?", ThreadSessionHelper.getUser().id, ThreadSession.getHttpSession().getId());
 			ThreadSession.getHttpSession().invalidate();
 		}
 		return mv;

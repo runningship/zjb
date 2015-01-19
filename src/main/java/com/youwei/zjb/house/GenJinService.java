@@ -15,7 +15,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.phone.PGenjinService;
@@ -30,7 +30,7 @@ public class GenJinService {
 	@WebMethod
 	public ModelAndView add(GenJin gj){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		if(gj.chuzu==null || gj.chuzu==0){
 			PGenjinService ps = new PGenjinService();
 			mv = ps.add(user.id, gj.hid, gj.flag, gj.conts);

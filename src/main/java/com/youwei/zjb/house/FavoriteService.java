@@ -9,8 +9,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.house.entity.Favorite;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.user.entity.User;
@@ -23,7 +22,7 @@ public class FavoriteService {
 	
 	@WebMethod
 	public ModelAndView addSell(Integer houseId){
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		House h = dao.get(House.class, houseId);
 		if(h==null){
 			throw new GException(PlatformExceptionType.BusinessException, "房源已被删除或不存在!");
@@ -42,7 +41,7 @@ public class FavoriteService {
 	
 	@WebMethod
 	public ModelAndView addRent(Integer houseId){
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		HouseRent h = dao.get(HouseRent.class, houseId);
 		if(h==null){
 			throw new GException(PlatformExceptionType.BusinessException, "房源已被删除或不存在!");
@@ -61,7 +60,7 @@ public class FavoriteService {
 	@WebMethod
 	public ModelAndView deleteSell(Integer houseId){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String favStr = "@"+user.id+"|";
 		House h = dao.get(House.class, houseId);
 		if(h.fav!=null){
@@ -75,7 +74,7 @@ public class FavoriteService {
 	@WebMethod
 	public ModelAndView deleteRent(Integer houseId){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String favStr = "@"+user.id+"|";
 		HouseRent h = dao.get(HouseRent.class, houseId);
 		if(h.fav!=null){
@@ -89,7 +88,7 @@ public class FavoriteService {
 	@WebMethod
 	public ModelAndView list(HouseQuery query){
 		ModelAndView mv = new ModelAndView();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String favStr = "@"+user.id+"|";
 		StringBuilder hql = new StringBuilder("select h from House where fav like '%"+favStr+"%'");
 		Page<House> page = new Page<House>();

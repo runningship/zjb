@@ -12,11 +12,9 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
-import com.youwei.zjb.client.entity.Client;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.client.entity.ClientGenJin;
 import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/client/gj")
@@ -27,7 +25,7 @@ public class ClientGenJinService {
 	public ModelAndView list(ClientQuery query ,Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		StringBuilder hql = new StringBuilder("select d.namea as dname, u.uname as uname, gj.conts as conts,gj.addtime as addtime from User u, "
 				+ "Department d, ClientGenJin gj where u.did=d.id and u.id=gj.uid and gj.clientId=?");
 		params.add(query.clientId);
@@ -42,7 +40,7 @@ public class ClientGenJinService {
 	public ModelAndView add(ClientGenJin gj){
 		ModelAndView mv = new ModelAndView();
 		gj.addtime = new Date();
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		gj.uid = u.id;
 		gj.did = u.did;
 		gj.cid = u.cid;

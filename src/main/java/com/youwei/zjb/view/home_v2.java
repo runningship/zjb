@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -13,7 +13,7 @@ import com.youwei.zjb.user.entity.User;
 
 public class home_v2 {
 	public Document initPage(Document doc , HttpServletRequest req){
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		Department dept = u.Department();
 		Department comp = dept.Company();
 		String html = doc.html();
@@ -24,7 +24,7 @@ public class home_v2 {
 		Role role = u.getRole();
 		html = html.replace("$${role}", role==null?"":role.title);
 		html = html.replace("$${tel}", u.tel==null? "" : u.tel);
-		html = html.replace("$${city}", ThreadSession.getDomain());
+		html = html.replace("$${city}", ThreadSessionHelper.getDomain());
 		html = html.replace("$${version}", "5.0.1024");
 		return Jsoup.parse(html);
 	}

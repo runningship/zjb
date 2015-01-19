@@ -17,7 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.biz.entity.OutBiz;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
@@ -68,7 +68,7 @@ public class OutBizService {
 		StringBuilder hql = new StringBuilder("select u.uname as uname, d.namea as dname, biz.id as id, SubString(biz.reason,1,50) as reason,biz.outtime as outtime ,biz.backtime as backtime"
 				+ ", biz.status as status , biz.uid as uid from User u ,Department d, OutBiz biz where biz.uid=u.id and biz.did=d.id and biz.cid=? ");
 		List<Object> params = new ArrayList<Object>();
-		params.add(ThreadSession.getUser().cid);
+		params.add(ThreadSessionHelper.getUser().cid);
 		if(query.uid!=null){
 			hql.append(" and biz.uid=? ");
 			params.add(query.uid);
@@ -116,7 +116,7 @@ public class OutBizService {
 		if(py!=null){
 			mv.data.put("pyr", py.uname);
 		}else{
-			mv.data.put("pyr", ThreadSession.getUser().uname);
+			mv.data.put("pyr", ThreadSessionHelper.getUser().uname);
 		}
 		return mv;
 	}
@@ -130,7 +130,7 @@ public class OutBizService {
 		}
 		po.status = "已批阅";
 		po.pyyj = biz.pyyj;
-		po.pyUid = ThreadSession.getUser().id;
+		po.pyUid = ThreadSessionHelper.getUser().id;
 		dao.saveOrUpdate(po);
 		return mv;
 	}

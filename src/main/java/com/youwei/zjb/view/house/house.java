@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -14,7 +14,7 @@ public class house {
 
 	public Document initPage(Document doc, HttpServletRequest req) {
 		//业务员，默认为自己
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		Department comp = u.Company();
 		if(comp==null || comp.share!=1){
 			doc.getElementById("seeAll").remove();

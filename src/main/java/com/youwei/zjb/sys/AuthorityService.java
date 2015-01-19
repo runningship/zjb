@@ -19,9 +19,10 @@ import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.entity.Purview;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
@@ -63,7 +64,7 @@ public class AuthorityService {
 				}
 			}
 		}
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		Role role = dao.get(Role.class, roleId);
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了职务["+role.title+"]的权限";
 		operService.add(OperatorType.权限记录, operConts);
@@ -84,7 +85,7 @@ public class AuthorityService {
 		role.flag = 1;
 		role.sh = 1;
 		dao.saveOrUpdate(role);
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 添加了职务["+role.title+"]";
 		operService.add(OperatorType.权限记录, operConts);
 		mv.data.put("name",role.title);
@@ -104,7 +105,7 @@ public class AuthorityService {
 			dao.execute("delete from RoleAuthority where roleId=?", roleId);
 			dao.execute("update User u set u.roleId=? where u.roleId=?", 0,roleId);
 		}
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		String operConts = "["+user.Department().namea+"-"+user.uname+ "] 删除了职务["+po.title+"]";
 		operService.add(OperatorType.权限记录, operConts);
 		return mv;
@@ -168,7 +169,7 @@ public class AuthorityService {
 	@WebMethod
 	public ModelAndView getRoleMenus(int roleId , String authName){
 		ModelAndView mv = new ModelAndView();
-//		if(!UserHelper.hasAuthority(ThreadSession.getUser(), authName)){
+//		if(!UserHelper.hasAuthority(ThreadSessionHelper.getUser(), authName)){
 //			throw new GException(PlatformExceptionType.BusinessException, "您没有权限对职务进行授权");
 //		}
 		try {
@@ -190,7 +191,7 @@ public class AuthorityService {
 	
 	private void setSelected(RoleAuthority ra, JSONArray jarr) {
 //		if("sz_comp_edit".equals(ra.name)){
-//			if(ThreadSession.getUser().cid!=1){
+//			if(ThreadSessionHelper.getUser().cid!=1){
 //				//remove sz_comp_edit 只有中介宝用户才能才能修改公司
 //				for(int i=0;i<jarr.size();i++){
 //					JSONObject jobj = jarr.getJSONObject(i);
@@ -203,7 +204,7 @@ public class AuthorityService {
 		for(int i=0;i<jarr.size();i++){
 			JSONObject jobj = jarr.getJSONObject(i);
 			if(jobj.get("zjb-only")!=null && jobj.get("zjb-only").equals(true)){
-				if(ThreadSession.getUser().cid!=1){
+				if(ThreadSessionHelper.getUser().cid!=1){
 					jarr.remove(i);
 					continue;
 				}

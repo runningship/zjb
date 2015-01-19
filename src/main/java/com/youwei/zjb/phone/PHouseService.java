@@ -1,6 +1,5 @@
 package com.youwei.zjb.phone;
 
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
 import com.youwei.zjb.house.HouseQuery;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
@@ -26,7 +24,6 @@ import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.Track;
 import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.JSONHelper;
 @Module(name="/house/")
 public class PHouseService {

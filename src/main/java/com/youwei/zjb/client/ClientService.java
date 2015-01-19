@@ -13,9 +13,10 @@ import org.bc.sdak.utils.HqlHelper;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.client.entity.Client;
 import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.user.entity.Department;
@@ -32,7 +33,7 @@ public class ClientService {
 	public ModelAndView list(ClientQuery query ,Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		StringBuilder hql = new StringBuilder("select c.name as name,c.tels as tels,c.mjiFrom as mjiFrom, c.mjiTo as mjiTo, c.jiageFrom as jiageFrom,"
 				+ "c.jiageTo as jiageTo,c.lcengFrom as lcengFrom ,c.lcengTo as lcengTo,d.namea as dname,c.uname as uname,c.addtime as addtime,c.id as id ,c.uid as uid "
 				+ "from Client c,Department d where isdel=0 and d.id=c.did and c.cid=?");
@@ -192,7 +193,7 @@ public class ClientService {
 		return mv;
 	}
 	private void buildQuery(StringBuilder hql, List<Object> params,Client client){
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		params.add(u.cid);
 		params.add(1);
 		if(client.areas!=null){
@@ -337,7 +338,7 @@ public class ClientService {
 		client.dname = ywy.Department().namea;
 		client.cid = ywy.Company().id;
 		client.cname = ywy.Company().namea;
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		client.djrId = u.id;
 		client.djrDid = u.did;
 		client.djrName = u.uname;

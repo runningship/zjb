@@ -89,52 +89,54 @@
 		 }
 	  }
 	  
-	  function LayerShow(id){
-			//var $mainId = $(window.top.document).find("#"+id);
-			//$("#iframe_oa",window.top.document).contents()
-			var $mainId =$("#iframe_oa",window.top.document).contents().find("#"+id);
-			//var $mainId =$("#"+id);
-		    var $id = $mainId.children(".cocoLayerTit");
+
+
+
+	  var m_Move=true;
+	  function mDown(id){
+		  
+			m_Move=true;
 			
-		    $id.mousedown(function(e){ 
-				_move=true;  
-				//$mainId.css({"z-index":artDialog.defaults.zIndex++});
-				$id.parent().siblings().css({"z-index":"1990"});
+			var e = event || window.event,
+			    $id = $("#"+id).children(".cocoLayerTit");
+			
+			$id.parent().siblings().css({"z-index":"1990"});
+			$id.parent().css({"z-index":"2000"});
+			
+			$(".maskLayer").show();
+			
+			$("#"+id).fadeTo(0, 0.75);//点击后开始拖动并透明显示
+			
+			_x=e.pageX - parseInt($("#"+id).css("left"));
+			_y=e.pageY - parseInt($("#"+id).css("top"));
 				
-				$(this).parent().css({"z-index":"2000"});
+			$("#"+id).mousemove(function(e){
 				
-				$(".maskLayer").show();
+				if(m_Move){  
 				
-				_x=e.pageX-parseInt($mainId.css("left"));  
-				_y=e.pageY-parseInt($mainId.css("top"));  
-				$mainId.fadeTo(0, 0.75);//点击后开始拖动并透明显示  
-			});
-	
-		  //  alert("22");
-			$("#iframe_oa",window.top.document).contents().find("#"+id).mousemove(function(e){  
-				if(_move){  
 					var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
 					var y=e.pageY-_y;  
 					
 					x = x<=10?10:x;
-					x = x>=$("#iframe_oa",window.top.document).width()-300?$("#iframe_oa",window.top.document).width()-300:x;
+					x = x>=$(window).width()-300?$(window).width()-300:x;
 					
 					y = y<=50?50:y;
-					y = y>=$("#iframe_oa",window.top.document).height()-100?$("#iframe_oa",window.top.document).height()-100:y;
+					y = y>=$(window).height()-100?$(window).height()-100:y;
 					
-					$mainId.css({top:y,left:x});//控件新位置  
+					$("#"+id).css({top:y,left:x});//控件新位置  
 				}  
 			});
 			
-			$id.mouseup(function(){  
-				//$(document).bind("selectstart",function(){return true;});  
-				_move=false;  
-				$(".maskLayer").hide();  
-				$mainId.fadeTo(0, 1);//松开鼠标后停止移动并恢复成不透明
-			});
-		 
 	  }
-
+	  
+	  
+	  function mUp(id){
+		    var $id = $("#"+id).children(".cocoLayerTit");
+			m_Move=false;  
+			$(".maskLayer").hide();  
+			$("#"+id).fadeTo(0, 1);//松开鼠标后停止移动并恢复成不透明
+	  }
+	  
 	  function LayerCloseBox(id){
 		 
 		 $("#"+id).css("display","none");
@@ -210,58 +212,34 @@
 	  
 	  function openNewWin(id,w,h,tit,s){
 		  
-		//window.showModalDialog("www.baidu.com"); 
 		if ($("#iframe_oa",window.top.document).contents().find('#'+id).length>0) {
 			return;
 		};
-	    	 var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:2001;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
+	    	 var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:2001;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
 			
 			
-			// window.top.document.children("body").find("#oaMainPage").append(htmlText);
-			//$(window.parent.document)
-			//$("#iframe_oa", window.top.document);
 			     $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
 				 layerShowBox(id);
-		     	 LayerShow(id);
 		     
 		  
 	  }
-	 /*function openNewWin(id,w,h,tit,s){
-		if ($('#'+id).length>0) {
-			return;
-		};
-	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
-			 
-			
-			
-			// $(window.top.document).find("body").eq(0).append(htmlText);
-			 $("body").append(htmlText);
-				 layerShowBox(id);
-		     	 LayerShow(id);
-		     
-		  
-	  }*/
-	  /*cocoListLayerTit*/
+
 	  
 	  function openListWin(id,w,h,tit,s){// 调用方式：onclick="openNewWin('addGg','980','650','全部公告','gg.html')"
 		 
-			if ($('#'+id).length>0) {
+			if ($("#iframe_oa",window.top.document).contents().find('#'+id).length>0) {
 				return;
 			};
 			
-	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:1990;'><div class='cocoLayerTit'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
+	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:1990;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
-			 $("body").find("#oaMainPage").append(htmlText);
-			// $(window.top.document).find("body").eq(0).find("div#allMainBoxer").append(htmlText);
+			 $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
 			 
 			 layerShowBox(id);
 			 
-			 LayerShow(id);
+			// LayerShow(id);
 	  
-/*			  $(window).resize(function() {
-				  layerShowBox(id);
-			  });	*/	  
 	  }
 
 	  

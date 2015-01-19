@@ -16,7 +16,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.feedback.entity.Reply;
 import com.youwei.zjb.oa.entity.Notice;
@@ -37,7 +37,7 @@ public class NoticeService {
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder("select nc.id as id,  nc.fenlei as fenlei,count(*) as total from Notice n, NoticeReceiver nr , NoticeClass nc"
 				+ " where n.id=nr.noticeId and n.claid=nc.id  and nr.receiverId=? and nr.hasRead=0 group by nc.fenlei");
-		List<Map> list = dao.listAsMap(hql.toString(), ThreadSession.getUser().id);
+		List<Map> list = dao.listAsMap(hql.toString(), ThreadSessionHelper.getUser().id);
 		mv.data.put("oaData", JSONHelper.toJSONArray(list));
 		return mv;
 	}
@@ -59,7 +59,7 @@ public class NoticeService {
 	private Page<Map> innerListNotice(Page<Map> page){
 		page.setPageSize(6);
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime , SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n ,"
-				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
+				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSessionHelper.getUser().id});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -73,7 +73,7 @@ public class NoticeService {
 	private Page innerListArticle(Page<Map> page){
 		page.setPageSize(6);
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime ,SubString(n.conts,1,180) as conts "
-				+ ",n.zans as zans ,nr.zan as zan ,n.reads as reads,n.replys as replys from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSession.getUser().id});
+				+ ",n.zans as zans ,nr.zan as zan ,n.reads as reads,n.replys as replys from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSessionHelper.getUser().id});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -99,13 +99,13 @@ public class NoticeService {
 		mv.jspData.put("articleList", page.getResult());
 		
 		
-		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSession.getUser().id);
+		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSessionHelper.getUser().id);
 		List<Site> shareList = dao.listByParams(Site.class, "from Site where uid is null");
 		mv.jspData.put("personalList", JSONHelper.toJSONArray(personalList));
 		mv.jspData.put("shareList", JSONHelper.toJSONArray(shareList));
-		mv.jspData.put("myId", ThreadSession.getUser().id);
+		mv.jspData.put("myId", ThreadSessionHelper.getUser().id);
 		
-		User me = ThreadSession.getUser();
+		User me = ThreadSessionHelper.getUser();
 		StringBuilder auths = new StringBuilder();
 		if(me.getRole()!=null){
 			for(RoleAuthority ra : me.getRole().Authorities()){
@@ -125,7 +125,7 @@ public class NoticeService {
 		Notice po = dao.get(Notice.class, id);
 		po.reads++;
 		dao.saveOrUpdate(po);
-		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{id , ThreadSession.getUser().id});
+		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{id , ThreadSessionHelper.getUser().id});
 		if(nr!=null){
 			nr.hasRead=1;
 		}
@@ -165,7 +165,7 @@ public class NoticeService {
 	public ModelAndView toggleZan(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
-		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{ id , ThreadSession.getUser().id});
+		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{ id , ThreadSessionHelper.getUser().id});
 		if(nr.zan==0){
 			nr.zan=1;
 			po.zans++;
@@ -203,7 +203,7 @@ public class NoticeService {
 			receivers = "";
 //			throw new GException(PlatformExceptionType.BusinessException, "请先选择接收人");
 			//先发给所有人
-			List<Map> uids = dao.listAsMap("select id as uid from User where cid=?", ThreadSession.getUser().cid);
+			List<Map> uids = dao.listAsMap("select id as uid from User where cid=?", ThreadSessionHelper.getUser().cid);
 			for(Map map : uids){
 				receivers+=map.get("uid")+",";
 			}
@@ -212,7 +212,7 @@ public class NoticeService {
 //		if(po!=null){
 //			throw new GException(PlatformExceptionType.BusinessException,"该标题已存在");
 //		}
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		notice.senderId = user.id;
 		notice.addtime = new Date();
 		notice.zans=0;
@@ -238,7 +238,7 @@ public class NoticeService {
 	public ModelAndView list(OAQuery query, Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		User user = ThreadSession.getUser();
+		User user = ThreadSessionHelper.getUser();
 		StringBuilder hql = new StringBuilder("select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, n.reads as reads, n.replys as replys, nr.hasRead as hasRead,n.addtime as addtime from Notice n ,"
 				+ " NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=? and nr.receiverId=? ");
 		
@@ -272,7 +272,7 @@ public class NoticeService {
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, reply.noticeId);
 		po.replys++;
-		reply.replyUid = ThreadSession.getUser().id;
+		reply.replyUid = ThreadSessionHelper.getUser().id;
 		reply.addtime = new Date();
 		dao.saveOrUpdate(reply);
 		dao.saveOrUpdate(po);

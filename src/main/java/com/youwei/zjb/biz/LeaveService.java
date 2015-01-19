@@ -17,7 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.biz.entity.Leave;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
@@ -55,7 +55,7 @@ public class LeaveService {
 		StringBuilder hql = new StringBuilder("select u.uname as uname, d.namea as dname, lea.id as id, SubString(lea.reason,1,50) as reason,lea.starttime as starttime ,lea.endtime as endtime"
 				+ ",lea.hours as hours, lea.type as type,lea.sh as sh,lea.uid as uid from User u ,Department d, Leave lea where lea.uid=u.id and lea.did=d.id and lea.cid=? ");
 		List<Object> params = new ArrayList<Object>();
-		params.add(ThreadSession.getUser().cid);
+		params.add(ThreadSessionHelper.getUser().cid);
 		if(query.uid!=null){
 			hql.append(" and lea.uid=? ");
 			params.add(query.uid);
@@ -98,7 +98,7 @@ public class LeaveService {
 		po.status = leave.status;
 		po.conts = leave.conts;
 		po.sh=leave.sh;
-		po.pyUid = ThreadSession.getUser().id;
+		po.pyUid = ThreadSessionHelper.getUser().id;
 		dao.saveOrUpdate(po);
 		return mv;
 	}
@@ -127,7 +127,7 @@ public class LeaveService {
 		if(py!=null){
 			mv.data.put("pyr", py.uname);
 		}else{
-			mv.data.put("pyr", ThreadSession.getUser().uname);
+			mv.data.put("pyr", ThreadSessionHelper.getUser().uname);
 		}
 		return mv;
 	}

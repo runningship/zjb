@@ -184,10 +184,15 @@ public class PullAJKRentAction implements PullRentHouseAction{
 	@Override
 	public Date getPubTime(Element elem) {
 		Element time = elem.getElementsByClass("pinfo").first();
-		String Time = time.child(2).child(1).child(3).text();
-		String text = Time.split("发布时间：")[1].replace("年", "-").replace("月", "-").replace("日", " ");
+		String Time = time.select(".text-mute").text();
+		String[] arr = Time.split("发布时间：");
+		if(arr.length==1){
+			return new Date();
+		}
+		String text = arr[1];
+		text+=" 00时00分";
 		try {
-			return DataHelper.sdf3.parse(text);
+			return DataHelper.sdf5.parse(text);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return new Date();

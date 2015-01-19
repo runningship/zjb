@@ -17,7 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.DeptGroup;
 import com.youwei.zjb.user.entity.User;
@@ -154,14 +154,14 @@ public class DepartmentService {
 	public ModelAndView getUserTree(){
 		ModelAndView mv = new ModelAndView();
 		JSONArray result = new JSONArray();
-		Department comp = ThreadSession.getUser().Company();
+		Department comp = ThreadSessionHelper.getUser().Company();
 		JSONObject com = new JSONObject();
 		com.put("id", "d_"+comp.id);
 		com.put("pId", "0");
 		com.put("name", comp.namea);
 		com.put("type", "comp");
 		result.add(com);
-		List<User> users = dao.listByParams(User.class, "from User where cid=? ", ThreadSession.getUser().cid);
+		List<User> users = dao.listByParams(User.class, "from User where cid=? ", ThreadSessionHelper.getUser().cid);
 		for(User u : users){
 			JSONObject json = new JSONObject();
 			json.put("id", "u_"+u.id);
@@ -170,7 +170,7 @@ public class DepartmentService {
 			json.put("type", "dept");
 			result.add(json);
 		}
-		List<Department> depts = dao.listByParams(Department.class, "from Department where fid=?", ThreadSession.getUser().cid);
+		List<Department> depts = dao.listByParams(Department.class, "from Department where fid=?", ThreadSessionHelper.getUser().cid);
 		for(Department d : depts){
 			JSONObject json = new JSONObject();
 			json.put("id", "d_"+d.id);
@@ -185,7 +185,7 @@ public class DepartmentService {
 	@WebMethod
 	public ModelAndView getDeptTree(Integer cid){
 		ModelAndView mv = new ModelAndView();
-		if(ThreadSession.getUser().cid==1){
+		if(ThreadSessionHelper.getUser().cid==1){
 			//中介宝用户看到的分组略有不同
 			List<Department> comps = dao.listByParams(Department.class, "from Department where 1=1 order by sh desc, cnum");
 			JSONArray result = new JSONArray();

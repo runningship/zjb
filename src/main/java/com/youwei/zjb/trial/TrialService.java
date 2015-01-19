@@ -10,7 +10,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.im.IMServer;
 import com.youwei.zjb.user.entity.User;
 
@@ -50,7 +50,7 @@ public class TrialService {
 	public ModelAndView update(Trial trial){
 		ModelAndView mv = new ModelAndView();
 		Trial po = dao.get(Trial.class, trial.id);
-		User me = ThreadSession.getUser();
+		User me = ThreadSessionHelper.getUser();
 		if(po!=null){
 			po.clConts = trial.clConts;
 			po.finish = trial.finish;

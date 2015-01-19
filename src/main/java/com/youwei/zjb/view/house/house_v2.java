@@ -8,7 +8,7 @@ import org.bc.sdak.SimpDaoTool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.Department;
@@ -18,7 +18,7 @@ public class house_v2 {
 
 	public Document initPage(Document doc, HttpServletRequest req) {
 		//业务员，默认为自己
-		User u = ThreadSession.getUser();
+		User u = ThreadSessionHelper.getUser();
 		Department comp = u.Company();
 		if(comp==null || comp.share!=1){
 			try{

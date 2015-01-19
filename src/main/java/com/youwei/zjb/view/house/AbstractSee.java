@@ -15,7 +15,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.util.JSONHelper;
 import com.youwei.zjb.view.page;
 
@@ -82,7 +82,7 @@ public abstract class AbstractSee extends page{
 		html = html.replace("$${lxr}", json.getString("lxr"));
 		html = html.replace("$${tel}", json.getString("tel"));
 		html = html.replace("$${area}", json.getString("area"));
-		html = html.replace("$${city}",ThreadSession.getCity());
+		html = html.replace("$${city}",ThreadSessionHelper.getCity());
 		return Jsoup.parse(html);
 	}
 

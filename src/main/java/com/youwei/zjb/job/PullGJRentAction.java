@@ -26,7 +26,7 @@ public class PullGJRentAction implements PullRentHouseAction{
 
 	private Element getElementsByMatchingText(Element elem,String text){
 		for(Element e : elem.getElementsMatchingOwnText(text)){
-			if(text.equals(e.text())){
+			if(text.equals(e.ownText())){
 				return e;
 			}
 		}

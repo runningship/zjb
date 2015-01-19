@@ -4,18 +4,18 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.ThreadSession;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.biz.LeaveStatus;
 import com.youwei.zjb.biz.LeaveType;
 import com.youwei.zjb.house.ChaoXiang;
 import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.house.LouXing;
 import com.youwei.zjb.house.QuYu;
-import com.youwei.zjb.house.WuhuQuYu;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.ShenHe;
+import com.youwei.zjb.house.WuhuQuYu;
 import com.youwei.zjb.house.ZhuangXiu;
 
 @Module(name="/config/")
@@ -30,7 +30,7 @@ public class ConfigService {
 //		mv.data.put("xingzhi", HouseAttribute.toJsonArray());
 //		mv.data.put("leibie", HouseType.toJsonArray());
 		mv.data.put("lxing", LouXing.toJsonArray());
-		String domain=ThreadSession.getDomain();
+		String domain=ThreadSessionHelper.getDomain();
 		if("wuhu".equals(domain)){
 			mv.data.put("quyu", WuhuQuYu.toJsonArray());
 		}else{
