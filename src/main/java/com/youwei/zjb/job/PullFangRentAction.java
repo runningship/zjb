@@ -7,6 +7,12 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -139,7 +145,12 @@ public class PullFangRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getWo(Element elem) {
-		return "";
+		Elements wo = elem.getElementsByClass("baseInfo").first().getElementsMatchingOwnText("出租间：");
+		if(wo.isEmpty()){
+			return "";
+		}
+		String text = wo.first().nextElementSibling().ownText();
+		return text.trim();
 	}
 
 	@Override
@@ -170,16 +181,22 @@ public class PullFangRentAction implements PullRentHouseAction{
 
 	@Override
 	public Element getDetailSumary(String url) throws IOException {
-		URL url1 = new URL(url);
-		URLConnection conn = url1.openConnection();
-		conn.setConnectTimeout(10000);
-		conn.setReadTimeout(10000);
-		String result = IOUtils.toString(conn.getInputStream(),"GB2312");
+		CloseableHttpClient client = HttpClientBuilder.create().build(); 
+		RequestConfig requestConfig = RequestConfig.custom()  
+	    .setConnectionRequestTimeout(10000).setConnectTimeout(10000)
+	    .setSocketTimeout(10000).build();
+	    HttpGet request = new HttpGet(url);
+	    request.setConfig(requestConfig);
+		CloseableHttpResponse response = client.execute(request);
+		String result = EntityUtils.toString(response.getEntity() , "gb2312");
+		response.close();
+		client.close();
 		Document doc = Jsoup.parse(result);
 		if(doc.getElementsMatchingOwnText("您的访问速度太快了").isEmpty()==false){
 			throw new TooFastException("扫网速度太快了");
 		}
-		Element sumary = doc.getElementsByClass("houseInfo").first().parent();
+		Element su = doc.getElementsByClass("houseInfo").first();
+		Element sumary = su.parent();
 		return sumary;
 	}
 
@@ -187,7 +204,7 @@ public class PullFangRentAction implements PullRentHouseAction{
 	public Date getPubTime(Element elem) {
 		Element time = elem.getElementsByClass("houseInfo").first();
 		String times = time.child(0).child(0).child(1).text().trim();
-		String text = times.split("：")[2].split("//(")[0].replace("/", "-");
+		String text = times.split("：")[2].split("\\(")[0].replace("/", "-");
 		try {
 			return DataHelper.sdf3.parse(text);
 		} catch (ParseException e) {

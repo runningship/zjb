@@ -28,9 +28,9 @@ public class PullBXRent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-		HouseRent hr = PullDataHelper.pullDetail(instance.action ,"http://hefei.baixing.com/zhengzu/a585039119.html" , null ,RentType.整租,null);
-		int a=0;
-//		instance.work();
+//		HouseRent hr = PullDataHelper.pullDetail(instance.action ,"http://hefei.baixing.com/zhengzu/a585039119.html" , null ,RentType.整租,null);
+//		int a=0;
+		instance.work();
 	}
 	
 	private Elements getRepeats(Document doc){

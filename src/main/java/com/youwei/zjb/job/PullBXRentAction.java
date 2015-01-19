@@ -125,6 +125,8 @@ public class PullBXRentAction implements PullRentHouseAction{
 		if(qyu.isEmpty()){
 			return "";
 		}else {
+			String xx = String.valueOf((char)160);
+			qyu = qyu.replace(xx, "");
 			String quyu = qyu.split("-")[0].trim();
 			if(quyu.isEmpty()){
 				return "";
@@ -207,7 +209,7 @@ public class PullBXRentAction implements PullRentHouseAction{
 	public Date getPubTime(Element elem) {
 		Element time = elem.getElementsByClass("viewad-actions").first();
 		String Time = time.child(1).text();
-		String text = Time.replace("月", "-").replace("日", "-").trim();
+		String text = Time.replace("月", "-").replace("日", "").trim();
 		text ="2015-"+text;
 		try {
 			return DataHelper.sdf3.parse(text);

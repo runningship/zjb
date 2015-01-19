@@ -35,8 +35,8 @@ public class PullFangRent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		HouseRent hr = PullDataHelper.pullDetail(job.action , "http://hf.ganji.com/fang1/1350251348x.htm" , null ,RentType.整租);
-//		dao.saveOrUpdate(hr);
+//		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://zu.hf.fang.com/chuzu/1_50424966_-1.htm" , null ,RentType.整租,null);
+//		int a=0;
 		instance.work();
 	}
 	
@@ -75,6 +75,9 @@ public class PullFangRent extends AbstractJob implements HouseRentJob{
 				}
 				HouseRent hr = PullDataHelper.pullDetail(action , link , null ,getRentType(e),getAddress(e));
 				if(hr!=null){
+					if(hr.tel.startsWith("400")){
+						continue;
+					}
 					dao.saveOrUpdate(hr);
 				}
 				count++;
