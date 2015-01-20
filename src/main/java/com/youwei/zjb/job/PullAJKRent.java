@@ -78,7 +78,7 @@ public class PullAJKRent extends AbstractJob implements HouseRentJob{
 	}
 	
 	private String getLink(Element elem){
-		String href = elem.attr("link");
+		String href = elem.attr("link").split("\\?")[0];
 		return href;
 	}
 	

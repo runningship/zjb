@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
@@ -70,11 +72,11 @@ public class PullFangRentAction implements PullRentHouseAction{
 			return "";
 		}
 		String text = mj.first().nextElementSibling().text();
-		String[] arr = text.replace("层", "").split("/");
-		if(arr.length>1){
-			return arr[1];
+		if(text.contains("/")){
+			return text.replace("层", "").split("/")[1].trim();
+		}else {
+			return "";
 		}
-		return "";
 	}
 
 	@Override
@@ -208,11 +210,23 @@ public class PullFangRentAction implements PullRentHouseAction{
 	public Date getPubTime(Element elem) {
 		Element time = elem.getElementsByClass("houseInfo").first();
 		String times = time.child(0).child(0).child(1).text().trim();
-		String text = times.split("：")[2].split("\\(")[0].replace("/", "-");
-		try {
-			return DataHelper.sdf3.parse(text);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		String text = times.split("\\(")[1];
+		if(text.contains("天前")){
+			text = text.split("天前")[0];
+			Calendar ca = Calendar.getInstance();
+			ca.add(Calendar.DAY_OF_MONTH, 0-Integer.valueOf(text));
+			return ca.getTime();
+		}else if(text.contains("分钟前")){
+			text = text.split("分钟前")[0];
+			Calendar ca = Calendar.getInstance();
+			ca.add(Calendar.MINUTE, 0-Integer.valueOf(text));
+			return ca.getTime();
+		}else if(text.contains("小时前")){
+			text = text.split("小时前")[0];
+			Calendar ca = Calendar.getInstance();
+			ca.add(Calendar.SECOND, 0-Integer.valueOf(text));
+			return ca.getTime();
+		}else {
 			return new Date();
 		}
 	}
