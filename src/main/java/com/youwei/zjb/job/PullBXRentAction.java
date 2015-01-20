@@ -162,7 +162,10 @@ public class PullBXRentAction implements PullRentHouseAction{
 
 	@Override
 	public void getTel(HouseRent house , Element elem) {
-		house.tel = "";
+		String data = elem.select(".show-contact").attr("data-contact");
+		String text = elem.select("#num").text();
+		text = text.replace("****", data);
+		house.tel = text;
 	}
 
 	@Override

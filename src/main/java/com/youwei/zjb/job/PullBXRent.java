@@ -39,6 +39,7 @@ public class PullBXRent extends AbstractJob implements HouseRentJob{
 	}
 	
 	public void work(){
+		String link = "";
 		try{
 			System.out.print(action.getSiteName()+"正在运行");
 			URL url = new URL(listPageUrl);
@@ -53,8 +54,9 @@ public class PullBXRent extends AbstractJob implements HouseRentJob{
 				return;
 			}
 			int count=0;
-			for(Element e : list){
-				String link = getLink(e);
+			for(int i=list.size()-1;i>=0;i--){
+				Element e = list.get(i);
+				link = getLink(e);
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){
 					continue;
@@ -62,12 +64,15 @@ public class PullBXRent extends AbstractJob implements HouseRentJob{
 				HouseRent hr = PullDataHelper.pullDetail(action , link , null ,getRentType(e),getAddress(e));
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
+					count++;
 				}
-				count++;
+				Thread.sleep(this.getDetailPageInterval());
 			}
-			System.out.println("共处理房源数:"+count);
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);
 		}catch(Exception ex){
-			ex.printStackTrace();
+			StackTraceElement stack = ex.getStackTrace()[0];
+			String msg = "扫网"+link+"失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
+			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 		}
 	}
 

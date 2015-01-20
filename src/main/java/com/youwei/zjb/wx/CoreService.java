@@ -73,8 +73,12 @@ public class CoreService {
                     // TODO 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息  
                 }  
                 // 自定义菜单点击事件  
-                else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {  
-                    // TODO 自定义菜单权没有开放，暂不处理该类消息  
+                else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
+                	String key = requestMap.get("EventKey");
+                	if("经纪人认证".equals(key)){
+                		respContent = "请按照“认证规则”发送认证图片给我们...目前仅受理“在用中介宝电脑版的门店“里面的经纪人认证，请确认您所在的门店是否在用中介宝。若不在使用，请勿提交认证。并请知悉，我们手机版需要另外付费，具体收费标准请参看\"收费标准\".";
+                	}
+                	respContent = "您点击了自定义菜单功能";
                 }  
             }  
   

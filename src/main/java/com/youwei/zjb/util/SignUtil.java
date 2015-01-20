@@ -19,7 +19,7 @@ public class SignUtil {
     public static boolean checkSignature(String signature, String timestamp, String nonce) {  
         String[] arr = new String[] { token, timestamp, nonce };  
         // 将token、timestamp、nonce三个参数进行字典序排序  
-        Arrays.sort(arr);  
+        Arrays.sort(arr);
         StringBuilder content = new StringBuilder();  
         for (int i = 0; i < arr.length; i++) {  
             content.append(arr[i]);  

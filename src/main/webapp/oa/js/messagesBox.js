@@ -5,24 +5,19 @@
 	  
 	  function layerShowBox(id){
 		  
-		 // var $mainId = $(window.top.document).find("#"+id);
-		var $mainId =$("#iframe_oa",window.top.document).contents().find("#"+id);
-		 // var $mainId =  $("#"+id);
+	      var $mainId =$("#iframe_oa",window.top.document).contents().find("#"+id);
 		  var w = $mainId.width();
 		  var h = $mainId.height();
 		  var winW = $("#iframe_oa",window.top.document).width();
 		  var winH = $("#iframe_oa",window.top.document).height();
 		  var L = (winW - w)/2;
 		  var T = (winH - h)/2;
-		  
-/*		  if(L<=0) L=0;
-		  if(T<=0) T=0;*/
-		  
+
 		  T = T<=50?50:T;
 		  T = T>=winH-200?winH-200:T;
 					
-					L = L<=10?10:L;
-					L = L>=winW-300?winW-300:L;
+	      L = L<=10?10:L;
+		  L = L>=winW-300?winW-300:L;
 		  
 		  $mainId.css("left",L);
 		  $mainId.css("top",T);
@@ -215,12 +210,13 @@
 		if ($("#iframe_oa",window.top.document).contents().find('#'+id).length>0) {
 			return;
 		};
-	    	 var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:2001;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
+		
+	    var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:2001;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
-			
-			
-			     $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
-				 layerShowBox(id);
+	
+	
+		 $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
+		 layerShowBox(id);
 		     
 		  
 	  }
@@ -232,7 +228,7 @@
 				return;
 			};
 			
-	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:1990;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
+	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:2001;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
 			 $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
 			 

@@ -473,7 +473,7 @@ public class HouseRentService {
 	@WebMethod
 	public ModelAndView listNoTel(Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		page = service.findPage(page, "select id as id, href as href,site as site from HouseRent where site=? and ruku=0 and tel is null", true , new Object[]{"baixing"});
+		page = service.findPage(page, "select id as id, href as href,site as site from HouseRent where site=? and ruku=0 and tel=?", true , new Object[]{"baixing",""});
 		mv.data.put("houses", JSONHelper.toJSONArray(page.getResult()));
 		return mv;
 	}

@@ -70,7 +70,11 @@ public class PullFangRentAction implements PullRentHouseAction{
 			return "";
 		}
 		String text = mj.first().nextElementSibling().text();
-		return text.replace("层", "").split("/")[1].trim();
+		String[] arr = text.replace("层", "").split("/");
+		if(arr.length>1){
+			return arr[1];
+		}
+		return "";
 	}
 
 	@Override

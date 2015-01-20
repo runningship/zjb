@@ -115,19 +115,26 @@ public class PullDataHelper {
 			hr.peizhi = action.getPeiZhi(sumary);
 			hr.title = action.getTitle(sumary);
 			hr.isdel = 0;
-			if(StringUtils.isNotEmpty(hr.tel)){
-				HouseRent po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseRent.class, new String[]{"area","lceng","zceng" , "hxf" , "hxt" , "hxw"},
-						new Object[]{hr.area, hr.lceng, hr.zceng, hr.hxf , hr.hxt , hr.hxw});
-				if(po!=null){
-					LogUtil.info("房源"+hlink+"重复,id="+po.id);
-					return null;
-				}
-			}
 			if(pubTime==null){
 				hr.dateadd = action.getPubTime(sumary);
 			}else{
 				hr.dateadd = pubTime;
 			}
+			if(StringUtils.isNotEmpty(hr.tel)){
+				HouseRent po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseRent.class, new String[]{"area","lceng","zceng" , "hxf" , "hxt" , "hxw","tel"},
+						new Object[]{hr.area, hr.lceng, hr.zceng, hr.hxf , hr.hxt , hr.hxw , hr.tel});
+				if(po!=null){
+					LogUtil.info("房源"+hlink+"重复,id="+po.id);
+					if(hr.site.equals(po.site)){
+						//更新发布时间
+						po.dateadd = hr.dateadd;
+						return po;
+					}else{
+						return null;
+					}
+				}
+			}
+			
 			return hr;
 		}catch(SocketTimeoutException ex){
 			System.err.println("请求超时");

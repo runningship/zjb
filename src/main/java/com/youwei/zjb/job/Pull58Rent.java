@@ -71,7 +71,8 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 			}
 			int count=0;
 			
-			for(Element e : list){
+			for(int i=list.size()-1;i>=0;i--){
+				Element e = list.get(i);
 				Elements duns = e.getElementsByClass("dun");
 				if(duns!=null && duns.isEmpty()==false){
 					continue;

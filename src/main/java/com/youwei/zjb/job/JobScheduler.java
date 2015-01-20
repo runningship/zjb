@@ -16,7 +16,7 @@ public class JobScheduler extends Thread{
 		
 		PullGJRent jobGJ = new PullGJRent();
 		jobGJ.setDetailPageInterval(1000);
-		jobGJ.setListPageInterval(15000);
+		jobGJ.setListPageInterval(20000);
 		jobs.put(jobGJ.getJobName(), jobGJ);
 		
 		Pull365Rent job365 = new Pull365Rent();
@@ -26,6 +26,14 @@ public class JobScheduler extends Thread{
 		PullAJKRent jobAjk = new PullAJKRent();
 		jobAjk.setDetailPageInterval(100);
 		jobs.put(jobAjk.getJobName(), jobAjk);
+		
+		PullBXRent jobBaixing = new PullBXRent();
+		jobBaixing.setDetailPageInterval(100);
+		jobs.put(jobBaixing.getJobName(), jobBaixing);
+		
+		PullFangRent jobSofang = new PullFangRent();
+		jobSofang.setDetailPageInterval(100);
+		jobs.put(jobSofang.getJobName(), jobSofang);
 		this.start();
 	}
 	

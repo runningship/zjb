@@ -373,12 +373,37 @@ function buildSentMessage(text,time , senderName){
     
 }
 
+
+function layerBoxCenter(id){//漂浮层居中
+		  
+	      var $mainId =$("#"+id);
+		  var w = $mainId.width();
+		  var h = $mainId.height();
+		  var winW = $(window).width();
+		  var winH = $(window).height();
+		  var L = (winW - w)/2;
+		  var T = (winH - h)/2;
+
+		  T = T<=50?50:T;
+		  T = T>=winH-200?winH-200:T;
+					
+		  L = L<=10?10:L;
+		  L = L>=winW-300?winW-300:L;
+		  
+		  $mainId.css("left",L);
+		  $mainId.css("top",T);
+		  
+	  }
+
+
+
+
 function showBigImg(img){
 	
 	$("#imgBigSee").remove();
 	var htmlText = "<div id='imgBigSee' onclick='$(this).remove()' style='display:block; position:absolute; background-color:#ffffff; z-index:9999999999; box-shadow:#666 0px 0px 10px; border-radius:3px; font-family:'宋体'; background-color:#ffffff;'>"+ img.outerHTML +"</div>";
 	$("body").append(htmlText);
-	layerShowBox("imgBigSee");
+	layerBoxCenter("imgBigSee");
 }
 
 function showBigAvatar(img,event){
@@ -389,7 +414,7 @@ function showBigAvatar(img,event){
 	$("#avatarBigSee").remove();
 	var htmlText = "<div id='avatarBigSee' onclick='$(this).remove()' style='display:block; position:absolute; background-color:#ffffff; z-index:9999999999; box-shadow:#666 0px 0px 10px; border-radius:3px; font-family:'宋体'; background-color:#ffffff;'>"+ copyImg.outerHTML +"</div>";
 	$("body").append(htmlText);
-	layerShowBox("avatarBigSee");
+	layerBoxCenter("avatarBigSee");
 	$("#avatarBigSee").css("left",parent.position().left + event.clientX);
     $("#avatarBigSee").css("top",parent.position().top + event.clientY);
 }

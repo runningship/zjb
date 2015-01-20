@@ -52,7 +52,8 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 				return;
 			}
 			int count=0;
-			for(Element e : list){
+			for(int i=list.size()-1;i>=0;i--){
+				Element e = list.get(i);
 				link = getLink(e);
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){
@@ -63,9 +64,8 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 				if(hr!=null){
 					dao.saveOrUpdate(hr);
 					count++;
-				}else{
-					
 				}
+				Thread.sleep(this.getDetailPageInterval());
 			}
 			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "共处365理房源数:"+count);
 		}catch(Exception ex){

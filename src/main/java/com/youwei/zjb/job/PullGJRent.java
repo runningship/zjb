@@ -1,11 +1,8 @@
 package com.youwei.zjb.job;
 
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
@@ -26,7 +23,7 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 	private static PullGJRent instance = new PullGJRent();
 	//默认60秒
 	private PullGJRentAction action = new PullGJRentAction();
-	private final String listPageUrl= "http://hf.ganji.com/fang1/";
+	private final String listPageUrl= "http://hf.ganji.com/fang1/a1/";
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
@@ -72,9 +69,14 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 				return;
 			}
 			int count=0;
-			for(Element e : list){
+			for(int i=list.size()-1;i>=0;i--){
+				Element e = list.get(i);
 				Elements duns = e.getElementsByClass("ico-security");
 				if(duns!=null && duns.isEmpty()==false){
+					continue;
+				}
+				Elements zhineng = e.getElementsByClass("ico-zhineng");
+				if(zhineng!=null && zhineng.isEmpty()==false){
 					continue;
 				}
 				Elements dings = e.getElementsByClass("ico-stick-yellow");
@@ -97,7 +99,7 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 					count++;
 				}
 				
-				if(count>=2){
+				if(count>=1){
 					break;
 				}
 				Thread.sleep(this.getDetailPageInterval());
