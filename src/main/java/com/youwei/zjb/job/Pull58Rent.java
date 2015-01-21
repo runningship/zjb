@@ -29,9 +29,9 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		instance.pullDetail("http://hf.58.com/hezu/20645432802570x.shtml", new Date(), RentType.整租);
-		PullDataHelper.pullDetail(instance.action , "http://hf.58.com/hezu/20645432802570x.shtml" ,  new Date(), RentType.整租 , null);
-//		instance.work();
+//		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.58.com/zufang/20612022651141x.shtml" ,  new Date(), RentType.整租 , null);
+//		int a=0;
+		instance.work();
 	}
 
 	private Elements getRepeats(Document doc){

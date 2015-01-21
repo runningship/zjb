@@ -121,12 +121,22 @@ public class PullFangRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getQuyu(Element elem) {
-		Elements qy = elem.getElementsMatchingOwnText("小区：");
-		String quyu = qy.first().child(1).text();
+		String quyu = elem.getElementById("gerenzfxq_B04_03").text();
+		if(quyu.isEmpty()){
+			return "";
+		}
 		String text = quyu+"县";
+		String text2 = quyu+"区";
 		if(quyu.contains("巢湖")){
 			return "巢湖市";
+		}else if(!quyu.contains("经济")){
+			return "经开区";
+		}else if(!quyu.contains("高新")){
+			return "高新区";
 		}else if(!quyu.contains("区")){
+			if(!quyu.contains("肥东")&&!quyu.contains("肥西")&&!quyu.contains("长丰")&&!quyu.contains("庐江")){
+				return text2.trim();
+			}
 			return text.trim();
 		}
 		return quyu.trim();

@@ -119,8 +119,14 @@ public class Pull58RentAction implements PullRentHouseAction{
 	public String getQuyu(Element elem) {
 		String text = getQuyuText(elem);
 		String[] arr = text.split("-");
+		String quyu = arr[0].trim()+"区";
 		if(arr.length>=1){
-			return arr[0].trim()+"区";
+			if(text.contains("合肥周边")){
+				return "周边市区";
+			}else if(quyu.contains("滨湖")){
+				return "滨湖新区";
+			}
+			return quyu.trim();
 		}
 		return "";
 	}

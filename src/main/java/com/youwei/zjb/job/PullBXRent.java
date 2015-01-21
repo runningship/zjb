@@ -94,7 +94,7 @@ public class PullBXRent extends AbstractJob implements HouseRentJob{
 		if(title.contains("整套出租")){
 			return RentType.整租;
 		}else{
-			return RentType.整租;
+			return RentType.合租;
 		}
 	}
 
