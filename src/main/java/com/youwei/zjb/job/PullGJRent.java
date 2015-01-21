@@ -149,12 +149,12 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 			if(text.endsWith("分钟内")){
 				text = text.replace("分钟内","");
 				Calendar ca = Calendar.getInstance();
-				ca.add(Calendar.MINUTE, Integer.valueOf(text));
+				ca.add(Calendar.MINUTE, 0-Integer.valueOf(text));
 				return ca.getTime();
 			}else if (text.endsWith("小时内")){
 				text = text.replace("小时内","");
 				Calendar ca = Calendar.getInstance();
-				ca.add(Calendar.HOUR_OF_DAY, Integer.valueOf(text));
+				ca.add(Calendar.HOUR_OF_DAY, 0-Integer.valueOf(text));
 				return ca.getTime();
 			}
 		}catch(Exception ex){

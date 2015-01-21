@@ -124,12 +124,16 @@ public class PullDataHelper {
 				HouseRent po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseRent.class, new String[]{"area","lceng","zceng" , "hxf" , "hxt" , "hxw","tel"},
 						new Object[]{hr.area, hr.lceng, hr.zceng, hr.hxf , hr.hxt , hr.hxw , hr.tel});
 				if(po!=null){
-					LogUtil.info("房源"+hlink+"重复,id="+po.id);
 					if(hr.site.equals(po.site)){
 						//更新发布时间
 						po.dateadd = hr.dateadd;
 						return po;
 					}else{
+						//判断发布时间,如果发布时间是2个月前，则保存
+						if(System.currentTimeMillis()-po.dateadd.getTime()>=1000*3600*24*60){
+							return hr;
+						}
+						LogUtil.info("房源"+hlink+"重复,id="+po.id);
 						return null;
 					}
 				}
@@ -215,12 +219,12 @@ public class PullDataHelper {
 			if(text.endsWith("分钟")){
 				text = text.replace("分钟","");
 				Calendar ca = Calendar.getInstance();
-				ca.add(Calendar.MINUTE, Integer.valueOf(text));
+				ca.add(Calendar.MINUTE, 0-Integer.valueOf(text));
 				return ca.getTime();
 			}else if (text.endsWith("小时")){
 				text = text.replace("小时","");
 				Calendar ca = Calendar.getInstance();
-				ca.add(Calendar.HOUR_OF_DAY, Integer.valueOf(text));
+				ca.add(Calendar.HOUR_OF_DAY, 0-Integer.valueOf(text));
 				return ca.getTime();
 			}
 		}catch(Exception ex){
