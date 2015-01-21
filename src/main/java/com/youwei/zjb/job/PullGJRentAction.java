@@ -205,7 +205,12 @@ public class PullGJRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getBeizhu(Element elem) {
-		return "";
+		Elements bz = elem.getElementsByClass("summary-cont");
+		if(bz.isEmpty()){
+			return "";
+		}
+		String text = bz.first().ownText();
+		return text.trim();
 	}
 
 }

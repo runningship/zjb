@@ -206,7 +206,12 @@ public class PullAJKRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getBeizhu(Element elem) {
-		return "";
+		 Elements bz = elem.getElementsByClass("pro_con");
+			if(bz.isEmpty()){
+				return "";
+			}
+			String text = bz.first().text();
+			return text.trim();
 	}
 
 }

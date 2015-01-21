@@ -50,7 +50,7 @@ public class PullDataHelper {
 			hr.cid = 1;
 			//信息中心
 			hr.did = 90;
-			
+			hr.beizhu="";
 			hr.dateyear = action.getYear(sumary);
 			hr.dhao = "";
 			hr.fhao="";

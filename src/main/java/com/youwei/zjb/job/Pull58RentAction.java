@@ -320,6 +320,11 @@ public class Pull58RentAction implements PullRentHouseAction{
 
 	@Override
 	public String getBeizhu(Element elem) {
-		return "";
+		 Elements bz = elem.getElementsByClass("description_con");
+			if(bz.isEmpty()){
+				return "";
+			}
+			String text = bz.first().text().replace("联系我时，请说是在58同城上看到的，谢谢！", "");
+			return text.trim();
 	}
 }

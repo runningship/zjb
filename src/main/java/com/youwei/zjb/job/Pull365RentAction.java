@@ -184,7 +184,11 @@ public class Pull365RentAction implements PullRentHouseAction{
 
 	@Override
 	public String getBeizhu(Element elem) {
-		return "";
+		 Elements bz = elem.getElementsByClass("facility");
+			if(bz.isEmpty()){
+				return "";
+			}
+			String text = bz.first().nextElementSibling().text();
+			return text.trim();
 	}
-
 }
