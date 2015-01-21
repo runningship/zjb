@@ -236,6 +236,7 @@
 		"children":[{
 			"name":"sz_dian_add",
 			"text":"添加门店",
+			"zjb-only":true,
 			"type":"menu"
 		},{
 			"name":"sz_dian_edit",

@@ -75,7 +75,7 @@ public class PullGJRentAction implements PullRentHouseAction{
 	public String getHxing(Element elem) {
 		Element hx = elem.getElementsMatchingOwnText("户型：").first();
 		String text = hx.parent().ownText();
-		String hxing = text.split(" - ")[0].replace("室", "房");
+		String hxing = PullDataHelper.getHxingByText(text).replace("室", "房");
 		return hxing.trim();
 	}
 

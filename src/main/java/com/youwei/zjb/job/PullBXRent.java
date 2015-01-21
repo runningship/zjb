@@ -54,7 +54,11 @@ public class PullBXRent extends AbstractJob implements HouseRentJob{
 				return;
 			}
 			int count=0;
-			for(int i=list.size()-1;i>=0;i--){
+			int last = list.size();
+			if(last>30){
+				last = 30;
+			}
+			for(int i=30;i>=0;i--){
 				Element e = list.get(i);
 				link = getLink(e);
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);

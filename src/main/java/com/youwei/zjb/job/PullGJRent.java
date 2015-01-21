@@ -27,7 +27,7 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.ganji.com/fang3/1333437732x.htm" ,null ,RentType.整租 ,null);
+		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.ganji.com/fang1/1344478689x.htm" ,null ,RentType.整租 ,null);
 //		dao.saveOrUpdate(hr);
 //		instance.work();
 	}

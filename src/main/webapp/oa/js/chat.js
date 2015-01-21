@@ -865,7 +865,7 @@ function connectWebSocket(){
         console.log('登录成功');
         $('#avatarId').removeClass('user_offline_filter');
     };
-    coco_ws.close = function() {
+    coco_ws.onclose = function() {
         web_socket_on = false;
         console.log('we are getting offline');
         //掉线重连

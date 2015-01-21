@@ -35,8 +35,7 @@ public class PullFangRent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://zu.hf.fang.com/chuzu/1_50437242_-1.htm" , null ,RentType.整租,null);
-//		int a=0;
+//		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://zu.hf.fang.com/chuzu/1_50437252_-1.htm" , null ,RentType.整租,null);
 		instance.work();
 	}
 	

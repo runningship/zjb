@@ -87,10 +87,13 @@ public class PullFangRentAction implements PullRentHouseAction{
 	@Override
 	public String getHxing(Element elem) {
 		Elements hx = elem.getElementsByClass("baseInfo").first().getElementsMatchingOwnText("户 型：");
+		String text = "";
 		if(hx.isEmpty()){
-			return "";
+			hx = elem.getElementsMatchingOwnText("房屋概况：");
+			text = PullDataHelper.getHxingByText(hx.text().trim());
+		}else{
+			text = hx.first().nextElementSibling().text();
 		}
-		String text = hx.first().nextElementSibling().text();
 		return text.replace("室", "房").trim();
 	}
 
@@ -129,9 +132,9 @@ public class PullFangRentAction implements PullRentHouseAction{
 		String text2 = quyu+"区";
 		if(quyu.contains("巢湖")){
 			return "巢湖市";
-		}else if(!quyu.contains("经济")){
+		}else if(quyu.contains("经济")){
 			return "经开区";
-		}else if(!quyu.contains("高新")){
+		}else if(quyu.contains("高新")){
 			return "高新区";
 		}else if(!quyu.contains("区")){
 			if(!quyu.contains("肥东")&&!quyu.contains("肥西")&&!quyu.contains("长丰")&&!quyu.contains("庐江")){

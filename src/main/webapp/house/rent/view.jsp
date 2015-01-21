@@ -198,6 +198,18 @@ $('#area').on('click',function(){
               </table>
             </td>
           </tr>
+          <c:if test="${!empty house.title}">
+          <tr>
+            <td colspan="2" class="Zuo">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
+                <tr>
+                  <td class="biaoti">标题：</td>
+                  <td class="neirong TextColor1">${house.title} &nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          </c:if>
           <tr>
             <td class="Zuo">
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">

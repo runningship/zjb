@@ -31,8 +31,8 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.rent.house365.com/r_859381.html" , null ,RentType.整租);
-		instance.work();
+		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.rent.house365.com/r_861147.html" , null ,RentType.整租 , null);
+//		instance.work();
 	}
 
 	private Elements getRepeats(Document doc){

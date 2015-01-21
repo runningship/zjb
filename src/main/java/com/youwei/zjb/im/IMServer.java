@@ -32,7 +32,7 @@ import com.youwei.zjb.util.URLUtil;
 public class IMServer extends WebSocketServer{
 
 	private static IMServer instance =null;
-	static Map<Integer,WebSocket> pool = new HashMap<Integer,WebSocket>();
+//	static Map<Integer,WebSocket> pool = new HashMap<Integer,WebSocket>();
 	static Map<String,Map<Integer,WebSocket>> conns = new HashMap<String,Map<Integer,WebSocket>>();
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 //	private static InetSocketAddress socket = new InetSocketAddress("localhost", 9099); 

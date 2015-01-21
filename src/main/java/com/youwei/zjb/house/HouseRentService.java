@@ -144,7 +144,9 @@ public class HouseRentService {
 		HouseRent po = service.get(HouseRent.class, id);
 		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
 		mv.data = JSONHelper.toJSON(po);
-		mv.data.put("hxing", fxing.getName());
+		if(fxing!=null){
+			mv.data.put("hxing", fxing.getName());
+		}
 		return mv;
 	}
 	
@@ -201,14 +203,16 @@ public class HouseRentService {
 	@WebMethod
 	public ModelAndView doRuku(HouseRent house , String hxing){
 		ModelAndView mv = new ModelAndView();
-		long count = service.countHqlResult("select count(*) from HouseRent where tel=?", house.tel);
-		if(count>0){
-			throw new GException(PlatformExceptionType.BusinessException,"tel","存在相同的房主电话，可能为重复房源");
-		}
+//		long count = service.countHqlResult("select count(*) from HouseRent where tel=?", house.tel);
+//		if(count>0){
+//			throw new GException(PlatformExceptionType.BusinessException,"tel","存在相同的房主电话，可能为重复房源");
+//		}
 		
 		HouseRent po = service.get(HouseRent.class, house.id);
 		this.innerUpdateHouse(po, house, hxing);
 		po.ruku=1;
+		//入库直接审核通过
+		po.sh = 1;
 		service.saveOrUpdate(po);
 		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
 		mv.data = JSONHelper.toJSON(po);

@@ -90,14 +90,14 @@ public class JobScheduler extends Thread{
 	}
 	
 	public void setListPageInterval(String jobName,int interval){
-		if(interval<30*1000){
-			interval=30*1000;
+		if(interval<30){
+			interval=30;
 		}
-		jobs.get(jobName).setListPageInterval(interval);
+		jobs.get(jobName).setListPageInterval(interval*1000);
 	}
 	
 	public void setDetailPageInterval(String jobName,int interval){
-		jobs.get(jobName).setDetailPageInterval(interval);
+		jobs.get(jobName).setDetailPageInterval(interval*1000);
 	}
 	
 	public String getStatus(){

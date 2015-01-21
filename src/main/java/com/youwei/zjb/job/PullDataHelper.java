@@ -233,4 +233,28 @@ public class PullDataHelper {
 		}
 		return null;
 	}
+	
+	public static String getHxingByText(String text){
+		if(StringUtils.isEmpty(text)){
+			return "";
+		}
+		String str = "";
+		int si = text.indexOf("室");
+		int ti = text.indexOf("厅");
+		int wi = text.indexOf("卫");
+		if(si>0){
+			str+=text.charAt(si-1)+"室";
+		}
+		if(ti>0){
+			str+=text.charAt(ti-1)+"厅";
+		}else{
+			str+="0厅";
+		}
+		if(wi>0){
+			str+=text.charAt(wi-1)+"卫";
+		}else{
+			str+="1卫";
+		}
+		return str;
+	}
 }
