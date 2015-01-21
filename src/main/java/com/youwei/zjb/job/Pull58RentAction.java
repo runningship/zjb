@@ -315,4 +315,11 @@ public class Pull58RentAction implements PullRentHouseAction{
 	public String getSiteName() {
 		return "58";
 	}
+
+
+
+	@Override
+	public String getBeizhu(Element elem) {
+		return "";
+	}
 }

@@ -203,4 +203,9 @@ public class PullGJRentAction implements PullRentHouseAction{
 		return "ganji";
 	}
 
+	@Override
+	public String getBeizhu(Element elem) {
+		return "";
+	}
+
 }

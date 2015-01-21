@@ -182,4 +182,9 @@ public class Pull365RentAction implements PullRentHouseAction{
 		return "365";
 	}
 
+	@Override
+	public String getBeizhu(Element elem) {
+		return "";
+	}
+
 }

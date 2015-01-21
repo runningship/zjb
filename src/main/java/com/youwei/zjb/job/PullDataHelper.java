@@ -36,7 +36,7 @@ public class PullDataHelper {
 		try{
 			sumary = action.getDetailSumary(hlink);
 			hr = new HouseRent();
-			hr.beizhu="";
+			
 			hr.site = action.getSiteName();
 			hr.href = hlink;
 			if(address==null){
@@ -120,6 +120,7 @@ public class PullDataHelper {
 			}else{
 				hr.dateadd = pubTime;
 			}
+			hr.beizhu=hr.beizhu+ "\n"+action.getBeizhu(sumary);
 			if(StringUtils.isNotEmpty(hr.tel)){
 				HouseRent po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseRent.class, new String[]{"area","lceng","zceng" , "hxf" , "hxt" , "hxw","tel"},
 						new Object[]{hr.area, hr.lceng, hr.zceng, hr.hxf , hr.hxt , hr.hxw , hr.tel});
@@ -127,6 +128,7 @@ public class PullDataHelper {
 					if(hr.site.equals(po.site)){
 						//更新发布时间
 						po.dateadd = hr.dateadd;
+						LogUtil.info(action.getSiteName()+"更新发布时间,房源"+hlink+"重复,id="+po.id);
 						return po;
 					}else{
 						//判断发布时间,如果发布时间是2个月前，则保存

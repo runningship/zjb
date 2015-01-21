@@ -106,5 +106,10 @@ public interface PullRentHouseAction {
 	 */
 	public Date getPubTime(Element elem);
 	
+	/**
+	 * 发布时间
+	 */
+	public String getBeizhu(Element elem);
+	
 	public String getSiteName();
 }

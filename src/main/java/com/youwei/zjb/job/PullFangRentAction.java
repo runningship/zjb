@@ -249,4 +249,9 @@ public class PullFangRentAction implements PullRentHouseAction{
 		return "fang";
 	}
 
+	@Override
+	public String getBeizhu(Element elem) {
+		return "";
+	}
+
 }

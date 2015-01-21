@@ -227,4 +227,9 @@ public class PullBXRentAction implements PullRentHouseAction{
 		return "baixing";
 	}
 
+	@Override
+	public String getBeizhu(Element elem) {
+		return "";
+	}
+
 }
