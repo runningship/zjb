@@ -251,6 +251,10 @@ public class PullFangRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getBeizhu(Element elem) {
+		Element intr = elem.select(".Introduce").first();
+		if(intr!=null && intr.children().size()>0){
+			return intr.child(0).text();
+		}
 		return "";
 	}
 

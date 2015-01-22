@@ -131,6 +131,9 @@ function setSearchValue(index){
     var Vals=ThiA.eq(index).addClass('hover').attr('area');
     $('#search').val(Vals);
 }
+function updateRuku(id){
+  $('#btn_ruku_'+id).remove();
+}
 function updateHouse(id,data){
   getSider(id);
   var json = JSON.parse(data);
@@ -427,7 +430,7 @@ $(document).ready(function(){
                                                             <a href="##" auth="fy_sh" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
                                                             <a href="#" auth="fy_edit" show="showAction($[cid],$${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
                                                             <a href="##" auth="fy_del" show="showAction($[cid],$${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
-                                                            <a auth="fy_ruku" href="#" show="$[ruku]==0" onclick="ruku($[id])">入库</a>
+                                                            <a id="btn_ruku_$[id]" auth="fy_ruku" href="#" show="$[ruku]==0" onclick="ruku($[id])">入库</a>
                                                           </td>
                                                           <td width="50" class="ztai_$[ztai]">$[ztai]</td>
                                                           <td width="60">$[quyu]</td>
