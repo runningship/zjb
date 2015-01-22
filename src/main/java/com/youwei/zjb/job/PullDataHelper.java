@@ -8,8 +8,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.IOUtils;
@@ -27,7 +25,6 @@ import com.youwei.zjb.im.IMServer;
 
 public class PullDataHelper {
 
-	private static Map<String,String> cookies = new HashMap<String, String>();
 	public final static int errorReportUserId= 36;
 	public static HouseRent pullDetail(PullRentHouseAction action ,String hlink , Date pubTime , RentType rentType, String address){
 		System.out.println("pulling "+hlink);
@@ -35,6 +32,9 @@ public class PullDataHelper {
 		HouseRent hr = null;
 		try{
 			sumary = action.getDetailSumary(hlink);
+			if(sumary==null){
+				return null;
+			}
 			hr = new HouseRent();
 			
 			hr.site = action.getSiteName();

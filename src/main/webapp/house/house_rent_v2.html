@@ -133,6 +133,9 @@ function setSearchValue(index){
 }
 function updateRuku(id){
   $('#btn_ruku_'+id).remove();
+  $('#shenhe_'+id).text('审').removeClass('shenhe_0');
+  //更新未审核为已审核
+
 }
 function updateHouse(id,data){
   getSider(id);
@@ -427,7 +430,7 @@ $(document).ready(function(){
                                                         <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
                                                           <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
                                                           <td  width="75"  auth="fy_sh|fy_edit|fy_del">
-                                                            <a href="##" auth="fy_sh" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
+                                                            <a id="shenhe_$[id]" href="##" auth="fy_sh" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
                                                             <a href="#" auth="fy_edit" show="showAction($[cid],$${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
                                                             <a href="##" auth="fy_del" show="showAction($[cid],$${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
                                                             <a id="btn_ruku_$[id]" auth="fy_ruku" href="#" show="$[ruku]==0" onclick="ruku($[id])">入库</a>
