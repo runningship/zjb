@@ -22,5 +22,4 @@ public class page {
 		return innerHtml;
 	}
 	
-	
 }

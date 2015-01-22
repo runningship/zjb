@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.web.ThreadSession;
 
+import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.UserSession;
 import com.youwei.zjb.util.SessionHelper;
@@ -122,6 +123,17 @@ public class SessionFilter implements Filter{
 //			}
 //			
 //		}
+		if(path.endsWith(".jsp")){
+			User me = ThreadSessionHelper.getUser();
+			StringBuilder auths = new StringBuilder();
+			if(me.getRole()!=null){
+				for(RoleAuthority ra : me.getRole().Authorities()){
+					auths.append(ra.name).append(",");
+				}
+			}
+			req.setAttribute("user", me);
+			req.setAttribute("auths", auths);
+		}
 		chain.doFilter(request, response);
 	}
 
