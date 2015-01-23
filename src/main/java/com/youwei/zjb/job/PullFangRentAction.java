@@ -213,6 +213,8 @@ public class PullFangRentAction implements PullRentHouseAction{
 		Document doc = Jsoup.parse(result);
 		if(doc.getElementsMatchingOwnText("您的访问速度太快了").isEmpty()==false){
 			throw new TooFastException("扫网速度太快了");
+		}else if(!doc.getElementsByClass("guoqi-box").isEmpty()){
+			return null;
 		}
 		Element su = doc.getElementsByClass("houseInfo").first();
 		Element sumary = su.parent();
@@ -251,7 +253,11 @@ public class PullFangRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getBeizhu(Element elem) {
+		Element intr = elem.select(".Introduce").first();
+		if(intr!=null && intr.children().size()>0){
+			return intr.child(0).text();
+		}
 		return "";
 	}
-
+	
 }
