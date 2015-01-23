@@ -151,13 +151,15 @@ public class IMServer extends WebSocketServer{
 			if(recvId.equals(senderId)){
 				continue;
 			}
+			if(ap==null){
+				continue;
+			}
 			WebSocket conn = ap.get(recvId);
 			if(conn!=null){
 				//send group message
 				data.put("sendtime", DataHelper.sdf4.format(new Date()));
 				data.put("senderId", senderId);
 				conn.send(data.toString());
-//				sendMsg(conn,city,senderId , recvId,data,true);
 			}
 		}
 	

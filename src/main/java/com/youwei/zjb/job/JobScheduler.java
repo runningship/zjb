@@ -34,6 +34,11 @@ public class JobScheduler extends Thread{
 		PullFangRent jobSofang = new PullFangRent();
 		jobSofang.setDetailPageInterval(100);
 		jobs.put(jobSofang.getJobName(), jobSofang);
+		
+		NotificationJob nJob = new NotificationJob();
+		nJob.setListPageInterval(3600);
+		jobs.put(nJob.getJobName(), nJob);
+		
 		this.start();
 	}
 	
@@ -44,7 +49,7 @@ public class JobScheduler extends Thread{
 				schedule(jobName);
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -58,7 +63,7 @@ public class JobScheduler extends Thread{
 		if(job.isAllowRun() && job.isRunning()==false){
 			if(job.getLastRunTime()==-1 || System.currentTimeMillis()-job.getLastRunTime()>job.getListPageInterval()){
 				new Thread(){
-
+					
 					@Override
 					public void run() {
 						job.setRunning(true);

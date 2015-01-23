@@ -6,6 +6,10 @@ public interface HouseRentJob {
 	
 	public String getJobName();
 	
+	/**
+	 * 
+	 * @param interval 秒
+	 */
 	public void setListPageInterval(int interval);
 	
 	public int getListPageInterval();
