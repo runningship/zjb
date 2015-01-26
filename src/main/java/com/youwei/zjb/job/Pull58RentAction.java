@@ -21,9 +21,13 @@ public class Pull58RentAction implements PullRentHouseAction{
 	public String getArea(Element elem) {
 		String[] arr = getQuyuText(elem).split("-");
 		if(arr.length<=1){
-			return "";
+			return "null";
 		}
-		return arr[arr.length-1];
+		String tmp = arr[arr.length-1];
+		if(StringUtils.isEmpty(tmp)){
+			return "null";
+		}
+		return tmp;
 	}
 
 	

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,9 +22,12 @@ public class PullBXRentAction implements PullRentHouseAction{
 	public String getArea(Element elem) {
 		Elements ar = elem.getElementsMatchingOwnText("小区名：");
 		if(ar.isEmpty()){
-			return "";
+			return "null";
 		}
 		String area = ar.first().child(0).text();
+		if(StringUtils.isEmpty(area)){
+			return "null";
+		}
 		return area.trim();
 	}
 

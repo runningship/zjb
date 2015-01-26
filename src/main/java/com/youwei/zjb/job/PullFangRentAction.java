@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -29,6 +30,9 @@ public class PullFangRentAction implements PullRentHouseAction{
 	public String getArea(Element elem) {
 		Elements ar = elem.getElementsByClass("baseInfo").first().getElementsMatchingOwnText("小 区：");
 		String area = ar.first().nextElementSibling().text();
+		if(StringUtils.isEmpty(area)){
+			return "null";
+		}
 		return area.trim();
 	}
 

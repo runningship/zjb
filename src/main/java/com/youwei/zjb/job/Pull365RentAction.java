@@ -1,19 +1,15 @@
 package com.youwei.zjb.job;
 
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.ParseException;
 import java.util.Date;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.youwei.zjb.house.entity.HouseRent;
-import com.youwei.zjb.util.DataHelper;
 
 public class Pull365RentAction implements PullRentHouseAction{
 
@@ -21,7 +17,11 @@ public class Pull365RentAction implements PullRentHouseAction{
 	public String getArea(Element elem) {
 		Element ar = elem.getElementsMatchingOwnText("小区：").first();
 		String area = ar.nextElementSibling().text();
-		return area.split(" ")[0].trim();
+		String tmp = area.split(" ")[0].trim();
+		if(StringUtils.isEmpty(tmp)){
+			return "null";
+		}
+		return tmp;
 	}
 
 	private Element getElementsByMatchingText(Element elem,String text){

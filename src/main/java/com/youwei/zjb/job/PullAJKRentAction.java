@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,7 +22,11 @@ public class PullAJKRentAction implements PullRentHouseAction{
 	public String getArea(Element elem) {
 		Elements ar = elem.getElementsByClass("cinfo");
 		String area = ar.first().child(1).child(1).child(0).child(0).child(1).child(0).text();
-		return area.split("（")[0].trim();
+		String tmp =  area.split("（")[0].trim();
+		if(StringUtils.isEmpty(tmp)){
+			return "null";
+		}
+		return tmp;
 	}
 
 	private Element getElementsByMatchingText(Element elem,String text){

@@ -7,5 +7,5 @@ import javax.persistence.Id;
 public class Word {
 
 	@Id
-	public String name;
+	public String text;
 }
