@@ -8,22 +8,20 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
-import com.youwei.zjb.im.entity.Contact;
 import com.youwei.zjb.im.entity.Message;
 import com.youwei.zjb.im.entity.UserGroupStatus;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
-import com.youwei.zjb.util.JSONHelper;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Module(name="/im/")

@@ -11,21 +11,19 @@ import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.Transactional;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
-import com.youwei.zjb.entity.RoleAuthority;
-import com.youwei.zjb.feedback.entity.Reply;
 import com.youwei.zjb.oa.entity.Notice;
 import com.youwei.zjb.oa.entity.NoticeReceiver;
 import com.youwei.zjb.oa.entity.NoticeReply;
 import com.youwei.zjb.oa.entity.Site;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.HTMLSpirit;
-import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/oa")
 public class NoticeService {

@@ -35,24 +35,6 @@ public class DataHelper {
 		format.setVCharType(HanyuPinyinVCharType.WITH_V);
 		format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
 	}
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void fillDefaultValue(List<Map> list , String key,Object defValue){
-		for(Map map : list){
-			if(map.get(key)==null){
-				map.put(key, defValue);
-			}
-		}
-	}
-	
-	public static void escapeHtmlField(List<Map> list , String key){
-		for(Map map : list){
-			if(map.get(key)==null){
-				continue;
-			}
-			Document doc = Jsoup.parse(map.get(key).toString());
-			map.put(key, doc.text());
-		}
-	}
 	
 	public static String toPinyin(String hanzi){
 		try {

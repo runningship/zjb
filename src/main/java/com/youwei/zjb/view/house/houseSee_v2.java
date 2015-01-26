@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
+import org.bc.sdak.utils.JSONHelper;
 import org.jsoup.nodes.Document;
 
 import com.youwei.zjb.ThreadSessionHelper;
@@ -13,7 +14,6 @@ import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.JSONHelper;
 
 
 public class houseSee_v2 extends AbstractSee {

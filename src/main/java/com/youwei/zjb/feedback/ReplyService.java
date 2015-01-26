@@ -9,6 +9,7 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
@@ -18,7 +19,6 @@ import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.feedback.entity.FeedBack;
 import com.youwei.zjb.feedback.entity.FeedbackQuery;
 import com.youwei.zjb.feedback.entity.Reply;
-import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/reply/")
 public class ReplyService {

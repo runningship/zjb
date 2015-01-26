@@ -67,7 +67,7 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 				}
 				Thread.sleep(this.getDetailPageInterval());
 			}
-			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "共处365理房源数:"+count);
+//			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "共处365理房源数:"+count);
 		}catch(Exception ex){
 			StackTraceElement stack = ex.getStackTrace()[0];
 			String msg = action.getSiteName()+"扫网任务失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();

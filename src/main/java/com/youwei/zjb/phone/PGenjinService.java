@@ -10,17 +10,16 @@ import net.sf.json.JSONObject;
 
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
-import com.youwei.zjb.house.GenJinService;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
-import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/")
 public class PGenjinService {

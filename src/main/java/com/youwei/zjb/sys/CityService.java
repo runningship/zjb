@@ -11,6 +11,7 @@ import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
@@ -19,7 +20,6 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.sys.entity.City;
-import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/city/")
 public class CityService {

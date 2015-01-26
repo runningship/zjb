@@ -852,8 +852,9 @@ function requestWindowAttention(senderId , type){
 	}
 
 }
-
+var retry;
 function connectWebSocket(){
+	retry=null;
     if(web_socket_on){
         return;
     }
@@ -869,7 +870,10 @@ function connectWebSocket(){
         web_socket_on = false;
         console.log('we are getting offline');
         //掉线重连
-        setTimeout(connectWebSocket,10*1000);
+        if(!retry){
+        	retry = setTimeout(connectWebSocket,10*1000);	
+        }
+        
         $('#avatarId').addClass('user_offline_filter');
     };
     coco_ws.onmessage = function(e) {
@@ -880,7 +884,9 @@ function connectWebSocket(){
     	web_socket_on = false;
         console.log('连接失败:10秒后重新连接.'+e);
         //掉线重连
-        setTimeout(connectWebSocket,10*1000);
+        if(!retry){
+        	retry = setTimeout(connectWebSocket,10*1000);	
+        }
         $('#avatarId').addClass('user_offline_filter');
     };
 }

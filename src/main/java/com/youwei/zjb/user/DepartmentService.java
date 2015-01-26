@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
@@ -22,7 +23,6 @@ import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.DeptGroup;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
-import com.youwei.zjb.util.JSONHelper;
 
 @Module(name="/dept/")
 public class DepartmentService {
