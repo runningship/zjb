@@ -4,7 +4,7 @@ public abstract class AbstractJob implements HouseRentJob{
 
 	private int listPageInterval = 1000*60;
 	private int detailPageInterval = 1000*5;
-	private boolean allowRun = false;
+	private boolean allowRun = true;
 	private long lastRunTime = -1;
 	private boolean running = false;
 	
