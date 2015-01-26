@@ -35,7 +35,7 @@ function save(){
     return;
   }
   var a=$('form[name=form1]').serialize();
-  if ($('#tel').val()==undefined||$('#tel').val()=='') {
+  if (($('#tel').val()==undefined||$('#tel').val()=='') && ${house.site}!='58') {
     alert('请填写房主电话');
   }else{
       api.button({
@@ -47,8 +47,8 @@ function save(){
         url: '/c/house/rent/doRuku',
         data:a,
         mysuccess: function(data){
+        	art.dialog.opener.updateRuku(id);
             art.dialog.close();
-            art.dialog.opener.updateHouse(id,data);
             // art.dialog.opener.doSearch();
             alert('修改成功');
         }

@@ -29,7 +29,17 @@ public class AssistantService {
 			sb.append("stop jobName(58|365|ganji|baixing|anjuke|fang): ").append("停止指定网站的扫网任务").append("<br/>");
 			sb.append("set jobName listPageInterval 60: ").append("设置扫网任务时间间隔,单位为秒").append("<br/>");
 			sb.append("clear old house: ").append("删除老房源(2个月前)").append("<br/>");
+			sb.append("ruku all: ").append("批量入库所有房源").append("<br/>");
+			sb.append("shenhe all: ").append("批量审核所有房源").append("<br/>");
 			return sb.toString();
+		}
+		if("ruku all".equals(cmd)){
+			int count = dao.execute("update HouseRent set ruku=1 where ruku=0");
+			return "成功入库"+count+"条房源";
+		}
+		if("shenhe all".equals(cmd)){
+			int count = dao.execute("update HouseRent set sh=1 where ruku=1 and sh=0");
+			return "成功审核"+count+"条房源";
 		}
 		if("swq status".equals(cmd)){
 			msg = schedule.getStatus();

@@ -106,13 +106,13 @@ public class NoticeService {
 		mv.jspData.put("myId", ThreadSessionHelper.getUser().id);
 		
 		User me = ThreadSessionHelper.getUser();
-		StringBuilder auths = new StringBuilder();
-		if(me.getRole()!=null){
-			for(RoleAuthority ra : me.getRole().Authorities()){
-				auths.append(ra.name).append(",");
-			}
-		}
-		mv.jspData.put("auths", auths);
+//		StringBuilder auths = new StringBuilder();
+//		if(me.getRole()!=null){
+//			for(RoleAuthority ra : me.getRole().Authorities()){
+//				auths.append(ra.name).append(",");
+//			}
+//		}
+//		mv.jspData.put("auths", auths);
 		
 		mv.jspData.put("addPublicSite", me.id==1);
 		return mv;

@@ -2,7 +2,6 @@ package com.youwei.zjb.job;
 
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
@@ -29,9 +28,9 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-//		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.58.com/zufang/20612022651141x.shtml" ,  new Date(), RentType.整租 , null);
+		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.58.com/zufang/20688929213954x.shtml" ,  new Date(), RentType.整租 , null);
 //		int a=0;
-		instance.work();
+//		instance.work();
 	}
 
 	private Elements getRepeats(Document doc){

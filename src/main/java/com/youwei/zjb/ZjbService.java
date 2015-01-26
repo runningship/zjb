@@ -104,13 +104,13 @@ public class ZjbService {
 		mv.jspData.put("domainName", ConfigCache.get("domainName" , "www.zhongjiebao.com"));
 		mv.jspData.put("use_im", me.Company().useIm);
 		
-		StringBuilder auths = new StringBuilder();
-		if(me.getRole()!=null){
-			for(RoleAuthority ra : me.getRole().Authorities()){
-				auths.append(ra.name).append(",");
-			}
-		}
-		mv.jspData.put("auths", auths);
+//		StringBuilder auths = new StringBuilder();
+//		if(me.getRole()!=null){
+//			for(RoleAuthority ra : me.getRole().Authorities()){
+//				auths.append(ra.name).append(",");
+//			}
+//		}
+//		mv.jspData.put("auths", auths);
 //		auths.toString().indexOf("cw_on");
 		return mv;
 	}
