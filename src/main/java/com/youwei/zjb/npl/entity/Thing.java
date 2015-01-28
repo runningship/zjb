@@ -14,5 +14,5 @@ public class Thing {
 	
 	public String sense;
 	
-	public String otherThing;
+	public String value;
 }

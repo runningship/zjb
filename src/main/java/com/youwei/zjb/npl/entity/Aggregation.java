@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Oper {
-	
+public class Aggregation {
+
 	@Id
 	public Integer id;
 	
-	public String text;
+	public String elem;
 	
-	public String action;
+	public String sets;
 }
