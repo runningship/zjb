@@ -8,6 +8,7 @@ import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.utils.LogUtil;
@@ -55,6 +56,10 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 			for(int i=list.size()-1;i>=0;i--){
 				Element e = list.get(i);
 				link = getLink(e);
+				if(StringUtils.isEmpty(link)){
+					LogUtil.warning("获取房源链接失败:"+e.html());
+					continue;
+				}
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){
 					continue;
@@ -72,6 +77,7 @@ public class Pull365Rent extends AbstractJob implements HouseRentJob{
 			StackTraceElement stack = ex.getStackTrace()[0];
 			String msg = action.getSiteName()+"扫网任务失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
 			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
+			LogUtil.log(Level.WARN, "365扫网任务失败", ex);
 		}
 	}
 

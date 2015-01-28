@@ -85,7 +85,7 @@ public class SessionFilter implements Filter{
 		Integer count = calls.get(path);
 		count++;
 		calls.put(path, count);
-		System.out.println("----------->clientId="+clientId+",path="+path+",oldSession="+oldSessionId+",session="+session.getId());
+//		System.out.println("----------->clientId="+clientId+",path="+path+",oldSession="+oldSessionId+",session="+session.getId());
 		ThreadSession.setHttpSession(session);
 		if(excludes.contains(path)){
 			chain.doFilter(request, response);

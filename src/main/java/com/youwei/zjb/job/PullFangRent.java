@@ -69,6 +69,10 @@ public class PullFangRent extends AbstractJob implements HouseRentJob{
 			for(int i=list.size()-1;i>=0;i--){
 				Element e = list.get(i);
 				link = getLink(e);
+				if(StringUtils.isEmpty(link)){
+					LogUtil.warning("获取房源链接失败:"+e.html());
+					continue;
+				}
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){
 					continue;
@@ -86,7 +90,7 @@ public class PullFangRent extends AbstractJob implements HouseRentJob{
 //			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);
 		}catch(Exception ex){
 			StackTraceElement stack = ex.getStackTrace()[0];
-			String msg = "扫网"+link+"失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
+			String msg = action.getSiteName()+"扫网"+link+"失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
 			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 		}
 	}

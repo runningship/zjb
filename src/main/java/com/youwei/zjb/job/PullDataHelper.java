@@ -12,6 +12,7 @@ import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.utils.LogUtil;
 import org.jsoup.nodes.Element;
@@ -149,9 +150,9 @@ public class PullDataHelper {
 			throw ex;
 		}catch(Exception ex){
 			StackTraceElement stack = ex.getStackTrace()[0];
-			String msg = "扫网"+hlink+"失败，href="+hlink+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
+			String msg = action.getSiteName()+"扫网"+hlink+"失败，href="+hlink+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
 			IMServer.sendMsgToUser(errorReportUserId, msg);
-			ex.printStackTrace();
+			LogUtil.log(Level.WARN, "", ex);
 		}
 		return null;
 	}
