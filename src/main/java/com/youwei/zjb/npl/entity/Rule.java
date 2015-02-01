@@ -4,13 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Oper {
-
+public class Rule {
+	
 	@Id
 	public Integer id;
 	
 	public String text;
 	
-	public int priority;
-	
+	public String action;
 }

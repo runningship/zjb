@@ -14,7 +14,8 @@ public class Lexer {
 	public static final String ExprSeprator = "-";
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-		String str = "小米手机被黄牛抬价了很多";
+//		String str = "小米手机被黄牛抬价了很多";
+		String str = "我有一部新手机";
 		Lexer p = new Lexer();
 		Expr expr = p.run(str);
 		if(expr==null){
@@ -26,7 +27,7 @@ public class Lexer {
 		}
 	}
 	
-	private List<String> getResult(Expr head){
+	public List<String> getResult(Expr head){
 		List<String> results = new ArrayList<String>();
 		if(head.next.isEmpty()){
 			results.add(ExprSeprator+head.text);
@@ -61,25 +62,23 @@ public class Lexer {
 		}
 		
 		List<Word> list = getWordStartWith(String.valueOf(str.charAt(0)));
-		if(list.isEmpty()){
+		for(Word w : list){
+			if(str.startsWith(w.text)){
+				Expr expr = new Expr();
+				expr.text = w.text;
+				exprs.add(expr);
+				break;
+			}
+		}
+		if(exprs.isEmpty()){
 			Expr expr = new Expr();
 			expr.text = String.valueOf(str.charAt(0));
 			exprs.add(expr);
-			
-		}else{
-			for(Word w : list){
-				if(str.startsWith(w.text)){
-					Expr expr = new Expr();
-					expr.text = w.text;
-					exprs.add(expr);
-					break;
-				}
-			}
 		}
-		
 		for(Expr expr : exprs){
 			expr.next = nextExpr(str.substring(expr.text.length()));
 		}
 		return exprs;
 	}
+	
 }
