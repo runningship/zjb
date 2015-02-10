@@ -7,6 +7,7 @@ import com.youwei.zjb.npl.entity.Thing;
 
 import net.sf.json.JSONObject;
 
+//遍历语义树，构造成低级语言数据结构(java)
 public class Translator {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
