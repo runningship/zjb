@@ -92,6 +92,9 @@ var list_this_err_num=0;
 
 
 function addList(box,url,title){
+	if(!url){
+		return;
+	}
     var addListStr='<li data-url="'+url+'" data-title="'+title+'"><span>'
         +'<a href="#" class="btns" data-type="list_see_url" ><i class="iconfont">&#xe675;</i></a>'
         +'<a href="#" class="btns" data-type="list_see" ><i class="iconfont">&#xe672;</i></a>'
@@ -274,7 +277,7 @@ if (tel.length>0) {
     var conTentAll =$$cont_doc.find(".sumary ul .su_tit");
     var conTentSize = conTentAll.size();
     
-    for(var i=0;i<=conTentSize;i++){
+    for(var i=0;i<conTentSize;i++){
         var CameFrom = $$cont_doc.find(".sumary ul .su_tit").eq(i);
         conTentCon = replaceAlls(CameFrom.text());
         var su_coninFor = CameFrom.siblings(".su_con");
@@ -293,16 +296,19 @@ if (tel.length>0) {
           default: break;
         }
     };
-
         var zx = $$cont_doc.find('.des_bgtit:contains("装修程度：")')[0];
-        var zxiu = zx.nextElementSibling;
-        cont_zx = zxiu.textContent;
+        if(zx && zx.nextElementSibling){
+        	cont_zx = zx.nextElementSibling.textContent;
+        }
+        
         var lc = $$cont_doc.find('.des_bgtit:contains("房屋楼层：")')[0];
-        var zlc = lc.nextElementSibling;
-        cont_lc = zlc.textContent;
+        if(lc && lc.nextElementSibling){
+        	cont_lc = lc.nextElementSibling.textContent;
+        }
         var gk = $$cont_doc.find('.description_con')[0];
-        var gaik= gk.textContent;
-        cont_gk = replaceAlls(gaik);
+        if(gk && gk.textContent){
+        	cont_gk = replaceAlls(gk.textContent);
+        }
 
     //    if(cont_lxr.indexOf('归属地')){cont_lxr='';}
     var thisHtml='<p>'+cont_title+'</p>'
@@ -327,6 +333,9 @@ if (tel.length>0) {
 }
 
 function get1Html(url){
+	if(!url){
+		return;
+	}
     $$.ajax({url: url,
         type: 'GET',
         dataType: 'html',
@@ -398,7 +407,7 @@ $(document).ready(function() {
     };
     $('#city').val(city);
     // sys_url='http://wuhu.58.com/ershoufang/0/?PGTID=14207001658910.9101886455900967&ClickID=0&key=%2525u5F20%2525u5BB6%2525u5C71&sourcetype=5';
-    sys_url='http://'+city+'.58.com/ershoufang/0/pn3/';
+    sys_url='http://'+city+'.58.com/ershoufang/0/';
 });
 
 function geturl(city){
