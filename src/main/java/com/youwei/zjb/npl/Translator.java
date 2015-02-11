@@ -24,7 +24,6 @@ public class Translator {
 		JSONObject jobj = new JSONObject();
 		for(String str : block.text){
 			//find something about str
-			jobj.put("text", str);
 			Thing thing = dao.getUniqueByKeyValue(Thing.class, "value", str);
 			if(thing.sense!=null){
 				jobj.put(thing.sense, str);

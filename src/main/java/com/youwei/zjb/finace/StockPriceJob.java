@@ -1,7 +1,7 @@
 package com.youwei.zjb.finace;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.List;
 
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
@@ -10,20 +10,30 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import net.sf.json.JSONObject;
-
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.job.PullDataHelper;
-import com.youwei.zjb.util.DataHelper;
 
 //http://data.10jqka.com.cn/interface/funds/ggzjl/je/desc/2/1/
-//http://stockpage.10jqka.com.cn/600698/funds/
+//http://stockpage.10jqka.com.cn/000050/funds/
 public class StockPriceJob {
 
 	static CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 	public static void main(String[] args) throws IOException{
 		StartUpListener.initDataSource();
-		String code = "600698";
+		List<Stock> list = dao.listByParams(Stock.class, "from Stock where 1=1 ");
+		for(Stock stock : list){
+			System.out.println("开始处理"+stock.name+"("+stock.code+")历史数据");
+			try{
+				getPriceHistory(stock.code);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public static void getPriceHistory(String code) throws IOException{
+		//先判断上个交易日是否已经获取，已经获取则无需重复抓取
+		
 		String url = "http://stockpage.10jqka.com.cn/"+code+"/funds/";
 		String result = PullDataHelper.getHttpData(url, "" ,"utf8");
 		Document doc = Jsoup.parse(result);
@@ -32,39 +42,20 @@ public class StockPriceJob {
 			if(tr.select("td").size()<=0){
 				continue;
 			}
-			StockPrice stock = new StockPrice();
-			stock.code = code;
-			stock.day = tr.child(0).text();
-			stock.price = Float.valueOf(tr.child(1).text());
-			stock.zhangdie = Float.valueOf(tr.child(2).text().replace("%", ""));
-			stock.cashIn = Float.valueOf(tr.child(3).text());
-			StockPrice po = dao.getUniqueByParams(StockPrice.class, new String[]{"code","day" },  new Object[]{stock.code , stock.day});
-			if(po==null){
-				dao.saveOrUpdate(stock);
+			try{
+				StockPrice price = new StockPrice();
+				price.code = code;
+				price.day = tr.child(0).text();
+				price.price = Float.valueOf(tr.child(1).text());
+				price.zhangdie = Float.valueOf(tr.child(2).text().replace("%", ""));
+				price.cashIn = Float.valueOf(tr.child(3).text());
+				StockPrice po = dao.getUniqueByParams(StockPrice.class, new String[]{"code","day" },  new Object[]{price.code , price.day});
+				if(po==null){
+					dao.saveOrUpdate(price);
+				}
+			}catch(Exception ex){
+				System.out.println(code+"数据异常,日期:"+tr.child(0).text());
 			}
 		}
 	}
-	
-//	public static void getPage(int page) throws IOException{
-//		String url = "http://data.10jqka.com.cn/interface/funds/ggzjl/code/desc/"+page+"/1/";
-//		String result = PullDataHelper.getHttpData(url, "" ,"utf8");
-//		JSONObject json = JSONObject.fromObject(result);
-//		
-//		Document table = Jsoup.parse("<table>"+json.getString("data")+"</table>");
-//		Element tbody = table.getElementsByTag("tbody").first();
-//		Elements trs = tbody.getElementsByTag("tr");
-//		for(Element tr : trs){
-//			System.out.println("代码:"+tr.child(1).text() +",名称:"+tr.child(2).text()+",价格:"+tr.child(3).text()+",涨跌幅:"+tr.child(4).text()+",资金:"+tr.child(8).text());
-//			StockPrice stock = new StockPrice();
-//			stock.code = tr.child(1).text();
-//			stock.price = Float.valueOf(tr.child(3).text());
-//			stock.cashIn = Float.valueOf(tr.child(8).text());
-//			stock.zhangdie = Float.valueOf(tr.child(4).text().replace("%", ""));
-//			stock.day = DataHelper.sdf6.format(new Date());
-//			StockPrice po = dao.getUniqueByParams(StockPrice.class, new String[]{"code","day" },  new Object[]{stock.code , stock.day});
-//			if(po!=null){
-//				dao.saveOrUpdate(stock);
-//			}
-//		}
-//	}
 }
