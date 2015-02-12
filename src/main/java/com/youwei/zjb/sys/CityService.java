@@ -29,17 +29,21 @@ public class CityService {
 	@WebMethod
 	public ModelAndView list(){
 		ModelAndView mv = new ModelAndView();
-		try {
-			String path = ConfigCache.get("citys_file", "");
-			String text = FileUtils.readFileToString(new File(path), "utf8");
-			mv.data.put("citys", JSONArray.fromObject(text));
-		} catch (IOException e) {
-			LogUtil.log(Level.WARN, "load filter words failed ", e);
-			mv.data.put("citys", new JSONArray());
-		}
+		mv.data.put("citys", getCitys());
 		return mv;
 	}
 	
+	public JSONArray getCitys(){
+		JSONArray arr = new JSONArray();
+		try {
+			String path = ConfigCache.get("citys_file", "");
+			String text = FileUtils.readFileToString(new File(path), "utf8");
+			arr = JSONArray.fromObject(text);
+		} catch (IOException e) {
+			LogUtil.log(Level.WARN, "load filter words failed ", e);
+		}
+		return arr;
+	}
 	@WebMethod
 	public ModelAndView test(){
 		ModelAndView mv = new ModelAndView();

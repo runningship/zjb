@@ -1,5 +1,8 @@
 package com.youwei.zjb.sys;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -21,6 +24,7 @@ import com.youwei.zjb.house.ZhuangXiu;
 @Module(name="/config/")
 public class ConfigService {
 
+	CityService cityService = new CityService();
 	@WebMethod
 	public ModelAndView getQueryOptions(){
 		ModelAndView mv = new ModelAndView();
@@ -31,11 +35,19 @@ public class ConfigService {
 //		mv.data.put("leibie", HouseType.toJsonArray());
 		mv.data.put("lxing", LouXing.toJsonArray());
 		String domain=ThreadSessionHelper.getDomain();
-		if("wuhu".equals(domain)){
-			mv.data.put("quyu", WuhuQuYu.toJsonArray());
-		}else{
-			mv.data.put("quyu", QuYu.toJsonArray());
+		//此处可以优化
+		JSONArray citys = cityService.getCitys();
+		for(int i=0;i<citys.size();i++){
+			JSONObject city = citys.getJSONObject(i);
+			if(city.getString("py").equals(domain)){
+				mv.data.put("quyu", city.getJSONArray("quyu"));
+			}
 		}
+//		if("wuhu".equals(domain)){
+//			mv.data.put("quyu", WuhuQuYu.toJsonArray());
+//		}else{
+//			mv.data.put("quyu", QuYu.toJsonArray());
+//		}
 		
 		mv.data.put("ztai_sell", SellState.toJsonArray());	
 		mv.data.put("ztai_rent", RentState.toJsonArray());
