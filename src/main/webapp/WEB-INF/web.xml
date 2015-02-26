@@ -67,6 +67,15 @@
 	    <url-pattern>/weixin/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+        <servlet-name>bosh</servlet-name>
+        <servlet-class>com.codemarvels.boshservlet.BoshXmppServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>bosh</servlet-name>
+	    <url-pattern>/bosh/*</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
 		<filter-name>session</filter-name>
 		<filter-class>com.youwei.zjb.SessionFilter</filter-class>

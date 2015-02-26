@@ -22,10 +22,15 @@ public class ThreadSessionHelper {
     }
     
     public static String getDomain(){
+    	//先从ThreadLocal中取，没有再从HttpSession中取
+    	String domain = ThreadSession.getDomain();
+    	if(StringUtils.isNotEmpty(domain)){
+    		return domain;
+    	}
     	if(ThreadSessionHelper.getUser()==null){
     		return "hefei";
     	}
-    	String domain = (String)ThreadSessionHelper.getUser().domain;
+    	domain = (String)ThreadSessionHelper.getUser().domain;
 		if(StringUtils.isEmpty(domain)){
 			domain="hefei";
 		}

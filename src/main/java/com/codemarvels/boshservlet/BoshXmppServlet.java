@@ -1,59 +1,71 @@
 package com.codemarvels.boshservlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringReader;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import org.bc.sdak.GException;
+import org.bc.web.PlatformExceptionType;
+import org.bc.web.ServletHelper;
 
-import com.codemarvels.boshservlet.bosh.ConnectionManager;
-import com.google.common.io.CharStreams;
+import com.youwei.zjb.ThreadSessionHelper;
+import com.youwei.zjb.user.entity.User;
 
 public class BoshXmppServlet extends HttpServlet{
 
 	private static final long serialVersionUID = -6582356799296606455L;
-    private ConnectionManager connectionManager = new ConnectionManager();
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  throws ServletException, IOException
     {
-            PrintWriter out = new PrintWriter(resp.getOutputStream());
-            out.println("BOSHServlet1.0");
-            out.println("An implementation of BOSH protocol with built-in XMPP over BOSH module (http://xmpp.org/extensions/xep-0124.html, " +
-                            "http://xmpp.org/extensions/xep-0206.html )");
-            out.flush();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-            try {
-                    DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = fac.newDocumentBuilder();
-            InputSource inStream = new InputSource();
-            String requestXML = CharStreams.toString(request.getReader());
-            inStream.setCharacterStream(new StringReader(requestXML));
-            Document doc = db.parse(inStream);
-                    connectionManager.handleRequest(doc, response, request);
-            } catch (SAXException e) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            } catch (Exception e) {
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,e.getMessage());
-            }
+    	Integer uid = 0;
+    	User u = ThreadSessionHelper.getUser();
+    	if(u!=null){
+//    		return;
+    		uid = u.id;
+    	}
+    	String type = getStringParam("type" , request);
+    	if("ping".equals(type)){
+    		
+    	}else if("send".equals(type)){
+    		
+    	}
+    	
+    	Connection conn = new Connection(uid);
+    	conn.resp = response;
+    	Connection oldConn = OutMessageManager.conns.get(uid);
+    	if(oldConn!=null){
+    		//replace old one
+//    		oldConn.respond("New_Connection_Received");
+    		oldConn.close();
+    	}
+    	OutMessageManager.conns.put(uid, conn);
+    	conn.start();
     }
 
     @Override
     public void init() throws ServletException
     {
+    }
+    
+    private String getStringParam(String param ,HttpServletRequest request){
+    	String[] arr = request.getParameterValues(param);
+    	if(arr==null || arr.length==0){
+    		return "";
+    	}
+    	if(arr.length==1){
+    		return arr[0];
+    	}
+    	throw new GException(PlatformExceptionType.ParameterTypeError,"want a string , but a string array.");
     }
 }

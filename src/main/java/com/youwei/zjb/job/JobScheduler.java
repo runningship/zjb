@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.bc.web.ThreadSession;
 
 public class JobScheduler extends Thread{
 
@@ -39,7 +40,7 @@ public class JobScheduler extends Thread{
 		nJob.setListPageInterval(3600);
 		jobs.put(nJob.getJobName(), nJob);
 		
-//		this.start();
+		this.start();
 	}
 	
 	@Override
@@ -67,6 +68,7 @@ public class JobScheduler extends Thread{
 					@Override
 					public void run() {
 						job.setRunning(true);
+						ThreadSession.setDomain("hefei");
 						job.work();
 						job.setRunning(false);
 						job.setLastRunTime(System.currentTimeMillis());

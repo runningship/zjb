@@ -65,6 +65,9 @@ public class SessionFilter implements Filter{
 		excludes.add("/c/house/rent/listNoTel");
 		excludes.add("/c/house/rent/updateTel");
 		excludes.add("/c/trial/add");
+		
+		excludes.add("/bosh/basic.html");
+		excludes.add("/bosh-test/basic.html");
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
