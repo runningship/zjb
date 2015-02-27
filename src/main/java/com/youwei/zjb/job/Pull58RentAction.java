@@ -151,6 +151,10 @@ public class Pull58RentAction implements PullRentHouseAction{
 		if(lxr==null ){
 			return "";
 		}
+		String lx = lxr.nextElementSibling().ownText();
+		if(!lx.isEmpty()){
+			return lx;
+		}
 		return lxr.nextElementSibling().child(0).text();
 	}
 
