@@ -294,9 +294,11 @@ $(document).ready(function() {
                 }
                 
             }
+            json = loadConfigAsJSON();
             pcinfo.domain=json.city_py;
             pcinfo.city=json.coodinate;
             if(!pcinfo.domain){
+            	//alert('请先设置城市');
                 pcinfo.domain = "hefei";
             }
             if(!pcinfo.city){

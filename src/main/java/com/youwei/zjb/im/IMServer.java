@@ -15,6 +15,7 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.LogUtil;
+import org.bc.web.ThreadSession;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -69,8 +70,9 @@ public class IMServer extends WebSocketServer{
 		try {
 			Map<String, Object> map = URLUtil.parseQuery(path);
 			Integer uid = Integer.valueOf(map.get("uid").toString());
-			User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, uid);
 			String city = (String)map.get("city");
+			ThreadSession.setDomain(city);
+			User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, uid);
 			conn.getAttributes().put("city", city);
 			conn.getAttributes().put("uid", uid);
 			conn.getAttributes().put("cid", user.cid);

@@ -42,6 +42,9 @@ public class UserService {
 	
 	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
+	public UserService(){
+		System.out.println();
+	}
 	@WebMethod
 	public ModelAndView initIndex(){
 		ModelAndView mv = new ModelAndView();
@@ -305,7 +308,7 @@ public class UserService {
 	@WebMethod
 	public ModelAndView login(User user,PC pc ,Integer uselic){
 		ModelAndView mv = new ModelAndView();
-		
+		ThreadSession.setDomain(user.domain);
 		if(user.lname==null){
 			throw new GException(PlatformExceptionType.BusinessException, "账号不存在");
 		}

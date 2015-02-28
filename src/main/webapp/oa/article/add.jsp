@@ -22,8 +22,8 @@ $(function(){
         ],
   });
     // var ue = UE.getEditor('editor', {});
-    ue.setHeight('100%');
-	initUserTree('receiverTree');
+    // ue.setHeight('100%');
+	// initUserTree('receiverTree');
 });
 
 function save(){
