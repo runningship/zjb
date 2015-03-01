@@ -14,7 +14,7 @@ import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.job.PullDataHelper;
 
 //http://data.10jqka.com.cn/interface/funds/ggzjl/je/desc/2/1/
-//http://stockpage.10jqka.com.cn/000050/funds/
+//http://stockpage.10jqka.com.cn/600819/funds/
 public class StockPriceJob {
 
 	static CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
