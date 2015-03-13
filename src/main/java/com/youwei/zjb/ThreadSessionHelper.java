@@ -21,34 +21,30 @@ public class ThreadSessionHelper {
     	return (String)session.getAttribute("ip");
     }
     
-    public static String getDomain(){
+    public static String getCityPinyin(){
     	//先从ThreadLocal中取，没有再从HttpSession中取
-    	String domain = ThreadSession.getDomain();
-    	if(StringUtils.isNotEmpty(domain)){
-    		return domain;
-    	}
-    	if(ThreadSessionHelper.getUser()==null){
+    	String city = ThreadSession.getCityPY();
+    	if(StringUtils.isNotEmpty(city)){
+    		return city;
+    	}else{
     		return "hefei";
     	}
-    	domain = (String)ThreadSessionHelper.getUser().domain;
-		if(StringUtils.isEmpty(domain)){
-			domain="hefei";
-		}
-		return domain;
+//    	city = (String)ThreadSessionHelper.getUser().cityPinyin;
+//		if(StringUtils.isEmpty(city)){
+//			city="hefei";
+//		}
+//		return city;
     }
     
     /**
      * @return 城市坐标
+     * 合肥老客户端为设置城市信息，则默认返回合肥市坐标
      */
-    public static String getCity(){
-    	if(ThreadSessionHelper.getUser()==null){
-    		//合肥
-    		return "117.23355, 31.827258";
-    	}
-    	String city = (String)ThreadSessionHelper.getUser().city;
-		if(StringUtils.isEmpty(city)){
-			city="117.23355, 31.827258";
+    public static String getCityCordinate(){
+    	String cityCoordinate = ThreadSession.getCityCoordinate();
+		if(StringUtils.isEmpty(cityCoordinate)){
+			cityCoordinate="117.23355, 31.827258";
 		}
-		return city;
+		return cityCoordinate;
     }
 }

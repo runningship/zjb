@@ -34,21 +34,15 @@ public class ConfigService {
 //		mv.data.put("xingzhi", HouseAttribute.toJsonArray());
 //		mv.data.put("leibie", HouseType.toJsonArray());
 		mv.data.put("lxing", LouXing.toJsonArray());
-		String domain=ThreadSessionHelper.getDomain();
+		String citypy=ThreadSessionHelper.getCityPinyin();
 		//此处可以优化
 		JSONArray citys = cityService.getCitys();
 		for(int i=0;i<citys.size();i++){
 			JSONObject city = citys.getJSONObject(i);
-			if(city.getString("py").equals(domain)){
+			if(city.getString("py").equals(citypy)){
 				mv.data.put("quyu", city.getJSONArray("quyu"));
 			}
 		}
-//		if("wuhu".equals(domain)){
-//			mv.data.put("quyu", WuhuQuYu.toJsonArray());
-//		}else{
-//			mv.data.put("quyu", QuYu.toJsonArray());
-//		}
-		
 		mv.data.put("ztai_sell", SellState.toJsonArray());	
 		mv.data.put("ztai_rent", RentState.toJsonArray());
 		mv.data.put("shenhe", ShenHe.toJsonArray());

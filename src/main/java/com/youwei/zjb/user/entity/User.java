@@ -93,12 +93,13 @@ public class User {
 	/**
 	 * 城市域名,如hefei,wuhu
 	 */
-	public String domain;
+	
+	public transient String cityPinyin;
 	
 	/**
 	 * 城市坐标
 	 */
-	public String city;
+	public transient String cityCoordinate;
 	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
@@ -109,5 +110,9 @@ public class User {
 	}
 	public Department Company(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Department.class, Department().fid);
+	}
+	
+	public String toString(){
+		return uname;
 	}
 }

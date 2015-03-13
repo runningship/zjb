@@ -41,7 +41,7 @@ public class ZjbService {
 				mySelf = user;
 				continue;
 			}
-			if(IMServer.isUserOnline(me.domain, uid)){
+			if(IMServer.isUserOnline(me.cityPinyin, uid)){
 				user.put("online", true);
 			}else{
 				user.put("online", false);

@@ -16,6 +16,7 @@ import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
@@ -134,7 +135,10 @@ public class DepartmentService {
 	}
 	
 	@WebMethod
-	public ModelAndView listDept(String authCode){
+	public ModelAndView listDept(String authCode , String cityPy){
+		if(StringUtils.isNotEmpty(cityPy)){
+			ThreadSession.setCityPY(cityPy);
+		}
 		ModelAndView mv = new ModelAndView();
 		Department comp = dao.getUniqueByKeyValue(Department.class, "authCode", authCode);
 		if(comp!=null){

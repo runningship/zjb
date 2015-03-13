@@ -295,14 +295,14 @@ $(document).ready(function() {
                 
             }
             json = loadConfigAsJSON();
-            pcinfo.domain=json.city_py;
-            pcinfo.city=json.coodinate;
-            if(!pcinfo.domain){
+            pcinfo.cityPinyin=json.city_py;
+            pcinfo.cityCoordinate=json.coodinate;
+            if(!pcinfo.cityPinyin){
             	//alert('请先设置城市');
-                pcinfo.domain = "hefei";
+                pcinfo.cityPinyin = "hefei";
             }
-            if(!pcinfo.city){
-                pcinfo.city = "117.23355, 31.827258";
+            if(!pcinfo.cityCoordinate){
+                pcinfo.cityCoordinate = "117.23355, 31.827258";
             }
             YW.ajax({
                 type: 'POST',
@@ -377,7 +377,7 @@ $(document).on('click', '.act_menu a', function(event) {
             isFocus();
         }else if(ThiPliIndex==1){
             if($('#iframe').attr('src')==''){
-                $('#iframe').attr('src','iframe_reg.html?cityName='+cityNames+'&domain='+domains);
+                $('#iframe').attr('src','iframe_reg.html?cityPy='+json.city_py+'&cityName='+cityNames+'&domain='+domains);
             }
             $("#iframe").contents().find('#authCode').focus();
         }

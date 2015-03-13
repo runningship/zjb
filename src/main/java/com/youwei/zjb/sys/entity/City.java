@@ -18,5 +18,7 @@ public class City {
 	
 	public String province;
 	
+	//服务器地址
+	//TODO 改名为host
 	public String domain;
 }

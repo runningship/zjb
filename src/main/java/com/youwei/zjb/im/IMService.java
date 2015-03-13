@@ -114,7 +114,7 @@ public class IMService {
 	public ModelAndView status(){
 		ModelAndView mv = new ModelAndView();
 		JSONArray arr = new JSONArray();
-		String domian = ThreadSessionHelper.getDomain();
+		String domian = ThreadSessionHelper.getCityPinyin();
 		for(Integer uid : IMServer.conns.get(domian).keySet()){
 			User u = dao.get(User.class, uid);
 			if(u!=null){

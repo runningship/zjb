@@ -71,7 +71,7 @@ public class IMServer extends WebSocketServer{
 			Map<String, Object> map = URLUtil.parseQuery(path);
 			Integer uid = Integer.valueOf(map.get("uid").toString());
 			String city = (String)map.get("city");
-			ThreadSession.setDomain(city);
+			ThreadSession.setCityPY(city);
 			User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, uid);
 			conn.getAttributes().put("city", city);
 			conn.getAttributes().put("uid", uid);

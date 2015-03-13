@@ -30,12 +30,8 @@
 var winBoxHeight=0,
 domains=getParam('domain'),
 cityNames=decodeURI(getParam('cityName'));
-function setCity(){
-    $.post('/c/city/list', function(data, textStatus, xhr) {
-        var  json = JSON.parse(data);
-        buildHtmlWithJsonArray('set_citys' , json.citys ,true);
-    });
-}
+var cityPy = getParam('cityPy');
+
 function setDomSize(){
     $('html,body').height('100%').width('100%').css({'overflow':'hidden','overflow-y':'hidden'});
     var domW=$(document).width(),
@@ -131,7 +127,8 @@ function btnAction(){
                 var form=$(ThiFormId),
                 getCode=$('#authCode').val(),
                 param={
-                    authCode:getCode
+                    authCode:getCode,
+                    cityPy:cityPy
                 };
                 if(!getCode){
                     art.dialog.tips('请输入授权码');

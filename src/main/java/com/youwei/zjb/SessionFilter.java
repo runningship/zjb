@@ -126,8 +126,8 @@ public class SessionFilter implements Filter{
 //			}
 //			
 //		}
+		User me = ThreadSessionHelper.getUser();
 		if(path.endsWith(".jsp")){
-			User me = ThreadSessionHelper.getUser();
 			StringBuilder auths = new StringBuilder();
 			if(me.getRole()!=null){
 				for(RoleAuthority ra : me.getRole().Authorities()){
@@ -137,6 +137,8 @@ public class SessionFilter implements Filter{
 			req.setAttribute("user", me);
 			req.setAttribute("auths", auths);
 		}
+		ThreadSession.setCityPY(me.cityPinyin);
+		ThreadSession.setCityCoordinate(me.cityCoordinate);
 		chain.doFilter(request, response);
 	}
 

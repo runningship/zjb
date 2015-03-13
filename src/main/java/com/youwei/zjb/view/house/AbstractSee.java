@@ -82,7 +82,7 @@ public abstract class AbstractSee extends page{
 		html = html.replace("$${lxr}", json.getString("lxr"));
 		html = html.replace("$${tel}", json.getString("tel"));
 		html = html.replace("$${area}", json.getString("area"));
-		html = html.replace("$${city}",ThreadSessionHelper.getCity());
+		html = html.replace("$${city}",ThreadSessionHelper.getCityCordinate());
 		return Jsoup.parse(html);
 	}
 

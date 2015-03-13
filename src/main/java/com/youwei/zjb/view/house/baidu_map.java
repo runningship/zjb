@@ -11,7 +11,7 @@ public class baidu_map{
 	
 	public Document initPage(Document doc, HttpServletRequest req) {
 		String html = doc.toString();
-		html = html.replace("$${city}", ThreadSessionHelper.getCity());
+		html = html.replace("$${city}", ThreadSessionHelper.getCityCordinate());
 		return Jsoup.parse(html);
 	}
 }

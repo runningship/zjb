@@ -306,9 +306,16 @@ public class UserService {
 	}
 	
 	@WebMethod
+	public ModelAndView setCity(String cityPinyin, String cityCoordinate){
+		ThreadSession.setCityCoordinate(cityCoordinate);
+		ThreadSession.setCityPY(cityPinyin);
+		return new ModelAndView();
+	}
+	
+	@WebMethod
 	public ModelAndView login(User user,PC pc ,Integer uselic){
 		ModelAndView mv = new ModelAndView();
-		ThreadSession.setDomain(user.domain);
+		ThreadSession.setCityPY(user.cityPinyin);
 		if(user.lname==null){
 			throw new GException(PlatformExceptionType.BusinessException, "账号不存在");
 		}
@@ -349,8 +356,8 @@ public class UserService {
 		mv.data.put("result", "0");
 		mv.data.put("msg", "登录成功");
 		po.lasttime = new Date();
-		po.domain = user.domain;
-		po.city = user.city;
+		po.cityPinyin = user.cityPinyin;
+		po.cityCoordinate = user.cityCoordinate;
 		if(po.avatar==null){
 			Random r = new Random();
 			int avatar = r.nextInt(168)+1;

@@ -40,7 +40,7 @@ public class JobScheduler extends Thread{
 		nJob.setListPageInterval(3600);
 		jobs.put(nJob.getJobName(), nJob);
 		
-		this.start();
+//		this.start();
 	}
 	
 	@Override
@@ -68,7 +68,7 @@ public class JobScheduler extends Thread{
 					@Override
 					public void run() {
 						job.setRunning(true);
-						ThreadSession.setDomain("hefei");
+						ThreadSession.setCityPY("hefei");
 						job.work();
 						job.setRunning(false);
 						job.setLastRunTime(System.currentTimeMillis());

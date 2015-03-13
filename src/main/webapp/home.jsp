@@ -168,7 +168,7 @@ $('.menuSide').find('.curr a').click();
     my_uid=${me.id};
     my_avatar=${me.avatar};
     my_name = '${me.uname}';
-    ws_url = 'ws://${domainName}:9099?uid=${me.id}&city=${me.domain}';
+    ws_url = 'ws://${domainName}:9099?uid=${me.id}&city=${me.cityPinyin}';
     //start IM	
 	
 });

@@ -45,7 +45,7 @@ public class StartUpListener implements ServletContextListener{
 
 			@Override
 			public String getKey() {
-				return ThreadSessionHelper.getDomain();
+				return ThreadSessionHelper.getCityPinyin();
 			}
 
 			@Override
@@ -71,9 +71,9 @@ public class StartUpListener implements ServletContextListener{
 				settings.put(AvailableSettings.USE_SECOND_LEVEL_CACHE, "true");
 				
 //				settings.put(AvailableSettings.PROXOOL_XML, "proxool.xml");//相对目录为classes
-				settings.put(AvailableSettings.PROXOOL_XML, ConfigCache.get(ThreadSessionHelper.getDomain()+"_proxool_xml" ,ThreadSessionHelper.getDomain()+"_proxool.xml"));//相对目录为classes
+				settings.put(AvailableSettings.PROXOOL_XML, ConfigCache.get(ThreadSessionHelper.getCityPinyin()+"_proxool_xml" ,ThreadSessionHelper.getCityPinyin()+"_proxool.xml"));//相对目录为classes
 				settings.put(AvailableSettings.PROXOOL_EXISTING_POOL, "false");
-				settings.put(AvailableSettings.PROXOOL_POOL_ALIAS, ThreadSessionHelper.getDomain());
+				settings.put(AvailableSettings.PROXOOL_POOL_ALIAS, ThreadSessionHelper.getCityPinyin());
 				
 //				settings.put("annotated.packages", HouseRent.class.getPackage().getName());
 				settings.put("annotated.packages", "com.youwei.zjb");

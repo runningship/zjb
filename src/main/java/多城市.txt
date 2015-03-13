@@ -1,0 +1,3 @@
+城市信息保存在session中的user对象中
+通过session filter 把城市信息保存到ThreadSession中
+系统使用时，通过ThreadSession 获取城市信息
