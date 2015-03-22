@@ -11,9 +11,13 @@ import org.bc.sdak.TransactionalServiceHelper;
 
 import com.youwei.zjb.npl.entity.Aggregation;
 
+//遍历词法树，一边遍历，一边"理解",加入集合层次作用，处理成初级的语义结构,
 public class Translator {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	/**
+	 * 返回一个语义结构
+	 */
 	public JSONObject visit(Block block){
 		if(block.isOper){
 			return visitOper(block);

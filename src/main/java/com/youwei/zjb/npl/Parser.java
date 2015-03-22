@@ -7,7 +7,7 @@ import org.bc.sdak.TransactionalServiceHelper;
 
 import com.youwei.zjb.npl.entity.Oper;
 
-//生成语义块
+//生成词法树Block
 public class Parser {
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	

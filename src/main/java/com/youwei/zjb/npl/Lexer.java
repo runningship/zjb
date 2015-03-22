@@ -9,6 +9,7 @@ import org.bc.sdak.SimpDaoTool;
 import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.npl.entity.Word;
 
+//分词器
 public class Lexer {
 
 	public static final String ExprSeprator = "-";
