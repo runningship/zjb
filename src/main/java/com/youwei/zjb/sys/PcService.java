@@ -13,9 +13,11 @@ import org.bc.sdak.Page;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
@@ -29,11 +31,12 @@ public class PcService {
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
 	@WebMethod
-	public ModelAndView add(PC pc){
-		ModelAndView mv = new ModelAndView();
-		if(pc==null){
-			return mv;
+	public ModelAndView add(PC pc , String cityPy){
+		LogUtil.info(cityPy+" 申请授权:"+pc.beizhu);
+		if(StringUtils.isNotEmpty(cityPy)){
+			ThreadSession.setCityPY(cityPy);
 		}
+		ModelAndView mv = new ModelAndView();
 		
 		if(pc.did==null){
 			throw new GException(PlatformExceptionType.BusinessException, "请先填写店面信息");

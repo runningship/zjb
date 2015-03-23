@@ -187,6 +187,9 @@ function getHtml(){
             $$doc.find("ico-stick-yellow").each(function(i,project){
                 iconum_tui++;
             });
+            $$doc.find("ico-zhineng").each(function(i,project){
+                iconum_tui++;
+            });
             iconum_ding+= $$doc.find("em[title='置顶信息，效果更好']").length;
             iconum_ding+= $$doc.find("em[title='高级置顶信息，效果更好']").length;
             iconum_all=iconum_ding+iconum_tui;
@@ -277,7 +280,7 @@ function get1Html(url){
                 cont_tels = $$cont_doc.find(".basic-info .basic-info-contact #contact-phone").find("em").text();
                 cont_tels = replaceAlls(cont_tels);
 			
-			var cont_lxr= $$cont_doc.find(".basic-info .basic-info-contact .contact-person").find("i.fc-4b").text();
+			var cont_lxr= $$cont_doc.find(".basic-info .basic-info-contact .contact-person").find("i.fc-gray9").text();
 			    cont_lxr = replaceAlls(cont_lxr);
 			
             var cont_lc;
@@ -300,7 +303,7 @@ function get1Html(url){
             var conTentSize = conTentAll.size();
             
             for(var i=0;i<=conTentSize;i++){
-                var CameFrom = $$cont_doc.find(".basic-info ul li span.fc-gray").eq(i);//.fc-gray
+                var CameFrom = $$cont_doc.find(".basic-info ul li span.fc-gray9").eq(i);//.fc-gray
                 conTentCon = replaceAlls(CameFrom.text());
                 var su_coninFor = CameFrom.parent();
                // var wzInfor= CameFrom.siblings(".su_con");

@@ -23,7 +23,7 @@ $(function(){
   });
     id = getParam('id');
     ue.addListener( 'ready', function( editor ) {
-        ue.setContent('${article.conts}');
+        ue.setContent($('#article_conts').html());
     });
     // getContent();
 });
@@ -82,6 +82,7 @@ function save(){
     </tr>
 </table>
 </form>
+<div id="article_conts" style="display:none">${article.conts}</div>
 <jsp:include page="../userTree.jsp"></jsp:include>
 </body>
 </html>

@@ -124,6 +124,9 @@ function btnAction(){
             l.start();
             var ThiFormId=ThiLi.attr('data-formId');
             if(ThiFormId=="auth"){
+            	if(cityPy=='undefined'){
+            		cityPy='';
+            	}
                 var form=$(ThiFormId),
                 getCode=$('#authCode').val(),
                 param={
@@ -201,6 +204,10 @@ function btnAction(){
                 param.authCode=getCode;
                 param.did=getDid[0];
                 param.beizhu=getBeizhu;
+                if(cityPy=='undefined'){
+                	cityPy='';
+                }
+                param.cityPy = cityPy;
                 if(gui.App.manifest['--use_uuid_lic']){
                     var data = readLic();
                     if(data==undefined){

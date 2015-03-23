@@ -26,7 +26,7 @@ $(function(){
 	initUserTree('receiverTree');
     id = getParam('id');
     ue.addListener( 'ready', function( editor ) {
-        ue.setContent('${notice.conts}');
+        ue.setContent($('#notice_conts').html());
     });
     // getContent();
 });
@@ -84,6 +84,7 @@ function save(){
     </tr>
 </table>
 </form>
+<div id="notice_conts" style="display:none">${notice.conts}</div>
 <jsp:include page="../userTree.jsp"></jsp:include>
 </body>
 </html>
