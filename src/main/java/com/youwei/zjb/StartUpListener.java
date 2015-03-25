@@ -16,6 +16,7 @@ import org.hibernate.cfg.AvailableSettings;
 
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.IMServer;
+import com.youwei.zjb.task.TaskScheduler;
 
 public class StartUpListener implements ServletContextListener{
 
@@ -28,6 +29,8 @@ public class StartUpListener implements ServletContextListener{
 		JspFactory.getDefaultFactory()
         .getJspApplicationContext(event.getServletContext())
         .addELResolver(new PublicFieldSupportingELResolver());
+		TaskScheduler ts = new TaskScheduler();
+		ts.start();
 		try {
 			IMServer.startUp();
 		} catch (Throwable e) {

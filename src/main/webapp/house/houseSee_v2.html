@@ -117,9 +117,11 @@ $(document).ready(function() {
     if($('.telBox').length>0){
         var telArr=new Array(),
         lxrArr=new Array();
-        tel=replaceAlls(tel);
-        lxr=replaceAlls(lxr);
+        if(tel.indexOf('http')<0){
+        	tel=replaceAlls(tel);
+        }
         telArr=tel.split(',');
+        lxr=replaceAlls(lxr);
         lxrArr=lxr.split(',');
         var ThiBox=$('.telBox');
         // blockAlert(ThiBox.attr('seeHM'));
@@ -143,7 +145,12 @@ $(document).ready(function() {
               }else{
                   thiLxr=lxrArr[0]
               }
-              TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span></p>';
+              if(thiTel.indexOf('http')>-1){
+            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <img src="'+thiTel+'"/> </p>';
+              }else{
+            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span></p>';  
+              }
+              
           });
           TelBoxStr=TelBoxStr+'<i>^</i>'
         };

@@ -1,0 +1,81 @@
+package com.youwei.zjb.task;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Task {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public Integer id;
+	
+	public String siteUrl;
+	
+	public String name;
+	
+	//数据库信息
+	public String cityPy;
+	
+	//城市中文
+	public String city;
+	
+	
+	//是否开启
+	public int taskOn;
+	
+	//运行状态
+	public int status;
+	
+////////////以下字段为选择器/////////////
+	public String filterSelector;
+	
+	//列表数据选择器
+	public String listSelector;
+	
+	//详情页面链接选择器
+	public String detailLink;
+	//楼盘名称选择器
+	public String area;
+	
+	public String quyu;
+	
+	public String lceng;
+	
+	public String zceng;
+	
+	public String hxf;
+	
+	public String hxt;
+	
+	public String hxw;
+	
+	public String zxiu;
+	
+	public String mji;
+	
+	public String zjia;
+	
+	public String djia;
+	
+	//联系人，房主
+	public String lxr;
+	
+	//房主电话
+	public String tel;
+	
+	public String dateyear;
+	
+	public String beizhu;
+	
+	public String address;
+	
+	public String pubtime;
+	
+	////////////以上字段为选择器/////////////
+	
+	//最近一次错误信息
+	public String lastError;
+}

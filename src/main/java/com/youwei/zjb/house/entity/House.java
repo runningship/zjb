@@ -163,4 +163,7 @@ public class House {
 
 	public Integer isdel;
 
+	public String href;
+	
+	public String site;
 }
