@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.utils.JSONHelper;
@@ -80,7 +81,11 @@ public abstract class AbstractSee extends page{
 		}
 		html = html.replace("$${seeHM}",seeHM==null? "" : seeHM.toString());
 		html = html.replace("$${lxr}", json.getString("lxr"));
-		html = html.replace("$${tel}", json.getString("tel"));
+		String tel = json.getString("tel");
+		if(StringUtils.isEmpty(tel)){
+			tel = json.getString("telImg");
+		}
+		html = html.replace("$${tel}", tel);
 		html = html.replace("$${area}", json.getString("area"));
 		html = html.replace("$${city}",ThreadSessionHelper.getCityCordinate());
 		return Jsoup.parse(html);

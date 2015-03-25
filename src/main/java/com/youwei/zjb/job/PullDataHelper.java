@@ -55,7 +55,7 @@ public class PullDataHelper {
 			hr.dateyear = action.getYear(sumary);
 			hr.dhao = "";
 			hr.fhao="";
-			hr.sh=0;
+			hr.sh=1;
 			String zujin = action.getZujin(sumary);
 			try{
 				hr.zjia = Float.valueOf(zujin);

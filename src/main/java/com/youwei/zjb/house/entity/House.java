@@ -166,4 +166,6 @@ public class House {
 	public String href;
 	
 	public String site;
+	
+	public String telImg;
 }

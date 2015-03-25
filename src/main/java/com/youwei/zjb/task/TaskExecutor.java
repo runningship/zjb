@@ -33,15 +33,15 @@ public class TaskExecutor extends Thread{
 	public void run() {
 		ThreadSession.setCityPY("hefei");
 		task.status =KeyConstants.Task_Running;
-		dao.saveOrUpdate(task);
+		dao.saveOrUpdate(task);//设置任务状态为运行中
 		try{
-			execute();
-			task.status = KeyConstants.Task_Stop;
+			execute();//execute方法会更新task.tatus
 		}catch(Exception ex){
 			task.status = KeyConstants.Task_Failed;
 			task.lastError = ex.getMessage();
 		}
 		ThreadSession.setCityPY("hefei");
+		//更新任务状态
 		dao.saveOrUpdate(task);
 	}
 
@@ -67,7 +67,7 @@ public class TaskExecutor extends Thread{
 		}
 		if(pageHtml==null){
 			task.status = KeyConstants.Task_Failed;
-			task.lastError = "page居然为空";
+			task.lastError = "列表页面数据获取失败";
 			return;
 		}
 		Document page = Jsoup.parse(pageHtml);
@@ -83,7 +83,7 @@ public class TaskExecutor extends Thread{
 			}
 			Elements link = elem.select(task.detailLink);
 			if(link.isEmpty()){
-				task.lastError = "列表没有找到数据,listSelector="+task.listSelector;
+				task.lastError = "列表没有找到详情页面链接,detailLinkSelector="+task.detailLink;
 				continue;
 			}
 			String detailUrl = link.first().attr("href");
@@ -91,13 +91,16 @@ public class TaskExecutor extends Thread{
 				processDetailPage(detailUrl);
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | IOException e) {
 				task.status = KeyConstants.Task_Failed;
-				e.printStackTrace();
+				task.lastError = e.getMessage();
+				LogUtil.log(Level.WARN, "任务运行失败，请检查程序", e);
 				return;
 			} catch(Exception ex){
 				//单挑数据失败，继续
-				LogUtil.log(Level.WARN, "抓取数据失败", ex);
+				task.lastError = ex.getMessage()+";"+detailUrl;
+				LogUtil.log(Level.WARN, "抓取数据失败:"+detailUrl, ex);
 			}
 		}
+		task.status = KeyConstants.Task_Stop;
 	}
 	
 	private boolean isZhiDing(Element elem) {
@@ -126,9 +129,9 @@ public class TaskExecutor extends Thread{
 		house.did = 90;
 //		house.lxing="";
 		house.ztai = "4";
-		house.sh = 1;
+		house.sh = 0;
 		house.seeFH = 1;
-		house.seeGX = 0;
+		house.seeGX = 1;
 		house.seeHM = 1;
 		house.dhao = "";
 		house.site = task.city;
@@ -140,6 +143,9 @@ public class TaskExecutor extends Thread{
 			System.out.println(detailUrl);
 		}
 		String quyu = getDataBySelector(page , "quyu");
+		if(StringUtils.isNotEmpty(quyu)){
+			quyu = quyu.replace("区", "").replace("县", "");
+		}
 		house.quyu = quyu;
 		
 		String address = getDataBySelector(page , "address");
@@ -177,13 +183,19 @@ public class TaskExecutor extends Thread{
 //		house.djia = Float.valueOf(djia);
 		if(house.mji!=null && house.mji!=0f){
 			house.djia = house.zjia*10000/house.mji;
+			house.djia = house.djia.intValue()*1.0f;
 		}
 		
 		String lxr = getDataBySelector(page , "lxr");
 		house.lxr = lxr;
 		
 		String tel = getDataBySelector(page , "tel");
-		house.tel = TaskHelper.getTelFromText(tel);
+		tel  = TaskHelper.getTelFromText(tel);
+		if(tel.contains("http:")){
+			house.telImg = tel;
+		}else{
+			house.tel = tel;
+		}
 		
 		String dateyear = getDataBySelector(page , "dateyear");
 		house.dateyear = TaskHelper.getYearFromText(dateyear);
@@ -209,7 +221,7 @@ public class TaskExecutor extends Thread{
 //			page.select("li:contains(位置)").first().ownText(); //楼盘 p:containsOwn(小区名称) :first-child
 //			page.select("li:contains(位置) a").first().ownText();//区域
 //			page.select("li:containsOwn(楼层) + li"); //楼层
-			page.select("p:containsOwn(小区名称) :first-child"); //地址
+//			page.select("p:containsOwn(小区名称) :first-child"); //地址
 //			page.select("li:containsOwn(装修程度) + li"); //装修
 //			page.select("li:containsOwn(建造年代) + li"); //年代
 //			page.select("div:containsOwn(户型) + .su_con"); //户型 面积
@@ -225,6 +237,7 @@ public class TaskExecutor extends Thread{
 			if(StringUtils.isEmpty(text)){
 				text = elems.first().html();
 			}
+			//过滤点无用字符
 			text = text.replace("-", "").replace(" ", "").replace(String.valueOf((char)160),"");
 			if(StringUtils.isEmpty(text)){
 				continue;
