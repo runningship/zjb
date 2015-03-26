@@ -56,6 +56,7 @@ public class PullDataHelper {
 			hr.dhao = "";
 			hr.fhao="";
 			hr.sh=1;
+			hr.ruku=1;
 			String zujin = action.getZujin(sumary);
 			try{
 				hr.zjia = Float.valueOf(zujin);
