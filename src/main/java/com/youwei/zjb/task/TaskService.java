@@ -98,7 +98,8 @@ public class TaskService {
 		po.filterSelector = task.filterSelector;
 		po.pubtime = task.pubtime;
 		po.detailPageUrlPrefix = task.detailPageUrlPrefix;
-		po.site = po.site;
+		po.site = task.site;
+		po.interval = task.interval;
 		dao.saveOrUpdate(po);
 		return mv;
 	}

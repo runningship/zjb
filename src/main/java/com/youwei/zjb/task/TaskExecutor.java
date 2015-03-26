@@ -90,6 +90,9 @@ public class TaskExecutor extends Thread{
 			}
 			String detailUrl = link.first().attr("href");
 			try {
+				if(task.interval>0){
+					Thread.sleep(task.interval*1000);
+				}
 				processDetailPage(detailUrl);
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | IOException e) {
 				task.status = KeyConstants.Task_Failed;

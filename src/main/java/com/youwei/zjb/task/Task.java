@@ -29,6 +29,9 @@ public class Task {
 	//运行状态
 	public int status;
 	
+	//每条房源之间的时间间隔(单位秒)
+	public int interval;
+	
 ////////////以下字段为选择器/////////////
 	public String filterSelector;
 	
