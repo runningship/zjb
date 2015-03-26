@@ -1,5 +1,7 @@
 package com.youwei.zjb.task;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -81,4 +83,6 @@ public class Task {
 	
 	//最近一次错误信息
 	public String lastError;
+	
+	public Date lasttime;
 }

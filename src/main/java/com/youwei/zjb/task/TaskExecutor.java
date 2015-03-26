@@ -2,6 +2,7 @@ package com.youwei.zjb.task;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
@@ -43,6 +44,7 @@ public class TaskExecutor extends Thread{
 		}
 		ThreadSession.setCityPY("hefei");
 		//更新任务状态
+		task.lasttime = new Date();
 		dao.saveOrUpdate(task);
 	}
 
@@ -57,8 +59,13 @@ public class TaskExecutor extends Thread{
 		try {
 			pageHtml = PullDataHelper.getHttpData(task.siteUrl, "", "utf8");
 		} catch (IOException e) {
-			task.status = KeyConstants.Task_Failed;
+			task.status = KeyConstants.Task_Stop;
 			task.lastError = "访问"+task.siteUrl+"失败";
+			return;
+		}
+		if(pageHtml.contains("您的访问速度太快")){
+			task.status = KeyConstants.Task_Too_Fast;
+			task.lastError = "访问速度过快";
 			return;
 		}
 		if(StringUtils.isEmpty(task.cityPy)){
@@ -66,11 +73,11 @@ public class TaskExecutor extends Thread{
 			task.lastError = "任务未设置城市";
 			return;
 		}
-		if(pageHtml==null){
-			task.status = KeyConstants.Task_Failed;
-			task.lastError = "列表页面数据获取失败";
-			return;
-		}
+//		if(pageHtml==null){
+//			task.status = KeyConstants.Task_Failed;
+//			task.lastError = "列表页面数据获取失败";
+//			return;
+//		}
 		Document page = Jsoup.parse(pageHtml);
 		Elements dataList = page.select(task.listSelector);
 		if(dataList.isEmpty()){
