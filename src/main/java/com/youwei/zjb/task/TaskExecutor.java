@@ -39,6 +39,7 @@ public class TaskExecutor extends Thread{
 		}catch(Exception ex){
 			task.status = KeyConstants.Task_Failed;
 			task.lastError = ex.getMessage();
+			ex.printStackTrace();
 		}
 		ThreadSession.setCityPY("hefei");
 		//更新任务状态
@@ -77,7 +78,8 @@ public class TaskExecutor extends Thread{
 			task.lastError = "列表没有找到数据,listSelector="+task.listSelector;
 			return;
 		}
-		for(Element elem : dataList){
+		for(int i=dataList.size()-1;i>=0;i--){
+			Element elem = dataList.get(i);
 			if(isZhiDing(elem)){
 				continue;
 			}
@@ -116,6 +118,9 @@ public class TaskExecutor extends Thread{
 	}
 	private void processDetailPage(String detailUrl) throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		ThreadSession.setCityPY(task.cityPy);
+		if(StringUtils.isNotEmpty(task.detailPageUrlPrefix)){
+			detailUrl = task.detailPageUrlPrefix+detailUrl;
+		}
 		House po = dao.getUniqueByKeyValue(House.class, "href", detailUrl);
 		if(po!=null){
 			return;
@@ -134,7 +139,7 @@ public class TaskExecutor extends Thread{
 		house.seeGX = 1;
 		house.seeHM = 1;
 		house.dhao = "";
-		house.site = task.city;
+		house.site = task.site;
 		house.href = detailUrl;
 		
 		String area = getDataBySelector(page , "area");
@@ -142,6 +147,8 @@ public class TaskExecutor extends Thread{
 		if(StringUtils.isEmpty(house.area.trim())){
 			System.out.println(detailUrl);
 		}
+//		page.select("li:contains(小区)").first().ownText()
+//		page.select("span:containsOwn(地区) :first-child")
 		String quyu = getDataBySelector(page , "quyu");
 		if(StringUtils.isNotEmpty(quyu)){
 			quyu = quyu.replace("区", "").replace("县", "");
@@ -167,12 +174,16 @@ public class TaskExecutor extends Thread{
 		house.hxw = TaskHelper.getHxwFromText(hxw);
 		
 		String zxiu = getDataBySelector(page , "zxiu");
+		zxiu = TaskHelper.getZxiuFromText(zxiu);
+		//装修情况：毛坯房
 		house.zxiu = zxiu;
 		
 		String mji = getDataBySelector(page , "mji");
 		house.mji = TaskHelper.getMjiFromText(mji);
 		
 		String zjia = getDataBySelector(page , "zjia");
+		zjia = TaskHelper.getZjiaFromText(zjia);
+		//价格：48万元
 		if(StringUtils.isEmpty(zjia)){
 			house.zjia = 0f;
 		}else{
@@ -235,11 +246,15 @@ public class TaskExecutor extends Thread{
 			}
 			String text = elems.first().ownText();
 			if(StringUtils.isEmpty(text)){
+				text = elems.first().text();
+			}
+			if(StringUtils.isEmpty(text)){
 				text = elems.first().html();
 			}
 			//过滤点无用字符
-			text = text.replace("-", "").replace(" ", "").replace(String.valueOf((char)160),"");
-			if(StringUtils.isEmpty(text)){
+			text = text.replace("-", "");
+			String tmp = text.replace(" ", "").replace(String.valueOf((char)160),"");
+			if(StringUtils.isEmpty(tmp)){
 				continue;
 			}
 			return text;

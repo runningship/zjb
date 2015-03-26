@@ -19,10 +19,10 @@ public class Task {
 	//数据库信息
 	public String cityPy;
 	
-	//城市中文
-	public String city;
+	//网站名称
+	public String site;
 	
-	
+	public String detailPageUrlPrefix;
 	//是否开启
 	public int taskOn;
 	

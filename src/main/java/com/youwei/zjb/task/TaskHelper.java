@@ -48,7 +48,7 @@ public class TaskHelper {
 	}
 	
 	public static int getLcengFromText(String text){
-		text = text.replace("楼", "");
+		text = text.replace("楼层：", "").replace("楼", "");
 		if(StringUtils.isEmpty(text)){
 			return 0;
 		}
@@ -93,7 +93,7 @@ public class TaskHelper {
 			return 0f;
 		}
 		String tmp = "";
-		text  = text.replace("　", " ");
+		text  = text.replace("　", " ").replace("面积：", "").replace("平米", "㎡");
 		text = text.split("（")[0];
 		for(String str : text.split(" ")){
 			if(str.contains("㎡") && !str.contains("（")){
@@ -112,6 +112,9 @@ public class TaskHelper {
 		if(StringUtils.isEmpty(text)){
 			return "";
 		}
+		if(!text.contains("src=")){
+			return text.replace(" ", "").trim();
+		}
 		String[] arr = text.split("src=");
 		if(arr.length>1){
 			text = arr[1];
@@ -125,11 +128,14 @@ public class TaskHelper {
 	}
 	
 	public static String getAreaFromText(String text){
+		//需要过滤括号里的内容
 		if(StringUtils.isEmpty(text)){
 			return "";
 		}
 		text = text.replace(String.valueOf((char)160), "");
-		return text.replace("-", "").trim();
+		text = text.replace("-", "").trim();
+		text = text.replace("小区：", "");
+		return text.split("\\(")[0].split(" ")[0];
 	}
 	
 	public static Date getPubtimeFromText(String text){
@@ -140,5 +146,19 @@ public class TaskHelper {
 			return new Date();
 		}
 		
+	}
+
+	public static String getZjiaFromText(String zjia) {
+		if(StringUtils.isEmpty(zjia)){
+			return "";
+		}
+		return zjia.replace("价格：", "").replace("万", "").replace("元", "");
+	}
+
+	public static String getZxiuFromText(String zxiu) {
+		if(StringUtils.isEmpty(zxiu)){
+			return "";
+		}
+		return zxiu.replace("装修情况：", "").replace("房", "");
 	}
 }

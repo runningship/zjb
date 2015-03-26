@@ -51,8 +51,8 @@ $(document).ready(function() {
     <td width="300" class="TableTdBgColor"><input type="text" class="w1" value="${task.cityPy}" name="cityPy"/></td>
   </tr>
   <tr>
-    <td width="70" align="right" class="TableTdBorBot TableTdBorTop">城市名称：</td>
-    <td width="300" class="TableTdBgColor"><input type="text" class="w1" value="${task.city}" name="city"/></td>
+    <td width="70" align="right" class="TableTdBorBot TableTdBorTop">网站：</td>
+    <td width="300" class="TableTdBgColor"><input type="text" class="w1" value="${task.site}" name="site"/></td>
   </tr>
   <tr>
     <td width="70" align="right" class="TableTdBorBot TableTdBorTop">任务地址：</td>

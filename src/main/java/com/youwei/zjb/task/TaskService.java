@@ -97,7 +97,8 @@ public class TaskService {
 		po.address = task.address;
 		po.filterSelector = task.filterSelector;
 		po.pubtime = task.pubtime;
-		po.city = po.city;
+		po.detailPageUrlPrefix = task.detailPageUrlPrefix;
+		po.site = po.site;
 		dao.saveOrUpdate(po);
 		return mv;
 	}
