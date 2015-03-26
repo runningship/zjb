@@ -133,9 +133,10 @@ public class TaskHelper {
 			return "";
 		}
 		text = text.replace(String.valueOf((char)160), "");
-		text = text.replace("-", "").trim();
 		text = text.replace("小区：", "");
-		return text.split("\\(")[0].split(" ")[0];
+		text = text.replace("-", "").trim();
+		text = text.split("\\(")[0].trim();
+		return text.split(" ")[0];
 	}
 	
 	public static Date getPubtimeFromText(String text){
