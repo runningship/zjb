@@ -30,8 +30,8 @@
 var winBoxHeight=0,
 domains=getParam('domain'),
 cityNames=decodeURI(getParam('cityName'));
-var cityPy = getParam('cityPy');
-
+//var cityPy = getParam('cityPy');
+var cityPy = "";
 function setDomSize(){
     $('html,body').height('100%').width('100%').css({'overflow':'hidden','overflow-y':'hidden'});
     var domW=$(document).width(),
@@ -307,7 +307,8 @@ $(document).ready(function() {
     $('.view_city').text(cityNames);
 
     parent.dialogClose();
-
+    var json = loadConfigAsJSON();
+    cityPy = json.city_py;
 });
 $(window).resize(function() {
     setDomSize();
