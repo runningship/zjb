@@ -50,6 +50,8 @@ public class TaskExecutor extends Thread{
 
 
 	public void execute(){
+		LogUtil.info("开始扫网.."+task.site);
+		int total  = 0;
 		if(StringUtils.isEmpty(task.siteUrl)){
 			task.status = KeyConstants.Task_Failed;
 			task.lastError = "siteUrl 不能为空";
@@ -61,6 +63,7 @@ public class TaskExecutor extends Thread{
 		} catch (IOException e) {
 			task.status = KeyConstants.Task_Stop;
 			task.lastError = "访问"+task.siteUrl+"失败";
+			LogUtil.log(Level.WARN, "访问"+task.siteUrl+"失败", e);
 			return;
 		}
 		if(pageHtml.contains("您的访问速度太快")){
@@ -101,6 +104,7 @@ public class TaskExecutor extends Thread{
 					Thread.sleep(task.interval*1000);
 				}
 				processDetailPage(detailUrl);
+				total++;
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | IOException e) {
 				task.status = KeyConstants.Task_Failed;
 				task.lastError = e.getMessage();
@@ -113,6 +117,7 @@ public class TaskExecutor extends Thread{
 			}
 		}
 		task.status = KeyConstants.Task_Stop;
+		LogUtil.info("本次扫网.."+task.site+",共处理"+total+"套新房源");
 	}
 	
 	private boolean isZhiDing(Element elem) {
@@ -133,6 +138,8 @@ public class TaskExecutor extends Thread{
 		}
 		House po = dao.getUniqueByKeyValue(House.class, "href", detailUrl);
 		if(po!=null){
+//			po.dateadd = new Date();
+//			dao.saveOrUpdate(po);
 			return;
 		}
 		String pageHtml = PullDataHelper.getHttpData(detailUrl, "", "utf8");
