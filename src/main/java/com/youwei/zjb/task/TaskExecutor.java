@@ -218,12 +218,19 @@ public class TaskExecutor extends Thread{
 		house.lxr = lxr;
 		
 		String tel = getDataBySelector(page , "tel");
-		tel  = TaskHelper.getTelFromText(tel);
+		Elements whao = page.select(".show-contact");
 		if(tel.contains("http:")){
 			house.telImg = tel;
 		}else{
-			house.tel = tel;
+			if(whao.isEmpty()){
+				house.tel = tel;
+			}else {
+				String weihao = whao.first().attr("data-contact");
+				house.tel = tel.replace("*", "")+weihao;
+			}
+			
 		}
+		
 		
 		String dateyear = getDataBySelector(page , "dateyear");
 		house.dateyear = TaskHelper.getYearFromText(dateyear);

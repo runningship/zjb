@@ -48,7 +48,7 @@ public class TaskHelper {
 	}
 	
 	public static int getLcengFromText(String text){
-		text = text.replace("楼层：", "").replace("楼", "");
+		text = text.replace("楼层：", "").replace("楼", "").replace("层", "");
 		if(StringUtils.isEmpty(text)){
 			return 0;
 		}
@@ -153,13 +153,26 @@ public class TaskHelper {
 		if(StringUtils.isEmpty(zjia)){
 			return "";
 		}
-		return zjia.replace("价格：", "").replace("万", "").replace("元", "");
+		if(zjia.contains("面议")){
+			return "";
+		}
+		return zjia.replace("价格：", "").replace("万", "").replace("w", "").replace("W", "").replace("元", "");
 	}
 
 	public static String getZxiuFromText(String zxiu) {
 		if(StringUtils.isEmpty(zxiu)){
 			return "";
 		}
-		return zxiu.replace("装修情况：", "").replace("房", "");
+		if(zxiu.contains("简单装修")){
+			return "简装";
+		}else if(zxiu.contains("精装修")){
+			return "精装";
+		}else if(zxiu.contains("中等装修")){
+			return "中装";
+		}else if(zxiu.contains("豪华装修")){
+			return "豪装";
+		}else{
+			return zxiu.replace("装修情况：", "").replace("房", "");
+		}
 	}
 }
