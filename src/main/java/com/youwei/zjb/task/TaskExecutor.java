@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.BeanUtil;
 import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ThreadSession;
 import org.jsoup.Jsoup;
@@ -50,7 +51,7 @@ public class TaskExecutor extends Thread{
 
 
 	public void execute(){
-		LogUtil.info("开始扫网.."+task.site);
+		LogUtil.info("开始扫网.."+task.name);
 		int total  = 0;
 		if(StringUtils.isEmpty(task.siteUrl)){
 			task.status = KeyConstants.Task_Failed;
@@ -117,7 +118,7 @@ public class TaskExecutor extends Thread{
 			}
 		}
 		task.status = KeyConstants.Task_Stop;
-		LogUtil.info("本次扫网.."+task.site+",共处理"+total+"套新房源");
+		LogUtil.info("本次扫网.."+task.name+",共处理"+total+"套新房源");
 	}
 	
 	private boolean isZhiDing(Element elem) {
@@ -151,7 +152,7 @@ public class TaskExecutor extends Thread{
 		house.did = 90;
 //		house.lxing="";
 		house.ztai = "4";
-		house.sh = 0;
+		house.sh = 1;
 		house.seeFH = 1;
 		house.seeGX = 1;
 		house.seeHM = 1;
@@ -220,7 +221,7 @@ public class TaskExecutor extends Thread{
 		String tel = getDataBySelector(page , "tel");
 		Elements whao = page.select(".show-contact");
 		if(tel.contains("http:")){
-			house.telImg = tel;
+			house.telImg = TaskHelper.getTelFromText(tel);
 		}else{
 			if(whao.isEmpty()){
 				house.tel = tel;
@@ -241,7 +242,7 @@ public class TaskExecutor extends Thread{
 //		house.dateadd = new Date();
 		String pubtime = getDataBySelector(page , "pubtime");
 		house.dateadd = TaskHelper.getPubtimeFromText(pubtime);
-		
+		LogUtil.info("抓取到"+task.name+"房源信息:"+BeanUtil.toString(house));
 		dao.saveOrUpdate(house);
 	}
 
