@@ -45,8 +45,12 @@ public class TaskExecutor extends Thread{
 		}
 		ThreadSession.setCityPY("hefei");
 		//更新任务状态
-		task.lasttime = new Date();
-		dao.saveOrUpdate(task);
+		//重新再从数据库取一遍，防止脏数据
+		Task po = dao.get(Task.class, task.id);
+		po.lasttime  = new Date();
+		po.lastError = task.lastError;
+		po.status = task.status;
+		dao.saveOrUpdate(po);
 	}
 
 

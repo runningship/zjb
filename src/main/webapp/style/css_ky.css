@@ -193,7 +193,7 @@ to {background: #007759; border:1px solid #00241b;}
 
 
 .InputMainLine li button{ height:30px; display:block; line-height:26px; padding:0 0; color:#555555;width:58px;}
-
+.InputMainLine .zonghe{border-color: cadetblue;background-color: #00976a;color:white}
 .InputMainLine li button:hover, .InputMainLine li button.bgBox{background: -webkit-gradient(linear, 0 0, 0 100%, from(#00976a), to(#006249)); border: 1px solid #006249; color:#ffffff;}
 
 .InputMainLine li button.sh:hover{background:#ffffff; color:#555555; border:1px solid #cccccc;}

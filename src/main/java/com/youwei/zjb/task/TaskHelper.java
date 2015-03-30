@@ -134,6 +134,9 @@ public class TaskHelper {
 		}
 		text = text.replace(String.valueOf((char)160), "");
 		text = text.replace("小区：", "");
+		text = text.replace("位置：", "");
+		text = text.replace("(出售)", "");
+		text = text.replace("出售", "");
 		text = text.replace("-", "").trim();
 		text = text.split("\\(")[0].trim();
 		return text.split(" ")[0];
