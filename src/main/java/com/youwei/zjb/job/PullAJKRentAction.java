@@ -64,8 +64,11 @@ public class PullAJKRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getZceng(Element elem) {
-		Elements lc = elem.getElementsByClass("pinfo");
-		String text = lc.first().child(2).child(0).child(1).child(3).child(1).ownText();
+		Elements lceng = elem.getElementsContainingOwnText("楼层");
+		if(lceng.isEmpty()){
+			return "0";
+		}
+		String text = lceng.first().nextElementSibling().ownText();
 		return text.split("/")[1];
 	}
 

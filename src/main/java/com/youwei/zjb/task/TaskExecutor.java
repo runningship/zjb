@@ -89,7 +89,7 @@ public class TaskExecutor extends Thread{
 		Document page = Jsoup.parse(pageHtml);
 		Elements dataList = page.select(task.listSelector);
 		if(dataList.isEmpty()){
-			task.status = KeyConstants.Task_Failed;
+			task.status = KeyConstants.Task_Stop;
 			task.lastError = "列表没有找到数据,listSelector="+task.listSelector;
 			return;
 		}
@@ -112,7 +112,7 @@ public class TaskExecutor extends Thread{
 				total++;
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | IOException e) {
 				task.status = KeyConstants.Task_Failed;
-				task.lastError = e.getMessage();
+				task.lastError = e.getMessage() + ","+detailUrl;
 				LogUtil.log(Level.WARN, "任务运行失败，请检查程序", e);
 				return;
 			} catch(Exception ex){
@@ -206,11 +206,16 @@ public class TaskExecutor extends Thread{
 		String zjia = getDataBySelector(page , "zjia");
 		zjia = TaskHelper.getZjiaFromText(zjia);
 		//价格：48万元
-		if(StringUtils.isEmpty(zjia)){
-			house.zjia = 0f;
-		}else{
-			house.zjia = Float.valueOf(zjia);
+		try{
+			if(StringUtils.isEmpty(zjia)){
+				house.zjia = 0f;
+			}else{
+				house.zjia = Float.valueOf(zjia);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
+		
 		
 		
 //		house.djia = Float.valueOf(djia);
