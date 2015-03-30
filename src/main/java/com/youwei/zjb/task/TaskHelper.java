@@ -159,6 +159,9 @@ public class TaskHelper {
 		if(zjia.contains("面议")){
 			return "";
 		}
+		if(zjia.contains("急售")){
+			return "";
+		}
 		return zjia.replace("价格：", "").replace("万", "").replace("w", "").replace("W", "").replace("元", "");
 	}
 
