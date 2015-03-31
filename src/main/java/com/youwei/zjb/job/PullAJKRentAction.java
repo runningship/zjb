@@ -69,7 +69,10 @@ public class PullAJKRentAction implements PullRentHouseAction{
 			return "0";
 		}
 		String text = lceng.first().nextElementSibling().ownText();
-		return text.split("/")[1];
+		if(text.split("/").length>1){
+			return text.split("/")[1];
+		}
+		return "0";
 	}
 
 	@Override
