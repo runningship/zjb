@@ -163,7 +163,7 @@ public class TaskHelper {
 		if(zjia.contains("急售")){
 			return "";
 		}
-		return zjia.replace("价格：", "").replace("万", "").replace("w", "").replace("W", "").replace("元", "");
+		return zjia.replace("价格：", "").replace("万", "").replace("w", "").replace("W", "").replace("元", "").replace("左右", "");
 	}
 
 	public static String getZxiuFromText(String zxiu) {

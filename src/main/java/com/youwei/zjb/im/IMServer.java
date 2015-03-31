@@ -112,6 +112,7 @@ public class IMServer extends WebSocketServer{
 		}
 		JSONObject data = JSONObject.fromObject(message);
 		String city = (String) conn.getAttributes().get("city");
+		ThreadSession.setCityPY(city);
 		Integer senderId = Integer.valueOf(conn.getAttributes().get("uid").toString());
 		if("msg".equals(data.getString("type"))){
 			int recvId = data.getInt("contactId");
