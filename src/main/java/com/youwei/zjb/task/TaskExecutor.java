@@ -17,6 +17,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.youwei.zjb.KeyConstants;
+import com.youwei.zjb.StartUpListener;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.job.PullDataHelper;
 
@@ -148,6 +149,9 @@ public class TaskExecutor extends Thread{
 			return;
 		}
 		String pageHtml = PullDataHelper.getHttpData(detailUrl, "", "utf8");
+		if(pageHtml.contains("页面可能被删除")){
+			return;
+		}
 //		System.out.println(pageHtml);
 		Document page = Jsoup.parse(pageHtml);
 		House house = new House();
@@ -228,6 +232,7 @@ public class TaskExecutor extends Thread{
 		house.lxr = lxr;
 		
 		String tel = getDataBySelector(page , "tel");
+		page.select("#t_phone");
 		Elements whao = page.select(".show-contact");
 		if(tel.contains("http:")){
 			house.telImg = TaskHelper.getTelFromText(tel);
@@ -297,10 +302,12 @@ public class TaskExecutor extends Thread{
 	}
 	
 	public static void main(String[] args) throws Exception{
+//		StartUpListener.initDataSource();
 		Task task  = new Task();
-		task.cityPy = "fuyang";
+		task.cityPy = "bengbu";
 		TaskExecutor te = new TaskExecutor(task);
 		task.area= "p:containsOwn(小区名称) :first-child";
-		te.processDetailPage("http://fy.58.com/ershoufang/21407468341007x.shtml");
+//		task.tel="#t_phone script";
+		te.processDetailPage("http://bengbu.58.com/ershoufang/21472816271009x.shtml");
 	}
 }
