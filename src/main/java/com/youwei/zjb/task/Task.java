@@ -24,6 +24,8 @@ public class Task {
 	//网站名称
 	public String site;
 	
+	public int zufang;
+	
 	public String detailPageUrlPrefix;
 	//是否开启
 	public int taskOn;

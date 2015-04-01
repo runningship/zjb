@@ -4,25 +4,20 @@
 	  
 	  
 	  function layerShowBox(id){
-		  
-	      var $mainId =$("#iframe_oa",window.top.document).contents().find("#"+id);
-		  var w = $mainId.width();
-		  var h = $mainId.height();
-		  var winW = $("#iframe_oa",window.top.document).width();
-		  var winH = $("#iframe_oa",window.top.document).height();
+
+		  var w = $("#"+id).width();
+		  var h = $("#"+id).height();
+		  var winW = $(window).width();
+		  var winH = $(window).height();
 		  var L = (winW - w)/2;
 		  var T = (winH - h)/2;
+		  
+		  if(L<=0) L=0;
+		  if(T<=0) T=0;
+		  
+		  $("#"+id).css("left",L);
+		  $("#"+id).css("top",T);
 
-		  T = T<=50?50:T;
-		  T = T>=winH-200?winH-200:T;
-					
-	      L = L<=10?10:L;
-		  L = L>=winW-300?winW-300:L;
-		  
-		  $mainId.css("left",L);
-		  $mainId.css("top",T);
-		  
-		  
 	  }
 	  
 	  function showBox(){
@@ -207,16 +202,16 @@
 	  
 	  function openNewWin(id,w,h,tit,s){
 		  
-		if ($("#iframe_oa",window.top.document).contents().find('#'+id).length>0) {
+		if ($('#'+id).length>0) {
 			return;
 		};
 		
 	    var htmlText = "<iframe class='maskLayer'></iframe><div class='maskLayer'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:"+ h +"px; display:block; z-index:2001;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
 	
-	
-		 $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
-		 layerShowBox(id);
+	    $('body').append(htmlText);
+		//$("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
+		layerShowBox(id);
 		     
 		  
 	  }
@@ -224,13 +219,13 @@
 	  
 	  function openListWin(id,w,h,tit,s){// 调用方式：onclick="openNewWin('addGg','980','650','全部公告','gg.html')"
 		 
-			if ($("#iframe_oa",window.top.document).contents().find('#'+id).length>0) {
+			if ('#'+id)length>0) {
 				return;
 			};
 			
 	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:2001;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
-			 $("#iframe_oa",window.top.document).contents().find("#oaMainPage").append(htmlText);
+			 $('#'+id).append(htmlText);
 			 
 			 layerShowBox(id);
 			 

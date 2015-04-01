@@ -34,13 +34,13 @@ $(function(){
 });
 
 </script>
-<div class="cocoMain" style="z-index:9999999">
+<div class="cocoMain nobar" style="z-index:9999999">
      
     <div class="table w100 h100">
         
          <div class="tr w100">
 
-              <div class="td cocoMainTit oaTitBgCoco">
+              <div class="td cocoMainTit oaTitBgCoco nobar">
                 <div class=""><img src="/oa/images/avatar/${me.avatar}.jpg" class="user_offline_filter" id="avatarId" onclick="openNewWin('changeAvatar','695','500','修改头像','oa/avatar.jsp');" />
                     <div title="" class="mainInfo mainName" id="user_name_div">${me.uname}</div>
                     <input id="user_name_input" style="display:none;margin-top:5px;" onblur="endChangeName();" />

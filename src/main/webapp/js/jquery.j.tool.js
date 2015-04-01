@@ -115,7 +115,10 @@ function WinMaxOrRev(a){
     var menuTopW = doc.find('#menuTop').width();
     var bodyW = $(window.top.document).width()-50;
     var bodyW = win.width-50;
-    $(window.top.document).find('#dragbar').width(bodyW-menuTopW);
+    var dragbar = $(window.top.document).find('#dragbar');
+    dragbar.width(bodyW-menuTopW-200);
+    dragbar.css('margin-right' , '200px')
+    //$(window.top.document).find('#dragbar').width(bodyW-menuTopW);
     doc.find('.mainCont').width(win.width-50-270);
     doc.find('#table-container').width(win.width-50-270);
     var TableH=doc.find('.TableH');

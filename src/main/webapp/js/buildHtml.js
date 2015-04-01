@@ -346,7 +346,9 @@ function ChangeW(){
     var doc = $(window.top.selectedFrame[0].contentDocument);
     var menuTopW = doc.find('#menuTop').width();
     var bodyW = $(window.top.document).width()-50;
-    $(window.top.document).find('#dragbar').width(bodyW-menuTopW);
+    var dragbar = $(window.top.document).find('#dragbar');
+    dragbar.width(bodyW-menuTopW-200);
+    dragbar.css('margin-right' , '200px')
   }catch(e){
     console.log('set drag bar width fail,'+e);
   }
