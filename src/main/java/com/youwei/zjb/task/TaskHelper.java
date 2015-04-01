@@ -145,9 +145,20 @@ public class TaskHelper {
 		text = text.replace("(出售)", "");
 		text = text.replace("（出售 ）", "");
 		text = text.replace("出售", "");
+		text = text.replace("(单间出租)", "");
 		text = text.replace("-", "").trim();
 		text = text.split("\\(")[0].trim();
 		return text.split(" ")[0];
+	}
+
+	public static String getPeiZhiFromText(String script){
+		script = script.replace("\r\n", "").replace("\t", "");
+		script = script.split(" document.write")[0];
+		String[] arr = script.split(" tmp =");
+		if(arr.length>1){
+			return arr[1];
+		}
+		return "";
 	}
 	
 	public static Date getPubtimeFromText(String text){

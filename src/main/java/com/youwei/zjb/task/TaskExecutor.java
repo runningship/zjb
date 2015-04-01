@@ -227,7 +227,8 @@ public class TaskExecutor extends Thread{
 		hr.wo = TaskHelper.getWoFromText(wo);
 		String xianzhi = getDataBySelector(page , "xianzhi");
 		hr.xianzhi = TaskHelper.getXianzhiFromText(xianzhi);
-		hr.peizhi = getDataBySelector(page , "peizhi");
+		String peizhi = getDataBySelector(page , "peizhi");
+		hr.peizhi = TaskHelper.getPeiZhiFromText(peizhi);
 		hr.title = getDataBySelector(page , "cuzuTitle");
 		hr.isdel = 0;
 		
@@ -235,6 +236,8 @@ public class TaskExecutor extends Thread{
 		tel = TaskHelper.getTelFromText(tel);
 		if(tel.contains("img")){
 			hr.telImg = task.detailPageUrlPrefix+tel;
+		}else if(tel.contains("image")){
+			hr.telImg = tel;
 		}else{
 			hr.tel = tel;
 		}
