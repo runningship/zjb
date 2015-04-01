@@ -84,7 +84,7 @@ $(function(){
                     </div>
                     <div class="ggListBoxBot">
                     <span class="tuBox"><i class="Bg zan"></i>$[replys]</span>
-                    <i show="${user.id}==$[senderId]" class="Bg xgSel" onclick="openNewWin('editArt','800','600','编辑文章','/oa/article/edit.jsp?id=$[id]')"></i>
+                    <i show="${user.id}==$[senderId]" class="Bg xgSel" onclick="openNewWin('editArt','800','600','编辑文章','oa/article/edit.jsp?id=$[id]')"></i>
                     <c:if test="${auths.indexOf('oa_article_del')>-1}">
                       <i class="Bg hfSel" onclick="deleteThis($[id]);return false;" ></i>
                     </c:if>

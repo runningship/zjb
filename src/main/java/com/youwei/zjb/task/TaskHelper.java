@@ -3,6 +3,8 @@ package com.youwei.zjb.task;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.util.DataHelper;
@@ -94,6 +96,7 @@ public class TaskHelper {
 			return 0f;
 		}
 		String tmp = "";
+		text = text.replace(" ㎡", "㎡");
 		text  = text.replace("　", " ").replace("面积：", "").replace("平米", "㎡");
 		text = text.split("（")[0];
 		for(String str : text.split(" ")){
@@ -110,6 +113,9 @@ public class TaskHelper {
 	}
 	
 	public static String getTelFromText(String text){
+		if(text.startsWith("<img")){
+			return Jsoup.parse(text).select("img").attr("src");
+		}
 		if(StringUtils.isEmpty(text)){
 			return "";
 		}
@@ -171,6 +177,7 @@ public class TaskHelper {
 		if(StringUtils.isEmpty(zxiu)){
 			return "";
 		}
+		zxiu = zxiu.replace("房源概况", "");
 		if(zxiu.contains("简单装修")){
 			return "简装";
 		}else if(zxiu.contains("精装修")){
@@ -193,10 +200,35 @@ public class TaskHelper {
 	}
 
 	public static Integer getFangshiText(String fangshi) {
-		RentType fs = RentType.valueOf(fangshi);
-		if(fs==null){
+		if(StringUtils.isEmpty(fangshi)){
 			return RentType.合租.getCode();
 		}
-		return fs.getCode();
+		if(fangshi.contains("合租")){
+			return RentType.合租.getCode();
+		}
+		return RentType.整租.getCode();
+	}
+
+	public static String getWoFromText(String wo) {
+		if(StringUtils.isEmpty(wo)){
+			return "";
+		}
+		if(wo.contains("主卧")){
+			return "主卧";
+		}
+		if(wo.contains("次卧")){
+			return "次卧";
+		}
+		return "";
+	}
+
+	public static String getXianzhiFromText(String text) {
+		if(StringUtils.isEmpty(text)){
+			return "无";
+		}
+		if(text.contains("限女性")){
+			return "限女性";
+		}
+		return "男女不限";
 	}
 }

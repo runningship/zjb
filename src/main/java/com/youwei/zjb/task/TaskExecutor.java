@@ -114,7 +114,7 @@ public class TaskExecutor extends Thread{
 				processDetailPage(detailUrl);
 				total++;
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | IOException e) {
-				task.status = KeyConstants.Task_Failed;
+				task.status = KeyConstants.Task_Stop;
 				task.lastError = e.getMessage() + ","+detailUrl;
 				LogUtil.log(Level.WARN, "任务运行失败，请检查程序", e);
 				return;
@@ -169,8 +169,9 @@ public class TaskExecutor extends Thread{
 		hr.fhao="";
 		hr.sh=1;
 		hr.ruku=1;
+		hr.href = detailUrl;
 		String area = getDataBySelector(page , "area");
-		hr.area = area;
+		hr.area = TaskHelper.getAreaFromText(area);
 		String address = getDataBySelector(page , "address");
 		hr.address = address;
 		
@@ -222,12 +223,21 @@ public class TaskExecutor extends Thread{
 		hr.seeHM = 1;
 		hr.ztai = String.valueOf(RentState.在租.getCode());
 		
-		hr.wo = getDataBySelector(page , "wo");
-		hr.xianzhi = getDataBySelector(page , "xianzhi");
+		String wo = getDataBySelector(page , "wo");
+		hr.wo = TaskHelper.getWoFromText(wo);
+		String xianzhi = getDataBySelector(page , "xianzhi");
+		hr.xianzhi = TaskHelper.getXianzhiFromText(xianzhi);
 		hr.peizhi = getDataBySelector(page , "peizhi");
 		hr.title = getDataBySelector(page , "cuzuTitle");
 		hr.isdel = 0;
 		
+		String tel = getDataBySelector(page , "tel");
+		tel = TaskHelper.getTelFromText(tel);
+		if(tel.contains("img")){
+			hr.telImg = task.detailPageUrlPrefix+tel;
+		}else{
+			hr.tel = tel;
+		}
 		String pubtime = getDataBySelector(page , "pubtime");
 		hr.dateadd = TaskHelper.getPubtimeFromText(pubtime);
 		LogUtil.info("抓取到"+task.name+"房源信息:"+BeanUtil.toString(hr));

@@ -219,7 +219,7 @@
 	  
 	  function openListWin(id,w,h,tit,s){// 调用方式：onclick="openNewWin('addGg','980','650','全部公告','gg.html')"
 		 
-			if ('#'+id)length>0) {
+			if ($('#'+id).length>0) {
 				return;
 			};
 			
