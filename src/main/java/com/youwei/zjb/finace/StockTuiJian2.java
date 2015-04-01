@@ -1,87 +1,112 @@
 package com.youwei.zjb.finace;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
-import jxl.Sheet;
-import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 import org.apache.commons.io.IOUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.SimpDaoTool;
-import org.supercsv.io.CsvListReader;
-import org.supercsv.prefs.CsvPreference;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import com.youwei.zjb.StartUpListener;
-import com.youwei.zjb.job.PullDataHelper;
+import com.youwei.zjb.util.DataHelper;
 
 public class StockTuiJian2 {
 
 	static CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 
 	public static void main(String[] args) throws BiffException, IOException {
-		// StartUpListener.initDataSource();
+		 StartUpListener.initDataSource();
 		// //所有非创业板股票
-		// List<Stock> list = dao.listByParams(Stock.class,
-		// "from Stock where code not like '3%' ");
+		Page<Stock> page = new Page<Stock>();
+		page.setPageSize(100);
+		page = dao.findPage(page, "from Stock where code not like '3%' ");
+//		List<Stock> list = dao.listByParams(Stock.class,"from Stock where code not like '3%' ");
 		//http://table.finance.yahoo.com/table.csv?s=000061.ss
 		//http://table.finance.yahoo.com/table.csv?s=000061.sz
-		
-		cacuMoveAverage("000061");
+		 List<AverageFC> result = new ArrayList<AverageFC>();
+		for(Stock stock : page.getResult()){
+			try{
+				AverageFC afc = null;
+				if("sz".equals(stock.type)){
+					afc = cacuMoveAverage("SHE:"+stock.code , stock.name);
+				}else if("sh".equals(stock.type)){
+					afc = cacuMoveAverage("SHA:"+stock.code , stock.name);
+				}
+				if(afc!=null){
+					result.add(afc);
+				}
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+		Collections.sort(result);
+		System.out.println();
+		for(AverageFC afc :result){
+			if(afc.fangcha==0){
+				continue;
+			}
+			System.out.println(afc.code+"("+afc.name+")的方差="+afc.fangcha);
+		}
 	}
 
-	private static void cacuMoveAverage(String code) throws BiffException, IOException {
+	private static AverageFC cacuMoveAverage(String code , String name) throws BiffException, IOException {
+//		URL url = new URL("http://table.finance.yahoo.com/table.csv?s="+code+".ss&d=3&e=31&f=2015&g=d&a=1&b=1&c=2015&ignore=.csv");
+		URL url = new URL("http://www.google.com.hk/finance/historical?q="+code);
+		//http://www.google.com.hk/finance/historical?q=000861
+		URLConnection conn = url.openConnection();
+		conn.setConnectTimeout(10000);
+		conn.setReadTimeout(10000);
+		String result = IOUtils.toString(conn.getInputStream() , "utf8");
+		Document doc = Jsoup.parse(result);
+		Elements rows = doc.select("#prices tr");
 		
-		CsvListReader reader = null;
-		InputStream in = null;
-		try{
-			URL url = new URL("http://table.finance.yahoo.com/table.csv?s="+code+".sz");
-			URLConnection conn = url.openConnection();
-			conn.setConnectTimeout(10000);
-			conn.setReadTimeout(10000);
-			String result = IOUtils.toString(conn.getInputStream());
-			in = conn.getInputStream();
-			reader = new CsvListReader(new InputStreamReader(in), CsvPreference.EXCEL_PREFERENCE);
-		}catch(Exception ex){
-			if(in!=null){
-				in.close();
-			}
-			URL url = new URL("http://table.finance.yahoo.com/table.csv?s="+code+".sz");
-			URLConnection conn = url.openConnection();
-			in = conn.getInputStream();
-			reader = new CsvListReader(new InputStreamReader(in), CsvPreference.EXCEL_PREFERENCE);
-		}
-		
-		List<String[]> content = new ArrayList<String[]>();
-		List<String> line = new ArrayList<String>();
-		int row = -1;
 		float average5 = 0;
 		float average10 = 0;
 		float average15 = 0;
 		float average20 = 0;
 		float average30 = 0;
 		float total = 0;
-		while ((line = reader.read()) != null) {
-			row++;
-			if (row == 0) {
-				continue;
-			}
+		float firstPrice = 0;
+		for(int row=1;row<rows.size();row++) {
 			if (row > 60) {
 				break;
 			}
-			String[] data = line.toArray(new String[] {});
-			String close = data[4];
+			
+			String day = rows.get(row).child(0).ownText();
+			//TODO过滤掉停牌的
+			try {
+				Date date = DataHelper.sdf.parse(day);
+				Calendar now = Calendar.getInstance();
+				//两天前
+				now.add(Calendar.DAY_OF_MONTH, -2);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				if(cal.before(now)){
+					System.out.println(code+","+name+"已停牌");
+					continue;
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			String close = rows.get(row).child(4).ownText();
 			Float price = Float.valueOf(close);
+			if(row==1){
+				firstPrice=price; 
+			}
 			total += price;
 			if (row == 5) {
 				average5 = total / 5;
@@ -94,12 +119,22 @@ public class StockTuiJian2 {
 			}
 			if (row == 30) {
 				average30 = total / 30;
+				if(firstPrice>price){
+					//当前价格高于历史价格，处于上升期拐点,过滤
+					System.out.println(code+","+name+"处于上升期拐点");
+					return null;
+				}
 				break;
 			}
 		}
-		System.out.println("五日均价:" + average5 + ";十日均价为:" + average10 + ";二十日均价为:" + average20 + ";三十日均价为:" + average30);
-		System.out.println("方差为:"+cacuVariance2(average5 , average10 ,average20, average30));
-		in.close();
+		float fc = cacuVariance2(average5 , average10 ,average20, average30);
+		System.out.println(code+"("+name+")五日均价:" + average5 + ";十日均价为:" + average10 + ";二十日均价为:" + average20 + ";三十日均价为:" + average30+"方差="+fc);
+		
+		AverageFC afc = new AverageFC();
+		afc.code = code;
+		afc.name = name;
+		afc.fangcha = fc;
+		return afc;
 	}
 
 	
@@ -127,18 +162,10 @@ public class StockTuiJian2 {
 			fangcha += (num-average)*(num-average);
 		}
 		//平方的均值-均值的平方
-		return fangcha/nums.length;
+		fangcha= fangcha/nums.length;
+		
+		//方差除以均值的比例更有意义
+		return fangcha/average;
 	}
 	
-	private static void findByNewLowPrice(Stock stock, List<StockPrice> list) {
-		String day = list.get(0).day;
-		Collections.sort(list);
-		if (day.equals(list.get(0).day)) {
-			// System.out.println(stock.code);
-		} else if (day.equals(list.get(1).day)) {
-			System.out.println(stock.code);
-		} else if (day.equals(list.get(2).day)) {
-			// System.out.println(stock.code);
-		}
-	}
 }

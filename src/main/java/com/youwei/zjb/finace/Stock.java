@@ -9,10 +9,12 @@ import javax.persistence.Id;
 public class Stock {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	public Integer id;
+//	@GeneratedValue(strategy=GenerationType.AUTO)
+	public String id;
 	
 	public String code;
 	
 	public String name;
+	
+	public String type;
 }
