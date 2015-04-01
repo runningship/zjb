@@ -81,6 +81,16 @@ public class Task {
 	
 	public String pubtime;
 	
+	//出租信息
+	public String wo;
+	
+	public String peizhi;
+	
+	public String cuzuTitle;
+	
+	public String xianzhi;
+	
+	public String fangshi;
 	////////////以上字段为选择器/////////////
 	
 	//最近一次错误信息

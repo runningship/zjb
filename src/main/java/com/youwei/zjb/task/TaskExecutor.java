@@ -18,7 +18,9 @@ import org.jsoup.select.Elements;
 
 import com.youwei.zjb.KeyConstants;
 import com.youwei.zjb.StartUpListener;
+import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.job.PullDataHelper;
 
 public class TaskExecutor extends Thread{
@@ -142,10 +144,100 @@ public class TaskExecutor extends Thread{
 		if(StringUtils.isNotEmpty(task.detailPageUrlPrefix)){
 			detailUrl = task.detailPageUrlPrefix+detailUrl;
 		}
+		if(task.zufang==0){
+			prcessChushou(detailUrl);
+		}else{
+			prcessChuzu(detailUrl);
+		}
+		
+	}
+
+	private void prcessChuzu(String detailUrl) throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", detailUrl);
+		if(po!=null){
+			return;
+		}
+		String pageHtml = PullDataHelper.getHttpData(detailUrl, "", "utf8");
+		if(pageHtml.contains("页面可能被删除")){
+			return;
+		}
+		Document page = Jsoup.parse(pageHtml);
+		HouseRent hr = new HouseRent();
+		hr.cid = 1;
+		hr.did = 90;
+		hr.dhao = "";
+		hr.fhao="";
+		hr.sh=1;
+		hr.ruku=1;
+		String area = getDataBySelector(page , "area");
+		hr.area = area;
+		String address = getDataBySelector(page , "address");
+		hr.address = address;
+		
+		String dateyear = getDataBySelector(page , "dateyear");
+		hr.dateyear = String.valueOf(TaskHelper.getYearFromText(dateyear));
+		
+		String beizhu = getDataBySelector(page , "beizhu");
+		hr.beizhu = beizhu;
+		
+		//租金
+		String zujin = getDataBySelector(page , "zjia");
+		hr.zjia = TaskHelper.getZujinText(zujin);
+		String fangshi = getDataBySelector(page , "fangshi");
+		hr.fangshi = TaskHelper.getFangshiText(fangshi);
+		String lxr = getDataBySelector(page , "lxr");
+		hr.lxr = lxr;
+		String lceng = getDataBySelector(page , "lceng");
+		hr.lceng = TaskHelper.getLcengFromText(lceng);
+		
+		String zceng = getDataBySelector(page , "zceng");
+		hr.zceng = TaskHelper.getZcengFromText(zceng);
+		
+		String hxf = getDataBySelector(page , "hxf");
+		hr.hxf = TaskHelper.getHxsFromText(hxf);
+		
+		String hxt = getDataBySelector(page , "hxt");
+		hr.hxt = TaskHelper.getHxtFromText(hxt);
+		 
+		String hxw = getDataBySelector(page , "hxw");
+		hr.hxw = TaskHelper.getHxwFromText(hxw);
+		
+		String zxiu = getDataBySelector(page , "zxiu");
+		zxiu = TaskHelper.getZxiuFromText(zxiu);
+		hr.zxiu = zxiu;
+		
+		String mji = getDataBySelector(page , "mji");
+		hr.mji = TaskHelper.getMjiFromText(mji);
+		
+		String quyu = getDataBySelector(page , "quyu");
+		if(StringUtils.isNotEmpty(quyu)){
+			quyu = quyu.replace("区", "");
+			if(quyu.length()>2){
+				quyu = quyu.replace("县", "");
+			}
+		}
+		hr.quyu = quyu;
+		hr.seeFH = 1;
+		hr.seeGX = 1;
+		hr.seeHM = 1;
+		hr.ztai = String.valueOf(RentState.在租.getCode());
+		
+		hr.wo = getDataBySelector(page , "wo");
+		hr.xianzhi = getDataBySelector(page , "xianzhi");
+		hr.peizhi = getDataBySelector(page , "peizhi");
+		hr.title = getDataBySelector(page , "cuzuTitle");
+		hr.isdel = 0;
+		
+		String pubtime = getDataBySelector(page , "pubtime");
+		hr.dateadd = TaskHelper.getPubtimeFromText(pubtime);
+		LogUtil.info("抓取到"+task.name+"房源信息:"+BeanUtil.toString(hr));
+		dao.saveOrUpdate(hr);
+	}
+
+
+	private void prcessChushou(String detailUrl) throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		House po = dao.getUniqueByKeyValue(House.class, "href", detailUrl);
 		if(po!=null){
-//			po.dateadd = new Date();
-//			dao.saveOrUpdate(po);
 			return;
 		}
 		String pageHtml = PullDataHelper.getHttpData(detailUrl, "", "utf8");
@@ -262,6 +354,7 @@ public class TaskExecutor extends Thread{
 		LogUtil.info("抓取到"+task.name+"房源信息:"+BeanUtil.toString(house));
 		dao.saveOrUpdate(house);
 	}
+
 
 	private String getDataBySelector(Document page ,String selectorField) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		Field field = Task.class.getField(selectorField);

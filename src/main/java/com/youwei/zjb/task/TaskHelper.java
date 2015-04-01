@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.youwei.zjb.house.RentType;
 import com.youwei.zjb.util.DataHelper;
 
 public class TaskHelper {
@@ -181,5 +182,21 @@ public class TaskHelper {
 		}else{
 			return zxiu.replace("装修情况：", "").replace("房", "");
 		}
+	}
+
+	public static Float getZujinText(String zujin) {
+		try{
+			return Float.valueOf(zujin);
+		}catch(Exception ex){
+			return 0f;
+		}
+	}
+
+	public static Integer getFangshiText(String fangshi) {
+		RentType fs = RentType.valueOf(fangshi);
+		if(fs==null){
+			return RentType.合租.getCode();
+		}
+		return fs.getCode();
 	}
 }
