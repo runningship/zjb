@@ -225,7 +225,7 @@
 			
 	    	 var htmlText = "<iframe class='mask'></iframe><div class='mask'></div><div class='cocoLayer' id=" + id + " style='width:" + w + "px; height:" + h + "px; display:block; z-index:2001;'><div class='cocoLayerTit' onmousedown='mDown(\""+id+"\")'  onmouseup='mUp(\""+id+"\")'><span>" + tit + "</span><i class='closeBg close' onclick='LayerRemoveBox(\""+id+"\")' title='关闭'></i></div><iframe src='"+s+"' style='width:100%;border:0px;height:"+(h-32)+"px;-webkit-user-select: text;'></iframe></div>";
 			 
-			 $('#'+id).append(htmlText);
+			 $('body').append(htmlText);
 			 
 			 layerShowBox(id);
 			 

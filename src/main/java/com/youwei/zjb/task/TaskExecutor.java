@@ -217,6 +217,7 @@ public class TaskExecutor extends Thread{
 				quyu = quyu.replace("县", "");
 			}
 		}
+		hr.site = task.site;
 		hr.quyu = quyu;
 		hr.seeFH = 1;
 		hr.seeGX = 1;
