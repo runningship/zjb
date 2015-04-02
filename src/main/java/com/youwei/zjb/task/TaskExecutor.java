@@ -231,6 +231,7 @@ public class TaskExecutor extends Thread{
 		String peizhi = getDataBySelector(page , "peizhi");
 		hr.peizhi = TaskHelper.getPeiZhiFromText(peizhi);
 		hr.title = getDataBySelector(page , "cuzuTitle");
+		
 		hr.isdel = 0;
 		
 		String tel = getDataBySelector(page , "tel");

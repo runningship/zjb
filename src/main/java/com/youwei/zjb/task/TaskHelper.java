@@ -1,6 +1,8 @@
 package com.youwei.zjb.task;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -11,11 +13,27 @@ import com.youwei.zjb.util.DataHelper;
 
 public class TaskHelper {
 
+	private static Map<String,Integer> nums = new HashMap<String , Integer>();
+	static{
+		nums.put("一", 1);
+		nums.put("二", 2);
+		nums.put("三", 3);
+		nums.put("四", 4);
+		nums.put("五", 5);
+		nums.put("六", 6);
+		nums.put("七", 7);
+		nums.put("八", 8);
+		nums.put("九", 9);
+	}
 	public static Integer getHxtFromText(String text){
 		int ting = text.indexOf("厅");
 		try{
 			if(ting>0){
-				return Integer.valueOf(String.valueOf(text.charAt(ting-1)));
+				String str = String.valueOf(text.charAt(ting-1));
+				if(nums.containsKey(str)){
+					return nums.get(str);
+				}
+				return Integer.valueOf(str);
 			}
 		}catch(Exception ex){
 			//暂不处理
@@ -28,7 +46,11 @@ public class TaskHelper {
 		int ting = text.indexOf("室");
 		try{
 			if(ting>0){
-				return Integer.valueOf(String.valueOf(text.charAt(ting-1)));
+				String str = String.valueOf(text.charAt(ting-1));
+				if(nums.containsKey(str)){
+					return nums.get(str);
+				}
+				return Integer.valueOf(str);
 			}
 		}catch(Exception ex){
 			//暂不处理
@@ -41,7 +63,11 @@ public class TaskHelper {
 		int ting = text.indexOf("卫");
 		try{
 			if(ting>0){
-				return Integer.valueOf(String.valueOf(text.charAt(ting-1)));
+				String str = String.valueOf(text.charAt(ting-1));
+				if(nums.containsKey(str)){
+					return nums.get(str);
+				}
+				return Integer.valueOf(str);
 			}
 		}catch(Exception ex){
 			//暂不处理
@@ -51,7 +77,7 @@ public class TaskHelper {
 	}
 	
 	public static int getLcengFromText(String text){
-		text = text.replace("楼层：", "").replace("楼", "").replace("层", "");
+		text = text.replace("楼层：", "").replace("楼", "").replace("层", "").replace(" ", "");
 		if(StringUtils.isEmpty(text)){
 			return 0;
 		}
@@ -64,7 +90,7 @@ public class TaskHelper {
 		}
 	}
 	public static int getZcengFromText(String text){
-		text = text.replace("楼", "");
+		text = text.replace("楼", "").replace(" ", "");
 		try{
 			String tmp = text.split("/")[1];
 			return Integer.valueOf(tmp);
@@ -181,7 +207,7 @@ public class TaskHelper {
 		if(zjia.contains("急售")){
 			return "";
 		}
-		return zjia.replace("价格：", "").replace("万", "").replace("w", "").replace("W", "").replace("元", "").replace("左右", "");
+		return zjia.replace(",", "").replace("价格：", "").replace("万", "").replace("w", "").replace("W", "").replace("元", "").replace("左右", "");
 	}
 
 	public static String getZxiuFromText(String zxiu) {
@@ -215,6 +241,9 @@ public class TaskHelper {
 			return RentType.合租.getCode();
 		}
 		if(fangshi.contains("合租")){
+			return RentType.合租.getCode();
+		}
+		if(fangshi.contains("单间")){
 			return RentType.合租.getCode();
 		}
 		return RentType.整租.getCode();
