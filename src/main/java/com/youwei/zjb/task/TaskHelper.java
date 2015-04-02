@@ -77,7 +77,7 @@ public class TaskHelper {
 	}
 	
 	public static int getLcengFromText(String text){
-		text = text.replace("楼层：", "").replace("楼", "").replace("层", "").replace(" ", "");
+		text = text.replace("楼层：", "").replace("楼", "").replace("层", "").trim().replace(" ", "/");
 		if(StringUtils.isEmpty(text)){
 			return 0;
 		}
@@ -90,9 +90,14 @@ public class TaskHelper {
 		}
 	}
 	public static int getZcengFromText(String text){
-		text = text.replace("楼", "").replace(" ", "");
+		text = text.replace("楼", "").trim().replace(" ", "/");
 		try{
-			String tmp = text.split("/")[1];
+			String[] lcen = text.split("/");
+			int i = lcen.length-1;
+			if(i==0){
+				return 0;
+			}
+			String tmp = lcen[i];
 			return Integer.valueOf(tmp);
 		}catch(Exception ex){
 			//暂不处理

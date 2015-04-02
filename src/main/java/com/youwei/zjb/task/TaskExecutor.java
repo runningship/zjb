@@ -284,15 +284,15 @@ public class TaskExecutor extends Thread{
 //		page.select("span:containsOwn(地区) :first-child")
 		String quyu = getDataBySelector(page , "quyu");
 		if(StringUtils.isNotEmpty(quyu)){
-			quyu = quyu.replace("区", "");
+			quyu = quyu.replace("区", "").replace("域：", "");
 			if(quyu.length()>2){
-				quyu = quyu.replace("县", "");
+				quyu = quyu.replace("县", "").replace("域：", "");
 			}
 		}
 		house.quyu = quyu;
 		
 		String address = getDataBySelector(page , "address");
-		house.address = address;
+		house.address = address.replace("地址：", "");
 		
 		String lceng = getDataBySelector(page , "lceng");
 		house.lceng = TaskHelper.getLcengFromText(lceng);
@@ -339,7 +339,7 @@ public class TaskExecutor extends Thread{
 		}
 		
 		String lxr = getDataBySelector(page , "lxr");
-		house.lxr = lxr;
+		house.lxr = lxr.replace("联系人： ", "");
 		
 		String tel = getDataBySelector(page , "tel");
 		page.select("#t_phone");
@@ -402,7 +402,9 @@ public class TaskExecutor extends Thread{
 				text = elems.first().html();
 			}
 			//过滤点无用字符
-			text = text.replace("-", "");
+			if(!text.contains("http")){
+				text = text.replace("-", "");
+			}
 			String tmp = text.replace(" ", "").replace(String.valueOf((char)160),"");
 			if(StringUtils.isEmpty(tmp)){
 				continue;
