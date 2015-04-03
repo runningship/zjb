@@ -176,6 +176,8 @@ public class TaskHelper {
 		text = text.replace("(出售)", "");
 		text = text.replace("（出售 ）", "");
 		text = text.replace("出售", "");
+		text = text.replace("):", "");
+		text = text.replace(")", "");
 		text = text.replace("(单间出租)", "");
 		text = text.replace("-", "").trim();
 		text = text.split("\\(")[0].trim();
