@@ -192,8 +192,11 @@ public class UserService {
 	public ModelAndView delete(int id){
 		ModelAndView mv = new ModelAndView();
 		User po = dao.get(User.class, id);
+		User operUser = ThreadSessionHelper.getUser();
 		if(po!=null){
 			dao.delete(po);
+			String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 删除了用户["+po.Department().namea+"-"+po.uname+"]";
+			operService.add(OperatorType.人事记录, operConts);
 		}
 		return mv;
 	}

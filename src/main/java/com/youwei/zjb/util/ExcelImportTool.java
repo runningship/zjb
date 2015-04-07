@@ -164,8 +164,8 @@ public class ExcelImportTool {
             	System.out.println(sql);
             }
             book.close();
-            FileUtils.deleteQuietly(new File("E:\\sql.txt"));
-            FileUtils.writeLines(new File("E:\\sql.txt"), lines);
+            FileUtils.deleteQuietly(new File("E:\\houseImport.sql"));
+            FileUtils.writeLines(new File("E:\\houseImport.sql"), lines);
         } catch (Exception e) {
             e.printStackTrace();
         }

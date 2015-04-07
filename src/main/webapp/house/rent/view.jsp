@@ -323,14 +323,11 @@ $('#area').on('click',function(){
 	                        <td class="biaoti">房主：</td>
 	                        <td >${house.lxr} 
                             <c:choose> 
-                              <c:when test="${house.site=='58' && empty house.tel}">   
-                                <img src="${house.telImg}" />
+                              <c:when test="${empty house.telImg}">   
+                                ${house.tel}
                               </c:when>
-                              <c:when test="${house.site=='58' && house.tel!=''}">
-                                ${house.tel}
-                              </c:when> 
                               <c:otherwise>
-                                ${house.tel}
+                                <img src="${house.telImg}" />
                               </c:otherwise> 
                             </c:choose>
 	                        </td>

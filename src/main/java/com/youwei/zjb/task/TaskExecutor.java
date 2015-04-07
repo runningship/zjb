@@ -216,8 +216,8 @@ public class TaskExecutor extends Thread{
 		
 		String quyu = getDataBySelector(page , "quyu");
 		if(StringUtils.isNotEmpty(quyu)){
-			quyu = quyu.replace("区", "");
 			if(quyu.length()>2){
+				quyu = quyu.replace("区", "");
 				quyu = quyu.replace("县", "");
 			}
 		}
@@ -291,8 +291,8 @@ public class TaskExecutor extends Thread{
 //		page.select("span:containsOwn(地区) :first-child")
 		String quyu = getDataBySelector(page , "quyu");
 		if(StringUtils.isNotEmpty(quyu)){
-			quyu = quyu.replace("区", "").replace("域：", "");
 			if(quyu.length()>2){
+				quyu = quyu.replace("区", "").replace("域：", "");
 				quyu = quyu.replace("县", "").replace("域：", "");
 			}
 		}
