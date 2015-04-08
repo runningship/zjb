@@ -259,7 +259,7 @@ public class TaskExecutor extends Thread{
 		if(po!=null){
 			return;
 		}
-		String pageHtml = PullDataHelper.getHttpData(detailUrl, "", "utf8");
+		String pageHtml = PullDataHelper.getHttpData(detailUrl, "", task.encoding);
 		if(pageHtml.contains("页面可能被删除")){
 			return;
 		}

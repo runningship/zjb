@@ -26,6 +26,7 @@ public class TaskHelper {
 		nums.put("九", 9);
 	}
 	public static Integer getHxtFromText(String text){
+		text=text.replace(" ", "");
 		int ting = text.indexOf("厅");
 		try{
 			if(ting>0){
@@ -43,6 +44,7 @@ public class TaskHelper {
 	}
 	
 	public static Integer getHxsFromText(String text){
+		text=text.replace(" ", "");
 		int ting = text.indexOf("室");
 		try{
 			if(ting>0){
@@ -60,6 +62,7 @@ public class TaskHelper {
 	}
 	
 	public static Integer getHxwFromText(String text){
+		text=text.replace(" ", "");
 		int ting = text.indexOf("卫");
 		try{
 			if(ting>0){
@@ -90,7 +93,7 @@ public class TaskHelper {
 		}
 	}
 	public static int getZcengFromText(String text){
-		text = text.replace("楼", "").trim().replace(" ", "/");
+		text = text.replace("楼", "").replace("共", "").replace("层", "").trim().replace(" ", "/");
 		try{
 			String[] lcen = text.split("/");
 			int i = lcen.length-1;

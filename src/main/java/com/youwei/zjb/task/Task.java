@@ -33,6 +33,8 @@ public class Task {
 	//运行状态
 	public int status;
 	
+	public String encoding;
+	
 	//每条房源之间的时间间隔(单位秒)
 	public int interval;
 	
