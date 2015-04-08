@@ -409,7 +409,7 @@ public class TaskExecutor extends Thread{
 				text = elems.first().html();
 			}
 			//过滤点无用字符
-			if(!text.contains("http")){
+			if(!text.contains("src")){
 				text = text.replace("-", "");
 			}
 			String tmp = text.replace(" ", "").replace(String.valueOf((char)160),"");

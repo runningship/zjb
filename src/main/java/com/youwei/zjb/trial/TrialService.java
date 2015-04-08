@@ -8,6 +8,7 @@ import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
@@ -29,6 +30,8 @@ public class TrialService {
 	public ModelAndView add(Trial trial){
 		ModelAndView mv = new ModelAndView();
 		trial.finish=0;
+		LogUtil.info("收到试用请求:city="+ThreadSession.getCityPY());
+		ThreadSession.setCityPY("hefei");
 		dao.saveOrUpdate(trial);
 		mv.returnText="<script>window.location=\"http://www.zhongjiebao.com/success.html\"</script>";
 		StringBuilder msg = new StringBuilder("收到新的试用请求").append("<br/>");
