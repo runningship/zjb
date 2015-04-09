@@ -52,6 +52,7 @@ try{
     console.log(e);
 }
 var debug=getParam('debug');
+var debugCity = getParam('city');
 var json = loadConfigAsJSON();
 var cityNames=json.cityName;
 var domains = json.domain;
@@ -303,6 +304,9 @@ $(document).ready(function() {
             }
             if(!pcinfo.cityCoordinate){
                 pcinfo.cityCoordinate = "117.23355, 31.827258";
+            }
+            if(debug){
+            	pcinfo.cityPinyin=debugCity;
             }
             YW.ajax({
                 type: 'POST',
