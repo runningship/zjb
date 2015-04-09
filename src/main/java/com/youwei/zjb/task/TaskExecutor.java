@@ -161,10 +161,11 @@ public class TaskExecutor extends Thread{
 		if(pageHtml.contains("页面可能被删除")){
 			return;
 		}
-		if(pageHtml.contains("访问速度太快")){
+		if(pageHtml.contains("访问速度太快") || pageHtml.contains("过于频繁")){
 			task.status = KeyConstants.Task_Too_Fast;
 			return;
 		}
+		
 		Document page = Jsoup.parse(pageHtml);
 		HouseRent hr = new HouseRent();
 		hr.cid = 1;
@@ -263,7 +264,7 @@ public class TaskExecutor extends Thread{
 		if(pageHtml.contains("页面可能被删除")){
 			return;
 		}
-		if(pageHtml.contains("访问速度太快")){
+		if(pageHtml.contains("访问速度太快") || pageHtml.contains("过于频繁")){
 			task.status = KeyConstants.Task_Too_Fast;
 			return;
 		}
