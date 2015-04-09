@@ -246,7 +246,7 @@ public class TaskExecutor extends Thread{
 		}else if(tel.contains("image")){
 			hr.telImg = tel;
 		}else{
-			hr.tel = tel;
+			hr.tel = tel.replace(" ", "");
 		}
 		String pubtime = getDataBySelector(page , "pubtime");
 		hr.dateadd = TaskHelper.getPubtimeFromText(pubtime);
@@ -356,7 +356,7 @@ public class TaskExecutor extends Thread{
 			house.telImg = TaskHelper.getTelFromText(tel);
 		}else{
 			if(whao.isEmpty()){
-				house.tel = tel;
+				house.tel = tel.replace(" ", "");
 			}else {
 				String weihao = whao.first().attr("data-contact");
 				house.tel = tel.replace("*", "")+weihao;
