@@ -12,7 +12,7 @@ public class JobScheduler extends Thread{
 	
 	public JobScheduler(){
 		Pull58Rent job58 = new Pull58Rent();
-		job58.setDetailPageInterval(100);
+		job58.setDetailPageInterval(10000);
 		jobs.put(job58.getJobName(), job58);
 		
 		PullGJRent jobGJ = new PullGJRent();
