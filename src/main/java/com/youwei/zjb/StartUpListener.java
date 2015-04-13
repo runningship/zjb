@@ -29,8 +29,8 @@ public class StartUpListener implements ServletContextListener{
 		JspFactory.getDefaultFactory()
         .getJspApplicationContext(event.getServletContext())
         .addELResolver(new PublicFieldSupportingELResolver());
-		TaskScheduler ts = new TaskScheduler();
-		ts.start();
+//		TaskScheduler ts = new TaskScheduler();
+//		ts.start();
 		try {
 			IMServer.startUp();
 		} catch (Throwable e) {
