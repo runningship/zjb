@@ -16,7 +16,6 @@ import org.hibernate.cfg.AvailableSettings;
 
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.IMServer;
-import com.youwei.zjb.task.TaskScheduler;
 
 public class StartUpListener implements ServletContextListener{
 
