@@ -149,6 +149,7 @@ function deletehouse(id){
     type: 'POST',
     url: '/c/house/physicalDelete?id='+id,
     mysuccess: function(data){
+      $(event.srcElement).attr('action','page');
       doSearchAndSelectFirst();
       alert('删除成功');
     }
