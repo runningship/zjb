@@ -562,7 +562,22 @@ function replaceClassAll(d1,a1,a2,c1,c2){
  * 后台侧边搜索功能
  */
 function getFunSettingSideEarch(){
-  function getSearch(val){
+  
+  $(document).on('keyup','.input_search', function(event) {
+      //blockAlert(event.keyCode)
+      if(event.keyCode==27){
+          $('[data-toggle=popover]').popover('hide');return false;
+      }
+      var Thi=$(this),
+      ThiVal=Thi.val();
+      if(event.keyCode==13){
+          getSearch(ThiVal);
+      }
+      return false;
+  });
+}
+
+function getSearch(val){
     //alert($('.jtree').html())
     var input = val;  //记录输入的商家名
     var tds = $('.jtree>li>a');  //取商家名那一列
@@ -583,21 +598,6 @@ function getFunSettingSideEarch(){
       }
     }
   }
-  $(document).on('keyup','.input_search', function(event) {
-      //blockAlert(event.keyCode)
-      if(event.keyCode==27){
-          $('[data-toggle=popover]').popover('hide');return false;
-      }
-      var Thi=$(this),
-      ThiVal=Thi.val();
-      if(event.keyCode==13){
-          getSearch(ThiVal);
-      }
-      return false;
-  });
-}
-
-
 
 
 //获取url里需要的值

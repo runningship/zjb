@@ -28,6 +28,9 @@ YW.ajax({
       var result=JSON.parse(data);
       $.fn.zTree.init($("#treeDemo"), setting, result.result);
       rMenu = $("#rMenu");
+      cnum = getParam('cnum');
+      $('#search_input').val(cnum);
+      getSearch(cnum);
   }
 });
 
@@ -93,7 +96,7 @@ $('[data-toggle=popover]').popover({
     container:'body',
     placement:'top'
 });
-getFunSettingSideEarch();
+ var funSide = getFunSettingSideEarch();
 </script>
 
 <div class="sideHead">
@@ -115,7 +118,7 @@ getFunSettingSideEarch();
 <div class="sideFoot">
   <ul>
     <li>
-      <a href="" title="搜索数据" class="btns" id="search" data-type="popover" data-toggle="popover" data-content='<input type="text" class="form-control input_search" placeholder="公司代码\公司名\等" name="" value="" style="min-width:250px;">' autofocus="autofocus"><i class="iconfont" style="font-size:13px; font-weight:bold; margin-right:3px;">&#xe649;</i>搜索</a>
+      <a href="" title="搜索数据" class="btns" id="search" data-type="popover" data-toggle="popover" data-content='<input type="text" class="form-control input_search" placeholder="公司代码\公司名\等" name="" value=""  id="search_input" style="min-width:250px;">' autofocus="autofocus"><i class="iconfont" style="font-size:13px; font-weight:bold; margin-right:3px;">&#xe649;</i>搜索</a>
     </li>
   </ul>
 </div>

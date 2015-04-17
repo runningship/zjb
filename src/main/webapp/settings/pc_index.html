@@ -27,6 +27,7 @@
 <script type="text/javascript" src="/js/zTree_v3/js/jquery.ztree.all-3.5.js"></script>
 <script type="text/javascript">
 var queryOptions;
+var cnum;
 function doSearch(){
   var a=$('form[name=form1]').serialize();
   // if(event==undefined || $(event.srcElement).attr('action')!='page'){
@@ -59,6 +60,7 @@ function getSider(id){
         var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+1;
         $('#sideCont').css({'padding-top':sideHeadHeight})
         $('#search').click();
+        
     });
 }
 $(document).ready(function() {

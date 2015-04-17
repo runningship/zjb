@@ -257,6 +257,7 @@ function delNode(){
 }
 
 $(document).ready(function() {
+	console.log(1);
     $('[data-toggle=tooltip]').tooltip();
     $('.sideCont').on('click', '.btns', function(event) {
         event.preventDefault();
@@ -376,6 +377,8 @@ $(document).ready(function() {
             return false;
         }else if(ThiType=='adddept'){
           art.dialog.open('/v/settings/uc_index_d_add.html?cid='+node.id);
+        }else if(ThiType=='auth_pc'){
+          window.location='pc_index.html?act=sq&cnum='+node.cnum;
         }else{
             return false;
         }
