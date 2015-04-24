@@ -129,8 +129,8 @@ $(document).ready(function() {
       </div>
       <div class="input-group" style="width:315px">
         <span class="input-group-addon">操作时间</span>
-        <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:120px;border-radius:0;">
-        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:120px">
+        <input type="text" class="form-control input-sm" name="addtimeStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:120px;border-radius:0;">
+        <input type="text" class="form-control input-sm" name="addtimeEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:120px">
       </div>
       <div class="btn-group btn-sm">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding-right: 4px;">
