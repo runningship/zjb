@@ -347,6 +347,22 @@ public class ClientService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView client_Detail(Integer id){
+		ModelAndView mv = new ModelAndView();
+		Client po = dao.get(Client.class, id);
+		mv.jspData.put("client", po);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView client_edit(Integer id){
+		ModelAndView mv = new ModelAndView();
+		Client po = dao.get(Client.class, id);
+		mv.jspData.put("client", po);
+		return mv;
+	}
+	
 	private void setDefaultValue(Client client){
 		if(client.jiageFrom==null){
 			client.jiageFrom=0f;
