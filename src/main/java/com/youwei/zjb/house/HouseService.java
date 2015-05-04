@@ -16,6 +16,7 @@ import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
+import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.HqlHelper;
 import org.bc.sdak.utils.JSONHelper;
@@ -27,12 +28,14 @@ import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
+import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.user.UserHelper;
+import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 
@@ -647,5 +650,62 @@ public class HouseService {
 				obj.put("ztai", state.toString());
 			}
 		}
+	}
+	
+	@WebMethod
+	public ModelAndView houses(Integer id){
+		ModelAndView mv = new ModelAndView();
+		User u = ThreadSessionHelper.getUser();
+//		Department comp = u.Company();
+//		if(comp==null || comp.share!=1){
+//			mv.jspData.put("share", "0");
+//		}else{
+//			mv.jspData.put("share", "1");
+//		}
+		mv.jspData.put("cid", u.cid);
+		if(UserHelper.hasAuthority(u, "fy_sh")){
+			mv.jspData.put("sh", "");
+		}else{
+			//没有审核权的用户只能看到审核通过对数据
+			mv.jspData.put("sh", "1");
+		}
+		
+		if(u.cid!=1){
+			List<Role> role = SimpDaoTool.getGlobalCommonDaoService().listByParams(Role.class, "from Role where title='管理员' and cid<>1 and cid=?", u.cid);
+			if(role!=null && role.size()>0){
+				mv.jspData.put("seeAds", "0");
+			}else{
+				mv.jspData.put("seeAds", "1");
+			}
+		}else{
+			mv.jspData.put("seeAds", "1");
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView houseSee(Integer id){
+		ModelAndView mv = new ModelAndView();
+		House po = dao.get(House.class, id);
+		User user = dao.get(User.class, po.uid);
+		mv.jspData.put("house", po);
+		mv.jspData.put("fbr", user);
+		Department dept = dao.get(Department.class, po.did);
+		mv.jspData.put("dept", dept);
+		SellState ztai = SellState.parse(po.ztai);
+		mv.jspData.put("ztai", ztai==null?"":ztai.name());
+		
+		String favStr = "@"+ThreadSessionHelper.getUser().id+"|";
+		if(po.fav!=null && po.fav.contains(favStr)){
+			mv.jspData.put("fav", "1");
+		}else{
+			mv.jspData.put("fav", "0");
+		}
+		
+		String hql = "select gj.conts as conts , d.namea as dname , u.uname as uname , gj.addtime as addtime from GenJin gj , User u , "
+				+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
+		List<Map> gjList = dao.listAsMap(hql, Integer.valueOf(id) , 0);
+		mv.jspData.put("gjList", gjList);
+		return mv;
 	}
 }

@@ -26,6 +26,7 @@ import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
+import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
@@ -488,6 +489,20 @@ public class HouseRentService {
 		HouseRent po = service.get(HouseRent.class, hid);
 		if(po!=null){
 			po.tel = tel;
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView house_rent(Integer id){
+		ModelAndView mv = new ModelAndView();
+		User u = ThreadSessionHelper.getUser();
+		mv.jspData.put("cid", u.cid);
+		if(UserHelper.hasAuthority(u, "fy_sh")){
+			mv.jspData.put("sh", "");
+		}else{
+			//没有审核权的用户只能看到审核通过对数据
+			mv.jspData.put("sh", "1");
 		}
 		return mv;
 	}

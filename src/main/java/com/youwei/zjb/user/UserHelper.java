@@ -64,6 +64,21 @@ public class UserHelper {
 		return false;
 	}
 	
+	public static List<String> getAuthorityNames(User u){
+		List<String> result = new ArrayList<String>();
+		if(u==null){
+			return result;
+		}
+		Role role = u.getRole();
+		if(role==null){
+			return result;
+		}
+		for(RoleAuthority ra : role.Authorities()){
+			result.add(ra.name);
+		}
+		return result;
+	}
+	
 	public static List<Map> getOnlineContacts(int userId){
 		User me = SimpDaoTool.getGlobalCommonDaoService().get(User.class, userId);
 		List<Map> users = SimpDaoTool.getGlobalCommonDaoService().listAsMap("select id as uid from User where cid=?", me.cid);
