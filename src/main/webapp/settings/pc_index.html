@@ -28,11 +28,16 @@
 <script type="text/javascript">
 var queryOptions;
 var cnum;
-function doSearch(){
+function doSearch(page){
+	if(page){
+		  Page.currentPageNo=page;
+		  $('.pageInput').val(1);
+	  }
   var a=$('form[name=form1]').serialize();
   // if(event==undefined || $(event.srcElement).attr('action')!='page'){
   //   $('.pageInput').val(1);
   // }
+  
   YW.ajax({
     type: 'POST',
     url: '/c/pc/list',
@@ -70,7 +75,7 @@ $(document).ready(function() {
 // 加载侧边
     getSider();
 // 列表内容
-    doSearch();
+    doSearch(1);
 // 
     $('.id_House_list').on('click', 'a', function(event) {
         var Thi=$(this),

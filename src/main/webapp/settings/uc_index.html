@@ -30,8 +30,13 @@ var queryOptions;
 try{
 }catch(e){}
 
-function doSearch(){
+function doSearch(page){
+	if(page){
+		  Page.currentPageNo=page;
+		  $('.pageInput').val(1);
+	  }
   var a=$('form[name=form1]').serialize();
+  
   YW.ajax({
     type: 'POST',
     url: '/c/user/list',
@@ -90,7 +95,7 @@ $(document).ready(function() {
         queryOptions=JSON.parse(data);
         // buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
         Page.Init();
-        doSearch();
+        doSearch(1);
     });
 // // 
 //     $('.id_House_list').on('click', 'a', function(event) {
