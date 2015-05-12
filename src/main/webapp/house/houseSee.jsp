@@ -194,9 +194,9 @@ $(document).ready(function() {
     }
     var GenjinTbody=$('.see_house_genjin').find('tbody'),
     GenjinTbodyHtml=GenjinTbody.html().replace(/(\n)+|(\r\n)+/g, "");
-    GenjinTbodyHtml=GenjinTbodyHtml.replace('   ','');
+    GenjinTbodyHtml=GenjinTbodyHtml.replace(/ /g,'');
 
-    if(GenjinTbodyHtml==' '){
+    if(GenjinTbodyHtml==''){
       $('.see_house_genjin').find('tbody').html('<tr><td class="side_noThing">暂无跟进...</td></tr>');
       $('#addGenjinBtn').tooltip('show');
     }

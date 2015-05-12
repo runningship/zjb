@@ -42,6 +42,8 @@ function doSearch(callback){
         if(callback){
           callback();
         }
+        //滚动到最上
+        $('#KY_TableMain').parent().scrollTop(-2000);
     },
     complete:function(){
       searching=false;
