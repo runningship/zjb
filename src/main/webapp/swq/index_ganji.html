@@ -182,16 +182,22 @@ function getHtml(){
                 iconum_ding++;
             });
             $$doc.find("span.ico-security").each(function(i,project){
+                if($(project).parent().find('.ico-hot').length==0){
+                    iconum_tui++;    
+                }
+                
+            });
+            $$doc.find(".ico-stick-yellow").each(function(i,project){
                 iconum_tui++;
             });
-            $$doc.find("ico-stick-yellow").each(function(i,project){
+            $$doc.find(".ico-stick-red").each(function(i,project){
                 iconum_tui++;
             });
-            $$doc.find("ico-zhineng").each(function(i,project){
+            $$doc.find(".ico-zhineng").each(function(i,project){
                 iconum_tui++;
             });
-            iconum_ding+= $$doc.find("em[title='置顶信息，效果更好']").length;
-            iconum_ding+= $$doc.find("em[title='高级置顶信息，效果更好']").length;
+            //iconum_ding+= $$doc.find("em[title='置顶信息，效果更好']").length;
+            //iconum_ding+= $$doc.find("em[title='高级置顶信息，效果更好']").length;
             iconum_all=iconum_ding+iconum_tui;
             console.log(iconum_all+'='+iconum_ding+'+'+iconum_tui);
             $('.view_tui_num').text(iconum_tui);
