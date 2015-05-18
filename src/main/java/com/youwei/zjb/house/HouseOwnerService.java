@@ -1,7 +1,10 @@
 package com.youwei.zjb.house;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
@@ -16,6 +19,7 @@ import org.bc.web.PlatformExceptionType;
 import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
+import com.cloopen.rest.sdk.CCPRestSDK;
 import com.youwei.zjb.KeyConstants;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
@@ -45,6 +49,34 @@ public class HouseOwnerService {
 		tvc.tel = tel;
 		//send code to tel
 		tvc.sendtime =  new Date();
+        int max=9999;
+        int min=1000;
+        Random random = new Random();
+        int s = random.nextInt(max)%(max-min+1) + min;
+        String code = String.valueOf(s);
+        tvc.code = code ;
+
+		HashMap<String, Object> result = null;
+
+		CCPRestSDK restAPI = new CCPRestSDK();
+		restAPI.init("sandboxapp.cloopen.com", "8883");// 初始化服务器地址和端口，格式如下，服务器地址不需要写https://
+		restAPI.setAccount("8a48b5514d32a2a8014d4abe84a21169", "046d71432c984d4786c1a4261698cec1");// 初始化主帐号名称和主帐号令牌
+		restAPI.setAppId("aaf98f894d328b13014d4c69841c147d");// 初始化应用ID
+		result = restAPI.sendTemplateSMS(tvc.tel,"1" ,new String[]{tvc.code,"5"});
+
+		System.out.println("SDKTestGetSubAccounts result=" + result);
+		if("000000".equals(result.get("statusCode"))){
+			//正常返回输出data包体信息（map）
+			HashMap<String,Object> data = (HashMap<String, Object>) result.get("data");
+			Set<String> keySet = data.keySet();
+			for(String key:keySet){
+				Object object = data.get(key);
+				System.out.println(key +" = "+object);
+			}
+		}else{
+			//异常返回输出错误码和错误信息
+			System.out.println("错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
+		}
 		dao.saveOrUpdate(tvc);
 		return mv;
 	}

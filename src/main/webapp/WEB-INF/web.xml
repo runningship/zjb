@@ -59,12 +59,12 @@
 <!-- 	</servlet-mapping> -->
 	
 	<servlet>
-        <servlet-name>weixin</servlet-name>
+        <servlet-name>wx</servlet-name>
         <servlet-class> com.youwei.zjb.WeiXinServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	    <servlet-name>weixin</servlet-name>
-	    <url-pattern>/weixin/*</url-pattern>
+	    <servlet-name>wx</servlet-name>
+	    <url-pattern>/wx/*</url-pattern>
 	</servlet-mapping>
 	
 	<filter>

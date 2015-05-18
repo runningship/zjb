@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,27 @@
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/layer.m/layer.m.js"></script>
 <script src="js/reg.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/buildHtml.js"></script>
+<script type="text/javascript">
+function getCode(){
+    var tel = $('#tel').val();
+    if (tel=='') {
+      alert('请输入手机号');
+    };
+  YW.ajax({
+      type: 'POST',
+      url: '/c/houseOwner/sendVerifyCode?tel='+tel,
+      mysuccess: function(data){
+        $('#code').focus();
+        alert('验证码已发送，请于5分钟内填写');
+      }
+  });
+}
+
+function setTel(){}
+
+</script>
 </head>
 <body>
 <div class="body wx addtel">
@@ -23,13 +46,13 @@
         </div>
         <div class="item write">
             <input type="text" class="text w60b" name="code" id="code" value="" placeholder="验证码">
-            <a href="#" class="btn blue w40b btn_act getcode " data-type="getcode">获取验证码</a>
+            <a href="#" class="btn blue w40b btn_act getcode " data-type="getcode" onclick="getCode();return false;">获取验证码</a>
         </div>
         <div class="item tipbox hide">
             <div class="cRed"><b>错误提示等</b></div>
         </div>
         <div class="item">
-            <a href="#" class="btn gray btn_act" id="submit" data-type="submit">绑定手机号</a>
+            <a href="#" class="btn gray btn_act" id="submit" data-type="submit" onclick="setTel();return false;">绑定手机号</a>
         </div>
         <div class="item MT30 cGray hide">
             <b>主意事项：</b>
