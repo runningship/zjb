@@ -26,7 +26,7 @@ function openMessageBox(ziDuan){
     try{
         var command = 'swq.exe';
         var xx = exec(command,[ziDuan], function(err, stdout, stderr) {
-           console.log(err);
+           console.log(stdout);
             console.log(stderr);
         });
         xx=null;
@@ -81,7 +81,7 @@ function setWindowTit(){
 var iconum_all=0;       
 var iconum_ding=0;      
 var iconum_tui=0;       
-var TimeXunhuan=4000;   
+var TimeXunhuan=3000;   
 var isStart=false;      
 var sys_date;           
 var sys_url;  
@@ -124,6 +124,8 @@ function isListTree(obj,num){
     listbox=$('#list_yes'),
     listboxUrl,
     isUrlTree=0;
+    var title=$$obj.find("td.t a.t").text();
+    console.log(title);
     if(listbox.children('li').length>0){
         listbox.children('li').each(function(index, el) {
             listboxUrl=$(this).data('url');
@@ -200,32 +202,39 @@ function getHtml(){
     iconum_ding=0;
     iconum_tui=0;
 
-
-    $$.ajax({url: sys_url,
+    $$.ajax({url: sys_url+'?t='+new Date().getTime(),
         type: 'GET',
         dataType: 'html',
         data: {},
-        timeout:3000,
+        timeout:30000,
         beforeSend: function(){},
-        success: getListPageSuccess,
+        success: function(data){
+        	getListPageSuccess(data);
+        	if(isStart){
+                var setTimeouts=setTimeout(function(){
+                    getHtml();
+                },TimeXunhuan);
+                return false;
+            }	
+        },
         error: function(data){
             if(data.statusText!='timeout'){
                 console.log('error for access '+sys_url+':'+data.statusText);
                 sys_err_num++;
                 list_this_err_num++;    
             }
-            
-        },
-        complete: function(){
-            console.log('complete');
-            $('.view_err_num').text(sys_err_num);
-            $('.view_yes_num').text(sys_yes_num);
             if(isStart){
                 var setTimeouts=setTimeout(function(){
                     getHtml();
                 },TimeXunhuan);
                 return false;
             }
+        },
+        complete: function(){
+            console.log('complete');
+            $('.view_err_num').text(sys_err_num);
+            $('.view_yes_num').text(sys_yes_num);
+            
         }
     });
 

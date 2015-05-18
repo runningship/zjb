@@ -56,6 +56,15 @@ function editArea(id){
     })
 }
 
+function editMap(id,name){
+  art.dialog.open('/v/settings/baidu_map.html?area='+name+'&&id='+id,{
+      id:'EditMap',
+      title:'修改楼盘',
+      height:600,
+      width:900,
+    })
+}
+
 function viewArea(name){
   $('#search').val(name);
   $('#leibie').val('');
@@ -155,6 +164,7 @@ $(window).resize(function() {      //类别
               <a href="javascript:void(0)" class="btns" data-type="edit" onclick="editArea($[id])">编辑</a>
               <a href="javascript:void(0)" class="btns" data-type="edit" onclick="viewArea('$[name]')">查看</a>
               <a href="javascript:void(0)" class="btns" data-type="del" onclick="deleteArea($[id])">删除</a>
+              <a href="javascript:void(0)" class="btns" data-type="map" onclick="editMap($[id],'$[name]')"> 地图</a>
             </td>
           </tr>
           </tbody>

@@ -128,7 +128,7 @@ public class HouseService {
 		return mv;
 	}
 	
-	private void addDistrictIfNotExist(House house){
+	public void addDistrictIfNotExist(House house){
 		User u = ThreadSessionHelper.getUser();
 		
 		//检查楼盘是否在楼盘字典中，如果没有，则添加

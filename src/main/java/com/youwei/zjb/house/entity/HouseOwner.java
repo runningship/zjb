@@ -21,5 +21,7 @@ public class HouseOwner {
 	
 	public String tel;
 	
+	public String pwd;
+	
 	public Integer sh;
 }
