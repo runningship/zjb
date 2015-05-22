@@ -12,33 +12,28 @@
 <link href="css/style.css" rel="stylesheet">
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="js/layer.m/layer.m.js"></script>
-<script src="js/reg.js"></script>
+<script src="js/login.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
 <!-- <script type="text/javascript" src="js/buildHtml.js"></script> -->
+<script type="text/javascript">
+</script>
 </head>
 <body>
 <div class="body wx addtel">
     <div class="wrap PT30">
         <div class="item write">
-            <input type="number" class="text" name="tel" id="tel" value="" placeholder="请绑定手机号码">
+            <input type="number" class="text" name="tel" id="tel" value="" placeholder="手机号码">
         </div>
         <div class="item write">
-            <input type="password" class="text" name="pwd" id="pwd" value="" placeholder="登陆密码">
+            <input type="password" class="text" name="pwd" id="pwd" value="" placeholder="新密码">
         </div>
-        <div class="item write">
-            <input type="number" class="text w60b" name="code" id="code" value="" placeholder="验证码">
-            <a href="#" class="btn blue w40b btn_act getcode " data-type="getcode">获取验证码</a>
-        </div>
+        <div><a href="pwd.jsp" class="forget_pwd">忘记密码</a></div>
         <div class="item tipbox hide">
             <div class="cRed"><b>错误提示等</b></div>
         </div>
         <div class="item">
-            <a href="#" class="btn gray btn_act MB10" id="submit" data-type="submit">立即绑定</a>
-            <a href="login.jsp" class="btn link">去登陆</a>
-        </div>
-        <div class="item MT30 cGray hide">
-            <b>主意事项：</b>
-            <p>主意事项：</p>
+            <a href="#" class="btn gray btn_act MB10" id="submit" data-type="submit">登录</a>
+            <a href="index.jsp" class="btn link">绑定手机号</a>
         </div>
     </div>
 </div>

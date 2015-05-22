@@ -22,19 +22,13 @@ function ouTimes(){
     }
 }
 var T_s=59;
-function getcode(tel){
+function getcode(){
     var btn=$('.getcode'),
     cla='out';
     btn.addClass(cla);
-    $.ajax({
-      type: 'POST',
-      url: '/c/weixin/houseOwner/sendVerifyCode?tel='+tel,
-      success: function(data){
-        $('#code').focus();
-        layer.open({
-            content:'验证码已经发送到手机'
-        });
-      }
+    layer.open({
+        content:'验证码已经发送到手机',
+        btn: ['OK']
     });
     var t;
     t=setInterval("ouTimes()",1000);
@@ -47,7 +41,10 @@ $(document).on('click', '.btn_act', function(event) {
         var dom_tel=$('#tel'),
         dom_tel_v=dom_tel.val();
         if(dom_tel_v.length==11){
-            getcode(dom_tel_v);
+            /*$.post('path/i.html', param1:dom_tel_v, function(data, textStatus, xhr) {
+                ...
+            });*/
+            getcode();
         }else{
             layer.open({
                 content:'请输入正确的手机号码',
@@ -56,44 +53,13 @@ $(document).on('click', '.btn_act', function(event) {
         }
     }else if(ThiType=='submit'){
         var dom_tel=$('#tel'),
-        dom_pwd=$('#pwd'),
         dom_code=$('#code'),
         dom_tel_v=dom_tel.val(),
-        dom_pwd_v=dom_pwd.val(),
         dom_code_v=dom_code.val();
-        if(dom_pwd_v.length<6){
-        	layer.open({
-                content:'密码至少六位数字字母或字符',
+        if(dom_tel_v.length==11&&dom_code_v.length==4&&Thi.hasClass('blue')){
+            layer.open({
+                content:'登陆确认',
                 btn: ['OK']
-            });
-        	event.preventDefault();
-        	return;
-        }
-        if(dom_code_v.length<=0){
-        	layer.open({
-                content:'请输验证码',
-                btn: ['OK']
-            });
-        	event.preventDefault();
-        	return;
-        }
-        if(dom_tel_v.length==11&&Thi.hasClass('blue')){
-            $.ajax({
-              type: 'POST',
-              url: '/c/weixin/houseOwner/verifyCode?tel='+dom_tel_v+'&pwd='+dom_pwd_v+'&code='+dom_code_v,
-              success: function(data){
-                  var exp = new Date();
-                  exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                  document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString();
-                  window.location = 'houses.jsp';
-              },
-              error:function(data){
-                  var json = JSON.parse(data.responseText);
-                  layer.open({
-                    content:json.msg,
-                    btn: ['OK']
-                  });
-              }
             });
         }else{
             layer.open({

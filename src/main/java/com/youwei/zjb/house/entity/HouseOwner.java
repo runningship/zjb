@@ -23,5 +23,7 @@ public class HouseOwner {
 	
 	public String pwd;
 	
+	public Integer verified;
+	
 	public Integer sh;
 }

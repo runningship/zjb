@@ -68,6 +68,7 @@ public class SessionFilter implements Filter{
 		
 		excludes.add("/bosh/basic.html");
 		excludes.add("/bosh-test/basic.html");
+		excludes.add("/c/house/exist");
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -91,6 +92,10 @@ public class SessionFilter implements Filter{
 //		System.out.println("----------->clientId="+clientId+",path="+path+",oldSession="+oldSessionId+",session="+session.getId());
 		ThreadSession.setHttpSession(session);
 		if(excludes.contains(path)){
+			chain.doFilter(request, response);
+			return;
+		}
+		if(path.contains("houseOwner")){
 			chain.doFilter(request, response);
 			return;
 		}

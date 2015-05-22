@@ -31,16 +31,17 @@ public class OperatorService {
 	public void add(OperatorType operType , String conts){
 		OperRecord oper = new OperRecord();
 		oper.addtime = new Date();
-		User user = ThreadSessionHelper.getUser();
-		oper.uid = user.id;
 		oper.type = operType.getCode();
 		oper.ip = ThreadSessionHelper.getIp();
-		oper.did = user.did;
-		oper.cid = user.cid;
-		oper.uname = user.uname;
-		oper.ip = ThreadSessionHelper.getIp();
-		oper.dname = user.Department().namea;
-		oper.cname = user.Company().namea;
+		User user = ThreadSessionHelper.getUser();
+		if(user!=null){
+			oper.uid = user.id;
+			oper.did = user.did;
+			oper.cid = user.cid;
+			oper.uname = user.uname;
+			oper.dname = user.Department().namea;
+			oper.cname = user.Company().namea;
+		}
 		oper.yesno=1;
 		PC pc= (PC)ThreadSession.getHttpSession().getAttribute("pc");
 		if(pc!=null){

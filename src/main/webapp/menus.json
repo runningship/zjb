@@ -24,6 +24,11 @@
 			"zjb-only":true,
 			"type":"menu"
 		},{
+			"name":"fy_fz_on",
+			"text":"房主",
+			"zjb-only":true,
+			"type":"menu"
+		},{
 			"name":"fy_dels",
 			"text":"回收站删除",
 			"type":"menu"

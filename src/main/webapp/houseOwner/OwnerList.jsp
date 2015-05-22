@@ -10,13 +10,9 @@
 <script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
-<script type="text/javascript" src="/js/user.js"></script>
-<script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
 <script type="text/javascript">
-var cid=${me.cid};
 var rowId;
 var dataScope="ky";
 function doSearch(callback,isdel){
@@ -28,7 +24,7 @@ function doSearch(callback,isdel){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/client/list',
+    url: '/c/weixin/houseOwner/listData',
     data:a,
     mysuccess: function(data){
         houseData=JSON.parse(data);
@@ -53,7 +49,7 @@ function shenheFy(id , obj){
   // event.cancelBubble=true;
   YW.ajax({
     type: 'POST',
-    url: '/c/house/toggleShenHe?id='+id,
+    url: '/c/weixin/houseOwner/toggleShenHe?id='+id,
     mysuccess: function(data){
         var json = JSON.parse(data);
         if(json.sh==1){
@@ -85,12 +81,6 @@ $(document).ready(function() {
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;" class="not-select">
-            <div id="menuTop"  style="display:inline-block;">
-              <ul class="MainRightTop KY_W">
-                  <li onclick="window.location='/houseOwner/OwnerList.jsp'" class="slect"><i class="i5"></i>房主审核</li>
-                  <li class="line"></li>
-              </ul>
-            </div>
               <div class="MainRightInputMain KY_W not-select">
               
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
@@ -99,7 +89,7 @@ $(document).ready(function() {
                         <li><input class="input-sm w110" type="text" placeholder="电话" name="tel"/></li>
                         <li class="LiBoxW1">
                              <button class="ButtonW1 ButtonS hand not-select" type="submit" onclick="doSearch();return false;" value="enter">搜索</button>
-                             <button class="ButtonW1 ButtonQ hand not-select" type="button" onclick="window.location.reload();">清空</button>
+                             <button class="ButtonW1 ButtonQ hand not-select" type="button" style="display:none" onclick="window.location.reload();">清空</button>
                         </li>
                    </ul>
                    
@@ -112,10 +102,8 @@ $(document).ready(function() {
                            
                                    <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" style=" margin-bottom:-1px;">
                                     <tr>
-                                            <th width="60">编号</th>
+                                            <th width="160">房主电话</th>
                                             <th width="30">操作</th>
-                                            <th width="60">客户姓名</th>
-                                            <th width="160">客户电话</th>
                                             
                                      </tr>
                                           
@@ -128,12 +116,10 @@ $(document).ready(function() {
                 <div class="KY_MainRCon" style="height:100%; margin:0 0.5%; width:99%; display:table-cell; border-bottom:none; border-top:none; overflow:hidden; overflow-y:scroll;">
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
                     <tr data-cid="$[id]" style="display:none;" class="id_client_list"  >
-                      <td width="60"><strong>$[id]</strong></td>
+                      <td width="160" runscript = "true">$[tel]</td>
                       <td width="30"> 
-                        <a href="##" class="shenhe_0" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText(0)</a>
+                        <a href="##" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
                       </td>
-                      <td width="60"><strong>$[name]</strong></td>
-                      <td width="160" runscript = "true">getTel('$[tels]')</td>
                     </tr>
                   </table>
                 </div>
