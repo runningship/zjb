@@ -110,6 +110,9 @@ function sideBtnFun(){
     });
 }
 $(document).ready(function() {
+	if($('#sourceLink').attr('link')==''){
+		$('#sourceLinkTr').css('display','none');
+	}
     sideBtnFun();
     $('[data-toggle=tooltip]').tooltip();
         var lxr='$${lxr}',
@@ -376,6 +379,10 @@ $('#area').on('click',function(){
                 <tr>
                   <td class="biaoti biaotiMax">业务人员：</td>
                   <td class="neirong TextColor1">${ywy} ${fortel}&nbsp;</td>
+                </tr>
+                <tr auth="fy_sh" id="sourceLinkTr">
+                  <td class="biaoti biaotiMax"></td>
+                  <td class="neirong TextColor1"><a id="sourceLink" link="${href}" href="javascript:void(0)" onclick="window.top.gui.Shell.openExternal('${href}');">原链接</a></td>
                 </tr>
               </table>
             </td>

@@ -278,8 +278,9 @@ $(document).ready(function(){
 		 
 });
 
-
-										 
+function openGongGao(){
+	art.dialog.open("/ad/gonggao.html",{id:'gonggao',width:960,height:615,title:'',lock:true,padding:0}); 
+}			 
 								
 </script>
 <style type="text/css">
@@ -338,6 +339,10 @@ $(document).ready(function(){
                             <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=addShou&chuzus=0'">我发布的出售</a> 
                             <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=addZu&chuzus=1'">我发布的出租</a>  
                        </div>
+                  </li>
+                  <li class="line"></li>
+                  <li id="zbj_week" class="MenuBox nobar" style="position:relative;">
+                       <span onclick="openGongGao();">公告</span>
                   </li>
                   <li class="line"></li>
               </ul>
