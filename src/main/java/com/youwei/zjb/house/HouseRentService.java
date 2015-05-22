@@ -73,6 +73,7 @@ public class HouseRentService {
 			if(house.seeGX==null){
 				house.seeGX=0;
 			}
+			house.ruku = 1;
 			service.saveOrUpdate(house);
 			mv.data.put("msg", "发布成功");
 			mv.data.put("result", 0);
