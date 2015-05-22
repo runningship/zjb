@@ -32,6 +32,7 @@ public class houseSee_v2 extends AbstractSee {
 			return null;
 		}
 		JSONObject json = JSONHelper.toJSON(h);
+		json.put("city", ThreadSessionHelper.getCityPinyin());
 		Department dept = dao.get(Department.class, h.did);
 		User user = dao.get(User.class, h.uid);
 		json.put("fbr", (user==null || user.uname==null) ? "":user.uname);
