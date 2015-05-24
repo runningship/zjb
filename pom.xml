@@ -147,11 +147,16 @@
 		</dependency>
 
 		<dependency>
-				<groupId>net.sourceforge.jexcelapi</groupId>
-				<artifactId>jxl</artifactId>
-				<version>2.6.12</version>
-			</dependency>
-
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.cloopen</groupId>
+			<artifactId>CCPRestSDK</artifactId>
+			<version>2.6</version>
+		</dependency>
 	</dependencies>
 	<build>
 	
