@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
@@ -25,16 +21,13 @@ import org.bc.web.WebMethod;
 
 import com.cloopen.rest.sdk.CCPRestSDK;
 import com.youwei.zjb.KeyConstants;
-import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseOwner;
 import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.house.entity.TelVerifyCode;
+import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
-import com.youwei.zjb.user.UserHelper;
-import com.youwei.zjb.user.entity.User;
-import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
 
 @Module(name="/weixin/houseOwner")
@@ -46,6 +39,7 @@ public class HouseOwnerService {
 	
 	HouseService houseService = TransactionalServiceHelper.getTransactionalService(HouseService.class);
 	
+	CityService cityService = new CityService();
 	@WebMethod
 	public ModelAndView sendVerifyCode(String tel){
 		ModelAndView mv = new ModelAndView();
@@ -98,34 +92,33 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView houses(){
 		ModelAndView mv = new ModelAndView();
-		String tel  = "";
 		//判断session中没有房主信息
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
-		if(owner==null){
-			Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
-    		if(cookies==null){
-    			mv.redirect="login.jsp";
-				return mv;
-    		}
-    		
-    		for(Cookie cookie : cookies){
-    			if("tel".equals(cookie.getName())){
-    				tel = cookie.getValue();
-    			}
-    		}
-//			pwd = SecurityHelper.Md5(pwd);
-			HouseOwner po = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{tel});
-			if(po==null){
-				//TODO 信息不正确重新登录
-				mv.redirect="login.jsp";
-				return mv;
-			}else{
-				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, po);
-			}
-		}else{
-			tel = owner.tel;
-		}
-		List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+tel+"%");
+//		if(owner==null){
+//			Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
+//    		if(cookies==null){
+//    			mv.redirect="login.jsp";
+//				return mv;
+//    		}
+//    		
+//    		for(Cookie cookie : cookies){
+//    			if("tel".equals(cookie.getName())){
+//    				tel = cookie.getValue();
+//    			}
+//    		}
+////			pwd = SecurityHelper.Md5(pwd);
+//			HouseOwner po = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{tel});
+//			if(po==null){
+//				//TODO 信息不正确重新登录
+//				mv.redirect="login.jsp";
+//				return mv;
+//			}else{
+//				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, po);
+//			}
+//		}else{
+//			tel = owner.tel;
+//		}
+		List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+owner.tel+"%");
 		mv.jspData.put("houses", houses);
 		return mv;
 	}
@@ -137,6 +130,14 @@ public class HouseOwnerService {
 		mv.jspData.put("lxings", LouXing.toList());
 		mv.jspData.put("hxings", FangXing.toList());
 		mv.jspData.put("quyus", QuYu.toList());
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView citys(){
+		ModelAndView mv = new ModelAndView();
+		cityService.getCitys();
+		mv.jspData.put("citys", cityService.getCitys());
 		return mv;
 	}
 	
@@ -265,7 +266,7 @@ public class HouseOwnerService {
 		house.ztai = SellState.在售.getCodeString();
 		//house.uid = user.id;
 		house.cid = 1;
-		house.did = 90;
+		house.did = 0;
 		house.sh = 0;
 		FangXing fx = FangXing.parse(hxing);
 		house.hxf = fx.getHxf();

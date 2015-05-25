@@ -22,6 +22,7 @@ import org.bc.sdak.SimpDaoTool;
 import org.bc.web.ThreadSession;
 
 import com.youwei.zjb.entity.RoleAuthority;
+import com.youwei.zjb.house.entity.HouseOwner;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.UserSession;
 import com.youwei.zjb.util.SessionHelper;
@@ -96,7 +97,7 @@ public class SessionFilter implements Filter{
 			return;
 		}
 		if(path.contains("houseOwner")){
-			chain.doFilter(request, response);
+			processHouseOwner(chain , req , resp);
 			return;
 		}
 		if(ThreadSessionHelper.getUser()==null){
@@ -186,5 +187,55 @@ public class SessionFilter implements Filter{
 			}
 		}
 		return oldSessionId;
+	}
+	
+	private void processHouseOwner(FilterChain chain ,HttpServletRequest req ,HttpServletResponse resp) throws IOException, ServletException{
+		String tel = "";
+		String city = ThreadSession.getCityPY();
+		String path = req.getRequestURI().toString();
+		System.out.println(path);
+		if(path.contains("logout") || path.contains("login") || path.contains("doLogin")){
+			chain.doFilter(req, resp);
+			return;
+		}
+		Cookie[] cookies = req.getCookies();
+		if(cookies==null){
+			//去登录
+			if(!path.endsWith("login.jsp")){
+				resp.sendRedirect("login.jsp");
+				return;
+			}
+		}
+		for(Cookie cookie : cookies){
+			if("tel".equals(cookie.getName())){
+				tel = cookie.getValue();
+			}
+			if("city".equals(cookie.getName())){
+				city = cookie.getValue();
+			}
+		}
+		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+		if(owner==null){
+			if(StringUtils.isEmpty(tel)){
+				//去登录
+				if(!path.endsWith("login.jsp")){
+					resp.sendRedirect("login.jsp");
+					return;
+				}
+			}else{
+				HouseOwner po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{tel});
+				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, po);
+			}
+		}
+		if(StringUtils.isEmpty(city)){
+			//选择城市
+			if(!path.endsWith("citys.jsp")){
+				resp.sendRedirect("citys.jsp");
+				return;
+			}
+		}else{
+			ThreadSession.setCityPY(city);
+		}
+		chain.doFilter(req, resp);
 	}
 }

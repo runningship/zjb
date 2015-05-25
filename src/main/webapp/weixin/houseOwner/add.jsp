@@ -14,8 +14,9 @@
 <!-- <script src="../../js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script> -->
 <!-- <script src="../../js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script> -->
 <script type="text/javascript" src="js/buildHtml.js"></script>
-<script src="../../js/jquery.j.tool.v2.js" type="text/javascript"></script>
+<script src="js/check.js" type="text/javascript"></script>
 <script src="js/layer.m/layer.m.js"></script>
+<script src="js/textareaAutoHeight.js"></script>
 <script src="js/regForm.js"></script>
 <script>
 function save(){
@@ -35,22 +36,26 @@ function save(){
 
 $(document).ready(function() {
     
+$("textarea").textareaAutoHeight();
 });
-$(document).on('click', '.btn_act', function(event) {
-    var Thi=$(this),
-    ThiType=Thi.data('type');
-    if(ThiType=='submit'){
+// $(document).on('click', '.btn_act', function(event) {
+//     var Thi=$(this),
+//     ThiType=Thi.data('type');
+//     if(ThiType=='submit'){
         
-    }
-    event.preventDefault();
-    /* Act on the event */
-});
+//     }
+//     event.preventDefault();
+//     /* Act on the event */
+// });
 </script>
 </head>
 <body>
 <div class="body wx content">
     <div class="wrap">
-        <h2 class="cGray item">添加新的房源 <span class="hTip"></span></h2>
+        <div class="cGray item">
+            <a href="houses.jsp" class="btn link w20b fr">取消</a>
+            <span class="h2">添加新的房源 <span class="hTip"></span></span>
+        </div>
         <form name="form1" role="form" onsubmit="save();">
         <ul class="item ul_list">
             <li class="dblock">
@@ -64,7 +69,7 @@ $(document).on('click', '.btn_act', function(event) {
             </li>
             <li>
                 <span class="title">栋号：</span>
-                <span class="inputbox"><input class="text isFormItem" id="dhao" name="dhao" value="" desc="栋号" placeholder="栋号" data-rule="noNull" data-tip="请输入栋号" data-tipErr="请输入栋号"></span>
+                <span class="inputbox"><input type="number" class="text isFormItem" id="dhao" name="dhao" value="" desc="栋号" placeholder="栋号" data-rule="noNull" data-tip="请输入栋号" data-tipErr="请输入栋号"></span>
             </li>
             <li>
                 <span class="title">房号：</span>
@@ -75,8 +80,11 @@ $(document).on('click', '.btn_act', function(event) {
                 <span class="inputbox"><input type="number" class="text isFormItem" value="" name="lceng" desc="楼层" placeholder="楼层" data-rule="noNull" data-tip="请输入楼层" data-tipErr="请输入楼层"></span>
             </li>
             <li>
-                <span class="title">总层：</span>
-                <span class="inputbox"><input type="number" class="text isFormItem" value="" name="zceng" desc="总层" placeholder="总层" data-rule="noNull" data-tip="请输入总层" data-tipErr="请输入总层"></span>
+                <span class="title"> </span>
+                <span class="inputbox">
+                	<input type="number" class="text " name="zceng" desc="总层" placeholder="总层" />
+                </span>
+                
             </li>
             <li>
                 <span class="title">面积：</span>
@@ -88,7 +96,7 @@ $(document).on('click', '.btn_act', function(event) {
             </li>
             <li>
                 <span class="title">年代：</span>
-                <span class="inputbox"><input type="number" class="text isFormItem" value="" name="dateyear" placeholder="" data-rule="noNull" data-tip="请输入年代" data-tipErr="请输入年代"><b>年</b></span>
+                <span class="inputbox"><input type="number"  desc="建筑年代" min="1900" max="2015" class="text isFormItem" value="" name="dateyear" placeholder="" data-rule="noNull" data-tip="请输入年代" data-tipErr="请输入年代"><b>年</b></span>
             </li>
             <li>
             </li>
@@ -134,13 +142,13 @@ $(document).on('click', '.btn_act', function(event) {
             
             <li class="dblock">
                 <span class="title">备注：</span>
-                <span class="inputbox"><textarea  rows="4"  name="beizhu"  style="width:100%;"></textarea></span>
+                <span class="inputbox"><textarea class="textarea"  rows="4"  name="beizhu"  ></textarea></span>
             </li>
         </ul>
     </form>
     </div>
     <div class="wrap footer">
-        <a href="#" class="btn blue btn_act getcode " data-type="submit" onclick="save();return false;"><i class="iconfont">&#xe600;</i><span>发布</span></a>
+        <a href="#" class="btn blue btn_act " data-type="submit" onclick="save();return false;"><span>发布</span></a>
     </div>
 </div>
     

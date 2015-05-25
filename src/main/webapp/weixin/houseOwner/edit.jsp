@@ -12,7 +12,7 @@
 <link href="css/style.css" rel="stylesheet">
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/buildHtml.js"></script>
-<script src="../../js/jquery.j.tool.v2.js" type="text/javascript"></script>
+<script src="js/check.js" type="text/javascript"></script>
 <script src="js/layer.m/layer.m.js"></script>
 <script>
 function update(){
@@ -70,7 +70,7 @@ $(document).on('click', '.btn_act', function(event) {
             </li>
             <li>
                 <span class="title">栋号：</span>
-                <span class="inputbox"><input class="text"  name="dhao" value="${house.dhao }" desc="栋号" placeholder="栋号"></span>
+                <span class="inputbox"><input type="number" class="text"  name="dhao" value="${house.dhao }" desc="栋号" placeholder="栋号"></span>
             </li>
             <li>
                 <span class="title">房号：</span>
@@ -94,7 +94,7 @@ $(document).on('click', '.btn_act', function(event) {
             </li>
             <li>
                 <span class="title">年代：</span>
-                <span class="inputbox"><input type="number" min="1900" max="2015" class="text" value="${house.dateyear }"  name="dateyear" placeholder=""><b>年</b></span>
+                <span class="inputbox"><input type="number" min="1900" max="2015" desc="建筑年代" class="text" value="${house.dateyear }"  name="dateyear" placeholder=""><b>年</b></span>
             </li>
             <li>
             </li>
@@ -140,16 +140,16 @@ $(document).on('click', '.btn_act', function(event) {
             
             <li class="dblock">
                 <span class="title">备注：</span>
-                <span class="inputbox"><textarea rows="4" name="beizhu" style="width:100%;">${house.area }</textarea></span>
+                <span class="inputbox"><textarea rows="4" name="beizhu" style="width:100%;">${house.beizhu }</textarea></span>
             </li>
         </ul>
         </form>
     </div>
     <div class="wrap footer">
-        <a href="#" class="btn blue btn_act getcode " data-type="submit" ><i class="iconfont">&#xe600;</i>更新</a>
+        <a href="#" class="btn blue btn_act getcode " data-type="submit" >更新</a>
     </div>
     <div class="wrap footer">
-        <a href="#" class="btn red btn_act getcode " data-type="del" ><i class="iconfont">&#xe600;</i>删除</a>
+        <a href="#" class="btn red btn_act getcode " data-type="del" >删除</a>
     </div>
 </div>
     

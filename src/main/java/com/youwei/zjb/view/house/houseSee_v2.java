@@ -38,7 +38,7 @@ public class houseSee_v2 extends AbstractSee {
 		json.put("fbr", (user==null || user.uname==null) ? "":user.uname);
 		json.put("ywy", h.forlxr==null ? "":h.forlxr);
 		json.put("fortel", h.fortel==null ? "":h.fortel);
-		json.put("dname", dept==null? "" : dept.namea);
+		json.put("dname", dept==null? "房主" : dept.namea);
 		SellState ztai = SellState.parse(h.ztai);
 		json.put("ztai", ztai==null ? "": ztai);
 		String favStr = "@"+ThreadSessionHelper.getUser().id+"|";

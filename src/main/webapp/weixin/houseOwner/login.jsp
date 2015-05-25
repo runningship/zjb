@@ -25,15 +25,17 @@
             <input type="number" class="text" name="tel" id="tel" value="" placeholder="手机号码">
         </div>
         <div class="item write">
-            <input type="password" class="text" name="pwd" id="pwd" value="" placeholder="新密码">
+            <input type="password" class="text" name="pwd" id="pwd" value="" placeholder="密码">
         </div>
-        <div><a href="pwd.jsp" class="forget_pwd">忘记密码</a></div>
         <div class="item tipbox hide">
             <div class="cRed"><b>错误提示等</b></div>
         </div>
         <div class="item">
             <a href="#" class="btn gray btn_act MB10" id="submit" data-type="submit">登录</a>
-            <a href="index.jsp" class="btn link">绑定手机号</a>
+        </div>
+        <div class="item">
+            <a href="index.jsp" class="btn link w50b">注册</a>
+            <a href="pwd.jsp" class="btn link w50b">忘记密码</a>
         </div>
     </div>
 </div>

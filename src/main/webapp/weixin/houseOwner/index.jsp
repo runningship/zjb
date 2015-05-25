@@ -20,10 +20,10 @@
 <div class="body wx addtel">
     <div class="wrap PT30">
         <div class="item write">
-            <input type="number" class="text" name="tel" id="tel" value="" placeholder="请绑定手机号码">
+            <input type="number" class="text" name="tel" id="tel" value="" placeholder="请输入手机号码">
         </div>
         <div class="item write">
-            <input type="password" class="text" name="pwd" id="pwd" value="" placeholder="登陆密码">
+            <input type="password" class="text" name="pwd" id="pwd" value="" placeholder="请设置新密码">
         </div>
         <div class="item write">
             <input type="number" class="text w60b" name="code" id="code" value="" placeholder="验证码">
@@ -33,8 +33,8 @@
             <div class="cRed"><b>错误提示等</b></div>
         </div>
         <div class="item">
-            <a href="#" class="btn gray btn_act MB10" id="submit" data-type="submit">立即绑定</a>
-            <a href="login.jsp" class="btn link">去登陆</a>
+            <a href="#" class="btn gray btn_act MB10" id="submit" data-type="submit">立即注册</a>
+            <a href="login.jsp" class="btn link">登录</a>
         </div>
         <div class="item MT30 cGray hide">
             <b>主意事项：</b>

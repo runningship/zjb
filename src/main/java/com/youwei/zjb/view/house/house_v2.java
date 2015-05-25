@@ -46,6 +46,7 @@ public class house_v2 {
 		}else{
 			html = html.replace("$${seeAds}", "1");
 		}
+		html = html.replace("$${city}", ThreadSessionHelper.getCityPinyin());
 		return Jsoup.parse(html);
 	}
 }

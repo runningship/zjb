@@ -57,9 +57,12 @@ $(document).on('click', '.ul_list li', function(event) {
         </ul>
     </div>
     <div class="wrap footer">
-            <a href="add.jsp" class="btn border tal w40b btn_act getcode " data-type="getcode"><i class="iconfont">&#xe600;</i> 添加新房源</a>
-            <a href="houses.jsp" class="" >刷新</a>
-            <a href="/c/weixin/houseOwner/logout"  class="btn_act" >退出</a>
+		<c:if test="${houses.size()<3 }">
+        <a href="add.jsp" class="btn border tal w40b btn_act getcode " data-type="getcode"><i class="iconfont">&#xe600;</i> 添加新房源</a>
+        </c:if>
+        <a href="houses.jsp" class="" >刷新</a>
+        <a href="/c/weixin/houseOwner/logout" class="btn border tal w20b btn_act " >退出</a>
+        <a href="citys.jsp" class="btn border tal w20b btn_act " >切换城市</a>
     </div>
 </div>
     

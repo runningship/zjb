@@ -15,4 +15,18 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-gengduocaidan:before { content: "\e601"; }
 .icon-xinjian:before { content: "\e600"; }
+.icon-caidan:before { content: "\e602"; }
+.icon-weibiaoti1:before { content: "\e60d"; }
+.icon-peixunxiangmu:before { content: "\e603"; }
+.icon-caidan1:before { content: "\e604"; }
+.icon-icon:before { content: "\e605"; }
+.icon-tianjiadaoyangshi:before { content: "\e606"; }
+.icon-icon1:before { content: "\e607"; }
+.icon-xialacaidanzhuye24px:before { content: "\e608"; }
+.icon-xialacaidanshezhi24px:before { content: "\e609"; }
+.icon-shezhicaidangerenshezhi32px:before { content: "\e60a"; }
+.icon-shezhicaidanmimashezhi32px:before { content: "\e60b"; }
+.icon-add:before { content: "\e60e"; }
+.icon-appyoushangjiaogengduocaidan:before { content: "\e60c"; }
