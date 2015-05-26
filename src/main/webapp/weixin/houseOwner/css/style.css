@@ -208,13 +208,13 @@ html,body{height: 100%; padding: 0; margin:0;}
 .item.write{  margin:1px 0px; background: #FFF;}
 .inputbox{display: block; position: relative;}
 .inputbox b{ position: absolute; right: 10px; top: 15px; bottom: 0; font-weight: normal; color: #AAA;}
-.text,.select{ height: 30pt; line-height: 30pt; padding: 10px 10px; border-radius: 3pt; border: 1px solid #CCC; width: 100%;height: 50px; line-height: 30px; background: none; border: none;}
+.text,.select{ height: 30pt; line-height: 30pt; padding: 10px 10px; border-radius: 3pt; border: 1px solid #EEE; width: 100%;height: 50px; line-height: 30px; background: none;}
 .textarea{ padding: 10px 10px; border-radius: 3pt; border: 1px solid #EEE; width: 100%;}
 .inputbox.n2b{ }
 .inputbox.n2b .text{ width: 48.5%;}
 .joiner{display: inline-block;height: 42px;line-height: 42px;width: 3%;float: left;text-align: center;}
 
-.btn{ display: block; margin:0px 0px; text-align: center; height: 30pt; line-height: 30pt; background: #F9F9F9; border: 1px solid #DFDFDF; color: #666; border-radius: 3pt;}
+.btn{ display: block; margin:0px 0px; text-align: center; height: 40px; line-height:40px; background: #F9F9F9; border: 1px solid #DFDFDF; color: #666; border-radius: 5px;}
 .btn.tal{ text-align: left;}
 .btn:hover{ background: #FCFCFC; color: #666;}
 .btn.link{ background: none; border: none;}
@@ -238,6 +238,9 @@ html,body{height: 100%; padding: 0; margin:0;}
 .MB10{ margin-bottom: 10px;}
 .hide{ display: none;}
 
+.fMenuBox{ position: fixed; top: 0; left: 0; z-index: 999; width: 100px; border-radius: 5px; display: none;}
+.fMenuBox li{ padding: 10px;background: #FFF; margin-top: 1px;}
+
 /* 
             <li>
                 <span class="title">楼层：</span>
@@ -259,14 +262,18 @@ html,body{height: 100%; padding: 0; margin:0;}
 .list .footer{ position: fixed; bottom:0; left: 0; right: 0; height: 50px; line-height: 50px; background: #2C3031;}
 .list .ul_list { padding-bottom: 60px;}
 .list .ul_list li{ border:1px solid #DDD; margin-bottom: 10px; padding: 10px;  border-radius: 5px; background: #FFF; background: #C54F54; border-color: #2C3031; color: #FFF;}
+.list .ul_list li.green{ background: #4A9753;}
+.list .ul_list li.blue{ background: #1A66A4;}
+
 .list .ibox{ }
 .list .ibox span{ display: inline-block;  margin:6px 0; }
 .list .ibox span.hname{ width: 74%; border-left: 4px solid #FFF; padding-left: 10px;}
 .list .footer{ padding: 0 10px; }
+.list .footer .icoMenu{ width: 55px;}
 
 /* content */
 .content { background: #FFF;}
-.content .h2{ padding:10px; height: 50px; line-height: 30px;}
+.content .h2{ padding:10px; height: 40px; line-height: 40px;}
 .content h2{ font-weight: normal; padding-left: 10px;}
 .content .ul_list li{ width: 49%; display: inline-block;}
 .content .ul_list li.dblock{ width: 100%;}

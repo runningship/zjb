@@ -16,6 +16,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .icon-gengduocaidan:before { content: "\e601"; }
+.icon-add:before { content: "\e610"; }
 .icon-xinjian:before { content: "\e600"; }
 .icon-caidan:before { content: "\e602"; }
 .icon-weibiaoti1:before { content: "\e60d"; }
@@ -28,5 +29,5 @@
 .icon-xialacaidanshezhi24px:before { content: "\e609"; }
 .icon-shezhicaidangerenshezhi32px:before { content: "\e60a"; }
 .icon-shezhicaidanmimashezhi32px:before { content: "\e60b"; }
-.icon-add:before { content: "\e60e"; }
+.icon-add1:before { content: "\e60e"; }
 .icon-appyoushangjiaogengduocaidan:before { content: "\e60c"; }

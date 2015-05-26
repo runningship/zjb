@@ -193,6 +193,9 @@ public class SessionFilter implements Filter{
 		String tel = "";
 		String cityInSession = (String)req.getSession().getAttribute("city");
 		String path = req.getRequestURI().toString();
+		if(cityInSession==null){
+			System.out.println("city is null for "+ path);
+		}
 		System.out.println(cityInSession);
 		if(path.contains("logout") || path.contains("login") || path.contains("doLogin")){
 			chain.doFilter(req, resp);

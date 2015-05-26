@@ -34,9 +34,14 @@ function save(){
     });
 }
 
+
 $(document).ready(function() {
     
-$("textarea").textareaAutoHeight();
+$('textarea').tah({
+    moreSpace:15,   //输入框底部预留的空白, 默认15, 单位像素
+    maxHeight:600,  //指定Textarea的最大高度, 默认600, 单位像素
+    animateDur:200  //调整高度时的动画过渡时间, 默认200, 单位毫秒
+});
 });
 // $(document).on('click', '.btn_act', function(event) {
 //     var Thi=$(this),
@@ -142,7 +147,9 @@ $("textarea").textareaAutoHeight();
             
             <li class="dblock">
                 <span class="title">备注：</span>
-                <span class="inputbox"><textarea class="textarea"  rows="4"  name="beizhu"  ></textarea></span>
+                <span class="inputbox">
+                    <textarea name="" class="text isFormItem" name="beizhu" placeholder="">&nbsp;</textarea>
+                </span>
             </li>
         </ul>
     </form>
