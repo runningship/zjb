@@ -232,7 +232,7 @@ public class HouseService {
 			dao.execute("delete from HouseTel where hid = ?", house.id);
 			po.tel = house.tel;
 		}else{
-			if(!house.tel.equals(po.tel)){
+//			if(!house.tel.equals(po.tel)){
 				//修改了电话号码
 				dao.execute("delete from HouseTel where hid = ?", house.id);
 				String[] arr = house.tel.split("/");
@@ -243,7 +243,7 @@ public class HouseService {
 					dao.saveOrUpdate(ht);
 				}
 				po.tel = house.tel;
-			}
+//			}
 		}
 		dao.saveOrUpdate(po);
 		User user = ThreadSessionHelper.getUser();
