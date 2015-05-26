@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
@@ -18,6 +21,7 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
+import org.hibernate.exception.SQLGrammarException;
 
 import com.cloopen.rest.sdk.CCPRestSDK;
 import com.youwei.zjb.KeyConstants;
@@ -118,8 +122,22 @@ public class HouseOwnerService {
 //		}else{
 //			tel = owner.tel;
 //		}
-		List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+owner.tel+"%");
-		mv.jspData.put("houses", houses);
+		try{
+			List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+owner.tel+"%");
+			mv.jspData.put("houses", houses);
+			String cityInSession = (String)ThreadSession.getHttpSession().getAttribute("city");
+			JSONArray citys = cityService.getCitys();
+			for(int i=0;i<citys.size();i++){
+				if(citys.getJSONObject(i).getString("py").equals(cityInSession)){
+					mv.jspData.put("city", citys.getJSONObject(i).getString("name"));
+					break;
+				}
+			}
+		}catch(SQLGrammarException ex){
+			if(ex.getCause().getMessage().contains("登录失败")){
+				mv.redirect="citys.jsp";
+			}
+		}
 		return mv;
 	}
 	
@@ -167,6 +185,7 @@ public class HouseOwnerService {
 	public ModelAndView doLogin(String tel , String pwd){
 		ModelAndView mv = new ModelAndView();
 		pwd = SecurityHelper.Md5(pwd);
+		ThreadSession.getCityPY();
 		HouseOwner po = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel" , "pwd"}, new Object[]{tel , pwd});
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException,"账号或密码不正确");

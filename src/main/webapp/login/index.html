@@ -432,6 +432,14 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
 
 // addTitlebar("top-titlebar", "", "");
 }); 
+
+function clearCache(){
+	try{
+		gui.App.clearCache();
+	}catch(e){
+		
+	}
+}
 </script>
 </head>
 <body style="overflow: hidden">
@@ -525,7 +533,7 @@ menuerBoxI.stop().animate({left: menuerBoxOnLeft+(menuerBoxOnW/2-10)+(menuerBoxO
         </div>
     </div>
     <div class="footer">
-        <div class="fr">当前版本：5.0</div>
+        <div style="float:left" onclick="clearCache();">清理缓存</div><div class="fr">当前版本：5.0</div>
         <div class="fl tipbox"></div>
     </div>
 </div>

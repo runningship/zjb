@@ -191,9 +191,9 @@ public class SessionFilter implements Filter{
 	
 	private void processHouseOwner(FilterChain chain ,HttpServletRequest req ,HttpServletResponse resp) throws IOException, ServletException{
 		String tel = "";
-		String city = ThreadSession.getCityPY();
+		String cityInSession = (String)req.getSession().getAttribute("city");
 		String path = req.getRequestURI().toString();
-		System.out.println(path);
+		System.out.println(cityInSession);
 		if(path.contains("logout") || path.contains("login") || path.contains("doLogin")){
 			chain.doFilter(req, resp);
 			return;
@@ -206,12 +206,13 @@ public class SessionFilter implements Filter{
 				return;
 			}
 		}
+		String cityInCookie="";
 		for(Cookie cookie : cookies){
 			if("tel".equals(cookie.getName())){
 				tel = cookie.getValue();
 			}
 			if("city".equals(cookie.getName())){
-				city = cookie.getValue();
+				cityInCookie = cookie.getValue();
 			}
 		}
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
@@ -223,19 +224,28 @@ public class SessionFilter implements Filter{
 					return;
 				}
 			}else{
-				HouseOwner po = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{tel});
-				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, po);
+				owner = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{tel});
+				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, owner);
 			}
 		}
-		if(StringUtils.isEmpty(city)){
-			//选择城市
-			if(!path.endsWith("citys.jsp")){
-				resp.sendRedirect("citys.jsp");
-				return;
+		if(StringUtils.isEmpty(cityInSession)){
+			if(StringUtils.isEmpty(cityInCookie)){
+				//选择城市
+				if(!path.endsWith("citys.jsp")){
+					resp.sendRedirect("citys.jsp");
+					return;
+				}
+			}else{
+				req.getSession().setAttribute("city", cityInCookie);
 			}
 		}else{
-			ThreadSession.setCityPY(city);
+			if(!cityInCookie.equals(cityInSession)){
+				cityInSession = cityInCookie;
+				req.getSession().setAttribute("city", cityInCookie);
+			}
 		}
+		
+		ThreadSession.setCityPY(cityInSession);
 		chain.doFilter(req, resp);
 	}
 }
