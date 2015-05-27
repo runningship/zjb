@@ -62,10 +62,11 @@ $(document).on('click', '.btn_act', function(event) {
     }else if(ThiType=='submit'){
         var dom_tel_v = $('#tel').val();
         var dom_pwd_v = $('#pwd').val();
+        var dom_code_v = $('#code').val();
         if(dom_tel_v.length==11&&dom_pwd_v.length>=1&&Thi.hasClass('blue')){
             $.ajax({
                 type: 'POST',
-                url: '/c/weixin/houseOwner/doLogin?tel='+dom_tel_v+'&pwd='+dom_pwd_v,
+                url: '/c/weixin/houseOwner/verifyCode?tel='+dom_tel_v+'&pwd='+dom_pwd_v+"&code="+dom_code_v,
                 success: function(data){
                     var exp = new Date();
                     exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 

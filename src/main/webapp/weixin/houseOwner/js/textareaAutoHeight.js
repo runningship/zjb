@@ -30,7 +30,7 @@ $.fn.tah=function(opt){
 				(stCur=Math.max(defHeight,_ta.val(valCur=ta.val()).scrollTop(9e5).scrollTop())+(valCur&&opt.moreSpace))==stCache?0:
 				(stCache=stCur)<opt.maxHeight?ta.stop().animate({height:stCur},opt.animateDur):ta.css('overflowY','auto');
 			};
-		ta.after(_ta).bind('blur focus input change propertychange keydown',autoHeight);
+		ta.after(_ta).on('blur focus input change propertychange keydown',autoHeight);
 	});
 };
 }(jQuery);

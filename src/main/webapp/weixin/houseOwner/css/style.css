@@ -238,8 +238,9 @@ html,body{height: 100%; padding: 0; margin:0;}
 .MB10{ margin-bottom: 10px;}
 .hide{ display: none;}
 
-.fMenuBox{ position: fixed; top: 0; left: 0; z-index: 999; width: 100px; border-radius: 5px; display: none;}
+.fMenuBox{ position: fixed; top: 0; left: 0; z-index: 999; width: 110px; border-radius: 5px; display: none;}
 .fMenuBox li{ padding: 10px;background: #FFF; margin-top: 1px;}
+.fMenuBox li a{display: block;}
 
 /* 
             <li>
@@ -260,7 +261,7 @@ html,body{height: 100%; padding: 0; margin:0;}
 /* list */
 .list {background: #2C3031;}
 .list .footer{ position: fixed; bottom:0; left: 0; right: 0; height: 50px; line-height: 50px; background: #2C3031;}
-.list .ul_list { padding-bottom: 60px;}
+.list .ul_list { }
 .list .ul_list li{ border:1px solid #DDD; margin-bottom: 10px; padding: 10px;  border-radius: 5px; background: #FFF; background: #C54F54; border-color: #2C3031; color: #FFF;}
 .list .ul_list li.green{ background: #4A9753;}
 .list .ul_list li.blue{ background: #1A66A4;}

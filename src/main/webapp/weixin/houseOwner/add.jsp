@@ -30,28 +30,27 @@ function save(){
             alert('发布成功');
             window.location='houses.jsp';
             }
-        })
+        });
     });
 }
 
+$(document).on('click', '.btn_act', function(event) {
+    var Thi=$(this),
+    ThiType=Thi.data('type');
+    if(ThiType=='submit'){
+        save();
+    }
+    event.preventDefault();
+    /* Act on the event */
+});
 
 $(document).ready(function() {
-    
-$('textarea').tah({
-    moreSpace:15,   //输入框底部预留的空白, 默认15, 单位像素
-    maxHeight:600,  //指定Textarea的最大高度, 默认600, 单位像素
-    animateDur:200  //调整高度时的动画过渡时间, 默认200, 单位毫秒
+    $('textarea').tah({
+        moreSpace:15,
+        maxHeight:600,
+        animateDur:200
+    });
 });
-});
-// $(document).on('click', '.btn_act', function(event) {
-//     var Thi=$(this),
-//     ThiType=Thi.data('type');
-//     if(ThiType=='submit'){
-        
-//     }
-//     event.preventDefault();
-//     /* Act on the event */
-// });
 </script>
 </head>
 <body>
@@ -155,7 +154,7 @@ $('textarea').tah({
     </form>
     </div>
     <div class="wrap footer">
-        <a href="#" class="btn blue btn_act " data-type="submit" onclick="save();return false;"><span>发布</span></a>
+        <a href="#" class="btn blue btn_act " data-type="submit"><span>发布</span></a>
     </div>
 </div>
     

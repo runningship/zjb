@@ -97,7 +97,7 @@ public class SessionFilter implements Filter{
 			return;
 		}
 		if(path.contains("houseOwner")){
-			processHouseOwner(chain , req , resp);
+			chain.doFilter(request, response);
 			return;
 		}
 		if(ThreadSessionHelper.getUser()==null){
@@ -189,66 +189,4 @@ public class SessionFilter implements Filter{
 		return oldSessionId;
 	}
 	
-	private void processHouseOwner(FilterChain chain ,HttpServletRequest req ,HttpServletResponse resp) throws IOException, ServletException{
-		String tel = "";
-		String cityInSession = (String)req.getSession().getAttribute("city");
-		String path = req.getRequestURI().toString();
-		if(cityInSession==null){
-			System.out.println("city is null for "+ path);
-		}
-		System.out.println(cityInSession);
-		if(path.contains("logout") || path.contains("login") || path.contains("doLogin")){
-			chain.doFilter(req, resp);
-			return;
-		}
-		Cookie[] cookies = req.getCookies();
-		if(cookies==null){
-			//去登录
-			if(!path.endsWith("login.jsp")){
-				resp.sendRedirect("login.jsp");
-				return;
-			}
-		}
-		String cityInCookie="";
-		for(Cookie cookie : cookies){
-			if("tel".equals(cookie.getName())){
-				tel = cookie.getValue();
-			}
-			if("city".equals(cookie.getName())){
-				cityInCookie = cookie.getValue();
-			}
-		}
-		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
-		if(owner==null){
-			if(StringUtils.isEmpty(tel)){
-				//去登录
-				if(!path.endsWith("login.jsp")){
-					resp.sendRedirect("login.jsp");
-					return;
-				}
-			}else{
-				owner = SimpDaoTool.getGlobalCommonDaoService().getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{tel});
-				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, owner);
-			}
-		}
-		if(StringUtils.isEmpty(cityInSession)){
-			if(StringUtils.isEmpty(cityInCookie)){
-				//选择城市
-				if(!path.endsWith("citys.jsp")){
-					resp.sendRedirect("citys.jsp");
-					return;
-				}
-			}else{
-				req.getSession().setAttribute("city", cityInCookie);
-			}
-		}else{
-			if(!cityInCookie.equals(cityInSession)){
-				cityInSession = cityInCookie;
-				req.getSession().setAttribute("city", cityInCookie);
-			}
-		}
-		
-		ThreadSession.setCityPY(cityInSession);
-		chain.doFilter(req, resp);
-	}
 }

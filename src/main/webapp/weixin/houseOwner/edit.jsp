@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +71,7 @@ $(document).on('click', '.btn_act', function(event) {
             </li>
             <li>
                 <span class="title">栋号：</span>
-                <span class="inputbox"><input type="number" class="text"  name="dhao" value="${house.dhao }" desc="栋号" placeholder="栋号"></span>
+                <span class="inputbox"><input type="text isFormItem" class="text"  name="dhao" value="${house.dhao }" desc="栋号" placeholder="栋号"></span>
             </li>
             <li>
                 <span class="title">房号：</span>
@@ -86,11 +87,11 @@ $(document).on('click', '.btn_act', function(event) {
             </li>
             <li>
                 <span class="title">面积：</span>
-                <span class="inputbox"><input type="number" class="text"  name="mji" value="${house.mji }"  desc="面积"><b>㎡</b></span>
+                <span class="inputbox"><input type="number" class="text"  name="mji" value="<fmt:formatNumber type="number" value="${house.mji }" maxFractionDigits="2"></fmt:formatNumber>"  desc="面积"/><b>㎡</b></span>
             </li>
             <li>
                 <span class="title">总价：</span>
-                <span class="inputbox"><input type="number" class="text" name="zjia" value="${house.zjia }"  desc="总价"><b>万元</b></span>
+                <span class="inputbox"><input type="number" class="text" name="zjia" value="<fmt:formatNumber type="number" value="${house.zjia }" maxFractionDigits="2"></fmt:formatNumber>"  desc="总价"/><b>万元</b></span>
             </li>
             <li>
                 <span class="title">年代：</span>

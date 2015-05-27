@@ -84,7 +84,7 @@ $(document).on('click', '.btn_act', function(event) {
               success: function(data){
                   var exp = new Date();
                   exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                  document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString();
+                  document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString()+ "; path=/";
                   //TODO 到选择城市界面
                   window.location = 'citys.jsp';
               },

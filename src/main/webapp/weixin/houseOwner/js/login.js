@@ -22,7 +22,7 @@ $(document).on('click', '.btn_act', function(event) {
               success: function(data){
                   var exp = new Date();
                   exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                  document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString();
+                  document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString()+ "; path=/";
                   window.location = 'houses.jsp';
               },
               error:function(data){
@@ -34,7 +34,7 @@ $(document).on('click', '.btn_act', function(event) {
                 });
               }
           });
-        }else if(dom_tel_v.length==11){
+        }else if(dom_tel_v.length!=11){
             layer.open({
                 content:'请输入正确的手机号码',
                 btn: ['OK']

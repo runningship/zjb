@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.servlet.http.Cookie;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -25,6 +27,7 @@ import org.hibernate.exception.SQLGrammarException;
 
 import com.cloopen.rest.sdk.CCPRestSDK;
 import com.youwei.zjb.KeyConstants;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseOwner;
 import com.youwei.zjb.house.entity.HouseTel;
@@ -47,6 +50,7 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView sendVerifyCode(String tel){
 		ModelAndView mv = new ModelAndView();
+		ThreadSession.setCityPY("hefei");
 		TelVerifyCode tvc = new TelVerifyCode();
 		tvc.tel = tel;
 		//send code to tel
@@ -64,7 +68,7 @@ public class HouseOwnerService {
 		restAPI.init("sandboxapp.cloopen.com", "8883");// 初始化服务器地址和端口，格式如下，服务器地址不需要写https://
 		restAPI.setAccount("8a48b5514d0427c1014d0429646a0002", "78a9ff1208304b949309f117a63f1d9b");// 初始化主帐号名称和主帐号令牌
 		restAPI.setAppId("aaf98f894d328b13014d65d868e1242a");// 初始化应用ID
-		result = restAPI.sendTemplateSMS(tvc.tel,"1" ,new String[]{tvc.code,"5"});
+		result = restAPI.sendTemplateSMS(tvc.tel,"20588" ,new String[]{tvc.code,"5"});
 
 		System.out.println("SDKTestGetSubAccounts result=" + result);
 		if("000000".equals(result.get("statusCode"))){
@@ -96,54 +100,50 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView houses(){
 		ModelAndView mv = new ModelAndView();
-		//判断session中没有房主信息
+		String city = ThreadSessionHelper.getHouseOwnerCity();
+		if(StringUtils.isEmpty(city)){
+			mv.redirect="citys.jsp";
+			return mv;
+		}
+		ThreadSession.setCityPY(city);
+		if(hasUserInfo()==false){
+			mv.redirect="login.jsp";
+			return mv;
+		}
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
-//		if(owner==null){
-//			Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
-//    		if(cookies==null){
-//    			mv.redirect="login.jsp";
-//				return mv;
-//    		}
-//    		
-//    		for(Cookie cookie : cookies){
-//    			if("tel".equals(cookie.getName())){
-//    				tel = cookie.getValue();
-//    			}
-//    		}
-////			pwd = SecurityHelper.Md5(pwd);
-//			HouseOwner po = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{tel});
-//			if(po==null){
-//				//TODO 信息不正确重新登录
-//				mv.redirect="login.jsp";
-//				return mv;
-//			}else{
-//				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, po);
-//			}
-//		}else{
-//			tel = owner.tel;
-//		}
-		try{
-			List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+owner.tel+"%");
-			mv.jspData.put("houses", houses);
-			String cityInSession = (String)ThreadSession.getHttpSession().getAttribute("city");
-			JSONArray citys = cityService.getCitys();
-			for(int i=0;i<citys.size();i++){
-				if(citys.getJSONObject(i).getString("py").equals(cityInSession)){
-					mv.jspData.put("city", citys.getJSONObject(i).getString("name"));
-					break;
-				}
-			}
-		}catch(SQLGrammarException ex){
-			if(ex.getCause().getMessage().contains("登录失败")){
-				mv.redirect="citys.jsp";
+		List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+owner.tel+"%");
+		mv.jspData.put("houses", houses);
+		JSONArray citys = cityService.getCitys();
+		for(int i=0;i<citys.size();i++){
+			if(citys.getJSONObject(i).getString("py").equals(city)){
+				mv.jspData.put("city", citys.getJSONObject(i).getString("name"));
+				break;
 			}
 		}
+		return mv;
+	}
+	
+	
+	@WebMethod
+	public ModelAndView setCity(String city){
+		ModelAndView mv = new ModelAndView();
+		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City, city);
 		return mv;
 	}
 	
 	@WebMethod
 	public ModelAndView add(){
 		ModelAndView mv = new ModelAndView();
+		String city = ThreadSessionHelper.getHouseOwnerCity();
+		if(StringUtils.isEmpty(city)){
+			mv.redirect="citys.jsp";
+			return mv;
+		}
+		ThreadSession.setCityPY(city);
+		if(hasUserInfo()==false){
+			mv.redirect="login.jsp";
+			return mv;
+		}
 		mv.jspData.put("zxius", ZhuangXiu.toList());
 		mv.jspData.put("lxings", LouXing.toList());
 		mv.jspData.put("hxings", FangXing.toList());
@@ -162,10 +162,23 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView edit(Integer id){
 		ModelAndView mv = new ModelAndView();
+		String city = ThreadSessionHelper.getHouseOwnerCity();
+		if(StringUtils.isEmpty(city)){
+			mv.redirect="citys.jsp";
+			return mv;
+		}
+		ThreadSession.setCityPY(city);
+		if(hasUserInfo()==false){
+			mv.redirect="login.jsp";
+			return mv;
+		}
 		House po = dao.get(House.class, id);
 		if(po!=null){
 			mv.jspData.put("house", po);
+		}else{
+			System.out.println("没有找到房源...id="+id);
 		}
+		System.out.println(city);
 		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
 		mv.data = JSONHelper.toJSON(po);
 		if(fxing!=null){
@@ -185,7 +198,7 @@ public class HouseOwnerService {
 	public ModelAndView doLogin(String tel , String pwd){
 		ModelAndView mv = new ModelAndView();
 		pwd = SecurityHelper.Md5(pwd);
-		ThreadSession.getCityPY();
+		ThreadSession.setCityPY("hefei");
 		HouseOwner po = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel" , "pwd"}, new Object[]{tel , pwd});
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException,"账号或密码不正确");
@@ -234,6 +247,8 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView verifyCode(String tel , String code , String pwd){
+		//发送验证码，验证，登录操作都在主库中进行
+		ThreadSession.setCityPY("hefei");
 		ModelAndView mv = new ModelAndView();
 		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{tel , code});
 		if(tvc==null){
@@ -372,5 +387,30 @@ public class HouseOwnerService {
 		if(house.zjia==null){
 			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
 		}
+	}
+	
+	private boolean hasUserInfo(){
+		//判断session中没有房主信息
+		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+		String telInCookie="";
+		if(owner==null){
+			Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
+    		if(cookies==null){
+    			return false;
+    		}
+    		
+    		for(Cookie cookie : cookies){
+    			if("tel".equals(cookie.getName())){
+    				telInCookie = cookie.getValue();
+    			}
+    		}
+    		owner = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{telInCookie});
+			if(owner==null){
+				return false;
+			}else{
+				ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, owner);
+			}
+		}
+		return true;
 	}
 }

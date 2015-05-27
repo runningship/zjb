@@ -1,5 +1,6 @@
 package com.youwei.zjb;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -46,5 +47,21 @@ public class ThreadSessionHelper {
 			cityCoordinate="117.23355, 31.827258";
 		}
 		return cityCoordinate;
+    }
+    
+    public static String getHouseOwnerCity(){
+    	String city = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
+    	if(StringUtils.isNotEmpty(city)){
+    		return city;
+    	}
+    	String cityInCookie = null;
+    	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
+    	for(Cookie cookie : cookies){
+			if(KeyConstants.Session_House_Owner_City.equals(cookie.getName())){
+				cityInCookie = cookie.getValue();
+			}
+		}
+    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , city);
+    	return cityInCookie;
     }
 }
