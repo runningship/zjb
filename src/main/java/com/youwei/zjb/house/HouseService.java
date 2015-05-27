@@ -367,13 +367,15 @@ public class HouseService {
 		if(StringUtils.isNotEmpty(query.tel)){
 //			hql = new StringBuilder(" select h  from House  h , (select hid from HouseTel where tel=? group by hid,tel) ht where h.id=ht.hid ");
 			query.tel = query.tel.trim();
-			if(query.useLike){
-				hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
-				params.add("%"+query.tel+"%");
-			}else{
-				hql = new StringBuilder(" select h  from House  h , HouseTel  ht where h.id=ht.hid and ht.tel=? ");
-				params.add(query.tel);
-			}
+			hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
+			params.add("%"+query.tel+"%");
+//			if(query.useLike){
+//				hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
+//				params.add("%"+query.tel+"%");
+//			}else{
+//				hql = new StringBuilder(" select h  from House  h , HouseTel  ht where h.id=ht.hid and ht.tel=? ");
+//				params.add(query.tel);
+//			}
 			
 		}else{
 			hql = new StringBuilder(" select h  from House  h where 1=1");
