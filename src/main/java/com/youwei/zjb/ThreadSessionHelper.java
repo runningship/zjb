@@ -56,6 +56,9 @@ public class ThreadSessionHelper {
     	}
     	String cityInCookie = null;
     	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
+    	if(cookies==null){
+    		return null;
+    	}
     	for(Cookie cookie : cookies){
 			if(KeyConstants.Session_House_Owner_City.equals(cookie.getName())){
 				cityInCookie = cookie.getValue();
