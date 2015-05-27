@@ -185,6 +185,9 @@ function getListPageSuccess(html){
     $$doc.find("span.ico.tui").each(function(i,project){
         iconum_tui++;
     });
+    $$doc.find("label:contains(经纪人)").each(function(i,project){
+        iconum_tui++;
+    });
     iconum_all=iconum_ding+iconum_tui;
     console.log(iconum_all+'='+iconum_ding+'+'+iconum_tui);
     $('.view_tui_num').text(iconum_tui);
