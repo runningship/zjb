@@ -17,17 +17,12 @@ function exists(callback){
     }
     YW.ajax({
         type: 'POST',
-        url: '/c/house/exist',
+        url: '/c/weixin/houseOwner/exist',
         data:param,
         mysuccess: function(data){
             var jsons=JSON.parse(data);
             if(jsons['exist']==1){
-                if(jsons['hid']==id){
-                	alert('房源重复');
-                }else{
-                	alert('房源重复');
-                    //api.title(apiTitle + '　<b style="color:#F00;">房源重复：'+ jsons['hid'] +'</b>');
-                }
+            	alert('房源重复,请检查楼盘名称，房栋号');
             }else{
                 //api.title(apiTitle + '　<b style="color:#090;">无重复</b>');
                 callback();

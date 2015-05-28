@@ -535,7 +535,7 @@ function getHouseToo(callback){
                 }
             }else{
                 api.title(apiTitle + '　<b style="color:#090;">无重复</b>');
-                callback();
+                //callback();
             }
         }
     });

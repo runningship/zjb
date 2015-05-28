@@ -19,35 +19,26 @@
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/buildHtml.js"></script>
 <script>
-var goBackUrl;
 function setCity(cityPy){
-	 var exp = new Date();
-     exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年
      YW.ajax({
         type: 'POST',
         url: '/c/weixin/houseOwner/setCity?city='+cityPy,
         mysuccess: function(data){
-        	document.cookie = "house_owner_city=" + cityPy + ";expires=" + exp.toGMTString()+";path=/";
-        	if(goBackUrl){
-        		window.location=goBackUrl;
-        	}else{
-        		if(document.cookie.indexOf('tel')>-1){
-            		window.location="houses.jsp";
-            	}else{
-            		window.location="login.jsp";
-            	}	
-        	}
-        	
+        	//document.cookie = "house_owner_city=" + cityPy + ";expires=" + exp.toGMTString();
+       		if(document.cookie.indexOf('tel')>-1){
+           		window.location="houses.jsp";
+           	}else{
+           		window.location="login.jsp";
+           	}	
         }
      });
 }
 $(function(){
-	goBackUrl = getParam('goBackUrl');
 });
 </script>
 </head>
-<body>
-<div class="body wx list">
+<body class=" citys">
+<div class="body wx">
     <div class="wrap">
         <ul class="item ul_list">
         <c:forEach items="${citys}" var="city">

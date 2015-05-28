@@ -26,4 +26,6 @@ public class HouseOwner {
 	public Integer verified;
 	
 	public Integer sh;
+	
+	public String city;
 }

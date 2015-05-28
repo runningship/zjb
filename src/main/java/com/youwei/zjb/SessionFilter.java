@@ -69,7 +69,7 @@ public class SessionFilter implements Filter{
 		
 		excludes.add("/bosh/basic.html");
 		excludes.add("/bosh-test/basic.html");
-		excludes.add("/c/house/exist");
+//		excludes.add("/c/house/exist");
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

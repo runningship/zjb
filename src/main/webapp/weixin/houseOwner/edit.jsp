@@ -11,7 +11,7 @@
 <meta name="keywords" content="">
 <meta name="viewport" content="width=device-width,user-scalable=no" />   
 <link href="css/style.css" rel="stylesheet">
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/buildHtml.js"></script>
 <script src="js/check.js" type="text/javascript"></script>
 <script src="js/layer.m/layer.m.js"></script>
@@ -25,7 +25,8 @@ function update(){
         data:a,
         mysuccess: function(data){
             alert('发布成功');
-            window.location='houses.jsp';
+            setTimeout(function(){window.location='houses.jsp';},2000)
+            
             }
         })
     });

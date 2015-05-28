@@ -23,7 +23,6 @@ import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
-import org.hibernate.exception.SQLGrammarException;
 
 import com.cloopen.rest.sdk.CCPRestSDK;
 import com.youwei.zjb.KeyConstants;
@@ -37,6 +36,9 @@ import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.util.SecurityHelper;
 
+/**
+ * 房主信息保存在合肥主库里
+ */
 @Module(name="/weixin/houseOwner")
 public class HouseOwnerService {
 
@@ -98,18 +100,26 @@ public class HouseOwnerService {
 	}
 	
 	@WebMethod
+	public ModelAndView exist(String area, String dhao , String fhao , String seeGX){
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		ThreadSession.setCityPY(cityPy);
+		return houseService.exist(area, dhao, fhao, seeGX);
+	}
+	@WebMethod
 	public ModelAndView houses(){
 		ModelAndView mv = new ModelAndView();
+		if(hasUserInfo()==false){
+			mv.redirect="login.jsp";
+			return mv;
+		}
+		
 		String city = ThreadSessionHelper.getHouseOwnerCity();
 		if(StringUtils.isEmpty(city)){
 			mv.redirect="citys.jsp";
 			return mv;
 		}
+		
 		ThreadSession.setCityPY(city);
-		if(hasUserInfo()==false){
-			mv.redirect="login.jsp";
-			return mv;
-		}
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+owner.tel+"%");
 		mv.jspData.put("houses", houses);
@@ -128,26 +138,39 @@ public class HouseOwnerService {
 	public ModelAndView setCity(String city){
 		ModelAndView mv = new ModelAndView();
 		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City, city);
+		HouseOwner owner = (HouseOwner) ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+		owner.city = city;
+		ThreadSession.setCityPY("hefei");
+		HouseOwner po = dao.get(HouseOwner.class, owner.id);
+		po.city = city;
+		dao.saveOrUpdate(po);
 		return mv;
 	}
 	
 	@WebMethod
 	public ModelAndView add(){
 		ModelAndView mv = new ModelAndView();
-		String city = ThreadSessionHelper.getHouseOwnerCity();
-		if(StringUtils.isEmpty(city)){
-			mv.redirect="citys.jsp";
-			return mv;
-		}
-		ThreadSession.setCityPY(city);
 		if(hasUserInfo()==false){
 			mv.redirect="login.jsp";
 			return mv;
 		}
+		
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		if(StringUtils.isEmpty(cityPy)){
+			mv.redirect="citys.jsp";
+			return mv;
+		}
+		ThreadSession.setCityPY(cityPy);
 		mv.jspData.put("zxius", ZhuangXiu.toList());
 		mv.jspData.put("lxings", LouXing.toList());
 		mv.jspData.put("hxings", FangXing.toList());
-		mv.jspData.put("quyus", QuYu.toList());
+		JSONArray citys = cityService.getCitys();
+		for(int i=0;i<citys.size();i++){
+			JSONObject city = citys.getJSONObject(i);
+			if(city.getString("py").equals(cityPy)){
+				mv.data.put("quyus", city.getJSONArray("quyu"));
+			}
+		}
 		return mv;
 	}
 	
@@ -162,23 +185,24 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView edit(Integer id){
 		ModelAndView mv = new ModelAndView();
-		String city = ThreadSessionHelper.getHouseOwnerCity();
-		if(StringUtils.isEmpty(city)){
-			mv.redirect="citys.jsp";
-			return mv;
-		}
-		ThreadSession.setCityPY(city);
 		if(hasUserInfo()==false){
 			mv.redirect="login.jsp";
 			return mv;
 		}
+		
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		if(StringUtils.isEmpty(cityPy)){
+			mv.redirect="citys.jsp";
+			return mv;
+		}
+		
+		ThreadSession.setCityPY(cityPy);
 		House po = dao.get(House.class, id);
 		if(po!=null){
 			mv.jspData.put("house", po);
 		}else{
 			System.out.println("没有找到房源...id="+id);
 		}
-		System.out.println(city);
 		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
 		mv.data = JSONHelper.toJSON(po);
 		if(fxing!=null){
@@ -190,7 +214,14 @@ public class HouseOwnerService {
 		mv.jspData.put("zxius", ZhuangXiu.toList());
 		mv.jspData.put("lxings", LouXing.toList());
 		mv.jspData.put("hxings", FangXing.toList());
-		mv.jspData.put("quyus", QuYu.toList());
+		
+		JSONArray citys = cityService.getCitys();
+		for(int i=0;i<citys.size();i++){
+			JSONObject city = citys.getJSONObject(i);
+			if(city.getString("py").equals(cityPy)){
+				mv.data.put("quyus", city.getJSONArray("quyu"));
+			}
+		}
 		return mv;
 	}
 	
@@ -270,6 +301,8 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView editHouse(Integer id){
 		ModelAndView mv = new ModelAndView();
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		ThreadSession.setCityPY(cityPy);
 		House po = dao.get(House.class, id);
 		if(po==null){
 			//房源信息不存在
@@ -280,6 +313,8 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView deleteHouse(Integer id){
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		ThreadSession.setCityPY(cityPy);
 		ModelAndView mv = new ModelAndView();
 		House po = dao.get(House.class, id);
 		if(po==null){
@@ -292,6 +327,8 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView addHouse(House house , String hxing){
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		ThreadSession.setCityPY(cityPy);
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		ModelAndView mv = new ModelAndView();
 		validte(house);
@@ -337,6 +374,8 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView updateHouse(House house , String hxing){
 		validte(house);
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		ThreadSession.setCityPY(cityPy);
 		ModelAndView mv = new ModelAndView();
 		House po = dao.get(House.class, house.id);
 		po.area = house.area;
@@ -404,6 +443,7 @@ public class HouseOwnerService {
     				telInCookie = cookie.getValue();
     			}
     		}
+    		ThreadSession.setCityPY("hefei");
     		owner = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel"}, new Object[]{telInCookie});
 			if(owner==null){
 				return false;

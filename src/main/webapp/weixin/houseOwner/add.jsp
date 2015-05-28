@@ -14,7 +14,7 @@
 <!-- <script src="../../js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script> -->
 <!-- <script src="../../js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script> -->
 <script type="text/javascript" src="js/buildHtml.js"></script>
-<script src="js/check.js" type="text/javascript"></script>
+<script src="js/check.js?12" type="text/javascript"></script>
 <script src="js/layer.m/layer.m.js"></script>
 <script src="js/textareaAutoHeight.js"></script>
 <script src="js/regForm.js"></script>
@@ -28,7 +28,7 @@ function save(){
         data:a,
         mysuccess: function(data){
             alert('发布成功');
-            window.location='houses.jsp';
+            setTimeout(function(){window.location='houses.jsp';},2000)
             }
         });
     });
@@ -73,7 +73,7 @@ $(document).ready(function() {
             </li>
             <li>
                 <span class="title">栋号：</span>
-                <span class="inputbox"><input type="number" class="text isFormItem" id="dhao" name="dhao" value="" desc="栋号" placeholder="栋号" data-rule="noNull" data-tip="请输入栋号" data-tipErr="请输入栋号"></span>
+                <span class="inputbox"><input class="text isFormItem" id="dhao" name="dhao" value="" desc="栋号" placeholder="栋号" data-rule="noNull" data-tip="请输入栋号" data-tipErr="请输入栋号"></span>
             </li>
             <li>
                 <span class="title">房号：</span>

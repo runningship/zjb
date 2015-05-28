@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.bc.web.ThreadSession;
 
+import com.youwei.zjb.house.entity.HouseOwner;
 import com.youwei.zjb.user.entity.User;
 
 public class ThreadSessionHelper {
@@ -50,21 +51,24 @@ public class ThreadSessionHelper {
     }
     
     public static String getHouseOwnerCity(){
-    	String city = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
-    	if(StringUtils.isNotEmpty(city)){
-    		return city;
-    	}
-    	String cityInCookie = null;
-    	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
-    	if(cookies==null){
-    		return null;
-    	}
-    	for(Cookie cookie : cookies){
-			if(KeyConstants.Session_House_Owner_City.equals(cookie.getName())){
-				cityInCookie = cookie.getValue();
-			}
-		}
-    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , city);
-    	return cityInCookie;
+    	HouseOwner owner = (HouseOwner) ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+    	return owner.city;
+//    	String city = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
+//    	if(StringUtils.isNotEmpty(city)){
+//    		return city;
+//    	}
+//    	String cityInCookie = null;
+//    	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
+//    	if(cookies==null){
+//    		System.out.println("cookie is null");
+//    		return null;
+//    	}
+//    	for(Cookie cookie : cookies){
+//			if(KeyConstants.Session_House_Owner_City.equals(cookie.getName())){
+//				cityInCookie = cookie.getValue();
+//			}
+//		}
+//    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , city);
+//    	return cityInCookie;
     }
 }

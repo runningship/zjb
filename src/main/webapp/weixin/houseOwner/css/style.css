@@ -291,7 +291,11 @@ html,body{height: 100%; padding: 0; margin:0;}
 
 .forget_pwd{font-size:12px;text-decoration:underline;color:blue;padding:0 10px;}
 
-
+/* citys */
+.citys {background: #2C3031;}
+.citys .ul_list li{ border:1px solid #DDD; margin-bottom: 10px; padding: 10px;  border-radius: 5px; background: #FFF; background: #C54F54; border-color: #2C3031; color: #FFF;}
+.citys .ul_list li.green{ background: #4A9753;}
+.citys .ul_list li.blue{ background: #1A66A4;}
 
 
 
