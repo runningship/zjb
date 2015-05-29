@@ -290,6 +290,11 @@
 			"text":"审核员工",
 			"type":"menu"
 		},{
+			"name":"sz_sys_mobile",
+			"text":"手机版",
+			"zjb-only":true,
+			"type":"menu"
+		},{
 			"name":"sz_user_del",
 			"text":"删除员工(永久)",
 			"type":"menu"

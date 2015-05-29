@@ -380,7 +380,6 @@ public class HouseOwnerService {
 		House po = dao.get(House.class, house.id);
 		po.area = house.area;
 		po.address = house.address;
-		po.ztai = house.ztai;
 		po.dhao = house.dhao;
 		po.fhao = house.fhao;
 		po.quyu= house.quyu;

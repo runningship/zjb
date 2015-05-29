@@ -175,6 +175,7 @@ public class UserService {
 		po.did = user.did;
 		po.roleId = user.roleId;
 		po.lock = user.lock;
+		po.mobileON = user.mobileON;
 		dao.saveOrUpdate(po);
 		return mv;
 	}

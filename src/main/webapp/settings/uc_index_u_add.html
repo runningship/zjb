@@ -115,10 +115,23 @@ $(document).ready(function() {
                     <div class="col-xs-8">
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" value="1" name="lock" autocomplete="off" checked> 开启
+                                <input type="radio" value="1" name="lock" autocomplete="off" > 开启
                             </label>
                             <label class="btn btn-default">
                                 <input type="radio" value="0" name="lock" autocomplete="off"> 锁定
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div auth="sz_sys_mobile" class="form-group">
+                    <label class="col-xs-3 control-label">手机端:</label>
+                    <div class="col-xs-8">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default ">
+                                <input type="radio" value="1" name="mobileON" autocomplete="off" > 开启
+                            </label>
+                            <label class="btn btn-default active">
+                                <input type="radio" value="0" name="mobileON" autocomplete="off"> 锁定
                             </label>
                         </div>
                     </div>

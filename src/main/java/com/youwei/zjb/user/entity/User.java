@@ -101,6 +101,8 @@ public class User {
 	 */
 	public transient String cityCoordinate;
 	
+	public Integer mobileON;
+	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}

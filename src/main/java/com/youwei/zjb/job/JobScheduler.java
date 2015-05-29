@@ -40,7 +40,7 @@ public class JobScheduler extends Thread{
 		nJob.setListPageInterval(3600);
 		jobs.put(nJob.getJobName(), nJob);
 		
-		//this.start();
+//		this.start();
 	}
 	
 	@Override

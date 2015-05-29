@@ -50,7 +50,7 @@ public class HouseService {
 	public ModelAndView exist(String area, String dhao , String fhao , String seeGX){
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder();
-		hql.append("from House where area = ? and dhao = ? and fhao = ? and isdel <> 1");
+		hql.append("from House where area = ? and dhao = ? and fhao = ? and (isdel =0 or isdel is null) ");
 		List<Object> params = new ArrayList<Object>();
 		params.add(area);
 		params.add(dhao);
@@ -569,7 +569,7 @@ public class HouseService {
 			hql.append(" and h.sh= ? ");
 			params.add(query.sh);
 		}
-
+		hql.append(" and (isdel=0 or isdel is null) ");
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
 		page.setPageSize(25);

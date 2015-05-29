@@ -15,7 +15,7 @@
 <meta http-equiv="Expires" content="0" />
 
 <link href="css/iconfont/iconfont.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
+<link href="css/style.css?11" rel="stylesheet">
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/buildHtml.js"></script>
 <script>
