@@ -22,7 +22,7 @@ var show=true;
 var allContent = '{}';
 var exec = require('child_process').execFile;
 function openMessageBox(ziDuan){
-    
+	
     try{
         var command = 'swq.exe';
         var xx = exec(command,[ziDuan], function(err, stdout, stderr) {
@@ -357,7 +357,11 @@ function get1Html(url){
             $('.list_see_box').html('loading...');
         },
         success: function(html){
-            getDetailPageSuccess(html,url);
+            if(html.indexOf('您访问的页面居然不存在')>-1){
+                setTimeout(function(){get1Html(url)},3000);   
+            }else{
+                getDetailPageSuccess(html,url);    
+            }
         },
         error: function(){
             $('.list_see_box').html('半路遇到威震天，装死中...<br><br>请重新加载...');
