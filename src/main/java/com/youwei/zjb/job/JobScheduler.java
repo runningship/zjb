@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.bc.web.ThreadSession;
 
+import com.youwei.zjb.cache.ConfigCache;
+
 public class JobScheduler extends Thread{
 
 	private Map<String,HouseRentJob> jobs = new HashMap<String,HouseRentJob>();
@@ -40,7 +42,10 @@ public class JobScheduler extends Thread{
 		nJob.setListPageInterval(3600);
 		jobs.put(nJob.getJobName(), nJob);
 		
-//		this.start();
+		String flag = ConfigCache.get("startJob", "1");
+		if("1".equals(flag)){
+			this.start();
+		}
 	}
 	
 	@Override

@@ -197,7 +197,7 @@ $(document).ready(function() {
     GenjinTbodyHtml=GenjinTbodyHtml.replace(/ /g,'');
 
     if(GenjinTbodyHtml==''){
-      $('.see_house_genjin').find('tbody').html('<tr><td class="side_noThing">暂无跟进...</td></tr>');
+    	$('.see_house_genjin').find('tbody').html('<tr><td style="padding:3px;"><img src="../../style/images/zjb.png" style="width:240px;"/></td></tr>');
       $('#addGenjinBtn').tooltip('show');
     }
 
