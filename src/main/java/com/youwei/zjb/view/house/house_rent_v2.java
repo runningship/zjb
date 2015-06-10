@@ -18,9 +18,13 @@ public class house_rent_v2 {
 		User u = ThreadSessionHelper.getUser();
 		Department comp = u.Company();
 		if(comp==null || comp.share!=1){
+			try{
 			doc.getElementById("seeAll").remove();
 			doc.getElementById("seeGX").remove();
 			doc.getElementById("seeComp").getElementsByTag("input").attr("checked", "checked");
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
 		}
 		String html=doc.html();
 		if(UserHelper.hasAuthority(u, "fy_sh")){

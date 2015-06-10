@@ -49,10 +49,11 @@ public class HouseRentService {
 			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","租金不能为空");
 		}
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
-		House po = service.getUniqueByParams(House.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
+		HouseRent po = service.getUniqueByParams(HouseRent.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
 		if(po!=null){
-			mv.data.put("msg", "同一个房源已经存在");
-			mv.data.put("result", 2);
+//			mv.data.put("msg", "同一个房源已经存在");
+//			mv.data.put("result", 2);
+			throw new GException(PlatformExceptionType.BusinessException,"已经存在相同的房源，请检查小区名称楼栋号");
 		}else{
 			house.isdel = 0;
 			house.dateadd = new Date();
