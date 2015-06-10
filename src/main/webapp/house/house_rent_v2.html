@@ -145,13 +145,13 @@ function updateHouse(id,data){
   var a = tr.children()[2]
   var b = tr.children()[3]
   var c = tr.children()[4]
-  var d = tr.children()[5]
-  var e = tr.children()[6]
-  var f = tr.children()[7]
-  var g = tr.children()[8]
-  var h = tr.children()[9]
-  var i = tr.children()[10]
-  var j = tr.children()[11]
+  var d = tr.children()[6]
+  var e = tr.children()[7]
+  var f = tr.children()[8]
+  var g = tr.children()[9]
+  var h = tr.children()[10]
+  var i = tr.children()[11]
+  var j = tr.children()[12]
   $(a).html(json['house']['ztai']);
   $(b).html(json['house']['quyu']);
   $(c).html(json['house']['area']+' '+json['house']['dhao']+'-'+json['house']['fhao']);
@@ -244,7 +244,7 @@ $(document).ready(function(){
                             <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=favShou&chuzus=0'">我收藏的出售</a> 
                             <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=favZu&chuzus=1'">我收藏的出租</a>
                             <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=addShou&chuzus=0'">我发布的出售</a> 
-                            <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=addZu&chuzus=1'">我收藏的出租</a>  
+                            <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=addZu&chuzus=1'">我发布的出租</a>  
                        </div>
                   </li>
                   <li class="line"></li>
@@ -294,9 +294,9 @@ $(document).ready(function(){
                         <li>
                             <button class="selectMethod zonghe" type="button">综合<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="" name="scope" value="all" checked="checked" > 所有</label> </p> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="公司" name="scope" value="comp">公司</label> </p> 
-                                <p onclick="addQueryStr('scope')"><label><input type="radio" text="共享" name="scope" value="seeGX" > 共享</label> </p> 
+                                <p onclick="addQueryStr('scope')" id="seeAll"><label><input type="radio" text="" name="scope" value="all" checked="checked" > 所有</label> </p> 
+                                <p onclick="addQueryStr('scope')" id="seeComp"><label><input type="radio" text="公司" name="scope" value="comp">公司</label> </p> 
+                                <p onclick="addQueryStr('scope')" id="seeGX"><label><input type="radio" text="共享" name="scope"  value="seeGX" > 共享</label> </p> 
                             </div>
                         </li>
                         <li>
