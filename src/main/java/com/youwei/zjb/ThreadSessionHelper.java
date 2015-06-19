@@ -1,6 +1,5 @@
 package com.youwei.zjb;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -71,4 +70,5 @@ public class ThreadSessionHelper {
 //    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , city);
 //    	return cityInCookie;
     }
+    
 }

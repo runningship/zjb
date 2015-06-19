@@ -21,38 +21,31 @@ import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 
-@Module(name="/")
+@Module(name="/mobile/")
 public class PGenjinService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
-	@WebMethod(name="house/genjin/add.asp")
+	@WebMethod(name="house/genjin/add")
 	public ModelAndView add(Integer userId , Integer houseId , Integer type , String content){
 		//type是目标状态
 		if(type==null || type==0){
 			//客户端bug
 			type=SellState.已售.getCode();
 		}
-		JSONArray arr = new JSONArray();
-		JSONObject obj = new JSONObject();
 		ModelAndView mv = new ModelAndView();
-		mv.encodeReturnText=true;
 		House h=null;
 		User u = null;
 		if(userId==null || houseId==null){
-			obj.put("result", "0");
-			obj.put("msg", "跟进失败");
-			arr.add(obj);
-			mv.returnText = arr.toString();
+			mv.data.put("result", "0");
+			mv.data.put("msg", "跟进失败");
 			return mv;
 		}else{
 			h = dao.get(House.class, houseId);
 			u = dao.get(User.class, userId);
 			if(h==null || u==null){
-				obj.put("result", "0");
-				obj.put("msg", "跟进失败");
-				arr.add(obj);
-				mv.returnText = arr.toString();
+				mv.data.put("result", "0");
+				mv.data.put("msg", "跟进失败");
 				return mv;
 			}
 		}
@@ -131,30 +124,23 @@ public class PGenjinService {
 //			dao.saveOrUpdate(gj);
 //		}
 		dao.saveOrUpdate(gj);
-		obj.put("result", "0");
-		obj.put("msg", "添加成功");
-		arr.add(obj);
-		mv.returnText = arr.toString();
+		mv.data.put("result", "0");
+		mv.data.put("msg", "添加成功");
 		return mv;
 	}
 	
-	@WebMethod(name="house/genjin/list.asp")
+	@WebMethod(name="house/genjin/list")
 	public ModelAndView list(Integer houseId){
 		ModelAndView mv = new ModelAndView();
-		mv.encodeReturnText=true;
-		JSONArray arr = new JSONArray();
-		JSONObject obj = new JSONObject();
 		if(houseId==null){
-			obj.put("result", "0");
-			obj.put("msg", "没有跟进信息");
-			arr.add(obj);
-			mv.returnText = arr.toString();
+			mv.data.put("result", "0");
+			mv.data.put("msg", "没有跟进信息");
 			return mv;
 		}
-		List<Map> list = dao.listAsMap("select gj.id as id , c.namea as cname , d.namea as dname , u.uname as uname , "
-				+ " gj.conts as conts, gj.addtime as dateadd from GenJin gj, Department d , Department c, User u where gj.hid=? "
-				+ "and gj.sh=1 and gj.did=d.id and d.fid=c.id and u.id=gj.uid", houseId);
-		mv.returnText = JSONHelper.toJSONArray(list).toString();
+		List<Map> list = dao.listAsMap("select gj.id as id , u.uname as uname , "
+				+ " gj.conts as conts, gj.addtime as dateadd from GenJin gj, User u where gj.hid=? "
+				+ "and gj.sh=1 and u.id=gj.uid", houseId);
+		mv.data.put("data",JSONHelper.toJSONArray(list));
 		return mv;
 	}
 }

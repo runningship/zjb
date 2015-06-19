@@ -103,6 +103,9 @@ public class User {
 	
 	public Integer mobileON;
 	
+	//手机版过期时间
+	public Date mobileDeadtime;
+	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}

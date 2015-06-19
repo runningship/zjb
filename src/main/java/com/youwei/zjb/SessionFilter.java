@@ -100,6 +100,13 @@ public class SessionFilter implements Filter{
 			chain.doFilter(request, response);
 			return;
 		}
+		if(path.contains("mobile")){
+//			ThreadSession.setCityPY(city);
+			String cityPy = request.getParameter("cityPy");
+			System.out.println(cityPy);
+			chain.doFilter(request, response);
+			return;
+		}
 		if(ThreadSessionHelper.getUser()==null){
 			if(StringUtils.isEmpty(oldSessionId)){
 				relogin(req,resp);

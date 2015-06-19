@@ -185,69 +185,6 @@ function quit(){
 	clearCookie();
 	window.location="/c/weixin/houseOwner/logout";
 }
-var baiduNavigation;
-apiready = function(){
-	baiduNavigation = api.require('baiduNavigation');
-	alert(baiduNavigation);
-}
-
-
-function startNav(){
-	baiduNavigation.start({
-	    start: { // 起点信息.
-	        position: { // 经纬度，与address配合可为空
-	            lon: 112.47723797622677, // 经度.
-	            lat: 34.556480000000015 // 纬度.
-	        },
-	        title: "中国四大石窟之一", // 描述信息
-	        address: "龙门石窟" // 地址信息，与position配合为空
-	    },
-	    goBy: [{ // 途经点位置信息.
-	        position: { // 经纬度，与address配合可为空
-	        lon: 109.77539000000002, // 经度
-	        lat: 33.43144 // 纬度.
-	        },
-	        title: "释源", // 描述信息
-	        address: "白马寺" // 地址信息，与position配合为空
-	    }],
-	    end: { // 终点信息.
-	        position: { // 经纬度，与address配合可为空
-	        lon: 111.57062599999995, // 经度
-	        lat: 33.784214 // 纬度
-	        },
-	        title: "龙蛇之窟", // 描述信息
-	        address: "鸡冠洞" // 地址信息，与position配合为空
-	    }
-	}, function(ret, err){
-	    if(ret.status){
-	        api.alert({
-	            title: "提示",
-	            msg:'导航成功'
-	        });
-	}else{
-	    varmsg = "未知错误";
-	    if(1 == err.code){
-	        msg = "获取地理位置失败";
-	            }
-	    if(2 == err.code){
-	        msg = "定位服务未开启";
-	            }
-	    if(3 == err.code){
-	        msg = "线路取消";
-	            }
-	    if(4 == err.code){
-	        msg = "退出导航";
-	            }
-	if(5 == err.code){
-	    msg = "退出导航声明页面";
-	        }
-	        api.alert({
-	            title: "导航出错",
-	            msg: msg
-	        });
-	    }
-	});
-}
 
 </script>
 </head>
@@ -299,7 +236,6 @@ function startNav(){
 </div>
 <div class="fMenuBox" id="caidan">
     <ul>
-    	<li><a href="#" onclick="startNav();">startNav</a></li>
         <li><a href="citys.jsp">${city }[切换]</a></li>
         <li><a href="#" class="btn_act" data-type="loginput">退出</a></li>
     </ul>

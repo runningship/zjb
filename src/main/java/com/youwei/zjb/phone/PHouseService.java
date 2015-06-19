@@ -22,40 +22,41 @@ import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.Track;
 import com.youwei.zjb.user.entity.User;
-@Module(name="/house/")
+@Module(name="/mobile/")
 public class PHouseService {
 	
 	//1000米经验偏移量
 	public static float latOffset = 0.009000f;
 	public static float lngOffset = 0.010520f;
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	CityService cityService = TransactionalServiceHelper.getTransactionalService(CityService.class);
 	
 	@WebMethod(name="nearby.asp")
 	public ModelAndView nearBy(float longitude , float latitude){
+		long t1 = System.currentTimeMillis();
 		ModelAndView mv = new ModelAndView();
 		String hql="select area as name,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area " 
 							+" and ((maplat>=? and maplat<=?) and (maplng>=? and maplng<=?)) group by annex.area) as tt where xarea = area";
 		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset , latitude+latOffset , longitude-lngOffset , longitude+lngOffset);
-		mv.encodeReturnText=true;
-		mv.returnText = JSONHelper.toJSONArray(list).toString();
+//		mv.encodeReturnText=true;
+		mv.data.put("result", JSONHelper.toJSONArray(list));
+		System.out.println(System.currentTimeMillis()-t1);
 		return mv;
 	}
 	
-	@WebMethod(name="detail.asp")
+	@WebMethod
 	public ModelAndView detail(int houseId , Integer userId){
 		ModelAndView mv = new ModelAndView();
-		mv.encodeReturnText=true;
 		House house = dao.get(House.class, houseId);
-		JSONArray arr = new JSONArray();
 		JSONObject result = JSONHelper.toJSON(house);
 		if(house==null){
 			result.put("result","1");
 			result.put("msg", "已删除或未审核");
-			arr.add(result);
-			mv.returnText = arr.toString();
+			mv.data = result;
 			return mv;
 		}
 		if(house.tel!=null){
@@ -68,8 +69,8 @@ public class PHouseService {
 		result.put("dateadd", new SimpleDateFormat("yyyy/M/dd HH:mm:ss").format(house.dateadd));
 		result.put("dname", dept.namea);
 		result.put("cname", comp.namea);
-		User user = dao.get(User.class,house.uid);
-		result.put("uname", user.uname);
+		User lxr = dao.get(User.class,house.uid);
+		result.put("uname", lxr.uname);
 		District district = dao.getUniqueByKeyValue(District.class, "name", house.area);
 		if(district!=null){
 			result.put("latitude", district.maplat);
@@ -78,11 +79,13 @@ public class PHouseService {
 			result.put("latitude", "");
 			result.put("longitude", "");
 		}
-		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{userId,houseId});
-		if(po==null){
+//		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{userId,houseId});
+		if(house.fav==null){
 			result.put("isfav", "0");
-		}else{
+		}else if(house.fav.contains("@"+userId+"|")){
 			result.put("isfav", "1");
+		}else{
+			result.put("isfav", "0");
 		}
 		//状态
 		SellState state = SellState.parse(house.ztai);
@@ -105,8 +108,7 @@ public class PHouseService {
 		}
 		
 		result.put("year", house.dateyear);
-		arr.add(result);
-		mv.returnText = arr.toString();
+		mv.data = result;
 		
 		if(userId!=null){
 			Track track = dao.getUniqueByParams(Track.class, new String[]{"hid" , "uid" }, new Object[]{houseId , userId });
@@ -119,7 +121,7 @@ public class PHouseService {
 		}
 		return mv;
 	}
-	@WebMethod(name="list.asp")
+	@WebMethod
 	public ModelAndView list(HouseQuery query){
 		ModelAndView mv = new ModelAndView();
 		mv.encodeReturnText=true;
@@ -219,8 +221,27 @@ public class PHouseService {
 		if(query.page!=null){
 			page.setCurrentPageNo(query.page);
 		}
+		System.out.println(page.currentPageNo);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
-		mv.returnText = JSONHelper.toJSONArray(page.getResult()).toString();
+		mv.data.put("page", JSONHelper.toJSONArray(page.getResult()));
+//		mv.returnText = JSONHelper.toJSONArray(page.getResult()).toString();
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView getCityList(){
+		ModelAndView mv = new ModelAndView();
+		JSONArray cityList = cityService.getCitys();
+		JSONArray arr = new JSONArray();
+		for(int i=0;i<cityList.size();i++){
+			JSONObject  city = cityList.getJSONObject(i);
+			JSONObject tmp = new JSONObject();
+			tmp.put("name", city.getString("name"));
+			tmp.put("pinyin", city.getString("py"));
+			arr.add(tmp);
+		}
+		mv.data.put("citys", arr);
+		mv.data.put("status", 1);
 		return mv;
 	}
 }

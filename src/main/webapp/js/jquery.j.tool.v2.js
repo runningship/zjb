@@ -846,7 +846,7 @@ function relogin(){
             url: '/c/user/logout',
             success: function(data){
                 gui.App.clearCache();
-                window.location="/login/login.html";
+                window.location="/login/index.html";
             }
       });
   },function(){},'warning');

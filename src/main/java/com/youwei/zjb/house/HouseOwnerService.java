@@ -137,7 +137,6 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView setCity(String city){
 		ModelAndView mv = new ModelAndView();
-		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City, city);
 		HouseOwner owner = (HouseOwner) ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		owner.city = city;
 		ThreadSession.setCityPY("hefei");
