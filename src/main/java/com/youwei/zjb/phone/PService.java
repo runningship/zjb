@@ -16,6 +16,12 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import cn.jpush.api.JPushClient;
+import cn.jpush.api.push.model.Message;
+import cn.jpush.api.push.model.Platform;
+import cn.jpush.api.push.model.PushPayload;
+import cn.jpush.api.push.model.audience.Audience;
+
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -27,6 +33,8 @@ public class PService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	CityService cityService = TransactionalServiceHelper.getTransactionalService(CityService.class);
+	private static final String masterSecret ="17bfb60aef56934949f1b231";
+	private static final String appKey ="71f5687861a727f2827ba04a";
 	
 	@WebMethod
 	public ModelAndView tracks(Integer userId , Page<Map> page){
@@ -105,7 +113,7 @@ public class PService {
 //	}
 	
 	@WebMethod
-	public ModelAndView login(String cityPy, String tel , String pwd){
+	public ModelAndView login(String cityPy, String tel , String pwd , String deviceId){
 		ModelAndView mv = new ModelAndView();
 		JSONObject obj = new JSONObject();
 		String password = SecurityHelper.Md5(pwd);
@@ -147,7 +155,19 @@ public class PService {
 		obj.put("uname", user.uname);
 		obj.put("tel", tel);
 		mv.data = obj;
+		
+		pushToOther(tel,deviceId);
 		return mv;
+	}
+	
+	private void pushToOther(String tel,String deviceId){
+		JPushClient mClient = new JPushClient(masterSecret, appKey);
+		PushPayload payload = PushPayload.newBuilder()
+                .setPlatform(Platform.all())
+                .setAudience(Audience.alias(tel))
+                .setMessage(Message.content(deviceId))
+                .build();
+        mClient.sendPush(payload);
 	}
 	
 	@WebMethod(name="version.asp")

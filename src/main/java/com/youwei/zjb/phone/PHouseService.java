@@ -44,7 +44,6 @@ public class PHouseService {
 		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset , latitude+latOffset , longitude-lngOffset , longitude+lngOffset);
 //		mv.encodeReturnText=true;
 		mv.data.put("result", JSONHelper.toJSONArray(list));
-		System.out.println(System.currentTimeMillis()-t1);
 		return mv;
 	}
 	
@@ -66,7 +65,7 @@ public class PHouseService {
 		Department dept = dao.get(Department.class, house.did);
 		Department comp = dao.get(Department.class, house.cid);
 		
-		result.put("dateadd", new SimpleDateFormat("yyyy/M/dd HH:mm:ss").format(house.dateadd));
+		result.put("dateadd", new SimpleDateFormat("yyyy年MM月dd").format(house.dateadd));
 		result.put("dname", dept.namea);
 		result.put("cname", comp.namea);
 		User lxr = dao.get(User.class,house.uid);
@@ -124,7 +123,6 @@ public class PHouseService {
 	@WebMethod
 	public ModelAndView list(HouseQuery query){
 		ModelAndView mv = new ModelAndView();
-		mv.encodeReturnText=true;
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql  = new StringBuilder();
 		if(query.userid!=null){
@@ -223,7 +221,7 @@ public class PHouseService {
 		}
 		System.out.println(page.currentPageNo);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
-		mv.data.put("page", JSONHelper.toJSONArray(page.getResult()));
+		mv.data.put("page", JSONHelper.toJSON(page));
 //		mv.returnText = JSONHelper.toJSONArray(page.getResult()).toString();
 		return mv;
 	}
@@ -238,9 +236,25 @@ public class PHouseService {
 			JSONObject tmp = new JSONObject();
 			tmp.put("name", city.getString("name"));
 			tmp.put("pinyin", city.getString("py"));
+			tmp.put("quyus", city.getJSONArray("quyu").toString());
 			arr.add(tmp);
 		}
 		mv.data.put("citys", arr);
+		mv.data.put("status", 1);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView getQuyus(String cityPy){
+		ModelAndView mv = new ModelAndView();
+		JSONArray cityList = cityService.getCitys();
+		for(int i=0;i<cityList.size();i++){
+			JSONObject  city = cityList.getJSONObject(i);
+			if(city.getString("py").equals(cityPy)){
+				mv.data.put("quyus", city.getJSONArray("quyu"));
+				break;
+			}
+		}
 		mv.data.put("status", 1);
 		return mv;
 	}

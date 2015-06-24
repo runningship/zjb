@@ -157,6 +157,13 @@
 			<artifactId>CCPRestSDK</artifactId>
 			<version>2.6</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 	
