@@ -1,4 +1,4 @@
-package com.youwei.zjb.oa;
+package com.youwei.zjb.piazza;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,7 @@ import com.youwei.zjb.oa.entity.Site;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.HTMLSpirit;
 
-@Module(name="/oa")
+@Module(name="/piazza")
 public class NoticeService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
@@ -41,23 +41,23 @@ public class NoticeService {
 	}
 	
 	@WebMethod
-	public ModelAndView listNotice(Page<Map> page){
+	public ModelAndView listKnowledge(Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("page", JSONHelper.toJSON(innerListNotice(page)));
+		mv.data.put("page", JSONHelper.toJSON(innerListKnowledge(page)));
 		return mv;
 	}
 	
 	@WebMethod
-	public ModelAndView listArticle(Page<Map> page){
+	public ModelAndView listSail(Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("page", JSONHelper.toJSON(innerListArticle(page)));
+		mv.data.put("page", JSONHelper.toJSON(innerListSail(page)));
 		return mv;
 	}
 	
-	private Page<Map> innerListNotice(Page<Map> page){
+	private Page<Map> innerListKnowledge(Page<Map> page){
 		page.setPageSize(6);
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, nr.hasRead as hasRead,n.addtime as addtime , SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n ,"
-				+ " NoticeReceiver nr where n.id=nr.noticeId and isPublic=0 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSessionHelper.getUser().id});
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, n.addtime as addtime ,SubString(n.conts,1,180) as conts "
+				+ ",n.zans as zans ,n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId and isPublic=2 order by n.addtime desc", true, new Object[]{});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -68,10 +68,10 @@ public class NoticeService {
 		return page;
 	}
 	
-	private Page innerListArticle(Page<Map> page){
+	private Page innerListSail(Page<Map> page){
 		page.setPageSize(6);
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime ,SubString(n.conts,1,180) as conts "
-				+ ",n.zans as zans ,nr.zan as zan ,n.reads as reads,n.replys as replys from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSessionHelper.getUser().id});
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime , SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n "
+				+ " where isPublic=3 order by n.addtime desc", true, new Object[]{});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -81,7 +81,7 @@ public class NoticeService {
 		}
 		return page;
 	}
-
+	
 	@WebMethod
 	public ModelAndView index(){
 		ModelAndView mv = new ModelAndView();
@@ -89,13 +89,11 @@ public class NoticeService {
 		//公告
 		Page<Map> page = new Page<Map>();
 		page.setPageSize(6);
-		page = innerListNotice(page);
-		mv.jspData.put("noticeList", page.getResult());
+		page = innerListKnowledge(page);
+		mv.jspData.put("KnowledgeList", page.getResult());
 
-		//文化墙
-		page = innerListArticle(page);
-		mv.jspData.put("articleList", page.getResult());
-		
+		page = innerListSail(page);
+		mv.jspData.put("SailList", page.getResult());
 		
 		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSessionHelper.getUser().id);
 		List<Site> shareList = dao.listByParams(Site.class, "from Site where uid is null");
@@ -143,19 +141,19 @@ public class NoticeService {
 		return mv;
 	}
 	
-	@WebMethod(name="notice/edit")
-	public ModelAndView editNotice(int id){
+	@WebMethod(name="knowledge/edit")
+	public ModelAndView editKnowledge(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
-		mv.jspData.put("notice", po);
+		mv.jspData.put("knowledge", po);
 		return mv;
 	}
 	
-	@WebMethod(name="article/edit")
+	@WebMethod(name="sale/edit")
 	public ModelAndView editArticle(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
-		mv.jspData.put("article", po);
+		mv.jspData.put("sale", po);
 		return mv;
 	}
 	
@@ -233,7 +231,7 @@ public class NoticeService {
 	}
 	
 	@WebMethod(name="notice/list")
-	public ModelAndView list(OAQuery query, Page<Map> page){
+	public ModelAndView list(PiazzaQuery query, Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		User user = ThreadSessionHelper.getUser();

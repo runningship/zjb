@@ -276,6 +276,7 @@ function notify(){
                         <c:if test="${auths.indexOf('oa_on')>-1}">
                             <li ><a href="/oa/index.jsp" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         </c:if>
+                        <li ><a href="/piazza/index.jsp" class="ibtn" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe633;</i><span>广场</span></a></li>
                         <c:if test="${auths.indexOf('sz_on')>-1}">
                             <li auth="sz_on" class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                         </c:if>
