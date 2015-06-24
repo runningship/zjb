@@ -26,7 +26,7 @@ import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.HTMLSpirit;
 
 @Module(name="/piazza")
-public class NoticeService {
+public class PiazzaService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	

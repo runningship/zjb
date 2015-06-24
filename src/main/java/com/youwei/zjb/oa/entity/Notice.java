@@ -25,6 +25,7 @@ public class Notice {
 	
 	public Date addtime;
 	
+	//3 广场公告, 4 二手信息
 	public int isPublic;
 	
 	//点赞数量
@@ -36,6 +37,9 @@ public class Notice {
 	public Integer replys;
 	
 	public Integer orderx;
+	
+	//点赞人的id ;号隔开,用于"广场"功能
+	public String zanUids;
 	
 	public transient String senderName;
 	public transient Integer senderAvatar;
