@@ -48,9 +48,9 @@ public class PiazzaService {
 	}
 	
 	@WebMethod
-	public ModelAndView listSail(Page<Map> page){
+	public ModelAndView listSail(Page<Map> page,String title){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("page", JSONHelper.toJSON(innerListSail(page)));
+		mv.data.put("page", JSONHelper.toJSON(innerListSail(page,title)));
 		return mv;
 	}
 	
@@ -68,10 +68,10 @@ public class PiazzaService {
 		return page;
 	}
 	
-	private Page innerListSail(Page<Map> page){
+	private Page innerListSail(Page<Map> page, String title){
 		page.setPageSize(6);
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime , SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n "
-				+ " where isPublic=3 order by n.addtime desc", true, new Object[]{});
+				+ " where isPublic=3 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -92,7 +92,7 @@ public class PiazzaService {
 		page = innerListKnowledge(page);
 		mv.jspData.put("KnowledgeList", page.getResult());
 
-		page = innerListSail(page);
+		page = innerListSail(page,"");
 		mv.jspData.put("SailList", page.getResult());
 		
 		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSessionHelper.getUser().id);

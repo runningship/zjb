@@ -118,19 +118,19 @@ function buildArticle(page){
             <div class="txt Fleft"><span class="Fleft">房源知识最新分享</span>
             <!-- <c:if test="${auths.indexOf('oa_article_add')>-1}"> -->
               <i class="Bg add Fleft" onclick="openNewWin('addKnowledge','800','600','添加知识','knowledge/add.jsp')"></i>
-            <!-- </c:if> -->
-            </div>  <span style="color:grey">集齐50个赞，可获得50元现金</span>
-            <!-- <form name="form1"><input type="text" /><img src="" onclick=""></form> -->
-            <a href="#" onclick="openListWin('listKnowledge','980','650','全部知识','knowledge/list.jsp')">更多></a>  
+            <!-- </c:if> --><span style="color:#9cabb4;font-size:12px;">集齐50个赞，可获得50元现金</span>
+            </div>  
+            <form name="form1" style="float: right;"><div  style="margin-top: 14px;margin-right: 65px; "><input type="text" placeholder="关键字搜索" style="height: 25px;" /><img src="images/search.png" style="height: 25px;position: fixed;" onclick=""></div>
+            <a href="#" style="margin-top: -42px;" onclick="openListWin('listKnowledge','980','650','全部知识','knowledge/list.jsp')">更多></a>  </form>
           </div>
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">增值服务平台最近信息</span>
             <!-- <c:if test="${auths.indexOf('oa_notice_add')>-1}"> -->
               <i class="Bg add Fleft"  onclick="openNewWin('addSail','800','600','添加转让','sale/add.jsp')" ></i>
-            <!-- </c:if> -->
-            </div>  <span style="color:grey">可发布物品出售、转让、业务办理等</span>
-            <!-- <form name="form2"><input type="text" /><img src="" onclick=""></form> -->
-            <a href="#" style="margin-right:25px;" onclick="openListWin('listSail','980','650','全部转让','sale/list.jsp')">更多></a></div>
+            <!-- </c:if> --> <span style="color:#9cabb4;font-size:12px;">可发布物品出售、转让等</span>
+            </div> 
+            <form name="form2" style="float: right;"><div style="margin-top: 14px;margin-right: 90px; "><input type="text" name="title" placeholder="关键字搜索" style="height: 25px;" /><img src="images/search.png" style="height: 25px;position: fixed;" onclick=""></div>
+            <a href="#" style="margin-right:25px;margin-top: -42px;" onclick="openListWin('listSail','980','650','全部转让','sale/list.jsp')">更多></a></div></form>
           </div>
           <div class="tr w100">
           
