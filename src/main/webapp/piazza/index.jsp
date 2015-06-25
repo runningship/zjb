@@ -129,7 +129,7 @@ function buildArticle(page){
       <div class="tr w100">
         <div class="td oaTit oaTitBgInfo">
           <ul class="titBox">
-            <li href="#" onclick="window.location.reload()"><i class=" Bg whq"></i><span class="color1">房源知识分享</span></li>
+            <li href="#" onclick="window.location.reload()"><i class=" Bg whq"></i><span class="color1">房产知识分享</span></li>
             <li><span class="line"></span></li>
             <li href="#" onclick="window.location.reload()"><i class=" Bg gg"></i><span class="color2">增值服务平台</span></li>
           </ul>
@@ -139,7 +139,7 @@ function buildArticle(page){
       </div>
       <div class="tr w100">
           <div class="td oaInfoTit">
-            <div class="txt Fleft"><span class="Fleft">房源知识分享</span>
+            <div class="txt Fleft"><span class="Fleft">房产知识分享</span>
             <!-- <c:if test="${auths.indexOf('oa_article_add')>-1}"> -->
               <i class="Bg add Fleft" onclick="openNewWin('addKnowledge','800','600','添加知识','knowledge/add.jsp')"></i>
             <!-- </c:if> --><span style="color:#9cabb4;font-size:12px;margin-left:30px;">集齐50个赞，可获得50元现金</span>

@@ -258,9 +258,9 @@ function notify(){
                 <div class="tr tbody">
                     <ul class="menuSide">
                         <li class="curr"><a href="/v/house/house_v2.html" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span>房源</span></a></li>
-                        <c:if test="${auths.indexOf('fy_fz_on')>-1}">
-                        <li ><a href="/houseOwner/OwnerList.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="房主"><i class="iconfont">&#xe601;</i><span>房主</span></a></li>
-                        </c:if>
+<%--                         <c:if test="${auths.indexOf('fy_fz_on')>-1}"> --%>
+<!--                         <li ><a href="/houseOwner/OwnerList.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="房主"><i class="iconfont">&#xe601;</i><span>房主</span></a></li> -->
+<%--                         </c:if> --%>
                         <c:if test="${auths.indexOf('ky_on')>-1}">
                         <li ><a href="/client/index.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span>客源</span></a></li>
                         </c:if>
@@ -276,7 +276,7 @@ function notify(){
                         <c:if test="${auths.indexOf('oa_on')>-1}">
                             <li ><a href="/oa/index.jsp" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         </c:if>
-                        <li ><a href="/piazza/index.jsp" class="ibtn" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe633;</i><span>广场</span></a></li>
+                        <li ><a href="/piazza/index.jsp" class="ibtn" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a></li>
                         <c:if test="${auths.indexOf('sz_on')>-1}">
                             <li auth="sz_on" class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                         </c:if>

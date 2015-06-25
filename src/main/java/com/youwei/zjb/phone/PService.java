@@ -147,7 +147,7 @@ public class PService {
 		obj.put("cid", user.cid);
 		obj.put("lname", user.lname);
 		if(user.mobileDeadtime!=null){
-			obj.put("deadtime", DataHelper.sdf.format(user.mobileDeadtime));
+			obj.put("deadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 		}
 		if(dept!=null){
 			obj.put("dname", dept.namea);
@@ -189,8 +189,21 @@ public class PService {
 		User user = dao.get(User.class, userId);
 //		user.mobileDeadtime
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MONTH, monthAdd);
-		user.mobileDeadtime = cal.getTime();
+		if(user.mobileDeadtime==null){
+			cal.add(Calendar.MONTH, monthAdd);
+			user.mobileDeadtime = cal.getTime();
+		}else{
+			if(user.mobileDeadtime.after(cal.getTime())){
+				cal.setTime(user.mobileDeadtime);
+				cal.add(Calendar.MONTH, monthAdd);
+				user.mobileDeadtime = cal.getTime();
+			}else{
+				//已过期,从当前时间算起
+				cal.add(Calendar.MONTH, monthAdd);
+				user.mobileDeadtime = cal.getTime();
+			}
+		}
+		dao.saveOrUpdate(user);
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 		return mv;
 	}
