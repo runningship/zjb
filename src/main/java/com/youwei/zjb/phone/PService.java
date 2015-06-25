@@ -1,6 +1,8 @@
 package com.youwei.zjb.phone;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,7 @@ import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 
 import com.youwei.zjb.sys.CityService;
+import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
@@ -168,6 +171,34 @@ public class PService {
                 .setMessage(Message.content(deviceId))
                 .build();
         mClient.sendPush(payload);
+	}
+	
+	@WebMethod
+	public ModelAndView paySuccess(Integer monthAdd ,Integer userId,String uname,String tradeNO,Float fee,Integer payType){
+		ModelAndView mv = new ModelAndView();
+		Charge charge = new Charge();
+		charge.uid = userId;
+		charge.tradeNo = tradeNO;
+		charge.fee = fee;
+		charge.payType = payType;
+		charge.clientType="mobile";
+		charge.addtime = new Date();
+		charge.status = "TRADE_SUCCESS";
+		charge.finish = 1;
+		dao.saveOrUpdate(charge);
+		User user = dao.get(User.class, userId);
+//		user.mobileDeadtime
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, monthAdd);
+		user.mobileDeadtime = cal.getTime();
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView alipayCallback(Integer userId){
+		ModelAndView mv = new ModelAndView();
+		return mv;
 	}
 	
 	@WebMethod(name="version.asp")

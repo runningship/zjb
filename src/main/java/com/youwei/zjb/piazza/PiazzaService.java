@@ -41,23 +41,23 @@ public class PiazzaService {
 	}
 	
 	@WebMethod
-	public ModelAndView listKnowledge(Page<Map> page){
+	public ModelAndView listKnowledge(Page<Map> page , String title){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("page", JSONHelper.toJSON(innerListKnowledge(page)));
+		mv.data.put("page", JSONHelper.toJSON(innerListKnowledge(page , title)));
 		return mv;
 	}
 	
 	@WebMethod
 	public ModelAndView listSail(Page<Map> page,String title){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("page", JSONHelper.toJSON(innerListSail(page,title)));
+		mv.data.put("page", JSONHelper.toJSON(innerListSale(page,title)));
 		return mv;
 	}
 	
-	private Page<Map> innerListKnowledge(Page<Map> page){
+	private Page<Map> innerListKnowledge(Page<Map> page , String title){
 		page.setPageSize(6);
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, n.addtime as addtime ,SubString(n.conts,1,180) as conts "
-				+ ",n.zans as zans ,n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId and isPublic=2 order by n.addtime desc", true, new Object[]{});
+		page = dao.findPage(page, "select n.id as id, n.title as title,n.zanUids as zanUids, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, n.addtime as addtime ,SubString(n.conts,1,180) as conts "
+				+ ",n.zans as zans ,n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId and isPublic=2 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -68,8 +68,8 @@ public class PiazzaService {
 		return page;
 	}
 	
-	private Page innerListSail(Page<Map> page, String title){
-		page.setPageSize(6);
+	private Page innerListSale(Page<Map> page, String title){
+		page.setPageSize(15);
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime , SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n "
 				+ " where isPublic=3 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
 		for(Map map : page.getResult()){
@@ -89,11 +89,12 @@ public class PiazzaService {
 		//公告
 		Page<Map> page = new Page<Map>();
 		page.setPageSize(6);
-		page = innerListKnowledge(page);
+		page = innerListKnowledge(page , "");
 		mv.jspData.put("KnowledgeList", page.getResult());
 
-		page = innerListSail(page,"");
-		mv.jspData.put("SailList", page.getResult());
+		Page<Map> page2 = new Page<Map>();
+		page2 = innerListSale(page2,"");
+		mv.jspData.put("SailList", page2.getResult());
 		
 		List<Site> personalList = dao.listByParams(Site.class, "from Site where uid=?",ThreadSessionHelper.getUser().id);
 		List<Site> shareList = dao.listByParams(Site.class, "from Site where uid is null");
@@ -161,18 +162,21 @@ public class PiazzaService {
 	public ModelAndView toggleZan(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
-		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{ id , ThreadSessionHelper.getUser().id});
-		if(nr.zan==0){
-			nr.zan=1;
+		int uid = ThreadSessionHelper.getUser().id;
+		if(StringUtils.isEmpty(po.zanUids)){
+			po.zanUids=uid+";";
 			po.zans++;
-			mv.data.put("zan", 1);
 		}else{
-			nr.zan=0;
-			po.zans--;
-			mv.data.put("zan", -1);
+			if(po.zanUids.contains(String.valueOf(uid))){
+				po.zanUids = po.zanUids.replace(uid+";", "");
+				po.zans--;
+			}else{
+				po.zanUids +=uid+";";
+				po.zans++;
+			}
 		}
 		dao.saveOrUpdate(po);
-		dao.saveOrUpdate(nr);
+		mv.data.put("zan", po.zans);
 		return mv;
 	}
 	

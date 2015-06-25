@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
@@ -16,17 +17,18 @@
 </head>
 <script type="text/javascript">
 var artPage = 1;
+var myId = '${myId}';
 function selectZan(id,obj){
   $(obj).toggleClass('zan');
   $(obj).toggleClass('zanSel');
   YW.ajax({
     type: 'POST',
-    url: '/c/oa/toggleZan?id='+id,
+    url: '/c/piazza/toggleZan?id='+id,
     dataType:'json',
     mysuccess: function(data){
       var b = $(obj).next();
-      var c =Number.parseInt(b.text()) + data.zan;
-      b.text(c);
+      //var c =Number.parseInt(b.text()) + data.zan;
+      b.text(data.zan);
     }
   });
 }
@@ -37,13 +39,37 @@ function doSearch(){
   },1000);
 }
 
+function searchKnowledge(){
+	artPage=0;
+	$('.whqMain').empty();
+	getMore();
+}
+
+function searchSale(){
+	var title = $('#saleSearch').val();
+	YW.ajax({
+	    type: 'POST',
+	    url: '/c/piazza/listSail?',
+	    dataType:'json',
+	    data:{title: title},
+	    mysuccess: function(data){
+	    	buildHtmlWithJsonArray('sailRepeat',data.page.data);
+	    }
+	  });
+}
+
+$(function(){
+	searchSale();
+});
 function getMore(){
+	var title = $('#knowledgeSearch').val();
   $('.jzMore').text('加载中...');
   artPage ++;
   YW.ajax({
     type: 'POST',
     url: '/c/piazza/listKnowledge?currentPageNo='+artPage,
     dataType:'json',
+    data:{title: title},
     mysuccess: function(data){
       buildArticle(data);
       $('.jzMore').text('点击加载更多');
@@ -106,8 +132,6 @@ function buildArticle(page){
             <li href="#" onclick="window.location.reload()"><i class=" Bg whq"></i><span class="color1">房源知识分享</span></li>
             <li><span class="line"></span></li>
             <li href="#" onclick="window.location.reload()"><i class=" Bg gg"></i><span class="color2">增值服务平台</span></li>
-            <!-- <li><span class="line"></span></li>
-            <li><i class=" Bg wzsc"></i><span class="color3">网址收藏</span></li> -->
           </ul>
         </div>
         <div class="td oaTit oaTitBgInfo">
@@ -115,22 +139,26 @@ function buildArticle(page){
       </div>
       <div class="tr w100">
           <div class="td oaInfoTit">
-            <div class="txt Fleft"><span class="Fleft">房源知识最新分享</span>
+            <div class="txt Fleft"><span class="Fleft">房源知识分享</span>
             <!-- <c:if test="${auths.indexOf('oa_article_add')>-1}"> -->
               <i class="Bg add Fleft" onclick="openNewWin('addKnowledge','800','600','添加知识','knowledge/add.jsp')"></i>
-            <!-- </c:if> --><span style="color:#9cabb4;font-size:12px;">集齐50个赞，可获得50元现金</span>
+            <!-- </c:if> --><span style="color:#9cabb4;font-size:12px;margin-left:30px;">集齐50个赞，可获得50元现金</span>
             </div>  
-            <form name="form1" style="float: right;"><div  style="margin-top: 14px;margin-right: 65px; "><input type="text" placeholder="关键字搜索" style="height: 25px;" /><img src="images/search.png" style="height: 25px;position: fixed;" onclick=""></div>
-            <a href="#" style="margin-top: -42px;" onclick="openListWin('listKnowledge','980','650','全部知识','knowledge/list.jsp')">更多></a>  </form>
+            <form onsubmit="searchKnowledge();return false;" name="form1" style="float: right;width:40%"><div  style="margin-top: 12px;margin-right: 65px;position:relative; ">
+            <input id="knowledgeSearch" type="text" placeholder="关键字搜索" style="width:90%;height: 25px;border: 1px solid #fff;border-radius: 10px;" />
+            <img src="images/search.png" style="height: 20px;position: absolute;top:5px;cursor:pointer" onclick="searchKnowledge();"></div>
+            <a href="#" style="margin-top: -39px;" onclick="openListWin('listKnowledge','980','650','全部知识','knowledge/list.jsp')">更多></a>  </form>
           </div>
           <div class="td oaInfoTit">
-            <div class="txt2 Fleft"><span class="Fleft">增值服务平台最近信息</span>
+            <div class="txt2 Fleft"><span class="Fleft">增值服务平台</span>
             <!-- <c:if test="${auths.indexOf('oa_notice_add')>-1}"> -->
               <i class="Bg add Fleft"  onclick="openNewWin('addSail','800','600','添加转让','sale/add.jsp')" ></i>
-            <!-- </c:if> --> <span style="color:#9cabb4;font-size:12px;">可发布物品出售、转让等</span>
+            <!-- </c:if> --> <span style="color:#9cabb4;font-size:12px;margin-left:30px;">可发布物品出售、转让、业务办理等</span>
             </div> 
-            <form name="form2" style="float: right;"><div style="margin-top: 14px;margin-right: 90px; "><input type="text" name="title" placeholder="关键字搜索" style="height: 25px;" /><img src="images/search.png" style="height: 25px;position: fixed;" onclick=""></div>
-            <a href="#" style="margin-right:25px;margin-top: -42px;" onclick="openListWin('listSail','980','650','全部转让','sale/list.jsp')">更多></a></div></form>
+            <form name="form2" onsubmit="searchSale();return false;" style="float: right;width:40%;"><div style="margin-top: 12px;margin-right: 90px;position:relative ">
+            <input id="saleSearch" type="text" name="title" placeholder="关键字搜索" style="height: 25px;width:90% ;border: 1px solid #fff;border-radius: 10px;" />
+            <img src="images/search.png" style="height: 20px;position: absolute;top:5px;cursor:pointer" onclick="searchSale();"></div>
+            <a href="#" style="margin-right:40px;margin-top: -39px;" onclick="openListWin('listSail','980','650','全部转让','sale/list.jsp')">更多></a></div></form>
           </div>
           <div class="tr w100">
           
@@ -160,7 +188,7 @@ function buildArticle(page){
                             <i class="Bg xgSel" onclick="openNewWin('editKnowledge','800','600','编辑知识','knowledge/edit.jsp?id=${article.id}')">修改</i>  
                           <!-- </c:if> -->
                           
-                          <i class="Bg <c:if test="${article.zan==0}">zan</c:if> <c:if test="${article.zan==1}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
+                          <i class="Bg <c:if test="${!fn:contains(article.zanUids, myId)}">zan</c:if> <c:if test="${fn:contains(article.zanUids, myId)}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
                           <span class="zan_count" >${article.zans}</span>
                           <!-- <i class="Bg hf">回复</i> -->
                         </div>
@@ -185,7 +213,6 @@ function buildArticle(page){
 								 });
 					  </script>
                   
-                  
                 </div>
               </div>
             </div>
@@ -203,34 +230,35 @@ function buildArticle(page){
                 <div class="tr">
                   <div class="td ggMain" style="height:100%;">
                     <div style=" margin-right:22px; height:100%; overflow:hidden; overflow-y:auto; padding-right:2px;">
-                      <c:forEach items="${SailList}"  var="notice">
-                        <div class="ggBox">
-                          <div class="ggBoxTime">
-                            <p class="month"><fmt:formatDate value="${notice.addtime}" pattern="MMM"/></p>
-                            <p class="day"><fmt:formatDate value="${notice.addtime}" pattern="dd"/></p>
-                          </div>
-                          <div class="ggBoxContent">
-                            <p><span class="titL marginLeft10">Tit:</span><a href="#" class="tit marginLeft10 userSelectTrue" onclick="openNewWin('viewSail','980','650','查看转让','sale/view.html?id=${notice.id}')">${notice.title}</a></p>
+<%--                       <c:forEach items="${SailList}"  var="notice"> --%>
+						<span class="sailRepeat">
+                        <div class="ggBox" >
+                          <div class="ggBoxContent" style="margin-left:0px;">
+                            <p><span class="titL marginLeft10">Tit:</span>
+                            <a href="#" class="tit  userSelectTrue" onclick="openNewWin('viewSail','980','650','查看转让','sale/view.html?id=$[id]')" >$[title]</a>
+                            <span class="infoBoxTit" style="display: inline;"><span class="time" style="float:right;margin-right:20px;line-height:25px;">$[addtime]</span></span>
+                            </p>
                             <!--<p><span class="marginLeft10 con">${notice.conts}</span></p>-->
-                            <span class="GGcon" style="display:none">${notice.conts}</span>
+                            <span class="GGcon" style="display:none">$[conts]</span>
 							
                           </div>
                           <div class="ggBoxCaozuo">
                             <!-- <c:if test="${notice.senderId==myId}"> -->
-                              <i class="Bg xgSel" onclick="openNewWin('editSail','800','600','编辑转让','sale/edit.jsp?id=${notice.id}')">修改</i>
+                              <i class="Bg xgSel" onclick="openNewWin('editSail','800','600','编辑转让','sale/edit.jsp?id=$[id]')">修改</i>
                               <!-- <i class="Bg xgSel" onclick="openNewWin('editSail','800','600','编辑转让','sale/edit.jsp?id=${notice.id}')">审核</i> -->
                             <!-- </c:if> -->
                             <!-- <i class="Bg zanSel">查看</i> -->
                             <!-- <i class="Bg hfSel">回复</i> -->
                           </div>
                         </div>
-                      </c:forEach>
+                        </span>
+<%--                       </c:forEach> --%>
                       <script>
 								 /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
 								 $(function(){
 										  var conNum = $(".GGcon").size();
 										  for(var i=0;i<conNum;i++){
-											  $("#GGcon"+i).parent().append("<p><span class='marginLeft10 con userSelectTrue' style='font-family:\"宋体\"; line-height:18px;'>"+$("#GGcon"+i).text()+"</span></p>");
+											  $("#GGcon"+i).parent().append("<p><span class=' con userSelectTrue' style='font-family:\"宋体\";margin-left:43px; line-height:18px;'>"+$("#GGcon"+i).text()+"</span></p>");
 											 // $(".GGcon"+i).text();
 											  /*document.write("<p><span class='marginLeft10 con'>"+$("#GGcon"+i).text()+"</span></p>");*/
 										  }
