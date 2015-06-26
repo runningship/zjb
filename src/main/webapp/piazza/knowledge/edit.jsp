@@ -35,7 +35,7 @@ function save(){
         url: '/c/piazza/notice/update',
         data:a,
         mysuccess: function(data){
-            window.parent.doSearch();
+            window.parent.searchKnowledge();
             window.parent.LayerRemoveBox("editknowledge");
             alert('修改成功');
         }
@@ -83,6 +83,5 @@ function save(){
 </table>
 </form>
 <div id="knowledge_conts" style="display:none">${knowledge.conts}</div>
-<jsp:include page="../userTree.jsp"></jsp:include>
 </body>
 </html>

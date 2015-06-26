@@ -37,7 +37,7 @@ function save(){
         url: '/c/piazza/notice/update',
         data:a,
         mysuccess: function(data){
-            window.parent.doSearch();
+            window.parent.searchSale();
             window.parent.LayerRemoveBox("editSail");
             alert('修改成功');
         }

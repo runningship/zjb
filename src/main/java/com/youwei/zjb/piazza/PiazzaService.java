@@ -70,8 +70,8 @@ public class PiazzaService {
 	
 	private Page innerListSale(Page<Map> page, String title){
 		page.setPageSize(15);
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime , SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n "
-				+ " where isPublic=3 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime ,u.uname as senderName, SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId "
+				+ " and isPublic=3 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){

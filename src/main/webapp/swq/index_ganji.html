@@ -91,6 +91,11 @@ var list_this_err_num=0;
 
 
 function addList(box,url,title){
+    if(url.indexOf('http://')>-1){
+        sys_urlBu='';
+    }else{
+        sys_urlBu ='http://hf.ganji.com';
+    }
     var addListStr='<li data-url="'+sys_urlBu+url+'" data-title="'+title+'"><span>'
         +'<a href="#" class="btns" data-type="list_see_url" ><i class="iconfont">&#xe675;</i></a>'
         +'<a href="#" class="btns" data-type="list_see" ><i class="iconfont">&#xe672;</i></a>'

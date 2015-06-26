@@ -1,5 +1,6 @@
 package com.youwei.zjb.user;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
@@ -67,6 +68,11 @@ public class MobileUserService {
 		if(muser == null){
 			muser = new User();
 			muser.tel = tel;
+			
+			//注册送5天试用
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, 5);
+			muser.mobileDeadtime =  cal.getTime();
 		}
 		dao.saveOrUpdate(muser);
 		
@@ -91,6 +97,7 @@ public class MobileUserService {
 		
 		muser.pwd = SecurityHelper.Md5(pwd);
 		muser.addtime = new Date();
+		
 		dao.saveOrUpdate(muser);
 //		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_Mobile_User, muser);
 		return mv;

@@ -121,6 +121,9 @@ public class NoticeService {
 	public ModelAndView get(int id){
 		ModelAndView mv = new ModelAndView();
 		Notice po = dao.get(Notice.class, id);
+		if(po.reads==null){
+			po.reads = 0;
+		}
 		po.reads++;
 		dao.saveOrUpdate(po);
 		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{id , ThreadSessionHelper.getUser().id});

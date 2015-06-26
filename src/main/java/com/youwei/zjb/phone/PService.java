@@ -147,7 +147,12 @@ public class PService {
 		obj.put("cid", user.cid);
 		obj.put("lname", user.lname);
 		if(user.mobileDeadtime!=null){
-			obj.put("deadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+			obj.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+			if(!user.mobileDeadtime.before(Calendar.getInstance().getTime())){
+				obj.put("fufei", "1");
+			}
+		}else{
+			obj.put("mobileDeadtime", DataHelper.dateSdf.format(new Date()));
 		}
 		if(dept!=null){
 			obj.put("dname", dept.namea);
@@ -205,6 +210,8 @@ public class PService {
 		}
 		dao.saveOrUpdate(user);
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+		mv.data.put("fufei", "1");
+		mv.data.put("result", "1");
 		return mv;
 	}
 	

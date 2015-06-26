@@ -42,7 +42,7 @@ function save(){
         url: '/c/oa/notice/save',
         data:a,
         mysuccess: function(data){
-			window.parent.doSearch();
+			window.parent.searchSale();
            // window.parent.doSearch();/*iframe_oa*/
             window.parent.LayerRemoveBox("addSail");
             alert('发布成功');

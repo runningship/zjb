@@ -93,14 +93,14 @@ function buildArticle(page){
              +    ' <div class="infoListImg Fleft"><img src="/oa/images/avatar/'+json[i]['senderAvatar']+'.jpg"></div>'
              +    ' <div class="Fleft userSelectTrue">    '  
              +       '<p><span class="yh">'+json[i]['senderName']+'</span><span class="time">'+json[i]['addtime']+'</span></p>'
-             +       '<p><a href="#" class="tit" onclick="openNewWin(\'viewSail\',\'980\',\'650\',\'查看知识\',\'sale/view.html?id='+json[i]['id']+'\')">'+json[i]['title']+'</a></p>'
+             +       '<p><a href="#" class="tit" onclick="openNewWin(\'viewSail\',\'980\',\'650\',\'查看内容\',\'sale/view.html?id='+json[i]['id']+'\')">'+json[i]['title']+'</a></p>'
              +     '</div>'
              +     '<div class="infoCaozuo">';
              // +     '<c:if test="${article.senderId==myId}">'
              // +        '<i class="Bg xgSel" onclick="openNewWin('editArt','700','450','编辑知识','/knowledge/edit.jsp?id=json[i]['id']')">修改</i>'  
              // +     '</c:if>'
     if(json[i].senderId==${myId}){
-      html+='<i class="Bg xgSel" onclick="openNewWin(\'editKnowledge\',\'700\',\'450\',\'编辑知识\',\'/knowledge/edit.jsp?id='+json[i].id+'\')">修改</i>';
+      html+='<i class="Bg xgSel" onclick="openNewWin(\'editKnowledge\',\'700\',\'450\',\'编辑内容\',\'knowledge/edit.jsp?id='+json[i].id+'\')">修改</i>';
     }
     if(json[i].zan==0){
       html  +=     '<i class="Bg zan " style="margin-right:3px" onclick="selectZan('+json[i]['id']+',this);return false;">点赞</i>';
@@ -140,25 +140,23 @@ function buildArticle(page){
       <div class="tr w100">
           <div class="td oaInfoTit">
             <div class="txt Fleft"><span class="Fleft">房产知识分享</span>
-            <!-- <c:if test="${auths.indexOf('oa_article_add')>-1}"> -->
-              <i class="Bg add Fleft" onclick="openNewWin('addKnowledge','800','600','添加知识','knowledge/add.jsp')"></i>
-            <!-- </c:if> --><span style="color:#9cabb4;font-size:12px;margin-left:30px;">集齐50个赞，可获得50元现金</span>
+              <i class="Bg add Fleft" onclick="openNewWin('addKnowledge','800','600','添加内容','knowledge/add.jsp')"></i>
+              <span style="color:#9cabb4;font-size:12px;margin-left:30px;">集齐50个赞，可获得50元现金</span>
             </div>  
             <form onsubmit="searchKnowledge();return false;" name="form1" style="float: right;width:40%"><div  style="margin-top: 12px;margin-right: 65px;position:relative; ">
             <input id="knowledgeSearch" type="text" placeholder="关键字搜索" style="width:90%;height: 25px;border: 1px solid #fff;border-radius: 10px;" />
             <img src="images/search.png" style="height: 20px;position: absolute;top:5px;cursor:pointer" onclick="searchKnowledge();"></div>
-            <a href="#" style="margin-top: -39px;" onclick="openListWin('listKnowledge','980','650','全部知识','knowledge/list.jsp')">更多></a>  </form>
+            <a href="#" style="margin-top: -39px;" onclick="openListWin('listKnowledge','980','650','全部内容','knowledge/list.jsp')">更多></a>  </form>
           </div>
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">增值服务平台</span>
-            <!-- <c:if test="${auths.indexOf('oa_notice_add')>-1}"> -->
-              <i class="Bg add Fleft"  onclick="openNewWin('addSail','800','600','添加转让','sale/add.jsp')" ></i>
-            <!-- </c:if> --> <span style="color:#9cabb4;font-size:12px;margin-left:30px;">可发布物品出售、转让、业务办理等</span>
+              <i class="Bg add Fleft"  onclick="openNewWin('addSail','800','600','添加内容','sale/add.jsp')" ></i>
+              <span style="color:#9cabb4;font-size:12px;margin-left:30px;">可发布物品出售、转让、业务办理等</span>
             </div> 
             <form name="form2" onsubmit="searchSale();return false;" style="float: right;width:40%;"><div style="margin-top: 12px;margin-right: 90px;position:relative ">
             <input id="saleSearch" type="text" name="title" placeholder="关键字搜索" style="height: 25px;width:90% ;border: 1px solid #fff;border-radius: 10px;" />
             <img src="images/search.png" style="height: 20px;position: absolute;top:5px;cursor:pointer" onclick="searchSale();"></div>
-            <a href="#" style="margin-right:40px;margin-top: -39px;" onclick="openListWin('listSail','980','650','全部转让','sale/list.jsp')">更多></a></div></form>
+            <a href="#" style="margin-right:40px;margin-top: -39px;" onclick="openListWin('listSail','980','650','全部内容','sale/list.jsp')">更多></a></div></form>
           </div>
           <div class="tr w100">
           
@@ -181,11 +179,11 @@ function buildArticle(page){
                         <div class="infoListImg Fleft"><img src="/oa/images/avatar/${article.senderAvatar }.jpg" /></div>
                         <div class="Fleft userSelectTrue">      
                           <p><span class="yh">${article.senderName }</span><span class="time"><fmt:formatDate value="${article.addtime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
-                          <p><a href="#" class="tit" onclick="openNewWin('viewKnowledge','980','650','查看知识','knowledge/view.html?id=${article.id}')">${article.title }</a></p>
+                          <p><a href="#" class="tit" onclick="openNewWin('viewKnowledge','980','650','查看内容','knowledge/view.html?id=${article.id}')">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
                           <!-- <c:if test="${article.senderId==myId}"> -->
-                            <i class="Bg xgSel" onclick="openNewWin('editKnowledge','800','600','编辑知识','knowledge/edit.jsp?id=${article.id}')">修改</i>  
+                            <!-- <i class="Bg xgSel" onclick="openNewWin('editKnowledge','800','600','编辑知识','knowledge/edit.jsp?id=${article.id}')">修改</i>   -->
                           <!-- </c:if> -->
                           
                           <i class="Bg <c:if test="${!fn:contains(article.zanUids, myId)}">zan</c:if> <c:if test="${fn:contains(article.zanUids, myId)}">zanSel</c:if>" onclick="selectZan(${article.id},this);return false;">点赞</i>
@@ -231,12 +229,12 @@ function buildArticle(page){
                   <div class="td ggMain" style="height:100%;">
                     <div style=" margin-right:22px; height:100%; overflow:hidden; overflow-y:auto; padding-right:2px;">
 <%--                       <c:forEach items="${SailList}"  var="notice"> --%>
-						<span class="sailRepeat">
+						<span class="sailRepeat" style="display:none">
                         <div class="ggBox" >
                           <div class="ggBoxContent" style="margin-left:0px;">
                             <p><span class="titL marginLeft10">Tit:</span>
-                            <a href="#" class="tit  userSelectTrue" onclick="openNewWin('viewSail','980','650','查看转让','sale/view.html?id=$[id]')" >$[title]</a>
-                            <span class="infoBoxTit" style="display: inline;"><span class="time" style="float:right;margin-right:20px;line-height:25px;">$[addtime]</span></span>
+                            <a href="#" class="tit  userSelectTrue" onclick="openNewWin('viewSail','980','650','查看内容','sale/view.html?id=$[id]')" >$[title]</a>
+                            <span class="infoBoxTit" style="display: inline;"><span class="time" style="float:right;margin-right:40px;line-height:25px;">$[addtime]</span></span>
                             </p>
                             <!--<p><span class="marginLeft10 con">${notice.conts}</span></p>-->
                             <span class="GGcon" style="display:none">$[conts]</span>
@@ -244,11 +242,12 @@ function buildArticle(page){
                           </div>
                           <div class="ggBoxCaozuo">
                             <!-- <c:if test="${notice.senderId==myId}"> -->
-                              <i class="Bg xgSel" onclick="openNewWin('editSail','800','600','编辑转让','sale/edit.jsp?id=$[id]')">修改</i>
+                              
                               <!-- <i class="Bg xgSel" onclick="openNewWin('editSail','800','600','编辑转让','sale/edit.jsp?id=${notice.id}')">审核</i> -->
                             <!-- </c:if> -->
                             <!-- <i class="Bg zanSel">查看</i> -->
                             <!-- <i class="Bg hfSel">回复</i> -->
+                            <!-- <i class="Bg xgSel" onclick="openNewWin('editSail','800','600','编辑转让','sale/edit.jsp?id=$[id]')">修改</i> -->
                           </div>
                         </div>
                         </span>

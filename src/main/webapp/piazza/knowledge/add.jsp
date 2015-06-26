@@ -43,7 +43,7 @@ function save(){
         url: '/c/oa/notice/save',
         data:a,
         mysuccess: function(data){
-            window.parent.doSearch();
+            window.parent.searchKnowledge();
             window.parent.LayerRemoveBox("addKnowledge");
             alert('发布成功');
         }
@@ -83,6 +83,5 @@ function save(){
     </tr>
 </table>
 </form>
-<jsp:include page="../userTree.jsp"></jsp:include>
 </body>
 </html>

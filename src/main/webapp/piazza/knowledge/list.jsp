@@ -23,7 +23,7 @@ function doSearch(){
   // pushQueryToHistory($('form[name=form1]').serializeArray());
   YW.ajax({
     type: 'POST',
-    url: '/c/oa/notice/list?isPublic=2',
+    url: '/c/piazza/listKnowledge',
     data:a,
     mysuccess: function(data){
         houseData=JSON.parse(data);
@@ -76,15 +76,15 @@ $(function(){
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
         <div class="ggLayerMainScol">
           
-          <div class="ggListBox id_notice_list">
+          <div class="ggListBox id_notice_list" style="display:none">
                <div class="ggListBoxTit ggBorLeftRed">
                     <div class="tit">
-                        <h2 onclick="window.location='/piazza/Knowledge/view.html?id=$[id]'">$[title]</h2>
+                        <h2 onclick="window.location='/piazza/knowledge/view.html?id=$[id]'">$[title]</h2>
                         <div class="conTime"><i class="person">$[senderName]</i><i class="clock">$[addtime]</i></div>
                     </div>
                     <div class="ggListBoxBot">
                     <span class="tuBox"><i class="Bg zan"></i>$[replys]</span>
-                    <i show="${user.id}==$[senderId]" class="Bg xgSel" onclick="openNewWin('editKnowledge','800','600','编辑文章','edit.jsp?id=$[id]')"></i>
+                    <i show="${user.id}==$[senderId]" class="Bg xgSel" onclick="openNewWin('editKnowledge','800','600','编辑内容','edit.jsp?id=$[id]')"></i>
                     <c:if test="${auths.indexOf('oa_article_del')>-1}">
                       <i class="Bg hfSel" onclick="deleteThis($[id]);return false;" ></i>
                     </c:if>

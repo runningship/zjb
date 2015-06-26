@@ -23,4 +23,11 @@ public class TestDistrictService {
 		dis.uid=-1;
 		service.update(dis);
 	}
+	
+	public static void main(String[] args){
+		String str = " 158056 00755  18100515581  ";
+		for(int i=0;i<str.length();i++){
+			System.out.println(i+":"+str.codePointAt(i));
+		}
+	}
 }

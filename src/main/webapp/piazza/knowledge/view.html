@@ -88,12 +88,12 @@ function selectZan(obj){
   $(obj).toggleClass('zanSel');
   YW.ajax({
     type: 'POST',
-    url: '/c/oa/toggleZan?id='+id,
+    url: '/c/piazza/toggleZan?id='+id,
     dataType:'json',
     mysuccess: function(data){
       var b = $('#zancount');
-      var c =Number.parseInt(b.text()) + data.zan;
-      b.text(c);
+      // var c =Number.parseInt(b.text()) + data.zan;
+      b.text(data.zan);
     }
   });
 }
