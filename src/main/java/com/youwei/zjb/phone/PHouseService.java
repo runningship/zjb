@@ -245,12 +245,12 @@ public class PHouseService {
 	}
 	
 	@WebMethod
-	public ModelAndView getQuyus(String cityPy){
+	public ModelAndView getQuyus(String pinyin){
 		ModelAndView mv = new ModelAndView();
 		JSONArray cityList = cityService.getCitys();
 		for(int i=0;i<cityList.size();i++){
 			JSONObject  city = cityList.getJSONObject(i);
-			if(city.getString("py").equals(cityPy)){
+			if(city.getString("py").equals(pinyin)){
 				mv.data.put("quyus", city.getJSONArray("quyu"));
 				break;
 			}
