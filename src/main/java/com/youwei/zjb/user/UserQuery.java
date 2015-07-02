@@ -24,5 +24,7 @@ public class UserQuery{
 	public Integer cid;
 	
 	public Integer did;
+
+	public String mobileON;
 	
 }

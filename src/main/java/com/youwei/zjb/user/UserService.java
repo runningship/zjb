@@ -297,6 +297,49 @@ public class UserService {
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
 		return mv;
 	}
+
+	@WebMethod
+	public ModelAndView listphone(UserQuery query , Page<Map> page){
+		ModelAndView mv = new ModelAndView();
+		StringBuilder hql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel, u.lasttime as lasttime, u.addtime as addtime ,u.mobileDeadtime as endtime,u.mobileON as mobileON  "
+				+ "from User  u  ");
+		if(StringUtils.isNotEmpty(query.tel)){
+			query.tel = query.tel.trim();
+			query.tel = query.tel.replace(String.valueOf((char)160), "");
+			hql.append(" where u.tel  like ?");
+			params.add("%"+query.tel+"%");
+			if(StringUtils.isNotEmpty(query.mobileON)){
+				if("1".equals(query.mobileON)){
+					hql.append(" and u.mobileON = 1");
+				}else if("0".equals(query.mobileON)){
+					hql.append(" and u.mobileON = 0");
+				}
+			}
+		}else if(StringUtils.isNotEmpty(query.mobileON)){
+			if("1".equals(query.mobileON)){
+				hql.append(" where u.mobileON = 1");
+			}else if("0".equals(query.mobileON)){
+				hql.append(" where u.mobileON = 0");
+			}
+		}
+		fillQuery(query,hql,params);
+		page = dao.findPage(page, hql.toString(), true, params.toArray());
+		for(Map map : page.getResult()){
+			Object roleId = map.get("roleId");
+			String title = "";
+			if(roleId!=null){
+				Role role = dao.get(Role.class, Integer.valueOf(roleId.toString()));
+				if(role!=null){
+					title=role.title;
+				}
+			}
+			map.put("role", title);
+		}
+		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
+		return mv;
+	}
 	
 	@WebMethod
 	public ModelAndView superLogin(User user){

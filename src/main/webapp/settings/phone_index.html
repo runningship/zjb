@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragram" content="no-cache"> 
+<meta http-equiv="cache-control" content="no-cache, must-revalidate"> 
+<meta http-equiv="expires" content="0"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>中介宝房源软件系统</title>
+<meta name="description" content="中介宝房源软件系统">
+<meta name="keywords" content="房源软件,房源系统,中介宝">
+<link href="/style/css.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="/style/style.css" rel="stylesheet">
+<link href="/js/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="/js/jquery.timers.js" type="text/javascript"></script>
+<script src="/js/jquery.input.js" type="text/javascript"></script>
+<script src="/js/jquery.j.tool.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/buildHtml.js"></script>
+<script type="text/javascript" src="/js/pagination.js"></script>
+<script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/zTree_v3/js/jquery.ztree.all-3.5.js"></script>
+<script type="text/javascript">
+var queryOptions;
+try{
+}catch(e){}
+
+function doSearch(page){
+	if(page){
+		  Page.currentPageNo=page;
+		  $('.pageInput').val(1);
+	  }
+  var a=$('form[name=form1]').serialize();
+  
+  YW.ajax({
+    type: 'POST',
+    url: '/c/user/listphone',
+    data:a,
+    mysuccess: function(data){
+        var houseData=JSON.parse(data);
+        buildHtmlWithJsonArray("id_House_list",houseData['page']['data']);
+        Page.setPageInfo(houseData['page']);
+        setTableFix();
+        // if(event==undefined || $(event.srcElement).attr('action')!='page'){
+        //   $('.pageInput').val(1);
+        // }
+        if(houseData['page']['data']<=0){
+          $('.id_House_list').parents('.maxHW').addClass('list_noThing');
+        }else{
+          $('.id_House_list').parents('.maxHW').removeClass('list_noThing');
+        }
+    }
+  });
+}
+
+function uc_edit(id){
+  art.dialog.open('/v/settings/uc_index_u_edit.html?id='+id)
+}
+
+function uc_delete(id){
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+      YW.ajax({
+        type: 'POST',
+        url: '/c/user/delete?id='+id,
+        data:'',
+        mysuccess: function(data){
+            doSearch();
+            alert('删除成功');
+        }
+      });
+  },function(){},'warning');
+}
+
+$(document).ready(function() {
+  Page.Init();
+  doSearch();
+    $.get('menuTop.html', function(data) {
+        $('#menuTop').html(data);
+        //设置拖动栏
+        var bodyW = $(window.top.document).width()-50;
+        //-200为margin-right:200
+        $(window.top.document).find('#dragbar').width(bodyW-$('#menuTop').width()-200);
+    });
+});
+$(window).resize(function() {      //类别
+});
+</script>
+
+</head>
+<body>
+<div class="html list title addSide">
+    <div class="header">
+        <div class="maxHW title">
+            <ul class="menuLi clearfix title" id="menuTop">
+            </ul>
+        </div>
+  <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
+    <input type="hidden" class="hidden" name="pageInput" value="">
+    <div class="form-group clearfix">
+        <div class="input-group input-group-max" style="width:200px;">
+          <span class="input-group-addon">电话号码</span>
+          <input type="text" class="form-control" name="tel" id="tel">
+        </div>
+      <div class="input-group input-group-min" style="width:150px;">
+        <span class="input-group-addon">类别</span>
+        <select class="form-control " name="mobileON" id="mobileON">
+          <option value="">全部</option>
+          <option value="1">开启</option>
+          <option value="0">未开启</option>
+        </select>
+      </div>
+      <div class="btn-group">
+          <button type="button" class="btn btn-primary " onclick="doSearch();">搜索</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-nopadding TableH " >
+    <tr>
+      <th>帐号</th>
+      <th>姓名</th>
+      <th>注册时间</th>
+      <th>最后登陆时间</th>
+      <th>到期时间</th>
+      <th>操作</th>
+    </tr>
+  </table>
+ 
+    </div>
+    <div class="bodyer">
+      <div class="maxHW" style="min-width: 700px;">
+
+        <table class="table table-hover table-striped table-nopadding TableB" >
+          <tbody>
+          <tr data-hid="$[id]" style="display:none;" class="id_House_list">
+            <td>$[lname]</td>
+            <td>$[uname]</td>
+            <td>$[addtime]</td>
+            <td>$[lasttime]</td>
+            <td>$[endtime]</td>
+            <td><span class="btn-group null-float">
+              <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit($[uid])">编辑</a>
+              <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="uc_delete($[uid])">删除</a>
+              </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+        <div class="maxHW mainCont ymx_page foot_page_box"></div>
+    </div>
+</div>
+</body>
+</html>
