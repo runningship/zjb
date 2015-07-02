@@ -104,6 +104,7 @@ public class SessionFilter implements Filter{
 //			ThreadSession.setCityPY(city);
 			String cityPy = request.getParameter("cityPy");
 			System.out.println(cityPy);
+			ThreadSession.setCityPY(cityPy);
 			chain.doFilter(request, response);
 			return;
 		}

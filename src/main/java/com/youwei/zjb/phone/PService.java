@@ -131,13 +131,13 @@ public class PService {
 			mv.data.put("msg", "密码错误");
 			return mv;
 		}
-		JSONArray citys = cityService.getCitys();
-		for(int i=0;i<citys.size();i++){
-			if(citys.getJSONObject(i).getString("py").equals(cityPy)){
-				obj.put("quyus", citys.getJSONObject(i).get("quyu"));
-				break;
-			}
-		}
+//		JSONArray citys = cityService.getCitys();
+//		for(int i=0;i<citys.size();i++){
+//			if(citys.getJSONObject(i).getString("py").equals(cityPy)){
+//				obj.put("quyus", citys.getJSONObject(i).get("quyu"));
+//				break;
+//			}
+//		}
 		Department dept = dao.get(Department.class, user.did);
 		Department comp = dao.get(Department.class, user.cid);
 		obj.put("result", "0");

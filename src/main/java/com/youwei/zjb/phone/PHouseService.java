@@ -40,7 +40,7 @@ public class PHouseService {
 		long t1 = System.currentTimeMillis();
 		ModelAndView mv = new ModelAndView();
 		String hql="select area as name,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area " 
-							+" and ((maplat>=? and maplat<=?) and (maplng>=? and maplng<=?)) group by annex.area) as tt where xarea = area";
+							+" and ((maplat>=? and maplat<=?) and (maplng>=? and maplng<=?)) group by annex.area) as tt where xarea = area and maplat >0";
 		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset , latitude+latOffset , longitude-lngOffset , longitude+lngOffset);
 //		mv.encodeReturnText=true;
 		mv.data.put("result", JSONHelper.toJSONArray(list));
@@ -233,6 +233,9 @@ public class PHouseService {
 		JSONArray arr = new JSONArray();
 		for(int i=0;i<cityList.size();i++){
 			JSONObject  city = cityList.getJSONObject(i);
+			if(!"on".equals(city.getString("status"))){
+				continue;
+			}
 			JSONObject tmp = new JSONObject();
 			tmp.put("name", city.getString("name"));
 			tmp.put("pinyin", city.getString("py"));

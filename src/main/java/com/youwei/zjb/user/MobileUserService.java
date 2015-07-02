@@ -15,10 +15,13 @@ import org.bc.web.PlatformExceptionType;
 import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
+import cn.jpush.api.utils.StringUtils;
+
 import com.cloopen.rest.sdk.CCPRestSDK;
 import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
 
 @Module(name="/mobile/user/")
@@ -30,7 +33,7 @@ public class MobileUserService {
 	@WebMethod
 	public ModelAndView sendVerifyCode(String tel){
 		ModelAndView mv = new ModelAndView();
-		ThreadSession.setCityPY("hefei");
+//		ThreadSession.setCityPY("hefei");
 		TelVerifyCode tvc = new TelVerifyCode();
 		tvc.tel = tel;
 		//send code to tel
@@ -80,9 +83,10 @@ public class MobileUserService {
 	}
 
 	@WebMethod
-	public ModelAndView verifyCode(String tel , String code , String pwd){
+	public ModelAndView verifyCode(String tel , String code , String pwd , String uname){
 		//发送验证码，验证，登录操作都在主库中进行
-		ThreadSession.setCityPY("hefei");
+		//在各自数据库中操作
+//		ThreadSession.setCityPY("hefei");
 		ModelAndView mv = new ModelAndView();
 		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{tel , code});
 		if(tvc==null){
@@ -96,10 +100,18 @@ public class MobileUserService {
 		User muser  = dao.getUniqueByKeyValue(User.class,"tel", tel);
 		
 		muser.pwd = SecurityHelper.Md5(pwd);
+		if(StringUtils.isNotEmpty(uname)){
+			muser.uname = uname;
+		}
 		muser.addtime = new Date();
 		
 		dao.saveOrUpdate(muser);
 //		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_Mobile_User, muser);
+		mv.data.put("uid", muser.id);
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(muser.mobileDeadtime));
+		mv.data.put("fufei", "1");
+		mv.data.put("uname", muser.uname);
+		mv.data.put("tel", tel);
 		return mv;
 	}
 	

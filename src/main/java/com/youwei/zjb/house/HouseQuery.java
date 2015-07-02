@@ -42,6 +42,7 @@ public class HouseQuery{
 	public String tel;
 	public String address;
 	public boolean useLike;
+	public boolean listMyAdd = false;
 	
 	// for phone client
 	//current page number

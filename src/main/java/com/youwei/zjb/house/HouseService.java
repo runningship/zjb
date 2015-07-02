@@ -346,6 +346,7 @@ public class HouseService {
 	public ModelAndView listMyAdd(HouseQuery query ,Page<House> page){
 		User user = ThreadSessionHelper.getUser();
 		query.userid = user.id;
+		query.listMyAdd = true;
 		return listAll(query ,page);
 	}
 	
@@ -570,10 +571,11 @@ public class HouseService {
 			hql.append(" and h.sh= ? ");
 			params.add(query.sh);
 		}else{
-			if(ThreadSessionHelper.getUser().cid!=1){
+			if(ThreadSessionHelper.getUser().cid!=1 && query.listMyAdd==false){
 				//非中介宝用户
 				//sh=0且seeGX=1的由中介宝审核，此时客户公司将看不到这条数据如果中介宝还没有审核
-				hql.append(" and ((h.sh=1 and h.seeGX=1) or (h.sh=0 and seeGX=0) )");
+				hql.append(" and ((h.sh=1 and h.seeGX=1) or cid=?)");
+				params.add(ThreadSessionHelper.getUser().cid);
 			}
 		}
 		hql.append(" and (isdel=0 or isdel is null) ");

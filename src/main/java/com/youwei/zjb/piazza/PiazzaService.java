@@ -167,7 +167,7 @@ public class PiazzaService {
 			po.zanUids=uid+";";
 			po.zans++;
 		}else{
-			if(po.zanUids.contains(String.valueOf(uid))){
+			if(po.zanUids.contains(String.valueOf(uid)+";")){
 				po.zanUids = po.zanUids.replace(uid+";", "");
 				po.zans--;
 			}else{
