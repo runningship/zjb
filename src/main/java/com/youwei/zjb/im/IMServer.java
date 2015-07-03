@@ -35,6 +35,7 @@ public class IMServer extends WebSocketServer{
 	private static IMServer instance =null;
 //	static Map<Integer,WebSocket> pool = new HashMap<Integer,WebSocket>();
 	static Map<String,Map<Integer,WebSocket>> conns = new HashMap<String,Map<Integer,WebSocket>>();
+	static Map<String,WebSocket> mobiles = new HashMap<String,WebSocket>();
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 //	private static InetSocketAddress socket = new InetSocketAddress("localhost", 9099); 
 	private AssistantService assistantService = new AssistantService();
@@ -69,6 +70,15 @@ public class IMServer extends WebSocketServer{
 		System.out.println("web socket connector path is: "+path);
 		try {
 			Map<String, Object> map = URLUtil.parseQuery(path);
+			if(map.containsKey("tel")){
+				WebSocket another = mobiles.get(map.get("tel"));
+				if(another!=null  && !map.get("deviceId").equals(another.getAttributes().get("deviceId"))){
+					another.send("loginAnother");
+				}
+				conn.getAttributes().put("deviceId", map.get("deviceId"));
+				mobiles.put(map.get("tel").toString(), conn);
+				return;
+			}
 			Integer uid = Integer.valueOf(map.get("uid").toString());
 			String city = (String)map.get("city");
 			ThreadSession.setCityPY(city);
@@ -96,6 +106,9 @@ public class IMServer extends WebSocketServer{
 		String city = (String) conn.getAttributes().get("city");
 		Integer uid = (Integer) conn.getAttributes().get("uid");
 		Map<Integer, WebSocket> ap = conns.get(city);
+		if(ap==null){
+			return;
+		}
 		WebSocket removed = ap.remove(uid);
 		if(removed!=null){
 			conns.remove(removed);

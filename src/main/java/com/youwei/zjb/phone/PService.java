@@ -164,7 +164,7 @@ public class PService {
 		obj.put("tel", tel);
 		mv.data = obj;
 		
-		pushToOther(tel,deviceId);
+//		pushToOther(tel,deviceId);
 		return mv;
 	}
 	

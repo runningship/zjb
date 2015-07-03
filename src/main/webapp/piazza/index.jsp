@@ -67,7 +67,7 @@ function getMore(){
   artPage ++;
   YW.ajax({
     type: 'POST',
-    url: '/c/piazza/listKnowledge?currentPageNo='+artPage,
+    url: '/c/piazza/listKnowledge?pageSize=6&currentPageNo='+artPage,
     dataType:'json',
     data:{title: title},
     mysuccess: function(data){

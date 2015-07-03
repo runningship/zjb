@@ -23,7 +23,7 @@ function doSearch(){
   // pushQueryToHistory($('form[name=form1]').serializeArray());
   YW.ajax({
     type: 'POST',
-    url: '/c/piazza/listSail',
+    url: '/c/piazza/listSail?pageSize=20',
     data:a,
     mysuccess: function(data){
         houseData=JSON.parse(data);
