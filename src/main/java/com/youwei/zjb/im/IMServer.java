@@ -70,12 +70,18 @@ public class IMServer extends WebSocketServer{
 		System.out.println("web socket connector path is: "+path);
 		try {
 			Map<String, Object> map = URLUtil.parseQuery(path);
+			
 			if(map.containsKey("tel")){
+				String tel = map.get("tel").toString();
+				String deviceId = map.get("deviceId").toString();
 				WebSocket another = mobiles.get(map.get("tel"));
-				if(another!=null  && !map.get("deviceId").equals(another.getAttributes().get("deviceId"))){
+				if(another!=null  && !another.getAttributes().get("deviceId").equals(deviceId)){
+					System.out.println("在"+deviceId+"出登录");
 					another.send("loginAnother");
+					another.close();
 				}
-				conn.getAttributes().put("deviceId", map.get("deviceId"));
+				conn.getAttributes().put("deviceId", deviceId);
+				conn.getAttributes().put("tel", tel);
 				mobiles.put(map.get("tel").toString(), conn);
 				return;
 			}
@@ -103,6 +109,13 @@ public class IMServer extends WebSocketServer{
 
 	@Override
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+		if(conn.getAttributes().containsKey("tel")){
+			WebSocket another = mobiles.get(conn.getAttributes().get("tel"));
+			if(another.getAttributes().get("deviceId").equals(conn.getAttributes().get("deviceId"))){
+					mobiles.remove(conn.getAttributes().get("tel"));
+			}
+			return;
+		}
 		String city = (String) conn.getAttributes().get("city");
 		Integer uid = (Integer) conn.getAttributes().get("uid");
 		Map<Integer, WebSocket> ap = conns.get(city);
