@@ -62,18 +62,8 @@ function uc_edit(id){
   art.dialog.open('/v/settings/phone_edit.html?id='+id)
 }
 
-function uc_delete(id){
-  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
-      YW.ajax({
-        type: 'POST',
-        url: '/c/user/delete?id='+id,
-        data:'',
-        mysuccess: function(data){
-            doSearch();
-            alert('删除成功');
-        }
-      });
-  },function(){},'warning');
+function SeeCharge(id){
+  art.dialog.open('/v/settings/phone_ChargeList.html?id='+id)
 }
 
 $(document).ready(function() {
@@ -145,7 +135,7 @@ $(window).resize(function() {      //类别
             <td>$[endtime]</td>
             <td><span class="btn-group null-float">
               <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit($[uid])">编辑</a>
-              <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="uc_delete($[uid])">删除</a>
+              <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="SeeCharge($[uid])">充值查看</a>
               </span>
             </td>
           </tr>

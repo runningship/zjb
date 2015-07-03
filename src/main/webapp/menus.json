@@ -342,6 +342,17 @@
 			"type":"menu"
 		}]
 	},{
+		"name":"sz_phone",
+		"text":"手机用户",
+		"zjb-only":true,
+		"type":"virtual",
+		"children":[{
+			"name":"sz_phone_on",
+			"text":"管理手机用户",
+			"zjb-only":true,
+			"type":"menu"
+		}]
+	},{
 		"name":"sz_area",
 		"text":"楼盘字典",
 		"zjb-only":true,
