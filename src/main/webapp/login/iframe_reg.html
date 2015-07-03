@@ -298,6 +298,16 @@ function btnAction(){
         return false;
     });
 }
+
+function textCounter(maxlimit ,obj) {    
+   // 函数，3个参数，表单名字，表单域元素名，限制字符；    
+    if (obj.value.length > maxlimit)    {  
+        obj.value = obj.value.substring(0, maxlimit); 
+        alert('只允许输入10个字！');
+        //如果元素区字符数大于最大字符数，按照最大字符数截断； 
+    }
+} 
+
 $(document).ready(function() {
     hetKeyAct();
 //    setCity();
@@ -413,7 +423,8 @@ $(window).resize(function() {
                     <div class="form-group">
                         <label class="col-xs-3 control-label">备注：</label>
                         <div class="col-xs-6">
-                            <textarea class="form-control" name="beizhu" cols="30" rows="5" placeholder="请填写备注信息"></textarea>
+                            <textarea class="form-control" name="beizhu"  cols="30" rows="5" onKeyDown="textCounter(10,this);" onKeyUp=
+"textCounter(10,this);" placeholder="请填写备注信息"></textarea>
                         </div>
                     </div>
                 </div>
