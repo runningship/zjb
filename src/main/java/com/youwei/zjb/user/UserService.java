@@ -324,6 +324,8 @@ public class UserService {
 			}else if("0".equals(query.mobileON)){
 				hql.append(" where u.mobileON = 0");
 			}
+		}else {
+			hql.append(" where u.tel is not null and u.tel is not ''");
 		}
 		fillQuery(query,hql,params);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());

@@ -116,7 +116,7 @@ $(window).resize(function() {      //类别
       <th>姓名</th>
       <th>注册时间</th>
       <th>最后登陆时间</th>
-      <th>到期时间</th>
+      <th style="width:80px">到期时间</th>
       <th>操作</th>
     </tr>
   </table>
@@ -132,7 +132,7 @@ $(window).resize(function() {      //类别
             <td>$[uname]</td>
             <td>$[addtime]</td>
             <td>$[lasttime]</td>
-            <td>$[endtime]</td>
+            <td style="width:80px">$[endtime]</td>
             <td><span class="btn-group null-float">
               <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit($[uid])">编辑</a>
               <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="SeeCharge($[uid])">充值查看</a>
