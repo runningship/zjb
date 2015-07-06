@@ -72,9 +72,9 @@ public class MobileUserService {
 			muser = new User();
 			muser.tel = tel;
 			muser.mobileON = 1;
-			//注册送5天试用
+			//注册送1天试用
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, 5);
+			cal.add(Calendar.DAY_OF_MONTH, 1);
 			muser.mobileDeadtime =  cal.getTime();
 		}
 		dao.saveOrUpdate(muser);

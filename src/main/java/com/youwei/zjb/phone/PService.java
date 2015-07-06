@@ -154,6 +154,7 @@ public class PService {
 		}else{
 			obj.put("mobileDeadtime", DataHelper.dateSdf.format(new Date()));
 		}
+//		obj.put("mobileDeadtime", "3天后到期");
 		if(dept!=null){
 			obj.put("dname", dept.namea);
 		}
@@ -221,11 +222,20 @@ public class PService {
 		return mv;
 	}
 	
-	@WebMethod(name="version.asp")
-	public ModelAndView version(Integer userId){
+	@WebMethod
+	public ModelAndView version(){
 		ModelAndView mv = new ModelAndView();
-		mv.encodeReturnText=true;
-		mv.returnText = "[{'shareurl':'http://app.qq.com/#id=detail&appid=1101502997','downurl':'http://www.zhongjiebao.com/download/zhongjiebao.apk','version':'1.3','content':[{'content':'1.3正式版发布'}]}]";
+		mv.data.put("latestVersion", "1.0.1");
+		mv.data.put("installUrl", "http://downloadpkg.apicloud.com/app/download?path=/zip/2b/63/2b636d136d48c4ea162bc8cb1eab97c7.apk");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView feeInfo(){
+		ModelAndView mv = new ModelAndView();
+		mv.data.put("monthPay", "40");
+		mv.data.put("seasonPay", "100");
+		mv.data.put("yearPay", "400");
 		return mv;
 	}
 }

@@ -124,7 +124,7 @@ public class PGenjinService {
 //			dao.saveOrUpdate(gj);
 //		}
 		dao.saveOrUpdate(gj);
-		mv.data.put("result", "0");
+		mv.data.put("result", "1");
 		mv.data.put("msg", "添加成功");
 		return mv;
 	}
