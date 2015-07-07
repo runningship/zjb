@@ -219,7 +219,7 @@ public class PHouseService {
 		if(query.page!=null){
 			page.setCurrentPageNo(query.page);
 		}
-		System.out.println(page.currentPageNo);
+//		System.out.println(page.currentPageNo);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 //		mv.returnText = JSONHelper.toJSONArray(page.getResult()).toString();
