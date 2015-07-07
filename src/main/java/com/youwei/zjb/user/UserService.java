@@ -305,41 +305,21 @@ public class UserService {
 		StringBuilder hql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel, u.lasttime as lasttime, u.addtime as addtime ,u.mobileDeadtime as endtime,u.mobileON as mobileON  "
-				+ "from User  u  ");
+				+ "from User  u  where u.tel is not null and u.tel <> '' ");
 		if(StringUtils.isNotEmpty(query.tel)){
 			query.tel = query.tel.trim();
 			query.tel = query.tel.replace(String.valueOf((char)160), "");
-			hql.append(" where u.tel  like ?");
+			hql.append(" and u.tel  like ?");
 			params.add("%"+query.tel+"%");
-			if(StringUtils.isNotEmpty(query.mobileON)){
-				if("1".equals(query.mobileON)){
-					hql.append(" and u.mobileON = 1");
-				}else if("0".equals(query.mobileON)){
-					hql.append(" and u.mobileON = 0");
-				}
-			}
-		}else if(StringUtils.isNotEmpty(query.mobileON)){
-			if("1".equals(query.mobileON)){
-				hql.append(" where u.mobileON = 1");
-			}else if("0".equals(query.mobileON)){
-				hql.append(" where u.mobileON = 0");
-			}
-		}else {
-			hql.append(" where u.tel is not null and u.tel is not ''");
+			
 		}
-		fillQuery(query,hql,params);
+		if(query.mobileON!=null){
+			hql.append(" and u.mobileON  = ?");
+			params.add(query.mobileON);
+		}
+		
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
-		for(Map map : page.getResult()){
-			Object roleId = map.get("roleId");
-			String title = "";
-			if(roleId!=null){
-				Role role = dao.get(Role.class, Integer.valueOf(roleId.toString()));
-				if(role!=null){
-					title=role.title;
-				}
-			}
-			map.put("role", title);
-		}
+		
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
 		return mv;
 	}
@@ -373,15 +353,15 @@ public class UserService {
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException, "账号不存在");
 		}
-		if(po.lock==0){
+		if(po.lock == null || po.lock==0){
 			throw new GException(PlatformExceptionType.BusinessException, "账号被锁定");
 		}
 		Department comp = dao.get(Department.class, po.cid);
-		if(comp.sh==0){
+		if(comp.sh== null || comp.sh ==0){
 			throw new GException(PlatformExceptionType.BusinessException, "公司 "+comp.namea+" 被锁定");
 		}
 		Department dept = po.Department();
-		if(dept.sh==0){
+		if(dept.sh==null || dept.sh==0){
 			throw new GException(PlatformExceptionType.BusinessException, "分店 "+comp.namea+" 被锁定");
 		}
 		pc.did = po.did;

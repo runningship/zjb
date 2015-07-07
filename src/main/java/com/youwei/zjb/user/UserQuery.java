@@ -25,6 +25,6 @@ public class UserQuery{
 	
 	public Integer did;
 
-	public String mobileON;
+	public Integer mobileON;
 	
 }
