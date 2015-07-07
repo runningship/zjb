@@ -123,7 +123,7 @@ public class PService {
 		User user = dao.getUniqueByParams(User.class, new String[]{"tel","mobileON"}, new Object[]{tel , 1});
 		if(user==null){
 			mv.data.put("result", "3");
-			mv.data.put("msg", "账号不存在");
+			mv.data.put("msg", "账号不存在或被锁定");
 			return mv;
 		}
 		if(!user.pwd.equals(password)){

@@ -67,23 +67,70 @@ public class MobileUserService {
 			System.out.println("错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
 		}
 		dao.saveOrUpdate(tvc);
-		User muser = dao.getUniqueByKeyValue(User.class, "tel", tel);
-		if(muser == null){
-			muser = new User();
-			muser.tel = tel;
-			muser.mobileON = 1;
-			//注册送1天试用
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, 1);
-			muser.mobileDeadtime =  cal.getTime();
-		}
-		dao.saveOrUpdate(muser);
+		
 		
 		return mv;
 	}
 
 	@WebMethod
 	public ModelAndView verifyCode(String tel , String code , String pwd , String uname){
+		//在各自数据库中操作
+//		ThreadSession.setCityPY("hefei");
+		ModelAndView mv = new ModelAndView();
+		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{tel , code});
+		if(tvc==null){
+			//验证码不正确
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+			mv.data.put("msg", "验证码不正确");
+			mv.data.put("result", "0");
+			return mv;
+		}
+		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+			//验证码已经过期
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+			mv.data.put("msg", "验证码已经过期");
+			mv.data.put("result", "0");
+			return mv;
+		}
+		User muser  = dao.getUniqueByKeyValue(User.class,"tel", tel);
+		if(muser!=null ){
+			if(muser.mobileON!=null){
+//				throw new GException(PlatformExceptionType.BusinessException,"手机号码已经注册");
+				mv.data.put("msg", "手机号码已经注册");
+				mv.data.put("result", "0");
+				return mv;
+			}else{
+				//手机号码已经填写，但未开通,在这里开通,同时电脑版的密码也随之改变了，这里要注意
+				
+			}
+		}else{
+			muser = new User();
+			muser.addtime = new Date();
+		}
+		muser.pwd = SecurityHelper.Md5(pwd);
+		if(StringUtils.isNotEmpty(uname)){
+			muser.uname = uname;
+		}
+		muser.tel = tel;
+		muser.mobileON = 1;
+		//注册送1天试用
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, 1);
+		muser.mobileDeadtime =  cal.getTime();
+		dao.saveOrUpdate(muser);
+		
+//		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_Mobile_User, muser);
+		mv.data.put("uid", muser.id);
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(muser.mobileDeadtime));
+		mv.data.put("fufei", "1");
+		mv.data.put("uname", muser.uname);
+		mv.data.put("tel", tel);
+		mv.data.put("result", "1");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView modifyPwd(String tel , String code , String pwd){
 		//发送验证码，验证，登录操作都在主库中进行
 		//在各自数据库中操作
 //		ThreadSession.setCityPY("hefei");
@@ -98,21 +145,13 @@ public class MobileUserService {
 			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
 		}
 		User muser  = dao.getUniqueByKeyValue(User.class,"tel", tel);
-		
-		muser.pwd = SecurityHelper.Md5(pwd);
-		if(StringUtils.isNotEmpty(uname)){
-			muser.uname = uname;
+		if(muser==null){
+			throw new GException(PlatformExceptionType.BusinessException,"手机号码未注册");
 		}
-		muser.addtime = new Date();
-		
+		muser.pwd = SecurityHelper.Md5(pwd);
 		dao.saveOrUpdate(muser);
-//		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_Mobile_User, muser);
-		mv.data.put("uid", muser.id);
-		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(muser.mobileDeadtime));
-		mv.data.put("fufei", "1");
-		mv.data.put("uname", muser.uname);
-		mv.data.put("tel", tel);
+		
+		mv.data.put("result", "1");
 		return mv;
 	}
-	
 }
