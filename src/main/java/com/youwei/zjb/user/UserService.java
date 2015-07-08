@@ -182,6 +182,25 @@ public class UserService {
 	}
 	
 	@WebMethod
+	public ModelAndView updatemobile(User user){
+		ModelAndView mv = new ModelAndView();
+		if(StringUtils.isEmpty(user.uname)){
+			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
+		}
+		
+		User po = dao.get(User.class, user.id);
+		po.uname = user.uname;
+		if(StringUtils.isNotEmpty(user.pwd)){
+			po.pwd = SecurityHelper.Md5(user.pwd);
+		}
+		po.tel = user.tel;
+		po.mobileDeadtime = user.mobileDeadtime;
+		po.mobileON = user.mobileON;
+		dao.saveOrUpdate(po);
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView get(int id){
 		ModelAndView mv = new ModelAndView();
 		User po = dao.get(User.class, id);

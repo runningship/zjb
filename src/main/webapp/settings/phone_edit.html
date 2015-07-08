@@ -30,7 +30,7 @@ function submits(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/user/update',
+    url: '/c/user/updatemobile',
     data:a,
     mysuccess: function(data){
         art.dialog.close();
