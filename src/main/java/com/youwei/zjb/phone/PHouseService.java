@@ -13,6 +13,7 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -107,6 +108,7 @@ public class PHouseService {
 		}
 		
 		result.put("year", house.dateyear);
+		result.put("beizhu", house.beizhu);
 		mv.data = result;
 		
 		if(userId!=null){
@@ -138,7 +140,7 @@ public class PHouseService {
 		}else{
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng from House h where h.sh=1 ");
+					+ " h.lceng as lceng, h.zceng as zceng from House h where h.seeGX=1 and h.sh=1 ");
 		}
 		if(StringUtils.isNotEmpty(query.search)){
 			hql.append(" and area like ?");
@@ -219,10 +221,9 @@ public class PHouseService {
 		if(query.page!=null){
 			page.setCurrentPageNo(query.page);
 		}
-//		System.out.println(page.currentPageNo);
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
+		System.out.println(hql.toString());
 		mv.data.put("page", JSONHelper.toJSON(page));
-//		mv.returnText = JSONHelper.toJSONArray(page.getResult()).toString();
 		return mv;
 	}
 	

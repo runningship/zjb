@@ -80,6 +80,7 @@ public class SessionFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
+//		req.setCharacterEncoding("utf-8");
 		String path = req.getRequestURI().toString();
 		HttpSession session = req.getSession();
 		String oldSessionId = getClientSid(req);
@@ -102,9 +103,12 @@ public class SessionFilter implements Filter{
 		}
 		if(path.contains("mobile")){
 //			ThreadSession.setCityPY(city);
+			
 			String cityPy = request.getParameter("cityPy");
 			System.out.println(cityPy);
 			ThreadSession.setCityPY(cityPy);
+			request.getCharacterEncoding();
+			
 			chain.doFilter(request, response);
 			return;
 		}

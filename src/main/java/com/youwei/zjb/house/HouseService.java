@@ -385,6 +385,7 @@ public class HouseService {
 		
 		User u = ThreadSessionHelper.getUser();
 		if("all".equals(query.scope)){
+			//TODO 直接h.seeGX=1就可以了吧
 			hql.append(" and (h.cid=? or h.seeGX=?) ");
 			params.add(u.cid);
 			params.add(1);
