@@ -96,10 +96,15 @@ public class GenJinService {
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder(" select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu , "
 				+ "u.uname as uname,d.namea as dname , c.namea as cname from  GenJin gj  ,User u,Department c , Department d where gj.uid=u.id  and d.id=gj.did and d.fid=c.id");
+		
+//		StringBuilder hql = new StringBuilder("select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,")
+//			.append("gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu ,d.dname, d.cname from house_gj gj left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=gj.did")
+//			.append(" where 1=1 ");
+		
 		List<Object> params = new ArrayList<Object>();
 		
 		if(query.houseId!=null){
-			hql.append(" and hid=? ");
+			hql.append(" and gj.hid=? ");
 			params.add(query.houseId);
 		}
 		
@@ -133,7 +138,7 @@ public class GenJinService {
 		
 		hql.append(" order by gj.addtime desc ");
 		page.pageSize=20;
-		page = dao.findPage(page, hql.toString(), true,params.toArray());
+		page = dao.findPageBySql(page, hql.toString(), params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

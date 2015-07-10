@@ -62,9 +62,15 @@ public abstract class AbstractSee extends page{
 				}
 				elem.html(innerHtml);
 			}
-			String hql = "select gj.conts as conts , d.namea as dname , u.uname as uname , gj.addtime as addtime from GenJin gj , User u , "
-					+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
-			List<Map> gjList = dao.listAsMap(hql, Integer.valueOf(id) , getChuzu());
+//			String hql = "select gj.conts as conts , d.namea as dname , u.uname as uname , gj.addtime as addtime from GenJin gj , User u , "
+//					+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
+			
+			String hql="select tt.conts as conts , d.dname , tt.uname , tt.addtime from (select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.did as did,u.uname as uname,"
+					+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu from house_gj gj ,uc_user u "
+					+" where gj.hid = ? and u.id=gj.uid  and gj.chuzu=?) tt "
+					+" left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did";
+			
+			List<Map> gjList = dao.listSqlAsMap(hql.toString(), Integer.valueOf(id) , getChuzu());
 			Elements temp = doc.getElementsByClass("list");
 			buildHtmlWithJsonArray(temp.first() , JSONHelper.toJSONArray(gjList));
 			temp.remove();
