@@ -80,7 +80,7 @@ public class SessionFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
-//		req.setCharacterEncoding("utf-8");
+		req.setCharacterEncoding("utf-8");
 		String path = req.getRequestURI().toString();
 		HttpSession session = req.getSession();
 		String oldSessionId = getClientSid(req);
