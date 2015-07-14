@@ -25,6 +25,7 @@ import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 
 import com.youwei.zjb.sys.CityService;
+import com.youwei.zjb.user.MobileUserDog;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
@@ -116,6 +117,13 @@ public class PService {
 //	}
 	
 	@WebMethod
+	public ModelAndView logout(String tel){
+		ModelAndView mv = new ModelAndView();
+		MobileUserDog.map.remove(tel);
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView login(String cityPy, String tel , String pwd , String deviceId){
 		ModelAndView mv = new ModelAndView();
 		JSONObject obj = new JSONObject();
@@ -165,6 +173,7 @@ public class PService {
 		obj.put("tel", tel);
 		mv.data = obj;
 		
+		MobileUserDog.map.put(tel, deviceId);
 //		pushToOther(tel,deviceId);
 		return mv;
 	}

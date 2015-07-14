@@ -22,7 +22,7 @@ import org.bc.sdak.SimpDaoTool;
 import org.bc.web.ThreadSession;
 
 import com.youwei.zjb.entity.RoleAuthority;
-import com.youwei.zjb.house.entity.HouseOwner;
+import com.youwei.zjb.user.MobileUserDog;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.UserSession;
 import com.youwei.zjb.util.SessionHelper;
@@ -103,12 +103,21 @@ public class SessionFilter implements Filter{
 		}
 		if(path.contains("mobile")){
 //			ThreadSession.setCityPY(city);
-			
 			String cityPy = request.getParameter("cityPy");
 			System.out.println(cityPy);
 			ThreadSession.setCityPY(cityPy);
 			request.getCharacterEncoding();
-			
+			String deviceId = request.getParameter("deviceId");
+			String tel = request.getParameter("tel");
+			if(StringUtils.isNotEmpty(tel)){
+				if(!path.contains("login") && !path.contains("logout")){
+					if(MobileUserDog.loginFromOther(tel, deviceId)){
+						resp.setStatus(400);
+						resp.getWriter().print("loginFromOther");
+						return;
+					}
+				}
+			}
 			chain.doFilter(request, response);
 			return;
 		}
