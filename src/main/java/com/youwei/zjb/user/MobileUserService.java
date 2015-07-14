@@ -12,7 +12,6 @@ import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
-import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import cn.jpush.api.utils.StringUtils;
@@ -29,6 +28,7 @@ public class MobileUserService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
+	private static final String tempId = "25871";
 	CityService cityService = new CityService();
 	@WebMethod
 	public ModelAndView sendVerifyCode(String tel){
@@ -51,7 +51,7 @@ public class MobileUserService {
 		restAPI.init("sandboxapp.cloopen.com", "8883");// 初始化服务器地址和端口，格式如下，服务器地址不需要写https://
 		restAPI.setAccount("8a48b5514d0427c1014d0429646a0002", "78a9ff1208304b949309f117a63f1d9b");// 初始化主帐号名称和主帐号令牌
 		restAPI.setAppId("aaf98f894d328b13014d65d868e1242a");// 初始化应用ID
-		result = restAPI.sendTemplateSMS(tvc.tel,"20588" ,new String[]{tvc.code,"5"});
+		result = restAPI.sendTemplateSMS(tvc.tel,tempId ,new String[]{tvc.code,"5"});
 
 		System.out.println("SDKTestGetSubAccounts result=" + result);
 		if("000000".equals(result.get("statusCode"))){
