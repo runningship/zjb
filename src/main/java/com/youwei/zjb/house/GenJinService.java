@@ -138,7 +138,8 @@ public class GenJinService {
 		
 		hql.append(" order by gj.addtime desc ");
 		page.pageSize=20;
-		page = dao.findPageBySql(page, hql.toString(), params.toArray());
+//		page = dao.findPageBySql(page, hql.toString(), params.toArray());
+		page = dao.findPage(page, hql.toString(), true,params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

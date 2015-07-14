@@ -63,14 +63,14 @@ public class PHouseService {
 			house.tel=house.tel.replace("&nbsp;", "").replace("/", ",").replace(" ", ",");
 			result.put("tel", house.tel);
 		}
-		Department dept = dao.get(Department.class, house.did);
-		Department comp = dao.get(Department.class, house.cid);
+//		Department dept = dao.get(Department.class, house.did);
+//		Department comp = dao.get(Department.class, house.cid);
 		
 		result.put("dateadd", new SimpleDateFormat("yyyy年MM月dd").format(house.dateadd));
-		result.put("dname", dept.namea);
-		result.put("cname", comp.namea);
-		User lxr = dao.get(User.class,house.uid);
-		result.put("uname", lxr.uname);
+//		result.put("dname", dept.namea);
+//		result.put("cname", comp.namea);
+//		User lxr = dao.get(User.class,house.uid);
+//		result.put("uname", lxr.uname);
 		District district = dao.getUniqueByKeyValue(District.class, "name", house.area);
 		if(district!=null){
 			result.put("latitude", district.maplat);
