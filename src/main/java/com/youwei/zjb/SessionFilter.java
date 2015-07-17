@@ -101,7 +101,7 @@ public class SessionFilter implements Filter{
 			chain.doFilter(request, response);
 			return;
 		}
-		if(path.contains("mobile")){
+		if(path.contains("/mobile")){
 //			ThreadSession.setCityPY(city);
 			String cityPy = request.getParameter("cityPy");
 			System.out.println(cityPy);
@@ -110,7 +110,7 @@ public class SessionFilter implements Filter{
 			String deviceId = request.getParameter("deviceId");
 			String tel = request.getParameter("tel");
 			if(StringUtils.isNotEmpty(tel)){
-				if(!path.contains("login") && !path.contains("logout")){
+				if(!path.contains("login") && !path.contains("logout") && !path.contains("sendVerifyCode")){
 					if(MobileUserDog.loginFromOther(tel, deviceId)){
 						resp.setStatus(400);
 						resp.getWriter().print("loginFromOther");
