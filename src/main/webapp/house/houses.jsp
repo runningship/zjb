@@ -237,17 +237,17 @@ $(document).ready(function(){
         return false;
     });
     // tableHover();
-    if(!window.top.hasShowAds){
-      if(${seeAds}){
-        if(window.screen.height<768){
-          art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0,top:50});   
-        }else{
-          art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0}); 
-        }
+//     if(!window.top.hasShowAds){
+//       if(${seeAds}){
+//         if(window.screen.height<768){
+//           art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0,top:50});   
+//         }else{
+//           art.dialog.open("/ad/leshi.html",{id:'ads',width:960,height:615,title:'',lock:true,padding:0}); 
+//         }
         
-        window.top.hasShowAds=true;
-      }
-    }
+//         window.top.hasShowAds=true;
+//       }
+//     }
 	
 	 
 	$(document).bind("contextmenu",function(e){

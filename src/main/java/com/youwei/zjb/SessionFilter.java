@@ -104,13 +104,12 @@ public class SessionFilter implements Filter{
 		if(path.contains("/mobile")){
 //			ThreadSession.setCityPY(city);
 			String cityPy = request.getParameter("cityPy");
-			System.out.println(cityPy);
 			ThreadSession.setCityPY(cityPy);
 			request.getCharacterEncoding();
 			String deviceId = request.getParameter("deviceId");
 			String tel = request.getParameter("tel");
 			if(StringUtils.isNotEmpty(tel)){
-				if(!path.contains("login") && !path.contains("logout") && !path.contains("sendVerifyCode")){
+				if(!path.contains("login") && !path.contains("logout") && !path.contains("sendVerifyCode") && !path.contains("verifyCode")){
 					if(MobileUserDog.loginFromOther(tel, deviceId)){
 						resp.setStatus(400);
 						resp.getWriter().print("loginFromOther");
