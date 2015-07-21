@@ -106,6 +106,8 @@ public class User {
 	//手机版过期时间
 	public Date mobileDeadtime;
 	
+	public Date lastPaytime;
+	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}

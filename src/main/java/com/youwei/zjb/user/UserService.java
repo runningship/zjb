@@ -323,7 +323,7 @@ public class UserService {
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel, u.lasttime as lasttime, u.addtime as addtime ,u.mobileDeadtime as endtime,u.mobileON as mobileON  "
+		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel, u.lasttime as lasttime, u.lastPaytime as lastPaytime ,u.addtime as addtime ,u.mobileDeadtime as endtime,u.mobileON as mobileON  "
 				+ "from User  u  where u.tel is not null and u.tel <> '' ");
 		if(StringUtils.isNotEmpty(query.tel)){
 			query.tel = query.tel.trim();

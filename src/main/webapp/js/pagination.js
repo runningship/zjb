@@ -145,8 +145,8 @@ var Page={
     },
     Init:function(){
       $('form[name=form1]').append('<input type="hidden" class="pageInput" name="currentPageNo" value="">');
-      $('form[name=form1]').append('<input type="hidden" name="orderBy" value="">');
-      $('form[name=form1]').append('<input type="hidden" name="order" value="">');
+      //$('form[name=form1]').append('<input type="hidden" name="orderBy" value="">');
+      //$('form[name=form1]').append('<input type="hidden" name="order" value="">');
       $(document).on('click', '.btn_p_prev_no', function(event) {
         $('.pageInput').val(1);
         if($('.btn_subnmit').length>0){$('.btn_subnmit').click();}else{$('form[name=form1]').submit();}

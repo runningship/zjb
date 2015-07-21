@@ -218,6 +218,7 @@ public class PService {
 				user.mobileDeadtime = cal.getTime();
 			}
 		}
+		user.lastPaytime = new Date();
 		dao.saveOrUpdate(user);
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 		mv.data.put("fufei", "1");

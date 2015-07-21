@@ -66,9 +66,13 @@ function SeeCharge(id){
   art.dialog.open('/v/settings/phone_ChargeList.html?id='+id)
 }
 
+function setOrderField(field){
+	$('#orderBy').val(field);
+	doSearch(1);
+}
 $(document).ready(function() {
   Page.Init();
-  doSearch();
+  doSearch(1);
     $.get('menuTop.html', function(data) {
         $('#menuTop').html(data);
         //设置拖动栏
@@ -91,6 +95,8 @@ $(window).resize(function() {      //类别
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
     <input type="hidden" class="hidden" name="pageInput" value="">
+    <input type="hidden" class="hidden" name="order" value="desc">
+    <input type="hidden" class="hidden" name="orderBy" id="orderBy" value="u.lastPaytime">
     <div class="form-group clearfix">
         <div class="input-group input-group-max" style="width:200px;">
           <span class="input-group-addon">电话号码</span>
@@ -105,7 +111,7 @@ $(window).resize(function() {      //类别
         </select>
       </div>
       <div class="btn-group">
-          <button type="button" class="btn btn-primary " onclick="doSearch();">搜索</button>
+          <button type="button" class="btn btn-primary " onclick="doSearch(1);">搜索</button>
       </div>
     </div>
   </form>
@@ -115,7 +121,8 @@ $(window).resize(function() {      //类别
       <th>电话号码</th>
       <th>姓名</th>
       <th>注册时间</th>
-      <th style="width:80px">到期时间</th>
+      <th style="width:80px;cursor:pointer;" onclick="setOrderField('mobileDeadtime')">到期时间</th>
+      <th style="width:100px;cursor:pointer;" onclick="setOrderField('lastPaytime')">最近付费时间</th>
       <th>操作</th>
     </tr>
   </table>
@@ -130,7 +137,8 @@ $(window).resize(function() {      //类别
             <td>$[tel]</td>
             <td>$[uname]</td>
             <td>$[addtime]</td>
-            <td style="width:80px">$[endtime]</td>
+            <td style="width:80px;">$[endtime]</td>
+            <td style="width:100px;">$[lastPaytime]</td>
             <td><span class="btn-group null-float">
               <a href="javascript:void(0)" auth="sz_user_edit" class="btns btn btn-xs btn-primary" data-type="edit" onclick="uc_edit($[uid])">编辑</a>
               <a href="javascript:void(0)" auth="sz_user_del" class="btns btn btn-xs btn-danger" data-type="del" onclick="SeeCharge($[uid])">充值查看</a>
