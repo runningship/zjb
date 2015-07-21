@@ -238,12 +238,12 @@ $(document).ready(function(){
     // tableHover();
     if(!window.top.hasShowAds){
       if($${seeAds}){
-        if(window.screen.height<768){
-          art.dialog.open("/ad/leshi.html",{id:'ads',width:406,height:406,title:'',lock:true,padding:0,top:50});   
-        }else{
-          art.dialog.open("/ad/leshi.html",{id:'ads',width:406,height:406,title:'',lock:true,padding:0}); 
-        }
-        
+//         if(window.screen.height<768){
+//           art.dialog.open("/ad/leshi.html",{id:'ads',width:406,height:406,title:'',lock:true,padding:0,top:50});   
+//         }else{
+//           art.dialog.open("/ad/leshi.html",{id:'ads',width:406,height:406,title:'',lock:true,padding:0}); 
+//         }
+        $('#ad_container').show();
         window.top.hasShowAds=true;
       }
     }
@@ -296,6 +296,10 @@ function openGongGao(){
 .GaB a{ display:block; width:100%; float:left; padding:8px 0; color:#05684c; font-family:"宋体"; text-align:center; border-bottom:1px solid #cccccc; font-size:12px;}
 .GaB a:hover{ background-color:#05684c; color:#ffffff;}
 .GaB a span{ margin:0 15px;}
+
+  .ad{position: absolute; display: block; top: 25%; text-align: center; width: 100%; overflow: hidden;}
+    .ad .ad_box{ position: relative; display: inline-block;}
+    .ad .ad_close{ position: absolute; top: 10px; right: 10px; z-index: 10; color: #FFF;}
 </style>
 </head>
 
@@ -560,5 +564,6 @@ function openGongGao(){
 
 </div>
 
+<div id="ad_container" style="display:none"  class="ad"><div class="ad_box"><img src="/ad/img/zjb/1.jpg" alt=""><a href="" onclick="$('.ad').remove(); return false;" class="ad_close">close</a></div></div>
 </body>
 </html>
