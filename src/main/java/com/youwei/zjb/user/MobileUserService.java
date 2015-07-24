@@ -28,7 +28,7 @@ public class MobileUserService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
-	private static final String tempId = "25871";
+	private static final String tempId = "27067";
 	CityService cityService = new CityService();
 	@WebMethod
 	public ModelAndView sendVerifyCode(String tel){

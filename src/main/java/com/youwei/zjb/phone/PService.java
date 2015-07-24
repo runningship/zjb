@@ -14,6 +14,7 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -229,6 +230,7 @@ public class PService {
 	@WebMethod
 	public ModelAndView alipayCallback(Integer userId){
 		ModelAndView mv = new ModelAndView();
+		LogUtil.info("收到支付宝回调");
 		return mv;
 	}
 	
