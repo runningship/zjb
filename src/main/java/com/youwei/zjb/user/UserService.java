@@ -238,6 +238,10 @@ public class UserService {
 		if(dept==null){
 			throw new GException(PlatformExceptionType.BusinessException, "没有指定用户所属公司");
 		}
+		User po = dao.getUniqueByKeyValue(User.class, "tel", user.tel);
+		if(po!=null){
+			throw new GException(PlatformExceptionType.BusinessException, "手机号码已经存在");
+		}
 		user.addtime = new Date();
 		user.flag = 1;
 		user.sh = 1;
