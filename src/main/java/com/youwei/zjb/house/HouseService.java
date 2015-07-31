@@ -38,6 +38,7 @@ import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
+import com.youwei.zjb.util.LngAndLatUtil;
 
 @Module(name="/house/")
 public class HouseService {
@@ -153,6 +154,9 @@ public class HouseService {
 			d.pinyin=DataHelper.toPinyin(d.name);
 			d.pyShort=DataHelper.toPinyinShort(d.name);
 			d.sh=0;
+			Map<String,Double> map = LngAndLatUtil.getLngAndLat(d.name);
+			d.maplat = map.get("lat").floatValue();
+			d.maplng = map.get("lng").floatValue();
 			dao.saveOrUpdate(d);
 		}
 	}
