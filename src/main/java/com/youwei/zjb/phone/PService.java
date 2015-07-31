@@ -172,6 +172,7 @@ public class PService {
 		}
 		obj.put("uname", user.uname);
 		obj.put("tel", tel);
+//		obj.put("payWay", "offline");
 		mv.data = obj;
 		
 		MobileUserDog.map.put(tel, deviceId);
