@@ -357,6 +357,9 @@ function get1Html(url){
 	if(!url){
 		return;
 	}
+	if(url.indexOf('ershoufang')<0){
+        return;
+    }
     $$.ajax({url: url,
         type: 'GET',
         dataType: 'html',
