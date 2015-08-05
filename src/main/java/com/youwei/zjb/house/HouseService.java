@@ -25,6 +25,7 @@ import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
@@ -154,7 +155,7 @@ public class HouseService {
 			d.pinyin=DataHelper.toPinyin(d.name);
 			d.pyShort=DataHelper.toPinyinShort(d.name);
 			d.sh=0;
-			Map<String,Double> map = LngAndLatUtil.getLngAndLat(d.name);
+			Map<String,Double> map = LngAndLatUtil.getLngAndLat(d.name,ThreadSession.getCityPY());
 			d.maplat = map.get("lat").floatValue();
 			d.maplng = map.get("lng").floatValue();
 			dao.saveOrUpdate(d);
