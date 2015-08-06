@@ -34,8 +34,8 @@ public class IMServer extends WebSocketServer{
 
 	private static IMServer instance =null;
 //	static Map<Integer,WebSocket> pool = new HashMap<Integer,WebSocket>();
-	static Map<String,Map<Integer,WebSocket>> conns = new HashMap<String,Map<Integer,WebSocket>>();
-	static Map<String,WebSocket> mobiles = new HashMap<String,WebSocket>();
+	public static Map<String,Map<Integer,WebSocket>> conns = new HashMap<String,Map<Integer,WebSocket>>();
+	public static Map<String,WebSocket> mobiles = new HashMap<String,WebSocket>();
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 //	private static InetSocketAddress socket = new InetSocketAddress("localhost", 9099); 
 	private AssistantService assistantService = new AssistantService();

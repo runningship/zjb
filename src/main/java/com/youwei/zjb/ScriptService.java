@@ -14,6 +14,8 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.im.IMServer;
+
 @Module(name="/script")
 public class ScriptService {
 
@@ -33,6 +35,7 @@ public class ScriptService {
 				throw new RuntimeException("java.io is forbiden,user sys.io instead");
 			}
 			result = engine.eval(scripts);
+			mv.data.put("data", result.toString());
 		}catch (ScriptException e) {
 			throw new RuntimeException(e);
 		}
