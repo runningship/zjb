@@ -113,6 +113,10 @@ YW={
             // $('#loading').remove();
         },
         error: function(data){
+        	if(data.statusText=='timeout'){
+        		alert('网络超时,请重试...');
+        		return;
+        	}
             if(data.status==500){
                 alert('操作不成功，请联系管理员.');
             }else if(data.status==400){
@@ -174,6 +178,7 @@ YW={
             	options.mysuccess(data);
             };
         }
+        options.timeout=10000,
         $.ajax(options);
     }
 }

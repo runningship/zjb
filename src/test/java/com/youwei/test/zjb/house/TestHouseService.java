@@ -1,7 +1,13 @@
 package com.youwei.test.zjb.house;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.bc.sdak.Page;
 import org.bc.sdak.utils.BeanUtil;
 import org.bc.web.ModelAndView;
@@ -156,5 +162,18 @@ public class TestHouseService {
 		for(House house : houses){
 			System.out.println(BeanUtil.toString(house));
 		}
+	}
+	
+	@Test
+	public void testUserAgent() throws IOException{
+		URL url = new URL("http://m.58.com/hf/ershoufang/22571195901470x.shtml?adtype=1&entinfo=22571195901470_0&psid=121857892188567320687039891&ClickID=2&PGTID=121857892188567320687039891&ad_id=152233426518080");
+		URLConnection conn = url.openConnection();
+		conn.addRequestProperty("User-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3");
+		conn.setDefaultUseCaches(false);
+		conn.setUseCaches(false);
+		conn.setConnectTimeout(10000);
+		conn.setReadTimeout(10000);
+		String result = IOUtils.toString(conn.getInputStream(),"utf8");
+		System.out.println(result);
 	}
 }

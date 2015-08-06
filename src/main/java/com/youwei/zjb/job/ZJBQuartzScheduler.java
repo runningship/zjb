@@ -8,7 +8,6 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-import com.youwei.test.zjb.quartz.TestJob;
 import com.youwei.zjb.StartUpListener;
 
 public class ZJBQuartzScheduler {

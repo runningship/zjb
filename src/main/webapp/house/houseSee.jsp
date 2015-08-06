@@ -278,7 +278,7 @@ $('#area').on('click',function(){
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
                 <tr>
                   <td class="biaoti">面积：</td>
-                  <td class="neirong TextColor1"><span style=" color:#F00; font-weight:bold;">${house.mji}</span> 平方 </td>
+                  <td class="neirong TextColor1"><span style=" color:#F00; font-weight:bold;">${house.mji}</span>㎡</td>
                 </tr>
               </table>
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">

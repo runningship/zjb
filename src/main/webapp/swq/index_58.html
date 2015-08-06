@@ -112,9 +112,11 @@ function getIsHtml(obj,callback){
     // console.log(obj.find("td.t a.t").text());
     var titles=obj.find("td.t a.t").text(),
         urls=obj.find("td.t a.t").attr('href');
-        if (urls==undefined) {
-            console.log('href is undefined');
-        };
+        if (urls) {
+            urls = urls.split('?psid=')[0];
+        }else{
+            console.log(urls + title);
+        }
     addList($('#list_yes'),urls,titles);
     list_this_err_num=0;
     // win.focus();
@@ -129,6 +131,12 @@ function isListTree(obj,num){
     listboxUrl,
     isUrlTree=0;
     var title=$$obj.find("td.t a.t").text();
+        if (urls) {
+            urls = urls.split('?psid=')[0];
+        }else{
+            console.log(urls + title);
+        }
+        
     // console.log(title);
     if(listbox.children('li').length>0){
         listbox.children('li').each(function(index, el) {
@@ -213,11 +221,15 @@ function getHtml(){
     iconum_ding=0;
     iconum_tui=0;
 
-    $$.ajax({url: sys_url+'?t='+new Date().getTime(),
+    $$.ajax({url: sys_url,
         type: 'GET',
         dataType: 'html',
         data: {},
         cache:false,
+        headers: {
+          'Cache-Control':'no-cache',
+          'Pragma':'no-cache'
+        },
         timeout:5000,
         beforeSend: function(){},
         success: function(data){
@@ -372,8 +384,16 @@ function get1Html(url){
             if(html.indexOf('您访问的页面居然不存在')>-1||html.indexOf('该页面可能被删除')>-1){
                 // setTimeout(function(){get1Html(url)},3000);
                 console.log('打开详细页面失败');
-            }else{
-                
+            }else if(html.indexOf('输入验证码')>-1){
+                    window.top.gui.Shell.openExternal(url);
+                    win.show();
+                    // show=true;
+                    win.setShowInTaskbar(true);
+                    $('#setAlwaysOnTop').attr('checked','checked');
+                    win.setAlwaysOnTop(true);
+                    win.title = "58:输入验证码";
+                    console.log('58需要输入验证码...');
+                    return;
             }
             getDetailPageSuccess(html,url);
         },
