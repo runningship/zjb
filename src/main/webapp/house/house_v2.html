@@ -5,6 +5,7 @@
 <title>房源</title>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 <link rel="stylesheet" type="text/css" href="/style/font/iconfont.css" />
+<link href="/style/animate.min.css" rel="stylesheet">
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
@@ -200,6 +201,16 @@ function updateHouse(id,data){
   $(k).html(json['house']['dateadd']);
 }
 
+    $(document).on('click', '.adboxs', function(event) {
+        var Thi=$(this),
+        ThiImg=Thi.find('img');
+            ThiImg.removeClass('fadeInDown').addClass('fadeOutUp');
+        var tms=setTimeout(function(){
+            Thi.remove();
+        },700);
+        event.preventDefault();
+    });
+
 $(document).ready(function(){
 	initTopMenu();
 	autoComplete($('#search'));
@@ -297,9 +308,8 @@ function openGongGao(){
 .GaB a:hover{ background-color:#05684c; color:#ffffff;}
 .GaB a span{ margin:0 15px;}
 
-  .ad{position: absolute; display: block; top: 25%; text-align: center; width: 100%; overflow: hidden;}
-    .ad .ad_box{ position: relative; display: inline-block;}
-    .ad .ad_close{ position: absolute; top: 10px; right: 10px; z-index: 10; color: #FFF;}
+.adboxs { position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center;}
+.adboxs .adboxitem{ margin:10% auto 0;}
 </style>
 </head>
 
@@ -564,6 +574,10 @@ function openGongGao(){
 
 </div>
 
-<div id="ad_container" style="display:none"  class="ad"><div class="ad_box"><img src="/ad/img/zjb/1.jpg" alt=""><a href="" onclick="$('.ad').remove(); return false;" class="ad_close">close</a></div></div>
+<div id="ad_container" style="display:none" class="adboxs">
+    <div class="adboxitem">
+        <img src="/ad/img/zjb/ad_6year.jpg" alt="" class=" animated fadeInDown">
+    </div>
+</div>
 </body>
 </html>
