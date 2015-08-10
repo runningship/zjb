@@ -86,23 +86,23 @@ public class HouseOwnerService {
 			System.out.println("错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
 		}
 		dao.saveOrUpdate(tvc);
-		HouseOwner owner = dao.getUniqueByKeyValue(HouseOwner.class, "tel", tel);
-		if(owner == null){
-			owner = new HouseOwner();
-			owner.tel = tel;
-			owner.sh=0;
-		}
-		owner.verified = 0;
+//		HouseOwner owner = dao.getUniqueByKeyValue(HouseOwner.class, "tel", tel);
+//		if(owner == null){
+//			owner = new HouseOwner();
+//			owner.tel = tel;
+//			owner.sh=0;
+//		}
+//		owner.verified = 0;
 //		owner.pwd = SecurityHelper.Md5(pwd);
-		dao.saveOrUpdate(owner);
+//		dao.saveOrUpdate(owner);
 		
 		return mv;
 	}
 	
 	@WebMethod
 	public ModelAndView exist(String area, String dhao , String fhao , String seeGX){
-		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
-		ThreadSession.setCityPY(cityPy);
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
 		return houseService.exist(area, dhao, fhao, seeGX);
 	}
 	@WebMethod
@@ -113,13 +113,13 @@ public class HouseOwnerService {
 			return mv;
 		}
 		
-		String city = ThreadSessionHelper.getHouseOwnerCity();
+		String city = ThreadSessionHelper.getHouseOwnerCity(ThreadSession.HttpServletRequest.get());
 		if(StringUtils.isEmpty(city)){
 			mv.redirect="citys.jsp";
 			return mv;
 		}
 		
-		ThreadSession.setCityPY(city);
+//		ThreadSession.setCityPY(city);
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		List<House> houses = dao.listByParams(House.class, "from House where seeGX=1 and tel like ? and isdel<> 1 ", "%"+owner.tel+"%");
 		mv.jspData.put("houses", houses);
@@ -137,12 +137,6 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView setCity(String city){
 		ModelAndView mv = new ModelAndView();
-		HouseOwner owner = (HouseOwner) ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
-		owner.city = city;
-		ThreadSession.setCityPY("hefei");
-		HouseOwner po = dao.get(HouseOwner.class, owner.id);
-		po.city = city;
-		dao.saveOrUpdate(po);
 		return mv;
 	}
 	
@@ -154,7 +148,7 @@ public class HouseOwnerService {
 			return mv;
 		}
 		
-		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity(ThreadSession.HttpServletRequest.get());
 		if(StringUtils.isEmpty(cityPy)){
 			mv.redirect="citys.jsp";
 			return mv;
@@ -189,13 +183,13 @@ public class HouseOwnerService {
 			return mv;
 		}
 		
-		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+		String cityPy = ThreadSessionHelper.getHouseOwnerCity(ThreadSession.HttpServletRequest.get());
 		if(StringUtils.isEmpty(cityPy)){
 			mv.redirect="citys.jsp";
 			return mv;
 		}
 		
-		ThreadSession.setCityPY(cityPy);
+//		ThreadSession.setCityPY(cityPy);
 		House po = dao.get(House.class, id);
 		if(po!=null){
 			mv.jspData.put("house", po);
@@ -228,7 +222,8 @@ public class HouseOwnerService {
 	public ModelAndView doLogin(String tel , String pwd){
 		ModelAndView mv = new ModelAndView();
 		pwd = SecurityHelper.Md5(pwd);
-		ThreadSession.setCityPY("hefei");
+//		ThreadSession.setCityPY("hefei");
+		ThreadSession.getCityPY();
 		HouseOwner po = dao.getUniqueByParams(HouseOwner.class, new String[]{"tel" , "pwd"}, new Object[]{tel , pwd});
 		if(po==null){
 			throw new GException(PlatformExceptionType.BusinessException,"账号或密码不正确");
@@ -277,6 +272,7 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView verifyCode(String tel , String code , String pwd){
+		String cityPy = ThreadSession.getCityPY();
 		//发送验证码，验证，登录操作都在主库中进行
 		ThreadSession.setCityPY("hefei");
 		ModelAndView mv = new ModelAndView();
@@ -285,13 +281,23 @@ public class HouseOwnerService {
 			//验证码不正确
 			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
 		}
-		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
-			//验证码已经过期
-			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
-		}
+//		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+//			//验证码已经过期
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+//		}
+		
+		//房主的操作在各自城市库中进行
+		ThreadSession.setCityPY(cityPy);
 		HouseOwner owner  = dao.getUniqueByKeyValue(HouseOwner.class,"tel", tel);
-		owner.verified = 1;
-		owner.pwd = SecurityHelper.Md5(pwd);
+		if(owner!=null){
+			owner.pwd = SecurityHelper.Md5(pwd);
+		}else{
+			owner = new HouseOwner();
+			owner.tel = tel;
+			owner.pwd = SecurityHelper.Md5(pwd);
+			owner.sh = 0;
+			owner.verified = 0;
+		}
 		dao.saveOrUpdate(owner);
 		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, owner);
 		return mv;
@@ -300,8 +306,8 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView editHouse(Integer id){
 		ModelAndView mv = new ModelAndView();
-		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
-		ThreadSession.setCityPY(cityPy);
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
 		House po = dao.get(House.class, id);
 		if(po==null){
 			//房源信息不存在
@@ -312,8 +318,8 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView deleteHouse(Integer id){
-		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
-		ThreadSession.setCityPY(cityPy);
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
 		ModelAndView mv = new ModelAndView();
 		House po = dao.get(House.class, id);
 		if(po==null){
@@ -326,8 +332,8 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView addHouse(House house , String hxing){
-		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
-		ThreadSession.setCityPY(cityPy);
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		ModelAndView mv = new ModelAndView();
 		validte(house);
@@ -373,8 +379,8 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView updateHouse(House house , String hxing){
 		validte(house);
-		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
-		ThreadSession.setCityPY(cityPy);
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
 		ModelAndView mv = new ModelAndView();
 		House po = dao.get(House.class, house.id);
 		po.area = house.area;

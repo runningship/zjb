@@ -80,6 +80,7 @@ public class SessionFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
+		ThreadSession.HttpServletRequest.set(req);
 		req.setCharacterEncoding("utf-8");
 		String path = req.getRequestURI().toString();
 		HttpSession session = req.getSession();
@@ -98,6 +99,8 @@ public class SessionFilter implements Filter{
 			return;
 		}
 		if(path.contains("houseOwner")){
+			String cityPy = ThreadSessionHelper.getHouseOwnerCity(req);
+			ThreadSession.setCityPY(cityPy);
 			chain.doFilter(request, response);
 			return;
 		}

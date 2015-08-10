@@ -106,47 +106,58 @@ YW={
             // $('#loading').remove();
         },
         error: function(data){
-            if(data.status==500){
-                alert('操作不成功，请联系管理员.');
-            }else if(data.status==400){
-                json = JSON.parse(data.responseText);
-                if(json.type=='ParameterMissingError'){
-                    var field = json.field;
-                    var arr = $('[name="'+field+'"]');
-                    var desc;
-                    if(arr!=null && arr.length>0){
-                        desc = $(arr[0]).attr('desc');
-                    }
-                    if(desc==undefined){
-                        desc = field;
-                    }
-                    $(arr[0]).focus();
-                    alert("请先填写 "+ desc);
-
-                }else if(json.type=='ParameterTypeError'){
-                    var field = json.field;
-                    var arr = $('[name="'+field+'"]');
-                    var desc;
-                    if(arr!=null && arr.length>0){
-                        desc = $(arr[0]).attr('desc');
-                    }
-                    if(desc==undefined){
-                        desc = field;
-                    }
-                    $(arr[0]).focus();
-                    alert(desc+json.msg);
-                }else{
-                    alert(json['msg']);   
-                }
-                
-            }else if(data.status!=0){
-//            	alert(data.status);
-                alert('请求服务失败，请稍后重试');
-            }
+           
         },
-        success:function(data){
+        success:function(data , mysuccess){
         	if(data.responseText!=undefined && data.responseText.indexOf('relogin')!=-1){
-        		window.parent.location='/login/index.html';
+                eval(data);
+        		return;
+        	}else{
+        		var json;
+        		if(typeof(data)=='string'){
+        			json = JSON.parse(data);
+        		}else{
+        			json = data;
+        		}
+        		if(json.return_status==302){
+                    alert('操作不成功，请联系管理员.');
+                }else if(json.return_status==303){
+                    if(json.type=='ParameterMissingError'){
+                        var field = json.field;
+                        var arr = $('[name="'+field+'"]');
+                        var desc;
+                        if(arr!=null && arr.length>0){
+                            desc = $(arr[0]).attr('desc');
+                        }
+                        if(desc==undefined){
+                            desc = field;
+                        }
+                        $(arr[0]).focus();
+                        alert("请先填写 "+ desc);
+
+                    }else if(json.type=='ParameterTypeError'){
+                        var field = json.field;
+                        var arr = $('[name="'+field+'"]');
+                        var desc;
+                        if(arr!=null && arr.length>0){
+                            desc = $(arr[0]).attr('desc');
+                        }
+                        if(desc==undefined){
+                            desc = field;
+                        }
+                        $(arr[0]).focus();
+                        alert(desc+json.msg);
+                    }else{
+                        alert(json['msg']);   
+                    }
+                    
+                }else if(data.return_status){
+                    alert('请求服务失败，请稍后重试');
+                }else{
+                	if(mysuccess!=undefined){
+                		mysuccess(json);
+                	}
+                }
         	}
         }
     },
@@ -163,8 +174,7 @@ YW={
         
         if(options.mysuccess!=undefined){
             options.success = function(data){
-            	YW.options.success(data);
-            	options.mysuccess(data);
+            	YW.options.success(data , options.mysuccess);
             };
         }
         $.ajax(options);
@@ -176,181 +186,6 @@ function fillData(data){
     $(obj).val(data[$(obj).attr('name')]);
   });
 }
-
-//读取
-function loadConfigAsJSON(){
-
-    var fs;
-    try{
-        fs=require("fs");    
-    }catch(e){
-        return JSON.parse("{}");
-    }
-    if(!fs.existsSync("config.data")){
-        fs.writeFileSync("config.data", "{}", 'utf8')
-    }
-    var data=fs.readFileSync("config.data","utf-8");
-    var json;
-    try{
-        json = JSON.parse(data);
-    }catch(e){
-        console.error("load config.data faild,"+e);
-        json = JSON.parse("{}");
-    }
-    return json;
-}
-//写入
-function writeConfig(json){
-    var fs = require("fs");
-    fs.writeFileSync("config.data", JSON.stringify(json), 'utf8')
-}
-//写入
-function putConfig(key, val){
-    var json = loadConfigAsJSON();
-    json[key] = val;
-    writeConfig(json);
-}
-
-var fileName = 'C:\\Windows\\System32\\zjb.lic';
-//var fileName = 'C:\\zjb.lic';
-function readLic(){
-    var fs=require("fs");
-    if(fs.existsSync(fileName)){
-        var data=fs.readFileSync(fileName,"utf-8");
-        var createTime = getFileCreateTime(fileName);
-        var json = JSON.parse('{}');
-        json.licCreateTime=createTime;
-        json.lic = data;
-        return json;
-    }else{
-        //重新授权
-        return undefined;
-    }
-}
-
-function createLic(){
-    var fs=require("fs");
-    fs.writeFileSync(fileName, "", 'utf8');
-    return getFileCreateTime(fileName);
-}
-function setLic(lic){
-    var fs=require("fs");
-    fs.writeFileSync(fileName, lic, 'utf8');
-}
-function getFileCreateTime(file){
-    var fs=require("fs");
-    var stat = fs.statSync(file);
-    var xx = stat.atime.getTime(); 
-    return Math.round(xx/1000)*1000;
-}
-
-//添加
-function appendConfig(key, val){
-    var json = loadConfigAsJSON();
-    var arr = json[key];
-    if(arr==undefined){
-        arr=[];
-        json[key]=arr;
-    }
-    if(arr.indexOf(val)==-1){
-        arr.push(val);
-    }else{
-        arr.splice(arr.indexOf(val),1)
-        arr.push(val);
-    }
-
-    writeConfig(json);
-}
-
-function readFile(file){
-    var fs=require("fs");
-    return fs.readFileSync(file,"utf-8");
-}
-try{
-    var lastErrMsg="";
-    process.on("uncaughtException", function(e) {
-        if(lastErrMsg != e.message){
-            console.log(lastErrMsg+"="+e.message);
-            reportError(e.stack);
-            lastErrMsg=e.message;
-        }else{
-            console.log(e);
-        }
-    }); 
-}catch(e){
-
-}
-
-function reportError(stack){
-    $.ajax({
-        type: 'post',
-        url: '/c/feedback/reportError',
-        data:'host='+document.location.hostname+'&stack='+stack,
-        success: function(data){
-        }
-    });
-}
-
-function addQueryStr(type){
-  var str="";
-  $('input[name="'+type+'"]').each(function(index,obj){
-    if(obj.checked){
-      if(str==""){
-          str+=$(obj).attr('text');
-      }else{
-        str+='、'+$(obj).attr('text');
-      }
-    }
-  });
-  $('#query_str').find('li[name="'+type+'"]').remove();
-  if(str!=""){
-    var xx = '<li name="'+type+'">'+str+'<i onclick="deleteQuery(this)"></i></li>';
-    $('#query_str').find('span').append(xx);
-  }
-}
-
-function deleteQuery(delIcon){
-  $(delIcon).parent().remove();
-  var name = $(delIcon).parent().attr('name');
-  $('input[name="'+name+'"]').attr('checked',false);
-  try{
-    $('input[name="'+name+'"][type="radio"]')[0].checked='checked';
-  }catch(e){
-
-  }
-  
-}
-
-function ChangeW(){
-    // var h = $(window).height();
-    // $(window.top.document).find('#iframeBox').height(h+40);
-  var w = $(window).width();
-  w = w - 267;
-  
-  $("#FY_RCon").width(w);
-  // $("#FY_RCon").css('margin-top','5px');
-  $("#FY_RTit").width(w);
-  $("#KY_TableMain").width(w);
-  $("#FY_TableTit").width(w);
-  $("#pageMwidth").width(w);
-
-  //设置拖动栏
-  try{
-    var doc = $(window.top.selectedFrame[0].contentDocument);
-    var menuTopW = doc.find('#menuTop').width();
-    var bodyW = $(window.top.document).width()-50;
-    var dragbar = $(window.top.document).find('#dragbar');
-    dragbar.width(bodyW-menuTopW-200);
-    dragbar.css('margin-right' , '200px')
-  }catch(e){
-    console.log('set drag bar width fail,'+e);
-  }
-}
-window.onresize = function(){
-  ChangeW();
-}
-
-
 
 
 

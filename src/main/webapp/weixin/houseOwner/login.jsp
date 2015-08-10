@@ -14,7 +14,7 @@
 <script src="js/layer.m/layer.m.js"></script>
 <script src="js/login.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
-<!-- <script type="text/javascript" src="js/buildHtml.js"></script> -->
+<script type="text/javascript" src="js/buildHtml.js"></script>
 <script type="text/javascript">
 </script>
 </head>
@@ -26,6 +26,10 @@
         </div>
         <div class="item write">
             <input type="password" class="text" name="pwd" id="pwd" value="" placeholder="密码">
+        </div>
+        <div class="item write">
+            <input type="text" class="text btn_act" name="city" id="city"  data-type="city" value="" readonly="readonly" placeholder="城市">
+            <input type="hidden"  name="cityPy" id="cityPy"/>
         </div>
         <div class="item tipbox hide">
             <div class="cRed"><b>错误提示等</b></div>

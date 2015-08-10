@@ -176,7 +176,6 @@ function delCookie(name)
     }
 }
 function clearCookie(){
-	delCookie("city");
 	delCookie("tel");
 	//delCookie("house_owner_city");
 }
@@ -236,7 +235,7 @@ function quit(){
 </div>
 <div class="fMenuBox" id="caidan">
     <ul>
-        <li><a href="citys.jsp">${city }[切换]</a></li>
+<%--         <li><a href="citys.jsp">${city }[切换]</a></li> --%>
         <li><a href="#" class="btn_act" data-type="loginput">退出</a></li>
     </ul>
 </div>

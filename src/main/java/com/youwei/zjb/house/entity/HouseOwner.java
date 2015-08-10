@@ -27,5 +27,5 @@ public class HouseOwner {
 	
 	public Integer sh;
 	
-	public String city;
+//	public String city;
 }

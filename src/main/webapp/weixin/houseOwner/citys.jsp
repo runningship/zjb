@@ -19,19 +19,23 @@
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/buildHtml.js"></script>
 <script>
-function setCity(cityPy){
-     YW.ajax({
-        type: 'POST',
-        url: '/c/weixin/houseOwner/setCity?city='+cityPy,
-        mysuccess: function(data){
-        	//document.cookie = "house_owner_city=" + cityPy + ";expires=" + exp.toGMTString();
-       		if(document.cookie.indexOf('tel')>-1){
-           		window.location="houses.jsp";
-           	}else{
-           		window.location="login.jsp";
-           	}	
-        }
-     });
+function setCity(cityPy , city){
+//      YW.ajax({
+//         type: 'POST',
+//         url: '/c/weixin/houseOwner/setCity?city='+cityPy,
+//         mysuccess: function(data){
+//         	document.cookie = "city=" + cityPy + ";expires=" + exp.toGMTString();
+//        		if(document.cookie.indexOf('tel')>-1){
+//            		window.location="houses.jsp";
+//            	}else{
+//            		window.location="login.jsp";
+//            	}	
+//         }
+//      });
+
+		document.cookie = "cityPy=" + cityPy + ";";
+		document.cookie = "city=" + city + ";";
+		window.location="login.jsp";
 }
 $(function(){
 });
@@ -43,7 +47,7 @@ $(function(){
         <ul class="item ul_list">
         <c:forEach items="${citys}" var="city">
         	<c:if test="${city.status eq 'on' }">
-        		<li onclick="setCity('${city.py}')">
+        		<li onclick="setCity('${city.py}', '${city.name }')">
 	                <div class="ibox">
 	                    <span class="hname">${city.name }</span>
 	                </div>

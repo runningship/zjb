@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>org.bc</groupId>
 			<artifactId>sdak</artifactId>
-			<version>0.0.1</version>
+			<version>makesite1.0</version>
 		</dependency>
 		
 		<dependency>

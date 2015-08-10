@@ -14,7 +14,7 @@
 <script src="js/layer.m/layer.m.js"></script>
 <script src="js/reg.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
-<!-- <script type="text/javascript" src="js/buildHtml.js"></script> -->
+<script type="text/javascript" src="js/buildHtml.js"></script>
 </head>
 <body>
 <div class="body wx addtel">
@@ -28,6 +28,10 @@
         <div class="item write">
             <input type="number" class="text w60b" name="code" id="code" value="" placeholder="验证码">
             <a href="#" class="btn blue w40b btn_act getcode " data-type="getcode">获取验证码</a>
+        </div>
+        <div class="item write">
+            <input type="text" class="text btn_act" name="city" id="city"  data-type="city" value="" readonly="readonly" placeholder="城市">
+            <input type="hidden"  name="cityPy" id="cityPy"/>
         </div>
         <div class="item tipbox hide">
             <div class="cRed"><b>错误提示等</b></div>

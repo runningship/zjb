@@ -1,5 +1,7 @@
 package com.youwei.zjb;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -49,26 +51,29 @@ public class ThreadSessionHelper {
 		return cityCoordinate;
     }
     
-    public static String getHouseOwnerCity(){
-    	HouseOwner owner = (HouseOwner) ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
-    	return owner.city;
-//    	String city = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
-//    	if(StringUtils.isNotEmpty(city)){
-//    		return city;
-//    	}
-//    	String cityInCookie = null;
-//    	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
-//    	if(cookies==null){
-//    		System.out.println("cookie is null");
-//    		return null;
-//    	}
-//    	for(Cookie cookie : cookies){
-//			if(KeyConstants.Session_House_Owner_City.equals(cookie.getName())){
-//				cityInCookie = cookie.getValue();
-//			}
-//		}
-//    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , city);
-//    	return cityInCookie;
+    public static String getHouseOwnerCity(HttpServletRequest req){
+    	String cityPy = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
+    	if(StringUtils.isNotEmpty(cityPy)){
+    		return cityPy;
+    	}
+    	cityPy = req.getParameter("cityPy");
+    	if(StringUtils.isNotEmpty(cityPy)){
+    		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , cityPy);
+    		return cityPy;
+    	}
+    	String cityInCookie = null;
+    	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
+    	if(cookies==null){
+    		System.out.println("cookie is null");
+    		return null;
+    	}
+    	for(Cookie cookie : cookies){
+			if(KeyConstants.Session_House_Owner_City.equals(cookie.getName())){
+				cityInCookie = cookie.getValue();
+			}
+		}
+    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , cityPy);
+    	return cityInCookie;
     }
     
 }

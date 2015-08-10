@@ -7,6 +7,12 @@
 function setTips(str){
     $('.tipbox').html(str).removeClass('hide');
 }
+$(function(){
+	var cityPy = getCookie("cityPy");
+	var city = getCookie("city");
+	$('#city').val(city);
+	$('#cityPy').val(cityPy);
+});
 $(document).on('click', '.btn_act', function(event) {
     var Thi=$(this),
     ThiType=Thi.data('type');
@@ -16,13 +22,16 @@ $(document).on('click', '.btn_act', function(event) {
         dom_tel_v=dom_tel.val(),
         dom_pwd_v=dom_pwd.val();
         if(dom_tel_v.length==11&&dom_pwd_v.length>=1&&Thi.hasClass('blue')){
-            $.ajax({
+            YW.ajax({
               type: 'POST',
-              url: '/c/weixin/houseOwner/doLogin?tel='+dom_tel_v+'&pwd='+dom_pwd_v,
-              success: function(data){
+              url: '/c/weixin/houseOwner/doLogin?tel='+dom_tel_v+'&pwd='+dom_pwd_v+'&cityPy='+$('#cityPy').val(),
+              mysuccess: function(data){
                   var exp = new Date();
                   exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
+                  //city="+$('#city').val()+";cityPy="+$('#cityPy').val()+";
                   document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString()+ "; path=/";
+                  document.cookie = "city=" + $('#city').val() + ";expires=" + exp.toGMTString()+ "; path=/";
+                  document.cookie = "cityPy=" + $('#cityPy').val() + ";expires=" + exp.toGMTString()+ "; path=/";
                   window.location = 'houses.jsp';
               },
               error:function(data){
@@ -45,6 +54,8 @@ $(document).on('click', '.btn_act', function(event) {
                 btn: ['OK']
             });
         }
+    }else if(ThiType=="city"){
+    	window.location="citys.jsp";
     }
     event.preventDefault();
     /* Act on the event */
@@ -63,3 +74,12 @@ $(document).on('click', '.btn_act', function(event) {
     event.preventDefault();
     /* Act on the event */
 });
+
+
+function getCookie(name) { 
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+        return unescape(arr[2]); 
+    else 
+        return ""; 
+} 

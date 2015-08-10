@@ -6,7 +6,10 @@
 
 
 $(document).ready(function() {
-    
+	var cityPy = getCookie("cityPy");
+	var city = getCookie("city");
+	$('#city').val(city);
+	$('#cityPy').val(cityPy);
 });
 function setTips(str){
     $('.tipbox').html(str).removeClass('hide');
@@ -26,10 +29,10 @@ function getcode(tel){
     var btn=$('.getcode'),
     cla='out';
     btn.addClass(cla);
-    $.ajax({
+    YW.ajax({
       type: 'POST',
       url: '/c/weixin/houseOwner/sendVerifyCode?tel='+tel,
-      success: function(data){
+      mysuccess: function(data){
         $('#code').focus();
         layer.open({
             content:'验证码已经发送到手机'
@@ -77,23 +80,31 @@ $(document).on('click', '.btn_act', function(event) {
         	event.preventDefault();
         	return;
         }
+        if(!$('#cityPy').val()){
+        	layer.open({
+                content:'请先选择城市',
+                btn: ['OK']
+            });
+        	event.preventDefault();
+        	return;
+        }
         if(dom_tel_v.length==11&&Thi.hasClass('blue')){
-            $.ajax({
+            YW.ajax({
               type: 'POST',
-              url: '/c/weixin/houseOwner/verifyCode?tel='+dom_tel_v+'&pwd='+dom_pwd_v+'&code='+dom_code_v,
-              success: function(data){
+              url: '/c/weixin/houseOwner/verifyCode?tel='+dom_tel_v+'&pwd='+dom_pwd_v+'&code='+dom_code_v+"&cityPy="+$('#cityPy').val(),
+              mysuccess: function(data){
                   var exp = new Date();
                   exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
                   document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString()+ "; path=/";
-                  //TODO 到选择城市界面
-                  window.location = 'citys.jsp';
+                  document.cookie = "city=" + $('#city').val() + ";expires=" + exp.toGMTString()+ "; path=/";
+                  document.cookie = "cityPy=" + $('#cityPy').val() + ";expires=" + exp.toGMTString()+ "; path=/";
+                  layer.open({
+                      content:'注册成功',
+                      btn: ['OK']
+                  });
               },
               error:function(data){
-                  var json = JSON.parse(data.responseText);
-                  layer.open({
-                    content:json.msg,
-                    btn: ['OK']
-                  });
+                 
               }
             });
         }else{
@@ -121,3 +132,11 @@ $(document).on('click', '.btn_act', function(event) {
     event.preventDefault();
     /* Act on the event */
 });
+
+function getCookie(name) { 
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+        return unescape(arr[2]); 
+    else 
+        return ""; 
+}
