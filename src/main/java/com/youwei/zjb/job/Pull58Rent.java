@@ -1,5 +1,6 @@
 package com.youwei.zjb.job;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
@@ -85,6 +86,14 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 				if(StringUtils.isEmpty(link)){
 					LogUtil.warning("获取房源链接失败:"+e.html());
 					continue;
+				}
+				//过滤掉参数
+				URL linkUrl;
+				try {
+					linkUrl = new URL(link);
+					link = linkUrl.toExternalForm().replace("?"+linkUrl.getQuery(),"");
+				} catch (MalformedURLException ex) {
+					ex.printStackTrace();
 				}
 				HouseRent po = dao.getUniqueByKeyValue(HouseRent.class, "href", link);
 				if(po!=null){

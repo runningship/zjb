@@ -117,47 +117,57 @@ YW={
         		alert('网络超时,请重试...');
         		return;
         	}
-            if(data.status==500){
-                alert('操作不成功，请联系管理员.');
-            }else if(data.status==400){
-                json = JSON.parse(data.responseText);
-                if(json.type=='ParameterMissingError'){
-                    var field = json.field;
-                    var arr = $('[name="'+field+'"]');
-                    var desc;
-                    if(arr!=null && arr.length>0){
-                        desc = $(arr[0]).attr('desc');
-                    }
-                    if(desc==undefined){
-                        desc = field;
-                    }
-                    $(arr[0]).focus();
-                    alert("请先填写 "+ desc);
-
-                }else if(json.type=='ParameterTypeError'){
-                    var field = json.field;
-                    var arr = $('[name="'+field+'"]');
-                    var desc;
-                    if(arr!=null && arr.length>0){
-                        desc = $(arr[0]).attr('desc');
-                    }
-                    if(desc==undefined){
-                        desc = field;
-                    }
-                    $(arr[0]).focus();
-                    alert(desc+json.msg);
-                }else{
-                    alert(json['msg']);   
-                }
-                
-            }else if(data.status!=0){
-//            	alert(data.status);
-                alert('请求服务失败，请稍后重试');
-            }
         },
-        success:function(data){
+        success:function(data , mysuccess){
         	if(data.responseText!=undefined && data.responseText.indexOf('relogin')!=-1){
-        		window.parent.location='/login/index.html';
+                eval(data);
+        		return;
+        	}else{
+        		var json;
+        		if(typeof(data)=='string'){
+        			json = JSON.parse(data);
+        		}else{
+        			json = data;
+        		}
+        		if(json.return_status==302){
+                    alert('操作不成功，请联系管理员.');
+                }else if(json.return_status==303){
+                    if(json.type=='ParameterMissingError'){
+                        var field = json.field;
+                        var arr = $('[name="'+field+'"]');
+                        var desc;
+                        if(arr!=null && arr.length>0){
+                            desc = $(arr[0]).attr('desc');
+                        }
+                        if(desc==undefined){
+                            desc = field;
+                        }
+                        $(arr[0]).focus();
+                        alert("请先填写 "+ desc);
+
+                    }else if(json.type=='ParameterTypeError'){
+                        var field = json.field;
+                        var arr = $('[name="'+field+'"]');
+                        var desc;
+                        if(arr!=null && arr.length>0){
+                            desc = $(arr[0]).attr('desc');
+                        }
+                        if(desc==undefined){
+                            desc = field;
+                        }
+                        $(arr[0]).focus();
+                        alert(desc+json.msg);
+                    }else{
+                        alert(json['msg']);   
+                    }
+                    
+                }else if(data.return_status){
+                    alert('请求服务失败，请稍后重试');
+                }else{
+                	if(mysuccess!=undefined){
+                		mysuccess(data);
+                	}
+                }
         	}
         }
     },
@@ -172,12 +182,19 @@ YW={
             options.error = YW.options.error;
         }
         
+//        if(options.mysuccess!=undefined){
+//            options.success = function(data){
+//            	YW.options.success(data);
+//            	options.mysuccess(data);
+//            };
+//        }
+        
         if(options.mysuccess!=undefined){
             options.success = function(data){
-            	YW.options.success(data);
-            	options.mysuccess(data);
+            	YW.options.success(data , options.mysuccess);
             };
         }
+        
         options.timeout=10000,
         $.ajax(options);
     }
