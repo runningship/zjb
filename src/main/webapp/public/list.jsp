@@ -1,0 +1,483 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>中介宝</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="css/reset.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript" src="js/jQuery.resizeEnd.min.js"></script>
+<script type="text/javascript" src="js/javascript.js"></script>
+<script type="text/javascript" src="js/j.suggest.js"></script>
+<script type="text/javascript" src="js/j.dimensions.js"></script>
+<script type="text/javascript" src="js/aircity.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+<div class="bodyer">
+    <div class="header">
+        <div class="toper">
+            <div class="wrap">
+                <a href="#" class="logobox">中介宝</a>
+                <a href="#" class="SwitchCityBtn btn_act" data-type="SwitchCity">合肥 <i class="iconfont">&#xe604;</i></a>
+
+                <dl class="SwitchCity HAs">
+                    <dt class="HB"><strong>合肥 <i class="iconfont">&#xe604;</i></strong></dt>
+                    <dd class="HC">
+                        <a href="#1">合肥</a>
+                        <a href="#2">合肥</a>
+                        <a href="#3">合肥</a>
+                        <a href="#4">合肥</a>
+                        <a href="#5">合肥</a>
+                    </dd>
+                </dl>
+
+                <ul class="classTab">
+                    <li class="active"><a href="#">找二手房</a></li>
+                    <li><a href="#">找租房</a></li>
+                </ul>
+
+                <ul class="UList fr HA">
+                    <li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>登录管理我的房源</strong></a></li>
+                    <li class="HV"><a href="#" class="btn btn_act" data-type="reg"><strong>注册</strong></a></li>
+                    <li class="HB "><strong>联系我们</strong>
+                        <div class="HC ULbox ContactUs">
+                            <div class="ewm"><img src="images/ewm_wx.jpg" alt=""><span>关注中介宝微信</span></div>
+                            <div class="lx">
+                                <ul>
+                                    <li><a href="#">客服电话：0551-65341555</a></li>
+                                    <li class="ablogo"><img src="images/logo_blue.png" alt=""></li>
+                                    <li class="ablogos"><b>二手房信息处理中心</b></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="search">
+        <form class="form" action="">
+            <div class="wrap">
+                <span class="searchItem">
+                    <input type="text" class="input" placeholder="楼盘名称" id="nope">
+                    <div class="autoTexts" id='suggest'>
+                        <ul class="">
+                            <li></li>
+                        </ul>
+                    </div>
+                </span>
+                <span class="searchItem ">
+                    <strong class="">区域 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
+                    <ul class="more ">
+                      <li>
+                        <div class="btnbox">
+                            <a href="#" class="btna btn_act"><i class="iconfont">&#xe606;</i></a>
+                            <a href="#" class="btna btn_act bor"><i class="iconfont">&#xe606;</i></a>
+                            <a href="#" class="btna btn_act"><i class="iconfont">&#xe606;</i></a>
+                        </div>
+                      </li>
+                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
+                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
+                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+                    </ul>
+                </span>
+                <span class="searchItem ">
+                    <strong class="">楼型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
+                    <ul class="more ">
+                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
+                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
+                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+                    </ul>
+                </span>
+                <span class="searchItem ">
+                    <strong class="">户型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
+                    <ul class="more ">
+                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
+                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
+                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+                    </ul>
+                </span>
+                <span class="searchItem ">
+                    <strong class="">装潢 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
+                    <ul class="more ">
+                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
+                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
+                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+                    </ul>
+                </span>
+                <span class="searchItem">
+                    <input type="text" class="input" placeholder="路段">
+                </span>
+                <a href="#" class="btn btns search">搜索</a>
+            </div>
+            <div class="wrap">
+                <span class="searchItem w15">
+                    <label class="inputTit" for="mji">面积</label>
+                    <div class="inputBox">
+                        <input type="text" id="mji" class="input" placeholder="" maxlength="3">
+                    </div>
+                    <span class="inputLab">-</span>
+                    <div class="inputBox">
+                        <input type="text" class="input" placeholder="" maxlength="4">
+                    </div>
+                </span>
+                <span class="searchItem w20">
+                    <label class="inputTit" for="zjia">总价</label>
+                    <div class="inputBox">
+                        <input type="text" id="zjia" class="input" placeholder="" maxlength="3">
+                    </div>
+                    <span class="inputLab">-</span>
+                    <div class="inputBox">
+                        <input type="text" class="input" placeholder="" maxlength="3">
+                    </div>
+                </span>
+                <span class="searchItem w20">
+                    <label class="inputTit" for="djia">单价</label>
+                    <div class="inputBox">
+                        <input type="text" id="djia" class="input" placeholder="" maxlength="4">
+                    </div>
+                    <span class="inputLab">-</span>
+                    <div class="inputBox">
+                        <input type="text" class="input" placeholder="" maxlength="4">
+                    </div>
+                </span>
+                <span class="searchItem w15">
+                    <label class="inputTit" for="lceng">楼层</label>
+                    <div class="inputBox">
+                        <input type="text" id="lceng" class="input" placeholder="" maxlength="2">
+                    </div>
+                    <span class="inputLab">-</span>
+                    <div class="inputBox">
+                        <input type="text" class="input" placeholder="" maxlength="2">
+                    </div>
+                </span>
+                <a href="#" class="btn btns empty">清空</a>
+
+            </div>
+            </form>
+        </div>
+        <div class="searchLine">
+            <div class="wrap">
+            1
+            </div>
+        </div>
+    </div>
+    <div class="mainer">
+        <div class="wrap">
+
+            <div class="listgroup">
+                <table border="0" cellspacing="0" cellpadding="0" class="tableList2 table-hover"> 
+                    <tbody>
+                        <tr data-hid="1" class="a1 active"> 
+                            <th>
+                                <h2>
+                                    <span class="icons">
+                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
+                                    </span>
+                                    虹雨花园
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    <span class="bhao">编号：11206</span>
+                                </h2>
+                                <p class="xq">
+                                    <span>1室1厅1卫</span>
+                                    <span>146㎡</span>
+                                    <span>高层 精装</span>
+                                    <span>10层 总层18</span>
+                                </p>
+                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span> </p>
+                            </th> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="zjia"><b>130</b> 万</p>
+                                <p class="hx">8904元/㎡</p>
+                            </td> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="kong">&nbsp;</p>
+                                <span class="time">2015-8-10</span>
+                            </td> 
+                        </tr>
+                        <tr data-hid="1" class="a2"> 
+                            <th>
+                                <h2>
+                                    <span class="icons">
+                                    <i class="iconfont my " data-class="no" title="我的房子">&#xe60d;</i>
+                                    </span>
+                                    虹雨花园
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    <span class="bhao">编号：11206</span>
+                                </h2>
+                                <p class="xq">
+                                    <span>1室1厅1卫</span>
+                                    <span>146㎡</span>
+                                    <span>高层 精装</span>
+                                    <span>10层 总层18</span>
+                                </p>
+                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
+                            </th> 
+                          <td>
+                              <p class="kong">&nbsp;</p>
+                              <p class="zjia"><b>130</b> 万</p>
+                              <p class="hx">8904元/㎡</p>
+                          </td> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="kong">&nbsp;</p>
+                                <span class="time">2015-8-10</span>
+                            </td> 
+                      </tr>
+                        <tr data-hid="1" class="a3"> 
+                            <th>
+                                <h2>
+                                    <span class="icons">
+                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
+                                    </span>
+                                    虹雨花园
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    <span class="bhao">编号：11206</span>
+                                </h2>
+                                <p class="xq">
+                                    <span>1室1厅1卫</span>
+                                    <span>146㎡</span>
+                                    <span>高层 精装</span>
+                                    <span>10层 总层18</span>
+                                </p>
+                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
+                            </th> 
+                          <td>
+                              <p class="kong">&nbsp;</p>
+                              <p class="zjia"><b>130</b> 万</p>
+                              <p class="hx">8904元/㎡</p>
+                          </td> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="kong">&nbsp;</p>
+                                <span class="time">2015-8-10</span>
+                            </td> 
+                      </tr>
+                        <tr data-hid="1" class="a4"> 
+                            <th>
+                                <h2>
+                                    <span class="icons">
+                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
+                                    </span>
+                                    虹雨花园
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    <span class="bhao">编号：11206</span>
+                                </h2>
+                                <p class="xq">
+                                    <span>1室1厅1卫</span>
+                                    <span>146㎡</span>
+                                    <span>高层 精装</span>
+                                    <span>10层 总层18</span>
+                                </p>
+                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
+                            </th> 
+                          <td>
+                              <p class="kong">&nbsp;</p>
+                              <p class="zjia"><b>130</b> 万</p>
+                              <p class="hx">8904元/㎡</p>
+                          </td> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="kong">&nbsp;</p>
+                                <span class="time">2015-8-10</span>
+                            </td> 
+                      </tr>
+                        <tr data-hid="1" class="a5"> 
+                            <th>
+                                <h2>
+                                    <span class="icons">
+                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
+                                    </span>
+                                    虹雨花园
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    <span class="bhao">编号：11206</span>
+                                </h2>
+                                <p class="xq">
+                                    <span>1室1厅1卫</span>
+                                    <span>146㎡</span>
+                                    <span>高层 精装</span>
+                                    <span>10层 总层18</span>
+                                </p>
+                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
+                            </th> 
+                          <td>
+                              <p class="kong">&nbsp;</p>
+                              <p class="zjia"><b>130</b> 万</p>
+                              <p class="hx">8904元/㎡</p>
+                          </td> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="kong">&nbsp;</p>
+                                <span class="time">2015-8-10</span>
+                            </td> 
+                      </tr>
+                        <tr data-hid="1" class="a6"> 
+                            <th>
+                                <h2>
+                                    <span class="icons">
+                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
+                                    </span>
+                                    虹雨花园
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    <span class="bhao">编号：11206</span>
+                                </h2>
+                                <p class="xq">
+                                    <span>1室1厅1卫</span>
+                                    <span>146㎡</span>
+                                    <span>高层 精装</span>
+                                    <span>10层 总层18</span>
+                                </p>
+                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
+                            </th> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="zjia"><b>130</b> 万</p>
+                                <p class="hx">8904元/㎡</p>
+                            </td> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="kong">&nbsp;</p>
+                                <span class="time">2015-8-10</span>
+                            </td> 
+                        </tr>
+                        <tr data-hid="1" class="a7"> 
+                            <th>
+                                <h2>
+                                    <span class="icons">
+                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
+                                    </span>
+                                    虹雨花园
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    <span class="bhao">编号：11206</span>
+                                </h2>
+                                <p class="xq">
+                                    <span>1室1厅1卫</span>
+                                    <span>146㎡</span>
+                                    <span>高层 精装</span>
+                                    <span>10层 总层18</span>
+                                </p>
+                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
+                            </th> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="zjia"><b>130</b> 万</p>
+                                <p class="hx">8904元/㎡</p>
+                            </td> 
+                            <td>
+                                <p class="kong">&nbsp;</p>
+                                <p class="kong">&nbsp;</p>
+                                <span class="time">2015-8-10</span>
+                            </td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="wrap">
+            <ul class="pageList">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">上一页</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li>...</li>
+                <li><a href="#">13</a></li>
+                <li class="active"><a href="#">14</a></li>
+                <li><a href="#">15</a></li>
+                <li><a href="#">16</a></li>
+                <li><a href="#">下一页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="">
+    <div class="loginbox hidden">
+      <div class="form-box">
+        <ul class="form-ul forms_login">
+          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe600;</i></strong><input type="text" class="input u" placeholder="用户名/手机"></label></li>
+          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe601;</i></strong><input type="password" class="input p" placeholder="密码"></label></li>
+          <li class="">
+            <a href="#" class="btn btn_act btn_block blue" data-type="submit_login">登陆</a>
+            <input type="submit" class="submit hidden" value="submit">
+          </li>
+          <li class="">
+            <a href="#" class="btn_act btn_link" data-type="getPwds">忘记密码</a>
+            <a href="#" class="btn_act btn_link fr" data-type="reg">立即注册</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="regbox hidden">
+      <div class="form-box">
+        <ul class="form-ul forms_reg">
+          <li class=""><label class="form-section form-active"><strong class="input-label">手机号</strong><input type="text" class="input placeholder u" placeholder="您的手机号码"></label></li>
+          <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码</strong><input type="text" class="input placeholder c" placeholder="收到的验证码"><a href="#" class="btn btn_act code" data-type="regCode" data-txt="发送验证码">发送验证码</a></label></li>
+          <li class=""><label class="form-section form-active"><strong class="input-label">密码</strong><input type="password" class="input placeholder p" placeholder="登陆密码"></label></li>
+          <li class=""><label class="form-section form-active"><strong class="input-label">重复密码</strong><input type="password" class="input placeholder p2" placeholder="重复输入密码"></label></li>
+          <li class="">
+            <a href="#" class="btn btn_act btn_block blue" data-type="submit_reg">注册</a>
+            <input type="submit" class="submit hidden" value="submit">
+          </li>
+          <li class="">
+            <a href="#" class="btn_act btn_link fr" data-type="login">立即登陆</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="citybox hidden">
+      <ul>
+        <li class="active"><a href="#"><i class="iconfont">&#xe607;</i> 合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+        <li><a href="#">合肥</a></li>
+      </ul>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(document).find('.form-active').find('.input').focusin(function(){
+        $(this).parent().addClass('active').addClass('focus');
+    }).focusout(function(){
+        if(!$(this).val()){
+            $(this).parent().removeClass('active');
+        }
+        $(this).parent().removeClass('focus');
+    }).hover(function() {
+        $(this).parent().addClass('hover');
+    }, function() {
+        $(this).parent().removeClass('hover');
+    });
+});
+</script>
+</body>
+</html>
