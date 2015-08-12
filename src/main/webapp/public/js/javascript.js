@@ -88,14 +88,13 @@ var form=$('.forms_reg'),
         layer.msg('请重复输入密码');
         return false;
     }else{
-         YW.ajax({
-           type: 'POST',
-           url: '/c/weixin/houseOwner/doLogin?tel='+u+'&pwd='+pwd+'&cityPy='+c,
-           //url: '?tel='+u+'&pwd='+p+'&code='+c,
-           mysuccess: function(data){
+        // $.ajax({
+        //   type: 'POST',
+        //   url: '?tel='+u+'&pwd='+p+'&code='+c,
+        //   success: function(data){
             layer.msg('ok');
-           }
-         });
+        //   }
+        // });
     }
 }
 
@@ -198,6 +197,8 @@ $(document).on('click', '.btn_act', function(event) {
             //   }
             // });
         }
+    }else if(ThiType=='submit'){
+        $('.submit').click();
     }
     event.preventDefault();
     /* Act on the event */
@@ -319,6 +320,12 @@ $(document).ready(function() {
     autoComplete($('#nope'));
 });
 /* house */
+  function setSearchValue(index){
+      var ThiA=$('#autoCompleteBox').find('a');
+      ThiA.removeClass('hover');
+      var Vals=ThiA.eq(index).addClass('hover').attr('title');
+      $('#nope').val(Vals);
+  }
 /**
  * 添加 autoComplete 功能
  * autoComplete($('#input的class或id'))

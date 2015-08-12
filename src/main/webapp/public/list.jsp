@@ -66,15 +66,11 @@ request.setAttribute("citys", citys);
             </div>
         </div>
         <div class="search">
-        <form class="form" action="">
+        <form class="form" action="list.jsp" type="form" method="get">
             <div class="wrap">
                 <span class="searchItem">
-                    <input type="text" class="input" placeholder="楼盘名称" id="nope">
-                    <div class="autoTexts" id='suggest'>
-                        <ul class="">
-                            <li></li>
-                        </ul>
-                    </div>
+                    <input type="text" class="input" placeholder="楼盘名称" name="area" value="${area}">
+                    
                 </span>
                 <span class="searchItem ">
                     <strong class="">区域 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
@@ -86,59 +82,60 @@ request.setAttribute("citys", citys);
                             <a href="#" class="btna btn_act"><i class="iconfont">&#xe606;</i></a>
                         </div>
                       </li>
-                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
-                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
-                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+					  <c:forEach items="${quyus }" var="quyu"  varStatus="status">
+                      <li><label><input type="checkbox" class="check" name="quyus" value="$[quyu.name]">${quyu.name}</label></li>
+                      </c:forEach>
                     </ul>
                 </span>
                 <span class="searchItem ">
                     <strong class="">楼型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
-                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
-                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
-                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+					  <c:forEach items="${lxings }" var="lxing"  varStatus="status">
+                      <li><label><input type="checkbox" class="check" name="lxings" value="$[lxing.name]">${lxing.name}</label></li>
+                      </c:forEach>
                     </ul>
                 </span>
                 <span class="searchItem ">
                     <strong class="">户型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
-                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
-                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
-                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+					  <c:forEach items="${hxings }" var="hxing"  varStatus="status">
+                      <li><label><input type="checkbox" class="check" name="hxings" value="$[hxing.name]">${hxing.name}</label></li>
+                      </c:forEach>
                     </ul>
                 </span>
                 <span class="searchItem ">
                     <strong class="">装潢 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
-                      <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
-                      <li><label><input type="checkbox" class="check"> 蜀山区</label></li>
-                      <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
+					  <c:forEach items="${zxius }" var="zxiu"  varStatus="status">
+                      <li><label><input type="checkbox" class="check" name="zxius" value="$[zxiu.name]">${zxiu.name}</label></li>
+                      </c:forEach>
                     </ul>
                 </span>
                 <span class="searchItem">
-                    <input type="text" class="input" placeholder="路段">
+                    <input type="text" class="input" placeholder="路段" name="address" value="${address}">
                 </span>
-                <a href="#" class="btn btns search">搜索</a>
+                <a href="#" class="btn btns btn_act search" data-type="submit">搜索</a>
+                <input type="submit" class="hidden submit" value="submit">
             </div>
             <div class="wrap">
                 <span class="searchItem w15">
                     <label class="inputTit" for="mji">面积</label>
                     <div class="inputBox">
-                        <input type="text" id="mji" class="input" placeholder="" maxlength="3">
+                        <input type="text" id="mji" class="input" placeholder="" maxlength="3" name="mjiStart" value="${mjiStart}">
                     </div>
                     <span class="inputLab">-</span>
                     <div class="inputBox">
-                        <input type="text" class="input" placeholder="" maxlength="4">
+                        <input type="text" class="input" placeholder="" maxlength="4" name="mjiEnd" value="${mjiEnd}">
                     </div>
                 </span>
                 <span class="searchItem w20">
                     <label class="inputTit" for="zjia">总价</label>
                     <div class="inputBox">
-                        <input type="text" id="zjia" class="input" placeholder="" maxlength="3">
+                        <input type="text" id="zjia" class="input" placeholder="" maxlength="3" name="zjiaStart" value="${zjiaStart}">
                     </div>
                     <span class="inputLab">-</span>
                     <div class="inputBox">
-                        <input type="text" class="input" placeholder="" maxlength="3">
+                        <input type="text" class="input" placeholder="" maxlength="3" name="mjiEnd" value="${mjiEnd}">
                     </div>
                 </span>
                 <span class="searchItem w20">
@@ -168,7 +165,6 @@ request.setAttribute("citys", citys);
         </div>
         <div class="searchLine">
             <div class="wrap">
-            1
             </div>
         </div>
     </div>

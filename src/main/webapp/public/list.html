@@ -12,9 +12,6 @@
 <script type="text/javascript" src="js/layer/layer.js"></script>
 <script type="text/javascript" src="js/jQuery.resizeEnd.min.js"></script>
 <script type="text/javascript" src="js/javascript.js"></script>
-<script type="text/javascript" src="js/j.suggest.js"></script>
-<script type="text/javascript" src="js/j.dimensions.js"></script>
-<script type="text/javascript" src="js/aircity.js"></script>
 <script type="text/javascript">
 </script>
 </head>
@@ -49,11 +46,9 @@
                         <div class="HC ULbox ContactUs">
                             <div class="ewm"><img src="images/ewm_wx.jpg" alt=""><span>关注中介宝微信</span></div>
                             <div class="lx">
-                                <ul>
-                                    <li><a href="#">客服电话：0551-65341555</a></li>
-                                    <li class="ablogo"><img src="images/logo_blue.png" alt=""></li>
-                                    <li class="ablogos"><b>二手房信息处理中心</b></li>
-                                </ul>
+                                <div><a href="#">客服电话：0551-65341555</a></div>
+                                <div class="ablogo"><img src="images/logo_blue.png" alt=""></div>
+                                <div class="ablogos"><b>二手房信息处理中心</b></div>
                             </div>
                         </div>
                     </li>
@@ -62,16 +57,16 @@
         </div>
         <div class="search">
         <form class="form" action="">
-            <div class="wrap">
+            <div class="wrap wrapTop">
                 <span class="searchItem">
-                    <input type="text" class="input" placeholder="楼盘名称" id="nope">
+                    <input type="text" class="input" name="area" placeholder="楼盘名称" id="nope">
                     <div class="autoTexts" id='suggest'>
                         <ul class="">
                             <li></li>
                         </ul>
                     </div>
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">区域 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
                       <li>
@@ -86,7 +81,7 @@
                       <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
                     </ul>
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">楼型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
                       <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
@@ -94,7 +89,7 @@
                       <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
                     </ul>
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">户型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
                       <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
@@ -102,7 +97,7 @@
                       <li><label><input type="checkbox" class="check"> 董铺水库</label></li>
                     </ul>
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">装潢 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
                       <li><label><input type="checkbox" class="check"> 庐阳区</label></li>
@@ -113,7 +108,8 @@
                 <span class="searchItem">
                     <input type="text" class="input" placeholder="路段">
                 </span>
-                <a href="#" class="btn btns search">搜索</a>
+                <a href="#" class="btn btns btn_act search" data-type="submit">搜索</a>
+                <input type="submit" class="hidden submit" value="submit">
             </div>
             <div class="wrap">
                 <span class="searchItem w15">
