@@ -125,7 +125,15 @@ YW={
         	}else{
         		var json;
         		if(typeof(data)=='string'){
-        			json = JSON.parse(data);
+        			try{
+        				json = JSON.parse(data);
+        			}catch(e){
+        				//不是json格式数据
+        				if(mysuccess!=undefined){
+                    		mysuccess(data);
+                    		return;
+                    	}
+        			}
         		}else{
         			json = data;
         		}
