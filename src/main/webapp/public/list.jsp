@@ -6,6 +6,8 @@
 <%@page import="com.youwei.zjb.sys.CityService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<jsp:include page="data.jsp"></jsp:include>
 <%
 CityService cs = new CityService();
 JSONArray citys = cs.getCitys();
@@ -176,223 +178,37 @@ request.setAttribute("citys", citys);
             <div class="listgroup">
                 <table border="0" cellspacing="0" cellpadding="0" class="tableList2 table-hover"> 
                     <tbody>
-                        <tr data-hid="1" class="a1 active"> 
+						<c:forEach items="${list }" var="house"  varStatus="status">
+                        <tr data-hid="1" class="a${status.index%7} active"> 
                             <th>
                                 <h2>
                                     <span class="icons">
                                     <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>
-                                    虹雨花园
-                                    <span class="icons">
+                                    </span>${house.area}<span class="icons">
                                         <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
                                     </span>
-                                    <span class="bhao">编号：11206</span>
+                                    <span class="bhao">编号：${house.id}</span>
                                 </h2>
                                 <p class="xq">
-                                    <span>1室1厅1卫</span>
-                                    <span>146㎡</span>
-                                    <span>高层 精装</span>
-                                    <span>10层 总层18</span>
+                                    <span>${house.hxf}室${house.hxt}厅${house.hxw}卫</span>
+                                    <span>${house.mji}㎡</span>
+                                    <span>${house.lxing} ${house.zxiu}</span>
+                                    <span>${house.lceng}层 总层${house.zceng}</span>
                                 </p>
-                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span> </p>
+                                <p class="dz"><span>${house.address} </span> </p>
                             </th> 
                             <td>
                                 <p class="kong">&nbsp;</p>
-                                <p class="zjia"><b>130</b> 万</p>
-                                <p class="hx">8904元/㎡</p>
+                                <p class="zjia"><b>${house.zjia}</b> 万</p>
+                                <p class="hx">${house.djia}元/㎡</p>
                             </td> 
                             <td>
                                 <p class="kong">&nbsp;</p>
                                 <p class="kong">&nbsp;</p>
-                                <span class="time">2015-8-10</span>
+                                <span class="time"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd HH:mm"/></span>
                             </td> 
                         </tr>
-                        <tr data-hid="1" class="a2"> 
-                            <th>
-                                <h2>
-                                    <span class="icons">
-                                    <i class="iconfont my " data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>
-                                    虹雨花园
-                                    <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
-                                    </span>
-                                    <span class="bhao">编号：11206</span>
-                                </h2>
-                                <p class="xq">
-                                    <span>1室1厅1卫</span>
-                                    <span>146㎡</span>
-                                    <span>高层 精装</span>
-                                    <span>10层 总层18</span>
-                                </p>
-                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
-                            </th> 
-                          <td>
-                              <p class="kong">&nbsp;</p>
-                              <p class="zjia"><b>130</b> 万</p>
-                              <p class="hx">8904元/㎡</p>
-                          </td> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="kong">&nbsp;</p>
-                                <span class="time">2015-8-10</span>
-                            </td> 
-                      </tr>
-                        <tr data-hid="1" class="a3"> 
-                            <th>
-                                <h2>
-                                    <span class="icons">
-                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>
-                                    虹雨花园
-                                    <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
-                                    </span>
-                                    <span class="bhao">编号：11206</span>
-                                </h2>
-                                <p class="xq">
-                                    <span>1室1厅1卫</span>
-                                    <span>146㎡</span>
-                                    <span>高层 精装</span>
-                                    <span>10层 总层18</span>
-                                </p>
-                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
-                            </th> 
-                          <td>
-                              <p class="kong">&nbsp;</p>
-                              <p class="zjia"><b>130</b> 万</p>
-                              <p class="hx">8904元/㎡</p>
-                          </td> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="kong">&nbsp;</p>
-                                <span class="time">2015-8-10</span>
-                            </td> 
-                      </tr>
-                        <tr data-hid="1" class="a4"> 
-                            <th>
-                                <h2>
-                                    <span class="icons">
-                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>
-                                    虹雨花园
-                                    <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
-                                    </span>
-                                    <span class="bhao">编号：11206</span>
-                                </h2>
-                                <p class="xq">
-                                    <span>1室1厅1卫</span>
-                                    <span>146㎡</span>
-                                    <span>高层 精装</span>
-                                    <span>10层 总层18</span>
-                                </p>
-                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
-                            </th> 
-                          <td>
-                              <p class="kong">&nbsp;</p>
-                              <p class="zjia"><b>130</b> 万</p>
-                              <p class="hx">8904元/㎡</p>
-                          </td> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="kong">&nbsp;</p>
-                                <span class="time">2015-8-10</span>
-                            </td> 
-                      </tr>
-                        <tr data-hid="1" class="a5"> 
-                            <th>
-                                <h2>
-                                    <span class="icons">
-                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>
-                                    虹雨花园
-                                    <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
-                                    </span>
-                                    <span class="bhao">编号：11206</span>
-                                </h2>
-                                <p class="xq">
-                                    <span>1室1厅1卫</span>
-                                    <span>146㎡</span>
-                                    <span>高层 精装</span>
-                                    <span>10层 总层18</span>
-                                </p>
-                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
-                            </th> 
-                          <td>
-                              <p class="kong">&nbsp;</p>
-                              <p class="zjia"><b>130</b> 万</p>
-                              <p class="hx">8904元/㎡</p>
-                          </td> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="kong">&nbsp;</p>
-                                <span class="time">2015-8-10</span>
-                            </td> 
-                      </tr>
-                        <tr data-hid="1" class="a6"> 
-                            <th>
-                                <h2>
-                                    <span class="icons">
-                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>
-                                    虹雨花园
-                                    <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
-                                    </span>
-                                    <span class="bhao">编号：11206</span>
-                                </h2>
-                                <p class="xq">
-                                    <span>1室1厅1卫</span>
-                                    <span>146㎡</span>
-                                    <span>高层 精装</span>
-                                    <span>10层 总层18</span>
-                                </p>
-                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
-                            </th> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="zjia"><b>130</b> 万</p>
-                                <p class="hx">8904元/㎡</p>
-                            </td> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="kong">&nbsp;</p>
-                                <span class="time">2015-8-10</span>
-                            </td> 
-                        </tr>
-                        <tr data-hid="1" class="a7"> 
-                            <th>
-                                <h2>
-                                    <span class="icons">
-                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>
-                                    虹雨花园
-                                    <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
-                                    </span>
-                                    <span class="bhao">编号：11206</span>
-                                </h2>
-                                <p class="xq">
-                                    <span>1室1厅1卫</span>
-                                    <span>146㎡</span>
-                                    <span>高层 精装</span>
-                                    <span>10层 总层18</span>
-                                </p>
-                                <p class="dz"><span>蜀山区 淠河路和青阳路交口 </span></p>
-                            </th> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="zjia"><b>130</b> 万</p>
-                                <p class="hx">8904元/㎡</p>
-                            </td> 
-                            <td>
-                                <p class="kong">&nbsp;</p>
-                                <p class="kong">&nbsp;</p>
-                                <span class="time">2015-8-10</span>
-                            </td> 
-                        </tr>
+                            </c:forEach>
                     </tbody>
                 </table>
             </div>
