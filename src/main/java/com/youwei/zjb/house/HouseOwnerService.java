@@ -170,7 +170,6 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView citys(){
 		ModelAndView mv = new ModelAndView();
-		cityService.getCitys();
 		mv.jspData.put("citys", cityService.getCitys());
 		return mv;
 	}

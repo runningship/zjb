@@ -1,5 +1,19 @@
+<%@page import="net.sf.json.JSONObject"%>
+<%@page import="com.youwei.zjb.sys.entity.City"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="net.sf.json.JSONArray"%>
+<%@page import="com.youwei.zjb.sys.CityService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+CityService cs = new CityService();
+JSONArray citys = cs.getCitys();
+request.setAttribute("citys", citys);
+
+%>
+<%-- <jsp:include page="city.jsp"></jsp:include> --%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -13,9 +27,8 @@
 <script type="text/javascript" src="js/layer/layer.js"></script>
 <script type="text/javascript" src="js/jQuery.resizeEnd.min.js"></script>
 <script type="text/javascript" src="js/javascript.js"></script>
-<script type="text/javascript" src="js/j.suggest.js"></script>
-<script type="text/javascript" src="js/j.dimensions.js"></script>
-<script type="text/javascript" src="js/aircity.js"></script>
+<script type="text/javascript" src="js/buildHtml.js"></script>
+<script type="text/javascript" src="js/list.js"></script>
 <script type="text/javascript">
 </script>
 </head>
@@ -25,18 +38,7 @@
         <div class="toper">
             <div class="wrap">
                 <a href="#" class="logobox">中介宝</a>
-                <a href="#" class="SwitchCityBtn btn_act" data-type="SwitchCity">合肥 <i class="iconfont">&#xe604;</i></a>
-
-                <dl class="SwitchCity HAs">
-                    <dt class="HB"><strong>合肥 <i class="iconfont">&#xe604;</i></strong></dt>
-                    <dd class="HC">
-                        <a href="#1">合肥</a>
-                        <a href="#2">合肥</a>
-                        <a href="#3">合肥</a>
-                        <a href="#4">合肥</a>
-                        <a href="#5">合肥</a>
-                    </dd>
-                </dl>
+                <a  href="#" class="SwitchCityBtn btn_act" data-type="SwitchCity"><span id="currentCity"  py="hefei" >合肥</span> <i class="iconfont">&#xe604;</i></a>
 
                 <ul class="classTab">
                     <li class="active"><a href="#">找二手房</a></li>
@@ -449,17 +451,12 @@
     </div>
     <div class="citybox hidden">
       <ul>
-        <li class="active"><a href="#"><i class="iconfont">&#xe607;</i> 合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
-        <li><a href="#">合肥</a></li>
+<!--         <li class="active"><a href="#" ><i  class="iconfont">&#xe607;</i> 合肥</a></li> -->
+        <c:forEach items="${citys}" var="city">
+        	<c:if test="${city.status eq 'on' }">
+       			<li><a href="javascript:void(0)" onclick="switchCity('${city.py}' , '${city.name }' );">${city.name }</a></li>
+       		</c:if>
+       	</c:forEach>
       </ul>
     </div>
 </div>

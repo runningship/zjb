@@ -88,13 +88,14 @@ var form=$('.forms_reg'),
         layer.msg('请重复输入密码');
         return false;
     }else{
-        // $.ajax({
-        //   type: 'POST',
-        //   url: '?tel='+u+'&pwd='+p+'&code='+c,
-        //   success: function(data){
+         YW.ajax({
+           type: 'POST',
+           url: '/c/weixin/houseOwner/doLogin?tel='+u+'&pwd='+pwd+'&cityPy='+c,
+           //url: '?tel='+u+'&pwd='+p+'&code='+c,
+           mysuccess: function(data){
             layer.msg('ok');
-        //   }
-        // });
+           }
+         });
     }
 }
 
