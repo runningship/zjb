@@ -23,6 +23,12 @@
 	String mjiEnd = request.getParameter("mjiEnd");
 	String zjiaStart = request.getParameter("zjiaStart");
 	String zjiaEnd = request.getParameter("zjiaEnd");
+	String djiaStart = request.getParameter("djiaStart");
+	String djiaEnd = request.getParameter("djiaEnd");
+	String lcengStart = request.getParameter("lcengStart");
+	String lcengEnd = request.getParameter("lcengEnd");
+// 	String[] quyus = request.getParameter("quyus");
+// 	String lxings = request.getParameter("lxings");
 	HouseService hs = new HouseService();
 	Page<House> p = new Page<House>();
 	HouseQuery query = new HouseQuery();
@@ -50,6 +56,30 @@
 		query.zjiaEnd = Float.valueOf(zjiaEnd);
 		request.setAttribute("zjiaEnd", Float.valueOf(zjiaStart));
 	}
+	if(StringUtils.isNotEmpty(djiaStart)){
+		query.djiaStart = Float.valueOf(djiaStart);
+		request.setAttribute("djiaStart", Float.valueOf(djiaStart));
+	}
+	if(StringUtils.isNotEmpty(djiaEnd)){
+		query.djiaEnd = Float.valueOf(djiaEnd);
+		request.setAttribute("djiaEnd", Float.valueOf(djiaEnd));
+	}
+	if(StringUtils.isNotEmpty(lcengStart)){
+		query.lcengStart = Integer.valueOf(lcengStart);
+		request.setAttribute("lcengStart", Integer.valueOf(lcengStart));
+	}
+	if(StringUtils.isNotEmpty(lcengEnd)){
+		query.lcengEnd = Integer.valueOf(lcengEnd);
+		request.setAttribute("lcengEnd", Integer.valueOf(lcengEnd));
+	}
+// 	if(StringUtils.isNotEmpty(quyus)){
+// 		query.quyus = quyus;
+// 		request.setAttribute("quyus", Integer.valueOf(quyus));
+// 	}
+// 	if(StringUtils.isNotEmpty(lxings)){
+// 		query.lcengEnd = Integer.valueOf(lxings);
+// 		request.setAttribute("lxings", Integer.valueOf(lxings));
+// 	}
 	String citypy=ThreadSessionHelper.getCityPinyin();
 	CityService cityService = new CityService();
 	JSONArray citys = cityService.getCitys();

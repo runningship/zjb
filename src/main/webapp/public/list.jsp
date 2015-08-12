@@ -135,27 +135,27 @@ request.setAttribute("citys", citys);
                     </div>
                     <span class="inputLab">-</span>
                     <div class="inputBox">
-                        <input type="text" class="input" placeholder="" maxlength="3" name="mjiEnd" value="${mjiEnd}">
+                        <input type="text" class="input" placeholder="" maxlength="3" name="zjiaEnd" value="${zjiaEnd}">
                     </div>
                 </span>
                 <span class="searchItem w20">
                     <label class="inputTit" for="djia">单价</label>
                     <div class="inputBox">
-                        <input type="text" id="djia" class="input" placeholder="" maxlength="4">
+                        <input type="text" id="djia" class="input" placeholder="" maxlength="4" name="djiaStart" value="${djiaStart}">
                     </div>
                     <span class="inputLab">-</span>
                     <div class="inputBox">
-                        <input type="text" class="input" placeholder="" maxlength="4">
+                        <input type="text" class="input" placeholder="" maxlength="4" name="djiaEnd" value="${djiaEnd}">
                     </div>
                 </span>
                 <span class="searchItem w15">
                     <label class="inputTit" for="lceng">楼层</label>
                     <div class="inputBox">
-                        <input type="text" id="lceng" class="input" placeholder="" maxlength="2">
+                        <input type="text" id="lceng" class="input" placeholder="" maxlength="2" name="lcengStart" value="${lcengStart}">
                     </div>
                     <span class="inputLab">-</span>
                     <div class="inputBox">
-                        <input type="text" class="input" placeholder="" maxlength="2">
+                        <input type="text" class="input" placeholder="" maxlength="2" name="lcengEnd" value="${lcengEnd}">
                     </div>
                 </span>
                 <a href="#" class="btn btns empty">清空</a>
