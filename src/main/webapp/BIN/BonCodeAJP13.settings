@@ -1,0 +1,9 @@
+<Settings>
+<Server>localhost</Server>
+<Port>8009</Port>
+<EnableRemoteAdmin>True</EnableRemoteAdmin>
+<EnableHeaderDataSupport>False</EnableHeaderDataSupport>
+<ForceSecureSession>False</ForceSecureSession>
+<AllowEmptyHeaders>False</AllowEmptyHeaders>
+<ResolveRemoteAddrFrom>HTTP_X_FORWARDED_FOR</ResolveRemoteAddrFrom>
+</Settings>
