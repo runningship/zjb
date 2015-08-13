@@ -1,3 +1,4 @@
+<%@page import="com.youwei.zjb.KeyConstants"%>
 <%@page import="net.sf.json.JSONObject"%>
 <%@page import="com.youwei.zjb.sys.entity.City"%>
 <%@page import="java.util.ArrayList"%>
@@ -8,13 +9,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:include page="data.jsp"></jsp:include>
+<%-- <%@include file="data.jsp" %> --%>
 <%
 CityService cs = new CityService();
 JSONArray citys = cs.getCitys();
 request.setAttribute("citys", citys);
-
+request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyConstants.Session_House_Owner));
 %>
-<%-- <jsp:include page="city.jsp"></jsp:include> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +49,8 @@ request.setAttribute("citys", citys);
                 </ul>
 
                 <ul class="UList fr HA">
-                    <li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>登录管理我的房源</strong></a></li>
+                    <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>登录管理我的房源</strong></a></li></c:if>
+                    <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>${house_owner.tel }</strong></a></li></c:if>
                     <li class="HV"><a href="#" class="btn btn_act" data-type="reg"><strong>注册</strong></a></li>
                     <li class="HB "><strong>联系我们</strong>
                         <div class="HC ULbox ContactUs">
@@ -62,11 +64,13 @@ request.setAttribute("citys", citys);
                             </div>
                         </div>
                     </li>
+                    <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="logout"><strong>退出</strong></a></li></c:if>
                 </ul>
             </div>
         </div>
         <div class="search">
-        <form class="form" action="list.jsp" type="form" method="get">
+        <form class="form" action="list.jsp" id="searchForm">
+        	<input type="hidden" name="currentPageNo" id="currentPageNo"/>
             <div class="wrap">
                 <span class="searchItem">
                     <input type="text" class="input" placeholder="楼盘名称" name="area" value="${area}">
@@ -180,8 +184,10 @@ request.setAttribute("citys", citys);
                                 <h2>
                                     <span class="icons">
                                     <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
-                                    </span>${house.area}<span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" title="点我收藏">&#xe60c;</i>
+                                    </span>
+                                    ${house.area}
+                                    <span class="icons">
+                                        <i class="iconfont collect no btn_act" data-type="SC" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
                                     </span>
                                     <span class="bhao">编号：${house.id}</span>
                                 </h2>
@@ -210,28 +216,16 @@ request.setAttribute("citys", citys);
             </div>
         </div>
     </div>
+    
     <div class="footer">
-        <div class="wrap">
-            <ul class="pageList">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">上一页</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li>...</li>
-                <li><a href="#">13</a></li>
-                <li class="active"><a href="#">14</a></li>
-                <li><a href="#">15</a></li>
-                <li><a href="#">16</a></li>
-                <li><a href="#">下一页</a></li>
-            </ul>
-        </div>
+    	<jsp:include page="pagination.jsp"></jsp:include>
     </div>
 </div>
 <div class="">
     <div class="loginbox hidden">
       <div class="form-box">
         <ul class="form-ul forms_login">
-          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe600;</i></strong><input type="text" class="input u" placeholder="用户名/手机"></label></li>
+          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe600;</i></strong><input id="tel_input" type="text" class="input u" placeholder="用户名/手机"></label></li>
           <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe601;</i></strong><input type="password" class="input p" placeholder="密码"></label></li>
           <li class="">
             <a href="#" class="btn btn_act btn_block blue" data-type="submit_login">登陆</a>

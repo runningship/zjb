@@ -29,6 +29,7 @@ import com.youwei.zjb.KeyConstants;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseOwner;
+import com.youwei.zjb.house.entity.HouseOwnerFav;
 import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
@@ -236,6 +237,13 @@ public class HouseOwnerService {
 	}
 	
 	@WebMethod
+	public ModelAndView logoutWZJB(){
+		ModelAndView mv = new ModelAndView();
+		ThreadSession.getHttpSession().removeAttribute(KeyConstants.Session_House_Owner);
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView logout(){
 		ModelAndView mv = new ModelAndView();
 		ThreadSession.getHttpSession().removeAttribute(KeyConstants.Session_House_Owner);
@@ -312,6 +320,22 @@ public class HouseOwnerService {
 			//房源信息不存在
 		}
 		mv.jspData.put("house", po);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView toggleFav(Integer hid){
+		ModelAndView mv = new ModelAndView();
+		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+		HouseOwnerFav po = dao.getUniqueByParams(HouseOwnerFav.class, new String[]{"hid" , "hoid" },  new Object[]{hid , owner.id});
+		if(po==null){
+			HouseOwnerFav vo = new HouseOwnerFav();
+			vo.hid = hid;
+			vo.hoid = owner.id;
+			dao.saveOrUpdate(vo);
+		}else{
+			dao.delete(po);
+		}
 		return mv;
 	}
 	

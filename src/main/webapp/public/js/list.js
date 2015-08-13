@@ -17,6 +17,7 @@ function getCookie(name) {
 $(function(){
 	var cityPy = getCookie('cityPy');
 	var city = getCookie('city');
+	var tel = getCookie('tel');
 	if(cityPy && cityPy!='undefined'){
 		$('#currentCity').text(city);
 		$('#currentCity').attr("py" , cityPy);
@@ -30,4 +31,8 @@ $(function(){
 			$(obj).find('a').prepend('<i  class="iconfont">&#xe607;</i>');
 		}
 	});
+	if(tel && tel!='undefined'){
+		$('#tel_input').val(tel);
+	}
+	
 });

@@ -50,17 +50,30 @@ var form=$('.forms_login'),
         layer.msg('请输入密码');
         return false;
     }else{
-        // $.ajax({
-        //   type: 'POST',
-        //   url: '?tel='+u+'&p='+p,
-        //   success: function(data){
-            layer.msg('ok');
-        //   }
-        // });
+    	YW.ajax({
+            type: 'POST',
+            url: '/c/weixin/houseOwner/doLogin?tel='+uv+'&pwd='+pv+'&cityPy='+$('#currentCity').attr('py'),
+            mysuccess: function(data){
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
+                document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; ";
+                window.location = 'list.jsp';
+            }
+        });
+    	
     }
 
 }
 
+function logoutAction(){
+	YW.ajax({
+        type: 'POST',
+        url: '/c/weixin/houseOwner/logoutWZJB',
+        mysuccess: function(data){
+            window.location = 'list.jsp';
+        }
+    });
+}
 function regAction(){
 var form=$('.forms_reg'),
     u=form.find('.u'),
@@ -88,13 +101,20 @@ var form=$('.forms_reg'),
         layer.msg('请重复输入密码');
         return false;
     }else{
-        // $.ajax({
-        //   type: 'POST',
-        //   url: '?tel='+u+'&pwd='+p+'&code='+c,
-        //   success: function(data){
-            layer.msg('ok');
-        //   }
-        // });
+    	 YW.ajax({
+             type: 'POST',
+             url: '/c/weixin/houseOwner/verifyCode?tel='+uv+'&pwd='+pv+'&cityPy='+$('#currentCity').attr('py')+'&code='+cv,
+             mysuccess: function(data){
+                 var exp = new Date();
+                 exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
+                 document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString()+ "; ";
+                 layer.open({
+                     content:'注册成功',
+                     btn: ['OK']
+                 	//回调函数刷新页面
+                 });
+             }
+           });
     }
 }
 
@@ -113,12 +133,15 @@ var form=$('.forms_reg'),
         return false;
     }else{
         cBtn.addClass(cla);
-        // $.ajax({
-        //   type: 'POST',
-        //   url: '?tel='+tel,
-        //   success: function(data){
-            layer.msg('已发');
-            c.focus();
+        YW.ajax({
+            type: 'POST',
+            url: '/c/weixin/houseOwner/sendVerifyCode?tel='+u.val(),
+            mysuccess: function(data){
+            	layer.msg('已发');
+                c.focus();
+            }
+          });
+        
         var T_s=59,t;
             t=setInterval(function(){
                 var ts=T_s--;
@@ -133,21 +156,25 @@ var form=$('.forms_reg'),
         // });
     }
 }
+
+function openLoginWindow(){
+	layer.closeAll();
+    layer.open({
+        type: 1,
+        title:'登陆',
+        area: ['320px', '400px'],
+        content: $('.loginbox'),
+        success: function(layero,index){mh();},
+        cancel: function(index){mhs();} 
+    });
+    $('.forms_login').find('.u').focus();
+}
 /* 所有按钮功能 */
 $(document).on('click', '.btn_act', function(event) {
     var Thi=$(this),
     ThiType=Thi.data('type');
     if(ThiType=='login'){
-        layer.closeAll();
-        layer.open({
-            type: 1,
-            title:'登陆',
-            area: ['320px', '400px'],
-            content: $('.loginbox'),
-            success: function(layero,index){mh();},
-            cancel: function(index){mhs();} 
-        });
-        $('.forms_login').find('.u').focus();
+    	openLoginWindow();
     }else if(ThiType=='reg'){
         layer.closeAll();
         layer.open({
@@ -165,6 +192,8 @@ $(document).on('click', '.btn_act', function(event) {
         regAction();
     }else if(ThiType=='regCode'){
         regCodeFun();
+    }else if(ThiType=='logout'){
+    	logoutAction();
     }else if(ThiType=='getPwds'){
         layer.msg('找回密码功能');
     }else if(ThiType=='SwitchCity'){
@@ -178,15 +207,21 @@ $(document).on('click', '.btn_act', function(event) {
             cancel: function(index){mhs();} 
         });
     }else if(ThiType=='SC'){
+    	//判断用户是否在线
+    	if(!Thi.attr('uid')){
+    		//弹出登录窗口
+    		openLoginWindow();
+    		return;
+    	}
         if(Thi.hasClass('no')){
-            // $.ajax({
-            //   type: 'POST',
-            //   url: '?tel='+tel,
-            //   success: function(data){
-                Thi.removeClass('no');
-                layer.msg('测试：未收藏→收藏');
-            //   }
-            // });
+        	YW.ajax({
+                type: 'POST',
+                url: '/c/weixin/houseOwner/toggleFav?hid='+Thi.attr('hid'),
+                mysuccess: function(data){
+                	Thi.removeClass('no');
+                    layer.msg('测试：未收藏→收藏');
+                }
+              });
         }else{
             // $.ajax({
             //   type: 'POST',

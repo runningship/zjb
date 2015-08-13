@@ -52,15 +52,17 @@ public class ThreadSessionHelper {
     }
     
     public static String getHouseOwnerCity(HttpServletRequest req){
-    	String cityPy = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
-    	if(StringUtils.isNotEmpty(cityPy)){
-    		return cityPy;
-    	}
-    	cityPy = req.getParameter("cityPy");
+    	String cityPy = req.getParameter("cityPy");
     	if(StringUtils.isNotEmpty(cityPy)){
     		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , cityPy);
     		return cityPy;
     	}
+    	
+    	cityPy = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
+    	if(StringUtils.isNotEmpty(cityPy)){
+    		return cityPy;
+    	}
+    	
     	String cityInCookie = null;
     	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
     	if(cookies==null){

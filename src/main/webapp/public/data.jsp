@@ -16,6 +16,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
+	String currentPageNo = request.getParameter("currentPageNo");
+	
 	CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 	String area = request.getParameter("area");
 	String address = request.getParameter("address");
@@ -31,6 +33,11 @@
 // 	String lxings = request.getParameter("lxings");
 	HouseService hs = new HouseService();
 	Page<House> p = new Page<House>();
+	try{
+		p.setCurrentPageNo(Integer.valueOf(currentPageNo));
+	}catch(Exception ex){
+		
+	}
 	HouseQuery query = new HouseQuery();
 	if(StringUtils.isNotEmpty(area)){
 		query.area = area;
@@ -91,6 +98,7 @@
 	}
 	hs.listAll(query, p);
 	request.setAttribute("list", p.getResult());
+	request.setAttribute("p", p);
 	request.setAttribute("zxius", ZhuangXiu.toJsonArray());
 	request.setAttribute("lxings", LouXing.toJsonArray());
 	request.setAttribute("hxings", FangXing.toJsonArray());
