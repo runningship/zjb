@@ -206,6 +206,8 @@ $(document).on('click', '.btn_act', function(event) {
             success: function(layero,index){mh();},
             cancel: function(index){mhs();} 
         });
+    }else if(ThiType=='seeMyHouse'){
+        layer.msg('查看我的房源')
     }else if(ThiType=='SC'){
     	//判断用户是否在线
     	if(!Thi.attr('uid')){

@@ -27,11 +27,11 @@
 	HouseOwner user = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 	if(user!=null){
 		List<HouseOwnerFav> buyFavList = dao.listByParams(HouseOwnerFav.class, "from HouseOwnerFav where hoid=?", user.id);
-		StringBuilder buyFavStr = new StringBuilder();
+		StringBuilder buyFavStr = new StringBuilder(",");
 		for(HouseOwnerFav fav : buyFavList){
 			buyFavStr.append(fav.hid).append(",");
 		}
-		request.setAttribute("buyFavStr", buyFavStr);
+		request.setAttribute("buyFavStr", buyFavStr.toString());
 	}
 	
 	String area = request.getParameter("area");

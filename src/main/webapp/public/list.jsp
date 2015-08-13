@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <jsp:include page="data.jsp"></jsp:include>
 <%-- <%@include file="data.jsp" %> --%>
 <%
@@ -51,7 +52,9 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                 <ul class="UList fr HA">
                     <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>登录管理我的房源</strong></a></li></c:if>
                     <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>${house_owner.tel }</strong></a></li></c:if>
-                    <li class="HV"><a href="#" class="btn btn_act" data-type="reg"><strong>注册</strong></a></li>
+                    <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="seeMyHouse"><strong>查看我的房源</strong></a></li></c:if>
+                    <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="logout"><strong>退出</strong></a></li></c:if>
+                    <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="reg"><strong>注册</strong></a></li></c:if>
                     <li class="HB "><strong>联系我们</strong>
                         <div class="HC ULbox ContactUs">
                             <div class="ewm"><img src="images/ewm_wx.jpg" alt=""><span>关注中介宝微信</span></div>
@@ -64,7 +67,6 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                             </div>
                         </div>
                     </li>
-                    <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="logout"><strong>退出</strong></a></li></c:if>
                 </ul>
             </div>
         </div>
@@ -183,11 +185,11 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                             <th>
                                 <h2>
                                     <span class="icons">
-                                    <i class="iconfont my no" data-class="no" title="我的房子">&#xe60d;</i>
+                                    <i class="iconfont my <c:if test="${house_owner.tel != house.tel}">no</c:if>" data-class="no" title="我的房子">&#xe60d;</i>
                                     </span>
                                     ${house.area}
                                     <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
+                                        <i class="iconfont collect <c:if test="${!fn:contains(buyFavStr, ','.concat(house.id.toString()).concat(','))}"> no </c:if> btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
                                     </span>
                                     <span class="bhao">编号：${house.id}</span>
                                 </h2>
