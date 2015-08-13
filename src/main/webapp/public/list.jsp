@@ -87,7 +87,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                         </div>
                       </li>
 					  <c:forEach items="${quyus }" var="quyu"  varStatus="status">
-                      <li><label><input type="checkbox" class="check" name="quyus" value="$[quyu.name]">${quyu.name}</label></li>
+                      <li><label><input type="checkbox" class="check" name="quyus" <c:if test="${s_quyus.contains(quyu.name)}">checked="checked"</c:if> value="${ quyu.name}">${quyu.name}</label></li>
                       </c:forEach>
                     </ul>
                 </span>
@@ -95,7 +95,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                     <strong class="">楼型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${lxings }" var="lxing"  varStatus="status">
-                      <li><label><input type="checkbox" class="check" name="lxings" value="$[lxing.name]">${lxing.name}</label></li>
+                      <li><label><input type="checkbox" class="check" name="lxings" <c:if test="${s_lxings.contains(lxing.name)}">checked="checked"</c:if> value="${lxing.name}">${lxing.name}</label></li>
                       </c:forEach>
                     </ul>
                 </span>
@@ -103,7 +103,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                     <strong class="">户型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${hxings }" var="hxing"  varStatus="status">
-                      <li><label><input type="checkbox" class="check" name="hxings" value="$[hxing.name]">${hxing.name}</label></li>
+                      <li><label><input type="checkbox" class="check" name="hxings" <c:if test="${s_hxings.contains(hxing.value)}">checked="checked"</c:if> value="${hxing.value}">${hxing.name}</label></li>
                       </c:forEach>
                     </ul>
                 </span>
@@ -111,7 +111,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                     <strong class="">装潢 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${zxius }" var="zxiu"  varStatus="status">
-                      <li><label><input type="checkbox" class="check" name="zxius" value="$[zxiu.name]">${zxiu.name}</label></li>
+                      <li><label><input type="checkbox" class="check" <c:if test="${s_zxius.contains(zxiu.name)}">checked="checked"</c:if> name="zxius" value="${zxiu.name}">${zxiu.name}</label></li>
                       </c:forEach>
                     </ul>
                 </span>
@@ -207,7 +207,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                             <td>
                                 <p class="kong">&nbsp;</p>
                                 <p class="kong">&nbsp;</p>
-                                <span class="time"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd HH:mm"/></span>
+                                <span class="time"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
                             </td> 
                         </tr>
                             </c:forEach>

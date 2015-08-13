@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="com.youwei.zjb.house.HouseOwnerService"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.youwei.zjb.ThreadSessionHelper"%>
@@ -29,8 +30,10 @@
 	String djiaEnd = request.getParameter("djiaEnd");
 	String lcengStart = request.getParameter("lcengStart");
 	String lcengEnd = request.getParameter("lcengEnd");
-// 	String[] quyus = request.getParameter("quyus");
-// 	String lxings = request.getParameter("lxings");
+	String[] quyus = request.getParameterValues("quyus");
+	String[] lxings = request.getParameterValues("lxings");
+	String[] hxings = request.getParameterValues("hxings");
+	String[] zxius = request.getParameterValues("zxius");
 	HouseOwnerService hs = new HouseOwnerService();
 	Page<House> p = new Page<House>();
 	try{
@@ -78,15 +81,23 @@
 	if(StringUtils.isNotEmpty(lcengEnd)){
 		query.lcengEnd = Integer.valueOf(lcengEnd);
 		request.setAttribute("lcengEnd", Integer.valueOf(lcengEnd));
+	} 
+	if(quyus!=null && quyus.length>0){
+		query.quyus = Arrays.asList(quyus);
+		request.setAttribute("s_quyus", Arrays.toString(quyus));
 	}
-// 	if(StringUtils.isNotEmpty(quyus)){
-// 		query.quyus = quyus;
-// 		request.setAttribute("quyus", Integer.valueOf(quyus));
-// 	}
-// 	if(StringUtils.isNotEmpty(lxings)){
-// 		query.lcengEnd = Integer.valueOf(lxings);
-// 		request.setAttribute("lxings", Integer.valueOf(lxings));
-// 	}
+	if(lxings!=null && lxings.length>0){
+		query.lxing = Arrays.asList(lxings);
+		request.setAttribute("s_lxings", Arrays.toString(lxings));
+	}
+	if(hxings!=null && hxings.length>0){
+		query.fxing = Arrays.asList(hxings);
+		request.setAttribute("s_hxings", Arrays.toString(hxings));
+	}
+	if(zxius!=null && zxius.length>0){
+		query.zxiu = Arrays.asList(zxius);
+		request.setAttribute("s_zxius", Arrays.toString(zxius));
+	}
 	String citypy=ThreadSessionHelper.getCityPinyin();
 	CityService cityService = new CityService();
 	JSONArray citys = cityService.getCitys();
