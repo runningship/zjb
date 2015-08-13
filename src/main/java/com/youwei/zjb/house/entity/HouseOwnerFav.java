@@ -19,4 +19,5 @@ public class HouseOwnerFav {
 	
 	public Integer hoid;
 	
+	public Integer cuzu;
 }

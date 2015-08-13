@@ -187,7 +187,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                                     </span>
                                     ${house.area}
                                     <span class="icons">
-                                        <i class="iconfont collect no btn_act" data-type="SC" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
+                                        <i class="iconfont collect no btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
                                     </span>
                                     <span class="bhao">编号：${house.id}</span>
                                 </h2>

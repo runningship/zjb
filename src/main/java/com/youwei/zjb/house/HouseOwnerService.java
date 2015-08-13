@@ -234,7 +234,6 @@ public class HouseOwnerService {
 			throw new GException(PlatformExceptionType.BusinessException,"账号或密码不正确");
 		}
 		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner, po);
-		
 //		Cookie cookieTel = new Cookie("tel", tel);
 //		cookieTel.setMaxAge(-1);
 //		response.addCookie(cookieTel);
@@ -499,7 +498,7 @@ public class HouseOwnerService {
 	}
 	
 	@WebMethod
-	public ModelAndView toggleFav(Integer hid){
+	public ModelAndView toggleFav(Integer hid , Integer cuzu){
 		ModelAndView mv = new ModelAndView();
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		HouseOwnerFav po = dao.getUniqueByParams(HouseOwnerFav.class, new String[]{"hid" , "hoid" },  new Object[]{hid , owner.id});
@@ -507,6 +506,7 @@ public class HouseOwnerService {
 			HouseOwnerFav vo = new HouseOwnerFav();
 			vo.hid = hid;
 			vo.hoid = owner.id;
+			vo.cuzu = cuzu;
 			dao.saveOrUpdate(vo);
 		}else{
 			dao.delete(po);

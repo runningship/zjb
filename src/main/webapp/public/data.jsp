@@ -1,4 +1,8 @@
 <%@page import="java.util.Arrays"%>
+<%@page import="com.youwei.zjb.house.entity.HouseOwner"%>
+<%@page import="com.youwei.zjb.KeyConstants"%>
+<%@page import="org.bc.web.ThreadSession"%>
+<%@page import="com.youwei.zjb.house.entity.HouseOwnerFav"%>
 <%@page import="com.youwei.zjb.house.HouseOwnerService"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.youwei.zjb.ThreadSessionHelper"%>
@@ -20,6 +24,16 @@
 	String currentPageNo = request.getParameter("currentPageNo");
 	
 	CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
+	HouseOwner user = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+	if(user!=null){
+		List<HouseOwnerFav> buyFavList = dao.listByParams(HouseOwnerFav.class, "from HouseOwnerFav where hoid=?", user.id);
+		StringBuilder buyFavStr = new StringBuilder();
+		for(HouseOwnerFav fav : buyFavList){
+			buyFavStr.append(fav.hid).append(",");
+		}
+		request.setAttribute("buyFavStr", buyFavStr);
+	}
+	
 	String area = request.getParameter("area");
 	String address = request.getParameter("address");
 	String mjiStart = request.getParameter("mjiStart");

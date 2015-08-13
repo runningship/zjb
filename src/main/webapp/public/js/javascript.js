@@ -107,7 +107,7 @@ var form=$('.forms_reg'),
              mysuccess: function(data){
                  var exp = new Date();
                  exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                 document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString()+ "; ";
+                 document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; ";
                  layer.open({
                      content:'注册成功',
                      btn: ['OK']
@@ -213,24 +213,25 @@ $(document).on('click', '.btn_act', function(event) {
     		openLoginWindow();
     		return;
     	}
+    	
         if(Thi.hasClass('no')){
         	YW.ajax({
                 type: 'POST',
-                url: '/c/weixin/houseOwner/toggleFav?hid='+Thi.attr('hid'),
+                url: '/c/weixin/houseOwner/toggleFav?hid='+Thi.attr('hid')+'&cuzu='+Thi.attr('cuzu'),
                 mysuccess: function(data){
                 	Thi.removeClass('no');
-                    layer.msg('测试：未收藏→收藏');
+                    layer.msg('已收藏');
                 }
               });
         }else{
-            // $.ajax({
-            //   type: 'POST',
-            //   url: '?tel='+tel,
-            //   success: function(data){
-                Thi.addClass('no');
-                layer.msg('测试：收藏→未收藏');
-            //   }
-            // });
+        	YW.ajax({
+                type: 'POST',
+                url: '/c/weixin/houseOwner/toggleFav?hid='+Thi.attr('hid')+'&cuzu='+Thi.attr('cuzu'),
+                mysuccess: function(data){
+                	Thi.addClass('no');
+                    layer.msg('取消收藏');
+                }
+              });
         }
     }else if(ThiType=='submit'){
         $('.submit').click();
@@ -352,7 +353,7 @@ $(document).ready(function() {
     //     area: ['320px', '400px'], 
     //     content: $('.regbox')
     // });
-    autoComplete($('#nope'));
+    //autoComplete($('#nope'));
 });
 /* house */
   function setSearchValue(index){
