@@ -1,5 +1,6 @@
 package com.youwei.zjb.house;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,10 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.HqlHelper;
 import org.bc.sdak.utils.JSONHelper;
 import org.bc.sdak.utils.LogUtil;
+import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
@@ -35,6 +38,8 @@ import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
+import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
 
 /**
@@ -257,6 +262,176 @@ public class HouseOwnerService {
 		ModelAndView mv = new ModelAndView();
 		page = dao.findPage(page, "from HouseOwner ");
 		mv.data.put("page", JSONHelper.toJSON(page));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView listAllHouse(HouseQuery query ,Page<House> page){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql =  new StringBuilder(" select h  from House  h where 1=1");
+		
+		if(StringUtils.isNotEmpty(query.ztai)){
+			hql.append(" and h.ztai like ? ");
+			params.add(query.ztai);
+		}
+		
+		if(StringUtils.isNotEmpty(query.search)){
+			query.search = query.search.replace(" ", "");
+			if(StringUtils.isNotEmpty(query.search)){
+				hql.append(" and (h.area like ? ");
+				params.add("%"+query.search+"%");
+				try{
+					int id = Integer.valueOf(query.search);
+					hql.append(" or h.id=? ");
+					params.add(id);
+				}catch(Exception ex){
+					
+				}
+				hql.append(")");
+			}
+			
+		}
+		if(query.id!=null){
+			hql.append(" and h.id = ? ");
+			params.add(query.id);
+		}
+		if(StringUtils.isNotEmpty(query.dhao)){
+			hql.append(" and h.dhao = ? ");
+			params.add(query.dhao);
+		}
+		if(StringUtils.isNotEmpty(query.area)){
+			query.area = query.area.replace(" ", "");
+			hql.append(" and h.area like ? ");
+			params.add("%"+query.area+"%");
+		}
+		if(StringUtils.isNotEmpty(query.address)){
+			query.address = query.address.replace(" ", "");
+			hql.append(" and h.address like ? ");
+			params.add("%"+query.address+"%");
+		}
+		if(StringUtils.isNotEmpty(query.fhao)){
+			hql.append(" and h.fhao like ? ");
+			params.add(query.fhao+"%");
+		}
+		if(StringUtils.isNotEmpty(query.favStr)){
+			hql.append(" and h.fav like ? ");
+			params.add("%"+query.favStr+"%");
+		}
+		
+		if(query.quyus!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.quyus.size();i++){
+				hql.append(" h.quyu like ? ");
+				if(i<query.quyus.size()-1){
+					hql.append(" or ");
+				}
+				params.add("%"+query.quyus.get(i)+"%");
+			}
+			hql.append(" )");
+		}
+		
+		if(query.lxing!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.lxing.size();i++){
+				hql.append(" h.lxing = ? ");
+				if(i<query.lxing.size()-1){
+					hql.append(" or ");
+				}
+				params.add(query.lxing.get(i));
+			}
+			hql.append(" )");
+		}
+		if(query.zxiu!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.zxiu.size();i++){
+				hql.append(" h.zxiu = ? ");
+				if(i<query.zxiu.size()-1){
+					hql.append(" or ");
+				}
+				params.add(query.zxiu.get(i));
+			}
+			hql.append(" )");
+		}
+		
+		if(query.fxing!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.fxing.size();i++){
+				String fxing = query.fxing.get(i);
+				FangXing fx = FangXing.valueOf(fxing);
+				hql.append("( h.hxf=? and h.hxt=? and h.hxw=?)");
+				if(i<query.fxing.size()-1){
+					hql.append(" or ");
+				}
+				params.add(fx.getHxf());
+				params.add(fx.getHxt());
+				params.add(fx.getHxw());
+			}
+			hql.append(" )");
+		}
+
+		if(StringUtils.isNotEmpty(query.leibie)){
+			hql.append(" and h.leibie = ? ");
+			params.add(query.leibie);
+		}
+		if(query.zjiaStart!=null){
+			hql.append(" and h.zjia>= ? ");
+			params.add(query.zjiaStart);
+		}
+		if(query.zjiaEnd!=null){
+			hql.append(" and h.zjia<= ? ");
+			params.add(query.zjiaEnd);
+		}
+		if(query.yearStart!=null){
+			hql.append(" and h.dateyear>= ? ");
+			params.add(query.yearStart);
+		}
+		if(query.yearEnd!=null){
+			hql.append(" and h.dateyear<= ? ");
+			params.add(query.yearEnd);
+		}
+		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateStart,DateSeparator.After,params));
+		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateEnd, DateSeparator.Before , params));
+		
+		if(query.mjiStart!=null){
+			hql.append(" and h.mji>= ? ");
+			params.add(query.mjiStart);
+		}
+		if(query.mjiEnd!=null){
+			hql.append(" and h.mji<= ? ");
+			params.add(query.mjiEnd);
+		}
+		if(query.lcengStart!=null){
+			hql.append(" and h.lceng>= ? ");
+			params.add(query.lcengStart);
+		}
+		if(query.lcengEnd!=null){
+			hql.append(" and h.lceng<= ? ");
+			params.add(query.lcengEnd);
+		}
+		if(query.djiaStart!=null){
+			hql.append(" and h.djia>= ? ");
+			params.add(query.djiaStart);
+		}
+		if(query.djiaEnd!=null){
+			hql.append(" and h.djia<= ? ");
+			params.add(query.djiaEnd);
+		}
+		
+		if(query.userid!=null){
+			hql.append(" and h.uid= ? ");
+			params.add(query.userid);
+		}
+		
+		hql.append(" and (isdel=0 or isdel is null) ");
+		page.orderBy = "h.dateadd";
+		page.order = Page.DESC;
+		page.setPageSize(25);
+		LogUtil.info("house query hql : "+ hql.toString());
+		page = dao.findPage(page, hql.toString(),params.toArray());
+		ModelAndView mv = new ModelAndView();
+		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.sdf.toPattern());
+//		fixEnumValue(jpage);
+		mv.data.put("page", jpage);
 		return mv;
 	}
 	

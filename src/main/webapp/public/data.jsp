@@ -1,3 +1,4 @@
+<%@page import="com.youwei.zjb.house.HouseOwnerService"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.youwei.zjb.ThreadSessionHelper"%>
 <%@page import="net.sf.json.JSONObject"%>
@@ -5,7 +6,6 @@
 <%@page import="net.sf.json.JSONArray"%>
 <%@page import="com.youwei.zjb.house.HouseQuery"%>
 <%@page import="org.bc.sdak.Page"%>
-<%@page import="com.youwei.zjb.house.HouseService"%>
 <%@page import="com.youwei.zjb.house.LouXing"%>
 <%@page import="com.youwei.zjb.house.FangXing"%>
 <%@page import="java.util.List"%>
@@ -31,7 +31,7 @@
 	String lcengEnd = request.getParameter("lcengEnd");
 // 	String[] quyus = request.getParameter("quyus");
 // 	String lxings = request.getParameter("lxings");
-	HouseService hs = new HouseService();
+	HouseOwnerService hs = new HouseOwnerService();
 	Page<House> p = new Page<House>();
 	try{
 		p.setCurrentPageNo(Integer.valueOf(currentPageNo));
@@ -96,7 +96,7 @@
 			request.setAttribute("quyus",city.getJSONArray("quyu"));
 		}
 	}
-	hs.listAll(query, p);
+	hs.listAllHouse(query, p);
 	request.setAttribute("list", p.getResult());
 	request.setAttribute("p", p);
 	request.setAttribute("zxius", ZhuangXiu.toJsonArray());

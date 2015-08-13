@@ -69,6 +69,7 @@ public class SessionFilter implements Filter{
 		
 		excludes.add("/bosh/basic.html");
 		excludes.add("/bosh-test/basic.html");
+		excludes.add("/public/");
 //		excludes.add("/c/house/exist");
 	}
 	@Override
@@ -98,7 +99,7 @@ public class SessionFilter implements Filter{
 			chain.doFilter(request, response);
 			return;
 		}
-		if(path.contains("houseOwner")){
+		if(path.contains("houseOwner") || path.contains("/public/")){
 			String cityPy = ThreadSessionHelper.getHouseOwnerCity(req);
 			ThreadSession.setCityPY(cityPy);
 			chain.doFilter(request, response);
