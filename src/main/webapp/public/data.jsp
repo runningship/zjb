@@ -44,6 +44,7 @@
 	String djiaEnd = request.getParameter("djiaEnd");
 	String lcengStart = request.getParameter("lcengStart");
 	String lcengEnd = request.getParameter("lcengEnd");
+	String action = request.getParameter("action");
 	String[] quyus = request.getParameterValues("quyus");
 	String[] lxings = request.getParameterValues("lxings");
 	String[] hxings = request.getParameterValues("hxings");
@@ -56,6 +57,13 @@
 		
 	}
 	HouseQuery query = new HouseQuery();
+	if(StringUtils.isNotEmpty(action)){
+		query.action = action;
+		query.userid = user.id;
+	}
+	if("my".equals(action)){
+		query.tel = user.tel;
+	}
 	if(StringUtils.isNotEmpty(area)){
 		query.area = area;
 		request.setAttribute("area", area);

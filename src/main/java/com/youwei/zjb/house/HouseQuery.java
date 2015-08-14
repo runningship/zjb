@@ -37,7 +37,8 @@ public class HouseQuery{
 	public String favStr;
 	public String scope="";
 	public Integer sh;
-	
+
+	public String action;
 	public String area;
 	public String tel;
 	public String address;

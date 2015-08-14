@@ -268,6 +268,11 @@ public class HouseOwnerService {
 	public ModelAndView listAllHouse(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql =  new StringBuilder(" select h  from House  h where 1=1");
+
+		if("fav".equals(query.action)){
+			 hql =  new StringBuilder(" select h  from House  h,HouseOwnerFav fav where fav.hid=h.id and fav.hoid=?");
+				params.add(query.userid);
+		}
 		
 		if(query.seeGX!=null){
 			hql.append(" and h.seeGX = ? ");
@@ -389,7 +394,7 @@ public class HouseOwnerService {
 			params.add(query.djiaEnd);
 		}
 		
-		if(StringUtils.isEmpty(query.tel)){
+		if(StringUtils.isNotEmpty(query.tel)){
 			hql.append(" and h.tel= ? ");
 			params.add(query.tel);
 		}

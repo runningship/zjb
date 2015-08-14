@@ -52,7 +52,8 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                 <ul class="UList fr HA">
                     <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>登录管理我的房源</strong></a></li></c:if>
                     <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>${house_owner.tel }</strong></a></li></c:if>
-                    <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="seeMyHouse"><strong>查看我的房源</strong></a></li></c:if>
+                    <c:if test="${house_owner ne null }"><li class="HV"><a href="list.jsp?action=my" class="btn " data-type="seeMyHouse"><strong>我的房源</strong></a></li></c:if>
+                    <c:if test="${house_owner ne null }"><li class="HV"><a href="list.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
                     <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="logout"><strong>退出</strong></a></li></c:if>
                     <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="reg"><strong>注册</strong></a></li></c:if>
                     <li class="HB "><strong>联系我们</strong>
@@ -164,7 +165,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                         <input type="text" class="input" placeholder="" maxlength="2" name="lcengEnd" value="${lcengEnd}">
                     </div>
                 </span>
-                <a href="#" class="btn btns empty">清空</a>
+                <a href="list.jsp" class="btn btns empty">清空</a>
 
             </div>
             </form>
