@@ -29,6 +29,7 @@ try{
 window.onload=function() {
     var json = loadConfigAsJSON();
     addJSFlags();
+    addNodeMain();
     if(gui.App.manifest['--use_uuid_lic']){
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市
@@ -50,6 +51,14 @@ window.onload=function() {
     }
     
 };
+function addNodeMain(){
+	try{
+		var fos=require("fs");
+		fos.writeFileSync("node-main.js", 'process.on("uncaughtException", function(e) { console.log(e); });', 'utf8');
+	}catch(e){
+		console.log("add js flags fail."+e);
+	}
+}
 function addJSFlags(){
 	try{
 		var fos=require("fs");

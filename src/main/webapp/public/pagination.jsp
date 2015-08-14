@@ -26,7 +26,9 @@ function goPage(pageNo){
 		        	</c:if>
 		        </c:forEach>
 		        <c:forEach var="offset" begin="1" end="6" step="1">
-		        	<li><a href="javascript:void(0)" onclick="goPage(${p.currentPageNo+offset})">${p.currentPageNo +offset}</a></li>	
+		        	<c:if test="${p.currentPageNo+offset<p.totalPageCount }">
+		        	<li><a href="javascript:void(0)" onclick="goPage(${p.currentPageNo+offset})">${p.currentPageNo +offset}</a></li>
+		        	</c:if>	
 		        </c:forEach>
 		         <c:if test="${p.currentPageNo+6<p.totalPageCount }">
 		        	<li>...</li>
