@@ -32,9 +32,9 @@
 <body>
 <div class="bodyer">
     <div class="header">
-        <jsp:include page="top.jsp?type=cushou"></jsp:include>
+        <jsp:include page="top.jsp?type=chushou"></jsp:include>
         <div class="search">
-        <form class="form" action="list.jsp" id="searchForm">
+        <form class="form" action="chushou.jsp" id="searchForm">
         	<input type="hidden" name="currentPageNo" id="currentPageNo"/>
             <div class="wrap">
                 <span class="searchItem">

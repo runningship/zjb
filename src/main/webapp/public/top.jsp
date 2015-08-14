@@ -23,7 +23,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
         <a  href="#" class="SwitchCityBtn btn_act" data-type="SwitchCity"><span id="currentCity"  py="hefei" >合肥</span> <i class="iconfont">&#xe604;</i></a>
 
         <ul class="classTab">
-            <li <c:if test="${type=='cushou' }">class="active"</c:if> ><a href="cushou.jsp">找二手房</a></li>
+            <li <c:if test="${type=='chushou' }">class="active"</c:if> ><a href="chushou.jsp">找二手房</a></li>
             <li <c:if test="${type=='chuzu' }">class="active"</c:if>><a href="chuzu.jsp">找出租房</a></li>
         </ul>
 

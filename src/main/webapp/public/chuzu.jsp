@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<jsp:include page="data.jsp"></jsp:include>
+<jsp:include page="data2.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +34,7 @@
     <div class="header">
 		<jsp:include page="top.jsp?type=chuzu"></jsp:include>
         <div class="search">
-        <form class="form" action="list.jsp" id="searchForm">
+        <form class="form" action="chuzu.jsp" id="searchForm">
         	<input type="hidden" name="currentPageNo" id="currentPageNo"/>
             <div class="wrap">
                 <span class="searchItem">
@@ -73,6 +73,15 @@
                     </ul>
                 </span>
                 <span class="searchItem ">
+                    <strong class="">方式<em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
+                    <ul class="more ">
+                      <li><label><input type="radio" class="check" name="fangshi" <c:if test="${s_fangshi eq null}">checked="checked"</c:if> value="">不限</label></li>
+					  <c:forEach items="${fangshis }" var="fangshi"  varStatus="status">
+                      <li><label><input type="radio" class="check" name="fangshi" <c:if test="${s_fangshi == fangshi.code}">checked="checked"</c:if> value="${fangshi.code}">${fangshi.name}</label></li>
+                      </c:forEach>
+                    </ul>
+                </span>
+                <span class="searchItem ">
                     <strong class="">装潢 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${zxius }" var="zxiu"  varStatus="status">
@@ -80,13 +89,13 @@
                       </c:forEach>
                     </ul>
                 </span>
-                <span class="searchItem">
-                    <input type="text" class="input" placeholder="路段" name="address" value="${address}">
-                </span>
                 <a href="#" class="btn btns btn_act search" data-type="submit">搜索</a>
                 <input type="submit" class="hidden submit" value="submit">
             </div>
             <div class="wrap">
+                <span class="searchItem w15">
+                    <input type="text" class="input" placeholder="路段" name="address" value="${address}">
+                </span>
                 <span class="searchItem w15">
                     <label class="inputTit" for="mji">面积</label>
                     <div class="inputBox">
@@ -98,23 +107,13 @@
                     </div>
                 </span>
                 <span class="searchItem w20">
-                    <label class="inputTit" for="zjia">总价</label>
+                    <label class="inputTit" for="zjia">租金</label>
                     <div class="inputBox">
                         <input type="text" id="zjia" class="input" placeholder="" maxlength="3" name="zjiaStart" value="${zjiaStart}">
                     </div>
                     <span class="inputLab">-</span>
                     <div class="inputBox">
                         <input type="text" class="input" placeholder="" maxlength="3" name="zjiaEnd" value="${zjiaEnd}">
-                    </div>
-                </span>
-                <span class="searchItem w20">
-                    <label class="inputTit" for="djia">单价</label>
-                    <div class="inputBox">
-                        <input type="text" id="djia" class="input" placeholder="" maxlength="4" name="djiaStart" value="${djiaStart}">
-                    </div>
-                    <span class="inputLab">-</span>
-                    <div class="inputBox">
-                        <input type="text" class="input" placeholder="" maxlength="4" name="djiaEnd" value="${djiaEnd}">
                     </div>
                 </span>
                 <span class="searchItem w15">

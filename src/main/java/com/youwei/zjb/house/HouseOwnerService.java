@@ -263,7 +263,7 @@ public class HouseOwnerService {
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}
-	
+
 	@WebMethod
 	public ModelAndView listAllHouse(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
@@ -394,6 +394,148 @@ public class HouseOwnerService {
 			params.add(query.djiaEnd);
 		}
 		
+		if(StringUtils.isNotEmpty(query.tel)){
+			hql.append(" and h.tel= ? ");
+			params.add(query.tel);
+		}
+		
+		hql.append(" and (isdel=0 or isdel is null) ");
+		page.orderBy = "h.dateadd";
+		page.order = Page.DESC;
+		page.setPageSize(25);
+		LogUtil.info("house query hql : "+ hql.toString());
+		page = dao.findPage(page, hql.toString(),params.toArray());
+		ModelAndView mv = new ModelAndView();
+		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.sdf.toPattern());
+//		fixEnumValue(jpage);
+		mv.data.put("page", jpage);
+		return mv;
+	}
+	@WebMethod
+	public ModelAndView listAllRent(HouseQuery query ,Page<House> page){
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql =  new StringBuilder(" select h  from HouseRent  h where 1=1");
+
+		if("fav".equals(query.action)){
+			 hql =  new StringBuilder(" select h  from HouseRent  h,HouseOwnerFav fav where fav.hid=h.id and fav.hoid=?");
+				params.add(query.userid);
+		}
+		
+		if(query.seeGX!=null){
+			hql.append(" and h.seeGX = ? ");
+			params.add(query.seeGX);
+		}
+		
+		if(StringUtils.isNotEmpty(query.search)){
+			query.search = query.search.replace(" ", "");
+			if(StringUtils.isNotEmpty(query.search)){
+				hql.append(" and (h.area like ? ");
+				params.add("%"+query.search+"%");
+				try{
+					int id = Integer.valueOf(query.search);
+					hql.append(" or h.id=? ");
+					params.add(id);
+				}catch(Exception ex){
+					
+				}
+				hql.append(")");
+			}
+			
+		}
+		if(StringUtils.isNotEmpty(query.area)){
+			query.area = query.area.replace(" ", "");
+			hql.append(" and h.area like ? ");
+			params.add("%"+query.area+"%");
+		}
+		if(StringUtils.isNotEmpty(query.address)){
+			query.address = query.address.replace(" ", "");
+			hql.append(" and h.address like ? ");
+			params.add("%"+query.address+"%");
+		}
+		
+		if(query.quyus!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.quyus.size();i++){
+				hql.append(" h.quyu like ? ");
+				if(i<query.quyus.size()-1){
+					hql.append(" or ");
+				}
+				params.add("%"+query.quyus.get(i)+"%");
+			}
+			hql.append(" )");
+		}
+		
+		if(query.lxing!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.lxing.size();i++){
+				hql.append(" h.lxing = ? ");
+				if(i<query.lxing.size()-1){
+					hql.append(" or ");
+				}
+				params.add(query.lxing.get(i));
+			}
+			hql.append(" )");
+		}
+		if(query.zxiu!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.zxiu.size();i++){
+				hql.append(" h.zxiu = ? ");
+				if(i<query.zxiu.size()-1){
+					hql.append(" or ");
+				}
+				params.add(query.zxiu.get(i));
+			}
+			hql.append(" )");
+		}
+		
+		if(query.fxing!=null){
+			hql.append(" and ( ");
+			for(int i=0;i<query.fxing.size();i++){
+				String fxing = query.fxing.get(i);
+				FangXing fx = FangXing.valueOf(fxing);
+				hql.append("( h.hxf=? and h.hxt=? and h.hxw=?)");
+				if(i<query.fxing.size()-1){
+					hql.append(" or ");
+				}
+				params.add(fx.getHxf());
+				params.add(fx.getHxt());
+				params.add(fx.getHxw());
+			}
+			hql.append(" )");
+		}
+
+		if(query.zjiaStart!=null){
+			hql.append(" and h.zjia>= ? ");
+			params.add(query.zjiaStart);
+		}
+		if(query.zjiaEnd!=null){
+			hql.append(" and h.zjia<= ? ");
+			params.add(query.zjiaEnd);
+		}
+		
+//		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateStart,DateSeparator.After,params));
+//		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateEnd, DateSeparator.Before , params));
+		
+		if(query.mjiStart!=null){
+			hql.append(" and h.mji>= ? ");
+			params.add(query.mjiStart);
+		}
+		if(query.mjiEnd!=null){
+			hql.append(" and h.mji<= ? ");
+			params.add(query.mjiEnd);
+		}
+		if(query.lcengStart!=null){
+			hql.append(" and h.lceng>= ? ");
+			params.add(query.lcengStart);
+		}
+		if(query.lcengEnd!=null){
+			hql.append(" and h.lceng<= ? ");
+			params.add(query.lcengEnd);
+		}
+		if(query.fangshi!=null){
+			hql.append(" and h.fangshi=? ");
+			params.add(query.fangshi);
+		}
 		if(StringUtils.isNotEmpty(query.tel)){
 			hql.append(" and h.tel= ? ");
 			params.add(query.tel);
