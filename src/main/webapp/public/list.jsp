@@ -199,7 +199,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                                     <span>${house.lxing} ${house.zxiu}</span>
                                     <span>${house.lceng}层 总层${house.zceng}</span>
                                 </p>
-                                <p class="dz"><span>${house.address} </span> </p>
+                                <p class="dz"><span>${house.quyu} ${house.address} </span> </p>
                             </th> 
                             <td>
                                 <p class="kong">&nbsp;</p>
