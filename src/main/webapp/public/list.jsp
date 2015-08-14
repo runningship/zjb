@@ -185,7 +185,7 @@ request.setAttribute(KeyConstants.Session_House_Owner, session.getAttribute(KeyC
                             <th>
                                 <h2>
                                     <span class="icons">
-                                    <i class="iconfont my <c:if test="${house_owner.tel != house.tel}">no</c:if>" data-class="no" title="我的房子">&#xe60d;</i>
+                                    <i class="iconfont my <c:if test="${house_owner.tel != house.tel || house_owner.tel == null}">no</c:if>" data-class="no" value="${house.tel }" title="我的房子">&#xe60d;</i>
                                     </span>
                                     ${house.area}
                                     <span class="icons">
