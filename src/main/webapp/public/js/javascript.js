@@ -56,7 +56,7 @@ var form=$('.forms_login'),
             mysuccess: function(data){
                 var exp = new Date();
                 exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; ";
+                document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/public";
                 window.location = 'list.jsp';
             }
         });
@@ -107,7 +107,7 @@ var form=$('.forms_reg'),
              mysuccess: function(data){
                  var exp = new Date();
                  exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                 document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; ";
+                 document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/public";
                  layer.open({
                      content:'注册成功',
                      btn: ['OK']

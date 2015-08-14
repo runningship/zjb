@@ -43,6 +43,7 @@ public class HouseQuery{
 	public String address;
 	public boolean useLike;
 	public boolean listMyAdd = false;
+	public Integer seeGX;
 	
 	// for phone client
 	//current page number

@@ -121,6 +121,8 @@
 			request.setAttribute("quyus",city.getJSONArray("quyu"));
 		}
 	}
+	query.ztai="4";
+	query.seeGX=1;
 	hs.listAllHouse(query, p);
 	request.setAttribute("list", p.getResult());
 	request.setAttribute("p", p);

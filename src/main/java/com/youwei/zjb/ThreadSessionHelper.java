@@ -52,16 +52,16 @@ public class ThreadSessionHelper {
     }
     
     public static String getHouseOwnerCity(HttpServletRequest req){
-    	String cityPy = req.getParameter("cityPy");
-    	if(StringUtils.isNotEmpty(cityPy)){
-    		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , cityPy);
-    		return cityPy;
-    	}
-    	
-    	cityPy = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
-    	if(StringUtils.isNotEmpty(cityPy)){
-    		return cityPy;
-    	}
+//    	String cityPy = req.getParameter("cityPy");
+//    	if(StringUtils.isNotEmpty(cityPy)){
+//    		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , cityPy);
+//    		return cityPy;
+//    	}
+//    	
+//    	cityPy = (String)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner_City);
+//    	if(StringUtils.isNotEmpty(cityPy)){
+//    		return cityPy;
+//    	}
     	
     	String cityInCookie = null;
     	Cookie[] cookies = ThreadSession.HttpServletRequest.get().getCookies();
@@ -70,11 +70,11 @@ public class ThreadSessionHelper {
     		return null;
     	}
     	for(Cookie cookie : cookies){
-			if(KeyConstants.Session_House_Owner_City.equals(cookie.getName())){
+			if("cityPy".equals(cookie.getName())){
 				cityInCookie = cookie.getValue();
 			}
 		}
-    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , cityPy);
+    	ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_House_Owner_City , cityInCookie);
     	return cityInCookie;
     }
     

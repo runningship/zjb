@@ -269,9 +269,9 @@ public class HouseOwnerService {
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql =  new StringBuilder(" select h  from House  h where 1=1");
 		
-		if(StringUtils.isNotEmpty(query.ztai)){
-			hql.append(" and h.ztai like ? ");
-			params.add(query.ztai);
+		if(query.seeGX!=null){
+			hql.append(" and h.seeGX = ? ");
+			params.add(query.seeGX);
 		}
 		
 		if(StringUtils.isNotEmpty(query.search)){
@@ -290,14 +290,6 @@ public class HouseOwnerService {
 			}
 			
 		}
-		if(query.id!=null){
-			hql.append(" and h.id = ? ");
-			params.add(query.id);
-		}
-		if(StringUtils.isNotEmpty(query.dhao)){
-			hql.append(" and h.dhao = ? ");
-			params.add(query.dhao);
-		}
 		if(StringUtils.isNotEmpty(query.area)){
 			query.area = query.area.replace(" ", "");
 			hql.append(" and h.area like ? ");
@@ -307,14 +299,6 @@ public class HouseOwnerService {
 			query.address = query.address.replace(" ", "");
 			hql.append(" and h.address like ? ");
 			params.add("%"+query.address+"%");
-		}
-		if(StringUtils.isNotEmpty(query.fhao)){
-			hql.append(" and h.fhao like ? ");
-			params.add(query.fhao+"%");
-		}
-		if(StringUtils.isNotEmpty(query.favStr)){
-			hql.append(" and h.fav like ? ");
-			params.add("%"+query.favStr+"%");
 		}
 		
 		if(query.quyus!=null){
@@ -368,10 +352,6 @@ public class HouseOwnerService {
 			hql.append(" )");
 		}
 
-		if(StringUtils.isNotEmpty(query.leibie)){
-			hql.append(" and h.leibie = ? ");
-			params.add(query.leibie);
-		}
 		if(query.zjiaStart!=null){
 			hql.append(" and h.zjia>= ? ");
 			params.add(query.zjiaStart);
@@ -380,16 +360,9 @@ public class HouseOwnerService {
 			hql.append(" and h.zjia<= ? ");
 			params.add(query.zjiaEnd);
 		}
-		if(query.yearStart!=null){
-			hql.append(" and h.dateyear>= ? ");
-			params.add(query.yearStart);
-		}
-		if(query.yearEnd!=null){
-			hql.append(" and h.dateyear<= ? ");
-			params.add(query.yearEnd);
-		}
-		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateStart,DateSeparator.After,params));
-		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateEnd, DateSeparator.Before , params));
+		
+//		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateStart,DateSeparator.After,params));
+//		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateEnd, DateSeparator.Before , params));
 		
 		if(query.mjiStart!=null){
 			hql.append(" and h.mji>= ? ");
@@ -416,9 +389,9 @@ public class HouseOwnerService {
 			params.add(query.djiaEnd);
 		}
 		
-		if(query.userid!=null){
-			hql.append(" and h.uid= ? ");
-			params.add(query.userid);
+		if(StringUtils.isEmpty(query.tel)){
+			hql.append(" and h.tel= ? ");
+			params.add(query.tel);
 		}
 		
 		hql.append(" and (isdel=0 or isdel is null) ");
