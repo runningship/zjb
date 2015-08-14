@@ -56,8 +56,8 @@ var form=$('.forms_login'),
             mysuccess: function(data){
                 var exp = new Date();
                 exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/public";
-                window.location = 'list.jsp';
+                document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/";
+                window.location.reload();
             }
         });
     	
@@ -70,7 +70,7 @@ function logoutAction(){
         type: 'POST',
         url: '/c/weixin/houseOwner/logoutWZJB',
         mysuccess: function(data){
-            window.location = 'list.jsp';
+            window.location.reload();
         }
     });
 }
@@ -107,7 +107,7 @@ var form=$('.forms_reg'),
              mysuccess: function(data){
                  var exp = new Date();
                  exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                 document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/public";
+                 document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/";
                  layer.open({
                      content:'注册成功',
                      btn: ['OK']
@@ -194,6 +194,11 @@ $(document).on('click', '.btn_act', function(event) {
         regCodeFun();
     }else if(ThiType=='logout'){
     	logoutAction();
+    }else if(ThiType=='empty'){
+    	var action = $('#action').val();
+    	$('input').val('');
+    	$('#action').val(action);
+    	$('.submit').click();
     }else if(ThiType=='getPwds'){
         layer.msg('找回密码功能');
     }else if(ThiType=='SwitchCity'){

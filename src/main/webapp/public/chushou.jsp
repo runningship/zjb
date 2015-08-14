@@ -35,6 +35,7 @@
         <jsp:include page="top.jsp?type=chushou"></jsp:include>
         <div class="search">
         <form class="form" action="chushou.jsp" id="searchForm">
+        	<input type="hidden" name="action" id="action"  value="${action }"/>
         	<input type="hidden" name="currentPageNo" id="currentPageNo"/>
             <div class="wrap">
                 <span class="searchItem">
@@ -127,7 +128,7 @@
                         <input type="text" class="input" placeholder="" maxlength="2" name="lcengEnd" value="${lcengEnd}">
                     </div>
                 </span>
-                <a href="list.jsp" class="btn btns empty">清空</a>
+                <a href="#" class="btn btns empty btn_act"  data-type="empty">清空</a>
 
             </div>
             </form>

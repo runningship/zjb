@@ -1,6 +1,6 @@
 <Settings>
 <Server>localhost</Server>
-<Port>8009</Port>
+<Port>8019</Port>
 <EnableRemoteAdmin>True</EnableRemoteAdmin>
 <EnableHeaderDataSupport>False</EnableHeaderDataSupport>
 <ForceSecureSession>False</ForceSecureSession>

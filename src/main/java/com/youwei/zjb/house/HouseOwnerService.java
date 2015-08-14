@@ -619,6 +619,7 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView toggleFav(Integer hid , Integer cuzu){
+		System.out.println(ThreadSession.getCityPY());
 		ModelAndView mv = new ModelAndView();
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		HouseOwnerFav po = dao.getUniqueByParams(HouseOwnerFav.class, new String[]{"hid" , "hoid" },  new Object[]{hid , owner.id});

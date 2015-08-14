@@ -137,7 +137,7 @@ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Colo
 }
 .searchItem input.input{ border: none; height: inherit; line-height: inherit; padding: 0 10px; width: 100%; border-radius: inherit;
 }
-.searchItem strong{ padding: 0 15px;height: inherit;display: block;line-height: 36px; font-weight: normal;}
+.searchItem strong{ padding: 0 16px;height: inherit;display: block;line-height: 36px; font-weight: normal;}
 .searchItem .more{ position: absolute; left: 0; background: #FFF; z-index: 9;border-radius: 3px;white-space:nowrap; overflow: hidden; height: 0;
 -moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.5);

@@ -1,9 +1,9 @@
 function switchCity(cityPy , cityName){
 	 var exp = new Date();
      exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-     document.cookie = "city=" +cityName+ ";expires=" + exp.toGMTString()+ ";path=/public";
-     document.cookie = "cityPy=" + cityPy + ";expires=" + exp.toGMTString()+ ";path=/public";
-     window.location="list.jsp";
+     document.cookie = "city=" +cityName+ ";expires=" + exp.toGMTString()+ ";path=/";
+     document.cookie = "cityPy=" + cityPy + ";expires=" + exp.toGMTString()+ ";path=/";
+     window.location.reload();
 }
 
 function getCookie(name) { 
