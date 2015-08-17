@@ -54,7 +54,7 @@
       <ul>
         <c:forEach items="${citys}" var="city">
         	<c:if test="${city.status eq 'on' }">
-       			<li><a href="javascript:void(0)" onclick="switchCity('${city.py}' , '${city.name }' );">${city.name }</a></li>
+       			<li><a py="${city.py }" href="javascript:void(0)" onclick="switchCity('${city.py}' , '${city.name }' );">${city.name }</a></li>
        		</c:if>
        	</c:forEach>
       </ul>

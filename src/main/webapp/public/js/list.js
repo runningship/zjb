@@ -1,11 +1,16 @@
 function switchCity(cityPy , cityName){
 	 var exp = new Date();
      exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-     document.cookie = "city=" +cityName+ ";expires=" + exp.toGMTString()+ ";path=/";
+//     document.cookie = "city=" +cityName+ ";expires=" + exp.toGMTString()+ ";path=/";
      document.cookie = "cityPy=" + cityPy + ";expires=" + exp.toGMTString()+ ";path=/";
      window.location.reload();
 }
 
+function clearCache(){
+	  document.cookie='city=a;expires='+ new Date().toGMTString();
+	  document.cookie='city=a;expires='+ new Date().toGMTString()+';path=/';
+	  document.cookie='city=a;expires='+ new Date().toGMTString()+';path=/public';
+}
 function getCookie(name) { 
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
     if(arr=document.cookie.match(reg))
@@ -16,7 +21,7 @@ function getCookie(name) {
 
 $(function(){
 	var cityPy = getCookie('cityPy');
-	var city = getCookie('city');
+	var city = $('.citybox a[py='+cityPy+']').text();
 	var tel = getCookie('tel');
 	if(cityPy && cityPy!='undefined'){
 		$('#currentCity').text(city);

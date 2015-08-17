@@ -43,8 +43,16 @@
 		request.setAttribute("buyFavStr", buyFavStr.toString());
 	}
 	
-	String area = request.getParameter("area");
-	String address = request.getParameter("address");
+	String area= request.getParameter("area");
+	if(area!=null){
+		area = new String(area.getBytes("ISO-8859-1"),"UTF-8");	
+	}
+	
+	String address= request.getParameter("address");
+	if(address!=null){
+		address = new String(address.getBytes("ISO-8859-1"),"UTF-8");	
+	}
+	
 	String mjiStart = request.getParameter("mjiStart");
 	String mjiEnd = request.getParameter("mjiEnd");
 	String zjiaStart = request.getParameter("zjiaStart");
