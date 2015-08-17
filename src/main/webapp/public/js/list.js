@@ -21,6 +21,9 @@ function getCookie(name) {
 
 $(function(){
 	var cityPy = getCookie('cityPy');
+	if(!cityPy){
+		cityPy="hefei";
+	}
 	var city = $('.citybox a[py='+cityPy+']').text();
 	var tel = getCookie('tel');
 	if(cityPy && cityPy!='undefined'){

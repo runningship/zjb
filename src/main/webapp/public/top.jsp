@@ -37,16 +37,15 @@ function seeMyHouse(){
 
         <ul class="UList fr HA">
             <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>登录管理我的房源</strong></a></li></c:if>
-            <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>${house_owner.tel }</strong></a></li></c:if>
-            <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn " onclick="addHouse();" data-type="login"><strong>添加售房</strong></a></li></c:if>
+            <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" ><strong>${house_owner.tel }</strong></a></li></c:if>
             <c:if test="${house_owner ne null }"><li class="HV cuurent"><a href="#" class="btn btn_act" data-type="addHouse"><strong>发布</strong></a></li></c:if>
             <c:if test="${house_owner ne null }">
-            	<c:if test="${type =='chushou' }"><li class="HV"><a href="javascript:void(0)" onclick="seeMyHouse();" class="btn " data-type="seeMyHouse"><strong>我的房源</strong></a></li></c:if>
-            	<c:if test="${type =='chuzu' }"><li class="HV"><a href="chuzu.jsp?action=my" class="btn " data-type="seeMyHouse"><strong>我的房源</strong></a></li></c:if>
+            	<c:if test="${type =='chushou' }"><li class="HV  <c:if test="${action =='my' }">active</c:if> "><a href="javascript:void(0)" onclick="seeMyHouse();" class="btn " data-type="seeMyHouse"><strong>我的房源</strong></a></li></c:if>
+            	<c:if test="${type =='chuzu' }"><li class="HV  <c:if test="${action =='my' }">active</c:if> "><a href="javascript:void(0)" onclick="seeMyHouse();" class="btn " data-type="seeMyHouse"><strong>我的房源</strong></a></li></c:if>
             </c:if>
             <c:if test="${house_owner ne null }">
-            	<c:if test="${type =='chushou' }"><li class="HV"><a href="chushou.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
-            	<c:if test="${type =='chuzu' }"><li class="HV"><a href="chuzu.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
+            	<c:if test="${type =='chushou' }"><li class="HV  <c:if test="${action =='fav' }">active</c:if> "><a href="chushou.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
+            	<c:if test="${type =='chuzu' }"><li class="HV" <c:if test="${action =='fav' }">active</c:if> ><a href="chuzu.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
             </c:if>
             <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="logout"><strong>退出</strong></a></li></c:if>
             <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="reg"><strong>注册</strong></a></li></c:if>
@@ -55,7 +54,7 @@ function seeMyHouse(){
                     <div class="ewm"><img src="images/ewm_wx.jpg" alt=""><span>关注中介宝微信</span></div>
                     <div class="lx">
                         <ul>
-                            <li><a href="#">客服电话：0551-65341555</a></li>
+                            <li><a href="#">客服电话：0551-65314555</a></li>
                             <li class="ablogo"><img src="images/logo_blue.png" alt=""></li>
                             <li class="ablogos"><b>二手房信息处理中心</b></li>
                         </ul>

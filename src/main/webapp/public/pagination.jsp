@@ -26,14 +26,16 @@ function goPage(pageNo){
 		        	</c:if>
 		        </c:forEach>
 		        <c:forEach var="offset" begin="1" end="6" step="1">
-		        	<c:if test="${p.currentPageNo+offset<p.totalPageCount }">
+		        	<c:if test="${p.currentPageNo+offset<=p.totalPageCount }">
 		        	<li><a href="javascript:void(0)" onclick="goPage(${p.currentPageNo+offset})">${p.currentPageNo +offset}</a></li>
 		        	</c:if>	
 		        </c:forEach>
 		         <c:if test="${p.currentPageNo+6<p.totalPageCount }">
 		        	<li>...</li>
 		        </c:if>
+		        <c:if test="${p.currentPageNo<p.totalPageCount }">
 		        <li><a href="javascript:void(0)" onclick="goPage(${p.currentPageNo+1})">下一页</a></li>
 		        <li><a href="javascript:void(0)" onclick="goPage(${p.totalPageCount})">尾页</a></li>
+		        </c:if>
 		    </ul>
 		</div>

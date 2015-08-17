@@ -38,12 +38,12 @@
 		if("my".equals(action)){
 			query.tel = user.tel;
 		}
-		List<HouseOwnerFav> buyFavList = dao.listByParams(HouseOwnerFav.class, "from HouseOwnerFav where cuzu=1 and hoid=?", user.id);
-		StringBuilder buyFavStr = new StringBuilder(",");
-		for(HouseOwnerFav fav : buyFavList){
-			buyFavStr.append(fav.hid).append(",");
+		List<HouseOwnerFav> rentFavList = dao.listByParams(HouseOwnerFav.class, "from HouseOwnerFav where cuzu=0 and hoid=?", user.id);
+		StringBuilder rentFavStr = new StringBuilder(",");
+		for(HouseOwnerFav fav : rentFavList){
+			rentFavStr.append(fav.hid).append(",");
 		}
-		request.setAttribute("buyFavStr", buyFavStr.toString());
+		request.setAttribute("rentFavStr", rentFavStr.toString());
 	}
 	
 	String area= request.getParameter("area");

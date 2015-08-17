@@ -35,6 +35,7 @@
 		<jsp:include page="top.jsp?type=chuzu"></jsp:include>
         <div class="search">
         <form class="form" action="chuzu.jsp" id="searchForm">
+        	<input type="hidden" name="action" id="action"  value="${action }"/>
         	<input type="hidden" name="currentPageNo" id="currentPageNo"/>
             <div class="wrap">
                 <span class="searchItem">
@@ -151,7 +152,7 @@
                                     </span>
                                     ${house.area}
                                     <span class="icons">
-                                        <i class="iconfont collect <c:if test="${!fn:contains(buyFavStr, ','.concat(house.id.toString()).concat(','))}"> no </c:if> btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
+                                        <i class="iconfont collect <c:if test="${!fn:contains(rentFavStr, ','.concat(house.id.toString()).concat(','))}"> no </c:if> btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
                                     </span>
                                     <span class="bhao">编号：${house.id}</span>
                                 </h2>
@@ -165,7 +166,7 @@
                             </th> 
                             <td>
                                 <p class="kong">&nbsp;</p>
-                                <p class="zjia"><b>${house.zjia}</b> 元/月</p>
+                                <p class="zjia"><b><fmt:formatNumber  value="${house.zjia}"  type="number"  pattern="#####.#" /></b> 元/月</p>
                             </td> 
                             <td>
                                 <p class="kong">&nbsp;</p>

@@ -175,8 +175,8 @@ function reloadWindow(){
                             </th> 
                             <td>
                                 <p class="kong">&nbsp;</p>
-                                <p class="zjia"><b>${house.zjia}</b> 万</p>
-                                <p class="hx">${house.djia}元/㎡</p>
+                                <p class="zjia"><b><fmt:formatNumber  value="${house.zjia}"  type="number"/></b> 万</p>
+                                <p class="hx"><fmt:formatNumber  value="${house.djia}"  type="number"  pattern="#####.#" />元/㎡</p>
                             </td> 
                             <td>
                                 <p class="kong">&nbsp;</p>
