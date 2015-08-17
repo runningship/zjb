@@ -91,4 +91,13 @@
     	<url-pattern>*.jsp</url-pattern>
     	<url-pattern>/c/*</url-pattern>
     </filter-mapping>
+    
+    <error-page>
+    	<error-code>500</error-code>
+    	<location>/public/500.jsp</location>
+    </error-page>
+    <error-page>
+    	<error-code>404</error-code>
+    	<location>/public/404.jsp</location>
+    </error-page>
 </web-app>

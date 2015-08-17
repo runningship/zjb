@@ -399,6 +399,11 @@ public class HouseOwnerService {
 			params.add(query.tel);
 		}
 		
+		if(StringUtils.isNotEmpty(query.ztai)){
+			hql.append(" and h.ztai= ? ");
+			params.add(query.ztai);
+		}
+		
 		hql.append(" and (isdel=0 or isdel is null) ");
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
@@ -424,6 +429,11 @@ public class HouseOwnerService {
 		if(query.seeGX!=null){
 			hql.append(" and h.seeGX = ? ");
 			params.add(query.seeGX);
+		}
+		
+		if(StringUtils.isNotEmpty(query.ztai)){
+			hql.append(" and h.ztai= ? ");
+			params.add(query.ztai);
 		}
 		
 		if(StringUtils.isNotEmpty(query.search)){

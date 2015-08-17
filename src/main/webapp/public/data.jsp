@@ -24,8 +24,17 @@
 	String currentPageNo = request.getParameter("currentPageNo");
 	
 	CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
+	HouseQuery query = new HouseQuery();
 	HouseOwner user = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+	String action = request.getParameter("action");
 	if(user!=null){
+		if(StringUtils.isNotEmpty(action)){
+			query.action = action;
+			query.userid = user.id;
+		}
+		if("my".equals(action)){
+			query.tel = user.tel;
+		}
 		List<HouseOwnerFav> buyFavList = dao.listByParams(HouseOwnerFav.class, "from HouseOwnerFav where hoid=?", user.id);
 		StringBuilder buyFavStr = new StringBuilder(",");
 		for(HouseOwnerFav fav : buyFavList){
@@ -44,7 +53,7 @@
 	String djiaEnd = request.getParameter("djiaEnd");
 	String lcengStart = request.getParameter("lcengStart");
 	String lcengEnd = request.getParameter("lcengEnd");
-	String action = request.getParameter("action");
+	
 	String[] quyus = request.getParameterValues("quyus");
 	String[] lxings = request.getParameterValues("lxings");
 	String[] hxings = request.getParameterValues("hxings");
@@ -56,14 +65,8 @@
 	}catch(Exception ex){
 		
 	}
-	HouseQuery query = new HouseQuery();
-	if(StringUtils.isNotEmpty(action)){
-		query.action = action;
-		query.userid = user.id;
-	}
-	if("my".equals(action)){
-		query.tel = user.tel;
-	}
+	
+	
 	if(StringUtils.isNotEmpty(area)){
 		query.area = area;
 		request.setAttribute("area", area);

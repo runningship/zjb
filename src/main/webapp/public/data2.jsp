@@ -125,7 +125,7 @@
 			request.setAttribute("quyus",city.getJSONArray("quyu"));
 		}
 	}
-	query.ztai="4";
+	query.ztai="1";
 	query.seeGX=1;
 	hs.listAllRent(query, p);
 	request.setAttribute("list", p.getResult());
