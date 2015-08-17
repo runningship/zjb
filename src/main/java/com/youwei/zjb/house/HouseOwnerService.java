@@ -33,6 +33,7 @@ import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseOwner;
 import com.youwei.zjb.house.entity.HouseOwnerFav;
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
@@ -267,13 +268,16 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView listAllHouse(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder hql =  new StringBuilder(" select h  from House  h where h.sh=1 ");
+		StringBuilder hql =  new StringBuilder(" select h  from House  h where 1=1 ");
 
 		if("fav".equals(query.action)){
-			 hql =  new StringBuilder(" select h  from House  h,HouseOwnerFav fav where h.sh=1 and fav.hid=h.id and fav.hoid=?");
+			 hql =  new StringBuilder(" select h  from House  h,HouseOwnerFav fav where  fav.hid=h.id and fav.hoid=?");
 				params.add(query.userid);
 		}
-		
+		if(query.sh!=null){
+			hql.append(" and h.sh = ? ");
+			params.add(query.sh);
+		}
 		if(query.seeGX!=null){
 			hql.append(" and h.seeGX = ? ");
 			params.add(query.seeGX);
@@ -422,11 +426,16 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView listAllRent(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder hql =  new StringBuilder(" select h  from HouseRent  h where h.sh=1");
+		StringBuilder hql =  new StringBuilder(" select h  from HouseRent  h where 1=1");
 
 		if("fav".equals(query.action)){
-			 hql =  new StringBuilder(" select h  from HouseRent  h,HouseOwnerFav fav where h.sh=1 and fav.hid=h.id and fav.hoid=?");
+			 hql =  new StringBuilder(" select h  from HouseRent  h,HouseOwnerFav fav where fav.hid=h.id and fav.hoid=?");
 				params.add(query.userid);
+		}
+		
+		if(query.sh!=null){
+			hql.append(" and h.sh = ? ");
+			params.add(query.sh);
 		}
 		
 		if(query.seeGX!=null){
@@ -654,6 +663,20 @@ public class HouseOwnerService {
 //		ThreadSession.setCityPY(cityPy);
 		ModelAndView mv = new ModelAndView();
 		House po = dao.get(House.class, id);
+		if(po==null){
+			//房源信息不存在
+		}
+		po.isdel = 1;
+		dao.saveOrUpdate(po);
+		return mv;
+	}
+
+	@WebMethod
+	public ModelAndView deleteRent(Integer id){
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = dao.get(HouseRent.class, id);
 		if(po==null){
 			//房源信息不存在
 		}

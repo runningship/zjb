@@ -45,7 +45,12 @@
 		}
 		request.setAttribute("rentFavStr", rentFavStr.toString());
 	}
-	
+
+	if(!"my".equals(action)){
+		query.ztai="1";
+		query.seeGX=1;
+		query.sh= 1;
+	}
 	String area= request.getParameter("area");
 	if(area!=null){
 		area = new String(area.getBytes("ISO-8859-1"),"UTF-8");	
@@ -133,8 +138,6 @@
 			request.setAttribute("quyus",city.getJSONArray("quyu"));
 		}
 	}
-	query.ztai="1";
-	query.seeGX=1;
 	hs.listAllRent(query, p);
 	request.setAttribute("list", p.getResult());
 	request.setAttribute("p", p);

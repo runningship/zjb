@@ -99,7 +99,7 @@ $(document).on('click', '.btn_act', function(event) {
       <li class=""><label class="form-section form-active"><strong class="input-label">年代</strong><input type="text" name="dateyear" class="input placeholder u" desc="楼盘年代" placeholder="楼盘年代"></label></li>
 
       <li class=""><label class="form-section form-section-tow one w4 form-active"><strong class="input-label">房主姓名</strong><input type="text" name="lxr" class="input placeholder u" desc="房主姓名" placeholder="房主姓名"></label>
-      <label class="form-section form-section-tow w6 form-active"><strong class="input-label">房主号码</strong><input type="text" name="tel" class="input placeholder u" desc="房主号码" placeholder="房主号码" value="${user.tel}"></label></li>
+      <label class="form-section form-section-tow w6 form-active"><strong class="input-label">房主号码</strong><input type="text" name="tel" class="input placeholder u" readonly="readonly" desc="房主号码" placeholder="房主号码" value="${user.tel}"></label></li>
 
 
     </ul>

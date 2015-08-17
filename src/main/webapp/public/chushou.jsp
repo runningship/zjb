@@ -158,7 +158,7 @@ function reloadWindow(){
                                     ${house.area}
                                     <span class="icons">
                                         <i class="iconfont collect <c:if test="${!fn:contains(buyFavStr, ','.concat(house.id.toString()).concat(','))}"> no </c:if> btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
-                                        <c:if test="${house_owner.tel == house.tel || house_owner.tel == null}">
+                                        <c:if test="${house_owner.tel == house.tel && house_owner.tel != null}">
                                         <i class="iconfont edit  btn_act" data-type="editHouse" title="修改">&#xe624;</i>
                                         <i class="iconfont del  btn_act" data-type="delHouse" title="删除">&#xe613;</i>
                                         </c:if>
