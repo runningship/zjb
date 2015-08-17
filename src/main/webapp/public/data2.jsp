@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.youwei.zjb.house.RentType"%>
 <%@page import="com.youwei.zjb.house.HouseOwnerService"%>
 <%@page import="java.util.Arrays"%>
@@ -21,12 +22,22 @@
 <%@page import="org.bc.sdak.CommonDaoService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="util.jsp" %>
 <%
 	String currentPageNo = request.getParameter("currentPageNo");
 	
 	CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 	HouseOwner user = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+	String action = request.getParameter("action");
+	HouseQuery query = new HouseQuery();
 	if(user!=null){
+		if(StringUtils.isNotEmpty(action)){
+			query.action = action;
+			query.userid = user.id;
+		}
+		if("my".equals(action)){
+			query.tel = user.tel;
+		}
 		List<HouseOwnerFav> buyFavList = dao.listByParams(HouseOwnerFav.class, "from HouseOwnerFav where cuzu=1 and hoid=?", user.id);
 		StringBuilder buyFavStr = new StringBuilder(",");
 		for(HouseOwnerFav fav : buyFavList){
@@ -50,7 +61,7 @@
 	String zjiaEnd = request.getParameter("zjiaEnd");
 	String lcengStart = request.getParameter("lcengStart");
 	String lcengEnd = request.getParameter("lcengEnd");
-	String action = request.getParameter("action");
+	
 	String fangshi = request.getParameter("fangshi");
 	String[] quyus = request.getParameterValues("quyus");
 	String[] lxings = request.getParameterValues("lxings");
@@ -63,66 +74,56 @@
 	}catch(Exception ex){
 		
 	}
-	HouseQuery query = new HouseQuery();
-	if(StringUtils.isNotEmpty(action)){
-		query.action = action;
-		query.userid = user.id;
-	}
-	if("my".equals(action)){
-		query.tel = user.tel;
-	}
-	if(StringUtils.isNotEmpty(area)){
-		query.area = area;
-		request.setAttribute("area", area);
-	}
-	if(StringUtils.isNotEmpty(address)){
-		query.address = address;
-		request.setAttribute("address", address);
-	}
-	if(StringUtils.isNotEmpty(mjiStart)){
-		query.mjiStart = Float.valueOf(mjiStart);
-		request.setAttribute("mjiStart", Integer.valueOf(mjiStart));
-	}
-	if(StringUtils.isNotEmpty(mjiEnd)){
-		query.mjiEnd = Float.valueOf(mjiEnd);
-		request.setAttribute("mjiEnd", Float.valueOf(mjiEnd));
-	}
-	if(StringUtils.isNotEmpty(zjiaStart)){
-		query.zjiaStart = Float.valueOf(zjiaStart);
-		request.setAttribute("zjiaStart", Float.valueOf(zjiaStart));
-	}
-	if(StringUtils.isNotEmpty(zjiaEnd)){
-		query.zjiaEnd = Float.valueOf(zjiaEnd);
-		request.setAttribute("zjiaEnd", Float.valueOf(zjiaStart));
-	}
-	if(StringUtils.isNotEmpty(lcengStart)){
-		query.lcengStart = Integer.valueOf(lcengStart);
-		request.setAttribute("lcengStart", Integer.valueOf(lcengStart));
-	}
-	if(StringUtils.isNotEmpty(lcengEnd)){
-		query.lcengEnd = Integer.valueOf(lcengEnd);
-		request.setAttribute("lcengEnd", Integer.valueOf(lcengEnd));
-	} 
+	
+	buidlFloatValueQueryItem(query , "mjiStart" , request);
+	buidlFloatValueQueryItem(query , "mjiEnd" , request);
+	buidlFloatValueQueryItem(query , "zjiaStart" , request);
+	buidlFloatValueQueryItem(query , "zjiaEnd" , request);
+	buidlFloatValueQueryItem(query , "lcengStart" , request);
+	buidlFloatValueQueryItem(query , "lcengEnd" , request);
+	
+
 	if(quyus!=null && quyus.length>0){
-		query.quyus = Arrays.asList(quyus);
-		request.setAttribute("s_quyus", Arrays.toString(quyus));
+		query.quyus = new ArrayList<String>();
+		for(int i=0;i<quyus.length;i++){
+			query.quyus.add(address = new String(quyus[i].getBytes("ISO-8859-1"),"UTF-8"));
+		}
+		request.setAttribute("s_quyus", Arrays.toString(query.quyus.toArray()));
 	}
 	if(lxings!=null && lxings.length>0){
-		query.lxing = Arrays.asList(lxings);
-		request.setAttribute("s_lxings", Arrays.toString(lxings));
+		query.lxing = new ArrayList<String>();
+		for(int i=0;i<lxings.length;i++){
+			query.lxing.add(address = new String(lxings[i].getBytes("ISO-8859-1"),"UTF-8"));
+		}
+		request.setAttribute("s_lxings", Arrays.toString(query.lxing.toArray()));
+// 		query.lxing = Arrays.asList(lxings);
+// 		request.setAttribute("s_lxings", Arrays.toString(lxings));
 	}
 	if(hxings!=null && hxings.length>0){
-		query.fxing = Arrays.asList(hxings);
-		request.setAttribute("s_hxings", Arrays.toString(hxings));
+		query.fxing = new ArrayList<String>();
+		for(int i=0;i<hxings.length;i++){
+			query.fxing.add(address = new String(hxings[i].getBytes("ISO-8859-1"),"UTF-8"));
+		}
+		request.setAttribute("s_hxings", Arrays.toString(query.fxing.toArray()));
+		//query.fxing = Arrays.asList(hxings);
+		//request.setAttribute("s_hxings", Arrays.toString(hxings));
 	}
+	if(zxius!=null && zxius.length>0){
+		query.zxiu = new ArrayList<String>();
+		for(int i=0;i<zxius.length;i++){
+			query.zxiu.add(address = new String(zxius[i].getBytes("ISO-8859-1"),"UTF-8"));
+		}
+		request.setAttribute("s_zxius", Arrays.toString(query.zxiu.toArray()));
+		
+		//query.zxiu = Arrays.asList(zxius);
+		//request.setAttribute("s_zxius", Arrays.toString(zxius));
+	}
+	
 	if(StringUtils.isNotEmpty(fangshi)){
 		query.fangshi = Integer.valueOf(fangshi);
 		request.setAttribute("s_fangshi", Integer.valueOf(fangshi));
 	}
-	if(zxius!=null && zxius.length>0){
-		query.zxiu = Arrays.asList(zxius);
-		request.setAttribute("s_zxius", Arrays.toString(zxius));
-	}
+	
 	String citypy=ThreadSessionHelper.getCityPinyin();
 	CityService cityService = new CityService();
 	JSONArray citys = cityService.getCitys();
