@@ -175,6 +175,11 @@
                                 <p class="kong">&nbsp;</p>
                                 <span class="time"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
                             </td> 
+                            <td>
+                                    <span class="icons">
+                                    <i class=" " title="修改房源" onclick="editHouse(${house.id});">修改</i>
+                                    </span>
+                            </td>
                         </tr>
                             </c:forEach>
                     </tbody>

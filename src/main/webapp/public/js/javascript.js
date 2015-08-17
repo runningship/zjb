@@ -34,7 +34,7 @@ var patrn=/^1\d{10}$/;
 if (!patrn.exec(s)) return false;
 return true;
 }
-/* 登陆与注册功能 */
+/* 登录与注册功能 */
 function loginAction(){
 var form=$('.forms_login'),
     u=form.find('.u'),
@@ -50,30 +50,17 @@ var form=$('.forms_login'),
         layer.msg('请输入密码');
         return false;
     }else{
-    	YW.ajax({
-            type: 'POST',
-            url: '/c/weixin/houseOwner/doLogin?tel='+uv+'&pwd='+pv+'&cityPy='+$('#currentCity').attr('py'),
-            mysuccess: function(data){
-                var exp = new Date();
-                exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/";
-                window.location.reload();
-            }
-        });
-    	
+        // $.ajax({
+        //   type: 'POST',
+        //   url: '?tel='+u+'&p='+p,
+        //   success: function(data){
+            layer.msg('ok');
+        //   }
+        // });
     }
 
 }
 
-function logoutAction(){
-	YW.ajax({
-        type: 'POST',
-        url: '/c/weixin/houseOwner/logoutWZJB',
-        mysuccess: function(data){
-            window.location.reload();
-        }
-    });
-}
 function regAction(){
 var form=$('.forms_reg'),
     u=form.find('.u'),
@@ -101,20 +88,13 @@ var form=$('.forms_reg'),
         layer.msg('请重复输入密码');
         return false;
     }else{
-    	 YW.ajax({
-             type: 'POST',
-             url: '/c/weixin/houseOwner/verifyCode?tel='+uv+'&pwd='+pv+'&cityPy='+$('#currentCity').attr('py')+'&code='+cv,
-             mysuccess: function(data){
-                 var exp = new Date();
-                 exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
-                 document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/";
-                 layer.open({
-                     content:'注册成功',
-                     btn: ['OK']
-                 	//回调函数刷新页面
-                 });
-             }
-           });
+        // $.ajax({
+        //   type: 'POST',
+        //   url: '?tel='+u+'&pwd='+p+'&code='+c,
+        //   success: function(data){
+            layer.msg('ok');
+        //   }
+        // });
     }
 }
 
@@ -133,15 +113,12 @@ var form=$('.forms_reg'),
         return false;
     }else{
         cBtn.addClass(cla);
-        YW.ajax({
-            type: 'POST',
-            url: '/c/weixin/houseOwner/sendVerifyCode?tel='+u.val(),
-            mysuccess: function(data){
-            	layer.msg('已发');
-                c.focus();
-            }
-          });
-        
+        // $.ajax({
+        //   type: 'POST',
+        //   url: '?tel='+tel,
+        //   success: function(data){
+            layer.msg('已发');
+            c.focus();
         var T_s=59,t;
             t=setInterval(function(){
                 var ts=T_s--;
@@ -156,25 +133,21 @@ var form=$('.forms_reg'),
         // });
     }
 }
-
-function openLoginWindow(){
-	layer.closeAll();
-    layer.open({
-        type: 1,
-        title:'登陆',
-        area: ['320px', '400px'],
-        content: $('.loginbox'),
-        success: function(layero,index){mh();},
-        cancel: function(index){mhs();} 
-    });
-    $('.forms_login').find('.u').focus();
-}
 /* 所有按钮功能 */
 $(document).on('click', '.btn_act', function(event) {
     var Thi=$(this),
     ThiType=Thi.data('type');
     if(ThiType=='login'){
-    	openLoginWindow();
+        layer.closeAll();
+        layer.open({
+            type: 1,
+            title:'登录',
+            area: ['320px', '300px'],
+            content: $('.loginbox'),
+            success: function(layero,index){mh();},
+            cancel: function(index){mhs();} 
+        });
+        $('.forms_login').find('.u').focus();
     }else if(ThiType=='reg'){
         layer.closeAll();
         layer.open({
@@ -186,19 +159,23 @@ $(document).on('click', '.btn_act', function(event) {
             cancel: function(index){mhs();} 
         });
         $('.forms_reg').find('.u').focus();
+    }else if(ThiType=='getPwds'){
+        layer.closeAll();
+        layer.open({
+            type: 1,
+            title:'找回密码',
+            area: ['320px', '400px'],
+            content: $('.getPwdbox'),
+            success: function(layero,index){mh();},
+            cancel: function(index){mhs();} 
+        });
+        $('.forms_pwds').find('.u').focus();
     }else if(ThiType=='submit_login'){
         loginAction();
     }else if(ThiType=='submit_reg'){
         regAction();
     }else if(ThiType=='regCode'){
         regCodeFun();
-    }else if(ThiType=='logout'){
-    	logoutAction();
-    }else if(ThiType=='empty'){
-    	var action = $('#action').val();
-    	$('input').val('');
-    	$('#action').val(action);
-    	$('.submit').click();
     }else if(ThiType=='getPwds'){
         layer.msg('找回密码功能');
     }else if(ThiType=='SwitchCity'){
@@ -213,39 +190,76 @@ $(document).on('click', '.btn_act', function(event) {
         });
     }else if(ThiType=='seeMyHouse'){
         layer.msg('查看我的房源')
+
+    }else if(ThiType=='addHouse'){
+        layer.open({
+            type: 2,
+            title:'添加房源',
+            area: ['610px', '480px'],
+            fix: false, //不固定
+            maxmin: false,
+            content: 'add.html'
+        });
+    }else if(ThiType=='editHouse'){
+        var hid=$(this).parents('tr').data('hid');
+        layer.open({
+            type: 2,
+            title:'修改房源',
+            area: ['610px', '480px'],
+            fix: false, //不固定
+            maxmin: false,
+            content: 'edit.html?hid='+hid
+        });
+    }else if(ThiType=='submit_add'){
+        if($('.addsubmit').length>0){
+            $('.addsubmit').click();
+        }
     }else if(ThiType=='SC'){
-    	//判断用户是否在线
-    	if(!Thi.attr('uid')){
-    		//弹出登录窗口
-    		openLoginWindow();
-    		return;
-    	}
-    	
         if(Thi.hasClass('no')){
-        	YW.ajax({
-                type: 'POST',
-                url: '/c/weixin/houseOwner/toggleFav?hid='+Thi.attr('hid')+'&cuzu='+Thi.attr('cuzu'),
-                mysuccess: function(data){
-                	Thi.removeClass('no');
-                    layer.msg('已收藏');
-                }
-              });
+            // $.ajax({
+            //   type: 'POST',
+            //   url: '?tel='+tel,
+            //   success: function(data){
+                Thi.removeClass('no');
+                layer.msg('测试：未收藏→收藏');
+            //   }
+            // });
         }else{
-        	YW.ajax({
-                type: 'POST',
-                url: '/c/weixin/houseOwner/toggleFav?hid='+Thi.attr('hid')+'&cuzu='+Thi.attr('cuzu'),
-                mysuccess: function(data){
-                	Thi.addClass('no');
-                    layer.msg('取消收藏');
-                }
-              });
+            // $.ajax({
+            //   type: 'POST',
+            //   url: '?tel='+tel,
+            //   success: function(data){
+                Thi.addClass('no');
+                layer.msg('测试：收藏→未收藏');
+            //   }
+            // });
         }
     }else if(ThiType=='submit'){
-        $('.submit').click();
+        if($('.submit').length>0){
+            $('.submit').click();
+        }
     }
     event.preventDefault();
     /* Act on the event */
 });
+/* 屏蔽按键 */
+
+$(document).keydown(function(event){  
+//alert('a'+event.keyCode)
+    if ((event.altKey)&&   
+        ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
+        (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
+   {   
+       event.returnValue=false;   
+       return false;  
+   }   
+    if((event.ctrlKey)&&(event.keyCode==13)){   //
+      if($('.submit').length>0){
+        $('.submit').click();
+      }
+    }  
+}); 
+
 /* 鼠标经过 */
 function mouseHover(){
 var st,Thi;
@@ -360,8 +374,39 @@ $(document).ready(function() {
     //     area: ['320px', '400px'], 
     //     content: $('.regbox')
     // });
-    //autoComplete($('#nope'));
+    autoComplete($('#nope'));
 });
+
+
+/* form-active  form mi style */
+$(document).ready(function() {
+    $(document).find('.form-active').find('.input').focusin(function(){
+        $(this).parent().addClass('active').addClass('focus');
+    }).focusout(function(){
+        if($(this).is('select')){
+            if($(this).is(":selected")){
+                $(this).parent().removeClass('active');
+            }
+        }else{
+            if(!$(this).val()){
+                $(this).parent().removeClass('active');
+            }
+        }
+        $(this).parent().removeClass('focus').removeClass('curr');
+    }).hover(function() {
+        $(this).parent().addClass('hover');
+    }, function() {
+        $(this).parent().removeClass('hover');
+    }).each(function(index, el) {
+        if($(this).is('select')){
+            $(this).parent().addClass('curr');
+        }
+    });
+});
+
+
+
+
 /* house */
   function setSearchValue(index){
       var ThiA=$('#autoCompleteBox').find('a');
@@ -369,6 +414,7 @@ $(document).ready(function() {
       var Vals=ThiA.eq(index).addClass('hover').attr('title');
       $('#nope').val(Vals);
   }
+
 /**
  * 添加 autoComplete 功能
  * autoComplete($('#input的class或id'))
@@ -382,6 +428,7 @@ $(document).ready(function() {
  * setSearchValue(当前选中的行)
  */
 function autoComplete(id){
+    if(id.length<1){return false;}
     $(document).find('body').prepend('<div id="autoCompleteBox" class="autocomplete"></div>');
     var Thi=id,
     oldVal,ThiMaxLen=0,ThiCurrIndex=-1,
@@ -390,6 +437,7 @@ function autoComplete(id){
     ThiOptTop=Thi.offset().top+ThiHeight,
     ThiOptLeft=Thi.offset().left,
     autocomplete=$('#autoCompleteBox');
+    // autocomplete.width(0);
     // autocomplete.width(ThiWidth).css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
     autocomplete.css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
     autocomplete.on('click','a',function(event) {
@@ -398,11 +446,10 @@ function autoComplete(id){
        ThisArea=This.attr('area'),
        ThisAddress=This.data('address'),
        ThisQuyu=This.data('quyu');
-       setSearchValue(ThisIndex);
+       setSearchValue(ThisIndex,true);
        return false;
     });
-    Thi.on('keydown',function(event) {
-    }).on('keyup',function(event) {
+    Thi.on('keyup',function(event) {
         var This=$(this),
         ThisVal=This.val(),
         param={search:ThisVal};

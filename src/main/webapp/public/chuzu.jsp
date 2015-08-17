@@ -165,8 +165,7 @@
                             </th> 
                             <td>
                                 <p class="kong">&nbsp;</p>
-                                <p class="zjia"><b>${house.zjia}</b> 万</p>
-                                <p class="hx">${house.djia}元/㎡</p>
+                                <p class="zjia"><b>${house.zjia}</b> 元/月</p>
                             </td> 
                             <td>
                                 <p class="kong">&nbsp;</p>
