@@ -89,8 +89,8 @@ color: #555;
 
 .pageList{}
 .pageList li{ display: inline-block;}
-.pageList li a{ display: block; padding: 0 10px;}
-.pageList li a:hover{ background: #09F; color: #FFF;}
+.pageList li a{ display: block; padding: 0 10px; font-weight: bold; font-size: 16px;}
+.pageList li a:hover{ background: #49B6FF; color: #FFF;}
 .pageList li.active a{ background: #09F; color: #FFF;}
 
 .UList{ display: inline-block;}
@@ -123,6 +123,8 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcol
 
 .UList li.active strong:after {border: solid transparent;content: ' ';height: 0;left: 100%;position: absolute;width: 0;border-width: 9px;border-bottom-color: #FFF;left: 37%;bottom: -0px;}
 
+.UList li.cuurent strong{ background: #09F; color: #FFF;}
+.UList li.cuurent a.btn:hover strong{ background:#0AF; color: #FFF;}
 
 
 .search{ padding: 10px;}
@@ -137,7 +139,7 @@ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Colo
 }
 .searchItem input.input{ border: none; height: inherit; line-height: inherit; padding: 0 10px; width: 100%; border-radius: inherit;
 }
-.searchItem strong{ padding: 0 16px;height: inherit;display: block;line-height: 36px; font-weight: normal;}
+.searchItem strong{ padding: 0 15px;height: inherit;display: block;line-height: 36px; font-weight: normal;}
 .searchItem .more{ position: absolute; left: 0; background: #FFF; z-index: 9;border-radius: 3px;white-space:nowrap; overflow: hidden; height: 0;
 -moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
@@ -156,6 +158,7 @@ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Colo
 .searchItem .inputBox{ float: left; width: 40px;height: inherit;border-radius: inherit;}
 .searchItem .inputBox input.input{ padding: 0 5px;border-radius: inherit;}
 .searchItem .inputLab{ float: left;}
+.searchItem .tipas{ position: absolute; right: 5px; color: #CCC;}
 
 
 .searchItem.hover em{ display: inline-block; transform:rotate(180deg);-webkit-transform:rotate(180deg);}
@@ -163,7 +166,7 @@ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Colo
 .searchItem .more label.hover{ background: #09F; color: #FFF;}
 
 
-.searchItem.w15 .inputBox{ width: 70px;}
+.searchItem.w15 .inputBox{ width: 58px;}
 .searchItem.w20 .inputBox{ width: 52.5px;}
 
 
@@ -201,7 +204,7 @@ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Colo
 .searchLine{
  background:rgba(255,255,255,0.5);
 filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcolorstr=#22FFFFFF);}
-.searchLine .wrap{ height: 36px; line-height: 36px;}
+.searchLine .wrap{ height: 16px; line-height: 16px;}
 
 
 
@@ -293,7 +296,7 @@ html .classTab li{*float: left;}
 html .SwitchCityBtn{*float: left;*margin-top: 7px;}
 html .UList {*position: relative;}
 html .UList li{*float: left;*margin-top: 7px;*position: static;}
-html .searchItem{*float: left;*width: 169px;*padding: 0 10px;}
+html .searchItem{*float: left; width: 167px;*width: 147px;*padding: 0 10px;}
 html .searchItem.selects{width: 76px;*width: 76px; *position: relative;
 *z-index: 199;*padding: 0;}
 html .searchItem label.inputTit{height: 36px; line-height: 36px;}
@@ -308,8 +311,8 @@ vertical-align: top\0;
 html .citybox li{*float: left;*margin-right: 5px;}
 html .ContactUs .ewm{*float: left;}
 html .ContactUs .lx{*float: left;}
-html .searchItem.w15{*padding: 0;width:167px\0;*width: 189px;}
-html .searchItem.w15 .inputBox{width:58px\0;*width: 64px;}
+html .searchItem.w15{*padding: 0;width:167px\0;*width: 167px;}
+html .searchItem.w15 .inputBox{width:58px\0;*width: 53px;}
 html .searchItem.w20 {width: 157px;width:157px\0;*width: 161px;*padding: 0;}
 html .searchItem .inputLab{*padding: 0 5px;}
 html .searchItem.w20 .inputBox{*width:49px;width:51px\0;}
@@ -348,6 +351,7 @@ html .layui-layer-btn a{font-weight: normal;border: 1px solid #69BCEE;height: 26
 
 /* loginbox */
 .form-ul li{ margin-bottom: 15px; position: relative;}
+.form-ul li:after {content: "\0020";display: block;clear: both;}
 .form-loo{ display: block; border: 1px solid #CCC; background: #FFF; }
 .form-loo .input-label{display: inline-block; width: 30px; text-align: right; }
 .form-loo input.input{border: none; background: #FFF; font-size: 14px; height: 36px; line-height: 36px; padding: 0px 15px; width: 229px;}
@@ -360,10 +364,26 @@ html .layui-layer-btn a{font-weight: normal;border: 1px solid #69BCEE;height: 26
 .form-section .input-label{position: absolute;left: 12px;top: 11px;z-index: 2;padding: 0 3px;font-size: 14px;line-height: 18px;color: #b0b0b0;background: transparent;cursor: text;-webkit-transition: all 0.2s linear;transition: all 0.2s linear;white-space:nowrap; width: auto;}
 .form-section input.input{border: none; background: #FFF; font-size: 14px; height: 36px; line-height: 36px; padding: 5px 15px; width: 100%;}
 .form-section textarea.input{ height: auto; width: 100%; border: none;resize: none;padding: 10px 16px; margin-top: 5px;}
+.form-section select.input{ height: auto; width: 100%; border: none; background: #FFF; font-size: 14px; height: 36px; line-height: 36px; padding: 5px 15px; }
+.form-section.curr select.input{ padding: 5px 15px 5px 50px;}
+
 .form-section.tow input.input{ width: 50%;}
 .form-section.tow a.btn{ width: 50%; float: right; height: 36px; line-height: 36px; font-size: 14px;}
 .form-section .code{color: #4C8EFF;}
 .form-section .code.out{ color: #999;}
+
+ .form-section-tow.one{ margin-right: 4%}
+ .form-section-tow{ width:48%; float: left; }
+ .form-section-tow.w1{ width: 8%;}
+ .form-section-tow.w2{ width: 18%;}
+ .form-section-tow.w3{ width: 28%;}
+ .form-section-tow.w4{ width: 38%;}
+ .form-section-tow.w5{ width: 48%;}
+ .form-section-tow.w6{ width: 58%;}
+ .form-section-tow.w7{ width: 68%;}
+ .form-section-tow.w8{ width: 78%;}
+ .form-section-tow.w9{ width: 88%;}
+ .form-section-tow.w10{ width: 100%;}
 
 /* placeholder */
 .form-section .placeholder::-webkit-input-placeholder { color:#FFF; }
@@ -387,6 +407,10 @@ html .layui-layer-btn a{font-weight: normal;border: 1px solid #69BCEE;height: 26
 .form-loo input.input{vertical-align: middle; width: auto;}
 
 
+body .form-section input.input{ *padding: 0px; *width: 95%; *padding-left: 5%;}
+body .form-section select.input{ *padding: 0px; *width: 100%; }
+body .form-section textarea.input{ *padding: 0px; *width: 90%; *padding-left: 5%; * padding-right: 5%;}
+body .form-loo input.input{*width: 70%;}
 
 
 
@@ -394,8 +418,12 @@ html .layui-layer-btn a{font-weight: normal;border: 1px solid #69BCEE;height: 26
 
 
 
-
-
+/**
+ * addHouse & editHouse
+ */
+.form-house{ padding: 10px;}
+.form-house table td{ padding: 0 10px; vertical-align: top;}
+.form-house .btn{ height: 36px; line-height: 36px;}
 
 
 
