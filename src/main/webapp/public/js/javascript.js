@@ -34,7 +34,7 @@ var patrn=/^1\d{10}$/;
 if (!patrn.exec(s)) return false;
 return true;
 }
-/* 登陆与注册功能 */
+/* 登录与注册功能 */
 function loginAction(){
 var form=$('.forms_login'),
     u=form.find('.u'),
@@ -162,7 +162,7 @@ function openLoginWindow(){
     layer.open({
         type: 1,
         title:'登陆',
-        area: ['320px', '400px'],
+        area: ['320px', '300px'],
         content: $('.loginbox'),
         success: function(layero,index){mh();},
         cancel: function(index){mhs();} 
@@ -186,6 +186,17 @@ $(document).on('click', '.btn_act', function(event) {
             cancel: function(index){mhs();} 
         });
         $('.forms_reg').find('.u').focus();
+    }else if(ThiType=='getPwds'){
+        layer.closeAll();
+        layer.open({
+            type: 1,
+            title:'找回密码',
+            area: ['320px', '400px'],
+            content: $('.getPwdbox'),
+            success: function(layero,index){mh();},
+            cancel: function(index){mhs();} 
+        });
+        $('.forms_pwds').find('.u').focus();
     }else if(ThiType=='submit_login'){
         loginAction();
     }else if(ThiType=='submit_reg'){
@@ -214,6 +225,40 @@ $(document).on('click', '.btn_act', function(event) {
         });
     }else if(ThiType=='seeMyHouse'){
         layer.msg('查看我的房源')
+
+    }else if(ThiType=='addHouse'){
+        layer.open({
+            type: 2,
+            title:'添加房源',
+            area: ['610px', '480px'],
+            fix: false, //不固定
+            maxmin: false,
+            content: 'chushou_add.jsp'
+        });
+    }else if(ThiType=='editHouse'){
+        var hid=$(this).parents('tr').data('hid');
+        layer.open({
+            type: 2,
+            title:'修改房源',
+            area: ['610px', '480px'],
+            fix: false, //不固定
+            maxmin: false,
+            content: 'chushou_edit.jsp?hid='+hid
+        });
+    }else if(ThiType=='delHouse'){
+        layer.confirm('确定删除房源？', {icon: 3,
+            btn: ['删除','取消'], //按钮
+            shade: false //不显示遮罩
+        }, function(){
+        	HouseDelete(Thi);
+            layer.msg('已删除', {icon: 1});
+        }, function(){
+            
+        });
+    }else if(ThiType=='submit_add'){
+        if($('.addsubmit').length>0){
+            $('.addsubmit').click();
+        }
     }else if(ThiType=='SC'){
     	//判断用户是否在线
     	if(!Thi.attr('uid')){
@@ -242,11 +287,31 @@ $(document).on('click', '.btn_act', function(event) {
               });
         }
     }else if(ThiType=='submit'){
-        $('.submit').click();
+        if($('.submit').length>0){
+            $('.submit').click();
+        }
     }
     event.preventDefault();
     /* Act on the event */
 });
+/* 屏蔽按键 */
+
+$(document).keydown(function(event){  
+//alert('a'+event.keyCode)
+    if ((event.altKey)&&   
+        ((event.keyCode==37)||   //屏蔽 Alt+ 方向键 ←   
+        (event.keyCode==39)))   //屏蔽 Alt+ 方向键 →   
+   {   
+       event.returnValue=false;   
+       return false;  
+   }   
+    if((event.ctrlKey)&&(event.keyCode==13)){   //
+      if($('.submit').length>0){
+        $('.submit').click();
+      }
+    }  
+}); 
+
 /* 鼠标经过 */
 function mouseHover(){
 var st,Thi;
@@ -363,6 +428,44 @@ $(document).ready(function() {
     // });
     //autoComplete($('#nope'));
 });
+
+
+/* form-active  form mi style */
+$(document).ready(function() {
+    $(document).find('.form-active').find('.input').focusin(function(){
+        $(this).parent().addClass('active').addClass('focus');
+    }).focusout(function(){
+        if($(this).is('select')){
+            if($(this).is(":selected")){
+                $(this).parent().removeClass('active');
+            }
+        }else{
+            if(!$(this).val()){
+                $(this).parent().removeClass('active');
+            }
+        }
+        $(this).parent().removeClass('focus').removeClass('curr');
+    }).hover(function() {
+        $(this).parent().addClass('hover');
+    }, function() {
+        $(this).parent().removeClass('hover');
+    }).each(function(index, el) {
+        if($(this).is('select')){
+            $(this).parent().addClass('curr');
+            if($(this).val()){
+                $(this).parent().addClass('active');
+            }
+        }else if($(this).is('input')){
+            if($(this).val()){
+                $(this).parent().addClass('active');
+            }
+        }
+    });
+});
+
+
+
+
 /* house */
   function setSearchValue(index){
       var ThiA=$('#autoCompleteBox').find('a');
@@ -370,6 +473,7 @@ $(document).ready(function() {
       var Vals=ThiA.eq(index).addClass('hover').attr('title');
       $('#nope').val(Vals);
   }
+
 /**
  * 添加 autoComplete 功能
  * autoComplete($('#input的class或id'))
@@ -383,6 +487,7 @@ $(document).ready(function() {
  * setSearchValue(当前选中的行)
  */
 function autoComplete(id){
+    if(id.length<1){return false;}
     $(document).find('body').prepend('<div id="autoCompleteBox" class="autocomplete"></div>');
     var Thi=id,
     oldVal,ThiMaxLen=0,ThiCurrIndex=-1,
@@ -391,6 +496,7 @@ function autoComplete(id){
     ThiOptTop=Thi.offset().top+ThiHeight,
     ThiOptLeft=Thi.offset().left,
     autocomplete=$('#autoCompleteBox');
+    // autocomplete.width(0);
     // autocomplete.width(ThiWidth).css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
     autocomplete.css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
     autocomplete.on('click','a',function(event) {
@@ -399,7 +505,7 @@ function autoComplete(id){
        ThisArea=This.attr('area'),
        ThisAddress=This.data('address'),
        ThisQuyu=This.data('quyu');
-       setSearchValue(ThisIndex);
+       setSearchValue(ThisIndex,true);
        return false;
     });
     Thi.on('keydown',function(event) {

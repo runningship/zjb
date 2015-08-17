@@ -48,7 +48,7 @@ function editHouse(id){
     	title: '修改房源',
 	    shadeClose: false,
 	    shade: 0.5,
-    	area: ['500px', '500px'],
+    	area: ['610px', '480px'],
 	    content: 'chushou_edit.jsp?hid='+id
 // 	    btn: ['确定','取消'],
 // 	    yes:function(index){
@@ -64,7 +64,7 @@ function addHouse(){
     	title: '发布房源',
 	    shadeClose: false,
 	    shade: 0.5,
-    	area: ['500px', '500px'],
+    	area: ['610px', '480px'],
 	    content: 'chushou_add.jsp'
 // 	    btn: ['确定','取消'],
 // 	    yes:function(index){
@@ -72,4 +72,15 @@ function addHouse(){
 // 		    return false;
 // 		}
 	}); 
+}
+
+function HouseDelete(Thi){
+    var tr=Thi.parents('tr'),hid=tr.data('hid');
+    YW.ajax({
+    type: 'POST',
+    url: '/c/weixin/houseOwner/deleteHouse?id='+hid,
+    mysuccess: function(data){
+        tr.remove();
+        }
+    });
 }

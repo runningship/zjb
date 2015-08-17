@@ -170,7 +170,7 @@
                             <td>
                                 <p class="kong">&nbsp;</p>
                                 <p class="kong">&nbsp;</p>
-                                <span class="time"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
+                                <span class="time" title="发布时间"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
                             </td> 
                         </tr>
                             </c:forEach>

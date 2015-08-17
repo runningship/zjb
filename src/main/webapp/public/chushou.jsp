@@ -27,6 +27,10 @@
 <script type="text/javascript" src="js/buildHtml.js"></script>
 <script type="text/javascript" src="js/list.js"></script>
 <script type="text/javascript">
+function reloadWindow(){
+	window.location.reload();
+}
+
 </script>
 </head>
 <body>
@@ -96,7 +100,7 @@
                     <span class="inputLab">-</span>
                     <div class="inputBox">
                         <input type="text" class="input" placeholder="" maxlength="4" name="mjiEnd" value="${mjiEnd}">
-                    </div>
+                    </div><span class="tip">㎡</span>​
                 </span>
                 <span class="searchItem w20">
                     <label class="inputTit" for="zjia">总价</label>
@@ -106,7 +110,7 @@
                     <span class="inputLab">-</span>
                     <div class="inputBox">
                         <input type="text" class="input" placeholder="" maxlength="3" name="zjiaEnd" value="${zjiaEnd}">
-                    </div>
+                    </div><span class="tip">​万​</span>​
                 </span>
                 <span class="searchItem w20">
                     <label class="inputTit" for="djia">单价</label>
@@ -116,7 +120,7 @@
                     <span class="inputLab">-</span>
                     <div class="inputBox">
                         <input type="text" class="input" placeholder="" maxlength="4" name="djiaEnd" value="${djiaEnd}">
-                    </div>
+                    </div><span class="tip">​元​</span>​
                 </span>
                 <span class="searchItem w15">
                     <label class="inputTit" for="lceng">楼层</label>
@@ -145,7 +149,7 @@
                 <table border="0" cellspacing="0" cellpadding="0" class="tableList2 table-hover"> 
                     <tbody>
 						<c:forEach items="${list }" var="house"  varStatus="status">
-                        <tr data-hid="1" class="a${status.index%7} active"> 
+                        <tr data-hid="${house.id }" class="a${status.index%7} active"> 
                             <th>
                                 <h2>
                                     <span class="icons">
@@ -154,6 +158,10 @@
                                     ${house.area}
                                     <span class="icons">
                                         <i class="iconfont collect <c:if test="${!fn:contains(buyFavStr, ','.concat(house.id.toString()).concat(','))}"> no </c:if> btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
+                                        <c:if test="${house_owner.tel == house.tel || house_owner.tel == null}">
+                                        <i class="iconfont edit  btn_act" data-type="editHouse" title="修改">&#xe624;</i>
+                                        <i class="iconfont del  btn_act" data-type="delHouse" title="删除">&#xe613;</i>
+                                        </c:if>
                                     </span>
                                     <span class="bhao">编号：${house.id}</span>
                                 </h2>
@@ -173,13 +181,8 @@
                             <td>
                                 <p class="kong">&nbsp;</p>
                                 <p class="kong">&nbsp;</p>
-                                <span class="time"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
+                                <span class="time" title="发布时间"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
                             </td> 
-                            <td>
-                                    <span class="icons">
-                                    <i class=" " title="修改房源" onclick="editHouse(${house.id});">修改</i>
-                                    </span>
-                            </td>
                         </tr>
                             </c:forEach>
                     </tbody>
@@ -222,6 +225,23 @@
           </li>
           <li class="">
             <a href="#" class="btn_act btn_link fr" data-type="login">立即登陆</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="getPwdbox hidden">
+      <div class="form-box">
+        <ul class="form-ul forms_pwds">
+          <li class=""><label class="form-section form-active"><strong class="input-label">手机号</strong><input type="text" class="input placeholder u" placeholder="您的手机号码"></label></li>
+          <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码</strong><input type="text" class="input placeholder c" placeholder="收到的验证码"><a href="#" class="btn btn_act code" data-type="regCode" data-txt="发送验证码">发送验证码</a></label></li>
+          <li class=""><label class="form-section form-active"><strong class="input-label">密码</strong><input type="password" class="input placeholder p" placeholder="登录密码"></label></li>
+          <li class=""><label class="form-section form-active"><strong class="input-label">重复密码</strong><input type="password" class="input placeholder p2" placeholder="重复输入密码"></label></li>
+          <li class="">
+            <a href="#" class="btn btn_act btn_block blue" data-type="submit_reg">找回密码</a>
+            <input type="submit" class="submit hidden" value="submit">
+          </li>
+          <li class="">
+            <a href="#" class="btn_act btn_link fr" data-type="login">登录</a>
           </li>
         </ul>
       </div>
