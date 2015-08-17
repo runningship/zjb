@@ -42,7 +42,7 @@
                     <input type="text" class="input" placeholder="楼盘名称" name="area" value="${area}">
                     
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">区域 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
                       <li>
@@ -57,7 +57,7 @@
                       </c:forEach>
                     </ul>
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">楼型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${lxings }" var="lxing"  varStatus="status">
@@ -65,7 +65,7 @@
                       </c:forEach>
                     </ul>
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">户型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${hxings }" var="hxing"  varStatus="status">
@@ -73,7 +73,7 @@
                       </c:forEach>
                     </ul>
                 </span>
-                <span class="searchItem ">
+                <span class="searchItem selects">
                     <strong class="">装潢 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${zxius }" var="zxiu"  varStatus="status">
