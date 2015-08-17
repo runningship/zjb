@@ -267,10 +267,10 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView listAllHouse(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder hql =  new StringBuilder(" select h  from House  h where 1=1");
+		StringBuilder hql =  new StringBuilder(" select h  from House  h where h.sh=1 ");
 
 		if("fav".equals(query.action)){
-			 hql =  new StringBuilder(" select h  from House  h,HouseOwnerFav fav where fav.hid=h.id and fav.hoid=?");
+			 hql =  new StringBuilder(" select h  from House  h,HouseOwnerFav fav where h.sh=1 and fav.hid=h.id and fav.hoid=?");
 				params.add(query.userid);
 		}
 		
@@ -422,10 +422,10 @@ public class HouseOwnerService {
 	@WebMethod
 	public ModelAndView listAllRent(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder hql =  new StringBuilder(" select h  from HouseRent  h where 1=1");
+		StringBuilder hql =  new StringBuilder(" select h  from HouseRent  h where h.sh=1");
 
 		if("fav".equals(query.action)){
-			 hql =  new StringBuilder(" select h  from HouseRent  h,HouseOwnerFav fav where fav.hid=h.id and fav.hoid=?");
+			 hql =  new StringBuilder(" select h  from HouseRent  h,HouseOwnerFav fav where h.sh=1 and fav.hid=h.id and fav.hoid=?");
 				params.add(query.userid);
 		}
 		
