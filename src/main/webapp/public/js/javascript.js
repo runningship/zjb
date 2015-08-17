@@ -255,6 +255,35 @@ $(document).on('click', '.btn_act', function(event) {
         }, function(){
             
         });
+    }else if(ThiType=='addRent'){
+        layer.open({
+            type: 2,
+            title:'添加租房',
+            area: ['610px', '480px'],
+            fix: false, //不固定
+            maxmin: false,
+            content: 'chuzu_add.jsp'
+        });
+    }else if(ThiType=='editRent'){
+        var hid=$(this).parents('tr').data('hid');
+        layer.open({
+            type: 2,
+            title:'修改租房',
+            area: ['610px', '480px'],
+            fix: false, //不固定
+            maxmin: false,
+            content: 'chuzu_edit.jsp?hid='+hid
+        });
+    }else if(ThiType=='delRent'){
+        layer.confirm('确定删除租房？', {icon: 3,
+            btn: ['删除','取消'], //按钮
+            shade: false //不显示遮罩
+        }, function(){
+        	RentDelete(Thi);
+            layer.msg('已删除', {icon: 1});
+        }, function(){
+            
+        });
     }else if(ThiType=='submit_add'){
         if($('.addsubmit').length>0){
             $('.addsubmit').click();

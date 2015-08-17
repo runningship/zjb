@@ -45,43 +45,22 @@ $(function(){
 	
 });
 
-function editHouse(id){
-	layer.open({
-    	type: 2,
-    	title: '修改房源',
-	    shadeClose: false,
-	    shade: 0.5,
-    	area: ['610px', '480px'],
-	    content: 'chushou_edit.jsp?hid='+id
-// 	    btn: ['确定','取消'],
-// 	    yes:function(index){
-// 	    	$('[name=layui-layer-iframe'+index+']').contents().find('.save').click();
-// 		    return false;
-// 		}
-	}); 
-}
-
-function addHouse(){
-	layer.open({
-    	type: 2,
-    	title: '发布房源',
-	    shadeClose: false,
-	    shade: 0.5,
-    	area: ['610px', '480px'],
-	    content: 'chushou_add.jsp'
-// 	    btn: ['确定','取消'],
-// 	    yes:function(index){
-// 	    	$('[name=layui-layer-iframe'+index+']').contents().find('.save').click();
-// 		    return false;
-// 		}
-	}); 
-}
-
 function HouseDelete(Thi){
     var tr=Thi.parents('tr'),hid=tr.data('hid');
     YW.ajax({
     type: 'POST',
     url: '/c/weixin/houseOwner/deleteHouse?id='+hid,
+    mysuccess: function(data){
+        tr.remove();
+        }
+    });
+}
+
+function RentDelete(Thi){
+    var tr=Thi.parents('tr'),hid=tr.data('hid');
+    YW.ajax({
+    type: 'POST',
+    url: '/c/weixin/houseOwner/deleteRent?id='+hid,
     mysuccess: function(data){
         tr.remove();
         }

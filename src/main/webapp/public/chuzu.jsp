@@ -27,6 +27,10 @@
 <script type="text/javascript" src="js/buildHtml.js"></script>
 <script type="text/javascript" src="js/list.js"></script>
 <script type="text/javascript">
+function reloadWindow(){
+	window.location.reload();
+}
+
 </script>
 </head>
 <body>
@@ -144,7 +148,7 @@
                 <table border="0" cellspacing="0" cellpadding="0" class="tableList2 table-hover"> 
                     <tbody>
 						<c:forEach items="${list }" var="house"  varStatus="status">
-                        <tr data-hid="1" class="a${status.index%7} active"> 
+                        <tr data-hid="${house.id }" class="a${status.index%7} active"> 
                             <th>
                                 <h2>
                                     <span class="icons">
@@ -153,6 +157,10 @@
                                     ${house.area}
                                     <span class="icons">
                                         <i class="iconfont collect <c:if test="${!fn:contains(rentFavStr, ','.concat(house.id.toString()).concat(','))}"> no </c:if> btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
+                                        <c:if test="${house_owner.tel == house.tel && house_owner.tel != null}">
+                                        <i class="iconfont edit  btn_act" data-type="editRent" title="修改">&#xe624;</i>
+                                        <i class="iconfont del  btn_act" data-type="delRent" title="删除">&#xe613;</i>
+                                        </c:if>
                                     </span>
                                     <span class="bhao">编号：${house.id}</span>
                                 </h2>

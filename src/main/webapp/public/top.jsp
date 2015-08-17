@@ -38,7 +38,14 @@ function seeMyHouse(){
         <ul class="UList fr HA">
             <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="login"><strong>登录管理我的房源</strong></a></li></c:if>
             <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" ><strong>${house_owner.tel }</strong></a></li></c:if>
-            <c:if test="${house_owner ne null }"><li class="HV cuurent"><a href="#" class="btn btn_act" data-type="addHouse"><strong>发布</strong></a></li></c:if>
+            <c:if test="${house_owner ne null }">
+              <li class="HB"><strong class="btn btn_act" data-type="addHouse">发布</strong>
+              <div class="HC ULbox list">
+                  <a href="#" class=" btn_act" data-type="addHouse">出售</a>
+                  <a href="#" class=" btn_act" data-type="addRent">出租</a>
+              </div>
+              </li>
+            </c:if>
             <c:if test="${house_owner ne null }">
             	<c:if test="${type =='chushou' }"><li class="HV  <c:if test="${action =='my' }">active</c:if> "><a href="javascript:void(0)" onclick="seeMyHouse();" class="btn " data-type="seeMyHouse"><strong>我的房源</strong></a></li></c:if>
             	<c:if test="${type =='chuzu' }"><li class="HV  <c:if test="${action =='my' }">active</c:if> "><a href="javascript:void(0)" onclick="seeMyHouse();" class="btn " data-type="seeMyHouse"><strong>我的房源</strong></a></li></c:if>

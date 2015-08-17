@@ -1,5 +1,5 @@
-<%@page import="com.youwei.zjb.house.entity.House"%>
-<%@page import="com.youwei.zjb.house.SellState"%>
+<%@page import="com.youwei.zjb.house.RentType"%>
+<%@page import="com.youwei.zjb.house.entity.HouseRent"%>
 <%@page import="com.youwei.zjb.KeyConstants"%>
 <%@page import="org.bc.web.ThreadSession"%>
 <%@page import="com.youwei.zjb.house.entity.HouseOwner"%>
@@ -21,7 +21,7 @@
 	String hid = request.getParameter("hid");
 	HouseOwner user = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 	request.setAttribute("user", user);
-	House h = dao.get(House.class, Integer.valueOf(hid)); 
+	HouseRent h = dao.get(HouseRent.class, Integer.valueOf(hid)); 
 	CityService cityService = new CityService();
 	JSONArray citys = cityService.getCitys();
 	for(int i=0;i<citys.size();i++){
@@ -38,7 +38,7 @@
 	request.setAttribute("zxius", ZhuangXiu.toJsonArray());
 	request.setAttribute("lxings", LouXing.toJsonArray());
 	request.setAttribute("hxings", FangXing.toJsonArray());
-	request.setAttribute("ztais", SellState.toJsonArray());
+	request.setAttribute("fangshi", RentType.toJsonArray());
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +60,7 @@ function save(){
    var a=$('form[name=form1]').serialize();
    YW.ajax({
    type: 'POST',
-   url: '/c/weixin/houseOwner/updateHouse',
+   url: '/c/weixin/houseOwner/updateRent',
    data:a,
    mysuccess: function(data){
 		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -116,9 +116,9 @@ $(document).on('click', '.btn_act', function(event) {
             <td>
               
     <ul class="form-ul forms_reg">
-      <li class=""><label class="form-section form-active"><strong class="input-label">状态</strong><select name="ztai" id="" class="input">
-        <c:forEach items="${ztais}" var="ztai">
-        	<option value="${ztai.value}">${ztai.name}</option>
+      <li class=""><label class="form-section form-active"><strong class="input-label">方式</strong><select name="fangshi" id="" class="input">
+        <c:forEach items="${fangshi}" var="fs">
+        	<option value="${fs.code}" <c:if test="${house.fangshi eq fs.code}"> selected="selected"</c:if>>${fs.name}</option>
         </c:forEach>
       </select></label></li>
       <li class=""><label class="form-section form-active"><strong class="input-label">区域</strong><select name="quyu" id="" class="input">
@@ -133,7 +133,7 @@ $(document).on('click', '.btn_act', function(event) {
       </select></label></li>
       <li class=""><label class="form-section form-active"><strong class="input-label">户型</strong><select name="hxing" id="" class="input">
         <c:forEach items="${hxings }" var="hxing">
-        	<option value="${hxing.name}" <c:if test="${fxing eq hxing.name}">selected="selected"</c:if> >${hxing.name}</option>
+        	<option value="${hxing.name}"  <c:if test="${fxing eq hxing.name}"> selected="selected"</c:if> >${hxing.name}</option>
         </c:forEach>
       </select></label></li>
       <li class=""><label class="form-section form-active"><strong class="input-label">装潢</strong><select name="zxiu" id="" class="input">

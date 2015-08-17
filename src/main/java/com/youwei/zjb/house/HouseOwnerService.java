@@ -730,6 +730,76 @@ public class HouseOwnerService {
 		operService.add(OperatorType.房源记录, operConts);
 		return mv;
 	}
+
+	@WebMethod
+	public ModelAndView addRent(HouseRent house , String hxing){
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
+		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
+		ModelAndView mv = new ModelAndView();
+		if(house.fhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+		}
+		if(house.dhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
+		}
+		if(house.lceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"lceng","所在楼层不能为空");
+		}
+		if(house.zceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
+		}
+		if(house.mji==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+		}
+		if(house.zjia==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+		}
+		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
+		HouseRent po = dao.getUniqueByParams(HouseRent.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
+		if(po!=null){
+//			mv.data.put("msg", "同一个房源已经存在");
+//			mv.data.put("result", 2);
+			throw new GException(PlatformExceptionType.BusinessException,"已经存在相同的房源，请检查小区名称楼栋号");
+		}
+		house.isdel = 0;
+		house.dateadd = new Date();
+		house.ztai = String.valueOf(RentState.在租.getCode());
+		//house.uid = user.id;
+		house.cid = 1;
+		house.did = 0;
+		house.sh = 0;
+		FangXing fx = FangXing.parse(hxing);
+		house.hxf = fx.getHxf();
+		house.hxt = fx.getHxt();
+		house.hxw = fx.getHxw();
+		if(house.mji!=null && house.mji!=0){
+			int jiage = (int) (house.zjia*10000/house.mji);
+			house.djia = (float) jiage;
+		}
+		house.seeFH=1;
+		house.seeHM=1;
+		house.seeGX=1;
+		String nbsp = String.valueOf((char)160);
+		house.tel = owner.tel;
+		dao.saveOrUpdate(house);
+		if(StringUtils.isNotEmpty(house.tel)){
+			String[] arr = house.tel.split("/");
+			for(String tel : arr){
+				tel = tel.trim().replace(nbsp, "");
+				HouseTel ht = new HouseTel();
+				ht.hid = house.id;
+				ht.tel = tel;
+				dao.saveOrUpdate(ht);
+			}
+		}
+		mv.data.put("msg", "发布成功");
+		mv.data.put("result", 0);
+		
+		String operConts = "[房主添加了房源["+house.area+"],id="+house.id+",seeGX="+house.seeGX;
+		operService.add(OperatorType.房源记录, operConts);
+		return mv;
+	}
 	
 	@WebMethod
 	public ModelAndView updateHouse(House house , String hxing){
@@ -764,7 +834,59 @@ public class HouseOwnerService {
 		String operConts = "[房主修改了房源["+house.id+"]";
 		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "修改成功");
-		//TODO 是否增加跟进信息
+		return mv;
+	}
+
+	@WebMethod
+	public ModelAndView updateRent(HouseRent house , String hxing){
+//		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
+//		ThreadSession.setCityPY(cityPy);
+		if(house.fhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+		}
+		if(house.dhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
+		}
+		if(house.lceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"lceng","所在楼层不能为空");
+		}
+		if(house.zceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
+		}
+		if(house.mji==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+		}
+		if(house.zjia==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+		}
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = dao.get(HouseRent.class, house.id);
+		po.area = house.area;
+		po.address = house.address;
+		po.fangshi = house.fangshi;
+		po.dhao = house.dhao;
+		po.fhao = house.fhao;
+		po.quyu= house.quyu;
+		po.lceng = house.lceng;
+		po.zceng = house.zceng;
+		po.lxing = house.lxing;
+		po.mji = house.mji;
+		po.zjia =house.zjia;
+		FangXing fx = FangXing.parse(hxing);
+		po.hxf = fx.getHxf();
+		po.hxt = fx.getHxt();
+		po.hxw = fx.getHxw();
+		po.zxiu = house.zxiu;
+		po.lxr = house.lxr;
+		po.beizhu = house.beizhu;
+		if(po.mji!=null && po.mji!=0){
+			int jiage = (int) (po.zjia*10000/house.mji);
+			po.djia = (float) jiage;
+		}
+		dao.saveOrUpdate(po);
+		String operConts = "[房主修改了房源["+house.id+"]";
+		operService.add(OperatorType.房源记录, operConts);
+		mv.data.put("msg", "修改成功");
 		return mv;
 	}
 	
@@ -778,6 +900,10 @@ public class HouseOwnerService {
 		if(house.mji==null){
 			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
 		}
+		if(house.lceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"lceng","所在楼层不能为空");
+		}
+		
 		if(house.zceng==null){
 			throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
 		}
