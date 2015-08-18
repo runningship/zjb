@@ -55,9 +55,15 @@ function save(){
    url: '/c/weixin/houseOwner/addRent',
    data:a,
    mysuccess: function(data){
-		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		parent.reloadWindow();
-		parent.layer.close(index); //再执行关闭   
+	   layer.open({
+           content:'发布成功',
+           btn: ['OK'],
+           yes: function(layero,index){
+        	   var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	       		parent.reloadWindow();
+	       		parent.layer.close(index); //再执行关闭
+           }
+       }); 
        }
    });
 }
