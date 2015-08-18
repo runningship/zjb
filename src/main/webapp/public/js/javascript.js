@@ -118,8 +118,8 @@ var form=$('.forms_reg'),
     }
 }
 
-function regCodeFun(){
-var form=$('.forms_reg'),
+function regCodeFun(formClass){
+var form=$('.'+formClass),
     u=form.find('.u'),
     c=form.find('.c'),
     cBtn=form.find('.code'),
@@ -161,7 +161,7 @@ function openLoginWindow(){
 	layer.closeAll();
     layer.open({
         type: 1,
-        title:'登陆',
+        title:'登录',
         area: ['320px', '300px'],
         content: $('.loginbox'),
         success: function(layero,index){mh();},
@@ -191,7 +191,7 @@ $(document).on('click', '.btn_act', function(event) {
         layer.open({
             type: 1,
             title:'找回密码',
-            area: ['320px', '400px'],
+            area: ['320px', '350px'],
             content: $('.getPwdbox'),
             success: function(layero,index){mh();},
             cancel: function(index){mhs();} 
@@ -202,7 +202,9 @@ $(document).on('click', '.btn_act', function(event) {
     }else if(ThiType=='submit_reg'){
         regAction();
     }else if(ThiType=='regCode'){
-        regCodeFun();
+        regCodeFun('forms_reg');
+    }else if(ThiType=='reset_pwd_code'){
+    	regCodeFun('forms_pwds');
     }else if(ThiType=='logout'){
     	logoutAction();
     }else if(ThiType=='empty'){
@@ -211,8 +213,8 @@ $(document).on('click', '.btn_act', function(event) {
     	$('input[type=checkbox]').attr("checked" , false);
     	$('#action').val(action);
     	$('.submit').click();
-    }else if(ThiType=='getPwds'){
-        layer.msg('找回密码功能');
+    }else if(ThiType=='reset_pwd'){
+    	resetPwd();
     }else if(ThiType=='SwitchCity'){
         layer.closeAll();
         layer.open({
@@ -493,7 +495,42 @@ $(document).ready(function() {
 });
 
 
-
+function resetPwd(){
+	var form=$('.forms_pwds'),
+    u=form.find('.u'),
+    c=form.find('.c'),
+    p=form.find('.p'),
+    uv=u.val(),
+    cv=c.val(),
+    pv=p.val();
+	 if(!isPhone(uv)){
+        u.focus();
+        layer.msg('请输入正确的手机号');
+        return false;
+    }else if(!cv){
+        c.focus();
+        layer.msg('请输入手机收到的验证码');
+        return false;
+    }else if(pv.length<5){
+        p.focus();
+        layer.msg('请输入不小于5位密码');
+        return false;
+    }
+	YW.ajax({
+        type: 'POST',
+        url: '/c/weixin/houseOwner/verifyCode?tel='+uv+'&pwd='+pv+'&cityPy='+$('#currentCity').attr('py')+'&code='+cv,
+        mysuccess: function(data){
+            var exp = new Date();
+            exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
+            document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/";
+            layer.open({
+                content:'密码重置成功',
+                btn: ['OK']
+            	//回调函数刷新页面
+            });
+        }
+      });
+}
 
 /* house */
   function setSearchValue(index){

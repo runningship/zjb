@@ -58,7 +58,7 @@ $(document).on('click', '.btn_act', function(event) {
         dom_code_v=dom_code.val();
         if(dom_tel_v.length==11&&dom_code_v.length==4&&Thi.hasClass('blue')){
             layer.open({
-                content:'登陆确认',
+                content:'登录确认',
                 btn: ['OK']
             });
         }else{

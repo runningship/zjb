@@ -5,5 +5,6 @@
 <EnableHeaderDataSupport>False</EnableHeaderDataSupport>
 <ForceSecureSession>False</ForceSecureSession>
 <AllowEmptyHeaders>False</AllowEmptyHeaders>
+<MaxConnections>200</MaxConnections>
 <ResolveRemoteAddrFrom>HTTP_X_FORWARDED_FOR</ResolveRemoteAddrFrom>
 </Settings>

@@ -28,7 +28,7 @@ function seeMyHouse(){
 <div class="toper">
     <div class="wrap">
         <a href="#" class="logobox">中介宝</a>
-        <a  href="#" class="SwitchCityBtn btn_act" data-type="SwitchCity"><span id="currentCity"  py="hefei" >合肥</span> <i class="iconfont">&#xe604;</i></a>
+        <a  href="javascript:void(0)" class="SwitchCityBtn btn_act" <c:if test="${house_owner eq null }"> data-type="SwitchCity" </c:if>><span id="currentCity"  py="hefei" >合肥</span> <i class="iconfont">&#xe604;</i></a>
 
         <ul class="classTab">
             <li <c:if test="${type=='chushou' }">class="active"</c:if> ><a href="chushou.jsp">找二手房</a></li>
@@ -52,7 +52,7 @@ function seeMyHouse(){
             </c:if>
             <c:if test="${house_owner ne null }">
             	<c:if test="${type =='chushou' }"><li class="HV  <c:if test="${action =='fav' }">active</c:if> "><a href="chushou.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
-            	<c:if test="${type =='chuzu' }"><li class="HV" <c:if test="${action =='fav' }">active</c:if> ><a href="chuzu.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
+            	<c:if test="${type =='chuzu' }"><li class="HV <c:if test="${action =='fav' }">active</c:if>" ><a href="chuzu.jsp?action=fav" class="btn " data-type="seeMyHouse"><strong>我的收藏</strong></a></li></c:if>
             </c:if>
             <c:if test="${house_owner ne null }"><li class="HV"><a href="#" class="btn btn_act" data-type="logout"><strong>退出</strong></a></li></c:if>
             <c:if test="${house_owner eq null }"><li class="HV"><a href="#" class="btn btn_act" data-type="reg"><strong>注册</strong></a></li></c:if>
