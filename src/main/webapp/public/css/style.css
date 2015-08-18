@@ -111,6 +111,9 @@ box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 /* For IE 5.5 - 7 */
 filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
+.UList li .ULbox.list {width: 58px; text-align: center;}
+.UList li .ULbox.list a{ display: block; height: 36px; line-height: 36px; }
+.UList li .ULbox.list a:hover{ color: #FFF; background: #09F;}
 .UList li.HV a.btn:hover strong{ margin-bottom: 0px; z-index: 99;position: relative; border: none; 
  background:rgba(255,255,255,0.5);
 filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcolorstr=#22FFFFFF); color: #555;
@@ -140,14 +143,16 @@ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Colo
 .searchItem input.input{ border: none; height: inherit; line-height: inherit; padding: 0 10px; width: 100%; border-radius: inherit;
 }
 .searchItem strong{ padding: 0 15px;height: inherit;display: block;line-height: 36px; font-weight: normal;}
-.searchItem .more{ position: absolute; left: 0; background: #FFF; z-index: 9;border-radius: 3px;white-space:nowrap; overflow: hidden; height: 0;
+.searchItem strong i{ font-size: 12px;}
+.searchItem .more{ position: absolute; left: 0; background: #FFF; z-index: 9;border-radius: 3px;white-space:nowrap; overflow: hidden; height: 0; overflow-y: auto; max-height: 450px;
 -moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
 filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
-.searchItem .more label{ display: block; padding:0 5px; }
+.searchItem .more label{ display: block; padding:0 20px 0 5px; }
+.searchItem .more label
 .searchItem i.iconfont{ font-size: 12px;}
 .searchItem .more .btnbox{ display:none; border-bottom: 1px solid #DFDFDF;}
 .searchItem .more .btnbox:after {content: "\0020";display: block;clear: both;}
@@ -243,6 +248,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcol
 .tableList2 h2 i.no{ color: #CCC;}
 .tableList2 h2 i.my.no{display: none;}
 .tableList2 h2 i.my{ color:inherit;}
+.tableList2 h2 i.btn_act{ cursor: pointer;}
 .tableList2 p{/* font-family: '宋体';*/ font-size: 14px; color: #777; }
 .tableList2 .bhao{ display: none;/*font-family: '宋体';*/ font-size: 14px; color: #999;}
 .tableList2 .ztai{ font-family: '宋体'; font-size: 12px; color: #999; display: none;}

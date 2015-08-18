@@ -200,10 +200,10 @@ function reloadWindow(){
       <div class="form-box">
         <ul class="form-ul forms_login">
           <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe600;</i></strong><input id="tel_input" type="text" class="input u" placeholder="用户名/手机"></label></li>
-          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe601;</i></strong><input type="password" class="input p" placeholder="密码"></label></li>
+          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe601;</i></strong><input type="password" class="input p" placeholder="密码" data-keysubmit="true" data-keysubmitto=".submit_login"></label></li>
           <li class="">
             <a href="#" class="btn btn_act btn_block blue" data-type="submit_login">登陆</a>
-            <input type="submit" class="submit hidden" value="submit">
+            <input type="submit" class="submit submit_login hidden" value="submit">
           </li>
           <li class="">
             <a href="#" class="btn_act btn_link" data-type="getPwds">忘记密码</a>

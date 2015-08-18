@@ -105,7 +105,7 @@ $(document).on('click', '.btn_act', function(event) {
             <td>
               
     <ul class="form-ul forms_reg">
-      <li class=""><label class="form-section form-active"><strong class="input-label">状态</strong><select name="ztai" id="" class="input">
+      <li class=""><label class="form-section form-active"><strong class="input-label">方式</strong><select name="ztai" id="" class="input">
         <c:forEach items="${fangshi}" var="fs">
         	<option value="${fs.name}">${fs.name}</option>
         </c:forEach>

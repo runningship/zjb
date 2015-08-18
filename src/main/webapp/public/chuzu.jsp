@@ -109,7 +109,7 @@ function reloadWindow(){
                     <span class="inputLab">-</span>
                     <div class="inputBox">
                         <input type="text" class="input" placeholder="" maxlength="4" name="mjiEnd" value="${mjiEnd}">
-                    </div>
+                    </div><span class="tip">㎡</span>
                 </span>
                 <span class="searchItem w20">
                     <label class="inputTit" for="zjia">租金</label>
@@ -119,7 +119,7 @@ function reloadWindow(){
                     <span class="inputLab">-</span>
                     <div class="inputBox">
                         <input type="text" class="input" placeholder="" maxlength="3" name="zjiaEnd" value="${zjiaEnd}">
-                    </div>
+                    </div><span class="tip">​元​</span>
                 </span>
                 <span class="searchItem w15">
                     <label class="inputTit" for="lceng">楼层</label>
@@ -154,6 +154,8 @@ function reloadWindow(){
                                     <span class="icons">
                                     <i class="iconfont my <c:if test="${house_owner.tel != house.tel || house_owner.tel == null}">no</c:if>" data-class="no" value="${house.tel }" title="我的房子">&#xe60d;</i>
                                     </span>
+                                    <c:if test="${house.fangshi==1 }">[整租]</c:if>
+                                    <c:if test="${house.fangshi==2 }">[合租]</c:if>
                                     ${house.area}
                                     <span class="icons">
                                         <i class="iconfont collect <c:if test="${!fn:contains(rentFavStr, ','.concat(house.id.toString()).concat(','))}"> no </c:if> btn_act" data-type="SC"  cuzu="0" uid="${house_owner.id }" hid="${house.id }" title="点我收藏">&#xe60c;</i>
@@ -198,7 +200,7 @@ function reloadWindow(){
       <div class="form-box">
         <ul class="form-ul forms_login">
           <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe600;</i></strong><input id="tel_input" type="text" class="input u" placeholder="用户名/手机"></label></li>
-          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe601;</i></strong><input type="password" class="input p" placeholder="密码"></label></li>
+          <li class=""><label class="form-loo form-active"><strong class="input-label"><i class="iconfont">&#xe601;</i></strong><input type="password" class="input p" placeholder="密码" data-keysubmit="true" data-keysubmitto=".submit_login"></label></li>
           <li class="">
             <a href="#" class="btn btn_act btn_block blue" data-type="submit_login">登陆</a>
             <input type="submit" class="submit hidden" value="submit">
