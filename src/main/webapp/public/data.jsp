@@ -50,14 +50,19 @@
 		query.sh= 1;
 		query.seeGX=1;
 	}
+	
 	String area= request.getParameter("area");
-	if(area!=null){
-		area = new String(area.getBytes("ISO-8859-1"),"UTF-8");	
+	if(StringUtils.isNotEmpty(area)){
+		area = new String(area.getBytes("ISO-8859-1"),"UTF-8");
+		query.area = area;
+		request.setAttribute("area", area);
 	}
 	
 	String address= request.getParameter("address");
-	if(address!=null){
-		address = new String(address.getBytes("ISO-8859-1"),"UTF-8");	
+	if(StringUtils.isNotEmpty(address)){
+		address = new String(address.getBytes("ISO-8859-1"),"UTF-8");
+		query.address = address;
+		request.setAttribute("area", area);
 	}
 	
 	String mjiStart = request.getParameter("mjiStart");
@@ -81,14 +86,6 @@
 		
 	}
 	
-	if(StringUtils.isNotEmpty(area)){
-		query.area = area;
-		request.setAttribute("area", area);
-	}
-	if(StringUtils.isNotEmpty(address)){
-		query.address = address;
-		request.setAttribute("address", address);
-	}
 	buidlFloatValueQueryItem(query , "mjiStart" , request);
 	buidlFloatValueQueryItem(query , "mjiEnd" , request);
 	buidlFloatValueQueryItem(query , "zjiaStart" , request);
@@ -136,7 +133,11 @@
 	CityService cityService = new CityService();
 	JSONArray citys = cityService.getCitys();
 	for(int i=0;i<citys.size();i++){
+		
 		JSONObject city = citys.getJSONObject(i);
+		if(!"on".equals(city.getString("status"))){
+			continue;
+		}
 		if(city.getString("py").equals(citypy)){
 			request.setAttribute("quyus",city.getJSONArray("quyu"));
 		}

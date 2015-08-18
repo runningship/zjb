@@ -131,7 +131,7 @@ function reloadWindow(){
                         <input type="text" class="input" placeholder="" maxlength="2" name="lcengEnd" value="${lcengEnd}">
                     </div>
                 </span>
-                <a href="list.jsp" class="btn btns empty">清空</a>
+                <a href="#" class="btn btns empty btn_act"  data-type="empty">清空</a>
 
             </div>
             </form>
@@ -168,7 +168,7 @@ function reloadWindow(){
                                 </h2>
                                 <p class="xq">
                                     <span>${house.hxf}室${house.hxt}厅${house.hxw}卫</span>
-                                    <span>${house.mji}㎡</span>
+                                    <span><fmt:formatNumber  value="${house.mji}"  type="number"  pattern="###.##" />㎡</span>
                                     <span>${house.lxing} ${house.zxiu}</span>
                                     <span>${house.lceng}层 总层${house.zceng}</span>
                                 </p>

@@ -167,7 +167,7 @@ function reloadWindow(){
                                 </h2>
                                 <p class="xq">
                                     <span>${house.hxf}室${house.hxt}厅${house.hxw}卫</span>
-                                    <span>${house.mji}㎡</span>
+                                    <span><fmt:formatNumber  value="${house.mji}"  type="number"  pattern="###.##" />㎡</span>
                                     <span>${house.lxing} ${house.zxiu}</span>
                                     <span>${house.lceng}层 总层${house.zceng}</span>
                                 </p>
