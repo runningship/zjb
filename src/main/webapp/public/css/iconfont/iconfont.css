@@ -47,11 +47,14 @@
 .icon-coordinate:before { content: "\e602"; }
 .icon-wode:before { content: "\e60d"; }
 .icon-you:before { content: "\e610"; }
+.icon-jinggao:before { content: "\e629"; }
 .icon-wode1:before { content: "\e60e"; }
 .icon-zuobiao:before { content: "\e603"; }
+.icon-jinggao1:before { content: "\e62a"; }
 .icon-shezhicaidangerenshezhi32px:before { content: "\e600"; }
 .icon-shezhicaidanmimashezhi32px:before { content: "\e601"; }
 .icon-xuanze:before { content: "\e605"; }
 .icon-select:before { content: "\e606"; }
+.icon-dianhua:before { content: "\e628"; }
 .icon-zuobiao1:before { content: "\e604"; }
 .icon-duihaocuohao55:before { content: "\e60b"; }
