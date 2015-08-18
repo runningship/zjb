@@ -26,6 +26,7 @@
 <script type="text/javascript" src="js/javascript.js"></script>
 <script type="text/javascript" src="js/buildHtml.js"></script>
 <script type="text/javascript" src="js/list.js"></script>
+<script type="text/javascript" src="js/json2.js"></script>
 <script type="text/javascript">
 function reloadWindow(){
 	window.location.reload();

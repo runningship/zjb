@@ -91,6 +91,10 @@ var list_this_err_num=0;
 
 
 function addList(box,url,title){
+    if (!url) {
+        console.log(1);
+        return;
+    };
     if(url.indexOf('http://')>-1){
         sys_urlBu='';
     }else{
@@ -256,6 +260,11 @@ function replaceAlls(str){
 
 
 function get1Html(url){
+    
+    if (url=='http://hf.ganji.com/fang5/0x.htm') {
+        // console.log(1);
+        return;
+    };
     
     $$.ajax({url: url,
         type: 'GET',
