@@ -186,7 +186,7 @@ function reloadWindow(){
                                 <p class="dz"><span>${house.quyu} ${house.address} </span> </p>
                             </th> 
                             <td>
-                                <p class="kong">&nbsp;</p>
+                                <p class="kongs">&nbsp;</p>
                                 <p class="zjia"><b><fmt:formatNumber  value="${house.zjia}"  type="number"  pattern="#####.#" /></b> 元/月</p>
                             </td> 
                             <td>

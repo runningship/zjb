@@ -189,7 +189,7 @@ function reloadWindow(){
                                 <p class="hx"><fmt:formatNumber  value="${house.djia}"  type="number"  pattern="#####.#" />元/㎡</p>
                             </td> 
                             <td>
-                                <p class="kong">&nbsp;</p>
+                                <p class="kongs">&nbsp;</p>
                                 <p class=""><a href="#" class="btn btn_act seePhone blue" data-type="seePhone"><i class="iconfont"></i> 联系电话</a></p>
                                 <span class="time" title="发布时间"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
                             </td> 
