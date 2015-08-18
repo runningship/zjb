@@ -122,10 +122,13 @@ var form=$('.forms_reg'),
                  document.cookie = "tel=" + uv + ";expires=" + exp.toGMTString()+ "; path=/";
                  layer.open({
                      content:'注册成功',
-                     btn: ['OK']
-                 	//回调函数刷新页面
+                     btn: ['OK'],
+                     yes: function(layero,index){
+                    	 //setTimeout(function(){},1000);
+                    	 window.location.reload();
+                     }
                  });
-                 openLoginWindow();
+//                 openLoginWindow();
              }
            });
     }

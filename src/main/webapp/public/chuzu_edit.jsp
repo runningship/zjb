@@ -14,6 +14,7 @@
 <%@page import="com.youwei.zjb.house.ZhuangXiu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 
 	String citypy=ThreadSessionHelper.getCityPinyin();
@@ -101,8 +102,8 @@ $(document).on('click', '.btn_act', function(event) {
       <li class=""><label class="form-section form-section-tow one form-active"><strong class="input-label">楼层</strong><input type="text" name="lceng" class="input placeholder u" value="${house.lceng }" desc="楼层" placeholder="楼层"></label>
       <label class="form-section form-section-tow form-active"><strong class="input-label">总层</strong><input type="text" name="zceng" class="input placeholder u" value="${house.zceng }" desc="总层" placeholder="总层"></label></li>
 
-      <li class=""><label class="form-section form-section-tow one form-active"><strong class="input-label">面积</strong><input type="text" name="mji" class="input placeholder u" value="${house.mji }" desc="面积" placeholder="面积"><span class="tip">M<sub>2</sub></span></label>
-      <label class="form-section form-section-tow form-active"><strong class="input-label">总价</strong><input type="text" name="zjia" class="input placeholder u" value="${house.zjia }" desc="总价" placeholder="总价"><span class="tip">万元</span></label></li>
+      <li class=""><label class="form-section form-section-tow one form-active"><strong class="input-label">面积</strong><input type="text" name="mji" class="input placeholder u" value="<fmt:formatNumber  value="${house.mji}"  type="number"  pattern="###.##" />" desc="面积" placeholder="面积"><span class="tip">M<sub>2</sub></span></label>
+      <label class="form-section form-section-tow form-active"><strong class="input-label">总价</strong><input type="text" name="zjia" class="input placeholder u" value="<fmt:formatNumber  value="${house.zjia}"  type="number"  pattern="###.##" />" desc="总价" placeholder="总价"><span class="tip">万元</span></label></li>
 
       <li class=""><label class="form-section form-active"><strong class="input-label">年代</strong><input type="text" name="dateyear" class="input placeholder u" value="${house.dateyear }" desc="楼盘年代" placeholder="楼盘年代"></label></li>
 

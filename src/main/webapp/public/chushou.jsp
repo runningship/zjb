@@ -65,7 +65,7 @@ function reloadWindow(){
                     <strong class="">楼型 <em class="iconRight"><i class="iconfont">&#xe60f;</i></em></strong>
                     <ul class="more ">
 					  <c:forEach items="${lxings }" var="lxing"  varStatus="status">
-                      <li><label><input type="checkbox" class="check" name="lxings" <c:if test="${s_lxings.contains(lxing.name)}">checked="checked"</c:if> value="${lxing.name}">${lxing.name}</label></li>
+                      <li><label><input type="checkbox" class="check" name="lxings" <c:if test="${s_lxings.contains(','.concat(lxing.name).concat(','))}">checked="checked"</c:if> value="${lxing.name}">${lxing.name}</label></li>
                       </c:forEach>
                     </ul>
                 </span>

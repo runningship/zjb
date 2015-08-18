@@ -104,7 +104,8 @@
 		for(int i=0;i<lxings.length;i++){
 			query.lxing.add(address = new String(lxings[i].getBytes("ISO-8859-1"),"UTF-8"));
 		}
-		request.setAttribute("s_lxings", Arrays.toString(query.lxing.toArray()));
+		
+		request.setAttribute("s_lxings", Arrays.toString(query.lxing.toArray()).replace("[",",").replace("]",",").replace(" ",""));
 // 		query.lxing = Arrays.asList(lxings);
 // 		request.setAttribute("s_lxings", Arrays.toString(lxings));
 	}
