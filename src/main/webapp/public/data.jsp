@@ -144,6 +144,7 @@
 	}
 	hs.listAllHouse(query, p);
 	request.setAttribute("list", p.getResult());
+	request.setAttribute("totalCount", p.totalCount);
 	request.setAttribute("p", p);
 	request.setAttribute("zxius", ZhuangXiu.toJsonArray());
 	request.setAttribute("lxings", LouXing.toJsonArray());

@@ -147,6 +147,7 @@
 	}
 	hs.listAllRent(query, p);
 	request.setAttribute("list", p.getResult());
+	request.setAttribute("totalCount", p.totalCount);
 	request.setAttribute("p", p);
 	request.setAttribute("fangshis", RentType.toJsonArray());
 	request.setAttribute("zxius", ZhuangXiu.toJsonArray());

@@ -32,9 +32,9 @@
           <li class=""><label class="form-section form-active"><strong class="input-label">手机号</strong><input type="text" class="input placeholder u" placeholder="您的手机号码"></label></li>
           <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码</strong><input type="text" class="input placeholder c" placeholder="收到的验证码"><a href="#" class="btn btn_act code" data-type="regCode" data-txt="发送验证码">发送验证码</a></label></li>
           <li class=""><label class="form-section form-active"><strong class="input-label">密码</strong><input type="password" class="input placeholder p" placeholder="登录密码"></label></li>
-          <li class=""><label class="form-section form-active"><strong class="input-label">重复密码</strong><input type="password" class="input placeholder p2" placeholder="重复输入密码"></label></li>
+          <li class=""><label class="form-section form-active"><strong class="input-label">重复密码</strong><input type="password" class="input placeholder p2" placeholder="重复输入密码" data-keysubmit="true" data-keysubmitto=".submit_reg"></label></li>
           <li class="">
-            <a href="#" class="btn btn_act btn_block blue" data-type="submit_reg">注册</a>
+            <a href="#" class="btn btn_act btn_block blue submit_reg" data-type="submit_reg">注册</a>
             <input type="submit" class="submit hidden" value="submit">
           </li>
           <li class="">
@@ -48,9 +48,9 @@
         <ul class="form-ul forms_pwds">
           <li class=""><label class="form-section form-active"><strong class="input-label">手机号</strong><input type="text" class="input placeholder u" placeholder="您的手机号码"></label></li>
           <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码</strong><input type="text" class="input placeholder c" placeholder="收到的验证码"><a href="#" class="btn btn_act code" data-type="reset_pwd_code" data-txt="发送验证码">发送验证码</a></label></li>
-          <li class=""><label class="form-section form-active"><strong class="input-label">密码</strong><input type="password" class="input placeholder p" placeholder="登录密码"></label></li>
+          <li class=""><label class="form-section form-active"><strong class="input-label">密码</strong><input type="password" class="input placeholder p" placeholder="登录密码" data-keysubmit="true" data-keysubmitto=".reset_pwd"></label></li>
           <li class="">
-            <a href="#" class="btn btn_act btn_block blue" data-type="reset_pwd">重置密码</a>
+            <a href="#" class="btn btn_act btn_block blue reset_pwd" data-type="reset_pwd">重置密码</a>
             <input type="submit" class="submit hidden" value="submit">
           </li>
           <li class="">

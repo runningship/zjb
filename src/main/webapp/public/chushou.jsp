@@ -144,7 +144,15 @@ function reloadWindow(){
     </div>
     <div class="mainer">
         <div class="wrap">
-
+			<c:if test="${totalCount == 0}">
+            <div class="nogroup">
+                <div class="noIcon" value="${totalCount}"><i class="iconfont">&#xe629;</i></div>
+                <div class="noText">
+                    <h2>没找到你要的，换个搜索条件试试！</h2>
+                    <p>真的没找到</p>
+                </div>
+            </div>
+			</c:if>
             <div class="listgroup">
                 <table border="0" cellspacing="0" cellpadding="0" class="tableList2 table-hover"> 
                     <tbody>
@@ -168,7 +176,8 @@ function reloadWindow(){
                                 <p class="xq">
                                     <span>${house.hxf}室${house.hxt}厅${house.hxw}卫</span>
                                     <span><fmt:formatNumber  value="${house.mji}"  type="number"  pattern="###.##" />㎡</span>
-                                    <span>${house.lxing} ${house.zxiu}</span>
+                                    <span>${house.lxing}</span>
+                                    <span>${house.zxiu}</span>
                                     <span>${house.lceng}层 总层${house.zceng}</span>
                                 </p>
                                 <p class="dz"><span>${house.quyu} ${house.address} </span> </p>
@@ -180,7 +189,7 @@ function reloadWindow(){
                             </td> 
                             <td>
                                 <p class="kong">&nbsp;</p>
-                                <p class="kong">&nbsp;</p>
+                                <p class=""><a href="#" class="btn btn_act seePhone blue" data-type="seePhone"><i class="iconfont"></i> 联系电话</a></p>
                                 <span class="time" title="发布时间"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
                             </td> 
                         </tr>

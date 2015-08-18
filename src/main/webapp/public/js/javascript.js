@@ -125,6 +125,7 @@ var form=$('.forms_reg'),
                      btn: ['OK']
                  	//回调函数刷新页面
                  });
+                 openLoginWindow();
              }
            });
     }
@@ -202,6 +203,7 @@ function resetPwd(){
                 content:'密码重置成功',
                 btn: ['OK']
             });
+            openLoginWindow();
         }
       });
 }
@@ -350,6 +352,8 @@ $(document).on('click', '.btn_act', function(event) {
                 }
             });
         }
+    }else if(ThiType=='seePhone'){
+        layer.alert('<span class="seePhones">电话：<b>0551-65314555</b></span>',{title:'联系电话'})
     }else if(ThiType=='submit'){
         if($('.submit').length>0){
             $('.submit').click();

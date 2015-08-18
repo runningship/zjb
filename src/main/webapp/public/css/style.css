@@ -151,7 +151,7 @@ box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
 filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
-.searchItem .more label{ display: block; padding:0 20px 0 5px; }
+.searchItem .more label{ display: block; padding:0 15px 0 5px; }
 .searchItem .more label
 .searchItem i.iconfont{ font-size: 12px;}
 .searchItem .more .btnbox{ display:none; border-bottom: 1px solid #DFDFDF;}
@@ -213,8 +213,12 @@ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Colo
 filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcolorstr=#22FFFFFF);}
 .searchLine .wrap{ height: 16px; line-height: 16px;}
 
-
-
+.nogroup{ height: 100%; color: #666; color: #09F;}
+.noText{ padding: 50px 0 50px; margin-left: 30%;}
+.noText h2{ font-size: 24px; margin-bottom: 5px;}
+.noText p{ color: #999;}
+.noIcon { float: left; padding-top: 60px; margin-left: 20%;}
+.noIcon i{ font-size: 60px;}
 
 
 
@@ -243,6 +247,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcol
 
 .tableList2 tr.hover{ border-left-width: 7px;}
 .tableList2 tr.hover .bhao{ display: inline;}
+.tableList2 tr.hover .time{ display: inline-block;}
 
 .tableList2 h2 {font-size: 20px; display: block; color: #2A8AE1;}
 .tableList2 h2 i.no{ color: #CCC;}
@@ -254,12 +259,15 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcol
 .tableList2 .ztai{ font-family: '宋体'; font-size: 12px; color: #999; display: none;}
 .tableList2 .dz{ color: #999;}
 .tableList2 .zjia b{ font-size: 18px; color: #D71208; font-family: 'microsoft yahei','黑体'; font-weight: ; font-size: 25px; letter-spacing: -2px;}
+.seePhone{ border-radius: 5px; width: 130px;}
 
 .tableList2 .zjia{ }
 .tableList2 p.kong{ display: block;height: 26px;}
+.tableList2 p.kongs{ display: block;height: 10px;}
 .tableList2 p.xq { padding: 5px 0;}
 .tableList2 p.xq span{ display: inline-block; width: 110px; font-size: 16px; font-weight: normal;color: #444;}
-.tableList2 .time{ color: #999;}
+.tableList2 .time{ display: none; width: 130px; text-align: center; color: #999;}
+.seePhones{ font-size: 24px;}
 
 
 
@@ -308,6 +316,7 @@ html .searchItem{*float: left; width: 167px;*width: 147px;*padding: 0 10px;}
 html .searchItem.selects{width: 76px;*width: 76px; *position: relative;
 *z-index: 199;*padding: 0;}
 html .searchItem label.inputTit{height: 36px; line-height: 36px;}
+html .searchItem .more label{*padding:0 20px 0 5px; }
 html .searchItem.hover .more{ *overflow: visible;}
 html .searchItem .inputBox input.input{*padding:0;* text-align: center;}
 html .searchItem input.input{
@@ -413,9 +422,9 @@ html .layui-layer-btn a{font-weight: normal;border: 1px solid #69BCEE;height: 26
 .form-loo.focus span.tip,
 .form-active.focus span.tip{ color: #09F; }
 /* placeholder active */
-.form-active.active .input::-webkit-input-placeholder { color:#CCC; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
-.form-active.active .input::-moz-placeholder { color:#CCC; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
-.form-active.active .input:-ms-input-placeholder { color:#CCC; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
+.form-active.active .input::-webkit-input-placeholder { color:#CCC; -webkit-transition: all 0.0s linear;transition: all 0.0s linear;}
+.form-active.active .input::-moz-placeholder { color:#CCC; -webkit-transition: all 0.0s linear;transition: all 0.0s linear;}
+.form-active.active .input:-ms-input-placeholder { color:#CCC; -webkit-transition: all 0.0s linear;transition: all 0.0s linear;}
 /* placeholder active end */
 /* regbox end */
 
