@@ -18,7 +18,7 @@
 	String citypy=ThreadSessionHelper.getCityPinyin();
 	CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 	HouseOwner user = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
-
+	request.setAttribute("user", user);
 	CityService cityService = new CityService();
 	JSONArray citys = cityService.getCitys();
 	for(int i=0;i<citys.size();i++){
@@ -55,7 +55,9 @@ function save(){
    url: '/c/weixin/houseOwner/addRent',
    data:a,
    mysuccess: function(data){
-       alert('发布成功');
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		parent.reloadWindow();
+		parent.layer.close(index); //再执行关闭   
        }
    });
 }
@@ -95,8 +97,8 @@ $(document).on('click', '.btn_act', function(event) {
 
       <li class=""><label class="form-section form-active"><strong class="input-label">年代</strong><input type="text" name="dateyear" class="input placeholder u" desc="楼盘年代" placeholder="楼盘年代"></label></li>
 
-      <li class=""><label class="form-section form-section-tow one w4 form-active"><strong class="input-label">房主姓名</strong><input type="text" name="lxr" class="input placeholder u" desc="房主姓名" placeholder="房主姓名"></label>
-      <label class="form-section form-section-tow w6 form-active"><strong class="input-label">房主号码</strong><input type="text" name="tel" class="input placeholder u" desc="房主号码" placeholder="房主号码"></label></li>
+      <li class=""><label class="form-section form-section-tow one w4 form-active"><strong class="input-label">房主姓名</strong><input type="text" name="lxr" id="lxr" class="input placeholder u" desc="房主姓名" placeholder="房主姓名"></label>
+      <label class="form-section form-section-tow w6 form-active"><strong class="input-label">房主号码</strong><input type="text" name="tel" readonly="readonly" class="input placeholder u" desc="房主号码" placeholder="房主号码" value="${user.tel }"></label></li>
 
 
     </ul>
@@ -105,9 +107,9 @@ $(document).on('click', '.btn_act', function(event) {
             <td>
               
     <ul class="form-ul forms_reg">
-      <li class=""><label class="form-section form-active"><strong class="input-label">方式</strong><select name="ztai" id="" class="input">
+      <li class=""><label class="form-section form-active"><strong class="input-label">方式</strong><select name="fangshi" id="" desc="租房方式" class="input">
         <c:forEach items="${fangshi}" var="fs">
-        	<option value="${fs.name}">${fs.name}</option>
+        	<option value="${fs.code}">${fs.name}</option>
         </c:forEach>
       </select></label></li>
       <li class=""><label class="form-section form-active"><strong class="input-label">区域</strong><select name="quyu" id="" class="input">

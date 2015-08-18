@@ -84,7 +84,7 @@ $(document).ready(function() {
                 <span class="inputbox"><input type="number" class="text isFormItem" value="" name="lceng" desc="楼层" placeholder="楼层" data-rule="noNull" data-tip="请输入楼层" data-tipErr="请输入楼层"></span>
             </li>
             <li>
-                <span class="title"> </span>
+                <span class="title">总层：</span>
                 <span class="inputbox">
                 	<input type="number" class="text " name="zceng" desc="总层" placeholder="总层" />
                 </span>

@@ -57,6 +57,14 @@
 <script type="text/javascript" src="js/javascript.js"></script>
 <script type="text/javascript">
 function save(){
+	if($('#lxr').val()==""){
+		alert("请先填写房主姓名");
+		return;
+	}
+	if($('#dateyear').val()==""){
+		alert("请先填写建筑年代");
+		return;
+	}
    var a=$('form[name=form1]').serialize();
    YW.ajax({
    type: 'POST',
@@ -104,9 +112,9 @@ $(document).on('click', '.btn_act', function(event) {
       <li class=""><label class="form-section form-section-tow one form-active"><strong class="input-label">面积</strong><input type="text" name="mji" class="input placeholder u" value="${house.mji }" desc="面积" placeholder="面积"><span class="tip">M<sub>2</sub></span></label>
       <label class="form-section form-section-tow form-active"><strong class="input-label">总价</strong><input type="text" name="zjia" class="input placeholder u" value="${house.zjia }" desc="总价" placeholder="总价"><span class="tip">万元</span></label></li>
 
-      <li class=""><label class="form-section form-active"><strong class="input-label">年代</strong><input type="text" name="dateyear" class="input placeholder u" value="${house.dateyear }" desc="楼盘年代" placeholder="楼盘年代"></label></li>
+      <li class=""><label class="form-section form-active"><strong class="input-label">年代</strong><input type="text" id="dateyear" name="dateyear" class="input placeholder u" value="${house.dateyear }" desc="楼盘年代" placeholder="楼盘年代"></label></li>
 
-      <li class=""><label class="form-section form-section-tow one w4 form-active"><strong class="input-label">房主姓名</strong><input type="text" name="lxr" class="input placeholder u" value="${house.lxr }" desc="房主姓名" placeholder="房主姓名"></label>
+      <li class=""><label class="form-section form-section-tow one w4 form-active"><strong class="input-label">房主姓名</strong><input type="text" id="lxr" name="lxr" class="input placeholder u" value="${house.lxr }" desc="房主姓名" placeholder="房主姓名"></label>
       <label class="form-section form-section-tow w6 form-active"><strong class="input-label">房主号码</strong><input type="text" name="tel" class="input placeholder u" value="${house.tel }" readonly="readonly" desc="房主号码" placeholder="房主号码" value="${user.tel}"></label></li>
 
 

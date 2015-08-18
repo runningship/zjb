@@ -101,7 +101,7 @@ function reloadWindow(){
                 <span class="searchItem w15">
                     <input type="text" class="input" placeholder="路段" name="address" value="${address}">
                 </span>
-                <span class="searchItem w15">
+                <span class="searchItem w20">
                     <label class="inputTit" for="mji">面积</label>
                     <div class="inputBox">
                         <input type="text" id="mji" class="input" placeholder="" maxlength="3" name="mjiStart" value="${mjiStart}">
@@ -196,21 +196,6 @@ function reloadWindow(){
     </div>
 </div>
 <jsp:include page="common.jsp"></jsp:include>
-<script type="text/javascript">
-$(document).ready(function() {
-    $(document).find('.form-active').find('.input').focusin(function(){
-        $(this).parent().addClass('active').addClass('focus');
-    }).focusout(function(){
-        if(!$(this).val()){
-            $(this).parent().removeClass('active');
-        }
-        $(this).parent().removeClass('focus');
-    }).hover(function() {
-        $(this).parent().addClass('hover');
-    }, function() {
-        $(this).parent().removeClass('hover');
-    });
-});
-</script>
+
 </body>
 </html>

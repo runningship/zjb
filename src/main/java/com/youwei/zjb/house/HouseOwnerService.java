@@ -878,6 +878,7 @@ public class HouseOwnerService {
 		po.hxw = fx.getHxw();
 		po.zxiu = house.zxiu;
 		po.lxr = house.lxr;
+		po.dateyear = house.dateyear;
 		po.beizhu = house.beizhu;
 		if(po.mji!=null && po.mji!=0){
 			int jiage = (int) (po.zjia*10000/house.mji);

@@ -107,7 +107,7 @@ $(document).on('click', '.btn_act', function(event) {
       <li class=""><label class="form-section form-active"><strong class="input-label">年代</strong><input type="text" name="dateyear" class="input placeholder u" value="${house.dateyear }" desc="楼盘年代" placeholder="楼盘年代"></label></li>
 
       <li class=""><label class="form-section form-section-tow one w4 form-active"><strong class="input-label">房主姓名</strong><input type="text" name="lxr" class="input placeholder u" value="${house.lxr }" desc="房主姓名" placeholder="房主姓名"></label>
-      <label class="form-section form-section-tow w6 form-active"><strong class="input-label">房主号码</strong><input type="text" name="tel" class="input placeholder u" value="${house.tel }" readonly="readonly" desc="房主号码" placeholder="房主号码" value="${user.tel}"></label></li>
+      <label class="form-section form-section-tow w6 form-active"><strong class="input-label">房主号码</strong><input type="text" name="tel" class="input placeholder u" value="${house.tel }" readonly="readonly" desc="房主号码" placeholder="房主号码" value="${house.tel}"></label></li>
 
 
     </ul>
@@ -142,7 +142,7 @@ $(document).on('click', '.btn_act', function(event) {
         </c:forEach>
       </select></label></li>
 
-      <li class=""><label class="form-section form-active"><strong class="input-label">备注</strong><textarea class="input placeholder" name="beizhu" id="" cols="30" rows="4" placeholder="备注其他信息"></textarea></label></li>
+      <li class=""><label class="form-section form-active"><strong class="input-label">备注</strong><textarea class="input placeholder" name="beizhu" id="" cols="30" rows="4" placeholder="备注其他信息">${house.beizhu }</textarea></label></li>
 
       <li class="">
         <a href="#" class="btn btn_act btn_block blue" data-type="submits">提交</a>
