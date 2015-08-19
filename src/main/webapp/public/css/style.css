@@ -129,6 +129,13 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcol
 .UList li.cuurent strong{ background: #09F; color: #FFF;}
 .UList li.cuurent a.btn:hover strong{ background:#0AF; color: #FFF;}
 
+.releaseHouse { width: 800px;}
+.releaseHouse .layui-layer-content{ padding: 20px; }
+.releaseHouse .layui-layer-content a{ float: left; display: block; width: 200px; height: 100px; line-height: 100px; text-align: center; font-size: 24px; }
+.releaseHouse .layui-layer-content a.s{ background: #F90; color: #FFF; margin-right: 20px;}
+.releaseHouse .layui-layer-content a.z{ background: #09F; color: #FFF;}
+
+
 
 .search{ padding: 10px;}
 .search .wrap{ padding-bottom: 10px; width: 810px; min-width: 810px;}
@@ -217,7 +224,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcol
 .noText{ padding: 50px 0 50px; margin-left: 30%;}
 .noText h2{ font-size: 24px; margin-bottom: 5px;}
 .noText p{ color: #999;}
-.noIcon { float: left; padding-top: 60px; margin-left: 20%;}
+.noIcon { float: left; padding-top: 60px; margin-left: 20%; *padding-bottom: 20px;}
 .noIcon i{ font-size: 60px;}
 
 
