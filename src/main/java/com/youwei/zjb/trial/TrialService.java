@@ -14,6 +14,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.im.IMServer;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.MailUtil;
 
 @Module(name="/trial/")
 public class TrialService {
@@ -43,6 +44,11 @@ public class TrialService {
 		msg.append("qq: ").append(trial.qq).append("<br/>");
 		try{
 			IMServer.sendMsgToGroup(1, msg.toString());
+		}catch(Exception ex){
+			LogUtil.warning(msg.toString());
+		}
+		try{
+			MailUtil.send_email("76558874@qq.com", "中介宝试用申请", msg.toString());
 		}catch(Exception ex){
 			LogUtil.warning(msg.toString());
 		}

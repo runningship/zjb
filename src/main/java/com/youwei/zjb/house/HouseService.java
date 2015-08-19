@@ -142,11 +142,11 @@ public class HouseService {
 		String hql = "from District  where name = ? and address=?";
 		List<District> list = dao.listByParams(District.class, hql, house.area,house.address);
 		if(list.isEmpty()){
-			if(u.cid!=1){
-				//只有中介宝用户才可以
-				setMessageToMetis("出现新的楼盘: "+house.id+","+house.area+","+house.quyu+","+house.address);
-				return;
-			}
+//			if(u.cid!=1){
+//				//只有中介宝用户才可以
+//				setMessageToMetis("出现新的楼盘: "+house.id+","+house.area+","+house.quyu+","+house.address);
+//				return;
+//			}
 			District d= new District();
 			d.address = house.address;
 			d.name = house.area;
@@ -155,9 +155,13 @@ public class HouseService {
 			d.pinyin=DataHelper.toPinyin(d.name);
 			d.pyShort=DataHelper.toPinyinShort(d.name);
 			d.sh=0;
-			Map<String,Double> map = LngAndLatUtil.getLngAndLat(d.name,ThreadSession.getCityPY());
-			d.maplat = map.get("lat").floatValue();
-			d.maplng = map.get("lng").floatValue();
+			try{
+				Map<String,Double> map = LngAndLatUtil.getLngAndLat(d.name,ThreadSession.getCityPY());
+				d.maplat = map.get("lat").floatValue();
+				d.maplng = map.get("lng").floatValue();
+			}catch(Exception ex){
+				
+			}
 			dao.saveOrUpdate(d);
 		}
 	}
