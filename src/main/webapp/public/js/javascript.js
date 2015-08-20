@@ -268,8 +268,19 @@ $(document).on('click', '.btn_act', function(event) {
         });
     }else if(ThiType=='seeMyHouse'){
         layer.msg('查看我的房源')
-
+    }else if(ThiType=='releaseHouse'){
+        layer.closeAll();
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: false,
+            shadeClose: true,
+            area: ['auto', 'auto'],
+            skin: 'releaseHouse',
+            content: '<a href="#" class="s btn btn_act" data-type="addHouse">发布出售</a><a href="#" class="z btn btn_act" data-type="addRent">发布出租</a>'
+        });
     }else if(ThiType=='addHouse'){
+        layer.closeAll();
         layer.open({
             type: 2,
             title:'添加房源',
@@ -279,6 +290,7 @@ $(document).on('click', '.btn_act', function(event) {
             content: 'chushou_add.jsp'
         });
     }else if(ThiType=='editHouse'){
+        layer.closeAll();
         var hid=$(this).parents('tr').data('hid');
         layer.open({
             type: 2,
@@ -289,6 +301,7 @@ $(document).on('click', '.btn_act', function(event) {
             content: 'chushou_edit.jsp?hid='+hid
         });
     }else if(ThiType=='delHouse'){
+        layer.closeAll();
         var tr=$(this).parents('tr'),hid=tr.data('hid');
         layer.confirm('确定删除房源？', {icon: 3,
             btn: ['删除','取消'], //按钮
@@ -298,6 +311,7 @@ $(document).on('click', '.btn_act', function(event) {
             layer.msg('已删除', {icon: 1});
         }, function(){});
     }else if(ThiType=='addRent'){
+        layer.closeAll();
         layer.open({
             type: 2,
             title:'添加租房',
@@ -307,6 +321,7 @@ $(document).on('click', '.btn_act', function(event) {
             content: 'chuzu_add.jsp'
         });
     }else if(ThiType=='editRent'){
+        layer.closeAll();
         var hid=$(this).parents('tr').data('hid');
         layer.open({
             type: 2,
@@ -317,6 +332,7 @@ $(document).on('click', '.btn_act', function(event) {
             content: 'chuzu_edit.jsp?hid='+hid
         });
     }else if(ThiType=='delRent'){
+        layer.closeAll();
         layer.confirm('确定删除租房？', {icon: 3,
             btn: ['删除','取消'], //按钮
             shade: false //不显示遮罩
@@ -426,6 +442,72 @@ $('.HAs').hover(function(){
     },500);
 });
 }
+//判断浏览器
+function isIE8(){
+    var flags = 1;
+    if(navigator.userAgent.indexOf("MSIE")>0){ 
+        if(navigator.userAgent.indexOf("MSIE 6.0")>0){ 
+            flags = 0;
+        } 
+        if(navigator.userAgent.indexOf("MSIE 7.0")>0){
+            flags = 0;
+        } 
+        if(navigator.userAgent.indexOf("MSIE 8.0")>0){
+            flags = 0;
+        } 
+        if(navigator.userAgent.indexOf("MSIE 9.0")>0){
+        //alert("ie9");
+        } 
+    }else{
+        flags = 1;
+    }
+    return flags;
+}
+$(document).ready(function() {
+    if(isIE8()==0||isIE8()==null||isIE8()==''){
+        layer.msg(isIE8());
+        $('input.input').each(function(index, el) {
+            var Thi=$(this),
+            ThiId=Thi.attr('id'),
+            ThiName=Thi.attr('name'),
+            ThiP=Thi.parent(),
+            ThiLabel=ThiP.find('label'),
+            ThiPlaceholder=Thi.attr('placeholder');
+            if(ThiLabel.length>0){
+                return false;
+            }else{
+                if(!ThiId){
+                    Thi.attr('id',ThiName);
+                    ThiId=ThiName;
+                }
+                ThiP.append('<label class="'+ThiName+'_label" for="'+ThiName+'">'+ThiPlaceholder+'</label>');
+                ThiP.find('label').eq(0).css({'position':'absolute',
+                    'top': '0px',
+                    'left':'10px',
+                    'height':'inherit',
+                    'line-height':'inherit',
+                    'color':'#CCC'
+                });
+            }
+        }).on('keyup', function(event) {
+            var Thi=$(this),
+            ThiId=Thi.attr('id'),
+            ThiName=Thi.attr('name'),
+            ThiP=Thi.parent(),
+            ThiLabel=ThiP.find('label'),
+            ThiPlaceholder=Thi.attr('placeholder');
+            if(ThiLabel.length>0){
+                if(Thi.val()){
+                    ThiLabel.hide();
+                }else{
+                    ThiLabel.show();
+                }
+            }else{}
+            event.preventDefault();
+        });
+    }
+});
+
 
 // 列表标题与内容宽度保持一致
 function tableFix(TableH,TableB){

@@ -206,21 +206,5 @@ function reloadWindow(){
     </div>
 </div>
 <jsp:include page="common.jsp"></jsp:include>
-<script type="text/javascript">
-$(document).ready(function() {
-    $(document).find('.form-active').find('.input').focusin(function(){
-        $(this).parent().addClass('active').addClass('focus');
-    }).focusout(function(){
-        if(!$(this).val()){
-            $(this).parent().removeClass('active');
-        }
-        $(this).parent().removeClass('focus');
-    }).hover(function() {
-        $(this).parent().addClass('hover');
-    }, function() {
-        $(this).parent().removeClass('hover');
-    });
-});
-</script>
 </body>
 </html>
