@@ -152,7 +152,7 @@ $(document).on('click', '.btn_act', function(event) {
         </c:forEach>
       </select></label></li>
 
-      <li class=""><label class="form-section form-active"><strong class="input-label">备注</strong><textarea class="input placeholder" name="beizhu" id="" cols="30" rows="4" placeholder="备注其他信息"></textarea></label></li>
+      <li class=""><label class="form-section form-active"><strong class="input-label">备注</strong><textarea class="input placeholder" name="beizhu" id="" cols="30" rows="4" placeholder="备注其他信息">${house.beizhu }</textarea></label></li>
 
       <li class="">
         <a href="#" class="btn btn_act btn_block blue" data-type="submits">提交</a>

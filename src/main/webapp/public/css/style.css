@@ -262,7 +262,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22FFFFFF,endcol
 .tableList2 h2 i.my{ color:inherit;}
 .tableList2 h2 i.btn_act{ cursor: pointer;}
 .tableList2 p{/* font-family: '宋体';*/ font-size: 14px; color: #777; }
-.tableList2 .bhao{ display: none;/*font-family: '宋体';*/ font-size: 14px; color: #999;}
+.tableList2 .bhao{/*font-family: '宋体';*/ font-size: 14px; color: #999;}
 .tableList2 .ztai{ font-family: '宋体'; font-size: 12px; color: #999; display: none;}
 .tableList2 .dz{ color: #999;}
 .tableList2 .zjia b{ font-size: 18px; color: #D71208; font-family: 'microsoft yahei','黑体'; font-weight: ; font-size: 25px; letter-spacing: -2px;}

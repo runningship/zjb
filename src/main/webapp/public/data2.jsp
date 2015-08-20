@@ -62,7 +62,7 @@
 	if(StringUtils.isNotEmpty(address)){
 		address = new String(address.getBytes("ISO-8859-1"),"UTF-8");	
 		query.address = address;
-		request.setAttribute("area", area);
+		request.setAttribute("address", address);
 	}
 	String mjiStart = request.getParameter("mjiStart");
 	String mjiEnd = request.getParameter("mjiEnd");
@@ -95,14 +95,14 @@
 	if(quyus!=null && quyus.length>0){
 		query.quyus = new ArrayList<String>();
 		for(int i=0;i<quyus.length;i++){
-			query.quyus.add(address = new String(quyus[i].getBytes("ISO-8859-1"),"UTF-8"));
+			query.quyus.add(new String(quyus[i].getBytes("ISO-8859-1"),"UTF-8"));
 		}
 		request.setAttribute("s_quyus", Arrays.toString(query.quyus.toArray()));
 	}
 	if(lxings!=null && lxings.length>0){
 		query.lxing = new ArrayList<String>();
 		for(int i=0;i<lxings.length;i++){
-			query.lxing.add(address = new String(lxings[i].getBytes("ISO-8859-1"),"UTF-8"));
+			query.lxing.add(new String(lxings[i].getBytes("ISO-8859-1"),"UTF-8"));
 		}
 		
 		request.setAttribute("s_lxings", Arrays.toString(query.lxing.toArray()).replace("[",",").replace("]",",").replace(" ",""));
@@ -112,7 +112,7 @@
 	if(hxings!=null && hxings.length>0){
 		query.fxing = new ArrayList<String>();
 		for(int i=0;i<hxings.length;i++){
-			query.fxing.add(address = new String(hxings[i].getBytes("ISO-8859-1"),"UTF-8"));
+			query.fxing.add(new String(hxings[i].getBytes("ISO-8859-1"),"UTF-8"));
 		}
 		request.setAttribute("s_hxings", Arrays.toString(query.fxing.toArray()));
 		//query.fxing = Arrays.asList(hxings);
@@ -121,7 +121,7 @@
 	if(zxius!=null && zxius.length>0){
 		query.zxiu = new ArrayList<String>();
 		for(int i=0;i<zxius.length;i++){
-			query.zxiu.add(address = new String(zxius[i].getBytes("ISO-8859-1"),"UTF-8"));
+			query.zxiu.add(new String(zxius[i].getBytes("ISO-8859-1"),"UTF-8"));
 		}
 		request.setAttribute("s_zxius", Arrays.toString(query.zxiu.toArray()));
 		

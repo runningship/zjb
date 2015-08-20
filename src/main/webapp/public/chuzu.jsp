@@ -192,7 +192,7 @@ function reloadWindow(){
                             <td>
                                 <p class="kongs">&nbsp;</p>
                                 <p class=""><a href="#" class="btn btn_act seePhone blue" data-type="seePhone"><i class="iconfont"></i> 联系电话</a></p>
-                                <span class="time" title="发布时间"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd"/></span>
+                                <span class="time" title="发布时间"><fmt:formatDate value="${house.dateadd}" pattern="yyyy-MM-dd hh:mm"/></span>
                             </td> 
                         </tr>
                             </c:forEach>
