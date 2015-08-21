@@ -335,7 +335,9 @@ public class HouseService {
 		if(id!=null){
 			House po = dao.get(House.class, id);
 			if(po!=null){
-				dao.delete(po);
+				po.isdel=1;
+				dao.saveOrUpdate(po);
+//				dao.delete(po);
 				dao.execute("delete from GenJin where hid=?", po.id);
 			}
 		}

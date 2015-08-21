@@ -303,20 +303,21 @@ function readFile(file){
     var fs=require("fs");
     return fs.readFileSync(file,"utf-8");
 }
-try{
-    var lastErrMsg="";
-    process.on("uncaughtException", function(e) {
-        if(lastErrMsg != e.message){
-            console.log(lastErrMsg+"="+e.message);
-            reportError(e.stack);
-            lastErrMsg=e.message;
-        }else{
-            console.log(e);
-        }
-    }); 
-}catch(e){
 
-}
+//try{
+//    var lastErrMsg="";
+//    process.on("uncaughtException", function(e) {
+//        if(lastErrMsg != e.message){
+//            console.log(lastErrMsg+"="+e.message);
+//            reportError(e.stack);
+//            lastErrMsg=e.message;
+//        }else{
+//            console.log(e);
+//        }
+//    }); 
+//}catch(e){
+//
+//}
 
 function reportError(stack){
     $.ajax({

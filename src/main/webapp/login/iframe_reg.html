@@ -144,7 +144,7 @@ function btnAction(){
                     async:false,
                     url: '/c/dept/listDept',
                     data:param,
-                    success: function(data){
+                    mysuccess: function(data){
                         var json = JSON.parse(data);
                         if(json['depts'].length>0){
                             buildHtmlWithJsonArray('fendian' , json['depts'] , "true");
@@ -166,6 +166,7 @@ function btnAction(){
                         art.dialog.tips(msg['msg']);
                         l.stop();
                     },complete:function(){
+                    	 l.stop();
                     }
                 });
             }else if(ThiFormId=="idFendian"){
@@ -224,7 +225,7 @@ function btnAction(){
                     async:false,
                     url: '/c/pc/add',
                     data:param,
-                    success: function(data){
+                    mysuccess: function(data){
                         var json = JSON.parse(data);
                         if(json.lic){
                             setLic(json.lic);
