@@ -8,13 +8,21 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.youwei.zjb.sys.CityService;
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class LngAndLatUtil {
 	
 	public static Map<String, String> cityMap = new HashMap<String,String>();
 	static{
-		cityMap.put("hefei", "合肥市");
+		CityService cs = new CityService();
+		JSONArray citys = cs.getCitys();
+		for(int i=0;i<citys.size();i++){
+			JSONObject jobj = citys.getJSONObject(i);
+			cityMap.put(jobj.getString("py"), jobj.getString("name"));
+		}
 	}
 	public static void main(String[] args){
 		Map<String,Double> map=LngAndLatUtil.getLngAndLat("阜阳市和谐家苑" , "");
@@ -23,8 +31,10 @@ public class LngAndLatUtil {
 	
 	public static Map<String,Double> getLngAndLat(String address ,String cityPy){
 		Map<String,Double> map=new HashMap<String, Double>();
+		address = address.replace(" ", "");
+		String url ="";
 		try{
-		 String url = "http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city="+cityMap.get(cityPy);
+			url = "http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city="+cityMap.get(cityPy);
 	        String json = loadJSON(url);
 	        JSONObject obj = JSONObject.fromObject(json);
 	        if(obj.get("status").toString().equals("0")){

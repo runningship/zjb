@@ -40,7 +40,7 @@ public class PHouseService {
 	public ModelAndView nearBy(float longitude , float latitude){
 		long t1 = System.currentTimeMillis();
 		ModelAndView mv = new ModelAndView();
-		String hql="select area as name,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area " 
+		String hql="select area as name,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area and h.ztai=4" 
 							+" and ((maplat>=? and maplat<=?) and (maplng>=? and maplng<=?)) group by annex.area) as tt where xarea = area and maplat >0";
 		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset , latitude+latOffset , longitude-lngOffset , longitude+lngOffset);
 //		mv.encodeReturnText=true;
@@ -215,6 +215,7 @@ public class PHouseService {
 			}
 			hql.append(" )");
 		}
+		hql.append(" and h.ztai=4");
 		Page<Map> page = new Page<Map>();
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
