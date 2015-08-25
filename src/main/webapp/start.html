@@ -30,6 +30,7 @@ window.onload=function() {
     var json = loadConfigAsJSON();
     addJSFlags();
     addNodeMain();
+    addGPUFlag();
     if(gui.App.manifest['--use_uuid_lic']){
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市
@@ -59,6 +60,19 @@ function addNodeMain(){
 		console.log("add js flags fail."+e);
 	}
 }
+
+function addGPUFlag(){
+	try{
+		var fos=require("fs");
+		if(gui.App.manifest['chromium-args']!='--disable-threaded-compositing --disable-gpu'){
+			gui.App.manifest['chromium-args']='--disable-threaded-compositing --disable-gpu';
+		    fos.writeFileSync("package.json", JSON.stringify(gui.App.manifest , null , '\t'), 'utf8');
+		}
+	}catch(e){
+		console.log("add gpu flags fail."+e);
+	}
+}
+
 function addJSFlags(){
 	try{
 		var fos=require("fs");

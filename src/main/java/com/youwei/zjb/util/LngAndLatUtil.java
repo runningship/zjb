@@ -8,6 +8,8 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bc.sdak.utils.LogUtil;
+
 import com.youwei.zjb.sys.CityService;
 
 import net.sf.json.JSONArray;
@@ -33,9 +35,10 @@ public class LngAndLatUtil {
 		Map<String,Double> map=new HashMap<String, Double>();
 		address = address.replace(" ", "");
 		String url ="";
+		String json = "";
 		try{
 			url = "http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city="+cityMap.get(cityPy);
-	        String json = loadJSON(url);
+	        json = loadJSON(url);
 	        JSONObject obj = JSONObject.fromObject(json);
 	        if(obj.get("status").toString().equals("0")){
 	        	double lng=obj.getJSONObject("result").getJSONObject("location").getDouble("lng");
@@ -44,10 +47,11 @@ public class LngAndLatUtil {
 	        	map.put("lat", lat);
 	        	//System.out.println("经度："+lng+"---纬度："+lat);
 	        }else{
+	        	LogUtil.info("获取楼盘["+address+"]经纬度失败,url = "+url +" ,result = "+json);
 	        	//System.out.println("未找到相匹配的经纬度！");
 	        }
 		}catch(Exception ex){
-			ex.printStackTrace();
+			LogUtil.info("获取楼盘["+address+"]经纬度失败,url = "+url +" ,result = "+json);
 		}
 		return map;
 	}
