@@ -3,8 +3,11 @@ package com.youwei.zjb.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,17 +30,21 @@ public class LngAndLatUtil {
 		}
 	}
 	public static void main(String[] args){
-		Map<String,Double> map=LngAndLatUtil.getLngAndLat("阜阳市和谐家苑" , "");
+		Map<String,Double> map=LngAndLatUtil.getLngAndLat("南瑞锦秋园" , "wuhu");
 		System.out.println("经度："+map.get("lng")+"---纬度："+map.get("lat"));
 	}
 	
 	public static Map<String,Double> getLngAndLat(String address ,String cityPy){
 		Map<String,Double> map=new HashMap<String, Double>();
 		address = address.replace(" ", "");
+		String cityName = cityMap.get(cityPy)+"市";
 		String url ="";
 		String json = "";
 		try{
-			url = "http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city="+cityMap.get(cityPy);
+//			address = URLEncoder.encode(address, "utf-8");
+//			cityName = URLEncoder.encode(cityName, "utf-8");
+			url = "http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city="+cityName;
+//			url = "http://api.map.baidu.com/geocoder/v2/?address=%E6%9C%9D%E9%98%B3%E6%96%B0%E6%9D%91&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city=%E8%8A%9C%E6%B9%96%E5%B8%82";
 	        json = loadJSON(url);
 	        JSONObject obj = JSONObject.fromObject(json);
 	        if(obj.get("status").toString().equals("0")){
