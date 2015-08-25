@@ -9,6 +9,7 @@ import java.util.Set;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
@@ -64,11 +65,9 @@ public class MobileUserService {
 			}
 		}else{
 			//异常返回输出错误码和错误信息
-			System.out.println("错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
+			LogUtil.info("发送验证码失败,tel = "+tel+",错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
 		}
 		dao.saveOrUpdate(tvc);
-		
-		
 		return mv;
 	}
 

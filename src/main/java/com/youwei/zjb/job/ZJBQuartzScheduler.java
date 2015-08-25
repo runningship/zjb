@@ -8,12 +8,9 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-import com.youwei.zjb.StartUpListener;
-
 public class ZJBQuartzScheduler {
 
     public static void AreaCoordinatStart() {
-    	StartUpListener.initDataSource();
         try {
             JobDetail job = JobBuilder.newJob(AreaCoordinateTask.class)
             	       .withIdentity("AreaCoordinateTask")
