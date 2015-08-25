@@ -1,5 +1,21 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.youwei.zjb.util.WXUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+//wx955465193fd083ef
+//https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx955465193fd083ef&secret=7896b261071d9cca3f6b151ed3949a95
+//https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=mTerMUXDuoL7dKEUbWUE9iIC8OA_2XB5a-Xg3ESZjK3fAEf2-0fd8Nkz-yuKDnUJKdB-bEe2m1l02L5gxTQ9P6HE5_tGEsIg_rwRkAKaY0M&type=jsapi
+//var timestamp = new Date().getTime();
+// var nonceStr = "EPNSpJae8rgzOP1x";
+String appid = "wx955465193fd083ef";
+String url="http://wx.zjb.tunnel.mobi/weixin/houseOwner/yuyin.jsp";
+String token = WXUtil.getAccess_token(appid, "7896b261071d9cca3f6b151ed3949a95");
+String ticket = WXUtil.getJsApiTicket(token);
+Map sign = WXUtil.sign(ticket, url);
+request.setAttribute("sign", sign);
+request.setAttribute("appid", appid);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,10 +78,10 @@
    */
   wx.config({
       debug: false,
-      appId: 'wx955465193fd083ef',
-      timestamp: 1440382195,
-      nonceStr: 'EPNSpJae8rgzOP1x',
-      signature: 'f9ca30cadb65f3e58d72029e783a957a4daa34dd',
+      appId: '${appid}',
+      timestamp: ${sign.timestamp},
+      nonceStr: '${sign.nonceStr}',
+      signature: '${sign.signature}',
       jsApiList: [
         'checkJsApi',
         'onMenuShareTimeline',
