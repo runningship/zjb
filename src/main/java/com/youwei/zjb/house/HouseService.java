@@ -736,4 +736,26 @@ public class HouseService {
 		mv.jspData.put("gjList", gjList);
 		return mv;
 	}
+	
+
+	@WebMethod
+	public ModelAndView trackStatistic(Page<Map> page , Integer id , Integer isMobile , String viewTimeStart , String viewTimeEnd){
+		ModelAndView mv = new ModelAndView();
+		StringBuilder innerSql = new StringBuilder(" select uid ,COUNT(*) as total  FROM ViewHouseLog where uid>0 "); 
+		List<Object> params = new ArrayList<Object>();
+		if(isMobile!=null){
+			innerSql.append(" and isMobile=?");
+			params.add(isMobile);
+		}
+		innerSql.append(HqlHelper.buildDateSegment("viewTime", viewTimeStart,DateSeparator.After,params));
+		innerSql.append(HqlHelper.buildDateSegment("viewTime",viewTimeEnd,DateSeparator.Before,params));
+		innerSql.append(" group by uid ");
+		String sql = "select u.uname as uname , tt.total as total , u.tel as tel ,u.mobileON as mobileON from ( "
+						  +innerSql.toString() + "  ) tt , uc_user u  where tt.uid = u.id";
+		page.orderBy = "total";
+		page.order ="desc";
+		page = dao.findPageBySql(page, sql , params.toArray());
+		mv.data.put("page", JSONHelper.toJSON(page));
+		return mv;
+	}
 }

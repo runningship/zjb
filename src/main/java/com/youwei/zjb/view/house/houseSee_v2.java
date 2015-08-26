@@ -1,5 +1,7 @@
 package com.youwei.zjb.view.house;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
@@ -14,6 +16,7 @@ import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.user.entity.ViewHouseLog;
 
 
 public class houseSee_v2 extends AbstractSee {
@@ -47,6 +50,12 @@ public class houseSee_v2 extends AbstractSee {
 		}else{
 			json.put("fav", "0");
 		}
+		ViewHouseLog vl = new ViewHouseLog();
+		vl.hid = id;
+		vl.uid = ThreadSessionHelper.getUser().id;
+		vl.isMobile = 0;
+		vl.viewTime = new Date();
+		dao.saveOrUpdate(vl);
 		return json;
 	}
 

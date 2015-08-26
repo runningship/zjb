@@ -25,6 +25,7 @@ import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 
+import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.MobileUserDog;
 import com.youwei.zjb.user.entity.Charge;
@@ -238,8 +239,7 @@ public class PService {
 	@WebMethod
 	public ModelAndView version(){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("latestVersion", "1.0.1");
-		mv.data.put("installUrl", "http://downloadpkg.apicloud.com/app/download?path=/zip/2b/63/2b636d136d48c4ea162bc8cb1eab97c7.apk");
+		mv.data.put("latestVersion", ConfigCache.get("mobile_version", ""));
 		return mv;
 	}
 	

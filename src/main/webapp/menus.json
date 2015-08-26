@@ -353,6 +353,17 @@
 			"type":"menu"
 		}]
 	},{
+		"name":"sz_tj",
+		"text":"访问统计",
+		"zjb-only":true,
+		"type":"virtual",
+		"children":[{
+			"name":"sz_tj_on",
+			"text":"房源访问统计",
+			"zjb-only":true,
+			"type":"menu"
+		}]
+	},{
 		"name":"sz_area",
 		"text":"楼盘字典",
 		"zjb-only":true,

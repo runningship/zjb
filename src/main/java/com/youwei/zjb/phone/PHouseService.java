@@ -2,6 +2,7 @@ package com.youwei.zjb.phone;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,6 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
-import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -21,12 +21,10 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.house.HouseQuery;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
-import com.youwei.zjb.house.entity.Favorite;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.sys.CityService;
-import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.Track;
-import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.user.entity.ViewHouseLog;
 @Module(name="/mobile/")
 public class PHouseService {
 	
@@ -119,6 +117,12 @@ public class PHouseService {
 				track.uid = userId;
 				dao.saveOrUpdate(track);
 			}
+			ViewHouseLog vl = new ViewHouseLog();
+			vl.hid = houseId;
+			vl.uid = userId;
+			vl.isMobile = 1;
+			vl.viewTime = new Date();
+			dao.saveOrUpdate(vl);
 		}
 		return mv;
 	}
