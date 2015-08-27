@@ -750,11 +750,31 @@ public class HouseService {
 		innerSql.append(HqlHelper.buildDateSegment("viewTime", viewTimeStart,DateSeparator.After,params));
 		innerSql.append(HqlHelper.buildDateSegment("viewTime",viewTimeEnd,DateSeparator.Before,params));
 		innerSql.append(" group by uid ");
-		String sql = "select u.uname as uname , tt.total as total , u.tel as tel ,u.mobileON as mobileON from ( "
-						  +innerSql.toString() + "  ) tt , uc_user u  where tt.uid = u.id";
+		String sql = "select u.uname as uname , tt.total as total ,c.namea as cname, u.id as uid, u.tel as tel ,u.mobileON as mobileON from ( "
+						  +innerSql.toString() + "  ) tt , uc_user u ,uc_comp c where tt.uid = u.id and c.id = u.cid";
 		page.orderBy = "total";
 		page.order ="desc";
 		page = dao.findPageBySql(page, sql , params.toArray());
+		mv.data.put("page", JSONHelper.toJSON(page));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView viewLogList(Page<Map> page , Integer uid , Integer isMobile , String viewTimeStart , String viewTimeEnd){
+		ModelAndView mv = new ModelAndView();
+		StringBuilder sql = new StringBuilder(" select h.id as hid , h.area as area,h.quyu as quyu, h.dhao as dhao,h.fhao as fhao,h.hxt as hxt,h.hxf as hxf , h.hxw as hxw"
+				+ " ,lg.viewTime as viewTime , lg.isMobile as isMobile from ViewHouseLog lg , House h where  lg.hid=h.id and lg.uid = ? "); 
+		List<Object> params = new ArrayList<Object>();
+		params.add(uid);
+		if(isMobile!=null){
+			sql.append(" and isMobile=?");
+			params.add(isMobile);
+		}
+		sql.append(HqlHelper.buildDateSegment("lg.viewTime", viewTimeStart,DateSeparator.After,params));
+		sql.append(HqlHelper.buildDateSegment("lg.viewTime",viewTimeEnd,DateSeparator.Before,params));
+		page.orderBy = "lg.viewTime";
+		page.order ="desc";
+		page = dao.findPage(page, sql.toString() , true , params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

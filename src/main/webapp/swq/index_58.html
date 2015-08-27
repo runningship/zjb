@@ -268,7 +268,7 @@ function getHtml(){
 
 function replaceAlls(str){
     str = str.replace(/<\/?[^>]*>/g,''); 
-    str = str.replace(/（套内\/?[^>]*）/g,'');
+    //str = str.replace(/（套内\/?[^>]*）/g,'');
     str = str.replace(/[ | ]*\n/g,'\n');
     str = str.replace(/\n[\s| | ]*\r/g,'\n');
     str = str.replace(/&nbsp;/ig,'');
@@ -310,39 +310,52 @@ if (tel.length>0) {
     var conTentAll =$$cont_doc.find(".sumary ul .su_tit");
     var conTentSize = conTentAll.size();
     
-    for(var i=0;i<conTentSize;i++){
-        var CameFrom = $$cont_doc.find(".sumary ul .su_tit").eq(i);
-        conTentCon = replaceAlls(CameFrom.text());
-        var su_coninFor = CameFrom.siblings(".su_con");
-       // var wzInfor= CameFrom.siblings(".su_con");
-        var lxrInfor= CameFrom.siblings(".su_con").children("span").find("a");
+    cont_tit = $$cont_doc.find('.su_tit:contains(售价：)').next().text();
+    cont_hx = $$cont_doc.find('.su_tit:contains(户型：)').next().text();
+    cont_wz = $$cont_doc.find('.su_tit:contains(地址：)').next().text();
+    cont_lxr = $$cont_doc.find('.su_tit:contains(联系人：)').next().text();
+    var lceng = $$cont_doc.find('.des_bgtit:contains(房屋楼层：)').next().text();
+
+    cont_tit = replaceAlls(cont_tit);
+    cont_hx = replaceAlls(cont_hx);
+    cont_wz = replaceAlls(cont_wz);
+    cont_lxr = replaceAlls(cont_lxr);
+    cont_hx +=' '+lceng;
+    // for(var i=0;i<conTentSize;i++){
+    //     var CameFrom = $$cont_doc.find(".sumary ul .su_tit").eq(i);
+    //     conTentCon = replaceAlls(CameFrom.text());
+    //     var su_coninFor = CameFrom.siblings(".su_con");
+    //    // var wzInfor= CameFrom.siblings(".su_con");
+    //     var lxrInfor= CameFrom.siblings(".su_con").children("span").find("a");
         
-        switch (conTentCon) {
-          case "售价：": cont_tit = replaceAlls(su_coninFor.text());/*obj.replace(a,b)*/
-            break;
-          case "户型：": cont_hx = replaceAlls(su_coninFor.text());
-            break;
-          case "地址：": cont_wz = replaceAlls(su_coninFor.text());
-            break;
-          case "联系人：": cont_lxr = replaceAlls(lxrInfor.text());
-            break;
-          default: break;
-        }
-    };
+    //     switch (conTentCon) {
+    //       case "售价：": cont_tit = replaceAlls(su_coninFor.text());/*obj.replace(a,b)*/
+    //         break;
+    //       case "户型：": cont_hx = replaceAlls(su_coninFor.text());
+    //         break;
+    //       case "地址：": cont_wz = replaceAlls(su_coninFor.text());
+    //         break;
+    //       case "联系人：": cont_lxr = replaceAlls(lxrInfor.text());
+    //         break;
+    //       default: break;
+    //     }
+    // };
         var zx = $$cont_doc.find('.des_bgtit:contains("装修程度：")')[0];
         if(zx && zx.nextElementSibling){
         	cont_zx = zx.nextElementSibling.textContent;
         }
         
-        var lc = $$cont_doc.find('.des_bgtit:contains("房屋楼层：")')[0];
-        if(lc && lc.nextElementSibling){
-        	cont_lc = lc.nextElementSibling.textContent;
-        }
+        // var lc = $$cont_doc.find('.des_bgtit:contains("房屋楼层：")')[0];
+        // if(lc && lc.nextElementSibling){
+        // 	cont_lc = lc.nextElementSibling.textContent;
+        // }
+        var areaName = $$cont_doc.find('p:contains(小区名称)').text();
+        areaName = replaceAlls(areaName).replace("小区名称：","");
         var gk = $$cont_doc.find('.description_con')[0];
         if(gk && gk.textContent){
         	cont_gk = replaceAlls(gk.textContent);
         }
-
+        cont_gk = areaName+' '+cont_gk;
     //    if(cont_lxr.indexOf('归属地')){cont_lxr='';}
     var thisHtml='<p>'+cont_title+'</p>'
         +'<p>'+cont_tit+'</p>'
@@ -355,9 +368,9 @@ if (tel.length>0) {
     $('.list_see_box').html(thisHtml);  
 
     if(cont_tel_num==""){
-        allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+' '+cont_lc+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
+        allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel":"'+cont_telTan+'","url":"'+url+'"}';
     }else{
-        allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+' '+cont_lc+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel_num":"'+cont_tel_num+'","url":"'+url+'"}';
+        allContent = '{"area":"'+cont_title+'","addr":"'+cont_wz+'","hxing":"'+cont_hx+'","lxr":"'+cont_lxr+'","shoujia":"'+cont_tit+'","zxiu":"'+cont_zx+'","gaik":"'+cont_gk+'","tel_num":"'+cont_tel_num+'","url":"'+url+'"}';
     }
     
     $$cont_doc=null;

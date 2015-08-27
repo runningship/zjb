@@ -150,6 +150,18 @@ public class PHouseService {
 			hql.append(" and area like ?");
 			params.add("%"+query.search+"%");
 		}
+		if(StringUtils.isNotEmpty(query.dhao)){
+			hql.append(" and h.dhao = ? ");
+			params.add(query.dhao);
+		}
+		if(StringUtils.isNotEmpty(query.fhao)){
+			hql.append(" and h.fhao like ? ");
+			params.add(query.fhao+"%");
+		}
+		if(StringUtils.isNotEmpty(query.tel)){
+			hql.append(" and h.tel like ?");
+			params.add("%"+query.tel+"%");
+		}
 		if(StringUtils.isNotEmpty(query.specArea)){
 			HouseQuery hq = new HouseQuery();
 			hq.page = query.page;

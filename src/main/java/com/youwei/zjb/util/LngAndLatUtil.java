@@ -43,7 +43,7 @@ public class LngAndLatUtil {
 		try{
 //			address = URLEncoder.encode(address, "utf-8");
 //			cityName = URLEncoder.encode(cityName, "utf-8");
-			url = "http://api.map.baidu.com/geocoder/v2/?address="+address+"&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city="+cityName;
+			url = "http://api.map.baidu.com/geocoder/v2/?address="+cityName+address+"&output=json&ak=9ad26b763c7cd0619e372f993cdc9849";
 //			url = "http://api.map.baidu.com/geocoder/v2/?address=%E6%9C%9D%E9%98%B3%E6%96%B0%E6%9D%91&output=json&ak=9ad26b763c7cd0619e372f993cdc9849&city=%E8%8A%9C%E6%B9%96%E5%B8%82";
 	        json = loadJSON(url);
 	        JSONObject obj = JSONObject.fromObject(json);
