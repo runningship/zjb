@@ -596,9 +596,22 @@ public class HouseService {
 				params.add(ThreadSessionHelper.getUser().cid);
 			}
 		}
-		hql.append(" and (isdel=0 or isdel is null) ");
-		page.orderBy = "h.dateadd";
-		page.order = Page.DESC;
+		hql.append(" and (isdel=0 or isdel is null) order by ");
+		if(StringUtils.isNotEmpty(page.orderBy)){
+			hql.append("h.").append(page.orderBy);
+		}
+		if(StringUtils.isNotEmpty(page.order)){
+			hql.append(" ").append(page.order);
+		}
+		
+		if(StringUtils.isEmpty(page.orderBy)){
+			hql.append(" h.dateadd desc");
+		}else if(!"dateadd".equals(page.orderBy)){
+			hql.append(",").append(" h.dateadd desc");
+		}
+		
+		page.orderBy = "";
+		page.order = "";
 		page.setPageSize(25);
 		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());

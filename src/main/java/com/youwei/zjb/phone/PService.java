@@ -226,6 +226,7 @@ public class PService {
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 		mv.data.put("fufei", "1");
 		mv.data.put("result", "1");
+		mv.data.put("paytime", DataHelper.sdf.format(charge.addtime));
 		return mv;
 	}
 	

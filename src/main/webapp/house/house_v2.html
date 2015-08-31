@@ -291,13 +291,29 @@ $(document).ready(function(){
 function openGongGao(){
 	art.dialog.open("/ad/gonggao.html",{id:'gonggao',width:960,height:615,title:'',lock:true,padding:0}); 
 }			 
-								
+
+function setPageOrder(col){
+	var order = $('#'+col +'Order').attr('next');
+	$('#orderBy').val(col);
+	$('#order').val(order);
+	$('.order').text('');
+	if(order=='desc'){
+		//↑↓
+		$('#'+col +'Order').text('↓');
+		$('#'+col +'Order').attr('next' , 'asc');
+	}else{
+		$('#'+col +'Order').text('↑');
+		$('#'+col +'Order').attr('next' , 'desc');
+	}
+	$('#searchBtn').click();
+}
 </script>
 <style type="text/css">
   .selected{
     background-color: blue;
   }
 
+.order{margin-left:2px;}
 .KY_TableMain td a.shenhe_0{color:red;}
 .ztai_已售{color:red;}
 .ztai_在售{color:blue;}
@@ -360,6 +376,8 @@ function openGongGao(){
               <div class="MainRightInputMain KY_W not-select" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                     <input type="hidden" id="sh" name="sh" value="$${sh}">
+                    <input type="hidden" name="order" id="order" />
+                    <input type="hidden" name="orderBy" id="orderBy" />
                    <ul class="InputMainLine KY_W not-select" style=" margin-bottom:8px;">
                    
                         <li><input class="input-sm w110" type="text" placeholder="电话" name="tel" /></li>
@@ -510,12 +528,12 @@ function openGongGao(){
                                                       <th style=" width:200px; min-width:50px;">楼盘名称</th>
                                                       <th width="50">楼型</th>
                                                       <th width="60">户型</th>
-                                                      <th width="50">面积</th>
-                                                      <th width="50">总价(万)</th>
-                                                      <th width="50">单价</th>
+                                                      <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('mji')">面积</a><span id="mjiOrder" next="asc" class="order"></span></th>
+                                                      <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('zjia')">总价(万)</a><span id="zjiaOrder" next="asc" class="order"></span></th>
+                                                      <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('djia')">单价</a><span id="djiaOrder" next="asc" class="order"></span></th>
                                                       <th width="50">楼层</th>
                                                       <th width="50">装潢</th>
-                                                      <th width="90" style="padding-right:7px;">发布时间</th>
+                                                      <th width="90" style="padding-right:7px;"><a href="javascript:void(0)" onclick="setPageOrder('dateadd')">发布时间</a><span id="dateaddOrder" next="asc" class="order">↓</span></th>
                                                     </tr>
                                               </table>
                                              
