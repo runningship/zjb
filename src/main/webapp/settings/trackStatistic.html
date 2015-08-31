@@ -42,7 +42,8 @@ function doSearch(){
 }
 
 function seeViewLog(uid){
-	  art.dialog.open('/v/settings/viewLogList.html?uid='+uid)
+		var w=window.top.document.body.offsetWidth-200;
+	  art.dialog.open('/v/settings/viewLogList.html?uid='+uid , {width:w})
 	}
 
 $(document).ready(function() {
@@ -91,6 +92,7 @@ $(window).resize(function() {      //类别
       <table class="table table-nopadding TableH " >
         <tr>
         	<th>公司</th>
+        	<th>账号</th>
           <th>用户名</th>
           <th>手机号码</th>
           <th>访问次数</th>
@@ -105,6 +107,7 @@ $(window).resize(function() {      //类别
           <tbody>
           <tr data-hid="$[id]" style="display:none;" class="id_track_list">
           <td style="width:100px">$[cname]</td>
+          	<td style="width:100px">$[lname]</td>
             <td style="width:100px">$[uname]</td>
             <td style="width:150px">$[tel]</td>
             <td style="width:200px"><a href="javascript:void(0)" onclick="seeViewLog($[uid])">$[total]</a></td>

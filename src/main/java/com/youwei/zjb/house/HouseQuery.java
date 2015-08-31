@@ -53,4 +53,5 @@ public class HouseQuery{
 	public String specArea;
 	public String search;
 	public String site;
+	public String mobileTel;
 }

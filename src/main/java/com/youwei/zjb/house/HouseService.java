@@ -139,8 +139,14 @@ public class HouseService {
 		User u = ThreadSessionHelper.getUser();
 		
 		//检查楼盘是否在楼盘字典中，如果没有，则添加
-		String hql = "from District  where name = ? and address=?";
-		List<District> list = dao.listByParams(District.class, hql, house.area,house.address);
+		String hql = "from District  where name = ? ";
+		List<Object> params = new ArrayList<Object>();
+		params.add(house.area);
+		if(StringUtils.isNotEmpty(house.address)){
+			hql+=" and address=? ";
+			params.add(house.address);
+		}
+		List<District> list = dao.listByParams(District.class, hql, params.toArray());
 		if(list.isEmpty()){
 //			if(u.cid!=1){
 //				//只有中介宝用户才可以
@@ -750,7 +756,7 @@ public class HouseService {
 		innerSql.append(HqlHelper.buildDateSegment("viewTime", viewTimeStart,DateSeparator.After,params));
 		innerSql.append(HqlHelper.buildDateSegment("viewTime",viewTimeEnd,DateSeparator.Before,params));
 		innerSql.append(" group by uid ");
-		String sql = "select u.uname as uname , tt.total as total ,c.namea as cname, u.id as uid, u.tel as tel ,u.mobileON as mobileON from ( "
+		String sql = "select u.uname as uname ,u.lname as lname, tt.total as total ,c.namea as cname, u.id as uid, u.tel as tel ,u.mobileON as mobileON from ( "
 						  +innerSql.toString() + "  ) tt , uc_user u ,uc_comp c where tt.uid = u.id and c.id = u.cid";
 		page.orderBy = "total";
 		page.order ="desc";
