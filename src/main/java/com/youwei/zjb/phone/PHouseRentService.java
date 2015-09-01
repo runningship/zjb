@@ -22,11 +22,12 @@ import com.youwei.zjb.house.HouseQuery;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Track;
 import com.youwei.zjb.user.entity.ViewHouseLog;
-@Module(name="/mobile/")
-public class PHouseService {
+@Module(name="/mobile/rent/")
+public class PHouseRentService {
 	
 	//1000米经验偏移量
 	public static float latOffset = 0.009000f;
@@ -34,10 +35,10 @@ public class PHouseService {
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	CityService cityService = TransactionalServiceHelper.getTransactionalService(CityService.class);
 	
-	@WebMethod(name="nearby.asp")
+	@WebMethod
 	public ModelAndView nearBy(float longitude , float latitude){
 		ModelAndView mv = new ModelAndView();
-		String hql="select area as name,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area and h.ztai=4 and h.sh=1 " 
+		String hql="select area as name,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house_rent h ,house_annex annex where h.area=annex.area and h.ztai=1 and h.sh=1 " 
 							+" and ((maplat>=? and maplat<=?) and (maplng>=? and maplng<=?)) group by annex.area) as tt where xarea = area and maplat >0";
 		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset , latitude+latOffset , longitude-lngOffset , longitude+lngOffset);
 		mv.data.put("result", JSONHelper.toJSONArray(list));
@@ -47,7 +48,7 @@ public class PHouseService {
 	@WebMethod
 	public ModelAndView detail(int houseId , Integer userId){
 		ModelAndView mv = new ModelAndView();
-		House house = dao.get(House.class, houseId);
+		HouseRent house = dao.get(HouseRent.class, houseId);
 		JSONObject result = JSONHelper.toJSON(house);
 		if(house==null){
 			result.put("result","1");
@@ -59,14 +60,8 @@ public class PHouseService {
 			house.tel=house.tel.replace("&nbsp;", "").replace("/", ",").replace(" ", ",");
 			result.put("tel", house.tel);
 		}
-//		Department dept = dao.get(Department.class, house.did);
-//		Department comp = dao.get(Department.class, house.cid);
 		
 		result.put("dateadd", new SimpleDateFormat("yyyy年MM月dd").format(house.dateadd));
-//		result.put("dname", dept.namea);
-//		result.put("cname", comp.namea);
-//		User lxr = dao.get(User.class,house.uid);
-//		result.put("uname", lxr.uname);
 		District district = dao.getUniqueByKeyValue(District.class, "name", house.area);
 		if(district!=null){
 			result.put("latitude", district.maplat);
@@ -75,7 +70,6 @@ public class PHouseService {
 			result.put("latitude", "");
 			result.put("longitude", "");
 		}
-//		Favorite po = dao.getUniqueByParams(Favorite.class, new String[]{"userId","houseId"}, new Object[]{userId,houseId});
 		if(house.fav==null){
 			result.put("isfav", "0");
 		}else if(house.fav.contains("@"+userId+"|")){
@@ -84,10 +78,10 @@ public class PHouseService {
 			result.put("isfav", "0");
 		}
 		//状态
-		SellState state = SellState.parse(house.ztai);
-		if(state!=null){
-			result.put("ztai", state.toString());
-		}
+//		SellState state = SellState.parse(house.ztai);
+//		if(state!=null){
+//			result.put("ztai", state.toString());
+//		}
 		String hxing="";
 		if(house.hxf!=null){
 			hxing+=house.hxf+"室";
@@ -100,7 +94,7 @@ public class PHouseService {
 		}
 		result.put("hxing", hxing);
 		if(house.dateyear==null){
-			house.dateyear=0;
+			house.dateyear="";
 		}
 		
 		result.put("year", house.dateyear);
@@ -115,12 +109,6 @@ public class PHouseService {
 				track.uid = userId;
 				dao.saveOrUpdate(track);
 			}
-			ViewHouseLog vl = new ViewHouseLog();
-			vl.hid = houseId;
-			vl.uid = userId;
-			vl.isMobile = 1;
-			vl.viewTime = new Date();
-			dao.saveOrUpdate(vl);
 		}
 		return mv;
 	}
@@ -137,12 +125,12 @@ public class PHouseService {
 			String favStr = "@"+query.userid+"|";
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng from House h  where h.sh=1 and h.fav like ?");
+					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi from HouseRent h  where h.sh=1 and h.fav like ?");
 			params.add("%"+favStr+"%");
 		}else{
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng from House h where h.seeGX=1 and h.sh=1 ");
+					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi from HouseRent h where h.seeGX=1 and h.sh=1 ");
 		}
 		if(StringUtils.isNotEmpty(query.search)){
 			hql.append(" and area like ?");
@@ -166,24 +154,13 @@ public class PHouseService {
 			hq.specArea = query.specArea;
 			query = hq;
 		}
-		if(StringUtils.isNotEmpty(query.ztai)){
-			String[] arr = query.ztai.split(",");
-			hql.append(" and ( ");
-			for(int i=0;i<arr.length;i++){
-				if(StringUtils.isEmpty(arr[i])){
-					continue;
-				}
-				hql.append(" h.ztai = ? ");
-				if(i<arr.length-1){
-					hql.append(" or ");
-				}
-				params.add(arr[i]);
-			}
-			hql.append(" )");
-		}
 		if(StringUtils.isNotEmpty(query.specArea)){
 			hql.append(" and h.area = ?");
 			params.add(query.specArea);
+		}
+		if(query.fangshi!=null){
+			hql.append(" and h.fangshi = ?");
+			params.add(query.fangshi);
 		}
 		if(query.mjiStart!=null){
 			hql.append(" and h.mji>= ? ");
@@ -200,14 +177,6 @@ public class PHouseService {
 		if(query.zjiaEnd!=null){
 			hql.append(" and h.zjia<= ? ");
 			params.add(query.zjiaEnd);
-		}
-		if(query.djiaStart!=null){
-			hql.append(" and h.djia>= ? ");
-			params.add(query.djiaStart);
-		}
-		if(query.djiaEnd!=null){
-			hql.append(" and h.djia<= ? ");
-			params.add(query.djiaEnd);
 		}
 		if(query.lcengStart!=null){
 			hql.append(" and h.lceng>= ? ");
@@ -229,7 +198,7 @@ public class PHouseService {
 			}
 			hql.append(" )");
 		}
-		hql.append(" and h.ztai=4");
+		hql.append(" and h.ztai=1");
 		Page<Map> page = new Page<Map>();
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;

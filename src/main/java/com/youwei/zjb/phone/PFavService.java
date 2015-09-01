@@ -11,6 +11,7 @@ import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 
 @Module(name="/mobile/fav/")
 public class PFavService {
@@ -37,12 +38,54 @@ public class PFavService {
 	}
 	
 	@WebMethod
+	public ModelAndView triggerRent(String houseId , Integer userId){
+		ModelAndView mv = new ModelAndView();
+		
+		if(houseId==null || userId==null){
+			mv.data.put("result", "2");
+			mv.data.put("msg", "收藏失败");
+			return mv;
+		}
+		String[] hids = houseId.split(",");
+		int result = 0;
+		for(String hid : hids){
+			result = triggerRentFav(Integer.valueOf(hid) , userId);
+		}
+		mv.data.put("isfav", result);
+		System.out.println(1);
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView list(Page<House> page , Integer userId){
 		ModelAndView mv = new ModelAndView();
 		String favStr = "@"+userId+"|";
 		page = dao.findPage(page, "from House where fav like ? ", "%"+favStr+"%");
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
+	}
+	
+	private int triggerRentFav(int hid , int uid){
+		HouseRent h = dao.get(HouseRent.class, hid);
+		if(h==null){
+			throw new GException(PlatformExceptionType.BusinessException, "房源已被删除或不存在!");
+		}
+		String favStr = "@"+uid+"|";
+		int result = 0;
+		if(h.fav==null){
+			h.fav= favStr;
+			result=1;
+		}else{
+			if(!h.fav.contains(favStr)){
+				h.fav+=favStr;
+				result=1;
+			}else{
+				h.fav = h.fav.replace(favStr, "");
+				result=0;
+			}
+		}
+		dao.saveOrUpdate(h);
+		return result;
 	}
 	
 	private int triggerFav(int hid , int uid){

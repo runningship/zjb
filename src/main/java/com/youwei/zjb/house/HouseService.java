@@ -270,6 +270,11 @@ public class HouseService {
 		if(state!=null){
 			mv.data.getJSONObject("house").put("ztai", state.toString());
 		}
+		try{
+			addDistrictIfNotExist(house);
+		}catch(Exception ex){
+			LogUtil.log(Level.WARN,"add district of house failed,hid= "+house.id,ex);
+		}
 		mv.data.put("result", 0);
 		return mv;
 	}
