@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
+import org.bc.sdak.utils.LogUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -160,17 +162,39 @@ public class Pull58RentAction implements PullRentHouseAction{
 
 	@Override
 	public void getTel(HouseRent house ,Element elem) {
-		Element phone = elem.getElementById("t_phone");
-		Elements img = phone.getElementsByTag("script");
-		if(img!=null && img.first()!=null){
-			String str = img.first().html();
-			String[] arr = str.split("src=");
-			if(arr.length>1){
-				str = arr[1];
-				arr = str.split("'");
-				if(arr.length>2){
+
+		URL url=null;
+		try{
+			String[] arr = house.href.split("\\?");
+			arr = arr[0].split("\\/");
+			String houseId = arr[arr.length-1];
+			url = new URL("http://m.58.com/hf/zufang/"+houseId);
+			URLConnection conn = url.openConnection();
+			conn.addRequestProperty("User-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3");
+			conn.setDefaultUseCaches(false);
+			conn.setUseCaches(false);
+			conn.setConnectTimeout(10000);
+			conn.setReadTimeout(10000);
+			String result = IOUtils.toString(conn.getInputStream(),"utf8");
+//			System.out.println(result);
+			Document page = Jsoup.parse(result);
+			String href= page.getElementById("contact_phone").attr("href");
+			arr = href.split(":");
+			house.tel = arr[arr.length-1];
+		}catch(Exception ex){
+			LogUtil.log(Level.WARN, "试图从58手机版获取手机号码失败,"+url, ex);
+			Element phone = elem.getElementById("t_phone");
+			Elements img = phone.getElementsByTag("script");
+			if(img!=null && img.first()!=null){
+				String str = img.first().html();
+				String[] arr = str.split("src=");
+				if(arr.length>1){
 					str = arr[1];
-					house.telImg = str;
+					arr = str.split("'");
+					if(arr.length>2){
+						str = arr[1];
+						house.telImg = str;
+					}
 				}
 			}
 		}
