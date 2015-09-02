@@ -10,7 +10,7 @@ function setTips(str){
 $(function(){
 	var cityPy = getCookie("cityPy");
 	var city = getCookie("city");
-	$('#city').val(city);
+	$('#city').val(decodeURI(city));
 	$('#cityPy').val(cityPy);
 });
 $(document).on('click', '.btn_act', function(event) {
@@ -30,7 +30,7 @@ $(document).on('click', '.btn_act', function(event) {
                   exp.setTime(exp.getTime() + 1000*3600*24*365);//过期时间一年 
                   //city="+$('#city').val()+";cityPy="+$('#cityPy').val()+";
                   document.cookie = "tel=" + dom_tel_v + ";expires=" + exp.toGMTString()+ "; path=/";
-                  document.cookie = "city=" + $('#city').val() + ";expires=" + exp.toGMTString()+ "; path=/";
+                  document.cookie = "city=" + encodeURI($('#city').val()) + ";expires=" + exp.toGMTString()+ "; path=/";
                   document.cookie = "cityPy=" + $('#cityPy').val() + ";expires=" + exp.toGMTString()+ "; path=/";
                   window.location = 'houses.jsp';
               },
@@ -79,7 +79,7 @@ $(document).on('click', '.btn_act', function(event) {
 function getCookie(name) { 
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
     if(arr=document.cookie.match(reg))
-        return unescape(arr[2]); 
+        return arr[2]; 
     else 
         return ""; 
 } 

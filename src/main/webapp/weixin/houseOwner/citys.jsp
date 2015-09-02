@@ -34,7 +34,7 @@ function setCity(cityPy , city){
 //      });
 
 		document.cookie = "cityPy=" + cityPy + ";";
-		document.cookie = "city=" + city + ";";
+		document.cookie = "city=" + encodeURI(city) + ";";
 		window.location="login.jsp";
 }
 $(function(){

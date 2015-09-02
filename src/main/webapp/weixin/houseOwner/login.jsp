@@ -46,6 +46,7 @@
             <p style="padding:3px;color:#CDC0B0;">1、注册登录后，可发布出售房源。该信息展示在各城市数百家房产中介公司使用的中介宝端口；</p>
             <p style="padding:3px;color:#CDC0B0;">2、登录后，自动同步您现有的房源信息。您可修改、删除信息，中介端口自动同步。避免持续电话骚扰！</p>
         </div>
+        <a href="#"  style="width:80px;" onclick='document.cookie="city="' class="btn link w50b">清空缓存</a>
     </div>
 </div>
     
