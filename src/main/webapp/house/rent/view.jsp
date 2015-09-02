@@ -360,7 +360,7 @@ $('#area').on('click',function(){
           	<tr class="list">
               <td style="padding-left:5px;padding-right:5px">
                 <div style="margin-bottom:4px;">${gj.conts}</div>
-                <p style="display:inline-block;width:110px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden"><span title="${gj.uname}">${gj.dname}-${gj.uname}</span></p> <span style="float:right;color:#999999"><fmt:formatDate value="${gj.addtime}" pattern="yyyy-MM-dd HH:mm"/></span>
+                <p style="display:inline-block;width:110px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden"><span title="${gj.uname}">${gj.uname}</span></p> <span style="float:right;color:#999999"><fmt:formatDate value="${gj.addtime}" pattern="yyyy-MM-dd HH:mm"/></span>
               </td>
             </tr>
           </c:forEach>

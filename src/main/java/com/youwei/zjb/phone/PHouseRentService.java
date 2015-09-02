@@ -1,8 +1,6 @@
 package com.youwei.zjb.phone;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +17,11 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.house.HouseQuery;
-import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
-import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Track;
-import com.youwei.zjb.user.entity.ViewHouseLog;
+import com.youwei.zjb.util.DataHelper;
 @Module(name="/mobile/rent/")
 public class PHouseRentService {
 	
@@ -61,7 +57,7 @@ public class PHouseRentService {
 			result.put("tel", house.tel);
 		}
 		
-		result.put("dateadd", new SimpleDateFormat("yyyy年MM月dd").format(house.dateadd));
+		result.put("dateadd", DataHelper.sdf3.format(house.dateadd));
 		District district = dao.getUniqueByKeyValue(District.class, "name", house.area);
 		if(district!=null){
 			result.put("latitude", district.maplat);
@@ -102,11 +98,12 @@ public class PHouseRentService {
 		mv.data = result;
 		
 		if(userId!=null){
-			Track track = dao.getUniqueByParams(Track.class, new String[]{"hid" , "uid" }, new Object[]{houseId , userId });
+			Track track = dao.getUniqueByParams(Track.class, new String[]{"hid" , "uid" ,"chuzu"}, new Object[]{houseId , userId ,1});
 			if(track==null){
 				track = new Track();
 				track.hid = houseId;
 				track.uid = userId;
+				track.chuzu = 1;
 				dao.saveOrUpdate(track);
 			}
 		}

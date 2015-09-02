@@ -65,6 +65,15 @@ public class PFavService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView listRent(Page<House> page , Integer userId){
+		ModelAndView mv = new ModelAndView();
+		String favStr = "@"+userId+"|";
+		page = dao.findPage(page, "from HouseRent where fav like ? ", "%"+favStr+"%");
+		mv.data.put("page", JSONHelper.toJSON(page));
+		return mv;
+	}
+	
 	private int triggerRentFav(int hid , int uid){
 		HouseRent h = dao.get(HouseRent.class, hid);
 		if(h==null){

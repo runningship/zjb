@@ -52,7 +52,7 @@ public class PService {
 		}
 		StringBuilder hql = new StringBuilder("select h.id as id ,"
 				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-				+ " h.lceng as lceng, h.zceng as zceng from House h , Track t where h.sh=1 and t.hid=h.id and t.uid=?");
+				+ " h.lceng as lceng, h.zceng as zceng from House h , Track t where h.sh=1 and t.hid=h.id and t.chuzu=0 and t.uid=?");
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString(), true, new Object[]{userId});
@@ -61,7 +61,25 @@ public class PService {
 	}
 	
 	@WebMethod
-	public ModelAndView deltracks(Integer userId , String hid){
+	public ModelAndView tracksRent(Integer userId , Page<Map> page){
+		ModelAndView mv = new ModelAndView();
+		if(userId==null){
+			mv.data.put("result", "1");
+			mv.data.put("msg", "没找到相关信息");
+			return mv;
+		}
+		StringBuilder hql = new StringBuilder("select h.id as id ,"
+				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu, h.zjia as zjia,h.mji as mji,h.fangshi as fangshi ,"
+				+ " h.lceng as lceng, h.zceng as zceng from HouseRent h , Track t where h.sh=1 and t.hid=h.id and t.chuzu=1 and t.uid=?");
+		page.orderBy = "h.dateadd";
+		page.order = Page.DESC;
+		page = dao.findPage(page, hql.toString(), true, new Object[]{userId});
+		mv.data.put("page", JSONHelper.toJSON(page));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView deltracks(Integer userId , String hid , Integer chuzu){
 		ModelAndView mv = new ModelAndView();
 		if(StringUtils.isEmpty(hid) || userId==null){
 			mv.data.put("result", "1");
@@ -69,8 +87,9 @@ public class PService {
 			return mv;
 		}
 		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql = new StringBuilder("delete from Track where uid=? and chuzu=? and hid in (");
 		params.add(userId);
-		StringBuilder hql = new StringBuilder("delete from Track where uid=? and hid in (");
+		params.add(chuzu);
 		String ids[] = hid.split(",");
 		for(int i=0;i<ids.length;i++){
 			hql.append("?");

@@ -17,4 +17,6 @@ public class Track {
 	public Integer hid;
 	
 	public Integer uid;
+	
+	public Integer chuzu;
 }

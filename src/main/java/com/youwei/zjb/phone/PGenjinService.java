@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
@@ -15,9 +12,11 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 
@@ -123,6 +122,32 @@ public class PGenjinService {
 //		}else{
 //			dao.saveOrUpdate(gj);
 //		}
+		dao.saveOrUpdate(gj);
+		mv.data.put("result", "1");
+		mv.data.put("msg", "添加成功");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView addRentGj(GenJin gj , Integer uid){
+		ModelAndView mv = new ModelAndView();
+		User user = dao.get(User.class, uid);
+		gj.uid = user.id;
+		gj.did = user.did;
+		gj.cid = user.cid;
+		//默认审核通过
+		gj.sh=1;
+		//根据跟进内容片断
+		for(String kw : DataHelper.getFilterWords()){
+			if(gj.conts.contains(kw)){
+				gj.sh = 0;
+				break;
+			}
+		}
+		
+		gj.addtime = new Date();
+		HouseRent hr = dao.get(HouseRent.class, gj.hid);
+		gj.ztai = RentState.parse(hr.ztai)+"-"+RentState.parse(String.valueOf(gj.flag));
 		dao.saveOrUpdate(gj);
 		mv.data.put("result", "1");
 		mv.data.put("msg", "添加成功");

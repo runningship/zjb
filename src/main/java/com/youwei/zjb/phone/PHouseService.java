@@ -108,11 +108,12 @@ public class PHouseService {
 		mv.data = result;
 		
 		if(userId!=null){
-			Track track = dao.getUniqueByParams(Track.class, new String[]{"hid" , "uid" }, new Object[]{houseId , userId });
+			Track track = dao.getUniqueByParams(Track.class, new String[]{"hid" , "uid", "chuzu"}, new Object[]{houseId , userId ,0});
 			if(track==null){
 				track = new Track();
 				track.hid = houseId;
 				track.uid = userId;
+				track.chuzu = 0;
 				dao.saveOrUpdate(track);
 			}
 			ViewHouseLog vl = new ViewHouseLog();
