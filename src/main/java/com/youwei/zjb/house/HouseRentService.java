@@ -176,8 +176,9 @@ public class HouseRentService {
 			mv.jspData.put("fav", "0");
 		}
 		
-		String hql = "select gj.conts as conts , d.namea as dname , u.uname as uname , gj.addtime as addtime from GenJin gj , User u , "
-				+ " Department d where gj.hid=? and gj.uid=u.id and u.did=d.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
+		String hql = "select gj.conts as conts ,u.uname as uname , gj.addtime as addtime from GenJin gj , User u "
+				+ " where gj.hid=? and gj.uid=u.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
+		//TODO 参考AbstractSee
 		List<Map> gjList = service.listAsMap(hql, Integer.valueOf(id) , 1);
 		mv.jspData.put("gjList", gjList);
 		return mv;
