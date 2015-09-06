@@ -208,7 +208,11 @@ $('#area').on('click',function(){
   ThiVal=Thi.find('b').text();
   $('#search').val(ThiVal);
   $('#searchBtn').click();
-})
+});
+
+function junjiaTJ(area){
+	 art.dialog.open('/house/areaPrice.jsp?area='+area,{id:'areaPrice',title:'统计',width:1000,height:550});
+}
 </script>
 </head>
 <body >
@@ -269,7 +273,9 @@ $('#area').on('click',function(){
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
                 <tr>
                   <td class="biaoti" selectstart="yes">楼盘：</td>
-                  <td class="neirong"><span onclick="selectArea('${area}')" class="onselect" id="area" style=" cursor: pointer; color:#06C; font-weight:bold; font-size:14px;text-decoration: underline;"><b>${area}</b> ${fdhao}</span></td>
+                  <td class="neirong"><span onclick="selectArea('${area}')" class="onselect" id="area" style=" cursor: pointer; color:#06C; font-weight:bold; font-size:14px;text-decoration: underline;"><b>${area}</b> ${fdhao}
+                  	
+                  </span> <span style="float:right;cursor: pointer; color:#06C;  font-size:14px;text-decoration: underline;" href="#" onclick="junjiaTJ('${area}');"><i class="iconfont">&#xe664;</i></span></td>
                 </tr>
               </table>
             </td>

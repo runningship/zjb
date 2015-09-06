@@ -152,6 +152,9 @@ function isListTree(obj,num){
             if ($$obj.find("label").text()=='经纪人') {
                 return;
             }
+            if ($$obj.find("h1").text().indexOf('开单宝')>-1) {
+                return;
+            }
             getIsHtml($$obj)
         }else{
             $(this).find('h5').css('color','gold');
