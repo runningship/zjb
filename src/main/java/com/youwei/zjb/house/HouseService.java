@@ -380,19 +380,24 @@ public class HouseService {
 	@WebMethod
 	public ModelAndView listAll(HouseQuery query ,Page<House> page){
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder hql = null;
+		StringBuilder hql =null;
+		if(query.latEnd!=null || query.latStart!=null || query.lngStart!=null || query.lngEnd!=null){
+			hql = new StringBuilder(" select h  from House  h  , District d where h.area=d.name ");
+		}else{
+			hql = new StringBuilder(" select h  from House  h  where 1=1 ");
+		}
 //		if(StringUtils.isNotEmpty(query.xpath)){
 //			hql = new StringBuilder(" select h from  House h  ,User u where h.uid=u.id and u.id is not null and u.orgpath like ? ");
 //			params.add(query.xpath+"%");
 //		}else{
 //			hql = new StringBuilder(" select h  from House  h where 1=1");
 //		}
-		if(StringUtils.isNotEmpty(query.tel)){
+//		if(StringUtils.isNotEmpty(query.tel)){
 //			hql = new StringBuilder(" select h  from House  h , (select hid from HouseTel where tel=? group by hid,tel) ht where h.id=ht.hid ");
-			query.tel = query.tel.trim();
-			query.tel = query.tel.replace(String.valueOf((char)160), "");
-			hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
-			params.add("%"+query.tel+"%");
+//			query.tel = query.tel.trim();
+//			query.tel = query.tel.replace(String.valueOf((char)160), "");
+//			hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
+//			params.add("%"+query.tel+"%");
 //			if(query.useLike){
 //				hql = new StringBuilder(" select h  from House  h  where h.tel like ? ");
 //				params.add("%"+query.tel+"%");
@@ -401,9 +406,9 @@ public class HouseService {
 //				params.add(query.tel);
 //			}
 			
-		}else{
-			hql = new StringBuilder(" select h  from House  h where 1=1");
-		}
+//		}else{
+//			hql = new StringBuilder(" select h  from House  h where 1=1");
+//		}
 		
 		User u = ThreadSessionHelper.getUser();
 		if("all".equals(query.scope)){
@@ -458,11 +463,13 @@ public class HouseService {
 			hql.append(" and h.dhao = ? ");
 			params.add(query.dhao);
 		}
-//		if(StringUtils.isNotEmpty(query.tel)){
-//			query.tel = query.tel.replace(" ", "");
-//			hql.append(" and h.tel like ? ");
-//			params.add("%"+query.tel+"%");
-//		}
+		if(StringUtils.isNotEmpty(query.tel)){
+			query.tel = query.tel.replace(" ", "");
+			query.tel = query.tel.trim();
+			query.tel = query.tel.replace(String.valueOf((char)160), "");
+			hql.append(" and h.tel like ? ");
+			params.add("%"+query.tel+"%");
+		}
 		if(StringUtils.isNotEmpty(query.area)){
 			query.area = query.area.replace(" ", "");
 			hql.append(" and h.area like ? ");
@@ -601,6 +608,22 @@ public class HouseService {
 				params.add(ThreadSessionHelper.getUser().cid);
 			}
 		}
+		if(query.latStart!=null){
+			hql.append(" and d.maplat>=? ");
+			params.add(query.latStart);
+		}
+		if(query.latEnd!=null){
+			hql.append(" and d.maplat<=? ");
+			params.add(query.latEnd);
+		}
+		if(query.lngStart!=null){
+			hql.append(" and d.maplng>=? ");
+			params.add(query.lngStart);
+		}
+		if(query.lngEnd!=null){
+			hql.append(" and d.malng<=? ");
+			params.add(query.lngEnd);
+		}
 		hql.append(" and (isdel=0 or isdel is null) order by ");
 		if(StringUtils.isNotEmpty(page.orderBy)){
 			hql.append("h.").append(page.orderBy);
@@ -621,10 +644,10 @@ public class HouseService {
 		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
-		if(page.getResult().size()==0 && query.useLike==false && StringUtils.isNotEmpty(query.tel)){
-			query.useLike = true;
-			mv = listAll(query, page);
-		}
+//		if(page.getResult().size()==0 && query.useLike==false && StringUtils.isNotEmpty(query.tel)){
+//			query.useLike = true;
+//			mv = listAll(query, page);
+//		}
 		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.sdf.toPattern());
 		fixEnumValue(jpage);
 		mv.data.put("page", jpage);

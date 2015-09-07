@@ -45,6 +45,10 @@ public class HouseQuery{
 	public boolean useLike;
 	public boolean listMyAdd = false;
 	public Integer seeGX;
+	public Float latStart;
+	public Float latEnd;
+	public Float lngStart;
+	public Float lngEnd;
 	
 	// for phone client
 	//current page number
