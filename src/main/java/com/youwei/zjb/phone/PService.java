@@ -268,7 +268,7 @@ public class PService {
 		ModelAndView mv = new ModelAndView();
 		mv.data.put("monthPay", "40");
 		mv.data.put("seasonPay", "100");
-		mv.data.put("yearPay", "400");
+		mv.data.put("yearPay", "300");
 		return mv;
 	}
 }
