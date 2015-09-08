@@ -57,7 +57,7 @@ public class PHouseRentService {
 			result.put("tel", house.tel);
 		}
 		
-		result.put("dateadd", DataHelper.sdf3.format(house.dateadd));
+		result.put("dateadd", DataHelper.sdf.format(house.dateadd));
 		District district = dao.getUniqueByKeyValue(District.class, "name", house.area);
 		if(district!=null){
 			result.put("latitude", district.maplat);

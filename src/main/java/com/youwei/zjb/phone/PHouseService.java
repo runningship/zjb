@@ -25,6 +25,7 @@ import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Track;
 import com.youwei.zjb.user.entity.ViewHouseLog;
+import com.youwei.zjb.util.DataHelper;
 @Module(name="/mobile/")
 public class PHouseService {
 	
@@ -62,7 +63,7 @@ public class PHouseService {
 //		Department dept = dao.get(Department.class, house.did);
 //		Department comp = dao.get(Department.class, house.cid);
 		
-		result.put("dateadd", new SimpleDateFormat("yyyy年MM月dd").format(house.dateadd));
+		result.put("dateadd", DataHelper.sdf.format(house.dateadd));
 //		result.put("dname", dept.namea);
 //		result.put("cname", comp.namea);
 //		User lxr = dao.get(User.class,house.uid);
