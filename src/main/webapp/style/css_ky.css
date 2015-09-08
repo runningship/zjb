@@ -169,7 +169,7 @@ to {background: #007759; border:1px solid #00241b;}
 .InputMainLine li .w76{ width:70px;}
 .InputMainLine li .w208{ width:196px;}
 .InputMainLine li .w45{ width:42px; text-align:center;}
-.InputMainLine li .w46{ width:43px; text-align:center;}
+.InputMainLine li .w46{ width:45px; text-align:center;}
 .InputMainLine li .w130{ width:130px; text-align:center;}
 .InputMainLine li .w75{ width:75px; text-align:center;}
 
@@ -192,7 +192,7 @@ to {background: #007759; border:1px solid #00241b;}
 .InputMainLine li span.Rnone{ border-bottom-right-radius: 0; border-top-left-right: 0;}
 
 
-.InputMainLine li button{ height:30px; display:block; line-height:26px; padding:0 0; color:#555555;width:58px;}
+.InputMainLine li button{ height:30px; display:block; line-height:26px; padding:0 0; color:#555555;width:58.5px;}
 .InputMainLine .zonghe{border-color: cadetblue;background-color: #00976a;color:white}
 .InputMainLine li button:hover, .InputMainLine li button.bgBox{background: -webkit-gradient(linear, 0 0, 0 100%, from(#00976a), to(#006249)); border: 1px solid #006249; color:#ffffff;}
 
