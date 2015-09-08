@@ -226,7 +226,10 @@ function notify(){
   
 }
 
-
+function showAds(){
+	var xx = $('#iframe_house')[0];
+	xx.contentWindow.showAds();
+}
 </script>
 <script>
 /*function popup(childFrame,callback){
@@ -295,7 +298,8 @@ function notify(){
                     <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:40px;"></div>
                     <div class="wintool title nobar">
                         <ul class="wintools" style="padding-left:50px;">
-                        	<li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li>
+<!--                         	<li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
+							<li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="showAds();"></a></li>
                             <li><a href="#" class="winBtn black winBtnMin" style=" display:block; width:15px; height:15px; line-height:15px; font-size:10px; font-family:Verdana; margin-top:6px; text-align:center; border-radius:8px; background-color:#332d2c; color:#ffffff;" onclick="fankui();" data-q="">?</a></li>
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>

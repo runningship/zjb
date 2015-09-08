@@ -166,6 +166,22 @@ function getSider(id){
     }
 }
 
+function setMapSearch(lngStart , lngEnd , latStart , latEnd){
+	$('#lngStart').val(lngStart);
+	$('#lngEnd').val(lngEnd);
+	$('#latStart').val(latStart);
+	$('#latEnd').val(latEnd);
+	doSearchAndSelectFirst(true);
+}
+
+function openMapSearch(){
+	var lngStart = $('#lngStart').val();
+	var lngEnd = $('#lngEnd').val();
+	var latStart = $('#latStart').val();
+	var latEnd = $('#latEnd').val();
+	art.dialog.open('/house/mapSearch.jsp?latStart='+latStart+'&latEnd='+latEnd+'&lngStart='+lngStart+'&lngEnd='+lngEnd,{id:'mapSearch',title:'地图找房',width:1200,height:550});
+}
+
 function setSearchValue(index){
     var ThiA=$('#autoCompleteBox').find('a');
     ThiA.removeClass('hover');
@@ -206,7 +222,7 @@ function updateHouse(id,data){
         ThiImg=Thi.find('img');
             ThiImg.removeClass('fadeInDown').addClass('fadeOutUp');
         var tms=setTimeout(function(){
-            Thi.remove();
+            Thi.hide();
         },700);
         event.preventDefault();
     });
@@ -287,6 +303,11 @@ $(document).ready(function(){
  //  });
 		 
 });
+
+function showAds(){
+	$('#ad_container img').removeClass('fadeOutUp').addClass('fadeInDown');
+	$('#ad_container').show();
+}
 
 function openGongGao(){
 	art.dialog.open("/ad/gonggao.html",{id:'gonggao',width:960,height:615,title:'',lock:true,padding:0}); 
@@ -432,6 +453,9 @@ function setPageOrder(col){
                                 <p onclick="addQueryStr('ztai')"><label><input type="radio" name="ztai" value="" text="" checked="" > 所有</label> </p> 
                                 <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input type="radio" text="$[name]" name="ztai" value="$[code]"> $[name]</p>
                             </div>
+                        </li>
+                        <li>
+                            <button class="ButtonW1 ButtonS hand not-select"  onclick="openMapSearch();">地图</button>
                         </li>
                         <li auth="fy_sh">
                             <button class="selectMethod not-select" type="button" >审核<i class="caret"></i> </button>

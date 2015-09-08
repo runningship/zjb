@@ -621,7 +621,7 @@ public class HouseService {
 			params.add(query.lngStart);
 		}
 		if(query.lngEnd!=null){
-			hql.append(" and d.malng<=? ");
+			hql.append(" and d.maplng<=? ");
 			params.add(query.lngEnd);
 		}
 		hql.append(" and (isdel=0 or isdel is null) order by ");
