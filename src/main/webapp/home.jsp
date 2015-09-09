@@ -1,5 +1,25 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="org.bc.sdak.SimpDaoTool"%>
+<%@page import="org.bc.sdak.CommonDaoService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
+Calendar now = Calendar.getInstance();
+now.set(Calendar.HOUR_OF_DAY, 0);
+now.set(Calendar.MINUTE, 0);
+now.set(Calendar.SECOND, 0);
+Date start= now.getTime();
+
+now.set(Calendar.HOUR_OF_DAY, 23);
+now.set(Calendar.MINUTE, 59);
+now.set(Calendar.SECOND, 59);
+Date end= now.getTime();
+
+long count = dao.countHql("select count(*) from Notice where (isPublic=? or isPublic=?) and  addtime>=? and addtime<=? " , 2,3 ,start , end);
+request.setAttribute("ggCount", count);
+%>
 <!DOCTYPE html>
 <html >
 <head>

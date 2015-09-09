@@ -25,7 +25,9 @@ public class Notice {
 	
 	public Date addtime;
 	
-	//3 广场公告, 4 二手信息
+	public Date updateTime;
+	
+	// 0 OA公告，1OA文化墙 ,2 广场房产知识, 3 增值服务
 	public int isPublic;
 	
 	//点赞数量

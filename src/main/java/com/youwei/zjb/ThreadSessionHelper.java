@@ -46,7 +46,7 @@ public class ThreadSessionHelper {
     public static String getCityCordinate(){
     	String cityCoordinate = ThreadSession.getCityCoordinate();
 		if(StringUtils.isEmpty(cityCoordinate)){
-			cityCoordinate="117.23355, 31.827258";
+			cityCoordinate="117.291501,31.86719";
 		}
 		return cityCoordinate;
     }

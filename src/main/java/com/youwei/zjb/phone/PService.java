@@ -200,6 +200,13 @@ public class PService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView isIOSOnline(){
+		ModelAndView mv = new ModelAndView();
+		mv.data.put("iosOnline", 0);
+		return mv;
+	}
+	
 	private void pushToOther(String tel,String deviceId){
 		JPushClient mClient = new JPushClient(masterSecret, appKey);
 		PushPayload payload = PushPayload.newBuilder()
