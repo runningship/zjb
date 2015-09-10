@@ -45,11 +45,55 @@
 	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
 	<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 	<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+	<script type="text/javascript">
+var annis;
+        function anni(){
+            var Thi=$('.tipbox');
+            Thi.animate({'top':'80px', 'box-shadow': '10px 10px 30px #000'}, 500,function(e) {
+                Thi.animate({   
+                    'top': '70px',
+                    'box-shadow': '5px 5px 20px #000'},
+                    500, function() {
+                    //clearInterval(annis);
+                });
+            })
+        }
+    $(document).ready(function() {
+        annis=setInterval('anni()',1000);
+    });
+</script>
+<style type="text/css">
+.allmap{position: relative;}
+.tipbox{ position: absolute; top: 70px; right: 15px; border: 2px solid #09F; background-color: #FFF; border-radius: 6px; padding:0 20px; box-shadow: 5px 5px 20px #000;  color: #09F; height: 26px; line-height: 26px; }
+.tips{ position: relative; }
+.tips:before, .tips:after { 
+content: ' '; 
+height: 0; 
+position: absolute; 
+width: 0; 
+border: 10px solid transparent;
+}
+.tips:before { 
+border-bottom-color: #fff;
+position: absolute; 
+top: -19px; 
+right: 3px; 
+z-index: 2; 
+} 
+.tips:after { 
+border-bottom-color: #09F;
+position: absolute; 
+top: -22px; 
+right: 3px; 
+z-index: 1; 
+} 
+</style>
 	<title>地图找房</title>
 </head>
 <body>
 	<div id="allmap" style="overflow:hidden;zoom:1;position:relative;width: 100%; height: 100%;">
 		<div id="map" style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;"></div>
+		<div class="tipbox"><div class="tips">框选找房</div></div>
 	</div>
 	<script type="text/javascript">
 	var moveCenter = false;
@@ -102,7 +146,6 @@ var overlaycomplete = function(e){
     //再定位一次,artdialog有问题
     setTimeout(function(){
     	if(${lngStart} && ${latStart}){
-    		map.centerAndZoom(poi, 15);
     		var rectangle = new BMap.Polygon([
     			                          		new BMap.Point(${lngStart},${latEnd}),
     			                          		new BMap.Point(${lngEnd},${latEnd}),
@@ -110,8 +153,9 @@ var overlaycomplete = function(e){
     			                          		new BMap.Point(${lngStart},${latStart})
     			                          	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  //创建矩形
     			map.addOverlay(rectangle);
-    	}	
-    },100);
+    	}
+    	map.centerAndZoom(poi, 15);
+    },500);
 </script>
 </body>
 </html>

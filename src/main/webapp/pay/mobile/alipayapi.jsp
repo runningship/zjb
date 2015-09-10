@@ -1,3 +1,7 @@
+<%@page import="java.util.Date"%>
+<%@page import="org.bc.sdak.SimpDaoTool"%>
+<%@page import="com.youwei.zjb.user.entity.Charge"%>
+<%@page import="com.youwei.zjb.user.entity.User"%>
 <%@page import="com.youwei.zjb.pay.aliMobile.util.AlipaySubmit"%>
 <%@page import="com.youwei.zjb.pay.aliMobile.config.AlipayConfig"%>
 <%
@@ -47,18 +51,21 @@
 		//必填
 		//付款金额
 		String total_fee = new String(request.getParameter("WIDtotal_fee").getBytes("ISO-8859-1"),"UTF-8");
-		//必填
-		//商品展示地址
-		String show_url = new String(request.getParameter("WIDshow_url").getBytes("ISO-8859-1"),"UTF-8");
+		//必填		
+		//付款金额
+		String monthAdd = new String(request.getParameter("monthAdd").getBytes("ISO-8859-1"),"UTF-8");
+		
+		//商品展示地址,对于手机版而言应该是用户首页或者应该做一个付费成功页面
+		String show_url = "http://www.zhongjiebao.com/";
 		//必填，需以http://开头的完整路径，例如：http://www.商户网址.com/myorder.html
 		//订单描述
 		String body = new String(request.getParameter("WIDbody").getBytes("ISO-8859-1"),"UTF-8");
 		//选填
 		//超时时间
-		String it_b_pay = new String(request.getParameter("WIDit_b_pay").getBytes("ISO-8859-1"),"UTF-8");
+		//String it_b_pay = new String(request.getParameter("WIDit_b_pay").getBytes("ISO-8859-1"),"UTF-8");
 		//选填
 		//钱包token
-		String extern_token = new String(request.getParameter("WIDextern_token").getBytes("ISO-8859-1"),"UTF-8");
+		//String extern_token = new String(request.getParameter("WIDextern_token").getBytes("ISO-8859-1"),"UTF-8");
 		//选填
 		
 		
@@ -77,12 +84,27 @@
 		sParaTemp.put("subject", subject);
 		sParaTemp.put("total_fee", total_fee);
 		sParaTemp.put("show_url", show_url);
-		sParaTemp.put("body", body);
-		sParaTemp.put("it_b_pay", it_b_pay);
-		sParaTemp.put("extern_token", extern_token);
+		//sParaTemp.put("body", body);
+		//sParaTemp.put("it_b_pay", it_b_pay);
+		//sParaTemp.put("extern_token", extern_token);
 		
 		//建立请求
 		String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"get","确认");
+		
+		User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, Integer.valueOf(request.getParameter("uid")));
+		Charge charge = new Charge();
+		charge.uid = user.id;
+		charge.uname = user.uname;
+		charge.tradeNo = sParaTemp.get("out_trade_no");
+		charge.fee = Float.valueOf(sParaTemp.get("total_fee"));
+		charge.payType = 1;
+		charge.clientType = "mobile";
+		charge.addtime = new Date();
+		charge.finish = 0;
+		charge.beizhu = body;
+		charge.monthAdd = Integer.valueOf(monthAdd);
+		SimpDaoTool.getGlobalCommonDaoService().saveOrUpdate(charge);
+		
 		out.println(sHtmlText);
 	%>
 	<body>

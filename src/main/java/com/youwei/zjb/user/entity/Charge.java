@@ -57,4 +57,6 @@ public class Charge {
 	
 	//1,0
 	public Integer finish;
+	
+	public Integer monthAdd;
 }

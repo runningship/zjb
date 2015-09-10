@@ -192,7 +192,8 @@ public class PService {
 		}
 		obj.put("uname", user.uname);
 		obj.put("tel", tel);
-//		obj.put("payWay", "offline");
+//		obj.put("payWay", "online");
+		obj.put("iosShenHeVersion", "2.2.27");
 		mv.data = obj;
 		
 		MobileUserDog.map.put(tel, deviceId);
@@ -204,6 +205,16 @@ public class PService {
 	public ModelAndView isIOSOnline(){
 		ModelAndView mv = new ModelAndView();
 		mv.data.put("iosOnline", 0);
+		mv.data.put("iosShenHeVersion", "2.2.27");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView getUserFufeiInfo(Integer uid){
+		ModelAndView mv = new ModelAndView();
+		User u = dao.get(User.class, uid);
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(u.mobileDeadtime));
+		mv.data.put("fufei", "1");
 		return mv;
 	}
 	

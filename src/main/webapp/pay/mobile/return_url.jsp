@@ -1,3 +1,8 @@
+<%@page import="com.youwei.zjb.util.DataHelper"%>
+<%@page import="org.bc.sdak.CommonDaoService"%>
+<%@page import="com.youwei.zjb.user.entity.User"%>
+<%@page import="org.bc.sdak.SimpDaoTool"%>
+<%@page import="com.youwei.zjb.user.entity.Charge"%>
 <%@page import="com.youwei.zjb.view.pay.AlipayNotify"%>
 <%
 /* *
@@ -66,16 +71,49 @@
 			//判断该笔订单是否在商户网站中已经做过处理
 				//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 				//如果有做过处理，不执行商户的业务程序
+			CommonDaoService	dao = SimpDaoTool.getGlobalCommonDaoService();
+			Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , out_trade_no);
+			if(po!=null){
+				po.finish=1;
+				dao.saveOrUpdate(po);
+				//加时间
+				User user = dao.get(User.class, po.uid);
+//				user.mobileDeadtime
+				Calendar cal = Calendar.getInstance();
+				if(user.mobileDeadtime==null){
+					cal.add(Calendar.MONTH, po.monthAdd);
+					user.mobileDeadtime = cal.getTime();
+				}else{
+					if(user.mobileDeadtime.after(cal.getTime())){
+						cal.setTime(user.mobileDeadtime);
+						cal.add(Calendar.MONTH, po.monthAdd);
+						user.mobileDeadtime = cal.getTime();
+					}else{
+						//已过期,从当前时间算起
+						cal.add(Calendar.MONTH, po.monthAdd);
+						user.mobileDeadtime = cal.getTime();
+					}
+				}
+				user.lastPaytime = new Date();
+				dao.saveOrUpdate(user);
+				
+				RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
+				request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+				request.setAttribute("fee", po.fee);
+				rd.forward(request, response);
+			}else{
+				out.println("订单验证失败，请联系中介宝客服 <br />");
+			}
 		}
 		
 		//该页面可做页面美工编辑
-		out.println("验证成功<br />");
+		//out.println("验证成功<br />");
 		//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
+		
 		//////////////////////////////////////////////////////////////////////////////////////////
 	}else{
 		//该页面可做页面美工编辑
-		out.println("验证失败");
+		out.println("订单验证失败，请联系中介宝客服 <br />");
 	}
 %>
   </body>
