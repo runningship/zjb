@@ -1,3 +1,4 @@
+<%@page import="com.youwei.zjb.house.HouseImageService"%>
 <%@page import="java.util.Map"%>
 <%@page import="com.youwei.zjb.util.WXUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -8,22 +9,21 @@
 //https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=mTerMUXDuoL7dKEUbWUE9iIC8OA_2XB5a-Xg3ESZjK3fAEf2-0fd8Nkz-yuKDnUJKdB-bEe2m1l02L5gxTQ9P6HE5_tGEsIg_rwRkAKaY0M&type=jsapi
 //var timestamp = new Date().getTime();
 // var nonceStr = "EPNSpJae8rgzOP1x";
-String appid = "wx955465193fd083ef";
 String url="http://wx.zjb.tunnel.mobi/weixin/houseOwner/yuyin.jsp";
-String token = WXUtil.getAccess_token(appid, "7896b261071d9cca3f6b151ed3949a95");
+String token = WXUtil.getAccess_token(HouseImageService.appId, HouseImageService.appkey);
 String ticket = WXUtil.getJsApiTicket(token);
 Map sign = WXUtil.sign(ticket, url);
 request.setAttribute("sign", sign);
-request.setAttribute("appid", appid);
+request.setAttribute("appid", HouseImageService.appId);
 %>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>微信JS-SDK Demo2</title>
+  <title>微信JS-SDK Demo3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
   <link rel="stylesheet" href="css/wx.css">
-  
+  <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript">
   var aa='';
   
@@ -54,6 +54,56 @@ request.setAttribute("appid", appid);
 	      }
 	    });
   }
+  
+  function chooseImage(){
+	  var images = {
+	    localId: [],
+	    serverId: []
+	  };
+	  wx.chooseImage({
+	      success: function (res) {
+	        images.localId = res.localIds;
+	        uploadToWX(images , 0);
+	      },
+	      fail:function(res){
+	    	  alert(2);
+	      }
+	    });
+  }
+  
+  function uploadToWX(images , i){
+	  var length = images.localId.length;
+	  wx.uploadImage({
+          localId: images.localId[i],
+          success: function (res) {
+            i++;
+            images.serverId.push(res.serverId);
+            if (i < length) {
+            	uploadToWX(images , i);
+            }else{
+          	  notifyZJB(images.serverId.join());
+            }
+          },
+          fail: function (res) {
+            alert(JSON.stringify(res));
+          }
+        });
+  }
+  
+  function notifyZJB(wxMediaIds){
+	  $.ajax({
+        type: 'POST',
+        url: '/c/weixin/houseOwner/uploadImg?wxMediaIds='+wxMediaIds,
+        success: function(data){
+        	var json = JSON.parse(data);
+        	if(json.result=='0'){
+        		alert('图片上传成功');	
+        	}else{
+        		alert('图片上传失败');
+        	}
+        }
+	  });
+  }
   </script>
   
 </head>
@@ -61,6 +111,15 @@ request.setAttribute("appid", appid);
 <div class="wxapi_container">
     <button ontouchstart="start();" >开始</button>
     <button ontouchstart="finish();" >完成</button>
+    
+    
+    <h3 id="menu-image">图像接口</h3>
+      <span class="desc">拍照或从手机相册中选图接口</span>
+      <button class="btn btn_primary" id="chooseImage" onclick="chooseImage();">chooseImage</button>
+      <span class="desc">预览图片接口</span>
+      <button class="btn btn_primary" id="previewImage">previewImage</button>
+      <span class="desc">上传图片接口</span>
+      <button class="btn btn_primary" id="uploadImage">uploadImage</button>
   </div>
 </body>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -123,5 +182,5 @@ request.setAttribute("appid", appid);
   });
 </script>
 <script src="js/zepto.min.js"></script>
-<script src="js/demo.js"> </script>
+<!-- <script src="js/demo.js"> </script> -->
 </html>
