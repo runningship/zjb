@@ -17,8 +17,8 @@ now.set(Calendar.MINUTE, 59);
 now.set(Calendar.SECOND, 59);
 Date end= now.getTime();
 
-long count = dao.countHql("select count(*) from Notice where (isPublic=? or isPublic=?) and  addtime>=? and addtime<=? " , 2,3 ,start , end);
-request.setAttribute("ggCount", count);
+//long count = dao.countHql("select count(*) from Notice where (isPublic=? or isPublic=?) and  addtime>=? and addtime<=? " , 2,3 ,start , end);
+//request.setAttribute("ggCount", count);
 %>
 <!DOCTYPE html>
 <html >
@@ -246,16 +246,100 @@ function notify(){
   
 }
 
-function showAds(){
-	var xx = $('#iframe_house')[0];
-	xx.contentWindow.showAds();
-}
 </script>
 <script>
 /*function popup(childFrame,callback){
     childFrame[callback].call(childFrame,returnValue);
 }*/
 //$("body").find("iframe#iframe_oa")[0].contentWindow.LayerShow();
+</script>
+<script type="text/javascript">
+var icoOA;
+var icoGC;
+function showAds(){
+    var xx = $('#iframe_house')[0];
+    xx.contentWindow.showAds();
+}
+$(document).ready(function() {
+var times;
+    $('.showAds').hover(function(){
+        times=setTimeout(showAds,500);
+    },function(){
+        clearTimeout(times);
+    }).click(function(event) {
+        showAds();
+        clearTimeout(times);
+    });
+});
+
+function icoDD(c,n){
+    var Thi=$(c),
+    ThiI=Thi.find('i.iconfont');
+    var T1,T2,T3,T4,Ta,Tb;
+    if(n!=false||n==true){n=true}else{n=false}
+    function a2(){
+        T1=setTimeout(function(){
+            ThiI.css({'color': '#FFF'});
+            //clearTimeout(T2);
+        },200);
+    }
+    function a1(){
+        T1=setTimeout(function(){
+            ThiI.css({'color': '#F00'});
+            a2();
+            //clearTimeout(T1);
+        },200);
+    }
+    function b1(){
+        var i=0;
+        Ta=setInterval(function() {
+            if(i<=1){
+                a1();
+                ++i;
+            }else{
+                clearInterval(Ta);
+            }
+        },400)
+    }
+    return setInterval(function() {
+        b1();
+    },1800);
+}
+$(document).ready(function() {
+	getUnReadStatistic();
+	setInterval(function() {
+		getUnReadStatistic();
+    },6*1000);
+//clearInterval(icoOA);
+});
+
+function getUnReadStatistic(){
+	YW.ajax({
+	    type: 'get',
+	    datatype: 'json',
+	    url: '/c/oa/getUnReadStatistic',
+	    mysuccess: function(data){
+	        var json = JSON.parse(data);
+	        if(json.oaCount>0){
+	        	if(!icoOA){
+	        		icoOA=icoDD('.oaClass');	
+	        	}
+	        }else{
+	        	clearInterval(icoOA);
+	        	icoOA=null;
+	        }
+	        if(json.piazzaCount>0){
+	        	if(!icoGC){
+	        		icoGC=icoDD('.guangchang');	
+	        	}
+	        	
+	        }else{
+	        	clearInterval(icoGC);
+	        	icoGC = null;
+	        }
+	    }
+	  });
+}
 </script>
 </head>
 <body>
@@ -297,10 +381,10 @@ function showAds(){
                             <li><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="caiwu" data-toggle="tooltip" data-placement="right" title="财务"><i class="iconfont">&#xe613;</i><span>财务</span></a></li>    
                         </c:if>
                         <c:if test="${auths.indexOf('oa_on')>-1}">
-                            <li ><a href="/oa/index.jsp" class="ibtn" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
+                            <li ><a href="/oa/index.jsp" class="ibtn oaClass" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         </c:if>
-                        <li ><a href="/piazza/index.jsp" class="ibtn" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
-                         	<c:if test="${ggCount>0 }"><div style="width:10px;height:10px;background:#fa5757;position: absolute;  border-radius: 41px;top:7px;right:13px;"></div></c:if>
+                        <li ><a href="/piazza/index.jsp" class="ibtn guangchang" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
+                         	
                         </li>
                         <c:if test="${auths.indexOf('sz_on')>-1}">
                             <li auth="sz_on" class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
@@ -321,8 +405,9 @@ function showAds(){
                     <div class="wintool title nobar">
                         <ul class="wintools" style="padding-left:50px;">
 <!--                         	<li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
-							<li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="showAds();"></a></li>
-                            <li><a href="#" class="winBtn black winBtnMin" style=" display:block; width:15px; height:15px; line-height:15px; font-size:10px; font-family:Verdana; margin-top:6px; text-align:center; border-radius:8px; background-color:#332d2c; color:#ffffff;" onclick="fankui();" data-q="">?</a></li>
+                            <li><a href="#" onclick="return false;" onclick="window.top.gui.Shell.openExternal('www.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li>
+                            <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li>
+                            <li><a href="#" onclick="fankui();" title="请给予我们您的宝贵意见" class="winBtns "><i class="iconfont">&#xe633;</i></a></li>
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">

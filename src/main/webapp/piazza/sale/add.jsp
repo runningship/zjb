@@ -39,7 +39,7 @@ function save(){
     var a=$('form[name=form1]').serialize();
     YW.ajax({
         type: 'POST',
-        url: '/c/oa/notice/save',
+        url: '/c/piazza/save',
         data:a,
         mysuccess: function(data){
 			window.parent.searchSale();

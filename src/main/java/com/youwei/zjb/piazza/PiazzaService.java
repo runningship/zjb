@@ -30,15 +30,15 @@ public class PiazzaService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
-	@WebMethod
-	public ModelAndView getUnReadStatistic(){
-		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder("select nc.id as id,  nc.fenlei as fenlei,count(*) as total from Notice n, NoticeReceiver nr , NoticeClass nc"
-				+ " where n.id=nr.noticeId and n.claid=nc.id  and nr.receiverId=? and nr.hasRead=0 group by nc.fenlei");
-		List<Map> list = dao.listAsMap(hql.toString(), ThreadSessionHelper.getUser().id);
-		mv.data.put("oaData", JSONHelper.toJSONArray(list));
-		return mv;
-	}
+//	@WebMethod
+//	public ModelAndView getUnReadStatistic(){
+//		ModelAndView mv = new ModelAndView();
+//		StringBuilder hql = new StringBuilder("select nc.id as id,  nc.fenlei as fenlei,count(*) as total from Notice n, NoticeReceiver nr , NoticeClass nc"
+//				+ " where n.id=nr.noticeId and n.claid=nc.id  and nr.receiverId=? and nr.hasRead=0 group by nc.fenlei");
+//		List<Map> list = dao.listAsMap(hql.toString(), ThreadSessionHelper.getUser().id);
+//		mv.data.put("oaData", JSONHelper.toJSONArray(list));
+//		return mv;
+//	}
 	
 	@WebMethod
 	public ModelAndView listKnowledge(Page<Map> page , String title){
@@ -177,6 +177,30 @@ public class PiazzaService {
 		}
 		dao.saveOrUpdate(po);
 		mv.data.put("zan", po.zans);
+		return mv;
+	}
+	
+	@WebMethod
+	@Transactional
+	public ModelAndView save(Notice notice){
+		ModelAndView mv = new ModelAndView();
+		User user = ThreadSessionHelper.getUser();
+		notice.senderId = user.id;
+		notice.addtime = new Date();
+		notice.zans=0;
+		notice.reads = 0;
+		notice.replys = 0;
+		dao.saveOrUpdate(notice);
+		List<Map> uids = dao.listAsMap("select id as uid from User where cid=?", ThreadSessionHelper.getUser().cid);
+		for(Map map : uids){
+			NoticeReceiver nr = new NoticeReceiver();
+			nr.noticeId = notice.id;
+			nr.hasRead = 0;
+			nr.receiverId = Integer.valueOf((map.get("uid").toString()));
+			nr.zan=0;
+			dao.saveOrUpdate(nr);
+		}
+		mv.data.put("noticeId", notice.id);
 		return mv;
 	}
 	

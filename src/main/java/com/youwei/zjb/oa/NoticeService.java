@@ -33,10 +33,14 @@ public class NoticeService {
 	@WebMethod
 	public ModelAndView getUnReadStatistic(){
 		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder("select nc.id as id,  nc.fenlei as fenlei,count(*) as total from Notice n, NoticeReceiver nr , NoticeClass nc"
-				+ " where n.id=nr.noticeId and n.claid=nc.id  and nr.receiverId=? and nr.hasRead=0 group by nc.fenlei");
-		List<Map> list = dao.listAsMap(hql.toString(), ThreadSessionHelper.getUser().id);
-		mv.data.put("oaData", JSONHelper.toJSONArray(list));
+		long piazzaCount = dao.countHql("select count(*) from Notice n , NoticeReceiver nr where n.id = nr.noticeId "
+				+ "and nr.receiverId=? and  (isPublic=? or isPublic=?)" , ThreadSessionHelper.getUser().id , 2,3);
+		
+		long oaCount = dao.countHql("select count(*) from Notice n , NoticeReceiver nr where n.id = nr.noticeId "
+				+ "and nr.receiverId=? and  (isPublic=? or isPublic=?)" , ThreadSessionHelper.getUser().id , 0,1);
+		
+		mv.data.put("piazzaCount", 0);
+		mv.data.put("oaCount", 0);
 		return mv;
 	}
 	
