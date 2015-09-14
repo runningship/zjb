@@ -309,7 +309,7 @@ $(document).ready(function() {
 	getUnReadStatistic();
 	setInterval(function() {
 		getUnReadStatistic();
-    },6*1000);
+    },60*1000);
 //clearInterval(icoOA);
 });
 

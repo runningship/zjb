@@ -64,7 +64,7 @@ $(function(){
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
         <div class="ggLayerMainScol">
           
-          <div class="ggListBox id_notice_list">
+          <div class="ggListBox read$[hasRead] id_notice_list">
                <div class="ggListBoxTit ggBorLeftRed">
                     <div class="tit">
                         <h2 onclick="window.location='/oa/notice/view.html?id=$[id]'">$[title]</h2>

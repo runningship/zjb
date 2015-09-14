@@ -87,7 +87,7 @@ function buildArticle(page){
 	
 	//return false;
 	//conTxt = conTxt.text();
-    var html = '<div class="textInfoBox">'
+	var html = '<div class="textInfoBox read'+json[i].hasRead+'">'
              +  ' <div class="infoBoxLine"><img src="images/pageLineicon.png"></div>'
              +   '<div class="infoBoxTit">'
              +    ' <div class="infoListImg Fleft"><img src="/oa/images/avatar/'+json[i]['senderAvatar']+'.jpg"></div>'
@@ -173,13 +173,13 @@ function buildArticle(page){
               <div class="oaInfomain" style="overflow:hidden; overflow-y:auto;">
                 <div class="whqMain" style="padding-bottom:9px;">
                   <c:forEach items="${KnowledgeList}"  var="article">
-                    <div class="textInfoBox">
+                    <div class="textInfoBox <c:if test="${article.hasRead==0}">read0</c:if>">
                       <div class="infoBoxLine"><img src="images/pageLineicon.png" /></div>
                       <div class="infoBoxTit">
                         <div class="infoListImg Fleft"><img src="/oa/images/avatar/${article.senderAvatar }.jpg" /></div>
                         <div class="Fleft userSelectTrue">      
                           <p><span class="yh">${article.senderName }</span><span class="time"><fmt:formatDate value="${article.addtime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
-                          <p><a href="#" class="tit" onclick="openNewWin('viewKnowledge','980','650','查看内容','knowledge/view.html?id=${article.id}')">${article.title }</a></p>
+                          <p><a href="#" class="tit " onclick="openNewWin('viewKnowledge','980','650','查看内容','knowledge/view.html?id=${article.id}')">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
                           <!-- <c:if test="${article.senderId==myId}"> -->
@@ -230,10 +230,10 @@ function buildArticle(page){
                     <div style=" margin-right:22px; height:100%; overflow:hidden; overflow-y:auto; padding-right:2px;">
 <%--                       <c:forEach items="${SailList}"  var="notice"> --%>
 						<span class="sailRepeat" style="display:none">
-                        <div class="ggBox" >
+                        <div class="ggBox read$[hasRead]" >
                           <div class="ggBoxContent" style="margin-left:0px;">
                             <p><span class="titL marginLeft10">Tit:</span>
-                            <a href="#" class="tit  userSelectTrue" onclick="openNewWin('viewSail','980','650','查看内容','sale/view.html?id=$[id]')" >$[title]</a>
+                            <a href="#" class="tit userSelectTrue" onclick="openNewWin('viewSail','980','650','查看内容','sale/view.html?id=$[id]')" >$[title]</a>
                             <span class="infoBoxTit" style="display: inline;"><span class="time" style="float:right;margin-right:40px;line-height:25px;">$[addtime]</span></span>
                             </p>
                             <!--<p><span class="marginLeft10 con">${notice.conts}</span></p>-->

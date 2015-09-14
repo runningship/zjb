@@ -64,7 +64,7 @@ $(function(){
       <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
         <div class="ggLayerMainScol">
           
-          <div class="ggListBox id_notice_list" style="display:none">
+          <div class="ggListBox read$[hasRead] id_notice_list" style="display:none">
                <div class="ggListBoxTit ggBorLeftRed">
                     <div class="tit">
                         <h2 onclick="window.location='/piazza/sale/view.html?id=$[id]'">$[title]</h2>
@@ -73,7 +73,7 @@ $(function(){
                     <div class="ggListBoxBot">
                     <span class="tuBox"><i class="Bg zan"></i>$[replys]</span>
                     <!-- <span class="tuBox"><i class="Bg zan" onclick="selectZan($[id],this);return false;"></i>$[replys]</span> -->
-                    <i show="${user.id}==$[senderId]" class="Bg xgSel" onclick="openNewWin('editSale','800','600','编辑内容','edit.jsp?id=$[id]')"></i>
+                    <i show="${user.id}==$[senderId]" class="Bg  xgSel" onclick="openNewWin('editSale','800','600','编辑内容','edit.jsp?id=$[id]')"></i>
                     <!-- <c:if test="${auths.indexOf('oa_notice_del')>-1}"> -->
                       <i class="Bg hfSel" onclick="deleteThis($[id]);return false;" ></i>
                     <!-- </c:if> -->

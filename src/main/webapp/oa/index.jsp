@@ -61,7 +61,7 @@ function buildArticle(page){
 	
 	//return false;
 	//conTxt = conTxt.text();
-    var html = '<div class="textInfoBox">'
+    var html = '<div class="textInfoBox read'+json[i].hasRead+'">'
              +  ' <div class="infoBoxLine"><img src="images/pageLineicon.png"></div>'
              +   '<div class="infoBoxTit">'
              +    ' <div class="infoListImg Fleft"><img src="/oa/images/avatar/'+json[i]['senderAvatar']+'.jpg"></div>'
@@ -143,7 +143,8 @@ function buildArticle(page){
               <div class="oaInfomain" style="overflow:hidden; overflow-y:auto;">
                 <div class="whqMain" style="padding-bottom:9px;">
                   <c:forEach items="${articleList}"  var="article">
-                    <div class="textInfoBox">
+                  
+                    <div class="textInfoBox  <c:if test="${article.hasRead==0}">read0</c:if>">
                       <div class="infoBoxLine"><img src="images/pageLineicon.png" /></div>
                       <div class="infoBoxTit">
                         <div class="infoListImg Fleft"><img src="/oa/images/avatar/${article.senderAvatar }.jpg" /></div>
@@ -200,7 +201,7 @@ function buildArticle(page){
                   <div class="td ggMain" style="height:100%;">
                     <div style=" margin-right:22px; height:100%; overflow:hidden; overflow-y:auto; padding-right:2px;">
                       <c:forEach items="${noticeList}"  var="notice">
-                        <div class="ggBox">
+                        <div class="ggBox <c:if test="${notice.hasRead==0}">read0</c:if>">
                           <div class="ggBoxTime">
                             <p class="month"><fmt:formatDate value="${notice.addtime}" pattern="MMM"/></p>
                             <p class="day"><fmt:formatDate value="${notice.addtime}" pattern="dd"/></p>

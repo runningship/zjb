@@ -171,6 +171,11 @@ function setMapSearch(lngStart , lngEnd , latStart , latEnd){
 	$('#lngEnd').val(lngEnd);
 	$('#latStart').val(latStart);
 	$('#latEnd').val(latEnd);
+	
+	var str = '经度:'+lngStart+'-'+lngEnd+',维度:'+latStart+'-'+latEnd;
+	//设置查询条件提示 
+	var xx = '<li name=map>地图</li>';
+    $('#query_str').find('span').append(xx);
 	doSearchAndSelectFirst(true);
 }
 

@@ -57,7 +57,8 @@ public class PiazzaService {
 	private Page<Map> innerListKnowledge(Page<Map> page , String title){
 //		page.setPageSize(6);
 		page = dao.findPage(page, "select n.id as id, n.title as title,n.zanUids as zanUids, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, n.addtime as addtime ,SubString(n.conts,1,180) as conts "
-				+ ",n.zans as zans ,n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId and isPublic=2 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
+				+ ",n.zans as zans ,n.reads as reads,n.replys as replys,nr.hasRead as hasRead from Notice n , NoticeReceiver nr ,User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=2 "
+				+ "and n.title like ? and nr.receiverId=?  order by n.addtime desc", true, new Object[]{"%"+title+"%" , ThreadSessionHelper.getUser().id});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -70,8 +71,9 @@ public class PiazzaService {
 	
 	private Page innerListSale(Page<Map> page, String title){
 //		page.setPageSize(15);
-		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime ,u.uname as senderName, SubString(n.conts,1,50) as conts ,n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId "
-				+ " and isPublic=3 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
+		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime ,u.uname as senderName, SubString(n.conts,1,50) as conts ,"
+				+ "n.reads as reads,n.replys as replys ,nr.hasRead as hasRead from Notice n ,NoticeReceiver nr, User u where n.id=nr.noticeId and u.id=n.senderId "
+				+ " and isPublic=3 and n.title like ? and nr.receiverId=? order by n.addtime desc", true, new Object[]{"%"+title+"%" , ThreadSessionHelper.getUser().id});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -191,7 +193,7 @@ public class PiazzaService {
 		notice.reads = 0;
 		notice.replys = 0;
 		dao.saveOrUpdate(notice);
-		List<Map> uids = dao.listAsMap("select id as uid from User where cid=?", ThreadSessionHelper.getUser().cid);
+		List<Map> uids = dao.listAsMap("select id as uid from User");
 		for(Map map : uids){
 			NoticeReceiver nr = new NoticeReceiver();
 			nr.noticeId = notice.id;

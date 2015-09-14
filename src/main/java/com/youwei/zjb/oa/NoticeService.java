@@ -34,13 +34,13 @@ public class NoticeService {
 	public ModelAndView getUnReadStatistic(){
 		ModelAndView mv = new ModelAndView();
 		long piazzaCount = dao.countHql("select count(*) from Notice n , NoticeReceiver nr where n.id = nr.noticeId "
-				+ "and nr.receiverId=? and  (isPublic=? or isPublic=?)" , ThreadSessionHelper.getUser().id , 2,3);
+				+ "and nr.receiverId=? and  (isPublic=? or isPublic=?) and nr.hasRead=0" , ThreadSessionHelper.getUser().id , 2,3);
 		
 		long oaCount = dao.countHql("select count(*) from Notice n , NoticeReceiver nr where n.id = nr.noticeId "
-				+ "and nr.receiverId=? and  (isPublic=? or isPublic=?)" , ThreadSessionHelper.getUser().id , 0,1);
+				+ "and nr.receiverId=? and  (isPublic=? or isPublic=?) and nr.hasRead=0" , ThreadSessionHelper.getUser().id , 0,1);
 		
-		mv.data.put("piazzaCount", 0);
-		mv.data.put("oaCount", 0);
+		mv.data.put("piazzaCount", piazzaCount);
+		mv.data.put("oaCount", oaCount);
 		return mv;
 	}
 	
@@ -75,7 +75,7 @@ public class NoticeService {
 	private Page innerListArticle(Page<Map> page){
 		page.setPageSize(6);
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, nr.hasRead as hasRead,n.addtime as addtime ,SubString(n.conts,1,180) as conts "
-				+ ",n.zans as zans ,nr.zan as zan ,n.reads as reads,n.replys as replys from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSessionHelper.getUser().id});
+				+ ",n.zans as zans ,nr.zan as zan ,n.reads as reads,n.replys as replys , nr.hasRead as hasRead from Notice n , NoticeReceiver nr , User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=1 and nr.receiverId=? order by n.addtime desc", true, new Object[]{ThreadSessionHelper.getUser().id});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
 			if(StringUtils.isNotEmpty(conts)){
@@ -133,6 +133,7 @@ public class NoticeService {
 		NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" , "receiverId"}, new Object[]{id , ThreadSessionHelper.getUser().id});
 		if(nr!=null){
 			nr.hasRead=1;
+			dao.saveOrUpdate(nr);
 		}
 		User sender = dao.get(User.class, po.senderId);
 		po.senderName = sender.uname;

@@ -522,3 +522,10 @@ i.add:hover{ background-position:-38px -100px;}
     left:0;  
     z-index:1980;  
 }
+
+
+.read0{}
+.read0 .infoBoxTit{ border-left: 0px solid #F90;}
+.read0 .infoBoxTit .tit,
+.read0 .ggBoxContent .tit,
+.read0 .ggListBoxTit .tit h2{font-weight: bold;}
