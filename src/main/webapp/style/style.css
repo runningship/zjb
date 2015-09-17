@@ -411,7 +411,7 @@ opacity:1}
 */
 .default .menuSide li{}
 .default .menuSide li a{ color: #CFCFCF;}
-.default .menuSide li.curr { box-shadow: inset 0px 0px 20px #222; border-left: 3px solid #14a47c; }
+.default .menuSide li.curr { box-shadow: inset 0px 0px 20px #222; border-left: 0px solid #14a47c; }
 .default .menuSide li.curr a{ color: #24ceab; text-decoration: none;}
 .default .menuSide li.curr span{ display: block; height: auto;}
 .default .menuSide li:hover { box-shadow: inset 0px 0px 20px #222;}

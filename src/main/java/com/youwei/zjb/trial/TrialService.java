@@ -34,7 +34,8 @@ public class TrialService {
 		LogUtil.info("收到试用请求:city="+ThreadSession.getCityPY());
 		ThreadSession.setCityPY("hefei");
 		dao.saveOrUpdate(trial);
-		mv.returnText="<script>window.location=\"http://www.zhongjiebao.com/success.html\"</script>";
+//		mv.returnText="<script>window.location=\"http://www.zhongjiebao.com/success.html\"</script>";
+		mv.returnText="";
 		StringBuilder msg = new StringBuilder("收到新的试用请求").append("<br/>");
 		msg.append("城市: ").append(trial.city).append("<br/>");
 		msg.append("公司名称: ").append(trial.cname).append("<br/>");
@@ -52,6 +53,7 @@ public class TrialService {
 		}catch(Exception ex){
 			LogUtil.warning(msg.toString());
 		}
+		ThreadSession.getHttpservletresponse().setHeader("Access-Control-Allow-Origin", "*");
 		return mv;
 	}
 	

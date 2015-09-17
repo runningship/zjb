@@ -140,6 +140,11 @@ public class NoticeService {
 		po.senderAvatar = sender.avatar;
 		mv.data.put("notice", JSONHelper.toJSON(po));
 		mv.data.put("nr", JSONHelper.toJSON(nr));
+		if(po.zanUids!=null && po.zanUids.contains(ThreadSessionHelper.getUser().id+"")){
+			mv.data.put("zan", 1);
+		}else{
+			mv.data.put("zan", 0);
+		}
 		return mv;
 	}
 	

@@ -40,7 +40,7 @@ function getContent(){
       $('#conts').html(json['notice']['conts']);
       $('#zancount').html(json['notice']['zans']);
       $('#senderAvatar').attr('src','/oa/images/avatar/'+json['notice']['senderAvatar']+'.jpg');
-      if (json['nr']['zan']==1) {
+      if (json['zan']==1) {
         $('#zan').addClass('zanSel');
       }else{
         $('#zan').addClass('zan');

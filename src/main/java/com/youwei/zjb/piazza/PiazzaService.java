@@ -56,11 +56,24 @@ public class PiazzaService {
 	
 	private Page<Map> innerListKnowledge(Page<Map> page , String title){
 //		page.setPageSize(6);
+//		page = dao.findPage(page, "select n.id as id, n.title as title,n.zanUids as zanUids, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, n.addtime as addtime ,SubString(n.conts,1,180) as conts "
+//				+ ",n.zans as zans ,n.reads as reads,n.replys as replys,nr.hasRead as hasRead from Notice n , NoticeReceiver nr ,User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=2 "
+//				+ "and n.title like ? and nr.receiverId=?  order by n.addtime desc", true, new Object[]{"%"+title+"%" , ThreadSessionHelper.getUser().id});
+		
 		page = dao.findPage(page, "select n.id as id, n.title as title,n.zanUids as zanUids, n.senderId as senderId, u.uname as senderName, u.avatar as senderAvatar, n.addtime as addtime ,SubString(n.conts,1,180) as conts "
-				+ ",n.zans as zans ,n.reads as reads,n.replys as replys,nr.hasRead as hasRead from Notice n , NoticeReceiver nr ,User u where n.id=nr.noticeId and u.id=n.senderId and isPublic=2 "
-				+ "and n.title like ? and nr.receiverId=?  order by n.addtime desc", true, new Object[]{"%"+title+"%" , ThreadSessionHelper.getUser().id});
+				+ ",n.zans as zans ,n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId and isPublic=2 "
+				+ "and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
+		
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
+			NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" ,"receiverId"}, new Object[]{map.get("id") , ThreadSessionHelper.getUser().id});
+			if(nr!=null){
+				map.put("hasRead", nr.hasRead);
+				map.put("zan", nr.zan);
+			}else{
+				map.put("zan", 0);
+				map.put("hasRead", 1);
+			}
 			if(StringUtils.isNotEmpty(conts)){
 				conts = HTMLSpirit.delHTMLTag(conts);
 				map.put("conts", conts);
@@ -71,11 +84,23 @@ public class PiazzaService {
 	
 	private Page innerListSale(Page<Map> page, String title){
 //		page.setPageSize(15);
+//		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime ,u.uname as senderName, SubString(n.conts,1,50) as conts ,"
+//				+ "n.reads as reads,n.replys as replys ,nr.hasRead as hasRead from Notice n ,NoticeReceiver nr, User u where n.id=nr.noticeId and u.id=n.senderId "
+//				+ " and isPublic=3 and n.title like ? and nr.receiverId=? order by n.addtime desc", true, new Object[]{"%"+title+"%" , ThreadSessionHelper.getUser().id});
+		
 		page = dao.findPage(page, "select n.id as id, n.title as title, n.senderId as senderId, n.addtime as addtime ,u.uname as senderName, SubString(n.conts,1,50) as conts ,"
-				+ "n.reads as reads,n.replys as replys ,nr.hasRead as hasRead from Notice n ,NoticeReceiver nr, User u where n.id=nr.noticeId and u.id=n.senderId "
-				+ " and isPublic=3 and n.title like ? and nr.receiverId=? order by n.addtime desc", true, new Object[]{"%"+title+"%" , ThreadSessionHelper.getUser().id});
+				+ "n.reads as reads,n.replys as replys from Notice n ,User u where u.id=n.senderId "
+				+ " and isPublic=3 and n.title like ? order by n.addtime desc", true, new Object[]{"%"+title+"%"});
 		for(Map map : page.getResult()){
 			String conts = (String)map.get("conts");
+			NoticeReceiver nr = dao.getUniqueByParams(NoticeReceiver.class, new String[]{"noticeId" ,"receiverId"}, new Object[]{map.get("id") , ThreadSessionHelper.getUser().id});
+			if(nr!=null){
+				map.put("hasRead", nr.hasRead);
+				map.put("zan", nr.zan);
+			}else{
+				map.put("hasRead", 1);
+				map.put("zan", 0);
+			}
 			if(StringUtils.isNotEmpty(conts)){
 				conts = HTMLSpirit.delHTMLTag(conts);
 				map.put("conts", conts);
