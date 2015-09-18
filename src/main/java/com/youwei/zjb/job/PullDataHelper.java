@@ -152,7 +152,7 @@ public class PullDataHelper {
 		}catch(Exception ex){
 			StackTraceElement stack = ex.getStackTrace()[0];
 			String msg = action.getSiteName()+"扫网"+hlink+"失败，href="+hlink+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
-			IMServer.sendMsgToUser(errorReportUserId, msg);
+//			IMServer.sendMsgToUser(errorReportUserId, msg);
 			LogUtil.log(Level.WARN, "", ex);
 		}
 		return null;

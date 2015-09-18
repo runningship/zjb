@@ -193,7 +193,7 @@ public class PService {
 		obj.put("uname", user.uname);
 		obj.put("tel", tel);
 //		obj.put("payWay", "online");
-		obj.put("iosShenHeVersion", "2.2.27");
+		obj.put("iosShenHeVersion", "");
 		mv.data = obj;
 		
 		MobileUserDog.map.put(tel, deviceId);
@@ -205,7 +205,7 @@ public class PService {
 	public ModelAndView isIOSOnline(){
 		ModelAndView mv = new ModelAndView();
 		mv.data.put("iosOnline", 0);
-		mv.data.put("iosShenHeVersion", "2.2.27");
+		mv.data.put("iosShenHeVersion", "");
 		return mv;
 	}
 	

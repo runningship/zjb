@@ -72,7 +72,7 @@ public class PullBXRent extends AbstractJob implements HouseRentJob{
 				}
 				Thread.sleep(this.getDetailPageInterval());
 			}
-			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);
+//			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "本次共处"+action.getSiteName()+"理房源数:"+count);
 		}catch(Exception ex){
 			StackTraceElement stack = ex.getStackTrace()[0];
 			String msg = "扫网"+link+"失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();

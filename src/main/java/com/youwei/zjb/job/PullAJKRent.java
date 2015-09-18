@@ -78,7 +78,7 @@ public class PullAJKRent extends AbstractJob implements HouseRentJob{
 		}catch(Exception ex){
 			StackTraceElement stack = ex.getStackTrace()[0];
 			String msg = action.getSiteName()+"扫网"+link+"失败，href="+link+",at"+stack.getClassName()+" line "+stack.getLineNumber()+","+stack.getMethodName();
-			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
+//			IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, msg);
 			LogUtil.log(Level.WARN, "安居客扫网任务失败", ex);
 		}
 	}

@@ -5,7 +5,13 @@ function loadHardwareInfo(callback){
     var command = "hinf.exe";
     var xx = exec(command, function(err, stdout, stderr) {
         var fs=require("fs");
-        var result = fs.readFileSync("sys.data","utf-8");
+        var result =""; 
+        try{
+        	result = fs.readFileSync("sys.data","utf-8");
+        }catch(e){
+        	infoAlert('获取机器码失败，此为360误删中介宝核心文件所致，请联系中介宝客服解决.');
+        	return;
+        }
         result= result.trim();
         result = result.replace(/\r/g,"");
         var lines = result.split("\n");

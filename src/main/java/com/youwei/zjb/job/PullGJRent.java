@@ -61,7 +61,7 @@ public class PullGJRent extends AbstractJob implements HouseRentJob{
 			String result = PullDataHelper.getHttpData(listPageUrl,action.getSiteName() , "utf8");
 			Document doc = Jsoup.parse(result);
 			if(result.contains("您的访问速度太快了")){
-				IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "赶集又要输入验证码了。。");
+//				IMServer.sendMsgToUser(PullDataHelper.errorReportUserId, "赶集又要输入验证码了。。");
 				return;
 			}
 			Elements list = getRepeats(doc);
