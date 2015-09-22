@@ -22,6 +22,7 @@
 	}catch(Exception ex){
 		
 	}
+	
 	request.setAttribute("latStart", latStart);
 	request.setAttribute("latEnd", latEnd);
 	request.setAttribute("lngStart", lngStart);
@@ -109,7 +110,7 @@ z-index: 1;
 var overlaycomplete = function(e){
 	clearAll();
     overlays.push(e.overlay);
-    var result = e.overlay.Rn;
+    var result = e.overlay.Qe['3'];
     //var lt=e.overlay.Rn[0]
   //01
   //32

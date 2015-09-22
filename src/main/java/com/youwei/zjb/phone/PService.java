@@ -3,8 +3,11 @@ package com.youwei.zjb.phone;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -17,6 +20,7 @@ import org.bc.sdak.utils.JSONHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import cn.jpush.api.JPushClient;
@@ -231,6 +235,12 @@ public class PService {
 	@WebMethod
 	public ModelAndView paySuccess(Integer monthAdd ,Integer userId,String uname,String tradeNO,Float fee,Integer payType){
 		ModelAndView mv = new ModelAndView();
+		Charge po = dao.getUniqueByKeyValue(Charge.class, "tradeNO", tradeNO);
+		if(po!=null){
+			mv.data.put("fufei", "1");
+			mv.data.put("result", "1");
+			return mv;
+		}
 		Charge charge = new Charge();
 		charge.uid = userId;
 		charge.tradeNo = tradeNO;
@@ -270,7 +280,14 @@ public class PService {
 	@WebMethod
 	public ModelAndView alipayCallback(Integer userId){
 		ModelAndView mv = new ModelAndView();
+		HttpServletRequest request = ThreadSession.HttpServletRequest.get();
+		Enumeration<String> names = request.getParameterNames();
 		LogUtil.info("收到支付宝回调");
+		while(names.hasMoreElements()){
+			String key = names.nextElement();
+			String[] val = request.getParameterValues(key);
+			LogUtil.info(key+"="+val);
+		}
 		return mv;
 	}
 	
