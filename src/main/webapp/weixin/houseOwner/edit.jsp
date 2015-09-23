@@ -13,7 +13,7 @@
 <link href="css/style.css" rel="stylesheet">
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/buildHtml.js"></script>
-<script src="js/check.js" type="text/javascript"></script>
+<script src="js/check.js?13" type="text/javascript"></script>
 <script src="js/layer.m/layer.m.js"></script>
 <script>
 function update(){

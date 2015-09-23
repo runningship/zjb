@@ -20,7 +20,7 @@ function exists(callback){
         url: '/c/weixin/houseOwner/exist',
         data:param,
         mysuccess: function(data){
-            var jsons=JSON.parse(data);
+            var jsons=data;
             if(jsons['exist']==1){
             	alert('房源重复,请检查楼盘名称，房栋号');
             }else{

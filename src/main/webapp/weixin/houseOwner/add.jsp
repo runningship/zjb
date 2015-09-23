@@ -14,7 +14,7 @@
 <!-- <script src="../../js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script> -->
 <!-- <script src="../../js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script> -->
 <script type="text/javascript" src="js/buildHtml.js"></script>
-<script src="js/check.js?12" type="text/javascript"></script>
+<script src="js/check.js?13" type="text/javascript"></script>
 <script src="js/layer.m/layer.m.js"></script>
 <script src="js/textareaAutoHeight.js"></script>
 <script src="js/regForm.js"></script>
@@ -147,7 +147,7 @@ $(document).ready(function() {
             <li class="dblock">
                 <span class="title">备注：</span>
                 <span class="inputbox">
-                    <textarea name="" class="text isFormItem" name="beizhu" placeholder="">&nbsp;</textarea>
+                    <textarea class="text isFormItem" name="beizhu" placeholder="">&nbsp;</textarea>
                 </span>
             </li>
         </ul>
