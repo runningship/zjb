@@ -608,7 +608,7 @@ dataType:'script',
 scriptCharset:'gb2312',////////
 url:'http://php.tech.sina.com.cn/iframe/download/download_srv.php?action=bst_ms&code='+a,
 success:function(e){
-if(I_SUCCESS==1){
+if(I_SUCCESS && I_SUCCESS==1){
     //extAlert(a,ms_data[1]+ms_data[2]);
     callback(ms_data[1]+ms_data[2])
 }else {
