@@ -341,6 +341,9 @@ public class UserService {
 			params.add(query.mobileON);
 		}
 		
+		hql.append(HqlHelper.buildDateSegment("u.mobileDeadtime",query.rqtimeStart,DateSeparator.After,params));
+		hql.append(HqlHelper.buildDateSegment("u.mobileDeadtime",query.rqtimeEnd, DateSeparator.Before , params));
+		
 		page = dao.findPage(page, hql.toString(), true, params.toArray());
 		
 		mv.data.put("page", JSONHelper.toJSON(page , DataHelper.dateSdf.toPattern()));
