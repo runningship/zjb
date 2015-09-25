@@ -5,7 +5,7 @@
 <title>房源</title>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 <link rel="stylesheet" type="text/css" href="/style/font/iconfont.css" />
-<link href="/style/animate.min.css" rel="stylesheet">
+<link href="/style/animate.min.css" rel="stylesheet" />
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript" src="/js/pagination.js"></script>
@@ -174,8 +174,10 @@ function setMapSearch(lngStart , lngEnd , latStart , latEnd){
 	
 	var str = '经度:'+lngStart+'-'+lngEnd+',维度:'+latStart+'-'+latEnd;
 	//设置查询条件提示 
-	var xx = '<li name=map>地图</li>';
-    $('#query_str').find('span').append(xx);
+	if($('#mapSearch').length==0){
+		var xx = '<li id="mapSearch" name=map>地图</li>';
+	    $('#query_str').find('span').append(xx);	
+	}
 	doSearchAndSelectFirst(true);
 }
 

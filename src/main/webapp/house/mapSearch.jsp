@@ -119,6 +119,16 @@ var overlaycomplete = function(e){
   var lngEnd = result[2].lng;
   var latStart = result[2].lat;
   var latEnd = result[0].lat;
+  if(lngStart>lngEnd){
+		var tmp = lngStart;
+		lngStart = lngEnd;
+		lngEnd = tmp;
+	}
+  if(latStart>latEnd){
+		var tmp = latStart;
+		latStart = latEnd;
+		latEnd = tmp;
+	}
   art.dialog.opener.setMapSearch(lngStart , lngEnd , latStart , latEnd);
   art.dialog.close();
 };
