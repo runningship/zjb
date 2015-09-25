@@ -47,7 +47,7 @@ public class PullFangRentAction implements PullRentHouseAction{
 
 	@Override
 	public String getMji(Element elem) {
-		Elements mj = elem.getElementsByClass("baseInfo").first().getElementsMatchingOwnText("面 积：");
+		Elements mj = elem.getElementsByClass("baseInfo").first().getElementsMatchingOwnText("建筑面积：");
 		String text = mj.first().nextElementSibling().text();
 		return text.replace("平米", "").trim();
 	}
