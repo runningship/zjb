@@ -390,6 +390,7 @@ function DesktopAlert(str) {
   }
  * setSearchValue(当前选中的行)
  */
+var prompting=false;
 function autoComplete(id){
     $(document).find('body').prepend('<div id="autoCompleteBox" class="autocomplete"></div>');
     var Thi=id,
@@ -412,70 +413,82 @@ function autoComplete(id){
        return false;
     });
     Thi.on('keyup',function(event) {
-        var This=$(this),
-        ThisVal=This.val(),
-        param={search:ThisVal};
-        ThiOptTop=Thi.offset().top+ThiHeight+3,
-        ThiOptLeft=Thi.offset().left,
-        autocomplete.css({'top':ThiOptTop,'left':ThiOptLeft});
-        //alert(event.keyCode)
-        if(event.keyCode=='13'){
-            autocomplete.hide();
-            return false;
-        }else if(event.keyCode=='27'){
-            autocomplete.hide();
-            return false;
-        }else if(event.keyCode=='38'){
-            if(ThiCurrIndex<=0){
-                ThiCurrIndex=0;
-            }else{
-                ThiCurrIndex--;
-            }
-            if(ThiCurrIndex<$('#autoCompleteBox').find('a').length-13){
-              $('#autoCompleteBox').scrollTop($('#autoCompleteBox').scrollTop()-26);
-            }
-            setSearchValue(ThiCurrIndex);
-            //alert(ThiCurrIndex+'|'+ThiMaxLen+'|'+autocomplete.find('a').eq(ThiCurrIndex).attr('title'))
-            return false;
-        }else if(event.keyCode=='40'){
-            if(ThiCurrIndex>=ThiMaxLen-1){
-                ThiCurrIndex=ThiMaxLen-1;
-            }else{
-                ThiCurrIndex++;
-            }
-            if(ThiCurrIndex>12){
-              $('#autoCompleteBox').scrollTop($('#autoCompleteBox').scrollTop()+26);
-            }
-            setSearchValue(ThiCurrIndex);
-            //alert(ThiCurrIndex+'|'+ThiMaxLen+'|'+autocomplete.find('a').eq(ThiCurrIndex).attr('title'))
-            return false;
+    	var This=$(this);
+	    var ThisVal=This.val(),
+	    param={search:ThisVal};
+	    if(ThisVal==''){
+        	return false;
         }
-        if(oldVal!=ThisVal){
-            oldVal=ThisVal;
-            YW.ajax({
-                type: 'POST',
-                url: '/c/areas/prompt',
-                data:param,
-                success: function(data){
-                    var d=JSON.parse(data);
-                    autocomplete.html('');
-                    $.each(d['houses'], function(index, val) {
-                        autocomplete.prepend('<a href="#" area="'+val.area+'" title="'+val.address+'" data-address="'+val.address+'" data-quyu="'+val.quyu+'" ><i>'+val.quyu+'</i><b>'+val.area+'</b>'+val.address+'</a>');
-                    });
-                    ThiMaxLen=d['houses'].length;
-                    ThiCurrIndex=-1;
-                    if(ThiMaxLen>0){
-                        autocomplete.show()
-                    }else{
-                        autocomplete.hide()
-                    }
-                },complete:function(){
-                    
-                },beforeSend:function(){}
-            });
-        }
+	    ThiOptTop=Thi.offset().top+ThiHeight+3,
+	    ThiOptLeft=Thi.offset().left,
+	    autocomplete.css({'top':ThiOptTop,'left':ThiOptLeft});
+	    //alert(event.keyCode)
+	    if(event.keyCode=='13'){
+	        autocomplete.hide();
+	        return false;
+	    }else if(event.keyCode=='27'){
+	        autocomplete.hide();
+	        return false;
+	    }else if(event.keyCode=='38'){
+	        if(ThiCurrIndex<=0){
+	            ThiCurrIndex=0;
+	        }else{
+	            ThiCurrIndex--;
+	        }
+	        if(ThiCurrIndex<$('#autoCompleteBox').find('a').length-13){
+	          $('#autoCompleteBox').scrollTop($('#autoCompleteBox').scrollTop()-26);
+	        }
+	        setSearchValue(ThiCurrIndex);
+	        //alert(ThiCurrIndex+'|'+ThiMaxLen+'|'+autocomplete.find('a').eq(ThiCurrIndex).attr('title'))
+	        return false;
+	    }else if(event.keyCode=='40'){
+	        if(ThiCurrIndex>=ThiMaxLen-1){
+	            ThiCurrIndex=ThiMaxLen-1;
+	        }else{
+	            ThiCurrIndex++;
+	        }
+	        if(ThiCurrIndex>12){
+	          $('#autoCompleteBox').scrollTop($('#autoCompleteBox').scrollTop()+26);
+	        }
+	        setSearchValue(ThiCurrIndex);
+	        //alert(ThiCurrIndex+'|'+ThiMaxLen+'|'+autocomplete.find('a').eq(ThiCurrIndex).attr('title'))
+	        return false;
+	    }
+	    if(oldVal!=ThisVal){
+	    	oldVal=ThisVal;
+	        if(prompting){
+    			return;
+    		}
+	    	setTimeout(function(){
+	    		prompting = true;
+	    		YW.ajax({
+		            type: 'POST',
+		            url: '/c/areas/prompt',
+		            data:param,
+		            success: function(data){
+		                var d=JSON.parse(data);
+		                autocomplete.html('');
+		                $.each(d['houses'], function(index, val) {
+		                    autocomplete.prepend('<a href="#" area="'+val.area+'" title="'+val.address+'" data-address="'+val.address+'" data-quyu="'+val.quyu+'" ><i>'+val.quyu+'</i><b>'+val.area+'</b>'+val.address+'</a>');
+		                });
+		                ThiMaxLen=d['houses'].length;
+		                ThiCurrIndex=-1;
+		                if(ThiMaxLen>0){
+		                    autocomplete.show()
+		                }else{
+		                    autocomplete.hide()
+		                }
+		                prompting = false;
+		            },complete:function(){
+		            	prompting = false;
+		            },beforeSend:function(){}
+		        });
+	    	},500);
+	        
+	    }
     }).on('focusin',function(event) {
-        if(autocomplete.html()){autocomplete.show();}
+        //if(autocomplete.html()){autocomplete.show();}
+    	autocomplete.empty();
     }).on('focusout',function(event) {
         ThiCurrIndex=0;
         var autocompleteTime=setTimeout(function(){

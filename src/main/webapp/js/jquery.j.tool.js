@@ -379,6 +379,9 @@ function autoComplete(id){
         var This=$(this),
         ThisVal=This.val(),
         param={search:ThisVal};
+        if(ThisVal==''){
+        	return false;;
+        }
         ThiOptTop=Thi.offset().top+ThiHeight+3,
         ThiOptLeft=Thi.offset().left,
         autocomplete.css({'top':ThiOptTop,'left':ThiOptLeft});
@@ -416,30 +419,37 @@ function autoComplete(id){
         }
         if(oldVal!=ThisVal){
             oldVal=ThisVal;
-            YW.ajax({
-                type: 'POST',
-                url: '/c/areas/prompt',
-                data:param,
-                success: function(data){
-                    var d=JSON.parse(data);
-                    autocomplete.html('');
-                    $.each(d['houses'], function(index, val) {
-                        autocomplete.prepend('<a href="#" area="'+val.area+'" title="'+val.address+'" data-address="'+val.address+'" data-quyu="'+val.quyu+'" ><i>'+val.quyu+'</i><b>'+val.area+'</b>'+val.address+'</a>');
-                    });
-                    ThiMaxLen=d['houses'].length;
-                    ThiCurrIndex=-1;
-                    if(ThiMaxLen>0){
-                        autocomplete.show()
-                    }else{
-                        autocomplete.hide()
-                    }
-                },complete:function(){
-                    
-                },beforeSend:function(){}
-            });
+            if(prompting){
+    			return;
+    		}
+	    	setTimeout(function(){
+	    		prompting = true;
+	            YW.ajax({
+	                type: 'POST',
+	                url: '/c/areas/prompt',
+	                data:param,
+	                success: function(data){
+	                    var d=JSON.parse(data);
+	                    autocomplete.html('');
+	                    $.each(d['houses'], function(index, val) {
+	                        autocomplete.prepend('<a href="#" area="'+val.area+'" title="'+val.address+'" data-address="'+val.address+'" data-quyu="'+val.quyu+'" ><i>'+val.quyu+'</i><b>'+val.area+'</b>'+val.address+'</a>');
+	                    });
+	                    ThiMaxLen=d['houses'].length;
+	                    ThiCurrIndex=-1;
+	                    if(ThiMaxLen>0){
+	                        autocomplete.show()
+	                    }else{
+	                        autocomplete.hide()
+	                    }
+	                },complete:function(){
+	                    
+	                },beforeSend:function(){}
+	            });
+	    	},500);
         }
     }).on('focusin',function(event) {
-        if(autocomplete.html()){autocomplete.show();}
+        //if(autocomplete.html()){autocomplete.show();}
+    	autocomplete.empty();
     }).on('focusout',function(event) {
         ThiCurrIndex=0;
         var autocompleteTime=setTimeout(function(){
