@@ -51,6 +51,7 @@ public class DepartmentService {
 		}
 		dept.addtime = new Date();
 		dept.flag=1;
+		dept.useIm=0;
 		dao.saveOrUpdate(dept);
 		ModelAndView mv = new ModelAndView();
 		JSONObject json = new JSONObject();

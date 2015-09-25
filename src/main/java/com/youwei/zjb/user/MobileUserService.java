@@ -18,8 +18,10 @@ import org.bc.web.WebMethod;
 import cn.jpush.api.utils.StringUtils;
 
 import com.cloopen.rest.sdk.CCPRestSDK;
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
+import com.youwei.zjb.user.entity.InvitationCode;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
@@ -128,6 +130,64 @@ public class MobileUserService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView getMobileDeadtime(Integer uid){
+		User user = dao.get(User.class, uid);
+		ModelAndView mv = new ModelAndView();
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView getInvitationCode(Integer uid){
+		ModelAndView mv = new ModelAndView();
+		mv.data.put("invitationCode", getCode(uid));
+		return mv;
+	}
+	
+	private int getCode(Integer uid) {
+		InvitationCode code = dao.getUniqueByKeyValue(InvitationCode.class, "uid", uid);
+		if(code==null){
+			code = new InvitationCode();
+			code.uid = uid;
+			code.addtime = new Date();
+			dao.saveOrUpdate(code);
+		}
+		return code.id;
+	}
+
+	@WebMethod
+	public ModelAndView acceptInvitation(String code){
+		ModelAndView mv = new ModelAndView();
+		User inviter = dao.getUniqueByParams(User.class, new String[]{"tel" , "mobileON" },  new Object[]{code , 1});
+		if(inviter==null){
+			throw new GException(PlatformExceptionType.BusinessException,"邀请人手机号码不存在");
+		}
+		if(inviter.id == ThreadSessionHelper.getUser().id){
+			throw new GException(PlatformExceptionType.BusinessException,"邀请人手机号码不能是自己");
+		}
+		InvitationCode invitee = dao.getUniqueByKeyValue(InvitationCode.class, "inviteeUid", ThreadSessionHelper.getUser().id);
+		if(invitee==null){
+			throw new GException(PlatformExceptionType.BusinessException,"您已经参与过该优惠活动");
+		}
+		addMobileDeadtime(ThreadSessionHelper.getUser() , 7);
+		addMobileDeadtime(inviter , 7);
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(ThreadSessionHelper.getUser().mobileDeadtime));
+		return mv;
+	}
+	
+	private void addMobileDeadtime(User user, int days) {
+		Calendar cal = Calendar.getInstance();
+		if(user.mobileDeadtime==null || user.mobileDeadtime.before(cal.getTime())){
+			cal.add(Calendar.DAY_OF_MONTH, days);
+		}else{
+			cal.setTime(user.mobileDeadtime);
+			cal.add(Calendar.DAY_OF_MONTH, days);
+		}
+		user.mobileDeadtime = cal.getTime();
+		dao.saveOrUpdate(user);
+	}
+
 	@WebMethod
 	public ModelAndView modifyPwd(String tel , String code , String pwd){
 		//发送验证码，验证，登录操作都在主库中进行
