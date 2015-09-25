@@ -33,5 +33,6 @@ for(File file : allFiles){
 	files.add(fileName);
 }
 jobj.put("files", files);
+jobj.put("statusBarHeight", 25);
 out.write(jobj.toString());
 %>

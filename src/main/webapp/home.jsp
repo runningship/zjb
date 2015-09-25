@@ -306,10 +306,10 @@ function icoDD(c,n){
     },1800);
 }
 $(document).ready(function() {
-	getUnReadStatistic();
-	setInterval(function() {
-		getUnReadStatistic();
-    },60*1000);
+// 	getUnReadStatistic();
+// 	setInterval(function() {
+// 		getUnReadStatistic();
+//     },60*1000);
 //clearInterval(icoOA);
 });
 
@@ -347,7 +347,7 @@ function getUnReadStatistic(){
 
 <c:if test="${use_im==1}">
     <div>
-        <jsp:include page="oa/coco.jsp"></jsp:include>
+<%--         <jsp:include page="oa/coco.jsp"></jsp:include> --%>
     </div>
 </c:if>
 
