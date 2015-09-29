@@ -478,10 +478,21 @@ body .form-loo input.input{*width: 70%;}
 .btn.white{ background-color: #FFF; color: #000;}
 .btn.white:hover{ background-color: rgba(255,255,255,0.7);}
 
-.webreg .form1{ width: 60%; margin: 100px auto 0; }
+.webreg { background:#e93131 url('../images/appbg.png') no-repeat top center; background-size:100% auto; }
+.webreg .box{ padding-top: 250px;}
+.webreg .form1{ width: 70%; margin: 0 auto; padding:30px 20px 20px; background: #FFF; border-radius: 5px; }
 .webreg .form1 .form-section{ border-radius: 5px; }
 .webreg .form1 .form-section input.input,
 .webreg .form1 .form-section select.input{ border-radius: 5px; }
 .webreg .btn{ display: block; border-radius: 5px;}
+.webreg .btn.orange{background: #e93131;}
 
 
+.webreg .form-active.hover{ border-color: #e93131;}
+.webreg .form-active.focus { border-color: #e93131;}
+.webreg .form-active.focus  .input-label{ border-color: #e93131; color: #e93131;}
+.webreg .form-active.active .input-label{ top: -10px;background: #FFF;}
+.webreg .form-section.hover span.tip,
+.webreg .form-section.focus span.tip,
+.webreg .form-loo.hover span.tip
+.webreg .form-loo.focus span.tip{color: #e93131;}
