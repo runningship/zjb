@@ -49,7 +49,7 @@ public class TrialService {
 			LogUtil.warning(msg.toString());
 		}
 		try{
-			MailUtil.send_email("76558874@qq.com", "中介宝试用申请", msg.toString());
+			MailUtil.send_email("2975066320@qq.com", "中介宝试用申请", msg.toString());
 		}catch(Exception ex){
 			LogUtil.warning(msg.toString());
 		}
