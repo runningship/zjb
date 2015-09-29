@@ -459,6 +459,29 @@ body .form-loo input.input{*width: 70%;}
 
 
 
+.btn.block{ display: block;}
+.btn.round{ border-radius: 100px;}
+.btn.round3{ border-radius: 3px;}
+.btn.round5{ border-radius: 5px;}
+.btn.blue{ background: #18B4ED; color: #FFF;}
+.btn.blue:hover{ background-color: #23C0F9;}
+.btn.blue:active{ background-color: #23C0F9;}
+.btn.blue:visited{ background-color: #23C0F9;}
+.btn.orange{ background: #FF6100; color: #FFF;}
+.btn.orange:hover{ background-color: #FD7019;}
+.btn.orange:active{ background-color: #FF6100;}
+.btn.orange:visited{ background-color: #FF6100;}
+.btn.gray{ background: #EFEFEF; border: 1px solid #DFDFDF; color: #666;}
+.btn.gray:hover{ background-color: #69C0FF;}
+.btn.gray:active{ background-color: #69C0FF;}
+.btn.gray:visited{ background-color: #69C0FF;}
+.btn.white{ background-color: #FFF; color: #000;}
+.btn.white:hover{ background-color: rgba(255,255,255,0.7);}
 
+.webreg .form1{ width: 60%; margin: 100px auto 0; }
+.webreg .form1 .form-section{ border-radius: 5px; }
+.webreg .form1 .form-section input.input,
+.webreg .form1 .form-section select.input{ border-radius: 5px; }
+.webreg .btn{ display: block; border-radius: 5px;}
 
 

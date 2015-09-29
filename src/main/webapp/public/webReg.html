@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<link href="css/reset.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(document).find('.form-active').find('.input').focusin(function(){
+        $(this).parent().addClass('active').addClass('focus');
+    }).focusout(function(){
+        if($(this).is('select')){
+            if($(this).is(":selected")){
+                $(this).parent().removeClass('active');
+            }
+        }else{
+            if(!$(this).val()){
+                $(this).parent().removeClass('active');
+            }
+        }
+        $(this).parent().removeClass('focus').removeClass('curr');
+    }).hover(function() {
+        $(this).parent().addClass('hover');
+    }, function() {
+        $(this).parent().removeClass('hover');
+    }).each(function(index, el) {
+        if($(this).is('select')){
+            $(this).parent().addClass('curr');
+        }
+    });
+});
+$(document).on('click','btn_act',function(){
+	var Thi=$(this),
+	ThiType=Thi.data('type');
+	if(ThiType=='getCode'){
+
+	}
+})
+</script>
+</head>
+<body>
+<div class="webreg bodyer">
+
+<form class="form1" name="form1" method="post" action="http://www.zhongjiebao.com:8081/c/trial/add">
+<ul class="form-ul ">
+    <li class=""><label class="form-section form-active"><strong class="input-label">城市</strong><select name="city" class="input">
+        <option value="合肥">合肥</option>
+        <option value="芜湖">芜湖</option>
+        <option value="蚌埠">蚌埠</option>
+        <option value="马鞍山">马鞍山</option>
+        <option value="宿州">宿州</option>
+        <option value="安庆">安庆</option>
+        <option value="淮南">淮南</option>
+        <option value="铜陵">铜陵</option>
+        <option value="黄山">黄山</option>
+        <option value="宣城">宣城</option>
+        <option value="池州">池州</option>
+        <option value="滁州">滁州</option>
+        <option value="淮北">淮北</option>
+        <option value="阜阳">阜阳</option>
+        <option value="六安">六安</option>
+        <option value="亳州">亳州</option>
+    </select></label></li>
+    <li class=""><label class="form-section form-active"><strong class="input-label">您的手机号码</strong><input type="text" class="input placeholder" name="phone" placeholder="您的手机号码"><span class="tip">必填</span></label></li>
+    <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码</strong><a href="#" class="btn btn_act code" data-type="getCode" data-txt="发送验证码">发送验证码</a><input type="text" class="input placeholder" name="code" placeholder="验证码"></label></li>
+    <li class=""><label class="form-section form-active"><strong class="input-label">您的密码</strong><input type="password" class="input placeholder" name="pwds" placeholder="您的密码"><span class="tip"></span><span class="tip">必填</span></label></li>
+    <li class="">
+        <a href="#" class="btn btn_act block round5 orange btnForm1 hvr-hong">立即领取</a>
+    </li>
+</ul>
+</form>
+</div>
+</body>
+</html>
