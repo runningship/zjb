@@ -3,12 +3,17 @@ package com.youwei.zjb.user;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
+import org.bc.sdak.Transactional;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
@@ -21,6 +26,7 @@ import com.cloopen.rest.sdk.CCPRestSDK;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
+import com.youwei.zjb.user.entity.InvitationActivation;
 import com.youwei.zjb.user.entity.InvitationCode;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
@@ -67,14 +73,17 @@ public class MobileUserService {
 			}
 		}else{
 			//异常返回输出错误码和错误信息
+			mv.data.put("result", 0);
+			mv.data.put("msg", "手机号码不支持");
 			LogUtil.info("发送验证码失败,tel = "+tel+",错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
 		}
 		dao.saveOrUpdate(tvc);
+		mv.data.put("result", 1);
 		return mv;
 	}
 
 	@WebMethod
-	public ModelAndView verifyCode(String tel , String code , String pwd , String uname){
+	public ModelAndView verifyCode(String tel , String code , String pwd , String uname , Integer invitationCode){
 		//在各自数据库中操作
 //		ThreadSession.setCityPY("hefei");
 		ModelAndView mv = new ModelAndView();
@@ -97,7 +106,7 @@ public class MobileUserService {
 		if(muser!=null ){
 			if(muser.mobileON!=null){
 //				throw new GException(PlatformExceptionType.BusinessException,"手机号码已经注册");
-				mv.data.put("msg", "手机号码已经注册");
+				mv.data.put("msg", "该手机号码已经注册");
 				mv.data.put("result", "0");
 				return mv;
 			}else{
@@ -121,6 +130,13 @@ public class MobileUserService {
 		dao.saveOrUpdate(muser);
 		
 //		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_Mobile_User, muser);
+		if(invitationCode!=null){
+			try{
+				acceptInvitation(muser.id, invitationCode);
+			}catch(Exception ex){
+				LogUtil.log(Level.WARN, "使用邀请码失败,inviteeUId="+muser.id+",invitationCode="+invitationCode, ex);
+			}
+		}
 		mv.data.put("uid", muser.id);
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(muser.mobileDeadtime));
 		mv.data.put("fufei", "1");
@@ -152,28 +168,80 @@ public class MobileUserService {
 			code.uid = uid;
 			code.addtime = new Date();
 			dao.saveOrUpdate(code);
+			code.code = code.id;
+			dao.saveOrUpdate(code);
 		}
 		return code.id;
 	}
 
 	@WebMethod
-	public ModelAndView acceptInvitation(String code){
+	public ModelAndView acceptInvitation(Integer inviteeUid , Integer code){
 		ModelAndView mv = new ModelAndView();
-		User inviter = dao.getUniqueByParams(User.class, new String[]{"tel" , "mobileON" },  new Object[]{code , 1});
-		if(inviter==null){
-			throw new GException(PlatformExceptionType.BusinessException,"邀请人手机号码不存在");
+		InvitationCode invitationCode = dao.getUniqueByKeyValue(InvitationCode.class, "code", code);
+		if(invitationCode==null){
+			throw new GException(PlatformExceptionType.BusinessException,"该邀请码不存在，请检查后重新输入，请不要跨城市使用授权码.");
 		}
-		if(inviter.id == ThreadSessionHelper.getUser().id){
-			throw new GException(PlatformExceptionType.BusinessException,"邀请人手机号码不能是自己");
+		if(invitationCode.uid.intValue()==inviteeUid.intValue()){
+			throw new GException(PlatformExceptionType.BusinessException,"邀请人不能是自己");
 		}
-		InvitationCode invitee = dao.getUniqueByKeyValue(InvitationCode.class, "inviteeUid", ThreadSessionHelper.getUser().id);
-		if(invitee==null){
-			throw new GException(PlatformExceptionType.BusinessException,"您已经参与过该优惠活动");
+		InvitationActivation invitation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", inviteeUid);
+		if(invitation==null){
+			invitation = new InvitationActivation();
+			invitation.active = 0 ;
+			invitation.addtime = new Date();
+			invitation.invitationCode = code;
+			invitation.inviteeUid = inviteeUid;
+			dao.saveOrUpdate(invitation);
+		}else{
+			throw new GException(PlatformExceptionType.BusinessException,"您已经兑换过新手礼包");
 		}
-		addMobileDeadtime(ThreadSessionHelper.getUser() , 7);
-		addMobileDeadtime(inviter , 7);
-		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(ThreadSessionHelper.getUser().mobileDeadtime));
+		mv.data.put("result", 1);
 		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView getInviteList(Integer uid){
+		ModelAndView mv = new ModelAndView();
+		mv.data.put("invitationCode", this.getCode(uid));
+		InvitationCode code = dao.getUniqueByKeyValue(InvitationCode.class, "uid", uid);
+		List<Map> list = dao.listAsMap("select u.uname as uname,u.tel as tel , u.id as uid , invite.active as active ,invite.addtime as addtime , invite.bouns as bouns "
+				+ "from InvitationActivation invite, User u where u.id=invite.inviteeUid and invite.invitationCode=? ", code.id);
+		mv.data.put("inviteList", JSONHelper.toJSONArray(list));
+		InvitationActivation invitation = dao.getUniqueByParams(InvitationActivation.class, new String[]{"inviteeUid"},  new Object[]{uid});
+		if(invitation!=null){
+			mv.data.put("invitation", JSONHelper.toJSON(invitation));
+		}
+		mv.data.put("result", 1);
+		return mv;
+	}
+	
+	@Transactional
+	public boolean activeInvitation(User invitee){
+		try{
+			//邀请表
+			InvitationActivation invitation = dao.getUniqueByParams(InvitationActivation.class, new String[]{"inviteeUid" },  new Object[]{invitee.id});
+			if(invitation==null){
+				LogUtil.info("uid="+invitee.id+"没有使用邀请码");
+				return false;
+			}
+			//邀请码信息表
+			InvitationCode inviteCode = dao.getUniqueByKeyValue(InvitationCode.class, "code", invitation.invitationCode);
+			User inviter = dao.get(User.class, inviteCode.uid);
+			if(invitation.active ==0){
+				addMobileDeadtime(invitee , 5);
+				addMobileDeadtime(inviter , 5);
+				invitation.active = 1;
+				invitation.bouns = "5天";
+				invitation.activetime = new Date();
+				dao.saveOrUpdate(invitation);
+				return true;
+			}else{
+				LogUtil.info("uid="+invitee.id+"已经兑换过新手礼包");
+			}
+		}catch(Exception ex){
+			LogUtil.log(Level.WARN, "激活码激活失败,inviteeUId="+invitee.id, ex);
+		}
+		return false;
 	}
 	
 	private void addMobileDeadtime(User user, int days) {

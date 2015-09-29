@@ -32,8 +32,10 @@ import cn.jpush.api.push.model.audience.Audience;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.MobileUserDog;
+import com.youwei.zjb.user.MobileUserService;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
+import com.youwei.zjb.user.entity.InvitationActivation;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
@@ -45,6 +47,7 @@ public class PService {
 	CityService cityService = TransactionalServiceHelper.getTransactionalService(CityService.class);
 	private static final String masterSecret ="17bfb60aef56934949f1b231";
 	private static final String appKey ="71f5687861a727f2827ba04a";
+	MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
 	
 	@WebMethod
 	public ModelAndView tracks(Integer userId , Page<Map> page){
@@ -199,7 +202,12 @@ public class PService {
 //		obj.put("payWay", "online");
 		obj.put("iosShenHeVersion", "");
 		mv.data = obj;
-		
+		InvitationActivation activation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", user.id);
+		if(activation!=null){
+			mv.data.put("invitationActive", activation.active);
+		}else{
+			mv.data.put("invitationActive", -1);
+		}
 		MobileUserDog.map.put(tel, deviceId);
 //		pushToOther(tel,deviceId);
 		return mv;
@@ -270,6 +278,7 @@ public class PService {
 		}
 		user.lastPaytime = new Date();
 		dao.saveOrUpdate(user);
+		mv.data.put("invitationActive",mService.activeInvitation(user));
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 		mv.data.put("fufei", "1");
 		mv.data.put("result", "1");

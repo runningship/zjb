@@ -8,14 +8,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class InvitationCode {
+public class InvitationActivation {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
+
+	//被邀请人,唯一
+	public Integer inviteeUid;
 	
-	public Integer uid;
+	public Integer invitationCode;
 	
-	public Integer code;
+	public Integer active;
+	
 	public Date addtime;
+	
+	public Date activetime;
+	
+	public String bouns;
 }

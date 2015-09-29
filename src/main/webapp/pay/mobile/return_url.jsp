@@ -1,3 +1,5 @@
+<%@page import="org.bc.sdak.TransactionalServiceHelper"%>
+<%@page import="com.youwei.zjb.user.MobileUserService"%>
 <%@page import="com.youwei.zjb.util.DataHelper"%>
 <%@page import="org.bc.sdak.CommonDaoService"%>
 <%@page import="com.youwei.zjb.user.entity.User"%>
@@ -96,7 +98,8 @@
 				}
 				user.lastPaytime = new Date();
 				dao.saveOrUpdate(user);
-				
+				MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
+				mService.activeInvitation(user);
 				RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
 				request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 				request.setAttribute("fee", po.fee);
