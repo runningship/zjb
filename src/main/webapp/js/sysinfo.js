@@ -24,7 +24,7 @@ function loadHardwareInfo(callback){
             }
         }
         fs.unlink('sys.data', function (err) {
-          console.log('successfully deleted sys.data');
+          //console.log('successfully deleted sys.data');
         });
         callback(json);
     });
