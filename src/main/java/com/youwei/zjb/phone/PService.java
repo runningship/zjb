@@ -49,6 +49,7 @@ public class PService {
 	private static final String appKey ="71f5687861a727f2827ba04a";
 	MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
 	
+	private static final String iosShenHeVersion = "";
 	@WebMethod
 	public ModelAndView tracks(Integer userId , Page<Map> page){
 		ModelAndView mv = new ModelAndView();
@@ -200,7 +201,7 @@ public class PService {
 		obj.put("uname", user.uname);
 		obj.put("tel", tel);
 //		obj.put("payWay", "online");
-		obj.put("iosShenHeVersion", "");
+		obj.put("iosShenHeVersion", iosShenHeVersion);
 		mv.data = obj;
 		InvitationActivation activation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", user.id);
 		if(activation!=null){
@@ -216,8 +217,8 @@ public class PService {
 	@WebMethod
 	public ModelAndView isIOSOnline(){
 		ModelAndView mv = new ModelAndView();
-		mv.data.put("iosOnline", 0);
-		mv.data.put("iosShenHeVersion", "");
+//		mv.data.put("iosOnline", 0);
+		mv.data.put("iosShenHeVersion", iosShenHeVersion);
 		return mv;
 	}
 	

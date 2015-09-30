@@ -1,3 +1,4 @@
+<%@page import="org.bc.sdak.utils.LogUtil"%>
 <%@page import="org.bc.sdak.TransactionalServiceHelper"%>
 <%@page import="com.youwei.zjb.user.MobileUserService"%>
 <%@page import="com.youwei.zjb.util.DataHelper"%>
@@ -76,33 +77,37 @@
 			CommonDaoService	dao = SimpDaoTool.getGlobalCommonDaoService();
 			Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , out_trade_no);
 			if(po!=null){
-				po.finish=1;
-				dao.saveOrUpdate(po);
-				//加时间
 				User user = dao.get(User.class, po.uid);
-//				user.mobileDeadtime
-				Calendar cal = Calendar.getInstance();
-				if(user.mobileDeadtime==null){
-					cal.add(Calendar.MONTH, po.monthAdd);
-					user.mobileDeadtime = cal.getTime();
-				}else{
-					if(user.mobileDeadtime.after(cal.getTime())){
-						cal.setTime(user.mobileDeadtime);
+				if(po.finish!=1){
+					po.finish=1;
+					dao.saveOrUpdate(po);
+					//加时间
+					Calendar cal = Calendar.getInstance();
+					if(user.mobileDeadtime==null){
 						cal.add(Calendar.MONTH, po.monthAdd);
 						user.mobileDeadtime = cal.getTime();
 					}else{
-						//已过期,从当前时间算起
-						cal.add(Calendar.MONTH, po.monthAdd);
-						user.mobileDeadtime = cal.getTime();
+						if(user.mobileDeadtime.after(cal.getTime())){
+							cal.setTime(user.mobileDeadtime);
+							cal.add(Calendar.MONTH, po.monthAdd);
+							user.mobileDeadtime = cal.getTime();
+						}else{
+							//已过期,从当前时间算起
+							cal.add(Calendar.MONTH, po.monthAdd);
+							user.mobileDeadtime = cal.getTime();
+						}
 					}
+					user.lastPaytime = new Date();
+					dao.saveOrUpdate(user);
+				}else{
+					LogUtil.info("订单已处理,out_trade_no="+out_trade_no);
 				}
-				user.lastPaytime = new Date();
-				dao.saveOrUpdate(user);
 				MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
-				mService.activeInvitation(user);
+				boolean invitationActive = mService.activeInvitation(user);
 				RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
 				request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 				request.setAttribute("fee", po.fee);
+				request.setAttribute("invitationActive", invitationActive);
 				rd.forward(request, response);
 			}else{
 				out.println("订单验证失败，请联系中介宝客服 <br />");

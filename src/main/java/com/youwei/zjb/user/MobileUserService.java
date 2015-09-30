@@ -150,7 +150,13 @@ public class MobileUserService {
 	public ModelAndView getMobileDeadtime(Integer uid){
 		User user = dao.get(User.class, uid);
 		ModelAndView mv = new ModelAndView();
+		InvitationActivation invitation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", uid);
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+		if(invitation!=null){
+			mv.data.put("invitationActive", invitation.active);
+		}else{
+			mv.data.put("invitationActive", 1);
+		}
 		return mv;
 	}
 	
@@ -164,19 +170,33 @@ public class MobileUserService {
 	private int getCode(Integer uid) {
 		InvitationCode code = dao.getUniqueByKeyValue(InvitationCode.class, "uid", uid);
 		if(code==null){
-			code = new InvitationCode();
-			code.uid = uid;
-			code.addtime = new Date();
-			dao.saveOrUpdate(code);
-			code.code = code.id;
-			dao.saveOrUpdate(code);
+			Random random = new Random();
+			int x = random.nextInt(89999);
+			x = x+10000;
+			InvitationCode po = dao.getUniqueByKeyValue(InvitationCode.class, "code", x);
+			if(po==null){
+				po = new InvitationCode();
+				po.uid = uid;
+				po.addtime = new Date();
+				po.code = x;
+				dao.saveOrUpdate(po);
+				return po.code;
+			}else{
+				return getCode(uid);
+			}
+			
+		}else{
+			return code.code;
 		}
-		return code.id;
 	}
 
 	@WebMethod
 	public ModelAndView acceptInvitation(Integer inviteeUid , Integer code){
 		ModelAndView mv = new ModelAndView();
+		InvitationActivation invitation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", inviteeUid);
+		if(invitation!=null){
+			throw new GException(PlatformExceptionType.BusinessException,"您已经兑换过新手礼包");
+		}
 		InvitationCode invitationCode = dao.getUniqueByKeyValue(InvitationCode.class, "code", code);
 		if(invitationCode==null){
 			throw new GException(PlatformExceptionType.BusinessException,"该邀请码不存在，请检查后重新输入，请不要跨城市使用授权码.");
@@ -184,7 +204,6 @@ public class MobileUserService {
 		if(invitationCode.uid.intValue()==inviteeUid.intValue()){
 			throw new GException(PlatformExceptionType.BusinessException,"邀请人不能是自己");
 		}
-		InvitationActivation invitation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", inviteeUid);
 		if(invitation==null){
 			invitation = new InvitationActivation();
 			invitation.active = 0 ;
@@ -192,8 +211,6 @@ public class MobileUserService {
 			invitation.invitationCode = code;
 			invitation.inviteeUid = inviteeUid;
 			dao.saveOrUpdate(invitation);
-		}else{
-			throw new GException(PlatformExceptionType.BusinessException,"您已经兑换过新手礼包");
 		}
 		mv.data.put("result", 1);
 		return mv;
@@ -203,13 +220,26 @@ public class MobileUserService {
 	public ModelAndView getInviteList(Integer uid){
 		ModelAndView mv = new ModelAndView();
 		mv.data.put("invitationCode", this.getCode(uid));
+		User inviter = dao.get(User.class, uid);
 		InvitationCode code = dao.getUniqueByKeyValue(InvitationCode.class, "uid", uid);
 		List<Map> list = dao.listAsMap("select u.uname as uname,u.tel as tel , u.id as uid , invite.active as active ,invite.addtime as addtime , invite.bouns as bouns "
-				+ "from InvitationActivation invite, User u where u.id=invite.inviteeUid and invite.invitationCode=? ", code.id);
+				+ "from InvitationActivation invite, User u where u.id=invite.inviteeUid and invite.invitationCode=? ", code.code);
 		mv.data.put("inviteList", JSONHelper.toJSONArray(list));
 		InvitationActivation invitation = dao.getUniqueByParams(InvitationActivation.class, new String[]{"inviteeUid"},  new Object[]{uid});
 		if(invitation!=null){
 			mv.data.put("invitation", JSONHelper.toJSON(invitation));
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, 2014);
+		cal.set(Calendar.MONTH, 7);
+		cal.set(Calendar.DAY_OF_MONTH, 30);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		if(inviter.addtime.after(cal.getTime())){
+			mv.data.put("isNewUser", 1);
+		}else{
+			mv.data.put("isNewUser", 0);
 		}
 		mv.data.put("result", 1);
 		return mv;

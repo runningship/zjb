@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,14 @@
 <meta name="keywords" content="">
 <link href="reset.css" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
+<style type="text/css">
+.gift{  text-align: center;
+  height: 45px;
+  line-height: 45px;
+  margin-top: 20px;
+  font-size: 18px;
+  color: red;}
+</style>
 </head>
 <body class="pay ok">
 <div id="wrap" class="bodyer">
@@ -18,18 +27,21 @@
 
         </span>
         <span class="conter">
-            支付成功
+            支付完成
         </span>
         <span class="right">
             
         </span>
     </div>
     <div id="mainer" class="mainer">
+    	<c:if test="${invitationActive }"><div id="gift" class="gift">5天新手礼包已成功激活!</div>
+    	</c:if>
         <div class="conts">
             <div class="tits">
                 <span class="icon">
                     <i class="iconfont">&#xe61b;</i>
                 </span>
+                
                 <span class="cont">
                     <h2>支付成功！</h2>
                     <b id="paytime"></b>
