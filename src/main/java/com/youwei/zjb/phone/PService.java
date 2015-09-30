@@ -49,7 +49,7 @@ public class PService {
 	private static final String appKey ="71f5687861a727f2827ba04a";
 	MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
 	
-	private static final String iosShenHeVersion = "";
+	private static final String iosShenHeVersion = "2.2.50";
 	@WebMethod
 	public ModelAndView tracks(Integer userId , Page<Map> page){
 		ModelAndView mv = new ModelAndView();

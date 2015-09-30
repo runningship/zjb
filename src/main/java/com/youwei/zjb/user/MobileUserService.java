@@ -230,8 +230,8 @@ public class MobileUserService {
 			mv.data.put("invitation", JSONHelper.toJSON(invitation));
 		}
 		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, 2014);
-		cal.set(Calendar.MONTH, 7);
+		cal.set(Calendar.YEAR, 2015);
+		cal.set(Calendar.MONTH, 8);
 		cal.set(Calendar.DAY_OF_MONTH, 30);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
