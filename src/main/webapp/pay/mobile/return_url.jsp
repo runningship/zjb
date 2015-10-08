@@ -1,3 +1,4 @@
+<%@page import="org.apache.log4j.Level"%>
 <%@page import="org.bc.sdak.utils.LogUtil"%>
 <%@page import="org.bc.sdak.TransactionalServiceHelper"%>
 <%@page import="com.youwei.zjb.user.MobileUserService"%>
@@ -75,40 +76,45 @@
 				//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 				//如果有做过处理，不执行商户的业务程序
 			CommonDaoService	dao = SimpDaoTool.getGlobalCommonDaoService();
-			Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , out_trade_no);
+			Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , String.valueOf(out_trade_no));
 			if(po!=null){
-				User user = dao.get(User.class, po.uid);
-				if(po.finish!=1){
-					po.finish=1;
-					dao.saveOrUpdate(po);
-					//加时间
-					Calendar cal = Calendar.getInstance();
-					if(user.mobileDeadtime==null){
-						cal.add(Calendar.MONTH, po.monthAdd);
-						user.mobileDeadtime = cal.getTime();
-					}else{
-						if(user.mobileDeadtime.after(cal.getTime())){
-							cal.setTime(user.mobileDeadtime);
+				try{
+					User user = dao.get(User.class, po.uid);
+					if(po.finish!=1){
+						po.finish=1;
+						dao.saveOrUpdate(po);
+						//加时间
+						Calendar cal = Calendar.getInstance();
+						if(user.mobileDeadtime==null){
 							cal.add(Calendar.MONTH, po.monthAdd);
 							user.mobileDeadtime = cal.getTime();
 						}else{
-							//已过期,从当前时间算起
-							cal.add(Calendar.MONTH, po.monthAdd);
-							user.mobileDeadtime = cal.getTime();
+							if(user.mobileDeadtime.after(cal.getTime())){
+								cal.setTime(user.mobileDeadtime);
+								cal.add(Calendar.MONTH, po.monthAdd);
+								user.mobileDeadtime = cal.getTime();
+							}else{
+								//已过期,从当前时间算起
+								cal.add(Calendar.MONTH, po.monthAdd);
+								user.mobileDeadtime = cal.getTime();
+							}
 						}
+						user.lastPaytime = new Date();
+						dao.saveOrUpdate(user);
+					}else{
+						LogUtil.info("订单已处理,out_trade_no="+out_trade_no);
 					}
-					user.lastPaytime = new Date();
-					dao.saveOrUpdate(user);
-				}else{
-					LogUtil.info("订单已处理,out_trade_no="+out_trade_no);
+					MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
+					boolean invitationActive = mService.activeInvitation(user);
+					RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
+					request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+					request.setAttribute("fee", po.fee);
+					request.setAttribute("invitationActive", invitationActive);
+					rd.forward(request, response);
+				}catch(Exception ex){
+					LogUtil.log(Level.WARN, "web charge fail", ex);
+					out.println("订单验证失败，请联系中介宝客服. <br />");
 				}
-				MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
-				boolean invitationActive = mService.activeInvitation(user);
-				RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
-				request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
-				request.setAttribute("fee", po.fee);
-				request.setAttribute("invitationActive", invitationActive);
-				rd.forward(request, response);
 			}else{
 				out.println("订单验证失败，请联系中介宝客服 <br />");
 			}
