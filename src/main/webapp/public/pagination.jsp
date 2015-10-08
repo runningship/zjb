@@ -12,6 +12,7 @@ function goPage(pageNo){
 }
 </script>
 <div class="wrap">
+			<h3 class="fr">轻量化房产生态链平台</h3>
 		    <ul class="pageList">
 		    	<li><a href="javascript:void(0)" >${p.totalCount }</a></li>
 		    	<li><a href="javascript:void(0)" >${p.currentPageNo }/${p.totalPageCount }</a></li>

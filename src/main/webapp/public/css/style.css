@@ -69,7 +69,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22000000,endcol
 .ablogo,.ablogos{ text-align: center;}
 .ablogo{ padding-top: 20px;}
 .ablogos b{ font-size: 18px; color: #09F;}
-
+.ablogoss { padding-top: 10px; text-align: center; }
 
 
 .classTab{ display: inline-block; margin-left:30px;}

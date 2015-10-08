@@ -60,6 +60,7 @@ function seeMyHouse(){
                             <li><a href="#">客服电话：0551-65314555</a></li>
                             <li class="ablogo"><img src="images/logo_blue.png" alt=""></li>
                             <li class="ablogos"><b>二手房信息处理中心</b></li>
+                            <li class="ablogoss"><a href="" title="">中介宝</a></li>
                         </ul>
                     </div>
                 </div>
