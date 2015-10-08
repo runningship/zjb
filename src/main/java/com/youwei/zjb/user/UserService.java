@@ -174,7 +174,9 @@ public class UserService {
 		po.tel = user.tel;
 		po.did = user.did;
 		po.roleId = user.roleId;
-		po.mobileDeadtime = user.mobileDeadtime;
+		if(user.mobileDeadtime!=null){
+			po.mobileDeadtime = user.mobileDeadtime;
+		}
 		po.lock = user.lock;
 		po.mobileON = user.mobileON;
 		dao.saveOrUpdate(po);
