@@ -1,5 +1,7 @@
 package com.youwei.zjb.trial;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bc.sdak.CommonDaoService;
@@ -49,7 +51,13 @@ public class TrialService {
 			LogUtil.warning(msg.toString());
 		}
 		try{
-			MailUtil.send_email("2975066320@qq.com", "中介宝试用申请", msg.toString());
+			List<String> toList = new ArrayList<String>();
+			toList.add("2975066320@qq.com");//yulong
+			toList.add("947813825@qq.com");//gujun
+			toList.add("894350008@qq.com");
+			toList.add("253187898@qq.com");
+			toList.add("673508153@qq.com");//jinfei
+			MailUtil.send_email(toList, "中介宝试用申请", msg.toString());
 		}catch(Exception ex){
 			LogUtil.warning(msg.toString());
 		}
