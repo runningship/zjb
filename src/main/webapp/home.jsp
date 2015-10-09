@@ -383,12 +383,18 @@ function getUnReadStatistic(){
                         <c:if test="${auths.indexOf('oa_on')>-1}">
                             <li ><a href="/oa/index.jsp" class="ibtn oaClass" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         </c:if>
-                        <li ><a href="/piazza/index.jsp" class="ibtn guangchang" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
-                         	
+                        <li >
+                        	<a href="/piazza/index.jsp" class="ibtn guangchang" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
                         </li>
-                        <c:if test="${auths.indexOf('sz_on')>-1}">
-                            <li auth="sz_on" class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
+                        <c:if test="${auths.indexOf('map_on')>-1}">
+                         <li >
+                        	<a href="/map/xuequ.jsp" class="ibtn guangchang" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe604;</i><span>地图</span></a>
+                        </li>
                         </c:if>
+                        <c:if test="${auths.indexOf('sz_on')>-1}">
+                            <li class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
+                        </c:if>
+                            
                     </ul>
                 </div>
 <!--                 <div class="tr tfoot">

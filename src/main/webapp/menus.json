@@ -222,6 +222,21 @@
 		}]
 	}]
 },{
+	"name":"map",
+	"type":"module",
+	"text":"地图",
+	"zjb-only":true,
+	"children":[{
+		"name":"map_module",
+		"text":"地图设置",
+		"type":"virtual",
+		"children":[{
+			"name":"map_on",
+			"text":"开启地图设置",
+			"type":"menu"
+		}]
+	}]
+},{
 	"name":"sz",
 	"type":"module",
 	"text":"后台管理",
