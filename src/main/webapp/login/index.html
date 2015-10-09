@@ -381,7 +381,7 @@ $(document).on('click', '.act_menu a', function(event) {
             isFocus();
         }else if(ThiPliIndex==1){
             if($('#iframe').attr('src')==''){
-                $('#iframe').attr('src','iframe_reg.html?cityPy='+json.city_py+'&cityName='+cityNames+'&domain='+domains);
+                $('#iframe').attr('src','iframe_reg.html?2&cityPy='+json.city_py+'&cityName='+cityNames+'&domain='+domains);
             }
             $("#iframe").contents().find('#authCode').focus();
         }

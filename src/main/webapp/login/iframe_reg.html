@@ -231,7 +231,7 @@ function btnAction(){
                             setLic(json.lic);
                         }
                         l.stop();
-                        $('.view_fendian').text(getBeizhu);
+                        $('.view_beizhu').text(getBeizhu);
                         goto_marTop(-getThiLiTop(Thi,ThiNext),function(){$('.getologin').focus();});
                         window.parent.putConfig('domain', domains);
                         window.parent.putConfig('cityName', cityNames);
@@ -251,6 +251,7 @@ function btnAction(){
                         })
                         l.stop();
                     },complete:function(){
+                    	l.stop();
                         $('#authCode').val('');
                         $('textarea[name=beizhu]').val('');
                         $('select[name=fendian]').empty();
