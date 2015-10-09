@@ -70,7 +70,9 @@ request.setAttribute("defaultOffsetY", -10);
           <div  style="display:table; width:100%; height:100%; overflow:hidden;" class="not-select">
             <div id="menuTop" style="display:inline-block;">
               <ul class="MainRightTop KY_W titlebar">
-                  <li class="slect nobar" onclick="window.location='/map/xuequ.jsp'"><i class="i1"></i>学区</li>
+                  <li class="slect nobar" onclick="window.location='/map/xuequ.jsp'">
+<!--                   <i class="i1"></i> -->
+                  学区</li>
                   <li class="line"></li>
               </ul>
               </div>

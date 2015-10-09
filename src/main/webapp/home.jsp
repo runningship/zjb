@@ -388,7 +388,7 @@ function getUnReadStatistic(){
                         </li>
                         <c:if test="${auths.indexOf('map_on')>-1}">
                          <li >
-                        	<a href="/map/xuequ.jsp" class="ibtn guangchang" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe604;</i><span>地图</span></a>
+                        	<a href="/map/xuequ.jsp" class="ibtn guangchang" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe67d;</i><span>地图</span></a>
                         </li>
                         </c:if>
                         <c:if test="${auths.indexOf('sz_on')>-1}">

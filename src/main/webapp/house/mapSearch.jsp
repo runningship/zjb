@@ -1,3 +1,8 @@
+<%@page import="java.util.List"%>
+<%@page import="org.bc.sdak.utils.JSONHelper"%>
+<%@page import="com.youwei.zjb.house.entity.SchoolDistrict"%>
+<%@page import="org.bc.sdak.SimpDaoTool"%>
+<%@page import="org.bc.sdak.CommonDaoService"%>
 <%@page import="com.youwei.zjb.ThreadSessionHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -27,6 +32,13 @@
 	request.setAttribute("latEnd", latEnd);
 	request.setAttribute("lngStart", lngStart);
 	request.setAttribute("lngEnd", lngEnd);
+	
+	//加载学
+	CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
+	List<SchoolDistrict> list = dao.listByParams(SchoolDistrict.class, "from SchoolDistrict where 1=1");
+	if(!list.isEmpty()){
+		request.setAttribute("list", JSONHelper.toJSONArray(list));	
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -62,6 +74,45 @@ var annis;
     $(document).ready(function() {
         annis=setInterval('anni()',1000);
     });
+
+var styleOptions = {
+        strokeColor:"red",    //边线颜色。
+        fillColor:"red",      //填充颜色。当参数为空时，圆形将没有填充效果。
+        strokeWeight: 3,       //边线的宽度，以像素为单位。
+        strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
+        fillOpacity: 0.01,      //填充的透明度，取值范围0 - 1。
+        strokeStyle: 'solid' //边线的样式，solid或dashed。
+    }
+var xuequList = JSON.parse('${list}');
+$(function(){
+	for(var i=0;i<xuequList.length;i++){
+		//initXueQu(xuequList[i]);
+	}
+});
+
+    function initXueQu(xq){
+    	var arr = xq.center.split(',');
+    	var point = new BMap.Point(arr[0] , arr[1]);
+    	var label = new BMap.Label(xq.name,{position : point});
+    	label.setOffset(new BMap.Size(xq.offsetX, xq.offsetY));
+    	label.xqid = xq.id;
+    	label.setStyle({cursor:"pointer"});
+    	map.addOverlay(label);
+    	var points = xq.path.split(';');
+    	var paths = [];
+    	for(var i=0;i<points.length;i++){
+    		if(points[i]==''){
+    			continue;
+    		}
+    		var yy = points[i].split(',');
+    		var p = new BMap.Point(yy[0] , yy[1]);
+    		paths.push(p);
+    	}
+    	var polygon = new BMap.Polygon(paths, styleOptions);
+    	//polygon.setStrokeColor(getRandomColor());
+    	polygon.xqid = xq.id;
+    	map.addOverlay(polygon);
+    }
 </script>
 <style type="text/css">
 .allmap{position: relative;}
@@ -153,7 +204,7 @@ var overlaycomplete = function(e){
         overlays.length = 0
     }
     
-    map.centerAndZoom(poi, 15);
+    map.centerAndZoom(poi, 17);
     //再定位一次,artdialog有问题
     setTimeout(function(){
     	if(${lngStart} && ${latStart}){
@@ -165,7 +216,7 @@ var overlaycomplete = function(e){
     			                          	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  //创建矩形
     			map.addOverlay(rectangle);
     	}
-    	map.centerAndZoom(poi, 15);
+    	map.centerAndZoom(poi, 17);
     },500);
 </script>
 </body>
