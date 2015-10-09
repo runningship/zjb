@@ -21,7 +21,7 @@ request.setAttribute("invitationCode", invitationCode);
 <script type="text/javascript" src="js/layer/layer.js"></script>
 <script type="text/javascript" src="../js/buildHtml.js"></script>
 <script type="text/javascript">
-var server_host="192.168.1.222:8081";
+var server_host="www.zhongjiebao.com:8081";
 var sendingVerifyCode=false;
 $(document).ready(function() {
     $(document).find('.form-active').find('.input').focusin(function(){
@@ -183,10 +183,10 @@ function doReg(){
 	<input type="hidden"  id="invitationCode" value="${invitationCode }" name="invitationCode" />
 	<input type="hidden"  id="cityPy" value="${cityPy }" name="cityPy" />
 <ul class="form-ul ">
-    <li class=""><label class="form-section form-active"><strong class="input-label">您的手机号码</strong><input id="tel" type="text" class="input placeholder" name="tel" placeholder="您的手机号码"><span class="tip">必填</span></label></li>
+    <li class=""><label class="form-section form-active"><strong class="input-label">您的手机号码</strong><input id="tel" type="tel" class="input placeholder" name="tel" placeholder="您的手机号码"><span class="tip">必填</span></label></li>
     <li class=""><label class="form-section form-active"><strong class="input-label">姓名</strong><input id="uname" type="text" class="input placeholder" name="uname" placeholder="您的姓名"><span class="tip">必填</span></label></li>
     <li class=""><label class="form-section form-active"><strong class="input-label">您的密码</strong><input id="pwd" type="password" class="input placeholder" name="pwd" placeholder="您的密码"><span class="tip"></span><span class="tip">必填</span></label></li>
-    <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码</strong><a onclick="getVerfiyCode(this)" href="javascript:void(0)" class="btn blue btn_act code getcode" data-type="getCode" data-txt="发送验证码">发送验证码</a><input id="verifyCode" type="text" class="input placeholder" name="code" placeholder="验证码"></label></li>
+    <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码</strong><a onclick="getVerfiyCode(this)" href="javascript:void(0)" class="btn blue btn_act code getcode" data-type="getCode" data-txt="发送验证码">发送验证码</a><input id="verifyCode" type="tel" class="input placeholder" name="code" placeholder="验证码"></label></li>
     <li class="">
         <a href="javascript:void(0)" class="btn btn_act block round5 orange btnForm1 hvr-hong" onclick="doReg();">立即领取</a>
     </li>
