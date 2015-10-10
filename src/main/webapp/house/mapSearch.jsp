@@ -81,9 +81,9 @@ var annis;
 var styleOptions = {
         strokeColor:"red",    //边线颜色。
         fillColor:"red",      //填充颜色。当参数为空时，圆形将没有填充效果。
-        strokeWeight: 3,       //边线的宽度，以像素为单位。
-        strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
-        fillOpacity: 0.01,      //填充的透明度，取值范围0 - 1。
+        strokeWeight: 2,       //边线的宽度，以像素为单位。
+        strokeOpacity: 0.3,	   //边线透明度，取值范围0 - 1。
+        fillOpacity: 0.08,      //填充的透明度，取值范围0 - 1。
         strokeStyle: 'solid' //边线的样式，solid或dashed。
     }
 var xuequList = JSON.parse('${list}');
@@ -100,9 +100,10 @@ $(function(){
     	var arr = xq.center.split(',');
     	var point = new BMap.Point(arr[0] , arr[1]);
     	var label = new BMap.Label(xq.name,{position : point});
+        var color = getRandomColor();
     	label.setOffset(new BMap.Size(xq.offsetX, xq.offsetY));
     	label.xqid = xq.id;
-    	label.setStyle({cursor:"pointer"});
+    	label.setStyle({cursor:"pointer",border:"none" , background:"none" , color:"red"});
     	map.addOverlay(label);
     	var points = xq.path.split(';');
     	var paths = [];
@@ -115,9 +116,16 @@ $(function(){
     		paths.push(p);
     	}
     	var polygon = new BMap.Polygon(paths, styleOptions);
-    	//polygon.setStrokeColor(getRandomColor());
+    	
+    	polygon.setStrokeColor(color);
+    	polygon.setFillColor(color);
     	polygon.xqid = xq.id;
     	map.addOverlay(polygon);
+    }
+    var colors = ["red" , "blue" , "black","green" , "yellow"];
+    function getRandomColor(){
+    	var index = Math.floor(Math.random()*5);
+    	return colors[index];
     }
 </script>
 <style type="text/css">
@@ -210,7 +218,7 @@ var overlaycomplete = function(e){
         overlays.length = 0
     }
     
-    map.centerAndZoom(poi, 17);
+    map.centerAndZoom(poi, 13);
     //再定位一次,artdialog有问题
     setTimeout(function(){
     	if(${lngStart} && ${latStart}){
@@ -222,7 +230,7 @@ var overlaycomplete = function(e){
     			                          	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  //创建矩形
     			map.addOverlay(rectangle);
     	}
-    	map.centerAndZoom(poi, 17);
+    	map.centerAndZoom(poi, 13);
     },500);
 </script>
 </body>
