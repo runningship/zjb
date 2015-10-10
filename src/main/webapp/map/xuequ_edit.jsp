@@ -99,6 +99,15 @@ function delXueQu(){
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-xs-3 control-label">学区类型:</label>
+                    <div class="col-xs-8">
+                        <select name="type">
+                        	<option value="0">中学</option>
+                        	<option value="1">小学</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-xs-3 control-label">offsetX:</label>
                     <div class="col-xs-8">
                         <input  class="form-control" name="offsetX" value="${district.offsetX }" id="offsetX" placeholder="学区名称显示位置左右偏移">

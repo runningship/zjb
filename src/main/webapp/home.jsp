@@ -116,6 +116,9 @@ var iframeBox=$('#iframeBox'),
     
     iframeBox.find('.iframe').hide();
     if(iframeBox.find('#iframe_'+id).length>0){
+        if(iframeBox.find('#iframe_'+id).contents().find('body').find().length<1){
+            iframeBox.find('#iframe_'+id).attr('src',src);
+        }
         iframeBox.find('#iframe_'+id).css({'z-index': iframeIndex,'opacity':0}).show().animate({'opacity':1});
     }else{
         iframeBox.append(iframeDom).css({'z-index': iframeIndex});

@@ -181,12 +181,12 @@ function setMapSearch(lngStart , lngEnd , latStart , latEnd){
 	doSearchAndSelectFirst(true);
 }
 
-function openMapSearch(){
+function openMapSearch(xuequ){
 	var lngStart = $('#lngStart').val();
 	var lngEnd = $('#lngEnd').val();
 	var latStart = $('#latStart').val();
 	var latEnd = $('#latEnd').val();
-	art.dialog.open('/house/mapSearch.jsp?latStart='+latStart+'&latEnd='+latEnd+'&lngStart='+lngStart+'&lngEnd='+lngEnd,{id:'mapSearch',title:'地图框选找房',width:1200,height:550});
+	art.dialog.open('/house/mapSearch.jsp?xuequ='+xuequ+'&latStart='+latStart+'&latEnd='+latEnd+'&lngStart='+lngStart+'&lngEnd='+lngEnd,{id:'mapSearch',title:'地图框选找房',width:1200,height:550});
 }
 
 function setSearchValue(index){
@@ -462,7 +462,11 @@ function setPageOrder(col){
                             </div>
                         </li>
                         <li>
-                            <button class="hand not-select ButtonW1 ButtonQ"  onclick="openMapSearch();"  type="button" >地图</button>
+                            <button class="selectMethod not-select"   type="button" >地图<i class="caret"></i></button>
+                            <div class="ulErMenu"> 
+                                <p ><label style="cursor:pointer" onclick="openMapSearch(0);"> 框 选</label></p>
+                                <p><label style="cursor:pointer" onclick="openMapSearch(1)"> 学 区</label></p>
+                            </div>
                         </li>
                         <li auth="fy_sh">
                             <button class="selectMethod not-select" type="button" >审核<i class="caret"></i> </button>

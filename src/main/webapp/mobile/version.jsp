@@ -34,5 +34,6 @@ for(File file : allFiles){
 }
 jobj.put("files", files);
 jobj.put("statusBarHeight", 25);
+jobj.put("version",10);
 out.write(jobj.toString());
 %>

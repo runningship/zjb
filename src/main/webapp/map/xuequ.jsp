@@ -11,6 +11,8 @@ CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 List<SchoolDistrict> list = dao.listByParams(SchoolDistrict.class, "from SchoolDistrict where 1=1 ");
 if(!list.isEmpty()){
 	request.setAttribute("list", JSONHelper.toJSONArray(list));	
+}else{
+	request.setAttribute("list", "[]");
 }
 request.setAttribute("defaultOffsetX", -20);
 request.setAttribute("defaultOffsetY", -10);

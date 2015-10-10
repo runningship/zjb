@@ -8,6 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
  	request.setAttribute("initCordinate", ThreadSessionHelper.getCityCordinate());
+	request.setAttribute("xuequ", request.getParameter("xuequ"));
 	Float latStart=0f;
 	Float latEnd=0f;
 	Float lngStart=0f;
@@ -38,6 +39,8 @@
 	List<SchoolDistrict> list = dao.listByParams(SchoolDistrict.class, "from SchoolDistrict where 1=1");
 	if(!list.isEmpty()){
 		request.setAttribute("list", JSONHelper.toJSONArray(list));	
+	}else{
+		request.setAttribute("list", "[]");
 	}
 %>
 <!DOCTYPE html>
@@ -85,9 +88,12 @@ var styleOptions = {
     }
 var xuequList = JSON.parse('${list}');
 $(function(){
-	for(var i=0;i<xuequList.length;i++){
-		//initXueQu(xuequList[i]);
+	if(${xuequ}){
+		for(var i=0;i<xuequList.length;i++){
+			initXueQu(xuequList[i]);
+		}	
 	}
+	
 });
 
     function initXueQu(xq){

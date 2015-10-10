@@ -32,4 +32,7 @@ public class SchoolDistrict {
 	public Integer offsetX;
 	
 	public Integer offsetY;
+	
+	//0中学，1小学
+	public Integer type;
 }
