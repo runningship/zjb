@@ -338,6 +338,11 @@ public class UserService {
 			params.add("%"+query.tel+"%");
 			
 		}
+		if(StringUtils.isNotEmpty(query.name)){
+			hql.append(" and u.uname  like ?");
+			params.add("%"+query.name+"%");
+			
+		}
 		if(query.mobileON!=null){
 			hql.append(" and u.mobileON  = ?");
 			params.add(query.mobileON);
