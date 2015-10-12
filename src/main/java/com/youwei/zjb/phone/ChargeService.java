@@ -45,7 +45,7 @@ public class ChargeService {
 			return mv;
 		}
 		StringBuilder hql = new StringBuilder("select c.id as id , c.tradeNo as tradeON , c.fee as fee , c.addtime as addtime"
-				+ " from Charge c  where c.uid=?");
+				+ " from Charge c  where c.uid=? and c.finish=1");
 		page = dao.findPage(page, hql.toString(), true, new Object[]{userId});
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
