@@ -33,7 +33,8 @@ for(File file : allFiles){
 	files.add(fileName);
 }
 jobj.put("files", files);
-jobj.put("statusBarHeight", 25);
-jobj.put("version",10);
+//jobj.put("statusBarHeight", 25);
+//jobj.put("version",26);
+jobj.put("version","debug");
 out.write(jobj.toString());
 %>

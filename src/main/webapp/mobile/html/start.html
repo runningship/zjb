@@ -3,23 +3,42 @@
 <head>
 <meta charset="" />
 <title></title>
-<link rel="stylesheet" type="text/css" href="../css/ico.css" />
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/test.js"></script>
 <script type="text/javascript">
 $(function(){
-	
+	setTimeout(openIndexFrame , 3000);
 });
+function openIndexFrame(){
+	api.openFrame({
+	    name: 'rootFrame',
+	    url: 'index.html',
+	    bounces: false,
+	    reload:true,
+	    bgColor: '#fff',
+	    rect: {
+	        x: 0,
+	        y: 0,
+	        w: 'auto',
+	        h: 'auto'
+	    }
+	});
+}
 </script>
 <style type="text/css">
-body{background:white}
+html{height:100%}
+body{background:white;
+    background: url("../images/welcome.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-color: rgb(87,185,255);
+}
 
 </style>
 </head>
 <body>
-<div class="body">
-<div class="start">启动页面2e46</div>
-<div class="test"  onclick="test1()">fsdf</div>
-<span></span>
+<div class="body" >
 </div>
 </body>
 </html>
