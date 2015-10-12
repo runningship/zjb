@@ -454,7 +454,7 @@ function autoComplete(id){
 	        //alert(ThiCurrIndex+'|'+ThiMaxLen+'|'+autocomplete.find('a').eq(ThiCurrIndex).attr('title'))
 	        return false;
 	    }
-	    if(oldVal!=ThisVal){
+	    //if(oldVal!=ThisVal){
 	    	oldVal=ThisVal;
 	        if(prompting){
     			return;
@@ -485,7 +485,7 @@ function autoComplete(id){
 		        });
 	    	},500);
 	        
-	    }
+	    //}
     }).on('focusin',function(event) {
         //if(autocomplete.html()){autocomplete.show();}
     	autocomplete.empty();
