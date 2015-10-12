@@ -1,3 +1,5 @@
+<%@page import="com.youwei.zjb.ThreadSessionHelper"%>
+<%@page import="com.youwei.zjb.util.MailUtil"%>
 <%@page import="org.apache.log4j.Level"%>
 <%@page import="org.bc.sdak.utils.LogUtil"%>
 <%@page import="org.bc.sdak.TransactionalServiceHelper"%>
@@ -101,6 +103,13 @@
 						}
 						user.lastPaytime = new Date();
 						dao.saveOrUpdate(user);
+						try{
+							List<String> toList = new ArrayList<String>();
+							toList.add("253187898@qq.com");
+							MailUtil.send_email(toList, "手机版费用", po.fee+"电话:"+user.tel+",城市:"+ThreadSessionHelper.getCityPinyin());
+						}catch(Exception ex){
+							LogUtil.warning("pay return ---");
+						}
 					}else{
 						LogUtil.info("订单已处理,out_trade_no="+out_trade_no);
 					}

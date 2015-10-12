@@ -29,6 +29,7 @@ import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.MobileUserDog;
@@ -38,6 +39,7 @@ import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.InvitationActivation;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
+import com.youwei.zjb.util.MailUtil;
 import com.youwei.zjb.util.SecurityHelper;
 
 @Module(name="/mobile/user/")
@@ -284,6 +286,14 @@ public class PService {
 		mv.data.put("fufei", "1");
 		mv.data.put("result", "1");
 		mv.data.put("paytime", DataHelper.sdf.format(charge.addtime));
+		
+		try{
+			List<String> toList = new ArrayList<String>();
+			toList.add("253187898@qq.com");
+			MailUtil.send_email(toList, "手机版费用", charge.fee+"电话:"+user.tel+",城市:"+ThreadSessionHelper.getCityPinyin());
+		}catch(Exception ex){
+			LogUtil.warning("---");
+		}
 		return mv;
 	}
 	

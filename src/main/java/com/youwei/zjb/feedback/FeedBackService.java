@@ -10,6 +10,7 @@ import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
@@ -19,6 +20,7 @@ import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.feedback.entity.ErrorReport;
 import com.youwei.zjb.feedback.entity.FeedBack;
 import com.youwei.zjb.user.entity.User;
+import com.youwei.zjb.util.MailUtil;
 
 @Module(name="/feedback/")
 public class FeedBackService {
@@ -62,6 +64,13 @@ public class FeedBackService {
 		fb.addtime = new Date();
 		fb.userId = ThreadSessionHelper.getUser().id;
 		dao.saveOrUpdate(fb);
+		try{
+			List<String> toList = new ArrayList<String>();
+			toList.add("253187898@qq.com");
+			MailUtil.send_email(toList, "中介宝意见", fb.conts);
+		}catch(Exception ex){
+			LogUtil.warning("---");
+		}
 		return new ModelAndView();
 	}
 	
