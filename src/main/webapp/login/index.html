@@ -266,16 +266,28 @@ $(document).ready(function() {
                 ok:true
             });
         }else if(ThiType=='submit'){
-            var l = Ladda.create(this);
-            l.start();
+            var l;
+            try{
+            	Ladda.create(this);
+            }catch(e){
+            		
+            }
+            if(l){
+            	l.start();	
+            }
+            
             if(!$('#idName').val()){
-                l.stop();
+            	if(l){
+                	l.stop();
+            	}
                 alert('帐号不能为空');
                 $('#idName').focus();
                 return false;
             }
             if(!$('#idPassword').val()){
-                l.stop();
+            	if(l){
+                	l.stop();
+            	}
                 alert('密码不能为空');
                 $('#idPassword').focus();
                 return false;
@@ -286,7 +298,9 @@ $(document).ready(function() {
                 var xx = readLic();
                 if(xx==undefined){
                     alert('请先授权');
-                    l.stop();
+                    if(l){
+                    	l.stop();
+                	}
                     return;
                 }else{
                     pcinfo.uselic=1;
@@ -324,7 +338,9 @@ $(document).ready(function() {
                     }
                     window.location="/home.jsp";
                 },complete:function(){
-                    l.stop();
+                	if(l){
+                    	l.stop();
+                	}
                 },beforeSend:function(){}
             });
             
