@@ -142,10 +142,11 @@ public class HouseService {
 		String hql = "from District  where name = ? ";
 		List<Object> params = new ArrayList<Object>();
 		params.add(house.area);
-		if(StringUtils.isNotEmpty(house.address)){
-			hql+=" and address=? ";
-			params.add(house.address);
-		}
+		//只根据楼盘名称来判断，不再根据楼盘地址来判断
+//		if(StringUtils.isNotEmpty(house.address)){
+//			hql+=" and address=? ";
+//			params.add(house.address);
+//		}
 		List<District> list = dao.listByParams(District.class, hql, params.toArray());
 		if(list.isEmpty()){
 //			if(u.cid!=1){
