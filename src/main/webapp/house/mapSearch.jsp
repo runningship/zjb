@@ -171,6 +171,9 @@ z-index: 1;
 		<div class="tipbox"><div class="tips">框选找房</div></div>
 	</div>
 	<script type="text/javascript">
+	if(${xuequ}){
+		art.dialog.open.api.title('地图找房(仅供参考，不作为依据)');
+	}
 	var moveCenter = false;
     var map = new BMap.Map('map');
     var poi = new BMap.Point(${initCordinate});
@@ -184,7 +187,8 @@ z-index: 1;
 var overlaycomplete = function(e){
 	clearAll();
     overlays.push(e.overlay);
-    var result = e.overlay.Qe['3'];
+    //var result = e.overlay.Qe['3'];
+    var result = e.overlay.Un;
     //var lt=e.overlay.Rn[0]
   //01
   //32
