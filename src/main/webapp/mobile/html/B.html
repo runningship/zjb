@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="" />
+<title></title>
+<script type="text/javascript">
+function next(){
+	api.openFrame({
+	    name: 'frameC',
+	    url: 'C.html',
+	    bounces: false,
+	    reload:true,
+	    bgColor: '#fff',
+	    rect: {
+	        x: 0,
+	        y: 0,
+	        w: 'auto',
+	        h: 'auto'
+	    }
+	});
+}
+</script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+<div class="body" >
+	第二页
+	<div onclick="next();">下一页</div>
+</div>
+</body>
+</html>

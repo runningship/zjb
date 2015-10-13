@@ -4,11 +4,44 @@
 <meta charset="" />
 <title></title>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/test.js"></script>
 <script type="text/javascript">
 $(function(){
-	setTimeout(openIndexFrame , 3000);
+	setTimeout(function(){
+		window.location='index.html';
+		//fsaf
+		//fsfsffsf
+		//openGroup();
+	} , 1000);
+	
+	//updateIfNeed();
 });
+
+function openGroup(){
+	api.openFrameGroup ({
+	    name: 'group1',
+	    background:'#fff',
+	    scrollEnabled:false,
+	    rect:{x:0, y:0, w:'auto', h:'auto'},
+	    index:0,
+	    frames:
+	    [{
+	        name: 'frameA', 
+	        url: 'A.html',
+	        bgColor: '#fff'
+	    },{
+	        name: 'frameB', 
+	        url: 'B.html', 
+	        bgColor: '#fff'
+	    },{
+	        name: 'frameC', 
+	        url: 'C.html', 
+	        bgColor: '#fff'
+	    }]
+	}, function(ret, err){
+	    var name = ret.name;
+	    var index = ret.index;
+	});
+}
 function openIndexFrame(){
 	api.openFrame({
 	    name: 'rootFrame',

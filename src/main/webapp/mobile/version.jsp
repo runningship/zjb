@@ -29,7 +29,6 @@ for(File file : allFiles){
 	}
 	String fileName =file.getAbsolutePath().replace(rootPath, "").replace("\\","/"); 
 	jobj.put(fileName , file.length());
-	//jobj.put("length", file.length());
 	files.add(fileName);
 }
 jobj.put("files", files);

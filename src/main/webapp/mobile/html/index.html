@@ -9,14 +9,74 @@
 <meta name="keywords" content="">
 <link href="../css/reset.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
-<script type="text/javascript" ignore="true" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/layer/layer.js"></script>
-<script type="text/javascript" src="../js/javascript.js"></script>
 <script type="text/javascript">
 $(function(){
 	//alert($('#header').attr('class'));
+	
 });
+apiready = function(){
+	//bindAjpush();
+	api.addEventListener({
+	    name:'noticeclicked'
+	},function(ret,err){
+		api.openWidget({
+		    id: 'A6989896004356',
+		    animation: {
+		        type: 'flip',
+		        subType: 'from_bottom',
+		        duration: 500
+		    }
+		}, function(ret, err){
+		});
+	    //alert(JSON.stringify(ret));
+	});
+};
+function bindAjpush(){
+	var ajpush = api.require('ajpush');
+	var param = {alias: '15856985122'};
+	ajpush.bindAliasAndTags(param,function(ret) {
+	     alert('statuscode = '+ret.statusCode+'绑定到'+param.alias);
+	});
+
+	ajpush.setListener(function(ret) {
+		alert(ret.content);
+    });
+    
+}
+var startY;
+function ss(){
+// 	if(event.srcElement.scrollTop<=0){
+// 		if($('#mainer .refresh').length>0){
+// 			return;
+// 		}
+// 		$('#mainer').prepend('<div class="refresh">下拉刷新</div>');
+// 		$('#mainer').scrollTop(40);
+// 	}
+	var touchobj = event.changedTouches[0];
+	var dis = touchobj.clientY-startY;
+	var offset = $('#mainer').scrollTop();
+	$('#mainer .refresh').text(offset+(0-dis));
+	$('#mainer').scrollTop(offset+(0-dis));
+}
+
+function tstart(){
+	var touchobj = event.changedTouches[0] // reference first touch point
+	startY = parseInt(touchobj.clientY) // get x coord of touch point
+    event.preventDefault() // prevent default click behavior
+}
+function search(){
+	//alert('search');
+}
 </script>
+<style type="text/css">
+	.refresh{text-align: center;
+    background-color: powderblue;
+    height: 40px;
+    line-height: 40px;
+	}
+</style>
 </head>
 <body >
 <div id="wrap" class="bodyer body">
@@ -40,247 +100,8 @@ $(function(){
             </span>
         </div>
     </div>
-    <div id="mainer" class="mainer">
-        <ul class="Hul onclick" data-onclick="li">
-            <li class="no" data-id='1'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑 <b>12#1234</b></h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='2'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='3'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='4'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='5'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='6'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='7'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='8'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='9'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='10'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='11'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='12'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='13'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='14'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='15'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='16'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-            <li data-id='17'>
-                <div class="cont">
-                    <h2>滨湖世纪城徽昌苑</h2>
-                    <div class="span">
-                        <span>包河区</span>
-                        <span>90㎡</span>
-                        <span>2-1-1</span>
-                        <span>22/33层</span>
-                    </div>
-                </div>
-                <div class="side">
-                    <a href="#" class=""><i class="iconfont">&#xe625;</i></a>
-                </div>
-            </li>
-        </ul>
+    <div id="mainer" class="mainer"  >
+        
     </div>
     <div id="footer" class="footer">
         <a href="default.html" class="item active">

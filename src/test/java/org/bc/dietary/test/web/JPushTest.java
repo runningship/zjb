@@ -1,53 +1,27 @@
 package org.bc.dietary.test.web;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.junit.Test;
 
-import sun.misc.BASE64Encoder;
-
-import com.youwei.zjb.util.SecurityHelper;
+import cn.jpush.api.JPushClient;
+import cn.jpush.api.push.model.Platform;
+import cn.jpush.api.push.model.PushPayload;
+import cn.jpush.api.push.model.audience.Audience;
+import cn.jpush.api.push.model.notification.Notification;
 
 public class JPushTest {
-
+	private static final String masterSecret ="2b575a1dd863f6890d30b25e";
+	private static final String appKey ="bfb0717da1ccf51bdb21a811";
 	@Test
 	public void testPush() throws IOException{
-		String master_secret="2b575a1dd863f6890d30b25e";
-//		String md5 = SecurityHelper.Md5("654321"+"3"+""+master_secret).toUpperCase();
-		URL url = new URL("https://api.jpush.cn/v3/push");
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		
-		// 发送POST请求必须设置如下两行
-//		conn.setRequestMethod("POST");
-        conn.setDoOutput(true);
-        conn.setDoInput(true);
-//        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        BASE64Encoder encoder = new BASE64Encoder();
-        conn.setRequestProperty("Authorization", "Basic "+encoder.encode(master_secret.getBytes()));
-        OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-        JSONObject params = new JSONObject();
-        params.put("platform", "android");
-        JSONObject audience = new JSONObject();
-        JSONArray alias = new JSONArray();
-        alias.add("123");
-        audience.put("alias", alias);
-        params.put("audience", audience);
-        
-        JSONObject notification = new JSONObject();
-        notification.put("alert", "hello zjb");
-        params.put("notification", notification);
-        
-        osw.write(params.toString());
-        osw.flush();
-        osw.close();
-        conn.disconnect();
+		JPushClient mClient = new JPushClient(masterSecret, appKey);
+		PushPayload payload = PushPayload.newBuilder()
+                .setPlatform(Platform.all())
+                .setAudience(Audience.alias("15856985122"))
+                .setNotification(Notification.alert("服务端的通知"))
+                //.setMessage(Message.content("服务端的消息"))
+                .build();
+        mClient.sendPush(payload);
 	}
 }
