@@ -1,3 +1,14 @@
+<%@page import="org.bc.sdak.SimpDaoTool"%>
+<%@page import="com.youwei.zjb.user.entity.User"%>
+<%@page import="com.youwei.zjb.user.entity.Charge"%>
+<%@page import="org.bc.sdak.CommonDaoService"%>
+<%@page import="com.youwei.zjb.util.MailUtil"%>
+<%@page import="com.youwei.zjb.ThreadSessionHelper"%>
+<%@page import="com.youwei.zjb.util.DataHelper"%>
+<%@page import="org.bc.sdak.TransactionalServiceHelper"%>
+<%@page import="com.youwei.zjb.user.MobileUserService"%>
+<%@page import="org.apache.log4j.Level"%>
+<%@page import="org.bc.sdak.utils.LogUtil"%>
 <%@page import="com.youwei.zjb.view.pay.AlipayNotify"%>
 <%
 /* *
@@ -34,47 +45,92 @@
 		//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
 		params.put(name, valueStr);
 	}
-	
+	LogUtil.info("收到支付宝异步web回调："+params);
 	//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
-	//商户订单号
-	String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		//商户订单号
 
-	//支付宝交易号
-	String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
-	//交易状态
-	String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+		//支付宝交易号
 
-	//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
+		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
-	if(AlipayNotify.verify(params)){//验证成功
-		//////////////////////////////////////////////////////////////////////////////////////////
-		//请在这里加上商户的业务逻辑程序代码
+		//交易状态
+		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
 
-		//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 		
-		if(trade_status.equals("TRADE_FINISHED")){
-			//判断该笔订单是否在商户网站中已经做过处理
-				//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-				//如果有做过处理，不执行商户的业务程序
-				
-			//注意：
-			//退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-		} else if (trade_status.equals("TRADE_SUCCESS")){
-			//判断该笔订单是否在商户网站中已经做过处理
-				//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-				//如果有做过处理，不执行商户的业务程序
-				
-			//注意：
-			//付款完成后，支付宝系统发送该交易状态通知
-		}
+		//计算得出通知验证结果
+		boolean verify_result = AlipayNotify.verify(params);
+		
+		if(verify_result){//验证成功
+			//////////////////////////////////////////////////////////////////////////////////////////
+			//请在这里加上商户的业务逻辑程序代码
 
-		//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+			//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+			if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
+				//判断该笔订单是否在商户网站中已经做过处理
+					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+					//如果有做过处理，不执行商户的业务程序
+				CommonDaoService	dao = SimpDaoTool.getGlobalCommonDaoService();
+				Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , String.valueOf(out_trade_no));
+				if(po!=null){
+					try{
+						User user = dao.get(User.class, po.uid);
+						if(po.finish!=1){
+							po.finish=1;
+							dao.saveOrUpdate(po);
+							//加时间
+							Calendar cal = Calendar.getInstance();
+							if(user.mobileDeadtime==null){
+								cal.add(Calendar.MONTH, po.monthAdd);
+								user.mobileDeadtime = cal.getTime();
+							}else{
+								if(user.mobileDeadtime.after(cal.getTime())){
+									cal.setTime(user.mobileDeadtime);
+									cal.add(Calendar.MONTH, po.monthAdd);
+									user.mobileDeadtime = cal.getTime();
+								}else{
+									//已过期,从当前时间算起
+									cal.add(Calendar.MONTH, po.monthAdd);
+									user.mobileDeadtime = cal.getTime();
+								}
+							}
+							user.lastPaytime = new Date();
+							dao.saveOrUpdate(user);
+							try{
+								List<String> toList = new ArrayList<String>();
+								toList.add("253187898@qq.com");
+								MailUtil.send_email(toList, "手机版费用", po.fee+"电话:"+user.tel+",城市:"+ThreadSessionHelper.getCityPinyin());
+							}catch(Exception ex){
+								LogUtil.warning("pay return ---");
+							}
+						}else{
+							LogUtil.info("订单已处理,out_trade_no="+out_trade_no);
+						}
+						MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
+						boolean invitationActive = mService.activeInvitation(user);
+						RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
+						request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+						request.setAttribute("fee", po.fee);
+						request.setAttribute("invitationActive", invitationActive);
+						rd.forward(request, response);
+					}catch(Exception ex){
+						LogUtil.log(Level.WARN, "web charge fail", ex);
+						out.println("订单验证失败，请联系中介宝客服. <br />");
+					}
+				}else{
+					out.println("订单验证失败，请联系中介宝客服 <br />");
+				}
+			}
 			
-		out.println("success");	//请不要修改或删除
-
-		//////////////////////////////////////////////////////////////////////////////////////////
-	}else{//验证失败
-		out.println("fail");
-	}
+			//该页面可做页面美工编辑
+			//out.println("验证成功<br />");
+			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+			
+			//////////////////////////////////////////////////////////////////////////////////////////
+		}else{
+			//该页面可做页面美工编辑
+			out.println("订单验证失败，请联系中介宝客服 <br />");
+		}
 %>
