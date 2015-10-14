@@ -22,7 +22,8 @@ apiready = function(){
 	
 	
 	setTimeout(function(){
-		window.location='index.html';
+		//window.location='index.html';
+		openIndexFrame();
 	} , 2000);
 };
 
@@ -54,20 +55,53 @@ function openGroup(){
 	});
 }
 function openIndexFrame(){
-	api.openFrame({
-	    name: 'rootFrame',
-	    url: 'index.html',
-	    bounces: false,
-	    reload:true,
-	    bgColor: '#fff',
-	    rect: {
-	        x: 0,
-	        y: 0,
-	        w: 'auto',
-	        h: 'auto'
+// 	api.openFrame({
+// 	    name: 'rootFrame',
+// 	    url: 'index.html',
+// 	    bounces: false,
+// 	    reload:true,
+// 	    bgColor: '#fff',
+// 	    rect: {
+// 	        x: 0,
+// 	        y: 0,
+// 	        w: 'auto',
+// 	        h: 'auto'
+// 	    }
+// 	});
+	api.openSlidLayout ({
+	    type: 'all',
+	    leftEdge:120,
+	    rightEdge:100,
+	    fixedPane: {
+	        name: 'user', 
+	        url: 'user.html', 
+	        bgColor: '#fff', 
+	        bounces:false,
+	        vScrollBarEnabled:true,
+	        hScrollBarEnabled:false
+	    },
+	    slidPane: {
+	        name: 'root', 
+	        url: 'index.html', 
+	        pageParam:{isLayoutOpen:true},
+	        bgColor: '#fff', 
+	        bounces:false,
+	        vScrollBarEnabled:true,
+	        hScrollBarEnabled:false
+	    }
+	}, function(ret){
+	    var type = ret.type;
+	    if (type == 'left') {
+
+	    } else {
+
 	    }
 	});
+	
 }
+
+
+
 </script>
 <style type="text/css">
 html{height:100%}

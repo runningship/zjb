@@ -128,7 +128,44 @@ function ScrollGoto(a){
     }
 }
 
+function openUserPanel(){
+	if(isLayoutOpen){
+		api.openSlidPane({
+		    type: 'left'
+		});
+		return;
+	}
+	api.openSlidLayout ({
+	    type: 'all',
+	    leftEdge:120,
+	    rightEdge:100,
+	    fixedPane: {
+	        name: 'user', 
+	        url: 'user.html', 
+	        bgColor: '#fff', 
+	        bounces:true,
+	        vScrollBarEnabled:true,
+	        hScrollBarEnabled:false
+	    },
+	    slidPane: {
+	        name: 'root', 
+	        url: 'index.html', 
+	        pageParam:{isLayoutOpen:true},
+	        bgColor: '#fff', 
+	        bounces:true,
+	        vScrollBarEnabled:true,
+	        hScrollBarEnabled:false
+	    }
+	}, function(ret){
+	    var type = ret.type;
+	    if (type == 'left') {
 
+	    } else {
+
+	    }
+	});
+	isLayoutOpen = true;
+}
 
 
 

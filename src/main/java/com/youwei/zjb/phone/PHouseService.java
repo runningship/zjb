@@ -139,12 +139,12 @@ public class PHouseService {
 			String favStr = "@"+query.userid+"|";
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng from House h  where h.sh=1 and h.fav like ?");
+					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h  where h.sh=1 and h.fav like ?");
 			params.add("%"+favStr+"%");
 		}else{
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng from House h where h.seeGX=1 and h.sh=1 ");
+					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h where h.seeGX=1 and h.sh=1 ");
 		}
 		if(StringUtils.isNotEmpty(query.search)){
 			hql.append(" and area like ?");

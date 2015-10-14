@@ -139,17 +139,18 @@ api.download({
 
 //打开欢迎页面
 function openIndexFrame(){
-api.openFrame({
-    name: 'rootFrame',
-    url: api.cacheDir+'/html/start.html',
-    bounces: false,
-    reload:true,
-    bgColor: '#fff',
-    rect: {
-        x: 0,
-        y: statusBarHeight,
-        w: 'auto',
-        h: 'auto'
-    }
-});
+	window.location=api.cacheDir+'/html/start.html';
+//api.openFrame({
+//    name: 'rootFrame',
+//    url: api.cacheDir+'/html/start.html',
+//    bounces: false,
+//    reload:true,
+//    bgColor: '#fff',
+//    rect: {
+//        x: 0,
+//        y: statusBarHeight,
+//        w: 'auto',
+//        h: 'auto'
+//    }
+//});
 }
