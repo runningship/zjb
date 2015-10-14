@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import cn.jpush.api.JPushClient;
+import cn.jpush.api.push.model.Message;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
@@ -19,8 +20,8 @@ public class JPushTest {
 		PushPayload payload = PushPayload.newBuilder()
                 .setPlatform(Platform.all())
                 .setAudience(Audience.alias("15856985122"))
-                .setNotification(Notification.alert("服务端的通知"))
-                //.setMessage(Message.content("服务端的消息"))
+                //.setNotification(Notification.alert("服务端的通知"))
+                .setMessage(Message.content("服务端的消息"))
                 .build();
         mClient.sendPush(payload);
 	}

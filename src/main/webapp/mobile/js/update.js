@@ -4,7 +4,16 @@ var urlPrefix='http://192.168.1.222:8081/mobile';
 var fileCount=0;
 var downloadProcess=0;
 function updateIfNeed(){
-	alert(JSON.stringify(api.wgtParam));
+//	bindAjpush();
+//	api.addEventListener({
+//	    name:'appintent'
+//	},function(ret,err){
+//		alert(ret);
+//		var ajpush = ret.appParam.ajpush;
+//		alert(JSON.stringify(ajpush));
+//		var appParam = ret.appParam;
+//	});
+	//alert(JSON.stringify(api.wgtParam));
 	fs = api.require('fs');
 	//下载最新文件
 	api.ajax({
@@ -57,6 +66,21 @@ function updateIfNeed(){
 	});
 }
 
+function bindAjpush(){
+	try{
+	var ajpush = api.require('ajpush');
+	var param = {alias: '15856985122'};
+	ajpush.bindAliasAndTags(param,function(ret) {
+	     alert('statuscode = '+ret.statusCode+'绑定到'+param.alias);
+	});
+
+	ajpush.setListener(function(ret) {
+		alert(ret.content);
+    });
+	}catch(e){
+		alert(e);
+	}
+}
 
 function update(serverVersion , index){
 	

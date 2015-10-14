@@ -5,16 +5,27 @@
 <title></title>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
+apiready = function(){
+// 	api.addEventListener({
+// 	    name:'noticeclicked'
+// 	},function(ret,err){
+// 		api.openWidget({
+// 		    id: 'A6989896004356',
+// 		    animation: {
+// 		        type: 'flip',
+// 		        subType: 'from_bottom',
+// 		        duration: 500
+// 		    }
+// 		}, function(ret, err){
+// 		});
+// 	});
+	
+	
 	setTimeout(function(){
 		window.location='index.html';
-		//fsaf
-		//fsfsffsf
-		//openGroup();
-	} , 1000);
-	
-	//updateIfNeed();
-});
+	} , 2000);
+};
+
 
 function openGroup(){
 	api.openFrameGroup ({
