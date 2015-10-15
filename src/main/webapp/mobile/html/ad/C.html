@@ -8,20 +8,12 @@ function next(){
 // 	api.closeFrameGroup({
 // 	    name: 'group1'
 // 	});
-window.location='index.html';
-// 	api.openFrame({
-// 	    name: 'rootFrame',
-// 	    url: 'index.html',
-// 	    bounces: false,
-// 	    reload:true,
-// 	    bgColor: '#fff',
-// 	    rect: {
-// 	        x: 0,
-// 	        y: 0,
-// 	        w: 'auto',
-// 	        h: 'auto'
-// 	    }
-// 	});
+
+//window.location='index.html';
+var xx = api.execScript({
+    name: 'root',
+    script: "openIndexFrame()"
+});
 }
 </script>
 <style type="text/css">

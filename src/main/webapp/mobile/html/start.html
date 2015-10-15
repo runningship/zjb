@@ -23,11 +23,17 @@ apiready = function(){
 	
 	setTimeout(function(){
 		//window.location='index.html';
-		openIndexFrame();
+		  openIndexFrame();
+		//openGroup();
 	} , 2000);
 };
 
-
+function test(){
+	return "test2";
+}
+function setUser(){
+	return "test3";
+}
 function openGroup(){
 	api.openFrameGroup ({
 	    name: 'group1',
@@ -81,7 +87,7 @@ function openIndexFrame(){
 	        hScrollBarEnabled:false
 	    },
 	    slidPane: {
-	        name: 'root', 
+	        name: 'index', 
 	        url: 'index.html', 
 	        pageParam:{isLayoutOpen:true},
 	        bgColor: '#fff', 

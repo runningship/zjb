@@ -1,10 +1,15 @@
 var currentPage=1;
 var totalPageCount;
-var fufei;
+var user;
+var isChuzu=false;
 var searchParams = JSON.parse('{}');
 function loadData(clear){
+	var url = 'http://'+server_host+'/c/mobile/list?page='+currentPage;
+	if(isChuzu){
+		url = 'http://'+server_host+'/c/mobile/rent/list?page='+currentPage;
+	}
 	YW.ajax({
-		url:'http://'+server_host+'/c/mobile/list?page='+currentPage,
+		url: url,
 		method:'post',
 		cache:false,
 		data:{values:searchParams},
@@ -33,7 +38,7 @@ function setSearchParamsAndSearch(params){
 	loadData(true);
 }
 function SeeThis(id){
-	if(fufei){
+	if(isFufei()){
 		api.openWin({
 		    name: 'infoJJR',
 		    pageParam: {id: id},
@@ -53,10 +58,9 @@ function SeeThis(id){
  }
 
 	apiready = function(){
-		getUserInfo(function(user){
-			if(user){
-				fufei = user.fufei;
-			}
+		isChuzu = api.pageParam.isChuzu;
+		getUserInfo(function(u){
+			user = u;
 		});
 		api.setRefreshHeaderInfo({
 			 	bgColor: '#333',
@@ -86,7 +90,7 @@ function SeeThis(id){
 	};
 
 function isFufei(){
-	return fufei;
+	return user && user.fufei;
 }
 
 function refreshPage(){

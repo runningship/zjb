@@ -52,16 +52,25 @@ function exitApp(){
     });
 }
 //
-function openContentFrame(){
+function openContentFrame(isChuzu){
 	var header = $('#header');
 	//alert("header height"+header.height());
 	var mainer = $('#mainer');
 	//alert("main height:"+mainer.height());
 	//open houses
+	var page = 'house.html';
+	$('.btnGroup a').removeClass('active');
+	if(isChuzu){
+		page = 'houseRent.html';
+		$('.chuzu').addClass('active');
+	}else{
+		$('.chushou').addClass('active');
+	}
 	api.openFrame({
         name: 'house',
-		url: 'house.html',
+		url: page,
 		vScrollBarEnabled:true,
+		pageParam:{isChuzu:isChuzu},
 		reload:true,
         bounces: true,
         rect: {
@@ -72,6 +81,17 @@ function openContentFrame(){
         }
     });
 }
+
+function openSearch(){
+	//alert();
+	api.openWin({
+	    name: 'search',
+	    bounces: false,
+	    softInputMode:'resize',
+		url: 'search.html'
+	});
+}
+
 </script>
 <style type="text/css">
 #mainer{
@@ -90,11 +110,11 @@ function openContentFrame(){
         </span>
         <span class="conter">
             <span class="btnGroup">
-                <a href="#" class="btns active" onclick="openContentFrame();">出售</a><a href="#" class="btns" onclick="openContentFrame();">出租</a>
+                <a href="#" class="btns active chushou" onclick="openContentFrame();">出售</a><a href="#" class="btns chuzu" onclick="openContentFrame(true);">出租</a>
             </span>
         </span>
         <span class="right">
-            <a href="#" class="btns" id="s"><i class="iconfont">&#xe602;</i></a>
+            <a href="#" class="btns" id="search" onclick="openSearch();"><i class="iconfont">&#xe602;</i></a>
         </span>
     </div>
     <div id="mainer" class="mainer">
