@@ -331,72 +331,60 @@ box-orient:horizontal;
 .searchInputItem .d{ width: 30px; }
 .search .btn_record{ margin: 10px 10px 0; }
 /*
-display:-webkit-box;-webkit-box-orient:horizontal;
--webkit-box-flex:1;
-*/
-/* placeholder active */
-.search .header .input::-webkit-input-placeholder { color:#FFF; -webkit-transition: all 0.0s linear;transition: all 0.0s linear;}
-.search .header .input::-moz-placeholder { color:#FFF; -webkit-transition: all 0.0s linear;transition: all 0.0s linear;}
-.search .header .input:-ms-input-placeholder { color:#FFF; -webkit-transition: all 0.0s linear;transition: all 0.0s linear;}
-/* placeholder active end */
+form
+ */
+/* form checkbox */
+.formItem.check { cursor: pointer; }
+.formItem.check .icon{ width: 50px; }
+.formItem.check .icon i{ color: #68BF01;}
+.formItem.check .icon i.y{ display: none; }
+.formItem.check .inputbox{ padding-right: 20px; }
+.formItem.check .inputbox b{ float: right; color: #FF6100; font-weight: bold; }
+.formItem.check.active{ border-color: #DFDFDF; }
+.formItem.check.active .icon i{ color: #68BF01; }
+.formItem.check.active .icon i.n{ display: none; }
+.formItem.check.active .icon i.y{ display: inline-block; }
 
 
 
+/*
+house
+ */
+/* house details */
+.house.details{ font-size: 14pt; }
+.house.details .mainer{ background-color: #F6F6F6; }
 
-.share{}
-.share .mainer{display: -webkit-box;-webkit-box-orient:vertical;-webkit-flex-flow: column;}
-.share .headbox{-webkit-box-flex:1;}
-.share .shareListBox{-webkit-box-flex:100; overflow: hidden;overflow-y: auto;}
+.house.details .mainer .item{ padding: 10pt; margin: 5px; margin-left: 0; margin-right: 0; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
+.house.details .mainer .item:first-child{ margin-top: 0; border-top: 0; }
+.house.details .mainer .title{ padding: 10px; padding-bottom: 0; }
+.house.details .mainer .title i{ font-size: 13pt; }
 
-.share .headbox{ text-align: center; border-bottom: 1px solid #EFEFEF; background-color: #21BEF8; color: #FFF;}
-.share .headbox .codebox h2{ font-size: 40px;line-height: 1.5em; }
-.share .headbox{}
+.house.details .mainer .lists{ font-size: 13pt; }
+.house.details .mainer .lists li:after {content: "\0020";display: block;height: 0;clear: both;}
+.house.details .mainer .lists li{ border-bottom: 1px solid #EEE; padding: 10px 0; }
+.house.details .mainer .lists li:first-child{ padding-top: 0; }
+.house.details .mainer .lists li:last-child{ border:0;}
 
-.share .appList { padding: 10px 0 0px; }
-.share .appList ul{ width: 100%;display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; }
-.share .appList ul li{ text-align: center;-webkit-box-flex:1; }
-.share .appList ul li a{ color: #FFF; display: block; padding: 10px 0 10px }
-.share .appList ul li a i{ font-size: 30px; }
+.house.details .mainer .hList{}
+.house.details .mainer .hList li{ width: 48%; display: inline-block; padding-top: 5pt; padding-bottom: 5pt; }
+.house.details .mainer .hList li.block{ width: 100%; }
+.house.details .mainer .hList li span{ display: inline-block; width:40pt; color: #999; text-align: right; padding-right: 5pt;}
+.house.details .mainer .hList li i.iconfont{ font-size: 18pt; color: #18B4ED; }
+.house.details .mainer .htime{ font-size: 11pt; color: #999; padding-top: 12px; }
 
-.share .shareListBox{}
-.share .shareListBox h2{ text-align: center; font-size: 18px; line-height: 2em; border-bottom: 1px solid #EFEFEF; }
-.share .shareListBox ul {  }
-.share .shareListBox ul li{ height: 2.5em; line-height: 2.5em; display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; border-bottom: 1px solid #EFEFEF;}
-.share .shareListBox ul li span{ display: block; }
-.share .shareListBox ul li span.left{-webkit-box-flex:1; text-align: center;}
-.share .shareListBox ul li span.center{-webkit-box-flex:4;}
-.share .shareListBox ul li span.right{-webkit-box-flex:1; text-align: center;}
+.house.details .mainer .gjList .lists .fc{ margin-left: 50px; }
+.house.details .mainer .gjList .lists .gjTit h1{ color: #555; padding-bottom: 5pt; }
+.house.details .mainer .gjList .lists .gjTit b{ display: block; font-size: 11pt; padding-bottom: 5pt; color: #888; }
+.house.details .mainer .gjList .lists p{ color: #000; }
+.house.details .mainer .gjList .lists .imgbox{ display: block; width: 40px; height: 40px; line-height: 40px; overflow: hidden; border-radius: 50px; }
+.house.details .mainer .gjList .lists .imgbox img{ display: block; width: 100%; }
 
-.share.exch .headbox{}
-.share.exch .codeInput {display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; padding: 5px 5px; }
-.share.exch .codeInput .inputbox{-webkit-box-flex:1; height: 36px; line-height: 36px;}
-.share.exch .codeInput input.input{ width: 100%; border: 1px solid #EFEFEF; padding:5px 10px; font-size: 18px; }
-.share.exch .codeInput .btn{-webkit-box-flex:1; width: 80px; height: 36px; line-height: 36px; color: #FFF;}
-
-.share.exch .shareListBox {}
-.share.exch .shareListBox p{ width: 90%; margin: 0 auto; font-size: 1em; line-height: 1.5em; padding: 10px 0; border-bottom: 1px solid #EFEFEF;}
-
-
-
-
-.webreg {height: 100%; overflow-y: auto; }
-.webreg .box{ background:#e93131 url('../images/appbg.png') no-repeat top center; background-size:100% auto;  padding-top: 15em; padding-bottom: 5em;}
-.webreg .form1{ width: 80%; margin: 0 auto; padding:30px 20px 20px; background: #FFF; border-radius: 5px; }
-.webreg .form1 .form-section{ border-radius: 5px; }
-.webreg .form1 .form-section input.input,
-.webreg .form1 .form-section select.input{ border-radius: 5px; }
-.webreg .btn{ display: block; border-radius: 5px;}
-.webreg .btn.orange{background: #e93131;}
-
-
-.webreg .form-active.hover{ border-color: #e93131;}
-.webreg .form-active.focus { border-color: #e93131;}
-.webreg .form-active.focus  .input-label{ border-color: #e93131; color: #e93131;}
-.webreg .form-active.active .input-label{ top: -10px;background: #FFF;}
-.webreg .form-section.hover span.tip,
-.webreg .form-section.focus span.tip,
-.webreg .form-loo.hover span.tip
-.webreg .form-loo.focus span.tip{color: #e93131;}
-
-
-
+.house.details .footer{ height: auto; line-height: 100%; border:none; background:#FFF; -moz-box-orient:vertical;-webkit-box-orient: vertical;box-orient: vertical;}
+.house.details .footer .item{ width: 100%; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;}
+.house.details .footer .nos{ display: block; border-top: 1px solid #EEE; padding: 10px; color: #F00; text-align: center; }
+.house.details .footer .option { border-top: 1px solid #EEE; }
+.house.details .footer .option label{ display: block; -webkit-box-flex: 1; text-align: center; border:none; border-left: 1px solid #EEE; height: 36pt; line-height: 36pt; }
+.house.details .footer .option label:first-child{ border-left: none; }
+.house.details .footer .entered{ border-top: 1px solid #EEE;}
+.house.details .footer .entered .inputbox{-webkit-box-flex: 10; padding: 5pt 10pt; max-height: 60pt; line-height: 26pt; overflow: hidden; overflow-y: auto; text-align: left;}
+.house.details .footer .entered .btns{ display: block; width: 60px;-webkit-box-flex: 0; text-align: center; line-height: 35pt; background: #18B4ED; color: #FFF }
