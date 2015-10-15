@@ -139,7 +139,7 @@ api.download({
 
 //打开欢迎页面
 function openIndexFrame(){
-	window.location=api.cacheDir+'/html/start.html';
+	window.location=api.cacheDir+'/html/welcome.html';
 //api.openFrame({
 //    name: 'rootFrame',
 //    url: api.cacheDir+'/html/start.html',
