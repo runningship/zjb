@@ -164,7 +164,7 @@ public class PGenjinService {
 		}
 		List<Map> list = dao.listAsMap("select gj.id as id , u.uname as uname , "
 				+ " gj.conts as conts, gj.addtime as dateadd from GenJin gj, User u where gj.hid=? "
-				+ "and gj.sh=1 and u.id=gj.uid", houseId);
+				+ "and gj.sh=1 and u.id=gj.uid order by gj.addtime desc", houseId);
 		mv.data.put("data",JSONHelper.toJSONArray(list));
 		return mv;
 	}
