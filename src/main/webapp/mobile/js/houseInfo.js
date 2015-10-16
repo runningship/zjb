@@ -1,16 +1,16 @@
 var user;
 var hid;
 var tel_json = JSON.parse('[]');
+var status=4;
 apiready = function(){
 	getUserInfo(function(u){
 		user = u;
 		hid = api.pageParam.id;
 		loadData();
-		//loadGenJin()
+		loadGenJin()
 	});
 };
 function loadData(){
-		//blockAlert('http://'+server_host+'/c/mobile/detail?houseId='+hid+'&userId=');
 		YW.ajax({
 				url:'http://'+server_host+'/c/mobile/detail?houseId='+hid+'&userId='+1,
 				method:'post',
@@ -57,15 +57,12 @@ function loadData(){
 					    }
 					buildHtmlWithJsonArray('tel_repeat',tel_json , false,true);
 					//api.parseTapmode();
-//					if(ret.isfav=='1'){
-//						$('#fav').attr('src','../image/fav-yes.png');
-//					}
 				}else{
 				}
 			});
 	}
 	
-	function loadGenJin(){
+	function loadGenJin(clear){
 		YW.ajax({
 				url:'http://'+server_host+'/c/mobile/house/genjin/list?houseId='+hid,
 				method:'post',
@@ -73,9 +70,38 @@ function loadData(){
 				returnAll:false
 			},function(ret , err){
 				if(ret){
-					buildHtmlWithJsonArray('genjin',ret.data , false,true);
+					if(clear){
+						buildHtmlWithJsonArray('genjin',ret.data , false,false);
+					}else{
+						buildHtmlWithJsonArray('genjin',ret.data , false,true);
+					}
+					
 				}else{
 				}
 			});
 	}
 	
+	function addGenjin(){
+		var conts = $('#conts').text();
+		if(conts==''){
+			alert('请先填写跟进信息');
+			return;
+		}
+		api.ajax({
+			url:'http://'+server_host+'/c/mobile/house/genjin/add?chuzu=0',
+			method:'post',
+			data:{
+	        	values: {userId:1,houseId:hid,type:status,content:conts}
+	    	},
+			cache:false,
+			returnAll:false
+		},function(ret , err){
+			if(ret && ret.result=='1'){
+				alert('跟进成功');
+				$('#conts').text('');
+				loadGenJin(true);
+			}else{
+				alert('跟进失败');
+			}
+		});
+	}

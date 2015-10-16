@@ -2,12 +2,14 @@ var currentPage=1;
 var totalPageCount;
 var user;
 var isChuzu=false;
+var repeatClass="repeat";
 var searchParams = JSON.parse('{}');
 function loadData(clear){
 	var url = 'http://'+server_host+'/c/mobile/list?page='+currentPage;
 	if(isChuzu){
 		url = 'http://'+server_host+'/c/mobile/rent/list?page='+currentPage;
 	}
+	//blockAlert(repeatClass);
 	YW.ajax({
 		url: url,
 		method:'post',
@@ -23,9 +25,9 @@ function loadData(clear){
 					$('#noResultMsg').css('display','none');
 				}
 			if(clear){
-				buildHtmlWithJsonArray('repeat',ret.page.data , false,false);
+				buildHtmlWithJsonArray(repeatClass,ret.page.data , false,false);
 			}else{
-				buildHtmlWithJsonArray('repeat',ret.page.data , false,true);
+				buildHtmlWithJsonArray(repeatClass,ret.page.data , false,true);
 			}
 			api.parseTapmode();
 		}else{
@@ -48,7 +50,9 @@ function SeeThis(id){
  }
 
 	apiready = function(){
-		isChuzu = api.pageParam.isChuzu;
+		if(api.pageParam.isChuzu){
+			isChuzu = api.pageParam.isChuzu;
+		}
 		getUserInfo(function(u){
 			user = u;
 		});
@@ -58,7 +62,7 @@ function SeeThis(id){
 			},
 			function(ret,err){
 		    	api.refreshHeaderLoadDone();
-		    	buildHtmlWithJsonArray('repeat',[] , false,false);
+		    	buildHtmlWithJsonArray(repeatClass,[] , false,false);
 		    	currentPage=1;
 		    	loadData(true);
 			});
@@ -83,6 +87,8 @@ function isFufei(){
 	return user && user.fufei;
 }
 
-function refreshPage(){
-	window.location.reload();
+function switchType(chuzu){
+	isChuzu = chuzu;
+	currentPage=1;
+	loadData(true);
 }

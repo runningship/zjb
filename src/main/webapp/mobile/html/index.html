@@ -14,13 +14,52 @@
 <script src="../js/javascript.js" type="text/javascript"></script>
 <script type="text/javascript">
 var isLayoutOpen = false;
+var isChuzu=false;
+var header;
+var mainer;
+var houseType="";
 apiready = function(){
+	header = $('#header');
+	mainer = $('#mainer');
 	isLayoutOpen = api.pageParam.isLayoutOpen;
 	exitApp();
-	openContentFrame();
+	//openHouses();
+	openGroup();
 	//bindTecentPush();
 };
 
+function openGroup(){
+	houseType = "house";
+	api.openFrameGroup ({
+	    name: 'group1',
+	    background:'#fff',
+	    scrollEnabled:false,
+	    preload:2,
+	    rect:{x: 0,
+            y: header.height(),
+            w: 'auto',
+            h: mainer.height()},
+	    index:0,
+	    frames:
+	    [{
+	        name: 'house', 
+	        url: 'house.html',
+	        bgColor: '#fff'
+	    },{
+	        name: 'fujin', 
+	        url: 'fujin.html', 
+	        bgColor: '#fff'
+	    },{
+	        name: 'work', 
+	        url: 'work.html', 
+	        bounces: true,
+	        bgColor: '#fff'
+	    }]
+	}, function(ret, err){
+	    var name = ret.name;
+	    var index = ret.index;
+	});
+}
 
 function exitApp(){
     api.addEventListener({
@@ -29,7 +68,7 @@ function exitApp(){
         api.toast({
                 msg: '再按一次退出',
                 duration:2000,
-                location: 'bottom'
+                location: 'middle'
             });
 
             api.addEventListener({
@@ -47,26 +86,107 @@ function exitApp(){
             },3000)
     });
 }
-//
-function openContentFrame(isChuzu){
-	var header = $('#header');
-	var mainer = $('#mainer');
-	//open houses
-	var page = 'house.html?21';
+
+function setHouseType(chuzu){
+	isChuzu = chuzu;
 	$('.btnGroup a').removeClass('active');
 	if(isChuzu){
-		page = 'houseRent.html';
 		$('.chuzu').addClass('active');
 	}else{
 		$('.chushou').addClass('active');
 	}
+}
+function switchHouseType(chuzu){
+	setHouseType(chuzu);
+	if(houseType=="house"){
+		api.execScript({
+		    frameName: 'house',
+		    script: 'switchType('+isChuzu+')'
+		});
+	}else{
+		api.execScript({
+		    frameName: 'fujin',
+		    script: 'switchType('+isChuzu+')'
+		});
+	}
+}
+function openHouses(chuzu){
+	if($('.house.active').length>0){
+		return;
+	}
+	houseType = "house";
+	//open houses
+	$('#footer .item').removeClass('active');
+	$('#footer .house').addClass('active');
 	api.openFrame({
         name: 'house',
-		url: page,
+		url: 'house.html',
 		vScrollBarEnabled:true,
 		pageParam:{isChuzu:isChuzu},
-		reload:true,
+		reload:false,
         bounces: true,
+        animation:{
+		    type:"push",
+		    subType:"from_left",
+		    duration:300
+		},
+        rect: {
+            x: 0,
+            y: header.height(),
+            w: 'auto',
+            h: mainer.height()
+        }
+    });
+	setHouseType(chuzu);
+}
+
+function openFujin(chuzu){
+	if($('.fujin.active').length>0){
+		return;
+	}
+	houseType = "fujin";
+	$('#footer .item').removeClass('active');
+	$('#footer .fujin').addClass('active');
+	api.openFrame({
+        name: 'fujin',
+		url: 'fujin.html',
+		pageParam:{isChuzu:isChuzu},
+		reload:false,
+		animation:{
+		    type:"push",
+		    subType:"from_right",
+		    duration:300
+		},
+        bounces: true,
+        vScrollBarEnabled:true,
+        rect: {
+            x: 0,
+            y: header.height(),
+            w: 'auto',
+            h: mainer.height()
+        }
+    });
+	setHouseType(chuzu);
+}
+
+function openWork(){
+	if($('.work.active').length>0){
+		return;
+	}
+	$('#footer .item').removeClass('active');
+	$('#footer .work').addClass('active');
+	api.openFrame({
+        name: 'work',
+		url: 'work.html',
+		pageParam:{isChuzu:isChuzu},
+		reload:false,
+		animation:{
+		    type:"push",
+		    subType:"from_right",
+		    duration:300
+		},
+        bounces: false,
+        vScrollBarEnabled:true,
         rect: {
             x: 0,
             y: header.height(),
@@ -75,7 +195,6 @@ function openContentFrame(isChuzu){
         }
     });
 }
-
 function openSearch(){
 	//alert();
 	api.openWin({
@@ -121,7 +240,7 @@ function bindTecentPush(){
         </span>
         <span class="conter">
             <span class="btnGroup">
-                <a href="#" class="btns active chushou" onclick="openContentFrame();">出售</a><a href="#" class="btns chuzu" onclick="openContentFrame(true);">出租</a>
+                <a href="javascript:void(0)" class="btns active chushou" onclick="switchHouseType(false);">出售</a><a href="javascript:void(0)" class="btns chuzu" onclick="switchHouseType(true);">出租</a>
             </span>
         </span>
         <span class="right">
@@ -132,27 +251,27 @@ function bindTecentPush(){
         
     </div>
     <div id="footer" class="footer">
-        <span class="item active">
+        <a class="item house active">
             <div>
                 <i class="iconfont n">&#xe605;</i>
                 <i class="iconfont y">&#xe606;</i>
             </div>
-            <h2>房源</h2>
-        </span>
-        <span class="item ">
+            <h2 onclick="openHouses(isChuzu)">房源</h2>
+        </a>
+        <a class="item  fujin">
             <div>
                 <i class="iconfont n">&#xe623;</i>
                 <i class="iconfont y">&#xe652;</i>
             </div>
-            <h2>附近</h2>
-        </span>
-        <span class="item ">
+            <h2 onclick="openFujin(isChuzu)">附近</h2>
+        </a>
+        <a class="item work">
             <div>
                 <i class="iconfont n">&#xe653;</i>
                 <i class="iconfont y">&#xe654;</i>
             </div>
-            <h2>工作</h2>
-        </span>
+            <h2 onclick="openWork();">工作</h2>
+        </a>
     </div>
 </div>
 </body>

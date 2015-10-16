@@ -22,10 +22,9 @@
     <div id="header" class="header">
         <span class="left">
             <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
-            <h1 id="area"></h1>
         </span>
+        <span class="conter"><h1 id="area"></h1></span>
         <span class="right">
-            <a href="#" class="btns" id="s"><i class="iconfont">&#xe602;</i></a>
         </span>
     </div>
     <div id="mainer" class="mainer">
@@ -90,23 +89,21 @@
                     <strong id="beizhu"></strong>
                 </li>
             </ul>
-            <p class="htime" id="dateadd">2015-10-15 15:03:13</p>
+            <p class="htime" id="dateadd"></p>
         </div>
         <div class="title">
-            <i class="iconfont">&#xe61e;</i>
-            跟进 3
+<!--             <i class="iconfont">&#xe61e;</i>跟进 3 -->
         </div>
         <div class="item gjList">
             <ul class="lists">
-                <li>
-                    <div class="fl"><span class="imgbox"><img src="http://usr.im/40x40?text=∩_∩" alt="" class="img"></span></div>
+                <li class="genjin">
                     <div class="fc">
                         <div class="gjTit">
-                            <span class="fr">右</span>
-                            <h1>用户名称</h1>
-                            <b>2015-10-14 18:07:34</b>
+                            <span class="fr"></span>
+                            <h1>$[uname]</h1>
+                            <b>$[dateadd]</b>
                         </div>
-                        <p>右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容右侧内容</p>
+                        <p>$[conts]</p>
                     </div>
                 </li>
             </ul>
@@ -116,22 +113,21 @@
         <div class="item nos">续费</div>
         <div class="item option">
             <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="">
+                <input type="radio" class="check_radio" name="ztai" value="4" onclick="status=4">
                 在售
             </label>
             <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="">
+                <input type="radio" class="check_radio" name="ztai" value="6" onclick="status=6;">
                 已售
             </label>
             <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="">
+                <input type="radio" class="check_radio" name="ztai" value="7" onclick="status=7">
                 停售
             </label>
         </div>
         <div class="item entered">
-            <div class="inputbox input_genjin" contenteditable="true">可输入的div</div>
-            
-            <a class="btns btn_act" data-type="submit">提交</a>
+            <div class="inputbox input_genjin" contenteditable="true" placeholder="fsdf"  id="conts"></div>
+            <a class="btns btn_act" data-type="submit" onclick="addGenjin()">提交</a>
         </div>
     </div>
 </div>
