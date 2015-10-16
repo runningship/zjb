@@ -38,22 +38,12 @@ function setSearchParamsAndSearch(params){
 	loadData(true);
 }
 function SeeThis(id){
-	if(isFufei()){
-		api.openWin({
-		    name: 'infoJJR',
-		    pageParam: {id: id},
-		    delay:300,
-			url: '../html/infoJJR.html'
-		});
-	}else{
-		api.openWin({
-	        name: 'info',
-	        pageParam: {pageName: 'info',title:'出售' , id:id},
-			url: '../html/wrap.html',
-			delay:300,
-	        bgColor: '#fff'
-	    });
-	}
+	api.openWin({
+        name: 'info',
+        pageParam: {pageName: 'info',fufei:isFufei(), id:id},
+		url: 'house_details.html',
+		delay:300
+    });
 	$('#'+id).css('color','#999');
  }
 

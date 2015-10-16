@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -212,6 +213,12 @@ public class PService {
 			mv.data.put("invitationActive", -1);
 		}
 		MobileUserDog.map.put(tel, deviceId);
+		if(user.avatar==null){
+			Random r = new Random();
+			int avatar = r.nextInt(167)+1;
+			user.avatar = avatar;
+			dao.saveOrUpdate(user);
+		}
 //		pushToOther(tel,deviceId);
 		return mv;
 	}

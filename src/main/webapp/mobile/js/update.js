@@ -4,6 +4,7 @@ var urlPrefix='http://192.168.1.222:8081/mobile';
 var fileCount=0;
 var downloadProcess=0;
 function updateIfNeed(){
+	//bindTecentPush();
 //	bindAjpush();
 //	api.addEventListener({
 //	    name:'appintent'
@@ -81,6 +82,8 @@ function bindAjpush(){
 		alert(e);
 	}
 }
+
+
 
 function update(serverVersion , index){
 	

@@ -182,6 +182,8 @@ form
 /*
 house
  */
+.house .header .imgbox{ float: left; display: block; width: 30px; height: 30px; line-height: 30px; border-radius: 100px; overflow: hidden; margin-right: 15px;margin-top: 11px; margin-left: 10px; }
+.house .header .imgbox img{    width: 100%;  height: auto;}
 /* house details */
 .house.details{ font-size: 14pt; }
 .house.details .mainer{ background-color: #F6F6F6; }
@@ -231,10 +233,11 @@ user
 .user.side{ background: #333; }
 .user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
 .user.side .header .imgbox{ float: left; display: block; width: 80px; height: 80px; line-height: 80px; border-radius: 100px; overflow: hidden; margin-right: 15px; }
+.user.side .header .imgbox img{    width: 100%;  height: auto;}
 .user.side .header .uText{ padding-top: 6px; }
 .user.side .mainer { padding:10px 20px; }
 .user.side .mainer .mList{  }
-.user.side .mainer .mList li a{ display: block; padding: 10px; font-size: 15pt; color: #FFF; }
+.user.side .mainer .mList li a{ display: block; padding: 10px; font-size: 13pt; color: #FFF; }
 .user.side .mainer .mList li a i{ font-size: 18pt; }
 .user.side .mainer .mList li a i.fr{ float: none; font-size: 12pt;vertical-align: middle; }
 .user.side .mainer .mList li a span{ color: #999; padding-left: 10px; font-size: 12pt; display: inline-block;  }

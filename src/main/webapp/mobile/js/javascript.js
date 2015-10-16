@@ -135,13 +135,14 @@ function openUserPanel(){
 		});
 		return;
 	}
+	//
 	api.openSlidLayout ({
 	    type: 'all',
 	    leftEdge:120,
 	    rightEdge:100,
 	    fixedPane: {
 	        name: 'user', 
-	        url: 'user.html', 
+	        url: 'uside.html', 
 	        bgColor: '#fff', 
 	        bounces:true,
 	        vScrollBarEnabled:true,

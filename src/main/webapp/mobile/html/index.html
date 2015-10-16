@@ -18,6 +18,7 @@ apiready = function(){
 	isLayoutOpen = api.pageParam.isLayoutOpen;
 	exitApp();
 	openContentFrame();
+	//bindTecentPush();
 };
 
 
@@ -51,7 +52,7 @@ function openContentFrame(isChuzu){
 	var header = $('#header');
 	var mainer = $('#mainer');
 	//open houses
-	var page = 'house.html';
+	var page = 'house.html?21';
 	$('.btnGroup a').removeClass('active');
 	if(isChuzu){
 		page = 'houseRent.html';
@@ -85,6 +86,24 @@ function openSearch(){
 	});
 }
 
+
+function bindTecentPush(){
+	// 注册设备并绑定用户账号
+	var tencentPush = api.require('tencentPush');
+
+	var resultCallback = function(ret, err){
+		alert(JSON.stringify(err));
+	    if(ret.status){
+	        alert("注册成功，token为："+ret.token);
+	    }else{
+	        alert("注册失败，错误码："+err.code+"，错误信息："+err.msg);
+	    }
+	};
+
+	// 需要绑定的账号，若为"*"表示解除之前的账号绑定
+	var params = {account:"15856985122"};
+	tencentPush.registerPush( resultCallback);
+}
 </script>
 <style type="text/css">
 #mainer{
@@ -95,11 +114,10 @@ function openSearch(){
 </style>
 </head>
 <body>
-<div id="wrap" class="bodyer">
+<div id="wrap" class="bodyer house">
     <div id="header" class="header">
         <span class="left">
-            <a href="#" class="btns"><i class="iconfont">&#xe635;</i></a>
-            <h1 onclick="openUserPanel();">标题</h1>
+            <span onclick="openUserPanel();" class="imgbox"><img src="../images/71.jpg" alt="" class="img"></span>
         </span>
         <span class="conter">
             <span class="btnGroup">
