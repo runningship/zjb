@@ -253,14 +253,43 @@ user
 
 
 
+/* 
+work
+ */
+/* work */
+.work .mainer {background-color: #F6F6F6;}
+.work .mainer .item{ padding: 10pt; margin: 5px; margin-left: 0; margin-right: 0; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
+.work .mainer .item:first-child{ margin-top: 0; border-top: 0; }
+.work .mainer .title{ padding: 10px; padding-bottom: 0; }
+.work .mainer .title i{ font-size: 13pt; }
 
+.workList:after {content: "\0020";display: block;height: 0;clear: both;}
+.workList li{ display: inline-block; float: left; text-align: center; margin:5px 5px 5px 5px; }
+.workList li.default span{ background: #9F9F9F; }
+.workList li.blue span{ background: #64BEFD; }
+.workList li.green span{ background: #65C000; }
+.workList li.violet span{ background: #DC38AB; }
+.workList li.orange span{ background: #FF6100; }
+.workList li.reg span{ background: #FF0000; }
 
+.workList.big li span{ display: block; width: 54pt; height: 54pt; line-height: 54pt;  color: #FFF; border-radius: 15px;}
+.workList.big li span,
+.workList.big li i.iconfont{ display: block; font-size: 26pt;}
+.workList.big li i.fr{ display: none; }
+.workList.big li strong{ display: block; padding-top: 5px; font-size:13pt; }
 
+.workList.small li span{display: block; width: 40pt; height: 40pt; line-height: 40pt; color: #FFF; border-radius: 15px;}
+.workList.small li span,
+.workList.small li i.iconfont{ display: block; font-size: 20pt;}
+.workList.small li i.fr,
+.workList.small li strong{ display: none; }
 
-
-
-
-
+.workList.list li { display: block; float: none; text-align: left; line-height: 20pt; margin: 0; padding: 10pt 0; border-top: 1px solid #EEE;}
+.workList.list li:first-child{ padding-top: 0; border:none; }
+.workList.list li span{ display: inline-block; text-align: center; width: 26pt; height: 26pt; line-height:26pt; color: #FFF; border-radius: 5px; margin-right: 10px;}
+.workList.list li i.iconfont{ font-size: 16pt; }
+.workList.list li i.fr{ color: #CCC; height: 26pt; line-height: 26pt}
+.workList.list li strong{ display:inline-block; font-size: 14pt; }
 
 
 
