@@ -23,7 +23,7 @@ box-orient: horizontal;
 /* default */
 .bodyer{}
 
-.header{ height: 50px; line-height: 50px;margin-top:25px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;
+.header{ height: 50px; line-height: 50px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;
 }
 .header .left,
 .header .right,
@@ -58,7 +58,7 @@ display:box;
 -webkit-box-orient:horizontal;
 box-orient:horizontal;
 }
-.footer .item{ color: #AFAFAF; display: inline-block; width: 33.33%; text-align: center; line-height: 25px; }
+.footer .item{ color: #AFAFAF; display: block; width: 33.33%; text-align: center; line-height: 25px; }
 .footer .item i{ display: block; height: 25px; line-height: 35px; font-size: 20px; }
 .footer .item i.y{ display: none; }
 .footer .item.active { color: #18B4ED; }
@@ -158,6 +158,65 @@ form
 /* placeholder active end */
 /* regbox end */
 
+/* citys */
+.citys{}
+.citys .mainer{ background: #F6F6F6; }
+.cityList{}
+.cityList li{ margin: 3pt 5pt; display: block; background: #FFF; border: 1px solid #EEE; border-radius: 3px; }
+.cityList li a{ display: block;padding: 8pt 10pt; }
+.cityList li .fr{ display: none; color:#18B4ED;}
+.cityList li.active .fr{ display: inline-block; }
+
+/* login */
+.login{background:-webkit-gradient(linear, 0 0, 0 100%, from(#18B4ED), to(#2c91d2));}
+.login .header a.btns{ width: auto; padding: 0 10px; }
+.login .header,
+.login .footer{ background: none; border: none; }
+.login .footer{ height: 20pt; line-height: 20pt; }
+.login .footer .item{ width: 50%; color: #FFF; }
+.login .mainer{ text-align: center; color: #FFF; }
+.login .mainer .logo { display: block; height: 120pt; line-height: 170pt; }
+.login .mainer .logo i{ font-size:60pt; line-height: 60pt; }
+.login .formbox{ background: #FFF; display: block; width: 80%; margin: 0 auto; border-radius: 5pt; box-shadow: 1px 1px 5px rgba(0,0,0,0.2);}
+.login .formbox .formItem{ display: block; height: 30pt; line-height: 30pt; }
+.login .formbox li:first-child .formItem{ border-bottom: 1px solid #EEE;}
+.login .formbox .formItem .icon{ float: left; display: block; height: inherit; line-height:inherit; width: 20%; }
+.login .formbox .formItem .icon i{ color: #777; }
+.login .formbox .formItem .inputbox{ display: block; margin-left: 20%; height: inherit; line-height: inherit; }
+.login .formbox .formItem input.input{ display: block; width: 100%; height: inherit; line-height: inherit; border: 0; background: none; }
+.login .btn.submit{ margin-top: 40px; height: 26pt; line-height: 26pt; background: rgba(0,0,0,0.3); border-radius: 50px;box-shadow:-1px -1px rgba(0,0,0,0.4), 1px 1px rgba(255,255,255,0.3);text-shadow:1px 1px rgba(0,0,0,0.4), -1px -1px rgba(255,255,255,0.1); color: #FFF; }
+.login .btn.submit i{ color: #18B4ED; margin-left: 10px; }
+.login .btn.submits{ display: block;/* width: 80%; margin: 0 auto; */background: #53D1FF; border-radius:0 0 5px 5px; color: #015270; }
+.login .btn.submitss{ display: block; width: 80%; margin: 20px auto 0; background: #53D1FF; border-radius:5px; color: #015270; box-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
+
+/* user */
+.user.side{ background: #333; }
+.user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
+.user.side .header .imgbox{ float: left; display: block; width: 80px; height: 80px; line-height: 80px; border-radius: 100px; overflow: hidden; margin-right: 15px; }
+.user.side .header .imgbox img{    width: 100%;  height: auto;}
+.user.side .header .uText{ padding-top: 6px; }
+.user.side .mainer { padding:10px 20px; }
+.user.side .mainer .mList{  }
+.user.side .mainer .mList li a{ display: block; padding: 10px; font-size: 13pt; color: #FFF; }
+.user.side .mainer .mList li a i{ font-size: 18pt; }
+.user.side .mainer .mList li a i.fr{ float: none; font-size: 12pt;vertical-align: middle; }
+.user.side .mainer .mList li a span{ color: #999; padding-left: 10px; font-size: 12pt; display: inline-block;  }
+
+.user.side .footer{ background: none; border-top-color: #222; }
+.user.side .footer .item a{ color: #FFF;}
+
+
+
+.search{}
+.search .header .inputbox{ display: block; height: inherit; line-height: inherit; }
+.search .header .inputbox input.input{ background: none;border:none; padding: 0 10px; color: #FFF; border-bottom: 1px solid #FFF; }
+
+/* placeholder */
+.search .inputbox .placeholder::-webkit-input-placeholder { color:#FFF; }
+.search .inputbox .placeholder::-moz-placeholder { color:#FFF; }
+.search .inputbox .placeholder:-ms-input-placeholder { color:#FFF; }
+/* placeholder end */
+
 
 /* house */
 .house sup{ vertical-align: super; font-size: 12px; }
@@ -175,20 +234,6 @@ form
 .Hul li div.side { float: right; width: 40px; line-height: 46px; text-align: center; }
 .Hul li div.side a{ display: block; height: inherit; line-height: inherit; color:#CFCFCF;}
 
-
-
-
-.citys{}
-.citys .mainer{ background: #F6F6F6; }
-.cityList{}
-.cityList li{ margin: 3pt 5pt; display: block; background: #FFF; border: 1px solid #EEE; border-radius: 3px; }
-.cityList li a{ display: block;padding: 8pt 10pt; }
-
-
-
-.search{}
-.search .header .inputbox{ display: block; height: inherit; line-height: inherit; }
-.search .header .inputbox input.input{ background: none;border:none; padding: 0 10px; color: #FFF; border-bottom: 1px solid #FFF; }
 
 
 /*
@@ -237,25 +282,6 @@ house
 
 
 
-
-
-/* 
-user
- */
-.user.side{ background: #333; }
-.user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
-.user.side .header .imgbox{ float: left; display: block; width: 80px; height: 80px; line-height: 80px; border-radius: 100px; overflow: hidden; margin-right: 15px; }
-.user.side .header .imgbox img{    width: 100%;  height: auto;}
-.user.side .header .uText{ padding-top: 6px; }
-.user.side .mainer { padding:10px 20px; }
-.user.side .mainer .mList{  }
-.user.side .mainer .mList li a{ display: block; padding: 10px; font-size: 13pt; color: #FFF; }
-.user.side .mainer .mList li a i{ font-size: 18pt; }
-.user.side .mainer .mList li a i.fr{ float: none; font-size: 12pt;vertical-align: middle; }
-.user.side .mainer .mList li a span{ color: #999; padding-left: 10px; font-size: 12pt; display: inline-block;  }
-
-.user.side .footer{ background: none; border-top-color: #222; }
-.user.side .footer .item a{ color: #FFF;}
 
 
 
