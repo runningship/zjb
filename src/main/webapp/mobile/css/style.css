@@ -178,6 +178,18 @@ form
 
 
 
+.citys{}
+.citys .mainer{ background: #F6F6F6; }
+.cityList{}
+.cityList li{ margin: 3pt 5pt; display: block; background: #FFF; border: 1px solid #EEE; border-radius: 3px; }
+.cityList li a{ display: block;padding: 8pt 10pt; }
+
+
+
+.search{}
+.search .header .inputbox{ display: block; height: inherit; line-height: inherit; }
+.search .header .inputbox input.input{ background: none;border:none; padding: 0 10px; color: #FFF; border-bottom: 1px solid #FFF; }
+
 
 /*
 house
