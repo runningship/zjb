@@ -75,7 +75,7 @@
                     <strong id="lxr"></strong>
                 </li>
                 <span>
-                <li class="block tel_repeat" style="display:">
+                <li class="block tel_repeat" style="display:none">
                 	<span></span>
                     <strong>$[tel]<i class="iconfont">&#xe610;</i></strong>
                 </li>
@@ -110,22 +110,27 @@
         </div>
     </div>
     <div id="footer" class="footer">
-        <div class="item nos">续费</div>
-        <div class="item option">
-            <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="4" onclick="status=4">
-                在售
-            </label>
-            <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="6" onclick="status=6;">
-                已售
-            </label>
-            <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="7" onclick="status=7">
-                停售
-            </label>
-        </div>
+<!--         <div class="item nos">续费</div> -->
+<!--         <div class="item option"> -->
+<!--             <label class="formItem check"> -->
+<!--                 <input type="radio" class="check_radio" name="ztai" value="4" onclick="status=4"> -->
+<!--                 在售 -->
+<!--             </label> -->
+<!--             <label class="formItem check"> -->
+<!--                 <input type="radio" class="check_radio" name="ztai" value="6" onclick="status=6;"> -->
+<!--                 已售 -->
+<!--             </label> -->
+<!--             <label class="formItem check"> -->
+<!--                 <input type="radio" class="check_radio" name="ztai" value="7" onclick="status=7"> -->
+<!--                 停售 -->
+<!--             </label> -->
+<!--         </div> -->
         <div class="item entered">
+        	<select id="gjType">
+        		<option selected="selected" value="4">在售</option>
+        		<option value="6">已售</option>
+        		<option value="7">停售</option>
+        	</select>
             <div class="inputbox input_genjin" contenteditable="true" placeholder="fsdf"  id="conts"></div>
             <a class="btns btn_act" data-type="submit" onclick="addGenjin()">提交</a>
         </div>

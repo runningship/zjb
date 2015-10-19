@@ -1,7 +1,7 @@
 var user;
 var hid;
 var tel_json = JSON.parse('[]');
-var status=4;
+//var status=4;
 apiready = function(){
 	getUserInfo(function(u){
 		user = u;
@@ -83,6 +83,7 @@ function loadData(){
 	
 	function addGenjin(){
 		var conts = $('#conts').text();
+		var status = $('#gjType').val();
 		if(conts==''){
 			alert('请先填写跟进信息');
 			return;

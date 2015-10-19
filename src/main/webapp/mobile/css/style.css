@@ -23,7 +23,7 @@ box-orient: horizontal;
 /* default */
 .bodyer{}
 
-.header{ height: 50px; line-height: 50px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;
+.header{ height: 50px; line-height: 50px;margin-top:25px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;
 }
 .header .left,
 .header .right,
@@ -58,7 +58,7 @@ display:box;
 -webkit-box-orient:horizontal;
 box-orient:horizontal;
 }
-.footer .item{ color: #AFAFAF; display: block; width: 33.33%; text-align: center; line-height: 25px; }
+.footer .item{ color: #AFAFAF; display: inline-block; width: 33.33%; text-align: center; line-height: 25px; }
 .footer .item i{ display: block; height: 25px; line-height: 35px; font-size: 20px; }
 .footer .item i.y{ display: none; }
 .footer .item.active { color: #18B4ED; }

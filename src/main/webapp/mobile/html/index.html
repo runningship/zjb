@@ -10,6 +10,7 @@
 <link href="../css/reset.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
+<script src="../js/api.js" type="text/javascript"></script>
 <script src="../js/layer/layer.js" type="text/javascript"></script>
 <script src="../js/javascript.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -18,9 +19,14 @@ var isChuzu=false;
 var header;
 var mainer;
 var houseType="";
+var statusBarHeight=25;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
+	//$api.fixStatusBar($api.byId('header'));
+	//$api.byId('header').style.height = '75px';
+	//$api.byId('header').style.lineHeight = '75px';
+	//
 	isLayoutOpen = api.pageParam.isLayoutOpen;
 	exitApp();
 	//openHouses();
@@ -36,7 +42,7 @@ function openGroup(){
 	    scrollEnabled:false,
 	    preload:2,
 	    rect:{x: 0,
-            y: header.height(),
+            y: header.height()+statusBarHeight,
             w: 'auto',
             h: mainer.height()},
 	    index:0,
@@ -132,7 +138,7 @@ function openHouses(chuzu){
 		},
         rect: {
             x: 0,
-            y: header.height(),
+            y: header.height()+statusBarHeight,
             w: 'auto',
             h: mainer.height()
         }
@@ -161,7 +167,7 @@ function openFujin(chuzu){
         vScrollBarEnabled:true,
         rect: {
             x: 0,
-            y: header.height(),
+            y: header.height()+statusBarHeight,
             w: 'auto',
             h: mainer.height()
         }
@@ -189,7 +195,7 @@ function openWork(){
         vScrollBarEnabled:true,
         rect: {
             x: 0,
-            y: header.height(),
+            y: header.height()+statusBarHeight,
             w: 'auto',
             h: mainer.height()
         }
