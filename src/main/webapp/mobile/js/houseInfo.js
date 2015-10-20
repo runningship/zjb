@@ -2,15 +2,21 @@ var config;
 var hid;
 var tel_json = JSON.parse('[]');
 var sellStatus=4;
+var rentStatus = 1;
 var userId=1;
 var isChuzu=false;
+var isFufei=false;
 apiready = function(){
 	isChuzu = api.pageParam.isChuzu;
 	getConfig(function(cfg){
 		config = cfg;
+		isFufei = isUserFuFei(config);
 		hid = api.pageParam.id;
 		loadData();
-		loadGenJin()
+		if(isFufei){
+			//
+			loadGenJin()
+		}
 	});
 };
 function loadData(){
@@ -28,7 +34,26 @@ function loadData(){
 					houseDetail = ret;
 					area = ret.area;
 					fdhao = ret.dhao+' - '+ret.fhao;
-					$('#area').text(ret.area+'  '+fdhao);
+					if(isFufei){
+						$('#area').text(ret.area+'  '+fdhao);
+						$('.gjList').show();
+						$('#footer').show();
+						$('#favBtn').show();
+						var tels = ret.tel.split(',');
+					    for(var i=0;i<tels.length ;i++){
+							var xx = JSON.parse('{}');
+							if(tels[i].trim()==''){
+								continue;
+							}
+					    	xx.tel = tels[i];
+					    	tel_json.push(xx);
+					    }
+						buildHtmlWithJsonArray('tel_repeat',tel_json , false,true);
+						api.parseTapmode();
+					}else{
+						$('#kefu').show();
+						$('#area').text(ret.area);
+					}
 					$('#dateadd').text(ret.dateadd);
 					$('#quyu').text(ret.quyu);
 					$('#ztai').text(ret.ztai);
@@ -53,17 +78,10 @@ function loadData(){
 					$('#address').text(ret.address);
 					$('#beizhu').text(ret.beizhu);
 					$('#lxr').text(ret.lxr);
-					tels = ret.tel.split(',');
-					    for(var i=0;i<tels.length ;i++){
-							var xx = JSON.parse('{}');
-							if(tels[i].trim()==''){
-								continue;
-							}
-					    	xx.tel = tels[i];
-					    	tel_json.push(xx);
-					    }
-					buildHtmlWithJsonArray('tel_repeat',tel_json , false,true);
-					api.parseTapmode();
+					
+					if(ret.isfav=='1'){
+						$('#favBtn').css('color','red');
+					}
 				}else{
 				}
 			});
@@ -81,12 +99,14 @@ function loadData(){
 				returnAll:false
 			},function(ret , err){
 				if(ret){
+					for(var i=0;i<ret.data.length;i++){
+						ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg';
+					}
 					if(clear){
 						buildHtmlWithJsonArray('genjin',ret.data , false,false);
 					}else{
 						buildHtmlWithJsonArray('genjin',ret.data , false,true);
 					}
-					
 				}else{
 				}
 			});
@@ -128,7 +148,7 @@ function loadData(){
 			url:'http://'+server_host+'/c/mobile/addRentGj',
 			method:'post',
 			data:{
-	        	values: {uid:uid,hid:hid,flag:status,conts:conts,chuzu:1}
+	        	values: {uid:userId,hid:hid,flag:rentStatus,conts:conts,chuzu:1}
 	    	},
 			cache:false,
 			returnAll:false
@@ -144,28 +164,31 @@ function loadData(){
 	}
 	
 	function triggerFav(){
-		var url = 'http://'+server_host+'/c/mobile/fav/triggerRent?houseId='+hid+'&userId='+uid;
+		var url ='http://'+server_host+'/c/mobile/fav/trigger?houseId='+hid+'&userId='+userId;
+		if(isChuzu){
+			url ='http://'+server_host+'/c/mobile/fav/triggerRent?houseId='+hid+'&userId='+userId;
+		}
 		YW.ajax({
-			url:'http://'+server_host+'/c/mobile/fav/trigger?houseId='+hid+'&userId='+userId,
+			url: url,
 			method:'post',
 			cache:false,
 			returnAll:false
 		},function(ret , err){
 			if(ret && ret.isfav=='1'){
 				//修改收藏状态
-				$('#favBtn').attr('src','../image/fav-yes.png');
-				api.toast({
-				    msg: '已收藏',
-				    duration:2000,
-				    location: 'bottom'
-				});
+				$('#favBtn').css('color','red');
+//				api.toast({
+//				    msg: '已收藏',
+//				    duration:2000,
+//				    location: 'top'
+//				});
 			}else{
-				$('#favBtn').attr('src','../image/fav-no.png');
-				api.toast({
-				    msg: '取消收藏',
-				    duration:2000,
-				    location: 'bottom'
-				});
+				$('#favBtn').css('color','white');
+//				api.toast({
+//				    msg: '取消收藏',
+//				    duration:2000,
+//				    location: 'top'
+//				});
 			}
 		});
 	}

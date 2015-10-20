@@ -30,7 +30,9 @@ apiready = function(){
 		config = cfg;
 		if(config && config.user){
 			if(config.user.avatar){
-				$('#avatar').attr('src','');
+				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
+			}else{
+				$('#avatar').attr('src','../images/zjb.png');
 			}
 		}
 		isLayoutOpen = api.pageParam.isLayoutOpen;
@@ -270,7 +272,7 @@ function bindTecentPush(){
 <div id="wrap" class="bodyer house">
     <div id="header" class="header">
         <span class="left">
-            <span onclick="openUserPanel();" class="imgbox"><img id="avatar" src="../images/zjb.png" alt="" class="img"></span>
+            <span onclick="openUserPanel();" class="imgbox"><img id="avatar" src="" alt="" class="img"></span>
         </span>
         <span class="conter">
             <span class="btnGroup h">

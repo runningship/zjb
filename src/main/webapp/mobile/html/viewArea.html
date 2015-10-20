@@ -11,6 +11,7 @@
 <link href="../css/style.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script src="../js/layer/layer.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
 <script src="../js/javascript.js" type="text/javascript"></script>
 <script type="text/javascript">
 var header;
@@ -19,8 +20,7 @@ var statusBarHeight=0;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
-	var area = api.pageParam.search;
-	$('#area').text(area);
+	$('#area').text(api.pageParam.searchParams.search);
 	api.openFrame({
         name: 'areaFrame',
 		url: 'house.html',
@@ -49,11 +49,11 @@ apiready = function(){
 <body>
 <div id="wrap" class="bodyer house">
     <div id="header" class="header">
-        <span class="left">
+        <span class="left" onclick="closexx();">
             <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
         </span>
         <span class="conter">
-            <span id="area">jflsjk</span>
+            <span id="area"></span>
         </span>
         <span class="right">
         </span>

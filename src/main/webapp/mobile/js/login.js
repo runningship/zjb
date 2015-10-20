@@ -28,6 +28,11 @@ function doLogin(){
 				    name: 'user',
 				    script: 'refreshPage();'
 				});
+				api.execScript({
+				    name: 'index',
+				    frameName:'house',
+				    script: 'refreshPage();'
+				});
 				alert('登录成功');
 				setTimeout(closexx,1000);
 		}else{
@@ -116,9 +121,13 @@ function openReg(){
 //	window.location='reg.html';
 }
 
-function startSoftInput(){
-	$('#wrap').addClass('move');
+function openCitys(){
+	api.openWin({
+	    name: 'citys',
+	    url: 'citys.html',
+	    pageParam: {cityPy: 'cityPy'}
+	});
 }
-function endSoftInput(){
-	$('#wrap').removeClass('move');
+function updateCity(cityName){
+	$('#city').text(cityName);
 }

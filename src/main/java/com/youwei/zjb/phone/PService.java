@@ -188,11 +188,14 @@ public class PService {
 		obj.put("lname", user.lname);
 		if(user.mobileDeadtime!=null){
 			obj.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+			obj.put("mobileDeadtimeInLong", user.mobileDeadtime.getTime());
 			if(!user.mobileDeadtime.before(Calendar.getInstance().getTime())){
 				obj.put("fufei", "1");
 			}
 		}else{
-			obj.put("mobileDeadtime", DataHelper.dateSdf.format(new Date()));
+			Date now = new Date();
+			obj.put("mobileDeadtimeInLong", now.getTime());
+			obj.put("mobileDeadtime", DataHelper.dateSdf.format(now));
 		}
 //		obj.put("mobileDeadtime", "3天后到期");
 		if(dept!=null){

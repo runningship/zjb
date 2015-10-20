@@ -34,7 +34,7 @@ function SeeThis(area){
 	searchParams.search=area;
     api.openWin({
         name: 'viewArea',
-        pageParam: {searchParams: searchParams,title:area},
+        pageParam: {searchParams: searchParams},
 		url: 'viewArea.html',
 		bounces:false,
         bgColor: '#fff'

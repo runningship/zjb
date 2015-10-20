@@ -137,3 +137,27 @@ function closexx(){
 function refreshPage(){
 	window.location.reload();
 }
+
+function isUserFuFei(config){
+	if(!config){
+		return false;
+	}
+	if(!config.user){
+		//没登录
+		return false;
+	}
+	if(!config.user.pwd){
+		//没登录
+		return false;
+	}
+	if(!config.user.mobileDeadtimeInLong){
+		//没续费
+		return false;
+	}
+	var now = new Date().getTime();
+	if(now>=config.user.mobileDeadtimeInLong){
+		//时间到期
+		return false;
+	}
+	return true;
+}

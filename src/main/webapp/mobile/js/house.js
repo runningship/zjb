@@ -4,6 +4,7 @@ var config;
 var isChuzu=false;
 var repeatClass="repeat";
 var searchParams = JSON.parse('{}');
+var fufei=false;
 function loadData(clear){
 	var url = 'http://'+server_host+'/c/mobile/list?page='+currentPage;
 	if(isChuzu){
@@ -68,6 +69,8 @@ function SeeThis(id){
 		}
 		getConfig(function(cfg){
 			config = cfg;
+			fufei = isUserFuFei(config);
+			blockAlert(fufei);
 		});
 		api.setRefreshHeaderInfo({
 			 	bgColor: '#333',
@@ -95,10 +98,6 @@ function SeeThis(id){
 		
 		loadData();
 	};
-
-function isFufei(){
-	return config && config.user && config.user.fufei;
-}
 
 function switchType(chuzu){
 	isChuzu = chuzu;

@@ -20,12 +20,11 @@
 <body>
 <div id="wrap" class="bodyer house details">
     <div id="header" class="header">
-        <span class="left" onclick="click();">
+        <span class="left" onclick="closexx();">
             <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
         </span>
         <span class="conter"><h1 id="area"></h1></span>
         <span class="right">
-        	<a href="javascript:void(0)" class="btns" onclick="triggerFav();"><i id="favBtn" class="iconfont">&#xe65a;</i></a>
         	<a href="javascript:void(0)" class="btns" onclick="triggerFav();"><i id="favBtn" class="iconfont">&#xe659;</i></a>
         </span>
     </div>
@@ -75,7 +74,7 @@
                 <span>
                 <li class="block tel_repeat" style="display:none">
                 	<span></span>
-                    <strong>$[tel]<i class="iconfont">&#xe610;</i></strong>
+                    <strong tapmode="tapped">$[tel]<i class="iconfont">&#xe610;</i></strong>
                 </li>
                 </span>
                 <li class="block">
@@ -108,18 +107,18 @@
         </div>
     </div>
     <div id="footer" class="footer">
-        <div class="item nos">续费</div>
+        <div class="item nos hide" id="kehu" onclick="call('055165314555')">拨打客户电话</div>
         <div class="item option">
             <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="1" onclick="rentStatus=4">
+                <input type="radio" class="check_radio"  checked="checked" name="ztai" value="1" onclick="rentStatus=1">
                 在租
             </label>
             <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="2" onclick="rentStatus=6;">
+                <input type="radio" class="check_radio" name="ztai" value="2" onclick="rentStatus=2;">
                 已租
             </label>
             <label class="formItem check">
-                <input type="radio" class="check_radio" name="ztai" value="3" onclick="rentStatus=7">
+                <input type="radio" class="check_radio" name="ztai" value="3" onclick="rentStatus=3">
                 停租
             </label>
         </div>
