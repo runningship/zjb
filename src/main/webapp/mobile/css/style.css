@@ -189,6 +189,10 @@ form
 .login .btn.submits{ display: block;/* width: 80%; margin: 0 auto; */background: #53D1FF; border-radius:0 0 5px 5px; color: #015270; }
 .login .btn.submitss{ display: block; width: 80%; margin: 20px auto 0; background: #53D1FF; border-radius:5px; color: #015270; box-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
 
+.login.bg{background: url('http://photo.enterdesk.com/2009-11-5/enterdesk.com-DA10D5B0134923B1FFBD2DBE3D4363B2.jpg');
+    background-size: cover;
+    background-position: center;}
+
 /* user */
 .user.side{ background: #333; }
 .user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
@@ -331,6 +335,40 @@ work
 
 
 
+
+/* share */
+.share{}
+.share .mainer{display: -webkit-box;-webkit-box-orient:vertical;-webkit-flex-flow: column;}
+.share .headbox{-webkit-box-flex:1;}
+.share .shareListBox{-webkit-box-flex:100; overflow: hidden;overflow-y: auto;}
+
+.share .headbox{ text-align: center; border-bottom: 1px solid #EFEFEF; background-color: #21BEF8; color: #FFF;}
+.share .headbox .codebox h2{ font-size: 40px;line-height: 1.5em; }
+.share .headbox{}
+
+.share .appList { padding: 10px 0 0px; }
+.share .appList ul{ width: 100%;display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; }
+.share .appList ul li{ text-align: center;-webkit-box-flex:1; }
+.share .appList ul li a{ color: #FFF; display: block; padding: 10px 0 10px }
+.share .appList ul li a i{ font-size: 30px; }
+
+.share .shareListBox{}
+.share .shareListBox h2{ text-align: center; font-size: 18px; line-height: 2em; border-bottom: 1px solid #EFEFEF; }
+.share .shareListBox ul {  }
+.share .shareListBox ul li{ height: 2.5em; line-height: 2.5em; display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; border-bottom: 1px solid #EFEFEF;}
+.share .shareListBox ul li span{ display: block; }
+.share .shareListBox ul li span.left{-webkit-box-flex:1; text-align: center;}
+.share .shareListBox ul li span.center{-webkit-box-flex:4;}
+.share .shareListBox ul li span.right{-webkit-box-flex:1; text-align: center;}
+
+.share.exch .headbox{}
+.share.exch .codeInput {display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; padding: 5px 5px; }
+.share.exch .codeInput .inputbox{-webkit-box-flex:1; height: 36px; line-height: 36px;}
+.share.exch .codeInput input.input{ width: 100%; border: 1px solid #EFEFEF; padding:5px 10px; font-size: 18px; }
+.share.exch .codeInput .btn{-webkit-box-flex:1; width: 80px; height: 36px; line-height: 36px; color: #FFF;}
+
+.share.exch .shareListBox {}
+.share.exch .shareListBox p{ width: 90%; margin: 0 auto; font-size: 1em; line-height: 1.5em; padding: 10px 0; border-bottom: 1px solid #EFEFEF;}
 
 
 
