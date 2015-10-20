@@ -1,18 +1,25 @@
-var user;
+var config;
 var hid;
 var tel_json = JSON.parse('[]');
-//var status=4;
+var sellStatus=4;
+var userId=1;
+var isChuzu=false;
 apiready = function(){
-	getUserInfo(function(u){
-		user = u;
+	isChuzu = api.pageParam.isChuzu;
+	getConfig(function(cfg){
+		config = cfg;
 		hid = api.pageParam.id;
 		loadData();
 		loadGenJin()
 	});
 };
 function loadData(){
+		var url = 'http://'+server_host+'/c/mobile/detail?houseId='+hid+'&userId='+userId;
+		if(isChuzu){
+			url = 'http://'+server_host+'/c/mobile/rent/detail?houseId='+hid+'&userId='+userId;
+		}
 		YW.ajax({
-				url:'http://'+server_host+'/c/mobile/detail?houseId='+hid+'&userId='+1,
+				url: url,
 				method:'post',
 				cache:false,
 				returnAll:false
@@ -56,15 +63,19 @@ function loadData(){
 					    	tel_json.push(xx);
 					    }
 					buildHtmlWithJsonArray('tel_repeat',tel_json , false,true);
-					//api.parseTapmode();
+					api.parseTapmode();
 				}else{
 				}
 			});
 	}
 	
 	function loadGenJin(clear){
+		var url = 'http://'+server_host+'/c/mobile/house/genjin/list?houseId='+hid;
+		if(isChuzu){
+			url = 'http://'+server_host+'/c/mobile/house/genjin/list?houseId='+hid;
+		}
 		YW.ajax({
-				url:'http://'+server_host+'/c/mobile/house/genjin/list?houseId='+hid,
+				url: url,
 				method:'post',
 				cache:false,
 				returnAll:false
@@ -83,7 +94,7 @@ function loadData(){
 	
 	function addGenjin(){
 		var conts = $('#conts').text();
-		var status = $('#gjType').val();
+//		var status = $('#gjType').val();
 		if(conts==''){
 			alert('请先填写跟进信息');
 			return;
@@ -92,7 +103,7 @@ function loadData(){
 			url:'http://'+server_host+'/c/mobile/house/genjin/add?chuzu=0',
 			method:'post',
 			data:{
-	        	values: {userId:1,houseId:hid,type:status,content:conts}
+	        	values: {userId:userId,houseId:hid,type:sellStatus,content:conts}
 	    	},
 			cache:false,
 			returnAll:false
@@ -104,5 +115,65 @@ function loadData(){
 			}else{
 				alert('跟进失败');
 			}
+		});
+	}
+	
+	function addRentGenJin(){
+		var conts = $('#conts').text();
+		if(conts==''){
+			alert('请先填写跟进信息');
+			return;
+		}
+		api.ajax({
+			url:'http://'+server_host+'/c/mobile/addRentGj',
+			method:'post',
+			data:{
+	        	values: {uid:uid,hid:hid,flag:status,conts:conts,chuzu:1}
+	    	},
+			cache:false,
+			returnAll:false
+		},function(ret , err){
+			if(ret && ret.result=='1'){
+				$('#conts').val('');
+				alert('跟进成功');
+				loadGenJin(true);
+			}else{
+				alert('跟进失败');
+			}
+		});
+	}
+	
+	function triggerFav(){
+		var url = 'http://'+server_host+'/c/mobile/fav/triggerRent?houseId='+hid+'&userId='+uid;
+		YW.ajax({
+			url:'http://'+server_host+'/c/mobile/fav/trigger?houseId='+hid+'&userId='+userId,
+			method:'post',
+			cache:false,
+			returnAll:false
+		},function(ret , err){
+			if(ret && ret.isfav=='1'){
+				//修改收藏状态
+				$('#favBtn').attr('src','../image/fav-yes.png');
+				api.toast({
+				    msg: '已收藏',
+				    duration:2000,
+				    location: 'bottom'
+				});
+			}else{
+				$('#favBtn').attr('src','../image/fav-no.png');
+				api.toast({
+				    msg: '取消收藏',
+				    duration:2000,
+				    location: 'bottom'
+				});
+			}
+		});
+	}
+	
+	function call(num){
+		num = num.split('-')[0];
+		api.call({
+		    type: 'tel_prompt',
+		    number: num
 		});
 	}

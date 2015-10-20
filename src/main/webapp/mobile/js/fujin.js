@@ -30,10 +30,13 @@ function loadData(clear){
 }
 	
 function SeeThis(area){
+	var searchParams = JSON.parse('{}');
+	searchParams.search=area;
     api.openWin({
-        name: 'viewRent',
-        pageParam: {area: area,pageName: 'viewRent',title:area},
-		url: '../html/wrap.html',
+        name: 'viewArea',
+        pageParam: {searchParams: searchParams,title:area},
+		url: 'viewArea.html',
+		bounces:false,
         bgColor: '#fff'
     });
 	$('#'+area).css('color','#999');

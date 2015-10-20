@@ -11,35 +11,66 @@
 <link href="../css/style.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script src="../js/layer/layer.js" type="text/javascript"></script>
-<script src="../js/javascript.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<!-- <script src="../js/javascript.js" type="text/javascript"></script> -->
+<script type="text/javascript">
+var config;
+apiready=function(){
+	getConfig(function(cfg){
+		config = cfg;
+	});
+	$('.cityList li').on('click',function(){
+		var city = JSON.parse('{}');
+		city.cityPy = $(this).find('a').attr('py');
+		city.cityName = $(this).find('a').text();
+		if(!config){
+			config = JSON.parse('{}');
+		}
+		config.city = city;
+		saveConfig(config);
+		api.execScript({
+		    name: 'user',
+		    script: 'updateCity("'+city.cityName+'")'
+		});
+		closexx();
+	});
+};
+function closexx(){
+	api.closeWin({
+	    name: 'citys'
+	});
+}
+</script>
 </head>
 <body>
 <div id="wrap" class="bodyer citys">
     <div id="header" class="header">
-        <span class="left">
-            <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
-            <h1>选择城市</h1>
+        <span class="left" onclick="closexx();">
+            <a href="javascript:void();" class="btns"><i class="iconfont">&#xe628;</i></a>
         </span>
+        <span class="conter"><h1>选择城市</h1></span>
         <span class="right">
         </span>
     </div>
     <div id="mainer" class="mainer">
         <div class="item">
             <ul class="cityList">
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
-                <li><a href="#">热门城市</a></li>
+                <li py="hefei"><a href="#">合肥</a></li>
+                <li py="wuhu"><a href="#">芜湖</a></li>
+                <li py="maanshan"><a href="#">马鞍山</a></li>
+                <li py="suzhou"><a href="#">宿州</a></li>
+                <li py="bengbu"><a href="#">蚌埠</a></li>
+                <li py="luan"><a href="#">六安</a></li>
+                <li py="anqing"><a href="#">安庆</a></li>
+                <li py="huainan"><a href="#">淮南</a></li>
+                <li py="tongling"><a href="#">铜陵</a></li>
+                <li py="huangshan"><a href="#">黄山</a></li>
+                <li py="xuancheng"><a href="#">宣城</a></li>
+                <li py="chizhou"><a href="#">池州</a></li>
+                <li py="chuzhou"><a href="#">滁州</a></li>
+                <li py="huaibei"><a href="#">淮北</a></li>
+                <li py="bozhou"><a href="#">亳州</a></li>
+                <li py="fuyang"><a href="#">阜阳</a></li>
             </ul>
         </div>
     </div>

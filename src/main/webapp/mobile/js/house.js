@@ -1,6 +1,6 @@
 var currentPage=1;
 var totalPageCount;
-var user;
+var config;
 var isChuzu=false;
 var repeatClass="repeat";
 var searchParams = JSON.parse('{}');
@@ -9,11 +9,11 @@ function loadData(clear){
 	if(isChuzu){
 		url = 'http://'+server_host+'/c/mobile/rent/list?page='+currentPage;
 	}
-	//blockAlert(repeatClass);
 	YW.ajax({
 		url: url,
 		method:'post',
 		cache:false,
+		 dataType: 'json',
 		data:{values:searchParams},
 		returnAll:false
 	},function(ret , err){
@@ -40,12 +40,22 @@ function setSearchParamsAndSearch(params){
 	loadData(true);
 }
 function SeeThis(id){
-	api.openWin({
-        name: 'info',
-        pageParam: {pageName: 'info',fufei:isFufei(), id:id},
-		url: 'house_details.html',
-		delay:300
-    });
+	if(isChuzu){
+		api.openWin({
+	        name: 'info',
+	        pageParam: {isChuzu:isChuzu, id:id},
+			url: 'house_rent_details.html',
+			delay:300
+	    });
+	}else{
+		api.openWin({
+	        name: 'info',
+	        pageParam: {isChuzu:isChuzu, id:id},
+			url: 'house_details.html',
+			delay:300
+	    });
+	}
+	
 	$('#'+id).css('color','#999');
  }
 
@@ -53,8 +63,11 @@ function SeeThis(id){
 		if(api.pageParam.isChuzu){
 			isChuzu = api.pageParam.isChuzu;
 		}
-		getUserInfo(function(u){
-			user = u;
+		if(api.pageParam.searchParams){
+			searchParams = api.pageParam.searchParams;
+		}
+		getConfig(function(cfg){
+			config = cfg;
 		});
 		api.setRefreshHeaderInfo({
 			 	bgColor: '#333',
@@ -84,7 +97,7 @@ function SeeThis(id){
 	};
 
 function isFufei(){
-	return user && user.fufei;
+	return config && config.user && config.user.fufei;
 }
 
 function switchType(chuzu){

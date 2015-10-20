@@ -3,9 +3,9 @@ var server_host = "192.168.1.222:8081";
 //定位所在城市
 var myCity;
 
-function getUserInfo(callback){
+function getConfig(callback){
 	api.getPrefs({
-	    key: 'user'
+	    key: 'config'
 	}, function(ret, err){
 		if(callback){
 			var v = ret.value;
@@ -16,6 +16,13 @@ function getUserInfo(callback){
 			}
 		}
 	});
+}
+
+function saveConfig(config){
+	api.setPrefs({
+        key:'config',
+        value:JSON.stringify(config)
+    });
 }
 
 function getCityInfo(callback){
@@ -121,4 +128,12 @@ window.alert=function(message){
 function getParam(name){
 var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
 return (reg.test(location.search))? encodeURIComponent(decodeURIComponent(RegExp.$2.replace(/\+/g, " "))) : '';
+}
+
+function closexx(){
+	api.closeWin();
+}
+
+function refreshPage(){
+	window.location.reload();
 }

@@ -62,7 +62,7 @@ public class PService {
 			return mv;
 		}
 		StringBuilder hql = new StringBuilder("select h.id as id ,"
-				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
+				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,h.hxt as hxt , h.hxf as hxf, h.hxw as hxw, "
 				+ " h.lceng as lceng, h.zceng as zceng from House h , Track t where h.sh=1 and t.hid=h.id and t.chuzu=0 and t.uid=?");
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
@@ -80,7 +80,7 @@ public class PService {
 			return mv;
 		}
 		StringBuilder hql = new StringBuilder("select h.id as id ,"
-				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu, h.zjia as zjia,h.mji as mji,h.fangshi as fangshi ,"
+				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu, h.zjia as zjia,h.mji as mji,h.fangshi as fangshi ,h.hxf as hxf,h.hxt as hxt, h.hxw as hxw,"
 				+ " h.lceng as lceng, h.zceng as zceng from HouseRent h , Track t where h.sh=1 and t.hid=h.id and t.chuzu=1 and t.uid=?");
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
@@ -219,6 +219,7 @@ public class PService {
 			user.avatar = avatar;
 			dao.saveOrUpdate(user);
 		}
+		mv.data.put("avatar", user.avatar);
 //		pushToOther(tel,deviceId);
 		return mv;
 	}
@@ -268,6 +269,9 @@ public class PService {
 		charge.addtime = new Date();
 		charge.status = "TRADE_SUCCESS";
 		charge.finish = 1;
+		//注意要以fee为准
+		//在很低的概率下，用户迅速选择年度，而后ajax完成将价格改成季付
+		charge.monthAdd = monthAdd;
 		dao.saveOrUpdate(charge);
 		User user = dao.get(User.class, userId);
 //		user.mobileDeadtime

@@ -10,32 +10,37 @@
 <link href="../css/reset.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
-<script src="../js/api.js" type="text/javascript"></script>
 <script src="../js/layer/layer.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
 <script src="../js/javascript.js" type="text/javascript"></script>
 <script type="text/javascript">
 var isLayoutOpen = false;
-var isChuzu=false;
+var isHouseChuzu=false;
+var isFujinChuzu = false;
 var header;
 var mainer;
-var houseType="";
-var statusBarHeight=25;
+var actionType="";
+var statusBarHeight=0;
+var lastAction="house";
+var config;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
-	//$api.fixStatusBar($api.byId('header'));
-	//$api.byId('header').style.height = '75px';
-	//$api.byId('header').style.lineHeight = '75px';
-	//
-	isLayoutOpen = api.pageParam.isLayoutOpen;
-	exitApp();
-	//openHouses();
-	openGroup();
-	//bindTecentPush();
+	getConfig(function(cfg){
+		config = cfg;
+		if(config && config.user){
+			if(config.user.avatar){
+				$('#avatar').attr('src','');
+			}
+		}
+		isLayoutOpen = api.pageParam.isLayoutOpen;
+		exitApp();
+		openGroup();
+	});
 };
 
 function openGroup(){
-	houseType = "house";
+	actionType = "house";
 	api.openFrameGroup ({
 	    name: 'group1',
 	    background:'#fff',
@@ -71,12 +76,13 @@ function exitApp(){
     api.addEventListener({
         name: 'keyback'
     }, function(ret, err){
-        api.toast({
-                msg: '再按一次退出',
-                duration:2000,
-                location: 'middle'
-            });
-
+//         api.toast({
+//                 msg: '再按一次退出',
+//                 duration:2000,
+//                 location: 'middle'
+//             });
+		//blockAlert('再按一次退出');
+		alert('再按一次退出');
             api.addEventListener({
                 name: 'keyback'
             }, function(ret, err){
@@ -93,34 +99,48 @@ function exitApp(){
     });
 }
 
-function setHouseType(chuzu){
-	isChuzu = chuzu;
+//更新出租出售按钮效果 
+function updateActionType(){
 	$('.btnGroup a').removeClass('active');
-	if(isChuzu){
-		$('.chuzu').addClass('active');
+	if(actionType=="house"){
+		if(isHouseChuzu){
+			$('.chuzu').addClass('active');
+		}else{
+			$('.chushou').addClass('active');
+		}
 	}else{
-		$('.chushou').addClass('active');
+		if(isFujinChuzu){
+			$('.chuzu').addClass('active');
+		}else{
+			$('.chushou').addClass('active');
+		}
 	}
+	
 }
 function switchHouseType(chuzu){
-	setHouseType(chuzu);
-	if(houseType=="house"){
+	if(actionType=="house"){
+		isHouseChuzu = chuzu;
 		api.execScript({
 		    frameName: 'house',
-		    script: 'switchType('+isChuzu+')'
+		    script: 'switchType('+isHouseChuzu+')'
 		});
 	}else{
+		isFujinChuzu = chuzu;
 		api.execScript({
 		    frameName: 'fujin',
-		    script: 'switchType('+isChuzu+')'
+		    script: 'switchType('+isFujinChuzu+')'
 		});
 	}
+	updateActionType();
 }
-function openHouses(chuzu){
+function openHouses(){
+	lastAction="house";
+	$('.conter .h').show();
+	$('.conter .w').hide();
 	if($('.house.active').length>0){
 		return;
 	}
-	houseType = "house";
+	actionType = "house";
 	//open houses
 	$('#footer .item').removeClass('active');
 	$('#footer .house').addClass('active');
@@ -128,7 +148,7 @@ function openHouses(chuzu){
         name: 'house',
 		url: 'house.html',
 		vScrollBarEnabled:true,
-		pageParam:{isChuzu:isChuzu},
+		pageParam:{isChuzu:isHouseChuzu},
 		reload:false,
         bounces: true,
         animation:{
@@ -143,24 +163,30 @@ function openHouses(chuzu){
             h: mainer.height()
         }
     });
-	setHouseType(chuzu);
+	updateActionType();
 }
 
-function openFujin(chuzu){
+function openFujin(){
+	$('.conter .h').show();
+	$('.conter .w').hide();
 	if($('.fujin.active').length>0){
 		return;
 	}
-	houseType = "fujin";
+	actionType = "fujin";
 	$('#footer .item').removeClass('active');
 	$('#footer .fujin').addClass('active');
+	var subType = "from_right";
+	if(lastAction=="work"){
+		subType="from_left";
+	}
 	api.openFrame({
         name: 'fujin',
 		url: 'fujin.html',
-		pageParam:{isChuzu:isChuzu},
+		pageParam:{isChuzu:isFujinChuzu},
 		reload:false,
 		animation:{
 		    type:"push",
-		    subType:"from_right",
+		    subType:subType,
 		    duration:300
 		},
         bounces: true,
@@ -172,10 +198,13 @@ function openFujin(chuzu){
             h: mainer.height()
         }
     });
-	setHouseType(chuzu);
+	updateActionType();
 }
 
 function openWork(){
+	lastAction="work";
+	$('.conter .h').hide();
+	$('.conter .w').show();
 	if($('.work.active').length>0){
 		return;
 	}
@@ -184,7 +213,6 @@ function openWork(){
 	api.openFrame({
         name: 'work',
 		url: 'work.html',
-		pageParam:{isChuzu:isChuzu},
 		reload:false,
 		animation:{
 		    type:"push",
@@ -242,11 +270,14 @@ function bindTecentPush(){
 <div id="wrap" class="bodyer house">
     <div id="header" class="header">
         <span class="left">
-            <span onclick="openUserPanel();" class="imgbox"><img src="../images/71.jpg" alt="" class="img"></span>
+            <span onclick="openUserPanel();" class="imgbox"><img id="avatar" src="../images/zjb.png" alt="" class="img"></span>
         </span>
         <span class="conter">
-            <span class="btnGroup">
+            <span class="btnGroup h">
                 <a href="javascript:void(0)" class="btns active chushou" onclick="switchHouseType(false);">出售</a><a href="javascript:void(0)" class="btns chuzu" onclick="switchHouseType(true);">出租</a>
+            </span>
+            <span class="btnGroup w" style="display:none">
+                <span>工作</span>
             </span>
         </span>
         <span class="right">
@@ -262,14 +293,14 @@ function bindTecentPush(){
                 <i class="iconfont n">&#xe605;</i>
                 <i class="iconfont y">&#xe606;</i>
             </div>
-            <h2 onclick="openHouses(isChuzu)">房源</h2>
+            <h2 onclick="openHouses()">房源</h2>
         </a>
         <a class="item  fujin">
             <div>
                 <i class="iconfont n">&#xe623;</i>
                 <i class="iconfont y">&#xe652;</i>
             </div>
-            <h2 onclick="openFujin(isChuzu)">附近</h2>
+            <h2 onclick="openFujin()">附近</h2>
         </a>
         <a class="item work">
             <div>
