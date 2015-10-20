@@ -91,6 +91,16 @@ i.reg{ color: #FF0000; }
 form
  */
 /* form checkbox */
+.formItem{ padding: 0 3px; display: table; width: 100%; height: 50px; line-height: 50px; border-bottom: 1px solid #DFDFDF; }
+.formItem .icon,.formItem .inputbox{ display: table-cell; height: inherit; line-height: inherit; position: relative;}
+.formItem .icon{ width: 30px; text-align: center; }
+.formItem .icon i{ font-size: 20px; color: #CFCFCF;}
+.formItem .inputbox .input{ width: 100%; padding-left: 10px; font-weight: normal; font-size: 16px; height: inherit; line-height: inherit; border:none;background: none; }
+.formItem .inputbox .btn{ position: absolute; top: 5px; right: 10px; padding: 0 20px; background: #18B4ED; border-radius: 50px; height: 40px; line-height: 40x; color: #FFF; }
+.formItem.active{ border-color: #18B4ED; }
+.formItem.active .icon i{ color: #18B4ED; }
+
+.formItem.sty2{ border-bottom: 1px solid #DFDFDF; padding: 0 20px; }
 .formItem.check { cursor: pointer; }
 .formItem.check .icon{ width: 50px; }
 .formItem.check .icon i{ color: #68BF01;}
@@ -383,6 +393,26 @@ work
 
 
 
+/* pay */
+.pay { background: #F6F6F6; }
+.pay .formUL{ margin:10px 0; background: #FFF; border: 1px solid #CFCFCF; border-left: none; border-right:0; }
+.pay .formUL li{ margin-left: 30px; }
+.pay .formUL li.tit{ border-bottom: 1px solid #DFDFDF; margin: 0; padding-left: 30px; height: 36px; line-height: 36px; }
+.pay .formUL li.no .formItem{ border-bottom: none; }
+.pay .btn.block{ margin:20px 10px 0;letter-spacing:8px; }
+.pay .imgbox{ display: inline-block; display: none; }
+.pay .imgbox img{ height: 40px; margin-bottom: -15px; }
+.pay .inputbox i{font-size: 20pt;color: #00A0E9;}
+
+.pay.ok .conts{  padding: 30px; background:url('../images/bg_jc.png') repeat-x bottom left; }
+.pay.ok .conts div.tits{ margin: 0 auto; width: 250px; padding-left: 30px; padding-bottom: 10px; border-bottom: 3px solid #66c000; color:#66c000;  }
+.pay.ok .conts div.tits .icon{ margin-right: 10px; float: left; vertical-align: bottom; }
+.pay.ok .conts div.tits .icon i{ font-size: 40px; line-height: 40px; }
+.pay.ok .conts div.tits span.cont h2{font-size: 22px;}
+.pay.ok .conts div.tits span.cont b{ font-size: 14px; }
+.pay.ok .conts ul.payOkList{ margin: 0 auto; width: 250px; padding: 20px 0 0 50px; font-size: 16px;}
+.pay.ok .conts ul.payOkList li{ margin-bottom: 10px; }
+.pay.ok .conts ul.payOkList li b{ color: #FF6100; }
 
 
 
