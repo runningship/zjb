@@ -169,13 +169,14 @@ form
 
 /* login */
 .login{background:-webkit-gradient(linear, 0 0, 0 100%, from(#18B4ED), to(#2c91d2));}
-.login .header a.btns{ width: auto; padding: 0 10px; }
+.login{}
+.login a.btns.city{ position: fixed; left: 10pt; top: 10pt; width: auto; padding: 0 10px; color: #FFF; }
 .login .header,
 .login .footer{ background: none; border: none; }
 .login .footer{ height: 20pt; line-height: 20pt; }
 .login .footer .item{ width: 50%; color: #FFF; }
 .login .mainer{ text-align: center; color: #FFF; }
-.login .mainer .logo { display: block; height: 120pt; line-height: 170pt; }
+.login .mainer .logo { display: block; height: 180pt; line-height: 140pt; }
 .login .mainer .logo i{ font-size:60pt; line-height: 60pt; }
 .login .formbox{ background: #FFF; display: block; width: 80%; margin: 0 auto; border-radius: 5pt; box-shadow: 1px 1px 5px rgba(0,0,0,0.2);}
 .login .formbox .formItem{ display: block; height: 30pt; line-height: 30pt; }
@@ -187,12 +188,22 @@ form
 .login .btn.submit{ margin-top: 40px; height: 26pt; line-height: 26pt; background: rgba(0,0,0,0.3); border-radius: 50px;box-shadow:-1px -1px rgba(0,0,0,0.4), 1px 1px rgba(255,255,255,0.3);text-shadow:1px 1px rgba(0,0,0,0.4), -1px -1px rgba(255,255,255,0.1); color: #FFF; }
 .login .btn.submit i{ color: #18B4ED; margin-left: 10px; }
 .login .btn.submits{ display: block;/* width: 80%; margin: 0 auto; */background: #53D1FF; border-radius:0 0 5px 5px; color: #015270; }
-.login .btn.submitss{ display: block; width: 80%; margin: 20px auto 0; background: #53D1FF; border-radius:5px; color: #015270; box-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
+.login .btn.submitss{ display: block; width: 80%; margin: 20px auto 0; background: #53D1FF; border-radius:5px; color: #FFF; box-shadow: 1px 1px 5px rgba(0,0,0,0.2); text-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
 
-.login.bg{background: url('http://photo.enterdesk.com/2009-11-5/enterdesk.com-DA10D5B0134923B1FFBD2DBE3D4363B2.jpg');
+.login.bg {background: url('http://photo.enterdesk.com/2009-11-5/enterdesk.com-DA10D5B0134923B1FFBD2DBE3D4363B2.jpg');
     background-size: cover;
     background-position: center;}
+.login.bg .formbox{ background: rgba(255,255,255,0.5); border:1px solid rgba(255,255,255,0.5); }
+.login.bg .formbox li{ border-color:rgba(255,255,255,0.3);  }
+.login.bg .formbox .icon i,
+.login.bg .formbox input.input{ color: #000; }
 
+.login.bg .input::-webkit-input-placeholder { color:#000; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
+.login.bg .input::-moz-placeholder { color:#000; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
+.login.bg .input:-ms-input-placeholder { color:#000; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
+
+.login.active .mainer .logo { height: 80pt; line-height: 100pt;  }
+.login.active .mainer .logo i{ font-size: 40pt; line-height: 40pt;}
 /* user */
 .user.side{ background: #333; }
 .user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
