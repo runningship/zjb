@@ -189,7 +189,7 @@ form
 .login .mainer .logo { display: block; height: 180pt; line-height: 140pt; }
 .login .mainer .logo i{ font-size:60pt; line-height: 60pt; }
 .login .formbox{ background: #FFF; display: block; width: 80%; margin: 0 auto; border-radius: 5pt; box-shadow: 1px 1px 5px rgba(0,0,0,0.2);}
-.login .formbox .formItem{ display: block; height: 30pt; line-height: 30pt; }
+.login .formbox .formItem{ display: block; height: 30pt; line-height: 30pt; border: none; }
 .login .formbox li:first-child .formItem{ border-bottom: 1px solid #EEE;}
 .login .formbox .formItem .icon{ float: left; display: block; height: inherit; line-height:inherit; width: 20%; }
 .login .formbox .formItem .icon i{ color: #777; }
@@ -214,6 +214,9 @@ form
 
 .login.active .mainer .logo { height: 80pt; line-height: 100pt;  }
 .login.active .mainer .logo i{ font-size: 40pt; line-height: 40pt;}
+
+
+
 /* user */
 .user.side{ background: #333; }
 .user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
@@ -233,8 +236,17 @@ form
 
 
 .search{}
-.search .header .inputbox{ display: block; height: inherit; line-height: inherit; }
-.search .header .inputbox input.input{ background: none;border:none; padding: 0 10px; color: #FFF; border-bottom: 1px solid #FFF; }
+.search .header .conter{-webkit-box-flex: 2; height: 80%; line-height: 80%;}
+.search .header .inputbox{ position: relative; display: block; height: inherit; line-height: inherit; height: 80%; margin-top: 10px; }
+.search .header .inputbox input.input{ background: none;border:none; padding: 5px 10px; color: #FFF; border-bottom: 1px solid rgba(255,255,255,0.7);; width: 100%; height: 100%;  }
+.search .header .inputbox:before{content:""; position: absolute; left: 0; bottom: 0; border-left: 1px solid rgba(255,255,255,0.7);; height: 8px; }
+.search .header .inputbox:after {content:""; position: absolute; right: 0; bottom: 0; border-left: 1px solid rgba(255,255,255,0.7); height: 8px; }
+.search .header .inputbox.focus:before,
+.search .header .inputbox.focus:after,
+.search .header .inputbox.focus input.input{border-color: #FFF;}
+.search .mainer{ background: #FFF; }
+.search .mainer .item{ background: #FFF; margin: 5pt 2pt; }
+.search .mainer .item:after {content: "\0020";display: block;clear: both;}
 
 /* placeholder */
 .search .inputbox .placeholder::-webkit-input-placeholder { color:#FFF; }
@@ -242,6 +254,37 @@ form
 .search .inputbox .placeholder:-ms-input-placeholder { color:#FFF; }
 /* placeholder end */
 
+.search .sList{ font-size: 12pt;}
+.search .sList li{ position: relative; display: inline-block; float: left; width: 33.333333%; text-align: center; }
+.search .sList li a{ display: block; height: 28pt; line-height: 28pt; border: 1px solid #EEE; color: #777; border-top-width: 0; border-left-width: 0;}
+.search .sList li:first-child a{ color: #09F; font-weight: bold; border-top-width:1px; }
+.search .sList li:nth-child(-n+3) a{ border-top-width:1px; }
+.search .sList li:nth-child(3n+1) a{ border-left-width:1px;}
+.search .sList li i{ position: absolute; right: 3px; bottom: 3px; font-size: 6pt; width: 12pt; height: 12pt; line-height: 12pt; background: #CCC; border-radius: 20pt; color: #FFF; }
+.search .sList li.active i{ background: #18B4ED; }
+
+.search .db{display: -webkit-box;-webkit-box-orient: horizontal;-webkit-flex-flow: column;flex-flow: column; height: 26pt; line-height: 26pt; font-size: 14pt; color: #777;}
+.search .db .t{ display: block; width: 20%; text-align:right; padding-right: 5pt; height: inherit; line-height: inherit; }
+.search .db .i{display: -webkit-box;-webkit-box-orient: horizontal;-webkit-flex-flow: column;flex-flow: column;  overflow: hidden;height: inherit; line-height: inherit; width: 70%;}
+.search .db .i .ia{ width: 40%; display: block;height: inherit; line-height: inherit;}
+.search .db .i .ib{ margin: 0 5pt; display: block;height: inherit; line-height: inherit;}
+.search .db .i .ic{ width: 40%; display: block;height: inherit; line-height: inherit;}
+.search .db .i .id{ margin-left: 5pt; display: block;height: inherit; line-height: inherit;}
+.search .db  input.input { display: block; width: 100%;padding: 0 10px;border: 0;height: inherit; line-height: inherit; border-bottom: 1px solid #DDD; text-align: center; font-size: 14pt;}
+.search .db  .inputbox{ position: relative;}
+.search .db  .inputbox:before{content:""; position: absolute; left: 0; bottom: 0; border-left: 1px solid #EEE; height: 8px; }
+.search .db  .inputbox:after {content:""; position: absolute; right: 0; bottom: 0; border-left: 1px solid #EEE; height: 8px; }
+
+.search .btnbox{ padding: 5pt; }
+.search .btn{ background: #18B4ED; color: #FFF; font-size: 14pt; display: block; border-radius: 3pt;  }
+
+.search .soList{}
+.search .soList li{ position: relative; height: 36pt; line-height: 36pt; border-bottom: 1px solid #EEE; font-size: 12pt;}
+.search .soList li:first-child{ border-top: 3px solid #EEE; margin-top: 20px; }
+.search .soList li h3{ display: inline-block; height: inherit; line-height: inherit; }
+.search .soList li a{ color: #777; padding-left: 5pt; display: block; }
+.search .soList li a i{ color: #999; }
+.search .soList li a.fr{ display: inline-block; position: absolute; top: 0; right: 0; bottom: 0; padding: 0 5pt; }
 
 /* house */
 .house sup{ vertical-align: super; font-size: 12px; }
