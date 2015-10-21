@@ -185,12 +185,14 @@ html .layui-layer-btn a{font-weight: normal;border: 1px solid #69BCEE;height: 26
 .btn.orange:active{ background-color: #FF6100;}
 .btn.orange:visited{ background-color: #FF6100;}
 .btn.gray{ background: #EFEFEF; border: 1px solid #DFDFDF; color: #666;}
-.btn.gray:hover{ background-color: #69C0FF;}
-.btn.gray:active{ background-color: #69C0FF;}
-.btn.gray:visited{ background-color: #69C0FF;}
+.btn.gray:hover{ background-color: #EFEFEF;}
+.btn.gray:active{ background-color: #EFEFEF;}
+.btn.gray:visited{ background-color: #EFEFEF; color: #999;}
 .btn.white{ background-color: #FFF; color: #000;}
 .btn.white:hover{ background-color: rgba(255,255,255,0.7);}
 
+body .btn.v3{ display: inline-block; width: 29%; }
+body .btn.v7{ display: inline-block; width: 69%;}
 /**
  * login and reg
  */
