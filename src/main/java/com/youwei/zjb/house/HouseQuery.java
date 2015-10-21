@@ -58,4 +58,5 @@ public class HouseQuery{
 	public String search;
 	public String site;
 	public String mobileTel;
+	public Integer uid;
 }

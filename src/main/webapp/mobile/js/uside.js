@@ -1,4 +1,3 @@
-var config;
 apiready = function(){
 	getConfig(function(cfg){
 		config = cfg;
@@ -11,7 +10,7 @@ function init(){
 			if(config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
 			}else{
-				$('#avatar').attr('src','../images/zjb.png');
+				$('#avatar').attr('src','http://192.168.1.222:8081/mobile/images/zjb.png');
 			}
 			if(config.user.pwd){
 				$('#active').css('display','');
@@ -26,7 +25,11 @@ function init(){
 			}else{
 				$('#endtime').text('未登录');
 			}
-			
+			if(config.user.invitationActive==0){
+				$('#gift').css('display','');
+			}
+		}else{
+			$('#avatar').attr('src','http://192.168.1.222:8081/mobile/images/zjb.png');
 		}
 		if(config.city){
 			$('#city').text(config.city.cityName);
@@ -34,13 +37,6 @@ function init(){
 	}
 }
 
-function checkUser(){
-	if(config && config.user && config.user.valid){
-		return true;
-	}
-	alert('请先登录');
-	return false;
-}
 function openLogin(){
 //	api.closeSlidPane();
 	api.openWin({
@@ -50,9 +46,25 @@ function openLogin(){
 }
 
 function openShare(){
+	if(!checkUser()){
+		alert('请先登录');
+		return;
+	}
 	api.openWin({
         name: 'share',
 		url: 'share.html',
+		pageParam: {uid: config.user.uid}
+    });
+}
+
+function openPay(){
+	if(!checkUser()){
+		alert('请先登录');
+		return;
+	}
+	api.openWin({
+        name: 'pay',
+		url: 'pay.html',
 		pageParam: {uid: config.user.uid}
     });
 }
@@ -69,9 +81,37 @@ function quit(){
 		    frameName:'house',
 		    script: 'refreshPage();'
 		});
+		api.execScript({
+		    name: 'index',
+		    frameName:'work',
+		    script: 'refreshPage();'
+		});
 	}
 }
 
 function updateCity(cityName){
 	$('#city').text(cityName);
+}
+
+function updateDeadtime(){
+	YW.ajax({
+		url:'http://'+server_host+'/c/mobile/user/getMobileDeadtime',
+		method:'post',
+		data:{
+        	values: {uid:config.user.uid}
+    	},
+		cache:false,
+		returnAll:false
+	},function(ret , err){
+		$('#endtime').text(ret.mobileDeadtime);
+		config.user.invitationActive=ret.invitationActive;
+		config.user.mobileDeadtime=ret.mobileDeadtime;
+		config.user.mobileDeadtimeInLong=ret.mobileDeadtimeInLong;
+		if(ret.invitationActive==1){
+			$('#gift').css('display','none');			
+		}else{
+			$('#gift').css('display','');
+		}
+		saveConfig(config);
+	});
 }

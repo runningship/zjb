@@ -10,6 +10,9 @@ function loadData(clear){
 	if(isChuzu){
 		url = 'http://'+server_host+'/c/mobile/rent/list?page='+currentPage;
 	}
+	if(api.pageParam.useMyHouse){
+		searchParams.uid=config.user.uid;
+	}
 	YW.ajax({
 		url: url,
 		method:'post',
@@ -70,7 +73,6 @@ function SeeThis(id){
 		getConfig(function(cfg){
 			config = cfg;
 			fufei = isUserFuFei(config);
-			blockAlert(fufei);
 		});
 		api.setRefreshHeaderInfo({
 			 	bgColor: '#333',
@@ -95,8 +97,8 @@ function SeeThis(id){
 				setTimeout(loadData,100);
 			}
 		);
-		
-		loadData();
+		setTimeout(loadData,200);
+		//loadData();
 	};
 
 function switchType(chuzu){

@@ -16,6 +16,9 @@
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript">
 apiready = function(){
+	getConfig(function(cfg){
+		config = cfg;
+	});
 	if(api.pageParam.invitation){
 		$('#msg').text('您已经成功使用邀请码'+api.pageParam.invitation.invitationCode+'兑换过新手礼包');
 	}else{

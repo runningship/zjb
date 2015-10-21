@@ -22,11 +22,12 @@ var isHouseChuzu;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
+	api.pageParam.useMyHouse=true;
 	getConfig(function(cfg){
 		config = cfg;
 		api.openFrame({
-	        name: 'favFrame',
-			url: 'houseFav.html',
+	        name: 'myHouseFrame',
+			url: 'house.html',
 			reload:true,
 	        bounces: false,
 	        pageParam:api.pageParam,
@@ -38,7 +39,6 @@ apiready = function(){
 	            h: mainer.height()
 	        }
 	    });
-		$('#footer').hide();
 	});
 };
 
@@ -60,37 +60,8 @@ function switchHouseType(chuzu){
 	updateActionType();
 }
 
-function startEdit(){
-	$('#startEdit').hide();
-	$('#endEdit').show();
-	$('#footer').show();
-	api.execScript({
-	    frameName: 'favFrame',
-	    script: 'startEditAction()'
-	});
-}
-function endEdit(){
-	$('#startEdit').show();
-	$('#endEdit').hide();
-	$('#footer').hide();
-	api.execScript({
-	    frameName: 'favFrame',
-	    script: 'endEditAction()'
-	});
-}
-
-function selectAll(){
-	api.execScript({
-	    frameName: 'favFrame',
-	    script: 'selectAllItems()'
-	});
-}
-
-function deleteAll(){
-	api.execScript({
-	    frameName: 'favFrame',
-	    script: 'delItems()'
-	});
+function openSearch(){
+	
 }
 </script>
 <style type="text/css">
@@ -116,20 +87,11 @@ function deleteAll(){
             </span>
         </span>
         <span class="right">
-            <a href="#" class="btns" id="startEdit" onclick="startEdit();"><i class="iconfont">&#xe61c;</i></a>
-            <a href="#" class="btns" id="endEdit" onclick="endEdit();" style="display:none">取消</a>
+            <a href="#" class="btns" id="publish" onclick="openAdd();"><i class="iconfont">&#xe61c;</i></a>
+            <a href="#" class="btns" id="search" onclick="openSearch();"><i class="iconfont">&#xe602;</i></a>
         </span>
     </div>
     <div id="mainer" class="mainer">
-        
-    </div>
-    <div id="footer" class="footer" >
-        <a class="item house">
-            <h2 onclick="selectAll()">全选</h2>
-        </a>
-        <a class="item  fujin">
-            <h2 onclick="deleteAll()">删除</h2>
-        </a>
     </div>
 </div>
 </body>

@@ -1,5 +1,4 @@
 var tel;
-var config;
 function doLogin(){
 	tel = $('#tel').val();
 	var pwd = $('#pwd').val();
@@ -11,6 +10,7 @@ function doLogin(){
 		alert('请输入登录密码');
 		return;
 	}
+	//请先选择城市
 	YW.ajax({
 		url:'http://'+server_host+'/c/mobile/user/login',
 		method:'post',
@@ -33,8 +33,13 @@ function doLogin(){
 				    frameName:'house',
 				    script: 'refreshPage();'
 				});
-				alert('登录成功');
-				setTimeout(closexx,1000);
+				api.execScript({
+				    name: 'index',
+				    frameName:'work',
+				    script: 'refreshPage();'
+				});
+				alert('登录成功2');
+				forward();
 		}else{
 			alert(ret.msg);
 		}
@@ -42,7 +47,34 @@ function doLogin(){
 	});
 }
 
-
+function forward(){
+	if(api.pageParam.forward){
+//		api.openFrame({
+//		    name: 'fav',
+//		    url: api.pageParam.forward,
+//		    pageParam: api.pageParam,
+//		    rect:{
+//		        x:0,
+//		        y:0,
+//		        w:'auto',
+//		        h:'auto'
+//		    },
+//		});
+		api.openWin({
+		    name: 'fav',
+		    url: api.pageParam.forward,
+		    pageParam: api.pageParam
+		});
+		
+		setTimeout(function(){
+			api.closeWin({
+			    name: 'login'
+			});
+		},2000);
+	}else{
+		closexx();
+	}
+}
 apiready=function(){
 	getConfig(function(cfg){
 		config=cfg;

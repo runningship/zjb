@@ -2,7 +2,7 @@
 var server_host = "192.168.1.222:8081";
 //定位所在城市
 var myCity;
-
+var config;
 function getConfig(callback){
 	api.getPrefs({
 	    key: 'config'
@@ -10,7 +10,7 @@ function getConfig(callback){
 		if(callback){
 			var v = ret.value;
 			if(!v){
-				callback(null);
+				callback(JSON.parse('{}'));
 			}else{
 				callback(JSON.parse(v));
 			}
@@ -25,18 +25,17 @@ function saveConfig(config){
     });
 }
 
-function getCityInfo(callback){
-	api.getPrefs({
-	    key:'city'
-	},function(ret,err){
-		if(ret.value){
-			callback(JSON.parse(ret.value));
-		}else{
-			callback(null);
-		}
-		
-	});
-}
+//function getCityInfo(callback){
+//	api.getPrefs({
+//	    key:'city'
+//	},function(ret,err){
+//		if(ret.value){
+//			callback(JSON.parse(ret.value));
+//		}else{
+//			callback(null);
+//		}
+//	});
+//}
 
 YW={
     ajax:function(opts,callback){
@@ -54,63 +53,50 @@ YW={
     		opts.data=JSON.parse('{}');
     		opts.data.values=JSON.parse('{}');
     	}
-    	api.getPrefs({
-	        key:'city'
-        },function(ret,err){
-        	var v = ret.value;
-	    	opts.data.values.deviceId = api.deviceId;
-        	if(v!=''){
-        		var jsonV = JSON.parse(v);
-	        	opts.data.values.cityPy=jsonV.cityPy;
-        	}
-        	api.getPrefs({
-		        key:'tel'
-	        },function(ret,err){
-	        	if(ret.value){
-//	        		if(!opts.data.values.url || opts.data.values.url.indexOf('mobile/user/login')<0 ||opts.data.values.url.indexOf('mobile/user/sendVerifyCode')<0 || opts.data.values.url.indexOf('mobile/user/verifyCode')<0){
-//	        			//url 为空 或者 url不是login时
-//	        			opts.data.values.tel = ret.value;
-//	        		}
-	        		if(!opts.data.values.tel){
-	        			//如果参数中没有电话号码
-	        			opts.data.values.tel = ret.value;
-	        		}
-	        	}
-	        	api.showProgress({
-				    style: 'default',
-				    animationType: 'fade',
-				    title: '请求处理中...',
-				    text: '马上就好了',
-				    modal: false
+    	opts.data.values.deviceId = api.deviceId;
+    	if(config.city && config.city.cityPy){
+        	opts.data.values.cityPy=config.city.cityPy;
+    	}else{
+    		alert('请先在登录页选择城市');
+    		return;
+    	}
+    	if(config.user && config.user.tel){
+//    		if(!opts.data.values.url || opts.data.values.url.indexOf('mobile/user/login')<0 ||opts.data.values.url.indexOf('mobile/user/sendVerifyCode')<0 || opts.data.values.url.indexOf('mobile/user/verifyCode')<0){
+//    			//url 为空 或者 url不是login时
+//    			opts.data.values.tel = ret.value;
+//    		}
+    		if(!opts.data.values.tel){
+    			//如果参数中没有电话号码
+    			opts.data.values.tel = config.user.tel;
+    		}
+    	}
+    	api.showProgress({
+		    style: 'default',
+		    animationType: 'fade',
+		    title: '请求处理中...',
+		    text: '马上就好了',
+		    modal: false
+		});
+    	//blockAlert(JSON.stringify(opts));
+       	api.ajax(opts,function(ret,err){
+       		if(err && 'loginFromOther'==err.msg){
+   				blockAlert('账号在别处登录');
+               config.user.tel='';
+               config.user.pwd='';
+               saveConfig(config);
+	    		api.closeWidget({
+				    id: 'A6989896004356',
+				    retData: {name:'closeWidget'},
+                    silent:true
 				});
-		       	api.ajax(opts,function(ret,err){
-		       		if(err && 'loginFromOther'==err.msg){
-	       				blockAlert('账号在别处登录');
-		       			api.setPrefs({
-	                           key:'tel',
-	                           value:''
-                           });
-                       api.setPrefs({
-                           key:'pwd',
-                           value:''
-                       });
-			    		api.closeWidget({
-						    id: 'A6989896004356',
-						    retData: {name:'closeWidget'},
-		                    silent:true
-						});
-		       			return;
-		       		}
-		       		api.hideProgress();
-		       		if(err){
-		       			alert(err.msg);
-		       		}
-		       		callback(ret,err);
-		       	});
-	        });
-        	
-        });
-    	
+       			return;
+       		}
+       		api.hideProgress();
+       		if(err){
+       			alert(err.msg);
+       		}
+       		callback(ret,err);
+       	});
     }
 }
 
@@ -136,6 +122,14 @@ function closexx(){
 
 function refreshPage(){
 	window.location.reload();
+}
+
+
+function checkUser(){
+	if(config && config.user && config.user.pwd){
+		return true;
+	}
+	return false;
 }
 
 function isUserFuFei(config){

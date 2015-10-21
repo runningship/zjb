@@ -187,6 +187,10 @@ public class PHouseService {
 			hql.append(" and h.area = ?");
 			params.add(query.specArea);
 		}
+		if(query.uid!=null){
+			hql.append(" and h.uid= ? ");
+			params.add(query.uid);
+		}
 		if(query.mjiStart!=null){
 			hql.append(" and h.mji>= ? ");
 			params.add(query.mjiStart);

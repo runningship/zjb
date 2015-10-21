@@ -22,20 +22,18 @@ var mainer;
 var actionType="";
 var statusBarHeight=0;
 var lastAction="house";
-var config;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
 	getConfig(function(cfg){
 		config = cfg;
-		if(config && config.user){
-			if(config.user.avatar){
+		if(config && config.user && config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
-			}else{
-				$('#avatar').attr('src','../images/zjb.png');
-			}
+		}else{
+			$('#avatar').attr('src','http://192.168.1.222:8081/mobile/images/zjb.png');
 		}
 		isLayoutOpen = api.pageParam.isLayoutOpen;
+		//bindTecentPush();
 		exitApp();
 		openGroup();
 	});
@@ -84,20 +82,32 @@ function exitApp(){
 //                 location: 'middle'
 //             });
 		//blockAlert('再按一次退出');
-		alert('再按一次退出');
-            api.addEventListener({
-                name: 'keyback'
-            }, function(ret, err){
-                api.closeWidget({
-                        id: 'A6989896004356',     //这里改成自己的应用ID
-                        retData: {name:'closeWidget'},
-                        silent:true
-                    });
-            });
+		api.confirm({
+			msg: '确定要退出程序吗?',
+		    buttons:['确定', '取消']
+		},function(ret,err){
+		    if(ret.buttonIndex == 1){
+		        //api.alert({msg:ret.text});
+		    	 api.closeWidget({
+                     id: 'A6989896004356',     //这里改成自己的应用ID
+                     retData: {name:'closeWidget'},
+                     silent:true
+                 });
+		    }
+		});
+//         api.addEventListener({
+//             name: 'keyback'
+//         }, function(ret, err){
+//             api.closeWidget({
+//                     id: 'A6989896004356',     //这里改成自己的应用ID
+//                     retData: {name:'closeWidget'},
+//                     silent:true
+//                 });
+//         });
 
-            setTimeout(function(){
-                    exitApp();
-            },3000)
+//         setTimeout(function(){
+//                 exitApp();
+//         },3000)
     });
 }
 
@@ -244,20 +254,27 @@ function openSearch(){
 
 function bindTecentPush(){
 	// 注册设备并绑定用户账号
+	blockAlert(3432);
 	var tencentPush = api.require('tencentPush');
 
 	var resultCallback = function(ret, err){
-		alert(JSON.stringify(err));
+		blockAlert(JSON.stringify(ret));
 	    if(ret.status){
-	        alert("注册成功，token为："+ret.token);
+	    	blockAlert("注册成功，token为："+ret.token);
 	    }else{
-	        alert("注册失败，错误码："+err.code+"，错误信息："+err.msg);
+	    	blockAlert("注册失败，错误码："+err.code+"，错误信息："+err.msg);
 	    }
 	};
 
 	// 需要绑定的账号，若为"*"表示解除之前的账号绑定
 	var params = {account:"15856985122"};
-	tencentPush.registerPush( resultCallback);
+	tencentPush.registerPush( params,resultCallback);
+	
+	var params2 = {name:"notifactionClick"};    
+	tencentPush.setListener(params2, function(ret, err){
+		blockAlert("收到通知被点击的回调，title："+ret.title+"，content："+ret.content+"，customContent："+ret.customContent 
+			    + ",activity:"+ret.activity+",actionType:"+ret.actionType+",msgid:"+ret.msgid);
+	});
 }
 </script>
 <style type="text/css">

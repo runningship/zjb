@@ -19,7 +19,11 @@
 <script src="../js/houseInfo.js" type="text/javascript"></script>
 <style type="text/css">
 .fl img{width:24pt;border-radius: 100px;}
-
+.kefu{background-color:lightskyblue;height:44px;line-height:44px;color:white;text-align:-webkit-center;background: #FF6100;border-radius: 5px;
+  bottom: 20px;border:none;  margin-left: auto;
+  margin-right: auto;
+  font-size: 15px;
+  font-weight: bold;}
 </style>
 </head>
 <body>
@@ -97,9 +101,9 @@
             </ul>
             <p class="htime" id="dateadd"></p>
         </div>
-        <div class="title">
+<!--         <div class="title"> -->
 <!--             <i class="iconfont">&#xe61e;</i>跟进 3 -->
-        </div>
+<!--         </div> -->
         <div class="item gjList hide">
             <ul class="lists">
                 <li class="genjin" style="display:none">
@@ -116,8 +120,8 @@
             </ul>
         </div>
     </div>
+    <div class="item nos hide kefu"  id="kefu" onclick="call('055165314555')">拨打客户电话</div>
     <div id="footer" class="footer hide" >
-        <div class="item nos hide" id="kefu" onclick="call('055165314555')">拨打客户电话</div>
         <div class="item option">
             <label class="formItem check">
                 <input type="radio" class="check_radio"  checked="checked" name="ztai" value="4" onclick="status=4">

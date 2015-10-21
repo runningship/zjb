@@ -43,6 +43,9 @@ function SeeThis(area){
 }
 	
 apiready = function(){
+		getConfig(function(cfg){
+			config = cfg;
+		});
 		isChuzu = api.pageParam.isChuzu;
 		api.setRefreshHeaderInfo(function(ret,err){
 			api.refreshHeaderLoadDone();

@@ -155,6 +155,10 @@ public class PHouseRentService {
 			hql.append(" and h.area = ?");
 			params.add(query.specArea);
 		}
+		if(query.uid!=null){
+			hql.append(" and h.uid= ? ");
+			params.add(query.uid);
+		}
 		if(query.fangshi!=null){
 			hql.append(" and h.fangshi = ?");
 			params.add(query.fangshi);

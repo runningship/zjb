@@ -152,6 +152,7 @@ public class MobileUserService {
 		ModelAndView mv = new ModelAndView();
 		InvitationActivation invitation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", uid);
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+		mv.data.put("mobileDeadtimeInLong", user.mobileDeadtime.getTime());
 		if(invitation!=null){
 			mv.data.put("invitationActive", invitation.active);
 		}else{
