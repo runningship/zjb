@@ -9,88 +9,118 @@
 <meta name="keywords" content="">
 <link href="../css/reset.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
+<link href="../css/common.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script src="../js/layer/layer.js" type="text/javascript"></script>
 <script src="../js/javascript.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/buildHtml.js" type="text/javascript"></script>
+<script src="../js/search.js" type="text/javascript"></script>
+<style type="text/css">
+.search .soList li a{display:initial}
+#searchHistoryWrap .fr{float:right}
+.search .soList li h3{height:48px;}
+</style>
 </head>
 <body>
 <div id="wrap" class="bodyer search">
     <div id="header" class="header">
-        <span class="left">
+        <span class="left" onclick="closexx()">
             <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
         </span>
         <span class="conter">
             <div class="inputbox focus">
-                <input type="text" class="input placeholder" name="search" placeholder="搜索" x-webkit-speech>
+                <input type="text" class="input placeholder" id="searchText" name="search" placeholder="搜索" x-webkit-speech>
             </div>
         </span>
         <span class="right"></span>
     </div>
     <div id="mainer" class="mainer">
         <div class="item">
-            <ul class="sList">
+            <ul class="sList" >
                 <li class="title"><a href="#">区域</a></li>
-                <li class="active"><a href="#"><i class="iconfont">&#xe656;</i>庐阳区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>蜀山区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
-                <li class=""><a href="#"><i class="iconfont">&#xe656;</i>滨湖新区</a></li>
+                <span id="quyuWrap">
+                <li tapmode='tapped' class="repeat active" data="$[name]" onclick="selectQuyu(this);"><a><i class="iconfont hide">&#xe656;</i>$[name]</a></li>
+                </span>
             </ul>
         </div>
-        <div class="item db">
-            <span class="t">面积</span>
+        <div class="item db chuzu" style="display:none">
+            <span class="t">方式</span>
             <div class="i">
-                <span class="ia inputbox"><input type="number" class="input" name=""></span>
+                <span class="ia inputbox"><input type="radio" name="fangshi" value="1" onclick="fangshi=this.value">整租</span>
                 <span class="ib">-</span>
-                <span class="ic inputbox"><input type="number" class="input" name=""></span>
+                <span class="ic inputbox"><input type="radio" name="fangshi" value="2"  onclick="fangshi=this.value">合租</span>
                 <span class="id">m²</span>
             </div>
         </div>
         <div class="item db">
+            <span class="t">面积</span>
+            <div class="i">
+                <span class="ia inputbox"><input type="number" class="input" id="mjiStart"></span>
+                <span class="ib">-</span>
+                <span class="ic inputbox"><input type="number" class="input" id="mjiEnd"></span>
+            </div>
+        </div>
+        <div class="item db chushou" style="display:none">
             <span class="t">总价</span>
             <div class="i">
-                <span class="ia inputbox"><input type="number" class="input" name=""></span>
+                <span class="ia inputbox"><input type="number" class="input" id="zjiaStart"></span>
                 <span class="ib">-</span>
-                <span class="ic inputbox"><input type="number" class="input" name=""></span>
+                <span class="ic inputbox"><input type="number" class="input" id="zjiaEnd"></span>
                 <span class="id">万</span>
             </div>
         </div>
-        <div class="item db">
+        <div class="item db chuzu" style="display:none">
+            <span class="t">租金</span>
+            <div class="i">
+                <span class="ia inputbox"><input type="number" class="input" id="zjiaStart"></span>
+                <span class="ib">-</span>
+                <span class="ic inputbox"><input type="number" class="input" id="zjiaEnd"></span>
+                <span class="id">元</span>
+            </div>
+        </div>
+        <div class="item db chushou" style="display:none">
             <span class="t">单价</span>
             <div class="i">
-                <span class="ia inputbox"><input type="number" class="input" name=""></span>
+                <span class="ia inputbox"><input type="number" class="input" id="djiaStart"></span>
                 <span class="ib">-</span>
-                <span class="ic inputbox"><input type="number" class="input" name=""></span>
+                <span class="ic inputbox"><input type="number" class="input" id="djiaEnd"></span>
                 <span class="id">元</span>
             </div>
         </div>
         <div class="item db">
             <span class="t">楼层</span>
             <div class="i">
-                <span class="ia inputbox"><input type="number" class="input" name=""></span>
+                <span class="ia inputbox"><input type="number" class="input" id="lcengStart"></span>
                 <span class="ib">-</span>
-                <span class="ic inputbox"><input type="number" class="input" name=""></span>
+                <span class="ic inputbox"><input type="number" class="input" id="lcengEnd"></span>
                 <span class="id">层</span>
             </div>
         </div>
-        <div class="item btnbox">
-            <a href="#" class="btn v7">搜索</a>
-            <a href="#" class="btn v3 gray">清空</a>
+        <div class="item db" id="others" style="display:none">
+            <span class="t">其他</span>
+            <div class="i">
+                <span class="ia inputbox"><input type="number" class="input" id="dhao" name="dhao" placeholder="栋号"></span>
+                <span class="ib">-</span>
+                <span class="ic inputbox"><input type="number" class="input" id="fhao" name="fhao" placeholder="房号"></span>
+                <span class="id"></span>
+            </div>
         </div>
-        <ul class="item soList">
-            <li><a href="" class="fr"><i class="iconfont">&#xe657;</i></a><a href="#" class=""><i class="iconfont">&#xe640;</i> <h3>楼盘名称 30-60m² 40-66万 </h3></a></li>
-            <li><a href="" class="fr"><i class="iconfont">&#xe657;</i></a><a href="#" class=""><i class="iconfont">&#xe640;</i> <h3>楼盘名称 30-60m² 40-66万 </h3></a></li>
-            <li><a href="" class="fr"><i class="iconfont">&#xe657;</i></a><a href="#" class=""><i class="iconfont">&#xe640;</i> <h3>楼盘名称 30-60m² 40-66万 </h3></a></li>
-            <li><a href="" class="fr"><i class="iconfont">&#xe657;</i></a><a href="#" class=""><i class="iconfont">&#xe640;</i> <h3>楼盘名称 30-60m² 40-66万 </h3></a></li>
-        </ul>
+        <div class="item db" id="tel" style="display:none">
+            <span class="t">电话</span>
+            <div class="i">
+                <span class="ia inputbox"><input type="number" class="input" id="mobileTel" name="mobileTel" ></span>
+            </div>
+        </div>
         <div class="item btnbox">
-            <a href="#" class="btn gray">清空历史记录</a>
+            <a tapmode="tapped"  onclick="doSearch();" class="btn v7">搜索</a>
+            <a tapmode="tapped" onclick="clearQuery();" class="btn v3 gray">清空</a>
+        </div>
+        <ul class="item soList" id="searchHistoryWrap">
+            <li class="hisRepeat" style="display:none">$[html]</li>
+        </ul>
+        <div onclick="clearHistory();" class="item btnbox">
+            <a tapmode="tapped"  class="btn gray">清空历史记录</a>
         </div>
     </div>
 </div>

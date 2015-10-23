@@ -27,7 +27,7 @@ apiready = function(){
 		config = cfg;
 		api.openFrame({
 	        name: 'myHouseFrame',
-			url: 'house.html',
+			url: 'house.html?'+new Date().getTime(),
 			reload:true,
 	        bounces: false,
 	        pageParam:api.pageParam,
@@ -54,10 +54,18 @@ function updateActionType(){
 function switchHouseType(chuzu){
 	isHouseChuzu = chuzu;
 	api.execScript({
-	    frameName: 'favFrame',
+	    frameName: 'myHouseFrame',
 	    script: 'switchType('+isHouseChuzu+')'
 	});
 	updateActionType();
+}
+
+function openAdd(){
+	api.openWin({
+	    name: 'houseAdd',
+	    url: 'houseAdd.html?'+new Date().getTime(),
+	    pageParam:{isChuzu:isHouseChuzu}
+	});
 }
 
 function openSearch(){

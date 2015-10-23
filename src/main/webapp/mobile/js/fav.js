@@ -155,6 +155,7 @@ apiready=function(){
 	houseType = api.pageParam.houseType;
 	getConfig(function(cfg){
 		config=cfg;
+		userId=config.user.uid;
 	    loadData();
 	});
 	api.setRefreshHeaderInfo({

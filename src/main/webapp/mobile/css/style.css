@@ -190,7 +190,8 @@ form
 .login .mainer .logo i{ font-size:60pt; line-height: 60pt; }
 .login .formbox{ background: #FFF; display: block; width: 80%; margin: 0 auto; border-radius: 5pt; box-shadow: 1px 1px 5px rgba(0,0,0,0.2);}
 .login .formbox .formItem{ display: block; height: 30pt; line-height: 30pt; border: none; }
-.login .formbox li:first-child .formItem{ border-bottom: 1px solid #EEE;}
+.login .formbox li .formItem{ border-top: 1px solid #EEE;}
+.login .formbox li:first-child .formItem{ border-top: 0px solid #EEE;}
 .login .formbox .formItem .icon{ float: left; display: block; height: inherit; line-height:inherit; width: 20%; }
 .login .formbox .formItem .icon i{ color: #777; }
 .login .formbox .formItem .inputbox{ display: block; margin-left: 20%; height: inherit; line-height: inherit; }
@@ -208,9 +209,9 @@ form
 .login.bg .formbox .icon i,
 .login.bg .formbox input.input{ color: #000; }
 
-.login.bg .input::-webkit-input-placeholder { color:#000; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
-.login.bg .input::-moz-placeholder { color:#000; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
-.login.bg .input:-ms-input-placeholder { color:#000; -webkit-transition: all 0.4s linear;transition: all 0.4s linear;}
+.login.bg .input::-webkit-input-placeholder { color:#000; -webkit-transition: all 0s linear;transition: all 0s linear;}
+.login.bg .input::-moz-placeholder { color:#000; -webkit-transition: all 0s linear;transition: all 0s linear;}
+.login.bg .input:-ms-input-placeholder { color:#000; -webkit-transition: all 0s linear;transition: all 0s linear;}
 
 .login.active .mainer .logo { height: 80pt; line-height: 100pt;  }
 .login.active .mainer .logo i{ font-size: 40pt; line-height: 40pt;}

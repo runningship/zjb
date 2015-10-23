@@ -31,7 +31,7 @@ function openMyHouse(){
 	}
 	api.openWin({
 	    name: 'myHouse',
-	    url: 'myHouseWin.html'
+	    url: 'myHouseWin.html?'+new Date().getTime()
 	});
 }
 
