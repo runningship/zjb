@@ -1,6 +1,5 @@
 package com.youwei.zjb.phone;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,20 +9,29 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.ThreadSessionHelper;
+import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.house.HouseQuery;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.sys.CityService;
+import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.user.entity.Track;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.ViewHouseLog;
 import com.youwei.zjb.util.DataHelper;
 @Module(name="/mobile/")
@@ -124,6 +132,8 @@ public class PHouseService {
 			vl.viewTime = new Date();
 			dao.saveOrUpdate(vl);
 		}
+		long readCount = dao.countHql("select count(*) from Track where hid=? and chuzu=?", houseId , 0);
+		mv.data.put("readCount", readCount);
 		return mv;
 	}
 	@WebMethod
@@ -139,12 +149,16 @@ public class PHouseService {
 			String favStr = "@"+query.userid+"|";
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h  where h.sh=1 and h.fav like ?");
+					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h  where h.sh=1 and h.ztai=5 and h.fav like ?");
 			params.add("%"+favStr+"%");
+		}else if(query.searchMyPrivateHouse!=null && query.searchMyPrivateHouse==1){
+			hql.append("select h.id as id ,"
+					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
+					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h where 1=1  ");
 		}else{
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h where h.seeGX=1 and h.sh=1 ");
+					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h where h.seeGX=1 and h.sh=1 and h.ztai=4 ");
 		}
 		if(StringUtils.isNotEmpty(query.search)){
 			hql.append(" and area like ?");
@@ -235,7 +249,7 @@ public class PHouseService {
 			}
 			hql.append(" )");
 		}
-		hql.append(" and h.ztai=4");
+		//hql.append(" and h.ztai=4");
 		Page<Map> page = new Page<Map>();
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
@@ -281,6 +295,134 @@ public class PHouseService {
 			}
 		}
 		mv.data.put("status", 1);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView addPrivateHouse(House house , String hxing , String fangzhuTel){
+		ModelAndView mv = new ModelAndView();
+		DataHelper.validte(house);
+		house.isdel = 0;
+		house.dateadd = new Date();
+		house.ztai = SellState.在售.getCodeString();
+		house.cid = 0;
+		house.did = 0;
+		house.sh = 0;
+		house.seeFH=0;
+		house.seeGX=0;
+		house.seeHM=0;
+		if(StringUtils.isEmpty(hxing)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"hxing","");
+		}
+		if(StringUtils.isEmpty(fangzhuTel)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fangzhuTel","");
+		}
+		FangXing fx = FangXing.parse(hxing);
+		house.hxf = fx.getHxf();
+		house.hxt = fx.getHxt();
+		house.hxw = fx.getHxw();
+		house.tel = fangzhuTel;
+		if(house.mji!=null && house.mji!=0){
+			int jiage = (int) (house.zjia*10000/house.mji);
+			house.djia = (float) jiage;
+		}
+		String nbsp = String.valueOf((char)160);
+		dao.saveOrUpdate(house);
+		if(StringUtils.isNotEmpty(house.tel)){
+			String[] arr = house.tel.split("/");
+			for(String tel : arr){
+				tel = tel.trim().replace(nbsp, "");
+				HouseTel ht = new HouseTel();
+				ht.hid = house.id;
+				ht.tel = tel;
+				dao.saveOrUpdate(ht);
+			}
+		}
+		mv.data.put("msg", "发布成功");
+		mv.data.put("result", 0);
+		return mv;
+	}
+	@WebMethod
+	public ModelAndView editPrivateHouse(Integer hid){
+		ModelAndView mv = new ModelAndView();
+		House po = dao.get(House.class, hid);
+		if(po!=null){
+			mv.data.put("house", JSONHelper.toJSON(po));
+		}else{
+			throw new GException(PlatformExceptionType.BusinessException,"房源不存在或被删除");
+		}
+		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
+		if(fxing!=null){
+			mv.data.put("hxing", fxing.getName());
+		}else{
+			LogUtil.warning("房源的户型信息错误,hid="+hid);
+		}
+		
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView delPrivateHouse(Integer hid){
+		ModelAndView mv = new ModelAndView();
+		House po = dao.get(House.class, hid);
+		if(po!=null){
+			dao.delete(po);
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView updatePrivateHouse(House house , String hxing , String fangzhuTel){
+		DataHelper.validte(house);
+		if(StringUtils.isEmpty(hxing)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"hxing","");
+		}
+		if(StringUtils.isEmpty(fangzhuTel)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fangzhuTel","");
+		}
+		ModelAndView mv = new ModelAndView();
+		House po = dao.get(House.class, house.id);
+		po.area = house.area;
+		po.address = house.address;
+		po.dhao = house.dhao;
+		po.fhao = house.fhao;
+		po.quyu= house.quyu;
+		po.lceng = house.lceng;
+		po.zceng = house.zceng;
+		po.lxing = house.lxing;
+		po.mji = house.mji;
+		po.zjia =house.zjia;
+		FangXing fx = FangXing.parse(hxing);
+		po.hxf = fx.getHxf();
+		po.hxt = fx.getHxt();
+		po.hxw = fx.getHxw();
+		po.dateyear = house.dateyear;
+		po.zxiu = house.zxiu;
+		po.lxr = house.lxr;
+		po.beizhu = house.beizhu;
+		if(po.mji!=null && po.mji!=0){
+			int jiage = (int) (po.zjia*10000/house.mji);
+			po.djia = (float) jiage;
+		}
+		if(house.tel==null){
+			dao.execute("delete from HouseTel where hid = ?", house.id);
+			po.tel = house.tel;
+		}else{
+				//修改了电话号码
+				dao.execute("delete from HouseTel where hid = ?", house.id);
+				String[] arr = house.tel.split("/");
+				for(String tel : arr){
+					HouseTel ht = new HouseTel();
+					ht.hid = house.id;
+					ht.tel = tel;
+					dao.saveOrUpdate(ht);
+				}
+				po.tel = house.tel;
+		}
+		dao.saveOrUpdate(po);
+		mv.data.put("msg", "修改成功");
+		//mv.data.put("house", JSONHelper.toJSON(po , DataHelper.dateSdf.toPattern()));
+		mv.data.put("result", 0);
 		return mv;
 	}
 }
