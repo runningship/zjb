@@ -30,9 +30,9 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 	
 	public static void main(String[] args){
 		StartUpListener.initDataSource();
-		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.58.com/zufang/22143062947980x.shtml" ,  new Date(), RentType.整租 , null);
+//		HouseRent hr = PullDataHelper.pullDetail(instance.action , "http://hf.58.com/zufang/22143062947980x.shtml" ,  new Date(), RentType.整租 , null);
 //		int a=0;
-//		instance.work();
+		instance.work();
 	}
 
 	private Elements getRepeats(Document doc){
@@ -87,6 +87,10 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 					LogUtil.warning("获取房源链接失败:"+e.html());
 					continue;
 				}
+				if(link.contains("anjuke")){
+					//过滤掉安居客的
+					continue;
+				}
 				//过滤掉参数
 				URL linkUrl;
 				try {
@@ -117,11 +121,11 @@ public class Pull58Rent extends AbstractJob implements HouseRentJob{
 	}
 	
 	private String getLink(Element elem){
-		return elem.getElementsByTag("h1").first().getElementsByTag("a").first().attr("href");
+		return elem.getElementsByClass("qj-rentd").first().getElementsByTag("a").first().attr("href");
 	}
 	
 	private RentType getRentType(Element elem){
-		String title = elem.getElementsByTag("h1").first().getElementsByTag("a").first().text();
+		String title =elem.getElementsByClass("qj-rentd").first().getElementsByTag("a").first().text();
 		if(StringUtils.isEmpty(title)){
 			return RentType.合租;
 		}
