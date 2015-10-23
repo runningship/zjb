@@ -691,7 +691,7 @@ public class HouseOwnerService {
 //		ThreadSession.setCityPY(cityPy);
 		HouseOwner owner = (HouseOwner)ThreadSession.getHttpSession().getAttribute(KeyConstants.Session_House_Owner);
 		ModelAndView mv = new ModelAndView();
-		validte(house);
+		DataHelper.validte(house);
 		house.isdel = 0;
 		house.dateadd = new Date();
 		house.ztai = SellState.在售.getCodeString();
@@ -753,7 +753,7 @@ public class HouseOwnerService {
 			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
 		}
 		if(house.zjia==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","租金不能为空");
 		}
 		//检查，是否是重复房源.检查条件为,小区名+楼栋号+房号
 		HouseRent po = dao.getUniqueByParams(HouseRent.class, new String[]{"area","dhao","fhao"},new Object[]{house.area,house.dhao,house.fhao});
@@ -803,7 +803,7 @@ public class HouseOwnerService {
 	
 	@WebMethod
 	public ModelAndView updateHouse(House house , String hxing){
-		validte(house);
+		DataHelper.validte(house);
 //		String cityPy = ThreadSessionHelper.getHouseOwnerCity();
 //		ThreadSession.setCityPY(cityPy);
 		ModelAndView mv = new ModelAndView();
@@ -889,29 +889,6 @@ public class HouseOwnerService {
 		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "修改成功");
 		return mv;
-	}
-	
-	private void validte(House house){
-		if(house.fhao==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
-		}
-		if(house.dhao==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
-		}
-		if(house.mji==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
-		}
-		if(house.lceng==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"lceng","所在楼层不能为空");
-		}
-		
-		if(house.zceng==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
-		}
-		
-		if(house.zjia==null){
-			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
-		}
 	}
 	
 	private boolean hasUserInfo(){

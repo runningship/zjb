@@ -16,10 +16,15 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
+import org.bc.sdak.GException;
 import org.bc.sdak.utils.LogUtil;
+import org.bc.web.PlatformExceptionType;
 import org.bc.web.ThreadSession;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 
 public class DataHelper {
 
@@ -77,6 +82,29 @@ public class DataHelper {
 		return "";
 	}
 	
+	public static void validte(House house){
+		if(house.fhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+		}
+		if(house.dhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
+		}
+		if(house.mji==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+		}
+		if(house.lceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"lceng","所在楼层不能为空");
+		}
+		
+		if(house.zceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zceng","总层不能为空");
+		}
+		
+		if(house.zjia==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","总价不能为空");
+		}
+	}
+	
 	public static List<String> getFilterWords(){
 		try {
 			List<String> lines = FileUtils.readLines(new File(ThreadSession.getHttpSession().getServletContext().getRealPath("/")+File.separator+"filter-words.txt"), "utf8");
@@ -84,6 +112,27 @@ public class DataHelper {
 		} catch (IOException e) {
 			LogUtil.log(Level.WARN, "load filter words failed ", e);
 			return new ArrayList<String>();
+		}
+	}
+
+	public static void validte(HouseRent house) {
+		if(house.fhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fhao","房号不能为空");
+		}
+		if(house.dhao==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"dhao","栋号不能为空");
+		}
+		if(house.mji==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"mji","面积不能为空");
+		}
+		if(house.lceng==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"lceng","所在楼层不能为空");
+		}
+		if(house.zjia==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"zjia","租金不能为空");
+		}
+		if(house.fangshi==null){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fangshi","租金不能为空");
 		}
 	}
 }
