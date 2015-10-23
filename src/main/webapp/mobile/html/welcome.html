@@ -4,27 +4,31 @@
 <meta charset="" />
 <title></title>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript">
 apiready = function(){
-// 	api.addEventListener({
-// 	    name:'noticeclicked'
-// 	},function(ret,err){
-// 		api.openWidget({
-// 		    id: 'A6989896004356',
-// 		    animation: {
-// 		        type: 'flip',
-// 		        subType: 'from_bottom',
-// 		        duration: 500
-// 		    }
-// 		}, function(ret, err){
-// 		});
-// 	});
+	getConfig(function(cfg){
+		config = cfg;
+		if(config.city && config.city.cityPy){
+			setTimeout(function(){
+				//window.location='index.html';
+				  openIndexFrame();
+				//openGroup();
+			} , 2000);	
+		}else{
+			//
+			setTimeout(function(){
+				api.openWin({
+				    name: 'citys',
+				    url: 'citys.html?'+new Date().getTime(),
+				    pageParam: {cityPy: 'cityPy',init:true}
+				});
+			} , 2000);
+			
+		}
+		
+	});
 	
-	setTimeout(function(){
-		//window.location='index.html';
-		  openIndexFrame();
-		//openGroup();
-	} , 2000);
 };
 
 function test(){
@@ -59,6 +63,7 @@ function openGroup(){
 	    var index = ret.index;
 	});
 }
+
 function openIndexFrame(){
 // 	api.openFrame({
 // 	    name: 'rootFrame',

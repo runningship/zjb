@@ -19,6 +19,7 @@ var mainer;
 var actionType="";
 var statusBarHeight=0;
 var isHouseChuzu;
+var searchParams;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
@@ -69,7 +70,15 @@ function openAdd(){
 }
 
 function openSearch(){
-	
+	api.openWin({
+	    name: 'simpleSearch',
+	    url: 'simpleSearch.html?'+new Date().getTime(),
+	    pageParam:{isChuzu:isHouseChuzu,searchParams:searchParams}
+	});
+}
+
+function setSearchParams(params){
+	searchParams = params;
 }
 </script>
 <style type="text/css">

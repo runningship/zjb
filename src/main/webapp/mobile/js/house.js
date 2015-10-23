@@ -42,10 +42,11 @@ function loadData(clear){
 	});
 }
 
-//function setSearchParamsAndSearch(params){
-//	searchParams = JSON.parse(params);
-//	loadData(true);
-//}
+function setSearchParamsAndSearch(params){
+	//blockAlert(JSON.stringify(params));
+	searchParams =params;
+	loadData(true);
+}
 function SeeThis(id){
 	 if(searchMyPrivateHouse){
 		//编辑我的房源

@@ -76,11 +76,15 @@ function forward(){
 	}
 }
 apiready=function(){
+	api.clearCache();
+	
 	getConfig(function(cfg){
 		config=cfg;
 		if(config && config.user){
 			$('#tel').val(config.user.tel);
 			$('#pwd').val(config.user.pwd);
+		}
+		if(config.city){
 			$('#city').text(config.city.cityName);
 		}
 	});
@@ -125,7 +129,7 @@ function openModifyPwd(){
 function openCitys(){
 	api.openWin({
 	    name: 'citys',
-	    url: 'citys.html',
+	    url: 'citys.html?'+new Date().getTime(),
 	    pageParam: {cityPy: 'cityPy'}
 	});
 }

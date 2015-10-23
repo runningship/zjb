@@ -17,6 +17,10 @@ var historyItemSplitChar='--';
 var isChuzu=false;
 var searchHistoryKey="searchHistory";
 apiready=function(){
+	onready();
+};
+
+function onready(callback){
 	getConfig(function(cfg){
 		isChuzu = api.pageParam.isChuzu;
 		if(isChuzu){
@@ -29,9 +33,11 @@ apiready=function(){
 		}
 		config=cfg;
 		init();
+		if(callback){
+			callback();
+		}
 	});
-};
-
+}
 function init(){
 	if(isUserFuFei(config)){
 		$('#others').css('display','');
@@ -72,6 +78,8 @@ function clearQuery(){
 	$('#mainer input').val('');
 	$('#mainer input').attr('checked',false);
 	fangshi='';
+	$('#quyuWrap li i').addClass('hide');
+	$('#searchText').val('');
 }
 
 function selectAllQuyu(obj){
@@ -97,7 +105,8 @@ function clearHistory(){
     });
     historySearchCount=0;
 }
-function doSearch(){
+
+function getSearchParam(){
 	mjiStart = $('#mjiStart').val();
 	mjiEnd = $('#mjiEnd').val();
 	zjiaStart = $('#zjiaStart').val();
@@ -121,8 +130,8 @@ function doSearch(){
 	quyus = tmp2.join();
 
 	var pageParam = JSON.parse('{}');
-	pageParam.title = "搜索结果";
-	pageParam.pageName = "searchResult";
+//	pageParam.title = "搜索结果";
+//	pageParam.pageName = "searchResult";
 	pageParam.mjiStart = mjiStart;
 	pageParam.mjiEnd = mjiEnd;
 	pageParam.zjiaStart = zjiaStart;
@@ -139,7 +148,10 @@ function doSearch(){
 	
 	pageParam.fangshi=fangshi;
 	pageParam.isChuzu = isChuzu;
-	blockAlert(1);
+	return pageParam;
+}
+function doSearch(){
+	var pageParam = getSearchParam();
 	AddSelect(pageParam);
     api.openWin({
         name: 'searchResult',

@@ -23,6 +23,7 @@ var actionType="";
 var statusBarHeight=0;
 var lastAction="house";
 apiready = function(){
+	api.clearCache();
 	header = $('#header');
 	mainer = $('#mainer');
 	getConfig(function(cfg){
@@ -30,7 +31,7 @@ apiready = function(){
 		if(config && config.user && config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
 		}else{
-			$('#avatar').attr('src','http://192.168.1.222:8081/mobile/images/zjb.png');
+			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 		}
 		isLayoutOpen = api.pageParam.isLayoutOpen;
 		//bindTecentPush();

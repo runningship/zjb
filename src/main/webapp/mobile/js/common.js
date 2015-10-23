@@ -57,7 +57,7 @@ YW={
     	if(config.city && config.city.cityPy){
         	opts.data.values.cityPy=config.city.cityPy;
     	}else{
-    		if(!opts.data.value.ignoreCityCheck){
+    		if(!opts.data.values.ignoreCityCheck){
     			alert('请先在登录页选择城市');
         		return;
     		}

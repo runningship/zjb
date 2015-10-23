@@ -15,11 +15,58 @@
 <script src="../js/javascript.js" type="text/javascript"></script>
 <script src="../js/common.js" type="text/javascript"></script>
 <script src="../js/buildHtml.js" type="text/javascript"></script>
-<script src="../js/search.js" type="text/javascript"></script>
+<script src="../js/search.js?ghg" type="text/javascript"></script>
+<script type="text/javascript">
+function setSearchParam(){
+	var param = getSearchParam();
+	//保存查询条件
+	api.execScript({
+	    name: 'myHouse',
+	    script: 'setSearchParams('+JSON.stringify(param)+');'
+	});
+	api.execScript({
+	    name: 'myHouse',
+	    frameName:'myHouseFrame',
+	    script: 'setSearchParamsAndSearch('+JSON.stringify(param)+');'
+	});
+	closexx();
+}
+apiready=function(){
+	onready(function(){
+		
+		if(!api.pageParam.searchParams){
+			return;
+		}
+		blockAlert(JSON.stringify(api.pageParam.searchParams));
+		//设置查询条件 api.pageParam.searchParams
+		$('#mjiStart').val(api.pageParam.searchParams.mjiStart);
+		$('#mjiEnd').val(api.pageParam.searchParams.mjiEnd);
+		$('#zjiaStart').val(api.pageParam.searchParams.zjiaStart);
+		$('#zjiaEnd').val(api.pageParam.searchParams.zjiaEnd);
+		$('#djiaStart').val(api.pageParam.searchParams.djiaStart);
+		$('#djiaEnd').val(api.pageParam.searchParams.djiaEnd);
+		$('#lcengStart').val(api.pageParam.searchParams.lcengStart);
+		$('#lcengEnd').val(api.pageParam.searchParams.lcengEnd);
+		$('#searchText').val(api.pageParam.searchParams.search);
+		$('#fhao').val(api.pageParam.searchParams.fhao);
+		$('#dhao').val(api.pageParam.searchParams.dhao);
+		$('#mobileTel').val(api.pageParam.searchParams.mobileTel);
+		if(api.pageParam.searchParams.quyu){
+			var quyus = api.pageParam.searchParams.quyu.split(',');
+			for(var i=0;i<quyus.length;i++){
+				//$(obj).find('i').toggleClass('hide');
+				$('li i[data='+quyus[i]+']').toggleClass('hide');
+			}
+		}
+		if(fangshi){
+			fangshi = api.pageParam.searchParams.fangshi;
+			$('input[name=fangshi][value='+fangshi+']').attr('checked','checked');	
+		}
+		
+	});
+};
+</script>
 <style type="text/css">
-.search .soList li a{display:initial}
-#searchHistoryWrap .fr{float:right}
-.search .soList li h3{height:48px;}
 </style>
 </head>
 <body>
@@ -30,7 +77,7 @@
         </span>
         <span class="conter">
             <div class="inputbox focus">
-                <input type="text" class="input placeholder" id="searchText" name="search" placeholder="楼盘" />
+                <input type="text" class="input placeholder" id="searchText" name="search" placeholder="楼盘"  />
             </div>
         </span>
         <span class="right"></span>
@@ -40,7 +87,7 @@
             <ul class="sList" >
                 <li class="title"><a href="#">区域</a></li>
                 <span id="quyuWrap">
-                <li tapmode='tapped' class="repeat active" data="$[name]" onclick="selectQuyu(this);"><a><i class="iconfont hide">&#xe656;</i>$[name]</a></li>
+                <li tapmode='tapped' class="repeat active" style="display:none" data="$[name]" onclick="selectQuyu(this);"><a><i data="$[name]" class="iconfont hide">&#xe656;</i>$[name]</a></li>
                 </span>
             </ul>
         </div>
@@ -113,14 +160,8 @@
             </div>
         </div>
         <div class="item btnbox">
-            <a tapmode="tapped"  onclick="doSearch();" class="btn v7">搜索</a>
+            <a tapmode="tapped"  onclick="setSearchParam();" class="btn v7">搜索</a>
             <a tapmode="tapped" onclick="clearQuery();" class="btn v3 gray">清空</a>
-        </div>
-        <ul class="item soList" id="searchHistoryWrap">
-            <li class="hisRepeat" style="display:none">$[html]</li>
-        </ul>
-        <div onclick="clearHistory();" class="item btnbox">
-            <a tapmode="tapped"  class="btn gray">清空历史记录</a>
         </div>
     </div>
 </div>

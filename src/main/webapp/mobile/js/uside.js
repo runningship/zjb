@@ -10,7 +10,7 @@ function init(){
 			if(config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
 			}else{
-				$('#avatar').attr('src','http://192.168.1.222:8081/mobile/images/zjb.png');
+				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 			}
 			if(config.user.pwd){
 				$('#active').css('display','');
@@ -99,6 +99,19 @@ function updateCity(cityName){
 	$('#city').text(cityName);
 }
 
+function openCitys(){
+	if(config.user.pwd){
+		//请先退出登录
+		alert('请先退出登录');
+		return;
+	}
+	api.openWin({
+	    name: 'citys',
+	    url: 'citys.html?'+new Date().getTime(),
+	    pageParam: {cityPy: 'cityPy'}
+	});
+}
+
 function updateDeadtime(){
 	YW.ajax({
 		url:'http://'+server_host+'/c/mobile/user/getMobileDeadtime',
@@ -120,4 +133,11 @@ function updateDeadtime(){
 		}
 		saveConfig(config);
 	});
+}
+
+function clearSysCache(){
+	api.clearCache();
+	config = JSON.parse('{}');
+	saveConfig(config);
+	alert('缓存清理成功');
 }
