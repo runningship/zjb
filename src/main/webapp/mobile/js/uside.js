@@ -44,7 +44,13 @@ function openLogin(){
 	    url: 'login.html'
 	});
 }
-
+function openPwd(){
+//	api.closeSlidPane();
+	api.openWin({
+	    name: 'pwd',
+	    url: 'pwd.html'
+	});
+}
 function openShare(){
 	if(!checkUser()){
 		alert('请先登录');

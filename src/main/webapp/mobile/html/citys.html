@@ -17,27 +17,45 @@
 apiready=function(){
 	getConfig(function(cfg){
 		config = cfg;
-	});
-	$('.cityList li').on('click',function(){
-		var city = JSON.parse('{}');
-		city.cityPy = $(this)..attr('py');
-		city.cityName = $(this).find('a').text();
-		if(!config){
-			config = JSON.parse('{}');
+		if(config.city && config.city.cityPy){
+			$('[py='+config.city.cityPy+']').addClass('active');
 		}
-		config.city = city;
-		saveConfig(config);
-		api.execScript({
-		    name: 'login',
-		    script: 'updateCity("'+city.cityName+'")'
-		});
-		api.execScript({
-		    name: 'user',
-		    script: 'updateCity("'+city.cityName+'")'
-		});
-		closexx();
+		init();
 	});
 };
+
+function init(){
+	$('.cityList li').on('click',function(){
+		var city = JSON.parse('{}');
+		city.cityPy = $(this).attr('py');
+		city.cityName = $(this).find('a').text();
+		YW.ajax({
+			url:'http://'+server_host+'/c/mobile/getQuyus',
+			method:'post',
+			data:{
+	        	values: {pinyin:city.cityPy,ignoreCityCheck:true}
+	    	},
+			cache:false,
+			returnAll:false
+		},function(ret , err){
+			if(ret.status){
+				city.quyus = ret.quyus;
+				config.city = city;
+				blockAlert(JSON.stringify(config));
+				saveConfig(config);
+				api.execScript({
+				    name: 'login',
+				    script: 'updateCity("'+city.cityName+'")'
+				});
+				api.execScript({
+				    name: 'user',
+				    script: 'updateCity("'+city.cityName+'")'
+				});
+				closexx();
+			}
+		});
+	});
+}
 function closexx(){
 	api.closeWin({
 	    name: 'citys'
@@ -58,7 +76,7 @@ function closexx(){
     <div id="mainer" class="mainer">
         <div class="item">
             <ul class="cityList">
-                <li py="hefei" class="active"><a href="#"><i class="iconfont fr">&#xe656;</i>合肥</a></li>
+                <li py="hefei" class=""><a href="#"><i class="iconfont fr">&#xe656;</i>合肥</a></li>
                 <li py="wuhu"><a href="#"><i class="iconfont fr">&#xe656;</i>芜湖</a></li>
                 <li py="maanshan"><a href="#"><i class="iconfont fr">&#xe656;</i>马鞍山</a></li>
                 <li py="suzhou"><a href="#"><i class="iconfont fr">&#xe656;</i>宿州</a></li>

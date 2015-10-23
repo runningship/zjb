@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="org.bc.sdak.SimpDaoTool"%>
@@ -5,7 +6,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
+String agent = request.getHeader("User-Agent");
+if(agent.contains("Chrome/35.0.1916.157")){
+	System.out.println("from node webkit");
+	request.setAttribute("nwjs", true);
+}
+//Enumeration<String> names = request.getHeaderNames();
+//CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 Calendar now = Calendar.getInstance();
 now.set(Calendar.HOUR_OF_DAY, 0);
 now.set(Calendar.MINUTE, 0);
@@ -34,12 +41,13 @@ Date end= now.getTime();
 <link href="/style/css.css" rel="stylesheet">
 <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="/style/style.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/oa/style/cssOa.css" />
-<link rel="stylesheet" type="text/css" href="/oa/style/cocoWindow.css" />
-<link rel="stylesheet" type="text/css" href="/oa/style/cocoWinLayer.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/oa/style/cssOa.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="/oa/style/cocoWindow.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="/oa/style/cocoWinLayer.css" /> -->
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/im.css" /> -->
 <script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/js/buildHtml.js" type="text/javascript"></script>
+<!-- <script src="/js/buildHtml.js" type="text/javascript"></script> -->
+<script src="file:///D:\code\zjb\src\main\webapp\js\buildHtml.js" type="text/javascript"></script>
 <script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>

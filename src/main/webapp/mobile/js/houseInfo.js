@@ -36,7 +36,6 @@ function loadData(){
 					fdhao = ret.dhao+' - '+ret.fhao;
 					if(isFufei){
 						$('#area').text(ret.area+'  '+fdhao);
-						$('.gjList').show();
 						$('#footer').show();
 						$('#favBtn').show();
 						var tels = ret.tel.split(',');
@@ -78,7 +77,7 @@ function loadData(){
 					$('#address').text(ret.address);
 					$('#beizhu').text(ret.beizhu);
 					$('#lxr').text(ret.lxr);
-					
+					$('#readCount').text(ret.readCount+' 人');
 					if(ret.isfav=='1'){
 						$('#favBtn').css('color','red');
 					}
@@ -99,6 +98,9 @@ function loadData(){
 				returnAll:false
 			},function(ret , err){
 				if(ret){
+					if(ret.data.length>0){
+						$('.gjList').show();
+					}
 					for(var i=0;i<ret.data.length;i++){
 						ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg';
 					}

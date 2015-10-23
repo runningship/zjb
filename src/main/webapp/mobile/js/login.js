@@ -102,23 +102,12 @@ apiready=function(){
 	}
 };
 
-function selectCity(){
+function openReg(){
 	api.openWin({
-	    name: 'citys',
-	    pageParam:{parentPage:'login',title:'选择城市',pageName:'citys'},
-		url: '../html/wrap.html'
-	});
-}
-
-//call by wrap
-function setCity(pinyin,name){
-	$('#city').text(name);
-}
-
-function clearCache(){
-	api.setPrefs({
-	    key:'city',
-	    value:''
+        name: 'reg',
+		url: 'reg.html',
+		bounces: false,
+		scaleEnabled:true
     });
 }
 function openModifyPwd(){
@@ -131,26 +120,6 @@ function openModifyPwd(){
 		scaleEnabled:true,
         bgColor: '#fff'
     });
-}
-
-function openReg(){
-//	api.openWin({
-//        name: 'reg',
-//        pageParam: {pageName: 'reg',title:'注册'},
-//		url: 'wrap.html',
-//        bgColor: '#fff'
-//    });
-
-	api.openWin({
-        name: 'reg',
-        pageParam: {pageName: 'login'},
-		url: 'reg.html',
-		bounces: true,
-		scaleEnabled:true,
-        bgColor: '#fff'
-    });
-	
-//	window.location='reg.html';
 }
 
 function openCitys(){

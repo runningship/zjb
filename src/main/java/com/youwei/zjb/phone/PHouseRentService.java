@@ -1,6 +1,7 @@
 package com.youwei.zjb.phone;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,16 +10,24 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.house.HouseQuery;
+import com.youwei.zjb.house.RentState;
+import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
+import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Track;
 import com.youwei.zjb.util.DataHelper;
@@ -107,6 +116,8 @@ public class PHouseRentService {
 				dao.saveOrUpdate(track);
 			}
 		}
+		long readCount = dao.countHql("select count(*) from Track where hid=? and chuzu=?", houseId , 1);
+		mv.data.put("readCount", readCount);
 		return mv;
 	}
 	@WebMethod
@@ -122,12 +133,16 @@ public class PHouseRentService {
 			String favStr = "@"+query.userid+"|";
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from HouseRent h  where h.sh=1 and h.fav like ?");
+					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from HouseRent h  where h.sh=1 and h.ztai=1 and h.fav like ?");
 			params.add("%"+favStr+"%");
+		}else if(query.searchMyPrivateHouse!=null && query.searchMyPrivateHouse==1){
+			hql.append("select h.id as id ,"
+					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
+					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from HouseRent h where 1=1 ");
 		}else{
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from HouseRent h where h.seeGX=1 and h.sh=1 ");
+					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from HouseRent h where h.seeGX=1 and h.sh=1 and h.ztai=1 ");
 		}
 		if(StringUtils.isNotEmpty(query.search)){
 			hql.append(" and area like ?");
@@ -199,7 +214,7 @@ public class PHouseRentService {
 			}
 			hql.append(" )");
 		}
-		hql.append(" and h.ztai=1");
+		//hql.append(" and h.ztai=1");
 		Page<Map> page = new Page<Map>();
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
@@ -245,6 +260,101 @@ public class PHouseRentService {
 			}
 		}
 		mv.data.put("status", 1);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView addPrivateHouse(HouseRent house , String hxing , String fangzhuTel){
+		ModelAndView mv = new ModelAndView();
+		DataHelper.validte(house);
+		house.isdel = 0;
+		house.dateadd = new Date();
+		house.ztai = String.valueOf(RentState.在租.getCode());
+		house.cid = 0;
+		house.did = 0;
+		house.sh = 0;
+		house.seeFH=0;
+		house.seeGX=0;
+		house.seeHM=0;
+		if(StringUtils.isEmpty(hxing)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"hxing","");
+		}
+		if(StringUtils.isEmpty(fangzhuTel)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fangzhuTel","");
+		}
+		FangXing fx = FangXing.parse(hxing);
+		house.hxf = fx.getHxf();
+		house.hxt = fx.getHxt();
+		house.hxw = fx.getHxw();
+		house.tel = fangzhuTel;
+		dao.saveOrUpdate(house);
+		mv.data.put("msg", "发布成功");
+		mv.data.put("result", 0);
+		return mv;
+	}
+	@WebMethod
+	public ModelAndView editPrivateHouse(Integer hid){
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = dao.get(HouseRent.class, hid);
+		if(po!=null){
+			mv.data.put("house", JSONHelper.toJSON(po));
+		}else{
+			throw new GException(PlatformExceptionType.BusinessException,"房源不存在或被删除");
+		}
+		FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
+		if(fxing!=null){
+			mv.data.put("hxing", fxing.getName());
+		}else{
+			LogUtil.warning("房源的户型信息错误,hid="+hid);
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView delPrivateHouse(Integer hid){
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = dao.get(HouseRent.class, hid);
+		if(po!=null){
+			dao.delete(po);
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView updatePrivateHouse(HouseRent house , String hxing , String fangzhuTel){
+		DataHelper.validte(house);
+		if(StringUtils.isEmpty(hxing)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"hxing","");
+		}
+		if(StringUtils.isEmpty(fangzhuTel)){
+			throw new GException(PlatformExceptionType.ParameterMissingError,"fangzhuTel","");
+		}
+		ModelAndView mv = new ModelAndView();
+		HouseRent po = dao.get(HouseRent.class, house.id);
+		po.area = house.area;
+		po.address = house.address;
+		po.dhao = house.dhao;
+		po.fhao = house.fhao;
+		po.quyu= house.quyu;
+		po.lceng = house.lceng;
+		po.zceng = house.zceng;
+		po.lxing = house.lxing;
+		po.mji = house.mji;
+		po.zjia =house.zjia;
+		FangXing fx = FangXing.parse(hxing);
+		po.hxf = fx.getHxf();
+		po.hxt = fx.getHxt();
+		po.hxw = fx.getHxw();
+		po.dateyear = house.dateyear;
+		po.zxiu = house.zxiu;
+		po.lxr = house.lxr;
+		po.fangshi = house.fangshi;
+		po.beizhu = house.beizhu;
+		po.tel = house.tel;
+		dao.saveOrUpdate(po);
+		mv.data.put("msg", "修改成功");
+		//mv.data.put("house", JSONHelper.toJSON(po , DataHelper.dateSdf.toPattern()));
+		mv.data.put("result", 0);
 		return mv;
 	}
 }

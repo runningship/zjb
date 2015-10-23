@@ -51,6 +51,17 @@ function updateActionType(){
 		$('.chushou').addClass('active');
 	}
 }
+
+function openSearch(){
+	//alert();
+	api.openWin({
+	    name: 'search',
+	    bounces: false,
+	    pageParam:{isChuzu:isHouseChuzu},
+		url: 'search.html'
+	});
+}
+
 function switchHouseType(chuzu){
 	isHouseChuzu = chuzu;
 	api.execScript({
@@ -118,6 +129,7 @@ function deleteAll(){
         <span class="right">
             <a href="#" class="btns" id="startEdit" onclick="startEdit();"><i class="iconfont">&#xe61c;</i></a>
             <a href="#" class="btns" id="endEdit" onclick="endEdit();" style="display:none">取消</a>
+            <a href="#" class="btns" id="search" onclick="openSearch();"><i class="iconfont">&#xe602;</i></a>
         </span>
     </div>
     <div id="mainer" class="mainer">

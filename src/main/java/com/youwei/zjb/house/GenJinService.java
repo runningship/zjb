@@ -94,13 +94,16 @@ public class GenJinService {
 	@WebMethod
 	public ModelAndView list(GenJinQuery query , Page<Map> page){
 		ModelAndView mv = new ModelAndView();
-		StringBuilder hql = new StringBuilder(" select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu , "
-				+ "u.uname as uname,d.namea as dname , c.namea as cname from  GenJin gj  ,User u,Department c , Department d where gj.uid=u.id  and d.id=gj.did and d.fid=c.id");
+//		StringBuilder hql = new StringBuilder(" select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu , "
+//				+ "u.uname as uname,d.namea as dname , c.namea as cname from  GenJin gj  ,User u,Department c , Department d where gj.uid=u.id  and d.id=gj.did and d.fid=c.id");
 		
 //		StringBuilder hql = new StringBuilder("select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,")
 //			.append("gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu ,d.dname, d.cname from house_gj gj left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=gj.did")
 //			.append(" where 1=1 ");
 		
+		StringBuilder hql= new StringBuilder("select tt.* , d.dname, d.cname from (select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.did as did,u.uname as uname,"
+				+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu from house_gj gj ,uc_user u "
+				+" where u.id=gj.uid ");
 		List<Object> params = new ArrayList<Object>();
 		
 		if(query.houseId!=null){
@@ -135,11 +138,11 @@ public class GenJinService {
 		
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeStart, DateSeparator.After, params));
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeEnd, DateSeparator.Before, params));
-		
-		hql.append(" order by gj.addtime desc ");
+		hql.append(") tt  left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did order by tt.addtime desc");
+		//hql.append(" order by gj.addtime desc ");
 		page.pageSize=20;
-//		page = dao.findPageBySql(page, hql.toString(), params.toArray());
-		page = dao.findPage(page, hql.toString(), true,params.toArray());
+		page = dao.findPageBySql(page, hql.toString(), params.toArray());
+//		page = dao.findPage(page, hql.toString(), true,params.toArray());
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

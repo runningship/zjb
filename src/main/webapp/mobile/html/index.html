@@ -84,9 +84,9 @@ function exitApp(){
 		//blockAlert('再按一次退出');
 		api.confirm({
 			msg: '确定要退出程序吗?',
-		    buttons:['确定', '取消']
+		    buttons:['取消', '确定']
 		},function(ret,err){
-		    if(ret.buttonIndex == 1){
+		    if(ret.buttonIndex == 2){
 		        //api.alert({msg:ret.text});
 		    	 api.closeWidget({
                      id: 'A6989896004356',     //这里改成自己的应用ID
@@ -224,7 +224,7 @@ function openWork(){
 	$('#footer .work').addClass('active');
 	api.openFrame({
         name: 'work',
-		url: 'work.html',
+		url: 'work.html?'+new Date().getTime(),
 		reload:false,
 		animation:{
 		    type:"push",
@@ -246,7 +246,7 @@ function openSearch(){
 	api.openWin({
 	    name: 'search',
 	    bounces: false,
-	    softInputMode:'resize',
+	    pageParam:{isChuzu:isHouseChuzu},
 		url: 'search.html'
 	});
 }

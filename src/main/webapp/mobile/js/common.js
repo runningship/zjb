@@ -57,8 +57,10 @@ YW={
     	if(config.city && config.city.cityPy){
         	opts.data.values.cityPy=config.city.cityPy;
     	}else{
-    		alert('请先在登录页选择城市');
-    		return;
+    		if(!opts.data.value.ignoreCityCheck){
+    			alert('请先在登录页选择城市');
+        		return;
+    		}
     	}
     	if(config.user && config.user.tel){
 //    		if(!opts.data.values.url || opts.data.values.url.indexOf('mobile/user/login')<0 ||opts.data.values.url.indexOf('mobile/user/sendVerifyCode')<0 || opts.data.values.url.indexOf('mobile/user/verifyCode')<0){

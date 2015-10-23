@@ -9,6 +9,7 @@
 <meta name="keywords" content="">
 <link href="../css/reset.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
+<link href="../css/common.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script src="../js/layer/layer.js" type="text/javascript"></script>
 <script src="../js/javascript.js" type="text/javascript"></script>
@@ -19,10 +20,11 @@
 <style type="text/css">
 .fl img{width:24pt;border-radius: 100px;}
 .kefu{background-color:lightskyblue;height:44px;line-height:44px;color:white;text-align:-webkit-center;background: #FF6100;border-radius: 5px;
-  bottom: 20px;border:none;  margin-left: auto;
+  margin-bottom: 20px;: 20px;border:none;  margin-left: auto;
   margin-right: auto;
   font-size: 15px;
   font-weight: bold;}
+  .house.details .mainer .htime{padding-left:7pt}
 </style>
 </head>
 <body>
@@ -38,6 +40,8 @@
     </div>
     <div id="mainer" class="mainer">
         <div class="item">
+        	<p class="htime" ><span>发布时间: </span><span id="dateadd">fwfwfe</span>
+        	<span style="float:right">浏览: <span id="readCount">223</span></span> </p>
             <ul class="hList">
                 <li class="">
                     <span>租金</span>
@@ -82,7 +86,7 @@
                 <span>
                 <li class="block tel_repeat" style="display:none">
                 	<span></span>
-                    <strong tapmode="tapped">$[tel]<i class="iconfont">&#xe610;</i></strong>
+                    <strong onclick="call('$[tel]')" tapmode="tapped">$[tel]<i class="iconfont">&#xe610;</i></strong>
                 </li>
                 </span>
                 <li class="block">
@@ -94,12 +98,12 @@
                     <strong id="beizhu"></strong>
                 </li>
             </ul>
-            <p class="htime" id="dateadd"></p>
+            
         </div>
         <div class="title">
 <!--             <i class="iconfont">&#xe61e;</i>跟进 3 -->
         </div>
-        <div class="item gjList">
+        <div class="item gjList hide">
             <ul class="lists">
                 <li class="genjin" style="display:none">
                 	<span class="fl"><img src="$[avatarPath]"/></span>
@@ -116,7 +120,7 @@
         </div>
     </div>
     <div class="item nos hide kefu"  id="kefu" onclick="call('055165314555')">拨打客户电话</div>
-    <div id="footer" class="footer">
+    <div id="footer" class="footer hide">
         <div class="item option">
             <label class="formItem check">
                 <input type="radio" class="check_radio"  checked="checked" name="ztai" value="1" onclick="rentStatus=1">

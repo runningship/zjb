@@ -5,6 +5,7 @@ var isChuzu=false;
 var repeatClass="repeat";
 var searchParams = JSON.parse('{}');
 var fufei=false;
+var searchMyPrivateHouse;
 function loadData(clear){
 	var url = 'http://'+server_host+'/c/mobile/list?page='+currentPage;
 	if(isChuzu){
@@ -12,6 +13,8 @@ function loadData(clear){
 	}
 	if(api.pageParam.useMyHouse){
 		searchParams.uid=config.user.uid;
+		searchMyPrivateHouse = 1;
+		searchParams.searchMyPrivateHouse=1;
 	}
 	YW.ajax({
 		url: url,
@@ -39,27 +42,36 @@ function loadData(clear){
 	});
 }
 
-function setSearchParamsAndSearch(params){
-	searchParams = JSON.parse(params);
-	loadData(true);
-}
+//function setSearchParamsAndSearch(params){
+//	searchParams = JSON.parse(params);
+//	loadData(true);
+//}
 function SeeThis(id){
-	if(isChuzu){
+	 if(searchMyPrivateHouse){
+		//编辑我的房源
 		api.openWin({
-	        name: 'info',
-	        pageParam: {isChuzu:isChuzu, id:id},
-			url: 'house_rent_details.html',
+	        name: 'houseEdit',
+	        pageParam: {isChuzu:isChuzu, hid:id},
+			url: 'houseEdit.html?'+new Date().getTime(),
 			delay:300
 	    });
 	}else{
-		api.openWin({
-	        name: 'info',
-	        pageParam: {isChuzu:isChuzu, id:id},
-			url: 'house_details.html',
-			delay:300
-	    });
+		if(isChuzu){
+			api.openWin({
+		        name: 'info',
+		        pageParam: {isChuzu:isChuzu, id:id},
+				url: 'house_rent_details.html',
+				delay:300
+		    });
+		}else{
+			api.openWin({
+		        name: 'info',
+		        pageParam: {isChuzu:isChuzu, id:id},
+				url: 'house_details.html',
+				delay:300
+		    });
+		}
 	}
-	
 	$('#'+id).css('color','#999');
  }
 
