@@ -32,6 +32,7 @@ box-orient: horizontal;
 .header .right{ text-align: right; }
 .header h1{ display: inline-block; font-size: 13pt; }
 .header a.btns{ display: inline-block; width: 36px; height: inherit; line-height: inherit; text-align: center; color: #FFF; }
+.header a.btns.font{ width: auto; padding-right: 5pt; font-size: 14pt; }
 .header i{font-size: 18px;}
 
 .header .headGroup{display: table; width: 100%; padding: 0 5px;}
@@ -168,6 +169,12 @@ form
 /* placeholder active end */
 /* regbox end */
 
+/* tipbox */
+.tipbox{display: block; height: 30pt; line-height: 30pt; border-bottom: 1px solid #EEE; background: #F6F6F6; padding: 0 10pt; }
+.tipbox i{ font-size: 18pt; vertical-align: middle; margin-right: 10pt; }
+.tipbox.red{ color: #F00; border-color: #F00; background: #FFC7C7; }
+.tipbox.orange{ color: #FF4A00; border-color: #FF4A00; background: #FFC6AF; }
+
 /* citys */
 .citys{}
 .citys .mainer{ background: #F6F6F6; }
@@ -232,8 +239,8 @@ form
 .user.side .mainer .mList li a span{ color: #999; padding-left: 10px; font-size: 12pt; display: inline-block;  }
 
 .user.side .footer{ background: none; border-top-color: #222; }
-.user.side .footer .item a { color: #FFF;}
-.user.side .footer .item i {display: inline-block; margin-right: 5pt;}
+.user.side .footer .item a { padding: 0; color: #FFF;}
+.user.side .footer .item i { font-size: 12pt; display: inline-block; margin-right: 5pt;}
 .user.side .footer .item:first-child{ border-right: 1px solid #222; }
 
 .search{}
@@ -420,13 +427,13 @@ work
 .workList:after {content: "\0020";display: block;height: 0;clear: both;}
 .workList li{ display: inline-block; float: left; text-align: center; margin:5px 5px 5px 5px; }
 
-.workList.big li span{ display: block; width: 54pt; height: 54pt; line-height: 54pt;  color: #666; border-radius: 6pt;}
+.workList.big li span{ display: block; margin: 0 3pt; width: 46pt; height: 46pt; line-height: 46pt;  color: #666; border-radius: 6pt;}
 .workList.big li span,
-.workList.big li i.iconfont{ display: block; font-size: 32pt;}
+.workList.big li i.iconfont{ display: block; font-size: 26pt;}
 .workList.big li i.fr{ display: none; }
-.workList.big li strong{ display: block; padding-top: 5px; font-size:13pt; }
+.workList.big li strong{ display: block; padding-top: 5px; font-size:11pt; }
 
-.workList.small li span{display: block; width: 40pt; height: 40pt; line-height: 40pt; color: #666; border-radius: 4pt;}
+.workList.small li span{display: block; width: 36pt; height: 36pt; line-height: 36pt; color: #666; border-radius: 4pt;}
 .workList.small li span,
 .workList.small li i.iconfont{ display: block; font-size: 24pt;}
 .workList.small li i.fr,
@@ -445,8 +452,8 @@ work
 .workList li.green span{ background: #65C000; color: #FFF; }
 .workList li.violet span{ background: #DC38AB; color: #FFF; }
 .workList li.orange span{ background: #FF6100; color: #FFF; }
-.workList li.reg span{ background: #FF0000; color: #FFF; }
-
+.workList li.red span{ background: #FF0000; color: #FFF; }
+.workList li.paleRed span{ background: #FF5555; color: #FFF;}
 
 /* share */
 .share{}
