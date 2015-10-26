@@ -40,7 +40,7 @@
             <ul class="sList" >
                 <li class="title"><a href="#">区域</a></li>
                 <span id="quyuWrap">
-                <li tapmode='tapped' class="repeat active" data="$[name]" onclick="selectQuyu(this);"><a><i class="iconfont hide">&#xe656;</i>$[name]</a></li>
+                <li tapmode='tapped' class="repeat active" style="display:none"  data="$[name]" onclick="selectQuyu(this);"><a><i class="iconfont hide">&#xe656;</i>$[name]</a></li>
                 </span>
             </ul>
         </div>
@@ -50,7 +50,6 @@
                 <span class="ia inputbox"><input type="radio" name="fangshi" value="1" onclick="fangshi=this.value">整租</span>
                 <span class="ib">-</span>
                 <span class="ic inputbox"><input type="radio" name="fangshi" value="2"  onclick="fangshi=this.value">合租</span>
-                <span class="id">m²</span>
             </div>
         </div>
         <div class="item db">
@@ -59,6 +58,7 @@
                 <span class="ia inputbox"><input type="number" class="input" id="mjiStart"></span>
                 <span class="ib">-</span>
                 <span class="ic inputbox"><input type="number" class="input" id="mjiEnd"></span>
+                <span class="id">m²</span>
             </div>
         </div>
         <div class="item db chushou" style="display:none">
@@ -106,7 +106,7 @@
                 <span class="id"></span>
             </div>
         </div>
-        <div class="item db" id="tel" style="display:none">
+        <div class="item db b" id="tel" style="display:none">
             <span class="t">电话</span>
             <div class="i">
                 <span class="ia inputbox"><input type="number" class="input" id="mobileTel" name="mobileTel" ></span>

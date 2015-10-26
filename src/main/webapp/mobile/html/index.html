@@ -46,7 +46,6 @@ function openGroup(){
 	    name: 'group1',
 	    background:'#fff',
 	    scrollEnabled:false,
-	    preload:2,
 	    rect:{x: 0,
             y: header.height()+statusBarHeight,
             w: 'auto',
@@ -82,7 +81,6 @@ function exitApp(){
 //                 duration:2000,
 //                 location: 'middle'
 //             });
-		//blockAlert('再按一次退出');
 		api.confirm({
 			msg: '确定要退出程序吗?',
 		    buttons:['取消', '确定']
@@ -167,7 +165,7 @@ function openHouses(){
         animation:{
 		    type:"push",
 		    subType:"from_left",
-		    duration:300
+		    duration:200
 		},
         rect: {
             x: 0,
@@ -200,7 +198,7 @@ function openFujin(){
 		animation:{
 		    type:"push",
 		    subType:subType,
-		    duration:300
+		    duration:200
 		},
         bounces: true,
         vScrollBarEnabled:true,
@@ -225,12 +223,12 @@ function openWork(){
 	$('#footer .work').addClass('active');
 	api.openFrame({
         name: 'work',
-		url: 'work.html?'+new Date().getTime(),
+		url: 'work.html',
 		reload:false,
 		animation:{
 		    type:"push",
 		    subType:"from_right",
-		    duration:300
+		    duration:200
 		},
         bounces: false,
         vScrollBarEnabled:true,
@@ -247,6 +245,7 @@ function openSearch(){
 	api.openWin({
 	    name: 'search',
 	    bounces: false,
+	    delay:500,
 	    pageParam:{isChuzu:isHouseChuzu},
 		url: 'search.html'
 	});
