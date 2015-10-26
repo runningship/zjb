@@ -23,7 +23,7 @@ var searchParams;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
-	api.pageParam.useMyHouse=true;
+	api.pageParam.searchMyPrivateHouse=true;
 	getConfig(function(cfg){
 		config = cfg;
 		api.openFrame({
@@ -73,7 +73,7 @@ function openSearch(){
 	api.openWin({
 	    name: 'simpleSearch',
 	    url: 'simpleSearch.html?'+new Date().getTime(),
-	    pageParam:{isChuzu:isHouseChuzu,searchParams:searchParams}
+	    pageParam:{loadHistory:false,isChuzu:isHouseChuzu,searchParams:searchParams,winName:'myHouse',frameName:'myHouseFrame'}
 	});
 }
 

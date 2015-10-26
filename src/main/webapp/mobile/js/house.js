@@ -11,7 +11,7 @@ function loadData(clear){
 	if(isChuzu){
 		url = 'http://'+server_host+'/c/mobile/rent/list?page='+currentPage;
 	}
-	if(api.pageParam.useMyHouse){
+	if(api.pageParam.searchMyPrivateHouse){
 		searchParams.uid=config.user.uid;
 		searchMyPrivateHouse = 1;
 		searchParams.searchMyPrivateHouse=1;

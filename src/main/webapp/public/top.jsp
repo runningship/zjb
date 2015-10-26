@@ -60,6 +60,7 @@ function seeMyHouse(){
                             <li><a href="#">客服电话：0551-65314555</a></li>
                             <li class="ablogo"><a href="http://www.zhongjiebao.com" target="_blank" title=""><img src="images/logo_blue.png" alt=""></a></li>
                             <li class="ablogos"><a href="http://www.zhongjiebao.com" target="_blank" title=""><b>二手房信息处理中心</b></a></li>
+                            <li class="ablogoss"><a href="http://www.zhongjiebao.com" target="_blank" title=""><b>中介宝官网</b></a></li>
                         </ul>
                     </div>
                 </div>

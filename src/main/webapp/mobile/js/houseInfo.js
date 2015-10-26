@@ -10,6 +10,7 @@ apiready = function(){
 	isChuzu = api.pageParam.isChuzu;
 	getConfig(function(cfg){
 		config = cfg;
+		userId = config.user.uid;
 		isFufei = isUserFuFei(config);
 		hid = api.pageParam.id;
 		loadData();

@@ -53,6 +53,7 @@ public class HouseQuery{
 	// for phone client
 	//current page number
 	public Integer searchMyPrivateHouse;
+	public Integer searchFavHouse;
 	public String quyu;
 	public Integer page;
 	public String specArea;

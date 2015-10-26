@@ -141,7 +141,7 @@ public class PHouseService {
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql  = new StringBuilder();
-		if(query.userid!=null){
+		if(query.searchFavHouse!=null && query.searchFavHouse==1){
 			//我的收藏
 //			hql.append("select h.id as id ,"
 //					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
@@ -149,7 +149,7 @@ public class PHouseService {
 			String favStr = "@"+query.userid+"|";
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h  where h.sh=1 and h.ztai=5 and h.fav like ?");
+					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h  where h.sh=1 and h.ztai=4 and h.fav like ?");
 			params.add("%"+favStr+"%");
 		}else if(query.searchMyPrivateHouse!=null && query.searchMyPrivateHouse==1){
 			hql.append("select h.id as id ,"

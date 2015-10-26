@@ -69,8 +69,8 @@ filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#22000000,endcol
 .ablogo,.ablogos{ text-align: center;}
 .ablogo{ padding-top: 20px;}
 .ablogos b{ font-size: 18px; color: #09F;}
-.ablogoss { padding-top: 10px; text-align: center; }
-
+.ablogoss { margin: 10px auto 0; text-align: center; border-radius: 50px; border:1px solid #09F; }
+.ablogoss a{ color: #09F;}
 
 .classTab{ display: inline-block; margin-left:30px;}
 .classTab li{ display: inline-block;}
