@@ -125,7 +125,7 @@ public class PHouseRentService {
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder hql  = new StringBuilder();
-		if(query.userid!=null){
+		if(query.searchFavHouse!=null && query.searchFavHouse==1){
 			//我的收藏
 //			hql.append("select h.id as id ,"
 //					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"

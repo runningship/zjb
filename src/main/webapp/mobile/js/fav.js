@@ -9,18 +9,23 @@ var totalCount;
 var isChuzu=false;
 var startEdit=false;
 var houseType="";
+var searchParams = JSON.parse('{}');
+var searchFavHouse;
 function loadData(clear){
 	var url='';
-	
+	if(api.pageParam.searchFavHouse){
+		//searchParams.userId = config.user.id;
+		searchParams.searchFavHouse=1;
+	}
 	if(isChuzu){
 		if(houseType=='fav'){
-			url = 'http://'+server_host+'/c/mobile/fav/listRent?userId='+userId+'&currentPageNo='+currentPage;
+			url = 'http://'+server_host+'/c/mobile/rent/list?userid='+userId+'&currentPageNo='+currentPage;
 		}else{
 			url = 'http://'+server_host+'/c/mobile/user/tracksRent?userId='+userId+'&currentPageNo='+currentPage;
 		}
 	}else{
 		if(houseType=='fav'){
-			url='http://'+server_host+'/c/mobile/fav/list?userId='+userId+'&currentPageNo='+currentPage;
+			url='http://'+server_host+'/c/mobile/list?userid='+userId+'&currentPageNo='+currentPage;
 		}else{
 			url = 'http://'+server_host+'/c/mobile/user/tracks?userId='+userId+'&currentPageNo='+currentPage;
 		}
@@ -28,6 +33,7 @@ function loadData(clear){
 	YW.ajax({
 			url:url,
 			method:'post',
+			data:{values:searchParams},
 			cache:false,
 			returnAll:false
 		},function(ret , err){
@@ -46,11 +52,15 @@ function loadData(clear){
 					api.parseTapmode();
 				}
 			}else{
-				alert(312);
+				//alert();
 			}
 		});
 }
 	
+function setSearchParamsAndSearch(params){
+	searchParams =params;
+	loadData(true);
+}
 function closexx(){
 	api.closeWin({
 	    name: 'fav'

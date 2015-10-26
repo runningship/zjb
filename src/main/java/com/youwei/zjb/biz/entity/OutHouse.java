@@ -26,6 +26,9 @@ public class OutHouse {
 	 */
 	public int type;
 	
+	//默认出售
+	public int isChuzu;
+	
 	public Integer clientId;
 	
 	public String clientName;

@@ -46,7 +46,10 @@ function init(){
 	buildHtmlWithJsonArray('repeat',config.city.quyus , false, false);
 	api.parseTapmode();
 	$('#quyuWrap').prepend('<li id="allQuyu" class="active" onclick="selectAllQuyu(this);"><a><i class="iconfont hide">&#xe656;</i>全部</a></li>');
-	loadSearchHistory();
+	if(api.pageParam.loadHistory){
+		loadSearchHistory();
+	}
+	
 }
 
 function loadSearchHistory(){

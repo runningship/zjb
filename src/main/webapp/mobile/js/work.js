@@ -16,6 +16,7 @@ function openFav(){
 	api.openWin({
 	    name: 'fav',
 	    url: 'favIndex.html',
+	    delay:100,
 	    pageParam: {houseType: 'fav'}
 	});
 }
@@ -34,6 +35,22 @@ function openMyHouse(){
 	    url: 'myHouseWin.html?'+new Date().getTime()
 	});
 }
+
+function openKanFang(){
+	if(!checkUser()){
+		api.openWin({
+		    name: 'login',
+		    url: 'login.html',
+		    pageParam: {forward: 'kanfang/index.html'}
+		});
+		return;
+	}
+	api.openWin({
+	    name: 'kanfang',
+	    url: 'kanfang/index.html?'+new Date().getTime()
+	});
+}
+
 
 function openViewLog(){
 	if(!checkUser()){

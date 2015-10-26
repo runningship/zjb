@@ -188,7 +188,7 @@ var overlaycomplete = function(e){
 	clearAll();
     overlays.push(e.overlay);
     //var result = e.overlay.Qe['3'];
-    var result = e.overlay.Un;
+    var result = e.overlay.W;
     //var lt=e.overlay.Rn[0]
   //01
   //32
