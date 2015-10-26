@@ -73,7 +73,7 @@ function SeeThis(id){
 		    });
 		}
 	}
-	$('#'+id).css('color','#999');
+	$('#'+id).addClass('read');
  }
 
 	apiready = function(){

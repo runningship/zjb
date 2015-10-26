@@ -520,8 +520,8 @@ function setPageOrder(col){
                         <li>
                             <span class="SpanNameH2 not-select"><em>发布<br />日期</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:70px">
-        <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:70px">
+                            <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:70px">
+        <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:70px">
                             </div>
                         </li>
                         

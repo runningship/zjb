@@ -3,14 +3,18 @@ var hid;
 var tel_json = JSON.parse('[]');
 var sellStatus=4;
 var rentStatus = 1;
-var userId=1;
+var userId='';
 var isChuzu=false;
 var isFufei=false;
 apiready = function(){
+	
 	isChuzu = api.pageParam.isChuzu;
 	getConfig(function(cfg){
+		
 		config = cfg;
-		userId = config.user.uid;
+		if(config.user){
+			userId = config.user.uid;
+		}
 		isFufei = isUserFuFei(config);
 		hid = api.pageParam.id;
 		loadData();

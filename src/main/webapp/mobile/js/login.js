@@ -38,7 +38,7 @@ function doLogin(){
 				    frameName:'work',
 				    script: 'refreshPage();'
 				});
-				alert('登录成功2');
+				alert('登录成功');
 				forward();
 		}else{
 			alert(ret.msg);
