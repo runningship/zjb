@@ -232,9 +232,9 @@ form
 .user.side .mainer .mList li a span{ color: #999; padding-left: 10px; font-size: 12pt; display: inline-block;  }
 
 .user.side .footer{ background: none; border-top-color: #222; }
-.user.side .footer .item a{ color: #FFF;}
-
-
+.user.side .footer .item a { color: #FFF;}
+.user.side .footer .item i {display: inline-block; margin-right: 5pt;}
+.user.side .footer .item:first-child{ border-right: 1px solid #222; }
 
 .search{}
 .search .header .conter{-webkit-box-flex: 2; height: 80%; line-height: 80%;}
@@ -277,7 +277,7 @@ form
 .search .db  .inputbox:after {content:""; position: absolute; right: 0; bottom: 0; border-left: 1px solid #EEE; height: 8px; }
 
 .search .btnbox{ padding: 5pt; }
-.search .btn{ background: #18B4ED; color: #FFF; font-size: 14pt; display: block; border-radius: 3pt;  }
+.search .btn{ font-size: 14pt; display: block; border-radius: 3pt;  }
 
 .search .soList{}
 .search .soList li{ position: relative; height: 36pt; line-height: 36pt; border-bottom: 1px solid #EEE; font-size: 12pt;}
@@ -351,12 +351,59 @@ house
 
 
 
+/* house add
+.add{}
 
+.add .db{display: -webkit-box;-webkit-box-orient: horizontal;-webkit-flex-flow: column;flex-flow: column; height: 30pt; line-height: 30pt; font-size: 14pt; color: #777;}
+.add .db .t{ display: block; width: 20%; text-align:right; padding-right: 5pt; height: inherit; line-height: inherit; }
+.add .db .i{display: -webkit-box;-webkit-box-orient: horizontal;-webkit-flex-flow: column;flex-flow: column;  overflow: hidden;height: inherit; line-height: inherit; width: 70%;}
+.add .db .i .ia{ width: 40%; display: block;height: inherit; line-height: inherit;}
+.add .db .i .ib{ margin: 0 5pt; display: block;height: inherit; line-height: inherit;}
+.add .db .i .ic{ width: 40%; display: block;height: inherit; line-height: inherit;}
+.add .db .i .id{ margin-left: 5pt; display: block;height: inherit; line-height: inherit;}
+.add .db  input.input { display: block; width: 100%;padding: 0 10px;border: 0;height: inherit; line-height: inherit; border-bottom: 1px solid #DDD; text-align: center; font-size: 14pt;}
+.add .db  .inputbox{ display: block; position: relative;}
+.add .db  .inputbox:before{content:""; position: absolute; left: 0; bottom: 0; border-left: 1px solid #EEE; height: 8px; }
+.add .db  .inputbox:after {content:""; position: absolute; right: 0; bottom: 0; border-left: 1px solid #EEE; height: 8px; }
+.add .db  .inputbox .dw{ position: absolute; top: 0; right: 0; bottom: 0; font-size: 10pt; line-height: 36pt; padding-right: 3pt; }
+.add .db select.select{ width: 90%; height: 26pt; line-height: 26pt; display: block; border:1px solid #EEE; background: none; text-align: center; }
+.add .db.ta{ height: auto;}
+.add .db.ta .i{ height: 60pt;  }
+.add .db textarea.textarea{ width: 100%; height: 60pt; line-height: 20pt; border:1px solid #EEE; font-size: 14pt; padding: 0 5pt;}
 
+.add .db.block .inputbox{ width: 100%; }
+.add .db.block input.input { height: 29pt; }
+.add .db.block .i{width: 63%;}
+.add .db.mbt .i .ia,.add .db.mbt .i .ic{ width: 34%; }
 
+.add .btnbox{ padding: 5pt; }
+.add .btn{ background: #18B4ED; color: #FFF; font-size: 14pt; display: block; border-radius: 3pt;  }
+ */
 
+/* content */
+.house.add { background: #FFF;}
+.house.add .h2{ padding:10px; height: 40px; line-height: 40px;}
+.house.add h2{ font-weight: normal; padding-left: 10px;}
+.house.add .ul_list li{ width: 49%; display: inline-block;}
+.house.add .ul_list li.dblock{ width: 100%;}
+.house.add .ul_list li .title{ display: inline-block; height: 42px; line-height:50px; width: 50px; float: left; text-align: right;}
+.house.add .ul_list li .inputbox{ margin-left: 60px; }
+.house.add .ul_list li input.text,
+.house.add .ul_list li select.select{ display: block; border-bottom: 1px solid #EEE;  float: left;}
+.house.add .ul_list li select.select{ border: 1px solid #EEE; background: #FCFCFC;}
+.house.add .ul_list li input.text.error,
+.house.add .ul_list li select.select.error{ border-color: #F00;}
+.house.add .footer{ padding: 0 10px 15px; }
 
-
+.house.add .item{ margin:15px 10px;}
+.house.add .item.write{  margin:1px 0px; background: #FFF;}
+.house.add .inputbox{display: block; position: relative;}
+.house.add .inputbox b{ position: absolute; right: 10px; top: 15px; bottom: 0; font-weight: normal; color: #AAA;}
+.house.add .text,.select{ height: 30pt; line-height: 30pt; padding: 10px 10px; border-radius: 3pt; border: 1px solid #EEE; width: 100%;height: 50px; line-height: 30px; background: none;}
+.house.add .textarea{ padding: 10px 10px; border-radius: 3pt; border: 1px solid #EEE; width: 100%;}
+.house.add .inputbox.n2b{ }
+.house.add .inputbox.n2b .text{ width: 48.5%;}
+.house.add .joiner{display: inline-block;height: 42px;line-height: 42px;width: 3%;float: left;text-align: center;}
 
 
 
@@ -372,33 +419,33 @@ work
 
 .workList:after {content: "\0020";display: block;height: 0;clear: both;}
 .workList li{ display: inline-block; float: left; text-align: center; margin:5px 5px 5px 5px; }
-.workList li.default span{ background: #9F9F9F; }
-.workList li.blue span{ background: #64BEFD; }
-.workList li.green span{ background: #65C000; }
-.workList li.violet span{ background: #DC38AB; }
-.workList li.orange span{ background: #FF6100; }
-.workList li.reg span{ background: #FF0000; }
 
-.workList.big li span{ display: block; width: 54pt; height: 54pt; line-height: 54pt;  color: #FFF; border-radius: 15px;}
+.workList.big li span{ display: block; width: 54pt; height: 54pt; line-height: 54pt;  color: #666; border-radius: 6pt;}
 .workList.big li span,
-.workList.big li i.iconfont{ display: block; font-size: 26pt;}
+.workList.big li i.iconfont{ display: block; font-size: 32pt;}
 .workList.big li i.fr{ display: none; }
 .workList.big li strong{ display: block; padding-top: 5px; font-size:13pt; }
 
-.workList.small li span{display: block; width: 40pt; height: 40pt; line-height: 40pt; color: #FFF; border-radius: 15px;}
+.workList.small li span{display: block; width: 40pt; height: 40pt; line-height: 40pt; color: #666; border-radius: 4pt;}
 .workList.small li span,
-.workList.small li i.iconfont{ display: block; font-size: 20pt;}
+.workList.small li i.iconfont{ display: block; font-size: 24pt;}
 .workList.small li i.fr,
 .workList.small li strong{ display: none; }
 
 .workList.list li { display: block; float: none; text-align: left; line-height: 20pt; margin: 0; padding: 10pt 0; border-top: 1px solid #EEE;}
 .workList.list li:first-child{ padding-top: 0; border:none; }
-.workList.list li span{ display: inline-block; text-align: center; width: 26pt; height: 26pt; line-height:26pt; color: #FFF; border-radius: 5px; margin-right: 10px;}
-.workList.list li i.iconfont{ font-size: 16pt; }
+.workList.list li span{ display: inline-block; text-align: center; width: 26pt; height: 26pt; line-height:26pt; color: #666; border-radius: 3pt; margin-right: 10px;}
+.workList.list li i.iconfont{ font-size: 17pt; }
 .workList.list li i.fr{ color: #CCC; height: 26pt; line-height: 26pt}
 .workList.list li strong{ display:inline-block; font-size: 14pt; }
 
 
+.workList li.default span{ background: #9F9F9F; color: #FFF; }
+.workList li.blue span{ background: #64BEFD; color: #FFF; }
+.workList li.green span{ background: #65C000; color: #FFF; }
+.workList li.violet span{ background: #DC38AB; color: #FFF; }
+.workList li.orange span{ background: #FF6100; color: #FFF; }
+.workList li.reg span{ background: #FF0000; color: #FFF; }
 
 
 /* share */
