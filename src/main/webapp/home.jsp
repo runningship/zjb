@@ -46,8 +46,8 @@ Date end= now.getTime();
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/cocoWinLayer.css" /> -->
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/im.css" /> -->
 <script src="/js/jquery.js" type="text/javascript"></script>
-<!-- <script src="/js/buildHtml.js" type="text/javascript"></script> -->
-<script src="file:///D:\code\zjb\src\main\webapp\js\buildHtml.js" type="text/javascript"></script>
+<script src="/js/buildHtml.js" type="text/javascript"></script>
+<!-- <script src="file:///D:\code\zjb\src\main\webapp\js\buildHtml.js" type="text/javascript"></script> -->
 <script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>

@@ -37,6 +37,7 @@ function onready(callback){
 			callback();
 		}
 	});
+	api.parseTapmode();
 }
 function init(){
 	if(isUserFuFei(config)){
@@ -166,8 +167,9 @@ function doSearch(){
 
 function AddSelect(pageParam){
 	//var SelectBox="<div onclick='searchByHistory(this)' tapmode='tapped' data='"+JSON.stringify(pageParam)+"' class='hItem'>";
-	var SelectBox = "<a onclick='deleteHistoryItem(this.parentNode);' class='fr'><i class='iconfont'>&#xe657;</i></a>"
-		+"<a ><i class='iconfont'>&#xe640;</i> <h3>";
+	var attr = "tapmode='tapped' onclick='searchByHistory(this)' data='"+JSON.stringify(pageParam)+"'";
+	var SelectBox = "<a tapmode='tapped' onclick='deleteHistoryItem(this.parentNode);' class='fr'><i class='iconfont'>&#xe657;</i></a>"
+		+"<a "+attr+"><i class='iconfont'>&#xe640;</i> <h3>";
 	if(quyus!=[]){
 		SelectBox = SelectBox + '<span> 区域：'+quyus+'</span>';
 	}else{
@@ -240,8 +242,7 @@ function AddSelect(pageParam){
 		}
 	}
 	SelectBox +='</h3></a>';
-	var attr = "tapmode='tapped' onclick='searchByHistory(this)' data='"+JSON.stringify(pageParam)+"'";
-	$('#searchHistoryWrap').prepend('<li '+attr+'>'+SelectBox+'</li>');
+	$('#searchHistoryWrap').prepend('<li>'+SelectBox+'</li>');
 	if(historySearchCount>=10){
 //		remove last one
 		var xx = $('#searchHistoryWrap');
@@ -290,6 +291,7 @@ function searchByHistory(item){
 
 function deleteHistoryItem(item){
 	$(item).remove();
+//	$(item).fadeOut();
 	event.cancelbubble=true;
 	event.stopPropagation();
 	event.preventDefault();

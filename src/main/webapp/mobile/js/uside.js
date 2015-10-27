@@ -35,20 +35,30 @@ function init(){
 			$('#city').text(config.city.cityName);
 		}
 	}
+	api.parseTapmode();
 }
 
 function openLogin(){
-//	api.closeSlidPane();
 	api.openWin({
 	    name: 'login',
 	    url: 'login.html'
 	});
+	api.closeSlidPane();
 }
 function openPwd(){
 //	api.closeSlidPane();
 	api.openWin({
 	    name: 'pwd',
-	    url: 'pwd.html'
+	    url: 'pwd.html',
+	    delay:200
+	});
+}
+function openReg(){
+	api.closeSlidPane();
+	api.openWin({
+	    name: 'reg',
+	    url: 'reg.html',
+	    delay:200
 	});
 }
 function openShare(){
@@ -59,6 +69,7 @@ function openShare(){
 	api.openWin({
         name: 'share',
 		url: 'share.html',
+		delay:200,
 		pageParam: {uid: config.user.uid}
     });
 }
@@ -71,6 +82,7 @@ function openPay(){
 	api.openWin({
         name: 'pay',
 		url: 'pay.html',
+		delay:200,
 		pageParam: {uid: config.user.uid}
     });
 }
@@ -93,6 +105,7 @@ function quit(){
 		    script: 'refreshPage();'
 		});
 	}
+	api.closeSlidPane();
 }
 
 function updateCity(cityName){
@@ -107,6 +120,7 @@ function openCitys(){
 	}
 	api.openWin({
 	    name: 'citys',
+	    delay:200,
 	    url: 'citys.html?'+new Date().getTime(),
 	    pageParam: {cityPy: 'cityPy'}
 	});

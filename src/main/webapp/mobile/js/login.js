@@ -66,14 +66,17 @@ function forward(){
 		    pageParam: api.pageParam
 		});
 		
-		setTimeout(function(){
-			api.closeWin({
-			    name: 'login'
-			});
-		},2000);
+		
 	}else{
-		closexx();
+//		closexx();
 	}
+	
+	setTimeout(function(){
+//		api.closeWin({
+//		    name: 'login'
+//		});
+		closexx();
+	},1000);
 }
 apiready=function(){
 	api.clearCache();

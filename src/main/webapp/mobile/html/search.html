@@ -18,7 +18,7 @@
 <script src="../js/search.js" type="text/javascript"></script>
 <style type="text/css">
 .search .soList li a{display:initial}
-#searchHistoryWrap .fr{float:right}
+#searchHistoryWrap .fr{float:right;margin-right:21px;}
 .search .soList li h3{height:48px;}
 </style>
 </head>
@@ -117,6 +117,9 @@
             <a tapmode="tapped" onclick="clearQuery();" class="btn v3 gray">清空</a>
         </div>
         <ul class="item soList" id="searchHistoryWrap">
+        	<li tapmode='tapped' onclick='searchByHistory(this)' ><a onclick='deleteHistoryItem(this.parentNode);' class='fr'><i class='iconfont'>&#xe657;</i></a> <a ><i class='iconfont'>&#xe640;</i> <h3>
+        		<span>fefwef</span>
+        	</h3></a></li>
             <li class="hisRepeat" style="display:none">$[html]</li>
         </ul>
         <div onclick="clearHistory();" class="item btnbox">
