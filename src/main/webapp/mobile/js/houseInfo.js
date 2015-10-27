@@ -9,6 +9,7 @@ var isFufei=false;
 apiready = function(){
 	
 	isChuzu = api.pageParam.isChuzu;
+	api.parseTapmode();
 	getConfig(function(cfg){
 		
 		config = cfg;

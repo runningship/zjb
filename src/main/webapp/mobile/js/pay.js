@@ -3,9 +3,6 @@
 	var userInfo;
     var amount =100;
 	apiready = function(){
-		if(api.systemType=='ios'){
-			$('#header').css('padding-top','20px');
-		}
 		getConfig(function(cfg){
 			config = cfg;
 			userInfo = cfg.user;

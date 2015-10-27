@@ -1,4 +1,5 @@
 apiready = function(){
+	api.parseTapmode();
 	getConfig(function(cfg){
 		config = cfg;
 	});
@@ -9,7 +10,7 @@ function openFav(){
 		api.openWin({
 		    name: 'login',
 		    url: 'login.html',
-		    pageParam: {forward: 'favIndex.html',houseType: 'fav'}
+		    pageParam: {forward: 'favIndex.html',houseType: 'fav' , winName:'fav'}
 		});
 		return;
 	}
@@ -26,7 +27,7 @@ function openMyHouse(){
 		api.openWin({
 		    name: 'login',
 		    url: 'login.html',
-		    pageParam: {forward: 'myHouseWin.html'}
+		    pageParam: {forward: 'myHouseWin.html' , winName:'myHouse'}
 		});
 		return;
 	}
@@ -41,7 +42,7 @@ function openKanFang(){
 		api.openWin({
 		    name: 'login',
 		    url: 'login.html',
-		    pageParam: {forward: 'kanfang/index.html'}
+		    pageParam: {forward: 'kanfang/index.html' , winName:'kanfang'}
 		});
 		return;
 	}

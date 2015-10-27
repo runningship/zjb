@@ -22,6 +22,11 @@ function init(){
 			$('#tel').text(config.user.tel);
 			if(config.user.pwd){
 				$('#endtime').text(config.user.mobileDeadtime);
+				var t = Date.parse(config.user.mobileDeadtime+' 23:59:59');
+				//blockAlert(t-new Date().getTime());
+				if(t-new Date().getTime()<=0){
+					$('#endtime').css('color','red');
+				}
 			}else{
 				$('#endtime').text('未登录');
 			}
@@ -41,24 +46,23 @@ function init(){
 function openLogin(){
 	api.openWin({
 	    name: 'login',
-	    url: 'login.html'
+	    url: 'login.html',
+	    delay:300
 	});
-	api.closeSlidPane();
 }
 function openPwd(){
 //	api.closeSlidPane();
 	api.openWin({
 	    name: 'pwd',
 	    url: 'pwd.html',
-	    delay:200
+	    delay:300
 	});
 }
 function openReg(){
-	api.closeSlidPane();
 	api.openWin({
 	    name: 'reg',
 	    url: 'reg.html',
-	    delay:200
+	    delay:300
 	});
 }
 function openShare(){
@@ -69,7 +73,7 @@ function openShare(){
 	api.openWin({
         name: 'share',
 		url: 'share.html',
-		delay:200,
+		delay:300,
 		pageParam: {uid: config.user.uid}
     });
 }
@@ -153,5 +157,9 @@ function clearSysCache(){
 	api.clearCache();
 	config = JSON.parse('{}');
 	saveConfig(config);
+	api.setPrefs({
+        key:'version',
+        value:''
+    });
 	alert('缓存清理成功');
 }

@@ -56,6 +56,7 @@ function updateIfNeed(){
             	}
             });
 	    }else {
+	    	alert('网络连接失败');
 	        //下载版本文件失败，获取版本信息失败,应用启动失败
 	        if(err.statusCode==404){
 	        	alert(404);
@@ -142,7 +143,7 @@ api.download({
 
 //打开欢迎页面
 function openIndexFrame(){
-	window.location=api.cacheDir+'/html/welcome.html';
+	window.location='file://'+api.cacheDir+'/html/welcome.html';
 //api.openFrame({
 //    name: 'rootFrame',
 //    url: api.cacheDir+'/html/start.html',

@@ -1,4 +1,5 @@
 apiready=function(){
+	api.parseTapmode();
 	getConfig(function(cfg){
 		config=cfg;
 		if(config && config.user){
@@ -33,7 +34,6 @@ function save(){
         }
         
         data.uid = config.user.uid;
-        blockAlert(data.isChuzu);
         var url = 'http://'+server_host+'/c/mobile/kanfang/add';
         YW.ajax({
         	url: url,

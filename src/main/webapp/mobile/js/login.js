@@ -30,13 +30,7 @@ function doLogin(){
 				});
 				api.execScript({
 				    name: 'index',
-				    frameName:'house',
-				    script: 'refreshPage();'
-				});
-				api.execScript({
-				    name: 'index',
-				    frameName:'work',
-				    script: 'refreshPage();'
+				    script: 'refreshIndex();'
 				});
 				alert('登录成功');
 				forward();
@@ -61,7 +55,7 @@ function forward(){
 //		    },
 //		});
 		api.openWin({
-		    name: 'fav',
+		    name: api.pageParam.winName,
 		    url: api.pageParam.forward,
 		    pageParam: api.pageParam
 		});
@@ -72,11 +66,11 @@ function forward(){
 	}
 	
 	setTimeout(function(){
-//		api.closeWin({
-//		    name: 'login'
-//		});
-		closexx();
-	},1000);
+		api.closeWin({
+		    name: 'login'
+		});
+//		closexx();
+	},500);
 }
 apiready=function(){
 	api.clearCache();
@@ -100,8 +94,6 @@ apiready=function(){
     	},function(ret , err){
     		if(ret && ret.iosShenHeVersion!=api.appVersion){
     			$('#reg').css('display','');
-    		}else{
-    			
     		}
     	});
 	}else{
@@ -113,12 +105,11 @@ function openReg(){
 	api.openWin({
         name: 'reg',
 		url: 'reg.html',
-		bounces: false,
-		scaleEnabled:true
+		delay:200,
+		bounces: false
     });
 }
 function openModifyPwd(){
-
 	api.openWin({
         name: 'reg',
         pageParam: {pageName: 'pwd'},

@@ -27,6 +27,10 @@ apiready = function(){
 	api.clearCache();
 	header = $('#header');
 	mainer = $('#mainer');
+	if(api.systemType=='ios'){
+		statusBarHeight = 25;
+		//$('#header').css('margin-top','25px');
+	}
 	getConfig(function(cfg){
 		api.parseTapmode();
 		config = cfg;
@@ -42,6 +46,27 @@ apiready = function(){
 	});
 };
 
+function refreshIndex(){
+	getConfig(function(cfg){
+		config = cfg;
+		if(config && config.user && config.user.avatar){
+				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
+		}else{
+			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+		}
+		
+		api.execScript({
+		    name: 'index',
+		    frameName:'house',
+		    script: 'refreshPage();'
+		});
+		api.execScript({
+		    name: 'index',
+		    frameName:'work',
+		    script: 'refreshPage();'
+		});
+	});
+}
 function openGroup(){
 	actionType = "house";
 	api.openFrameGroup ({
@@ -51,7 +76,8 @@ function openGroup(){
 	    rect:{x: 0,
             y: header.height()+statusBarHeight,
             w: 'auto',
-            h: mainer.height()},
+            h: mainer.height()-statusBarHeight
+        },
 	    index:0,
 	    frames:
 	    [{

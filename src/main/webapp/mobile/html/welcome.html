@@ -12,7 +12,9 @@ apiready = function(){
 		if(config.city && config.city.cityPy){
 			setTimeout(function(){
 				//window.location='index.html';
-				  openIndexFrame();
+				//blockAlert('file://'+api.cacheDir+'/html/welcome.html');
+				//window.location='file://'+api.cacheDir+'/html/welcome.html';
+				openIndexFrame();
 				//openGroup();
 			} , 2000);	
 		}else{
@@ -79,7 +81,7 @@ function openIndexFrame(){
 // 	    }
 // 	});
 	api.openSlidLayout ({
-	    type: 'all',
+	    type: 'left',
 	    leftEdge:120,
 	    rightEdge:100,
 	    fixedPane: {

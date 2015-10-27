@@ -9,6 +9,7 @@
 <meta name="keywords" content="">
 <link href="../css/reset.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
+<link href="../css/common.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script src="../js/layer/layer.js" type="text/javascript"></script>
 <script src="../js/common.js" type="text/javascript"></script>
@@ -20,10 +21,15 @@ var actionType="";
 var statusBarHeight=0;
 var isHouseChuzu;
 var searchParams;
+var statusBarHeight=0;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
+	api.parseTapmode();
 	api.pageParam.searchFavHouse=true;
+	if(api.systemType=='ios'){
+		statusBarHeight = 25;
+	}
 	if(api.pageParam.houseType=='fav'){
 		$('#search').show();
 	}
@@ -40,7 +46,7 @@ apiready = function(){
 	            x: 0,
 	            y: header.height()+statusBarHeight,
 	            w: 'auto',
-	            h: mainer.height()
+	            h: mainer.height()-statusBarHeight
 	        }
 	    });
 		$('#footer').hide();
@@ -124,7 +130,7 @@ function deleteAll(){
 <div id="wrap" class="bodyer house">
     <div id="header" class="header">
         <span class="left" onclick="closexx();">
-            <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
+            <a tapmode="tapped" class="btns"><i class="iconfont">&#xe628;</i></a>
         </span>
         <span class="conter">
             <span class="btnGroup h">

@@ -23,7 +23,7 @@ box-orient: horizontal;
 /* default */
 .bodyer{}
 
-.header{ height: 50px; line-height: 50px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;
+.header{height: 50px; line-height: 50px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;
 }
 .header .left,
 .header .right,
@@ -342,7 +342,7 @@ house
 
 .house.details .mainer .gjList .lists .fc{ margin-left: 50px; }
 .house.details .mainer .gjList .lists .gjTit h1{ color: #555; padding-bottom: 5pt; }
-.house.details .mainer .gjList .lists .gjTit b{ display: block; font-size: 11pt; padding-bottom: 5pt; color: #888; }
+.house.details .mainer .gjList .lists .gjTit b{ display: block; font-size: 11pt; padding-bottom: 5pt; color: #888;     position: absolute;top: 0px;    right: 0px;    font-size: 12px;}
 .house.details .mainer .gjList .lists p{ color: #000; }
 .house.details .mainer .gjList .lists .imgbox{ display: block; width: 40px; height: 40px; line-height: 40px; overflow: hidden; border-radius: 50px; }
 .house.details .mainer .gjList .lists .imgbox img{ display: block; width: 100%; }

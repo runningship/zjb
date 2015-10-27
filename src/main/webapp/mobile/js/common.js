@@ -4,6 +4,9 @@ var server_host = "192.168.1.222:8081";
 var myCity;
 var config;
 function getConfig(callback){
+	if(api.systemType=='ios'){
+		$('#header').css('margin-top','25px');
+	}
 	api.getPrefs({
 	    key: 'config'
 	}, function(ret, err){
