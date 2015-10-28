@@ -23,14 +23,15 @@ box-orient: horizontal;
 /* default */
 .bodyer{}
 
-.header{height: 50px; line-height: 50px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;
-}
+.header{ height: 50px; line-height: 50px; background: #18B4ED; color:#FFF; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;white-space:nowrap;word-break: keep-all;}
 .header .left,
 .header .right,
 .header .conter{-webkit-box-flex: 1;display: block; height: inherit; line-height: inherit;}
 .header .conter{text-align: center;}
 .header .right{ text-align: right; }
-.header h1{ display: inline-block; font-size: 13pt; }
+.header h1{ display: inline-block; font-size: 13pt;line-height: 100%;
+    border-left: 2pt solid #04A3DD;
+    padding-left: 6pt; }
 .header a.btns{ display: inline-block; width: 36px; height: inherit; line-height: inherit; text-align: center; color: #FFF; }
 .header a.btns.font{ width: auto; padding-right: 5pt; font-size: 14pt; }
 .header i{font-size: 18px;}
@@ -170,7 +171,7 @@ form
 /* regbox end */
 
 /* tipbox */
-.tipbox{display: block; height: 30pt; line-height: 30pt; border-bottom: 1px solid #EEE; background: #F6F6F6; padding: 0 10pt; }
+.tipbox{display: block; height: 30pt; line-height: 30pt; border-bottom: 1px solid #EEE; background: #F6F6F6; padding: 0 10pt; font-size: 12pt; }
 .tipbox i{ font-size: 18pt; vertical-align: middle; margin-right: 10pt; }
 .tipbox.red{ color: #F00; border-color: #F00; background: #FFC7C7; }
 .tipbox.orange{ color: #FF4A00; border-color: #FF4A00; background: #FFC6AF; }
@@ -201,7 +202,7 @@ form
 .login .formbox li:first-child .formItem{ border-top: 0px solid #EEE;}
 .login .formbox .formItem .icon{ float: left; display: block; height: inherit; line-height:inherit; width: 20%; }
 .login .formbox .formItem .icon i{ color: #777; }
-.login .formbox .formItem .inputbox{ display: block; margin-left: 20%; height: inherit; line-height: inherit; }
+.login .formbox .formItem .inputbox{ display: block; margin-left: 20%; height: inherit; line-height: 16pt; }
 .login .formbox .formItem input.input{ display: block; width: 100%; height: inherit; line-height: inherit; border: 0; background: none; }
 .login .btn.submit{ margin-top: 40px; height: 26pt; line-height: 26pt; background: rgba(0,0,0,0.3); border-radius: 50px;box-shadow:-1px -1px rgba(0,0,0,0.4), 1px 1px rgba(255,255,255,0.3);text-shadow:1px 1px rgba(0,0,0,0.4), -1px -1px rgba(255,255,255,0.1); color: #FFF; }
 .login .btn.submit i{ color: #18B4ED; margin-left: 10px; }
@@ -310,9 +311,9 @@ form
 .Hul li div.cont div.span div{-webkit-box-flex: 1; width: 25%;}
 .Hul li div.side { float: right; width: 40px; line-height: 46px; text-align: center; }
 .Hul li div.side a{ display: block; height: inherit; line-height: inherit; color:#CFCFCF;}
-
-
-
+.Hul li.read{ background: #18B4ED;color:#FFF; }
+.Hul li.read div.cont h2{ color: #FFF; }
+.Hul li.read div.cont div.span span{ color: #FFF; }
 /*
 house
  */
@@ -342,7 +343,7 @@ house
 
 .house.details .mainer .gjList .lists .fc{ margin-left: 50px; }
 .house.details .mainer .gjList .lists .gjTit h1{ color: #555; padding-bottom: 5pt; }
-.house.details .mainer .gjList .lists .gjTit b{ display: block; font-size: 11pt; padding-bottom: 5pt; color: #888;     position: absolute;top: 0px;    right: 0px;    font-size: 12px;}
+.house.details .mainer .gjList .lists .gjTit b{ display: block; font-size: 11pt; padding-bottom: 5pt; color: #888; position: absolute; top: 0px; right: 0px; font-size: 12px;}
 .house.details .mainer .gjList .lists p{ color: #000; }
 .house.details .mainer .gjList .lists .imgbox{ display: block; width: 40px; height: 40px; line-height: 40px; overflow: hidden; border-radius: 50px; }
 .house.details .mainer .gjList .lists .imgbox img{ display: block; width: 100%; }
@@ -427,6 +428,9 @@ work
 
 .workList:after {content: "\0020";display: block;height: 0;clear: both;}
 .workList li{ display: inline-block; float: left; text-align: center; margin:5px 5px 5px 5px; }
+.workList li span{ position: relative; overflow: hidden; }
+.workList li span:after{content: "";display: block; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.0); }
+.workList li span.tapped:after{ background: rgba(0,0,0,0.2); }
 
 .workList.big li span{ display: block; margin: 0 3pt; width: 46pt; height: 46pt; line-height: 46pt;  color: #666; border-radius: 6pt;}
 .workList.big li span,
