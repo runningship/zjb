@@ -107,7 +107,7 @@ function addDelete(id,obj){
  }
      
 function delItems(){
-	if(!Ids){
+	if(!Ids || Ids==''){
 		alert('请至少选择一项');
 		return;
 	}

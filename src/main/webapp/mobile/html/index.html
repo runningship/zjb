@@ -69,6 +69,7 @@ function refreshIndex(){
 }
 function openGroup(){
 	actionType = "house";
+	//checkFile('/html/uside.html');
 	api.openFrameGroup ({
 	    name: 'group1',
 	    background:'#fff',
@@ -95,8 +96,8 @@ function openGroup(){
 	        bgColor: '#fff'
 	    }]
 	}, function(ret, err){
-	    var name = ret.name;
-	    var index = ret.index;
+		//blockAlert(JSON.stringify(ret));
+		//blockAlert(JSON.stringify(err));
 	});
 }
 
@@ -193,7 +194,7 @@ function openHouses(){
         animation:{
 		    type:"push",
 		    subType:"from_left",
-		    duration:200
+		    duration:300
 		},
         rect: {
             x: 0,
@@ -226,7 +227,7 @@ function openFujin(){
 		animation:{
 		    type:"push",
 		    subType:subType,
-		    duration:200
+		    duration:300
 		},
         bounces: true,
         vScrollBarEnabled:true,
@@ -256,7 +257,7 @@ function openWork(){
 		animation:{
 		    type:"push",
 		    subType:"from_right",
-		    duration:200
+		    duration:300
 		},
         bounces: false,
         vScrollBarEnabled:true,

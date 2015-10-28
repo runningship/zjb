@@ -66,7 +66,12 @@ function loadData(){
 						$('#mji').text(ret.mji);
 					}
 					if(ret.zjia){
-						$('#zjia').text(ret.zjia+'万');
+						if(isChuzu){
+							$('#zjia').text(ret.zjia+'元');
+						}else{
+							$('#zjia').text(ret.zjia+'万');
+						}
+						
 					}
 					if(ret.djia){
 						$('#djia').text(ret.djia+'元');
@@ -121,7 +126,7 @@ function loadData(){
 	}
 	
 	function addGenjin(){
-		var conts = $('#conts').text();
+		var conts = $('#conts').val();
 //		var status = $('#gjType').val();
 		if(conts==''){
 			alert('请先填写跟进信息');
@@ -138,7 +143,7 @@ function loadData(){
 		},function(ret , err){
 			if(ret && ret.result=='1'){
 				alert('跟进成功');
-				$('#conts').text('');
+				$('#conts').val('');
 				loadGenJin(true);
 			}else{
 				alert('跟进失败');

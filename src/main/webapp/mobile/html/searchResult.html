@@ -18,6 +18,7 @@ var header;
 var mainer;
 var statusBarHeight=0;
 apiready = function(){
+	getConfig();
 	header = $('#header');
 	mainer = $('#mainer');
 	api.openFrame({
@@ -31,7 +32,7 @@ apiready = function(){
             x: 0,
             y: header.height()+statusBarHeight,
             w: 'auto',
-            h: mainer.height()
+            h: mainer.height()-statusBarHeight
         }
     });
 };

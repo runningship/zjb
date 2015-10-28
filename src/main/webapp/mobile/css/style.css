@@ -304,16 +304,16 @@ form
 .Hul li.nos{ border: none; }
 .Hul li div.cont,.Hul li div.side{}
 .Hul li div.cont{-webkit-box-flex:2; padding:0 10px;}
-.Hul li div.cont h2{ color: #3F3F3F; font-size: 16px; margin-bottom: 5px; }
+.Hul li div.cont h2{ color: #2f2f2f; font-size: 16px; margin-bottom: 5px; font-weight:normal;}
 .Hul li div.cont h2 b{ font-weight: normal; }
-.Hul li div.cont div.span{display: -webkit-box;-webkit-box-orient: horizontal;}
-.Hul li div.cont div.span span{ display: block;-webkit-box-flex: 1; width: 25%; color: #808080; }
+.Hul li div.cont div.span{display: -webkit-box;-webkit-box-orient: horizontal;font-size:13px;}
+.Hul li div.cont div.span span{ display: block;-webkit-box-flex: 1; width: 25%; color: #6f6f6f; }
 .Hul li div.cont div.span div{-webkit-box-flex: 1; width: 25%;}
 .Hul li div.side { float: right; width: 40px; line-height: 46px; text-align: center; }
 .Hul li div.side a{ display: block; height: inherit; line-height: inherit; color:#CFCFCF;}
-.Hul li.read{ background: #18B4ED;color:#FFF; }
-.Hul li.read div.cont h2{ color: #FFF; }
-.Hul li.read div.cont div.span span{ color: #FFF; }
+.Hul li div.read{color:#FFF; }
+.Hul li div.cont.read h2{ color: #999; }
+.Hul li div.cont.read div.span span{ color: #999; }
 /*
 house
  */
@@ -355,7 +355,7 @@ house
 .house.details .footer .option label{ display: block; -webkit-box-flex: 1; text-align: center; border:none; border-left: 1px solid #EEE; height: 36pt; line-height: 36pt; }
 .house.details .footer .option label:first-child{ border-left: none; }
 .house.details .footer .entered{ border-top: 1px solid #EEE;}
-.house.details .footer .entered .inputbox{-webkit-box-flex: 10; padding: 5pt 10pt; max-height: 60pt; line-height: 26pt; overflow: hidden; overflow-y: auto; text-align: left;}
+.house.details .footer .entered .inputbox{-webkit-box-flex: 10; max-height: 60pt; line-height: 26pt; overflow: hidden;  text-align: left;}
 .house.details .footer .entered .btns{ display: block; width: 60px;-webkit-box-flex: 0; text-align: center; line-height: 35pt; background: #18B4ED; color: #FFF }
 
 

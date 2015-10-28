@@ -22,14 +22,37 @@ var searchParams = JSON.parse('{}');
 apiready=function(){
 	getConfig(function(cfg){
 		config = cfg;
+		api.setRefreshHeaderInfo({
+		 	bgColor: '#333',
+		    textColor: '#666',
+		},
+		function(ret,err){
+	    	api.refreshHeaderLoadDone();
+	    	buildHtmlWithJsonArray("repeat",[] , false,false);
+	    	currentPage=1;
+	    	loadData(true);
+		});
+	
+		api. addEventListener({name:'scrolltobottom'}, 
+			function(ret, err){
+				//设置提示信息
+				if(currentPage<totalPageCount){
+					currentPage++;
+				}else{
+					alert('已是最后一页');
+					return;
+				}
+				setTimeout(loadData,100);
+		});
 		loadData();
 	});
 };
 
 function loadData(clear){
-	var url = 'http://'+server_host+'/c/mobile/kanfang/list?page='+currentPage;
+	var url = 'http://'+server_host+'/c/mobile/kanfang/list?';
 	searchParams.isChuzu=isChuzu;
 	searchParams.uid=config.user.uid;
+	searchParams.currentPageNo = currentPage;
 	YW.ajax({
 		url: url,
 		method:'post',
@@ -76,6 +99,7 @@ function switchType(chuzu){
 	currentPage=1;
 	loadData(true);
 }
+
 </script>
 <style type="text/css">
 .time{float: right;color: #808080;font-size:12px;}

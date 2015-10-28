@@ -1,9 +1,10 @@
 var fs = null;
-var fsPrefix="cache://";
+var fsPrefix='';
 var urlPrefix='http://192.168.1.222:8081/mobile';
 var fileCount=0;
 var downloadProcess=0;
 function updateIfNeed(){
+	fsPrefix=api.fsDir;
 	//bindTecentPush();
 //	bindAjpush();
 //	api.addEventListener({
@@ -94,9 +95,9 @@ function update(serverVersion , index){
 	}
 	var filename = serverVersion.files[index];
 	fs.getAttribute({
-	path: api.cacheDir+filename
+	path: fsPrefix+filename
 	},function(ret,err){
-		//alert(JSON.stringify(ret));
+		//alert(fsPrefix+filename+','+JSON.stringify(err));
 	if (ret.status) {
 	    if(ret.attribute.size!=serverVersion[filename]){
 	    	//alert(filename+','+ret.attribute.size);
@@ -117,14 +118,16 @@ function update(serverVersion , index){
 
 function download(path , callback){
 var url = urlPrefix+path;
+//alert('serverUrl: '+url +", savePaht: "+fsPrefix+path);
 api.download({
     url: url, 
     savePath: fsPrefix+path,
-    report: true,
+    report: false,
     cache: false,
     allowResume:false
 },function(ret,err){
 	//不成功就不callback了吗?
+	//alert('download:'+JSON.stringify(ret));
 //	callback();
     if (ret) {
         if( ret.state==1 && callback){
@@ -143,7 +146,7 @@ api.download({
 
 //打开欢迎页面
 function openIndexFrame(){
-	window.location='file://'+api.cacheDir+'/html/welcome.html';
+	window.location='file://'+fsPrefix+'/html/welcome.html';
 //api.openFrame({
 //    name: 'rootFrame',
 //    url: api.cacheDir+'/html/start.html',

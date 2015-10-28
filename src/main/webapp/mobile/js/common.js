@@ -160,3 +160,34 @@ function isUserFuFei(config){
 	}
 	return true;
 }
+
+function checkFile(file){
+	//blockAlert(api.cacheDir);
+	blockAlert('用alert不会乱码');
+	api.alert({msg:'api.alert会乱码'});
+	try{
+		var fs =  api.require('fs');
+		fs.open({
+		    path: api.fsDir+file,
+		    flags: 'read_write'
+		},function(ret,err){
+		    if (ret.status) {
+		        fs.read({
+		    	    fd:ret.fd,
+		    	    offset:0,
+		    	    length:0
+		    	},function(ret,err){
+		    	    if (ret.status) {
+		    	        api.alert({msg:ret.data});
+		    	    }else{
+		    	        api.alert({msg:err.msg});
+		    	    }
+		    	});
+		    }else{
+		        api.alert({msg:err.msg});
+		    }
+		});
+	}catch(e){
+		blockAlert(e);
+	}
+}

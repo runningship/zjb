@@ -40,7 +40,13 @@ function save(){
     		returnAll:false
     	},function(ret , err){
     		if(ret && ret.result==0){
-    			alert('发布成功');
+    			blockAlert('发布成功');
+    			api.execScript({
+    				name:'myHouse',
+    			    frameName: 'myHouseFrame',
+    			    script: 'refreshPage()'
+    			});
+    			closexx();
     		}else{
     			alert($('[name='+ret.field+']').attr('data-tip'));
     			$('[name='+ret.field+']').focus();

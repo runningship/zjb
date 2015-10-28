@@ -3,9 +3,47 @@ var totalPageCount;
 var config;
 var isChuzu=false;
 var repeatClass="repeat";
-var searchParams = JSON.parse('{}');
+var searchParams;
 var fufei=false;
 var searchMyPrivateHouse;
+apiready = function(){
+	searchParams = JSON.parse('{}');
+	if(api.pageParam.isChuzu){
+		isChuzu = api.pageParam.isChuzu;
+	}
+	if(api.pageParam.searchParams){
+		searchParams = api.pageParam.searchParams;
+	}
+	getConfig(function(cfg){
+		config = cfg;
+		fufei = isUserFuFei(config);
+	});
+	api.setRefreshHeaderInfo({
+		 	bgColor: '#333',
+		    textColor: '#666',
+		},
+		function(ret,err){
+	    	api.refreshHeaderLoadDone();
+	    	buildHtmlWithJsonArray(repeatClass,[] , false,false);
+	    	currentPage=1;
+	    	loadData(true);
+	});
+	
+	api. addEventListener({name:'scrolltobottom'}, 
+		function(ret, err){
+			//设置提示信息
+			if(currentPage<totalPageCount){
+				currentPage++;
+			}else{
+				alert('已是最后一页');
+				return;
+			}
+			setTimeout(loadData,100);
+		}
+	);
+	setTimeout(loadData,200);
+	//loadData();
+};
 function loadData(clear){
 	var url = 'http://'+server_host+'/c/mobile/list?page='+currentPage;
 	if(isChuzu){
@@ -75,44 +113,6 @@ function SeeThis(id){
 	}
 	$('#'+id).addClass('read');
  }
-
-	apiready = function(){
-		if(api.pageParam.isChuzu){
-			isChuzu = api.pageParam.isChuzu;
-		}
-		if(api.pageParam.searchParams){
-			searchParams = api.pageParam.searchParams;
-		}
-		getConfig(function(cfg){
-			config = cfg;
-			fufei = isUserFuFei(config);
-		});
-		api.setRefreshHeaderInfo({
-			 	bgColor: '#333',
-			    textColor: '#666',
-			},
-			function(ret,err){
-		    	api.refreshHeaderLoadDone();
-		    	buildHtmlWithJsonArray(repeatClass,[] , false,false);
-		    	currentPage=1;
-		    	loadData(true);
-			});
-		
-		api. addEventListener({name:'scrolltobottom'}, 
-			function(ret, err){
-				//设置提示信息
-				if(currentPage<totalPageCount){
-					currentPage++;
-				}else{
-					alert('已是最后一页');
-					return;
-				}
-				setTimeout(loadData,100);
-			}
-		);
-		setTimeout(loadData,200);
-		//loadData();
-	};
 
 function switchType(chuzu){
 	isChuzu = chuzu;

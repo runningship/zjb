@@ -37,13 +37,13 @@
         </span>
         <span class="conter"><h1 id="area"></h1></span>
         <span class="right">
-        	<a id="favBtn"  href="javascript:void(0)" class="btns" style="display:none" onclick="triggerFav();"><i class="iconfont">&#xe659;</i></a>
+        	<a id="favBtn"  class="btns" style="display:none" onclick="triggerFav();"><i class="iconfont">&#xe659;</i></a>
         </span>
     </div>
     <div id="mainer" class="mainer">
         <div class="item">
         	<p class="htime" ><span>发布时间: </span><span id="dateadd"></span>
-        	<span style="float:right">浏览: <span id="readCount">223</span></span> </p>
+        	<span style="float:right">浏览: <span id="readCount"></span></span> </p>
             <ul class="hList">
                 <li class="">
                     <span>总价</span>
@@ -125,7 +125,7 @@
         </div>
     </div>
     <div class="item nos hide kefu"  id="kefu"  onclick="call('055165314555')">拨打客服电话</div>
-    <div id="footer" class="footer hide" >
+    <div id="footer" class="footer  " >
         <div class="item option">
             <label class="formItem check">
                 <input type="radio" class="check_radio"  checked="checked" name="ztai" value="4" onclick="status=4">
@@ -146,8 +146,11 @@
 <!--         		<option value="6">已售</option> -->
 <!--         		<option value="7">停售</option> -->
 <!--         	</select> -->
-            <div class="inputbox input_genjin" contenteditable="true" placeholder="fsdf"  id="conts"></div>
-            <a class="btns btn_act" data-type="submit" onclick="addGenjin()">提交</a>
+            <div class="inputbox input_genjin" contenteditable="false">
+            	<textarea class=""  id="conts" style="height:60pt;width:100%;font-size:16pt"></textarea>
+            </div>
+            
+            <a class="btns btn_act" data-type="submit" style="height:60pt;line-height:60pt;" onclick="addGenjin()">提交</a>
         </div>
     </div>
 </div>

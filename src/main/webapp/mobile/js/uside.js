@@ -19,6 +19,9 @@ function init(){
 			if(config.user.uname){
 				$('#uname').text(config.user.uname);
 			}
+			//blockAlert(config.user.tel);
+			//$('#tel').html(config.user.tel);
+			$('#tel').css('color','red');
 			$('#tel').text(config.user.tel);
 			if(config.user.pwd){
 				$('#endtime').text(config.user.mobileDeadtime);
@@ -47,6 +50,7 @@ function openLogin(){
 	api.openWin({
 	    name: 'login',
 	    url: 'login.html',
+	    //url:'http://www.baidu.com',
 	    delay:300
 	});
 }

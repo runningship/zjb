@@ -43,7 +43,13 @@ function save(){
     		returnAll:false
     	},function(ret , err){
     		if(ret && ret.result==0){
-    			alert('保存成功');
+    			blockAlert('保存成功');
+    			api.execScript({
+    				name:'kanfang',
+    			    frameName: 'kanfangFrame',
+    			    script: 'refreshPage()'
+    			});
+    			closexx();
     		}else{
     			alert($('[name='+ret.field+']').attr('data-tip'));
     			$('[name='+ret.field+']').focus();
