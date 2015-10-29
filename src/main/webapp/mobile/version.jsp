@@ -16,7 +16,6 @@ String cssPath = request.getServletContext().getRealPath("/mobile/css");
 String jsPath = request.getServletContext().getRealPath("/mobile/js");
 String htmlPath = request.getServletContext().getRealPath("/mobile/html");
 String imgPath = request.getServletContext().getRealPath("/mobile/images");
-String oldPath = request.getServletContext().getRealPath("/mobile/old");
 List<File> allFiles = new ArrayList<File>();
 allFiles.addAll(FileHelper.listFiles(new File(cssPath)));
 allFiles.addAll(FileHelper.listFiles(new File(jsPath)));
@@ -34,7 +33,7 @@ for(File file : allFiles){
 }
 jobj.put("files", files);
 //jobj.put("statusBarHeight", 25);
-//jobj.put("version",30);
+//jobj.put("version",35);
 jobj.put("version","debug");
 out.write(jobj.toString());
 %>

@@ -114,7 +114,12 @@ function loadData(){
 						$('.gjList').show();
 					}
 					for(var i=0;i<ret.data.length;i++){
-						ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg';
+						if(ret.data[i].avatar){
+							ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+ret.data[i].avatar+'.jpg';
+						}else{
+							ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+0+'.jpg';
+						}
+						blockAlert(ret.data[i].avatarPath);
 					}
 					if(clear){
 						buildHtmlWithJsonArray('genjin',ret.data , false,false);

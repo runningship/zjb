@@ -3,6 +3,20 @@ var fsPrefix='';
 var urlPrefix='http://192.168.1.222:8081/mobile';
 var fileCount=0;
 var downloadProcess=0;
+apiready = function(){
+	$('body').css('background' , '#fff');
+	api.removeLaunchView();
+	try{
+		updateIfNeed();
+	}catch(e){
+		alert('连接服务器失败!');
+		api.closeWidget({
+             id: 'A6989896004356',     //这里改成自己的应用ID
+             retData: {name:'closeWidget'},
+             silent:true
+         });
+	}
+};
 function updateIfNeed(){
 	fsPrefix=api.fsDir;
 	//bindTecentPush();
@@ -36,6 +50,7 @@ function updateIfNeed(){
             		openIndexFrame();
             		return;
             	}else{
+            		$('body').css('background' , '#000');
             		//alert(loop);
             		setInterval(loop, 16);
             		update(serverVersion , 0);
