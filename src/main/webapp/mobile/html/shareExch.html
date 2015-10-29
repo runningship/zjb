@@ -31,6 +31,10 @@ function duihuan(){
 		alert('请先输入邀请码');
 		return;
 	}
+	if(isNaN($('#invitationCode').val())){
+		alert('邀请码必须是数字.');
+		return;
+	}
 	var invitationCode = $('#invitationCode').val();
 	var url = 'http://'+server_host+'/c/mobile/user/acceptInvitation';
 	YW.ajax({
@@ -42,6 +46,7 @@ function duihuan(){
 		cache:false,
 		returnAll:false
 	},function(ret , err){
+		//blockAlert(JSON.stringify(ret));
 		if(ret && ret.result==1){
 			api.execScript({
 			    name: 'user',
@@ -49,7 +54,7 @@ function duihuan(){
 			});
 			blockAlert('您已成功领取5天的新手礼包，付费使用即可激活！');
 		}else{
-			alert(ret.msg);
+			blockAlert(ret.msg);
 		}
 	});
 }

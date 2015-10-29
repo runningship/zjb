@@ -335,6 +335,23 @@ function setPageOrder(col){
 	}
 	$('#searchBtn').click();
 }
+
+function onSetDateStart(){
+	var timeend=$dp.$('idTime');
+	var wp =WdatePicker({lang:'zh-cn',
+		startDate:'%y-%M-%d 00:00:00',
+		dateFmt:'yyyy-MM-dd HH:mm',
+		isShowToday:false,
+		onpicked:function(){
+			idTime.focus();
+			},
+		maxDate:'#F{$dp.$D(\'idTime\')}'
+		});
+}
+
+function onSetDataEnd(){
+	var wp2 = WdatePicker({lang:'zh-cn',isShowToday:false,startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'idTimes\')}'});
+}
 </script>
 <style type="text/css">
   .selected{
@@ -520,8 +537,8 @@ function setPageOrder(col){
                         <li>
                             <span class="SpanNameH2 not-select"><em>发布<br />日期</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:70px">
-        <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:70px">
+                            <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="onSetDateStart();" style="width:70px">
+        <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="onSetDataEnd();" style="width:70px">
                             </div>
                         </li>
                         

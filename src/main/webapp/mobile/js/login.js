@@ -85,19 +85,8 @@ apiready=function(){
 			$('#city').text(config.city.cityName);
 		}
 	});
-    if(api.systemType=='ios'){
-		//ios版审核未上线
-    	YW.ajax({
-    		url:'http://'+server_host+'/c/mobile/user/isIOSOnline',
-    		method:'get',
-    		cache:false
-    	},function(ret , err){
-    		if(ret && ret.iosShenHeVersion!=api.appVersion){
-    			$('#reg').css('display','');
-    		}
-    	});
-	}else{
-		$('#reg').css('display','');
+    if(api.systemType=='android'){
+    	$('#reg').css('display','block');
 	}
 };
 

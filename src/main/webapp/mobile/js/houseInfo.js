@@ -6,6 +6,7 @@ var rentStatus = 1;
 var userId='';
 var isChuzu=false;
 var isFufei=false;
+var houseDetail;
 apiready = function(){
 	
 	isChuzu = api.pageParam.isChuzu;
@@ -212,4 +213,29 @@ function loadData(){
 		    type: 'tel_prompt',
 		    number: num
 		});
+	}
+	
+	function daohang(){
+//		alert(houseDetail.latitude+','+houseDetail.longitude);
+//		window.location="intent://map/place/search?query=银行&region=北京&referer=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end";
+			var baiduLocation = api.require('baiduLocation');
+		    baiduLocation.getLocation(
+		        function (ret, err) {
+		            if (ret.status) {
+		            	var url = '';
+	            		if(houseDetail.latitude && houseDetail.longitude){
+	            			url='http://api.map.baidu.com/direction?origin=latlng:'+ret.latitude+','+ret.longitude+'|name:我的位置&destination=name:终点|latlng:'+houseDetail.latitude+','+houseDetail.longitude+'&mode=driving&region='+config.city.cityName+'&output=html';
+	            		}else{
+	            			url='http://api.map.baidu.com/direction?origin=latlng:'+ret.latitude+','+ret.longitude+'|name:我的位置&destination='+area+'&mode=driving&region='+config.city.cityName+'&output=html';
+	            		}
+	            		blockAlert(url);
+	            		api.openWin({
+	            		    name: 'daohang',
+	            		    url: url,
+	            		    delay:200
+	            		});
+		            } else {
+		            }
+		        }
+		    );
 	}

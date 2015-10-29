@@ -74,6 +74,11 @@ function delHouse(){
 	    	},function(ret , err){
 	    		if(ret){
 	    			blockAlert('删除成功');
+	    			api.execScript({
+	    				name:'myHouse',
+	    			    frameName: 'myHouseFrame',
+	    			    script: 'refreshPage()'
+	    			});
 	    			closexx();
 	    		}else{
 	    			alert('操作失败请重试.');

@@ -61,6 +61,11 @@ function delHouse(){
 	    	},function(ret , err){
 	    		if(ret){
 	    			blockAlert('删除成功');
+	    			api.execScript({
+	    				name:'kanfang',
+	    			    frameName: 'kanfangFrame',
+	    			    script: 'refreshPage()'
+	    			});
 	    			closexx();
 	    		}else{
 	    			alert('操作失败请重试.');

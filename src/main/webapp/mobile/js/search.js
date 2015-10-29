@@ -45,7 +45,9 @@ function init(){
 		$('#tel').css('display','');
 	}
 	buildHtmlWithJsonArray('repeat',config.city.quyus , false, false);
-	api.parseTapmode();
+	if(api.systemType=='android'){
+		api.parseTapmode();
+	}
 	$('#quyuWrap').prepend('<li id="allQuyu" class="active" onclick="selectAllQuyu(this);"><a><i class="iconfont hide">&#xe656;</i>全部</a></li>');
 	if(api.pageParam.loadHistory){
 		loadSearchHistory();
