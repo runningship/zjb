@@ -75,6 +75,7 @@ YW={
     			opts.data.values.tel = config.user.tel;
     		}
     	}
+    	opts.data.values.cache=false;
     	api.showProgress({
 		    style: 'default',
 		    animationType: 'fade',
@@ -129,6 +130,11 @@ function refreshPage(){
 	window.location.reload();
 }
 
+function reloadConfig(){
+	getConfig(function(cfg){
+		config = cfg;
+	});
+}
 
 function checkUser(){
 	if(config && config.user && config.user.pwd){
@@ -137,7 +143,7 @@ function checkUser(){
 	return false;
 }
 
-function isUserFuFei(config){
+function isUserFuFei(){
 	if(!config){
 		return false;
 	}
@@ -159,6 +165,23 @@ function isUserFuFei(config){
 		return false;
 	}
 	return true;
+}
+
+function toFuFei(){
+	api.confirm({
+	    title: '服务到期提醒',
+	    msg: '您的服务时间已到期,请续费后继续使用',
+	    buttons:['现在续费', '一会再说']
+	},function(ret,err){
+	    if(ret.buttonIndex == 1){
+	    	api.openWin({
+	            name: 'pay',
+	    		url: 'pay.html',
+	    		delay:200,
+	    		pageParam: {uid: config.user.uid}
+	        });
+	    }
+	});
 }
 
 function checkFile(file){

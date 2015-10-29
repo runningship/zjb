@@ -7,6 +7,7 @@
 <title>中介宝</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
+<meta name="format-detection" content="telephone=no" />
 <link href="../css/reset.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 <link href="../css/common.css" rel="stylesheet">
@@ -44,22 +45,22 @@
                         <span id="city" >城市</span>
                     </a>
                 </li>
-<!--                 <li> -->
-<!--                     <a href="#" class=""> -->
-<!--                         <i class="iconfont green">&#xe655;</i> -->
-<!--                         房源收藏 -->
-<!--                     </a> -->
-<!--                 </li> -->
-<!--                 <li> -->
-<!--                     <a href="#" class=""> -->
-<!--                         <i class="iconfont violet">&#xe640;</i> -->
-<!--                         查看记录 -->
-<!--                     </a> -->
-<!--                 </li> -->
                 <li>
+                    <a class="" onclick="openFav();">
+                        <i class="iconfont reg">&#xe659;</i>
+                        房源收藏
+                    </a>
+                </li>
+                <li>
+                    <a  class="" onclick="openViewLog()">
+                        <i class="iconfont violet">&#xe640;</i>
+                        查看记录
+                    </a>
+                </li>
+                <li id="pay" style="display:none">
                     <a tapmode="tapped"  onclick="openPay();" class="">
                         <i class="iconfont orange">&#xe614;</i>
-                        充值续费svd
+                        充值续费
                         <i class="iconfont fr reg" style="display:none" id="gift">&#xe650;</i>
                     </a>
                 </li>
@@ -109,7 +110,7 @@
         	<div onclick="openLogin();" class="item " tapmode="tapped"  >
             	<a class="btn"><i class="iconfont">&#xe665;</i>登录</a>
 	        </div>
-	        <div onclick="openReg();" class="item " tapmode="tapped"  >
+	        <div id="reg" style="display:none" onclick="openReg();" class="item " tapmode="tapped"  >
 	            <a class="btn"><i class="iconfont">&#xe664;</i>注册</a>
 	        </div>
         </div>

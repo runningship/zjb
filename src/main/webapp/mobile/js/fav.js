@@ -91,19 +91,27 @@ function addDelete(id,obj){
 
  function selectAllItems(){
  	checkbox=$('input[type=checkbox]');
-	 if(selectAll==0){
-	 	checkbox.prop('checked',true);
-    	checkbox.each(function(i){ 
-	      if ($(this).val()!='$[id]') {
-	        Ids[i-1] = $(this).val(); 
-	      }
-	 	selectAll=1;
-	 	});
-	 }else{
-	 	checkbox.prop('checked',false);
-	 	Ids=[];
-	 	selectAll=0;
-	 }
+ 	Ids=[];
+ 	checkbox.prop('checked',!checkbox.prop('checked'));
+ 	checkbox.each(function(i){
+      if ($(this).val()!='$[id]') {
+        Ids.push($(this).val()); 
+      }
+ 	});
+ 	
+//	 if(selectAll==0){
+//	 	checkbox.prop('checked',true);
+//    	checkbox.each(function(i){
+//	      if ($(this).val()!='$[id]') {
+//	        Ids.push($(this).val()); 
+//	      }
+//	 	});
+//    	selectAll=1;
+//	 }else{
+//	 	checkbox.prop('checked',false);
+//	 	Ids=[];
+//	 	selectAll=0;
+//	 }
  }
      
 function delItems(){
@@ -116,15 +124,16 @@ function delItems(){
 		if(houseType=='fav'){
 			url = 'http://'+server_host+'/c/mobile/fav/triggerRent?houseId='+Ids+'&userId='+userId;
 		}else{
-			url = 'http://'+server_host+'/c/mobile/user/deltracks?chuzu=0&hid='+Ids+'&userId='+userId;
+			url = 'http://'+server_host+'/c/mobile/user/deltracks?chuzu=1&hid='+Ids+'&userId='+userId;
 		}
 	}else{
 		if(houseType=='fav'){
 			url='http://'+server_host+'/c/mobile/fav/trigger?houseId='+Ids+'&userId='+userId;
 		}else{
-			url ='http://'+server_host+'/c/mobile/user/deltracks?chuzu=1&hid='+Ids+'&userId='+userId;
+			url ='http://'+server_host+'/c/mobile/user/deltracks?chuzu=0&hid='+Ids+'&userId='+userId;
 		}
 	}
+	//
 	YW.ajax({
 			url: url,
 			method:'post',
@@ -158,7 +167,7 @@ function SeeThis(id){
 		url: 'house_details.html',
 		delay:300
     });
-	$('#'+id).css('color','#999');
+	$('#'+id).addClass('read');
  }
  
 apiready=function(){
@@ -195,5 +204,6 @@ apiready=function(){
 function switchType(chuzu){
 	isChuzu = chuzu;
 	currentPage=1;
+	Ids=[];
 	loadData(true);
 }

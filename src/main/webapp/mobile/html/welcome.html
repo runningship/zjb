@@ -12,8 +12,6 @@ apiready = function(){
 		if(config.city && config.city.cityPy){
 			setTimeout(function(){
 				//window.location='index.html';
-				//blockAlert('file://'+api.cacheDir+'/html/welcome.html');
-				//window.location='file://'+api.cacheDir+'/html/welcome.html';
 				openIndexFrame();
 				//openGroup();
 			} , 2000);	
@@ -100,13 +98,6 @@ function openIndexFrame(){
 	        bounces:false,
 	        vScrollBarEnabled:true,
 	        hScrollBarEnabled:false
-	    }
-	}, function(ret){
-	    var type = ret.type;
-	    if (type == 'left') {
-
-	    } else {
-
 	    }
 	});
 	

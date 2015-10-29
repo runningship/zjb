@@ -63,7 +63,7 @@ function refreshIndex(){
 		api.execScript({
 		    name: 'index',
 		    frameName:'work',
-		    script: 'refreshPage();'
+		    script: 'reloadConfig();'
 		});
 	});
 }
@@ -80,6 +80,7 @@ function openGroup(){
             h: mainer.height()-statusBarHeight
         },
 	    index:0,
+	    preload:0,
 	    frames:
 	    [{
 	        name: 'house', 
@@ -99,6 +100,15 @@ function openGroup(){
 		//blockAlert(JSON.stringify(ret));
 		//blockAlert(JSON.stringify(err));
 	});
+	if(api.systemType=='ios'){
+		setTimeout(function(){
+			api.execScript({
+			    name: 'index',
+			    frameName:'house',
+			    script: 'refreshPage();'
+			});	
+		},1000);	
+	}
 }
 
 function exitApp(){

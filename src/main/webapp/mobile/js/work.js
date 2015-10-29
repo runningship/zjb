@@ -14,6 +14,11 @@ function openFav(){
 		});
 		return;
 	}
+	//检查是否付费
+	if(!isUserFuFei(config)){
+		toFuFei();
+		return;
+	}
 	api.openWin({
 	    name: 'fav',
 	    url: 'favIndex.html',
@@ -31,11 +36,17 @@ function openMyHouse(){
 		});
 		return;
 	}
+	//检查是否付费
+	if(!isUserFuFei(config)){
+		toFuFei();
+		return;
+	}
 	api.openWin({
 	    name: 'myHouse',
 	    url: 'myHouseWin.html?'+new Date().getTime()
 	});
 }
+
 
 function openKanFang(){
 	if(!checkUser()){
@@ -44,6 +55,11 @@ function openKanFang(){
 		    url: 'login.html',
 		    pageParam: {forward: 'kanfang/index.html' , winName:'kanfang'}
 		});
+		return;
+	}
+	//检查是否付费
+	if(!isUserFuFei(config)){
+		toFuFei();
 		return;
 	}
 	api.openWin({
@@ -60,6 +76,11 @@ function openViewLog(){
 		    url: 'login.html',
 		    pageParam: {forward: 'favIndex.html',houseType: 'viewLog'}
 		});
+		return;
+	}
+	//检查是否付费
+	if(!isUserFuFei(config)){
+		toFuFei();
 		return;
 	}
 	api.openWin({

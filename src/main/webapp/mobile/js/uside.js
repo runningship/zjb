@@ -1,4 +1,8 @@
 apiready = function(){
+	if(api.systemType=='android'){
+    	$('#pay').css('display','block');
+    	$('#reg').css('display','');
+	}
 	getConfig(function(cfg){
 		config = cfg;
 		init();
@@ -21,7 +25,7 @@ function init(){
 			}
 			//blockAlert(config.user.tel);
 			//$('#tel').html(config.user.tel);
-			$('#tel').css('color','red');
+			//$('#tel').css('color','red');
 			$('#tel').text(config.user.tel);
 			if(config.user.pwd){
 				$('#endtime').text(config.user.mobileDeadtime);
@@ -50,8 +54,7 @@ function openLogin(){
 	api.openWin({
 	    name: 'login',
 	    url: 'login.html',
-	    //url:'http://www.baidu.com',
-	    delay:300
+	    delay:200
 	});
 }
 function openPwd(){
@@ -59,14 +62,14 @@ function openPwd(){
 	api.openWin({
 	    name: 'pwd',
 	    url: 'pwd.html',
-	    delay:300
+	    delay:200
 	});
 }
 function openReg(){
 	api.openWin({
 	    name: 'reg',
 	    url: 'reg.html',
-	    delay:300
+	    delay:200
 	});
 }
 function openShare(){
@@ -145,6 +148,7 @@ function updateDeadtime(){
 		returnAll:false
 	},function(ret , err){
 		$('#endtime').text(ret.mobileDeadtime);
+		$('#endtime').css('color','white');
 		config.user.invitationActive=ret.invitationActive;
 		config.user.mobileDeadtime=ret.mobileDeadtime;
 		config.user.mobileDeadtimeInLong=ret.mobileDeadtimeInLong;
@@ -154,6 +158,55 @@ function updateDeadtime(){
 			$('#gift').css('display','');
 		}
 		saveConfig(config);
+		 //刷新工作页面
+	    api.execScript({
+	    	name: 'index',
+		    frameName:'work',
+		    script: 'reloadConfig()'
+		});
+	});
+}
+
+function openFav(){
+	if(!checkUser()){
+		api.openWin({
+		    name: 'login',
+		    url: 'login.html',
+		    pageParam: {forward: 'favIndex.html',houseType: 'fav' , winName:'fav'}
+		});
+		return;
+	}
+	//检查是否付费
+	if(!isUserFuFei(config)){
+		toFuFei();
+		return;
+	}
+	api.openWin({
+	    name: 'fav',
+	    url: 'favIndex.html',
+	    delay:100,
+	    pageParam: {houseType: 'fav'}
+	});
+}
+
+function openViewLog(){
+	if(!checkUser()){
+		api.openWin({
+		    name: 'login',
+		    url: 'login.html',
+		    pageParam: {forward: 'favIndex.html',houseType: 'viewLog'}
+		});
+		return;
+	}
+	//检查是否付费
+	if(!isUserFuFei(config)){
+		toFuFei();
+		return;
+	}
+	api.openWin({
+	    name: 'viewLog',
+	    url: 'favIndex.html',
+	    pageParam: {houseType: 'viewLog'}
 	});
 }
 

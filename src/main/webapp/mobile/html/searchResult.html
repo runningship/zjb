@@ -21,6 +21,9 @@ apiready = function(){
 	getConfig();
 	header = $('#header');
 	mainer = $('#mainer');
+	if(api.systemType=='ios'){
+		statusBarHeight = 25;
+	}
 	api.openFrame({
         name: 'areaFrame',
 		url: 'house.html',

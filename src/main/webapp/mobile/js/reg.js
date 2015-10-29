@@ -82,7 +82,12 @@ function doReg(){
 		returnAll:false
 	},function(ret , err){
 		if(ret && ret.result=='1'){
-			alert('注册成功');
+			blockAlert('注册成功');
+			api.openWin({
+			    name: 'login',
+			    url: 'login.html',
+			    delay:300
+			});
 			setTimeout(function(){
 				api.closeWin({
 				    name: 'reg'

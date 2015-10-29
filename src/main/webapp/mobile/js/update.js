@@ -146,10 +146,10 @@ api.download({
 
 //打开欢迎页面
 function openIndexFrame(){
-	window.location='file://'+fsPrefix+'/html/welcome.html';
+	window.location='file://'+fsPrefix+'/html/welcome.html?'+new Date().getTime();
 //api.openFrame({
 //    name: 'rootFrame',
-//    url: api.cacheDir+'/html/start.html',
+//    url: fsPrefix+'/html/start.html',
 //    bounces: false,
 //    reload:true,
 //    bgColor: '#fff',
