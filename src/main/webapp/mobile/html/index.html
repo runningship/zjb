@@ -43,7 +43,7 @@ apiready = function(){
 		//bindTecentPush();
 		exitApp();
 		openGroup();
-		bindAjpush();
+		//bindAjpush();
 	});
 };
 
@@ -101,15 +101,15 @@ function openGroup(){
 		//blockAlert(JSON.stringify(ret));
 		//blockAlert(JSON.stringify(err));
 	});
-	if(api.systemType=='ios'){
-		setTimeout(function(){
-			api.execScript({
-			    name: 'index',
-			    frameName:'house',
-			    script: 'refreshPage();'
-			});	
-		},1000);	
-	}
+// 	if(api.systemType=='ios'){
+// 		setTimeout(function(){
+// 			api.execScript({
+// 			    name: 'index',
+// 			    frameName:'house',
+// 			    script: 'refreshPage();'
+// 			});	
+// 		},1000);	
+// 	}
 }
 
 function exitApp(){

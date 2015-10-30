@@ -108,6 +108,7 @@ function openCitys(){
 	api.openWin({
 	    name: 'citys',
 	    url: 'citys.html?'+new Date().getTime(),
+	    slidBackEnabled:false,
 	    pageParam: {cityPy: 'cityPy'}
 	});
 }

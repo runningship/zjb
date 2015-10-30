@@ -41,7 +41,7 @@ function init(){
 				$('#gift').css('display','');
 			}
 		}else{
-			$('#avatar').attr('src','http://192.168.1.222:8081/mobile/images/zjb.png');
+			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 		}
 		if(config.city){
 			$('#city').text(config.city.cityName);
@@ -132,9 +132,21 @@ function openCitys(){
 	api.openWin({
 	    name: 'citys',
 	    delay:200,
+	    slidBackEnabled:false,
 	    url: 'citys.html?'+new Date().getTime(),
 	    pageParam: {cityPy: 'cityPy'}
 	});
+}
+
+function setDebug(){
+	api.getPrefs({
+	    key:'debug'
+    },function(ret,err){
+    	api.setPrefs({
+    	    key:'',
+    	    value: !ret.value
+        });
+    });
 }
 
 function updateDeadtime(){

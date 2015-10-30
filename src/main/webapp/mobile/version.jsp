@@ -11,6 +11,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
+//需要缓存
 String rootPath = request.getServletContext().getRealPath("/mobile/");
 String cssPath = request.getServletContext().getRealPath("/mobile/css");
 String jsPath = request.getServletContext().getRealPath("/mobile/js");

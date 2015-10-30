@@ -1,4 +1,6 @@
-//var server_host = "mobile.zjb.tunnel.mobi";
+
+
+
 var server_host = "192.168.1.222:8081";
 //定位所在城市
 var myCity;
@@ -85,22 +87,23 @@ YW={
 		});
     	//blockAlert(JSON.stringify(opts));
        	api.ajax(opts,function(ret,err){
-       		if(err && 'loginFromOther'==err.msg){
-   				blockAlert('账号在别处登录');
-               config.user.tel='';
-               config.user.pwd='';
-               saveConfig(config);
-	    		api.closeWidget({
-				    id: 'A6989896004356',
-				    retData: {name:'closeWidget'},
-                    silent:true
-				});
-       			return;
+   			if(err){
+       			if('loginFromOther'==err.msg || 'loginFromOther'==err.body){
+       				blockAlert('账号在别处登录');
+                    config.user.tel='';
+                    config.user.pwd='';
+                    saveConfig(config);
+     	    		api.closeWidget({
+     				    id: 'A6989896004356',
+     				    retData: {name:'closeWidget'},
+                         silent:true
+     				});
+        			return;
+       			}else{
+       				blockAlert(JSON.stringify(err));
+       			}
        		}
        		api.hideProgress();
-       		if(err){
-       			alert(err.msg);
-       		}
        		callback(ret,err);
        	});
     }
