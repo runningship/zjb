@@ -30,8 +30,7 @@ box-orient: horizontal;
 .header .conter{text-align: center;}
 .header .right{ text-align: right; }
 .header h1{ display: inline-block; font-size: 13pt;line-height: 100%;
-    border-left: 2pt solid #04A3DD;
-    padding-left: 6pt; }
+    /*border-left: 2pt solid #04A3DD; padding-left: 6pt;*/ }
 .header a.btns{ display: inline-block; width: 36px; height: inherit; line-height: inherit; text-align: center; color: #FFF; }
 .header a.btns.font{ width: auto; padding-right: 5pt; font-size: 14pt; }
 .header i{font-size: 18px;}
@@ -450,7 +449,6 @@ work
 .workList.list li i.iconfont{ font-size: 17pt; }
 .workList.list li i.fr{ color: #CCC; height: 26pt; line-height: 26pt}
 .workList.list li strong{ display:inline-block; font-size: 14pt; }
-
 
 .workList li.default span{ background: #9F9F9F; color: #FFF; }
 .workList li.blue span{ background: #64BEFD; color: #FFF; }
