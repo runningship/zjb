@@ -27,6 +27,9 @@ function init(){
 			//$('#tel').html(config.user.tel);
 			//$('#tel').css('color','red');
 			$('#tel').text(config.user.tel);
+			if(config.user.debug){
+				$('#settings').show();
+			}
 			if(config.user.pwd){
 				$('#endtime').text(config.user.mobileDeadtime);
 				var t = Date.parse(config.user.mobileDeadtime+' 23:59:59');
@@ -143,9 +146,14 @@ function setDebug(){
 	    key:'debug'
     },function(ret,err){
     	api.setPrefs({
-    	    key:'',
+    	    key:'debug',
     	    value: !ret.value
         });
+    	if(!ret.value){
+    		blockAlert('开启开发者模式');
+    	}else{
+    		blockAlert('关闭开发者模式');
+    	}
     });
 }
 

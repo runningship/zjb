@@ -1,6 +1,6 @@
 var fs = null;
 var fsPrefix='';
-var urlPrefix='http://192.168.1.222:8081/mobile';
+var urlPrefix='';
 var fileCount=0;
 var downloadProcess=0;
 

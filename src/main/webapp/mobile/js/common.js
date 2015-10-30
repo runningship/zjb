@@ -1,6 +1,3 @@
-
-
-
 var server_host = "192.168.1.222:8081";
 //定位所在城市
 var myCity;

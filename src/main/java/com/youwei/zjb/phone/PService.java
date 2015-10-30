@@ -215,6 +215,7 @@ public class PService {
 		}else{
 			mv.data.put("invitationActive", -1);
 		}
+		mv.data.put("debug", user.flag);
 		MobileUserDog.map.put(tel, deviceId);
 		if(user.avatar==null){
 			Random r = new Random();
