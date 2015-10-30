@@ -27,8 +27,11 @@ apiready = function(){
 	mainer = $('#mainer');
 	api.parseTapmode();
 	if(api.systemType=='ios'){
-		statusBarHeight = 25;
+		//statusBarHeight = 25;
 	}
+	api.closeWin({
+	    name: 'login'
+	});
 	api.pageParam.searchMyPrivateHouse=true;
 	getConfig(function(cfg){
 		config = cfg;

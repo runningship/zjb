@@ -18,7 +18,6 @@ function aliPay(){
 	
 	var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&cityPy='+config.city.cityPy+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee=0.01&WIDbody='+body;
 	//var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee='+amount+'&WIDbody='+body;
-	//blockAlert(url);
 	if(api.systemType=='android'){
 		api.openApp({
 		    androidPkg: 'android.intent.action.VIEW',

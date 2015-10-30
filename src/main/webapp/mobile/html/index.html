@@ -28,7 +28,7 @@ apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
 	if(api.systemType=='ios'){
-		statusBarHeight = 25;
+		//statusBarHeight = 25;
 		//$('#header').css('margin-top','25px');
 	}
 	getConfig(function(cfg){
@@ -43,6 +43,7 @@ apiready = function(){
 		//bindTecentPush();
 		exitApp();
 		openGroup();
+		bindAjpush();
 	});
 };
 
@@ -290,6 +291,35 @@ function openSearch(){
 	});
 }
 
+function bindAjpush(){
+	try{
+		var ajpush = api.require('ajpush');
+		var param = {alias: '15856985122'};
+		
+		ajpush.init(function(ret) {
+			blockAlert(JSON.stringify(ret));
+			ajpush.bindAliasAndTags(param,function(ret) {
+			     blockAlert('statuscode = '+ret.statusCode+'绑定到'+param.alias);
+			});
+	    });
+		ajpush.setListener(function(ret) {
+			blockAlert(ret.content);
+	    });
+		
+		 api.addEventListener({name:'appintent'}, function(ret,err) {
+		    if(ret && ret.appParam.ajpush){
+		            var data = ret.appParam.ajpush;
+		            var id = data.id;
+		            var title = data.title;
+		            var content = data.content;
+		            var extra = data.extra;
+		            blockAlert(JSON.stringify(data));
+		        }
+		  });
+	}catch(e){
+		alert(e);
+	}
+}
 
 function bindTecentPush(){
 	// 注册设备并绑定用户账号

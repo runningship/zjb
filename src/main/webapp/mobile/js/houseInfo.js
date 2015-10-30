@@ -119,7 +119,6 @@ function loadData(){
 						}else{
 							ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+0+'.jpg';
 						}
-						blockAlert(ret.data[i].avatarPath);
 					}
 					if(clear){
 						buildHtmlWithJsonArray('genjin',ret.data , false,false);
@@ -233,7 +232,6 @@ function loadData(){
 	            		}else{
 	            			url='http://api.map.baidu.com/direction?origin=latlng:'+ret.latitude+','+ret.longitude+'|name:我的位置&destination='+area+'&mode=driving&region='+config.city.cityName+'&output=html';
 	            		}
-	            		blockAlert(url);
 	            		api.openWin({
 	            		    name: 'daohang',
 	            		    url: url,

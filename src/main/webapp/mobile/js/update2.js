@@ -40,16 +40,17 @@ function updateIfNeed(){
             		return;
             	}else{
             		$('body').css('background' , '#000');
-            		setInterval(loop, 16);
-//            		loadstart();
-//            		loadtext('系统启动中...');
+            		//alert(loop);
+//            		setInterval(loop, 16);
+            		loadstart();
+            		loadtext('系统启动中...');
             		update(serverVersion , 0);
 			        var xx = setInterval(function(){
 						var percent = downloadProcess/fileCount;
 						var p = Math.round(percent*100);
 						if(p<=100){
-							$('#percent').text(p+'%');
-//							loading(p);
+//							$('#percent').text(p+'%');
+							loading(p);
 						}
 			        	if(downloadProcess>fileCount){
 			        		api.setPrefs({
@@ -136,17 +137,23 @@ api.download({
 //打开欢迎页面
 function openIndexFrame(){
 	window.location='file://'+fsPrefix+'/html/welcome.html?'+new Date().getTime();
-//api.openFrame({
-//    name: 'rootFrame',
-//    url: fsPrefix+'/html/start.html',
-//    bounces: false,
-//    reload:true,
-//    bgColor: '#fff',
-//    rect: {
-//        x: 0,
-//        y: statusBarHeight,
-//        w: 'auto',
-//        h: 'auto'
-//    }
-//});
+}
+
+function loadstart(){
+    $('.loadbox').animate({'opacity':'1'},1000);
+}
+function loading(b){
+var loadbox=$('.loadbox'),
+    loadNum=b,
+    loadB=loadbox.find('.loadb'),
+    loadBn=loadB.find('span');
+    if(loadNum<0&&loadNum>100){
+        loadNum=0;
+    }
+    loadBn.text(loadNum+'%');
+    loadB.css('width', loadNum+'%');
+}
+function loadtext(t){
+    if(!t){t='启动中...'}
+    $('.loadbox .loadt').text(t);
 }

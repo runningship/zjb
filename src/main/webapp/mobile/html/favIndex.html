@@ -28,11 +28,14 @@ apiready = function(){
 	api.parseTapmode();
 	api.pageParam.searchFavHouse=true;
 	if(api.systemType=='ios'){
-		statusBarHeight = 25;
+		//statusBarHeight = 25;
 	}
 	if(api.pageParam.houseType=='fav'){
 		$('#search').show();
 	}
+	api.closeWin({
+	    name: 'login'
+	});
 	getConfig(function(cfg){
 		config = cfg;
 		api.openFrame({

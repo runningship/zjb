@@ -5,7 +5,7 @@ var myCity;
 var config;
 function getConfig(callback){
 	if(api.systemType=='ios'){
-		$('#header').css('margin-top','25px');
+		//$('#header').css('margin-top','25px');
 	}
 	api.getPrefs({
 	    key: 'config'

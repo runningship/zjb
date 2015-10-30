@@ -59,18 +59,13 @@ function forward(){
 		    url: api.pageParam.forward,
 		    pageParam: api.pageParam
 		});
-		
-		
 	}else{
-//		closexx();
+		setTimeout(function(){
+			api.closeWin({
+			    name: 'login'
+			});
+		},300);
 	}
-	
-	setTimeout(function(){
-		api.closeWin({
-		    name: 'login'
-		});
-//		closexx();
-	},500);
 }
 apiready=function(){
 	api.clearCache();
