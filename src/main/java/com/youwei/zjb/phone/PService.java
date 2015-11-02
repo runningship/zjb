@@ -193,9 +193,11 @@ public class PService {
 				obj.put("fufei", "1");
 			}
 		}else{
-			Date now = new Date();
-			obj.put("mobileDeadtimeInLong", now.getTime());
-			obj.put("mobileDeadtime", DataHelper.dateSdf.format(now));
+			//过期日期设置成昨天
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, -1);
+			obj.put("mobileDeadtimeInLong", cal.getTime().getTime());
+			obj.put("mobileDeadtime", DataHelper.dateSdf.format(cal.getTime()));
 		}
 //		obj.put("mobileDeadtime", "3天后到期");
 		if(dept!=null){

@@ -69,7 +69,7 @@ public class User {
 	
 	/**
 	 *TODO 好像无用，值全为1
-	 *做手机版开发者标识用 2015-10-30
+	 *做手机版开发者标识用 2015-10-30 flag=2
 	 */
 	public Integer flag;
 	

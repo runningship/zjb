@@ -46,7 +46,7 @@ public class PHouseService {
 	@WebMethod(name="nearby.asp")
 	public ModelAndView nearBy(float longitude , float latitude){
 		ModelAndView mv = new ModelAndView();
-		String hql="select area as name,address as address ,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area and h.ztai=4 and h.sh=1 " 
+		String hql="select area as name,address as address ,maplat as latitude ,maplng as longitude,total from house_annex ,( select annex.area as xarea ,COUNT(*) as total from house h ,house_annex annex where h.area=annex.area and h.ztai=4 and h.sh=1 and h.seeGX=1  " 
 							+" and ((maplat>=? and maplat<=?) and (maplng>=? and maplng<=?)) group by annex.area) as tt where xarea = area and maplat >0";
 		List<Map> list = dao.listSqlAsMap(hql, latitude-latOffset , latitude+latOffset , longitude-lngOffset , longitude+lngOffset);
 		mv.data.put("result", JSONHelper.toJSONArray(list));
@@ -176,12 +176,12 @@ public class PHouseService {
 			hql.append(" and h.tel like ?");
 			params.add("%"+query.mobileTel+"%");
 		}
-		if(StringUtils.isNotEmpty(query.specArea)){
-			HouseQuery hq = new HouseQuery();
-			hq.page = query.page;
-			hq.specArea = query.specArea;
-			query = hq;
-		}
+//		if(StringUtils.isNotEmpty(query.specArea)){
+//			HouseQuery hq = new HouseQuery();
+//			hq.page = query.page;
+//			hq.specArea = query.specArea;
+//			query = hq;
+//		}
 		if(StringUtils.isNotEmpty(query.ztai)){
 			String[] arr = query.ztai.split(",");
 			hql.append(" and ( ");

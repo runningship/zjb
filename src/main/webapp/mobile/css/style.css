@@ -304,7 +304,7 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 .search .btn{ font-size: 14pt; display: block; border-radius: 3pt;  }
 
 .search .soList{}
-.search .soList li{ position: relative; height: 36pt; line-height: 36pt; border-bottom: 1px solid #EEE; font-size: 12pt;}
+.search .soList li{ position: relative; height: 36pt; line-height: 36pt; border-bottom: 1px solid #EEE; font-size: 12pt;overflow: hidden;}
 .search .soList li:first-child{ border-top: 3px solid #EEE; margin-top: 20px; }
 .search .soList li h3{ display: inline-block; height: inherit; line-height: inherit; }
 .search .soList li a{ color: #777; padding-left: 5pt; display: block; }

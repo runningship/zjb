@@ -278,7 +278,6 @@ function AddSelect(pageParam){
 
 function searchByHistory(item){
 	var data = $(item).attr('data');
-	blockAlert(data);
 	if(!data){
 		return;
 	}

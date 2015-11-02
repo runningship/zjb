@@ -245,7 +245,7 @@ public class UserService {
 			throw new GException(PlatformExceptionType.BusinessException, "手机号码已经存在");
 		}
 		user.addtime = new Date();
-		user.flag = 1;
+		//user.flag = 1;
 		user.sh = 1;
 		user.pwd = SecurityHelper.Md5(DataHelper.User_Default_Password);
 		user.cid = dept.fid;

@@ -340,8 +340,7 @@ function onSetDateStart(){
 	var timeend=$dp.$('idTime');
 	var wp =WdatePicker({lang:'zh-cn',
 		startDate:'%y-%M-%d 00:00:00',
-		dateFmt:'yyyy-MM-dd HH:mm',
-		isShowToday:false,
+		dateFmt:'yyyy-MM-dd',
 		onpicked:function(){
 			idTime.focus();
 			},
@@ -350,7 +349,7 @@ function onSetDateStart(){
 }
 
 function onSetDataEnd(){
-	var wp2 = WdatePicker({lang:'zh-cn',isShowToday:false,startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'idTimes\')}'});
+	var wp2 = WdatePicker({lang:'zh-cn',startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'idTimes\')}'});
 }
 </script>
 <style type="text/css">
