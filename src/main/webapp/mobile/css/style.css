@@ -169,6 +169,21 @@ form
 /* placeholder active end */
 /* regbox end */
 
+/* switch */
+a.switch{ display: block; width: 40pt; height: 15pt; background: #FFF; border-radius: 50px; position: relative; text-align: center; }
+a.switch input.input{ position: absolute; top: -0px; right: -0px; bottom: -0px; left: -0px; opacity: 0; width: 100%; height: 100%; margin: 0; padding: 0; z-index: 9; font-size: 30px; text-align: center;}
+a.switch label{ display: block; width: 100%; height: 100%; background: #a5a39d; box-shadow: inset 0 3px 8px 1px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.5); border-radius: 50px; }
+a.switch label i{ display: block;width: 26px; height:26px; background: #FFF; border-radius: 50px; border: 1px solid #CCC; position: absolute; top: -3px; left: -3px; z-index: 2; }
+a.switch label i:before,
+a.switch label i:after{ text-transform: uppercase; color: rgba(0,0,0,0.4);text-shadow: 0 1px 0 #bcb8ae, 0 -1px 0 #97958e;position: absolute; top: 50%; margin-top: -12px;font-size: 12px;}
+a.switch label i:before{content: "off";right: -100%;}
+a.switch label i:after{content: "on";left: -100%; opacity: 0;}
+a.switch input:checked ~ label{ background: #B5E08F; }
+a.switch input:checked ~ label i{ left: auto; right: -3px; }
+a.switch input:checked ~ label i:before{ display: none; }
+a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);text-shadow: 0 1px 0 #E0EAD7; }
+/* switch end */
+
 /* tipbox */
 .tipbox{display: block; height: 30pt; line-height: 30pt; border-bottom: 1px solid #EEE; background: #F6F6F6; padding: 0 10pt; font-size: 12pt; }
 .tipbox i{ font-size: 18pt; vertical-align: middle; margin-right: 10pt; }
@@ -246,7 +261,7 @@ form
 .search{}
 .search .header .conter{-webkit-box-flex: 2; height: 80%; line-height: 80%;}
 .search .header .inputbox{ position: relative; display: block; height: inherit; line-height: inherit; height: 100%; margin-top: 0px; }
-.search .header .inputbox input.input{ background: none;border:none; padding: 15pt 8pt 5pt; color: #FFF; border-bottom: 1px solid rgba(255,255,255,0.7);; width: 100%; height: 100%;  }
+.search .header .inputbox input.input{ background: none;border:none; padding: 15pt 8pt 5pt; color: #FFF; border-bottom: 1px solid rgba(255,255,255,0.7);; width: 100%; height: 100%;    font-size: 13pt;  }
 .search .header .inputbox:before{content:""; position: absolute; left: 0; bottom: 0; border-left: 1px solid rgba(255,255,255,0.7);; height: 8px; }
 .search .header .inputbox:after {content:""; position: absolute; right: 0; bottom: 0; border-left: 1px solid rgba(255,255,255,0.7); height: 8px; }
 .search .header .inputbox.focus:before,
@@ -414,16 +429,23 @@ house
 .house.add .joiner{display: inline-block;height: 42px;line-height: 42px;width: 3%;float: left;text-align: center;}
 
 
+.mainer>.item{ padding: 10pt; margin: 0px; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
+.mainer>.item:first-child{ margin-top: 0; border-top: 0; }
+.mainer>.title{ padding: 10px; padding-bottom: 0; background:#F6F6F6;  }
+.mainer>.title i{ font-size: 13pt; }
 
+.infoList.list li { display: block; float: none; text-align: left; line-height: 20pt; margin: 0; padding: 10pt 0; border-top: 1px solid #EEE;}
+.infoList.list li:first-child{ padding-top: 0; border:none; }
+.infoList.list li span{ display: inline-block; text-align: center; width: 26pt; height: 26pt; line-height:26pt; color: #666; border-radius: 3pt; margin-right: 10px;    vertical-align: bottom;}
+.infoList.list li i.iconfont{ font-size: 17pt; }
+.infoList.list li i.fr{ color: #CCC; height: 26pt; line-height: 26pt}
+.infoList.list li strong{ display:inline-block; font-size: 14pt; }
+.infoList.list li div{}
 /* 
 work
  */
 /* work */
 .work .mainer {background-color: #F6F6F6;}
-.work .mainer .item{ padding: 10pt; margin: 5px; margin-left: 0; margin-right: 0; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
-.work .mainer .item:first-child{ margin-top: 0; border-top: 0; }
-.work .mainer .title{ padding: 10px; padding-bottom: 0; }
-.work .mainer .title i{ font-size: 13pt; }
 
 .workList:after {content: "\0020";display: block;height: 0;clear: both;}
 .workList li{ display: inline-block; float: left; text-align: center; margin:5px 5px 5px 5px; }
@@ -445,10 +467,13 @@ work
 
 .workList.list li { display: block; float: none; text-align: left; line-height: 20pt; margin: 0; padding: 10pt 0; border-top: 1px solid #EEE;}
 .workList.list li:first-child{ padding-top: 0; border:none; }
-.workList.list li span{ display: inline-block; text-align: center; width: 26pt; height: 26pt; line-height:26pt; color: #666; border-radius: 3pt; margin-right: 10px;}
+.workList.list li span{ display: inline-block; text-align: center; width: 26pt; height: 26pt; line-height:26pt; color: #666; border-radius: 3pt; margin-right: 10px;    vertical-align: bottom;}
 .workList.list li i.iconfont{ font-size: 17pt; }
 .workList.list li i.fr{ color: #CCC; height: 26pt; line-height: 26pt}
 .workList.list li strong{ display:inline-block; font-size: 14pt; }
+.workList.list li div{}
+.workList.list a.switch{ margin-top: 7px; }
+
 
 .workList li.default span{ background: #9F9F9F; color: #FFF; }
 .workList li.blue span{ background: #64BEFD; color: #FFF; }
@@ -457,6 +482,11 @@ work
 .workList li.orange span{ background: #FF6100; color: #FFF; }
 .workList li.red span{ background: #FF0000; color: #FFF; }
 .workList li.paleRed span{ background: #FF5555; color: #FFF;}
+
+/* settings */
+.settings{}
+.settings .mainer {background-color: #F6F6F6;}
+
 
 /* share */
 .share{}
