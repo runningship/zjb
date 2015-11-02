@@ -32,7 +32,7 @@ function doLogin(){
 				    name: 'index',
 				    script: 'refreshIndex();'
 				});
-				alert('登录成功');
+				//alert('登录成功');
 				forward();
 		}else{
 			alert(ret.msg);
@@ -59,12 +59,13 @@ function forward(){
 		    url: api.pageParam.forward,
 		    pageParam: api.pageParam
 		});
-	}else{
 		setTimeout(function(){
 			api.closeWin({
 			    name: 'login'
 			});
-		},300);
+		},1000);
+	}else{
+		closexx();
 	}
 }
 apiready=function(){
@@ -114,4 +115,5 @@ function openCitys(){
 }
 function updateCity(cityName){
 	$('#city').text(cityName);
+	reloadConfig();
 }

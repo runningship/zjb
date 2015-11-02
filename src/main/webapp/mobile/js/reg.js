@@ -143,6 +143,7 @@ function openCitys(){
 }
 function updateCity(cityName){
 	$('#city').text(cityName);
+	reloadConfig();
 }
 apiready=function(){
 	getConfig(function(cfg){
