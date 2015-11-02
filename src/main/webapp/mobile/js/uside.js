@@ -143,17 +143,29 @@ function openCitys(){
 
 function setDebug(){
 	api.getPrefs({
-	    key:'debug'
+	    key:'online'
     },function(ret,err){
-    	api.setPrefs({
-    	    key:'debug',
-    	    value: !ret.value
-        });
-    	if(!ret.value){
-    		blockAlert('开启开发者模式');
+    	var result;
+    	if(ret.value==undefined || ret.value=='0' || ret.value==null){
+    		result='1';
     	}else{
-    		blockAlert('关闭开发者模式');
+    		result='0';
     	}
+    	api.setPrefs({
+    	    key:'online',
+    	    value: result
+        });
+    	if(result=='0'){
+    		blockAlert('开启开发者模式 , 需要重启重启应用程序');
+    	}else{
+    		blockAlert('关闭开启开发者模式, 需要重启重启应用程序');
+    	}
+    	quit();
+    	api.closeWidget({
+		    id: 'A6989896004356',
+		    retData: {name:'closeWidget'},
+		    silent:true
+		});
     });
 }
 

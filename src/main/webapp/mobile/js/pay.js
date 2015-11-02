@@ -16,7 +16,7 @@ function aliPay(){
 	var subject = '中介宝手机版费用'+userInfo.tel;
 	var body = '中介宝手机版费用'+userInfo.tel;
 	
-	var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&cityPy='+config.city.cityPy+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee=0.01&WIDbody='+body;
+	var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee=0.01&WIDbody='+body;
 	//var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee='+amount+'&WIDbody='+body;
 	if(api.systemType=='android'){
 		api.openApp({
@@ -35,7 +35,7 @@ function aliPay(){
 	}
 	
 	api.confirm({
-	    msg: '支付完成',
+	    msg: '支付完成?',
 	    buttons:['确定']
 	},function(ret,err){
 	    api.execScript({

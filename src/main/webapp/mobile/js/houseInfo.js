@@ -63,6 +63,12 @@ function loadData(){
 					$('#dateadd').text(ret.dateadd);
 					$('#quyu').text(ret.quyu);
 					$('#ztai').text(ret.ztai);
+					if(ret.fangshi==1){
+						$('#fangshi').text('整租');
+					}else if(ret.fangshi==2){
+						$('#fangshi').text('合租');
+					}
+					
 					if(ret.mji){
 						$('#mji').text(ret.mji);
 					}

@@ -247,6 +247,7 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 .user.side .header .imgbox img{    width: 100%;  height: auto;}
 .user.side .header .uText{ padding-top: 6px; }
 .user.side .mainer { padding:10px 20px; }
+.user.side .mainer .item{ background :none; border:none;  }
 .user.side .mainer .mList{  }
 .user.side .mainer .mList li a{ display: block; padding: 10px; font-size: 13pt; color: #FFF; }
 .user.side .mainer .mList li a i{ font-size: 18pt; }
@@ -268,7 +269,7 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 .search .header .inputbox.focus:after,
 .search .header .inputbox.focus input.input{border-color: #FFF;}
 .search .mainer{ background: #FFF; }
-.search .mainer .item{ background: #FFF; margin: 5pt 2pt; }
+.search .mainer .item{ background: #FFF; margin: 5pt 2pt;background :none; border:none; }
 .search .mainer .item:after {content: "\0020";display: block;clear: both;}
 
 /* placeholder */
