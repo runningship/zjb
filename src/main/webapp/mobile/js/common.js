@@ -97,7 +97,7 @@ YW={
      				});
         			return;
        			}else{
-       				blockAlert(JSON.stringify(err));
+       				blockAlert(err.msg);
        			}
        		}
        		api.hideProgress();
