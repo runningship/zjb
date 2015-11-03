@@ -1,5 +1,7 @@
 package com.youwei.zjb.user.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,4 +21,9 @@ public class Track {
 	public Integer uid;
 	
 	public Integer chuzu;
+	
+	//最后访问时间
+	public Date viewTime;
+	
+	public Integer viewCount;
 }

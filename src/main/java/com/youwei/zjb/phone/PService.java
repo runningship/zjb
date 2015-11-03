@@ -64,7 +64,7 @@ public class PService {
 		StringBuilder hql = new StringBuilder("select h.id as id ,"
 				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,h.hxt as hxt , h.hxf as hxf, h.hxw as hxw, "
 				+ " h.lceng as lceng, h.zceng as zceng from House h , Track t where h.sh=1 and t.hid=h.id and t.chuzu=0 and t.uid=?");
-		page.orderBy = "h.dateadd";
+		page.orderBy = "t.viewTime";
 		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString(), true, new Object[]{userId});
 		mv.data.put("page", JSONHelper.toJSON(page));
@@ -82,7 +82,7 @@ public class PService {
 		StringBuilder hql = new StringBuilder("select h.id as id ,"
 				+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu, h.zjia as zjia,h.mji as mji,h.fangshi as fangshi ,h.hxf as hxf,h.hxt as hxt, h.hxw as hxw,"
 				+ " h.lceng as lceng, h.zceng as zceng from HouseRent h , Track t where h.sh=1 and t.hid=h.id and t.chuzu=1 and t.uid=?");
-		page.orderBy = "h.dateadd";
+		page.orderBy = "t.viewTime";
 		page.order = Page.DESC;
 		page = dao.findPage(page, hql.toString(), true, new Object[]{userId});
 		mv.data.put("page", JSONHelper.toJSON(page));

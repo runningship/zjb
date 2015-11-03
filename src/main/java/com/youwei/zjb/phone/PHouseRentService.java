@@ -113,6 +113,12 @@ public class PHouseRentService {
 				track.hid = houseId;
 				track.uid = userId;
 				track.chuzu = 1;
+				track.viewTime = new Date();
+				track.viewCount = 1;
+				dao.saveOrUpdate(track);
+			}else{
+				track.viewTime = new Date();
+				track.viewCount = track.viewCount+1;
 				dao.saveOrUpdate(track);
 			}
 		}

@@ -123,6 +123,12 @@ public class PHouseService {
 				track.hid = houseId;
 				track.uid = userId;
 				track.chuzu = 0;
+				track.viewTime = new Date();
+				track.viewCount = 1;
+				dao.saveOrUpdate(track);
+			}else{
+				track.viewTime = new Date();
+				track.viewCount = track.viewCount+1;
 				dao.saveOrUpdate(track);
 			}
 			ViewHouseLog vl = new ViewHouseLog();
