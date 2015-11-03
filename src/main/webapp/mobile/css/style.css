@@ -29,11 +29,12 @@ box-orient: horizontal;
 .header .conter{-webkit-box-flex: 1;display: block; height: inherit; line-height: inherit;}
 .header .conter{text-align: center;}
 .header .right{ text-align: right; }
-.header h1{ display: inline-block; font-size: 13pt;line-height: 100%;
-    /*border-left: 2pt solid #04A3DD; padding-left: 6pt;*/ }
+.header h1{ display: inline-block; font-size: 14pt;line-height: 100%;}
+.header h2{ display: inline-block; font-size: 12pt;line-height: 100%;
+    border-left: 2pt solid #04A3DD; padding-left: 6pt; }
 .header a.btns{ display: inline-block; width: 36px; height: inherit; line-height: inherit; text-align: center; color: #FFF; }
-.header a.btns.font{ width: auto; padding-right: 5pt; font-size: 14pt; }
-.header i{font-size: 18px;}
+.header a.btns.font{ width: auto; padding-right: 5pt; font-size: 13pt; }
+.header i{font-size: 16pt;}
 
 .header .headGroup{display: table; width: 100%; padding: 0 5px;}
 .header .headGroup.heng{ padding: 0; display: -webkit-box;-webkit-box-orient:horizontal; height: 40px; line-height: 40px; }
@@ -169,6 +170,25 @@ form
 /* placeholder active end */
 /* regbox end */
 
+/* formList */
+.formList{ margin: 5pt 0;  }
+.formList li{ position: relative; border-bottom:1px solid #EFEFEF; background: #FFF;}
+.formList li:first-child{ border-top:1px solid #EFEFEF;  }
+.formList .inputbox{ display: block; position: relative; height: 40pt; line-height: 40pt; }
+.formList .inputbox input.input{ display: block; width: 100%; height: 100%; line-height: 30px; border:0; font-size: 12pt; padding: 0 0 0 10px; }
+.formList .inputbox input.input{}
+.formList li.tow{}
+.formList li.tow .tits{display: block; float: left; width: 30%; height: 40pt; line-height: 40pt; overflow: hidden; padding-left:10pt; }
+.formList li.tow .inputbox{ width: 50%; }
+.formList li.tow .btnbox{ display: block; float: right; width: 50%; height: 40pt; line-height: 40pt; overflow: hidden;}
+.formList li.tow.t2 .tits{ width: 30%; }
+.formList li.tow.t2 .inputbox{ display: inline-block; width: 70%;}
+.formList li.tow.t3 .tits{ width: 30%; }
+.formList li.tow.t3 .inputbox{ display: inline-block; width: 40%;}
+.formList li.tow.t3 .btnbox{ width: 30%; }
+.formList li.tow .btnbox .btn{ margin-top: 4px; }
+.formbtn { padding: 5pt; }
+
 /* switch */
 a.switch{ display: block; width: 40pt; height: 15pt; background: #FFF; border-radius: 50px; position: relative; text-align: center; }
 a.switch input.input{ position: absolute; top: -0px; right: -0px; bottom: -0px; left: -0px; opacity: 0; width: 100%; height: 100%; margin: 0; padding: 0; z-index: 9; font-size: 30px; text-align: center;}
@@ -247,8 +267,7 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 .user.side .header .imgbox img{    width: 100%;  height: auto;}
 .user.side .header .uText{ padding-top: 6px; }
 .user.side .mainer { padding:10px 20px; }
-.user.side .mainer .item{ background :none; border:none;  }
-.user.side .mainer .mList{  }
+.user.side .mainer .item{ background: none;border:none;  }
 .user.side .mainer .mList li a{ display: block; padding: 10px; font-size: 13pt; color: #FFF; }
 .user.side .mainer .mList li a i{ font-size: 18pt; }
 .user.side .mainer .mList li a i.fr{ float: none; font-size: 12pt;vertical-align: middle; }
@@ -306,9 +325,9 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 .search .soList{}
 .search .soList li{ position: relative; height: 36pt; line-height: 36pt; border-bottom: 1px solid #EEE; font-size: 12pt;overflow: hidden;}
 .search .soList li:first-child{ border-top: 3px solid #EEE; margin-top: 20px; }
-.search .soList li h3{ display: inline-block; height: inherit; line-height: inherit; }
+.search .soList li h3{ display: inline-block; height: inherit; line-height: inherit; width: 80%; overflow: hidden;text-overflow:ellipsis;}
 .search .soList li a{ color: #777; padding-left: 5pt; display: block; }
-.search .soList li a i{ color: #999; }
+.search .soList li a i{ color: #999; vertical-align: top; }
 .search .soList li a.fr{ display: inline-block; position: absolute; top: 0; right: 0; bottom: 0; padding: 0 5pt; }
 
 /* house */
@@ -488,6 +507,10 @@ work
 .settings{}
 .settings .mainer {background-color: #F6F6F6;}
 
+/* pwds */
+.pwds{}
+.pwds .mainer {background-color: #F6F6F6;}
+
 
 /* share */
 .share{}
@@ -496,7 +519,7 @@ work
 .share .shareListBox{-webkit-box-flex:100; overflow: hidden;overflow-y: auto;}
 
 .share .headbox{ text-align: center; border-bottom: 1px solid #EFEFEF; background-color: #21BEF8; color: #FFF;}
-.share .headbox .codebox h2{ font-size: 40px;line-height: 1.5em; }
+.share .headbox .codebox h2{font-size: 40px;height: 45pt;line-height: 1.5em; }
 .share .headbox{}
 
 .share .appList { padding: 10px 0 0px; }
@@ -510,19 +533,24 @@ work
 .share .shareListBox ul {  }
 .share .shareListBox ul li{ height: 2.5em; line-height: 2.5em; display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; border-bottom: 1px solid #EFEFEF;}
 .share .shareListBox ul li span{ display: block; }
-.share .shareListBox ul li span.left{-webkit-box-flex:1; text-align: center;}
-.share .shareListBox ul li span.center{-webkit-box-flex:4;}
-.share .shareListBox ul li span.right{-webkit-box-flex:1; text-align: center;}
+.share .shareListBox ul li span.left{-webkit-box-flex:1; text-align: left; padding-left: 8pt; width: 40%;}
+.share .shareListBox ul li span.center{-webkit-box-flex:4; width: 40%;}
+.share .shareListBox ul li span.right{-webkit-box-flex:1; text-align: center; width:20%;}
 
 .share.exch .headbox{}
 .share.exch .codeInput {display: -webkit-box;-webkit-box-orient:horizontal;-webkit-flex-flow: column; padding: 5px 5px; }
-.share.exch .codeInput .inputbox{-webkit-box-flex:1; height: 36px; line-height: 36px;}
-.share.exch .codeInput input.input{ width: 100%; border: 1px solid #EFEFEF; padding:5px 10px; font-size: 18px; }
-.share.exch .codeInput .btn{-webkit-box-flex:1; width: 80px; height: 36px; line-height: 36px; color: #FFF;}
+.share.exch .codeInput .inputbox{-webkit-box-flex:1; height: 46px; line-height: 46px; border: 0px solid #EFEFEF; border-radius: 3pt 0 0 3pt; overflow: hidden;}
+.share.exch .codeInput input.input{ width: 100%; border:none; background: rgba(0,0,0,0.1); padding:5px 10px; font-size: 18px; display: block; height: 100%; color: #FFF; }
+.share.exch .codeInput .btn{-webkit-box-flex:1; width: 80px; height: 46px; line-height: 46px; color: #FFF; background: rgba(0,0,0,0.15); border-radius: 0 4pt 4pt 0;}
 
 .share.exch .shareListBox {}
 .share.exch .shareListBox p{ width: 90%; margin: 0 auto; font-size: 1em; line-height: 1.5em; padding: 10px 0; border-bottom: 1px solid #EFEFEF;}
 
+/* placeholder */
+.share.exch .inputbox .placeholder::-webkit-input-placeholder { color:#FFF; }
+.share.exch .inputbox .placeholder::-moz-placeholder { color:#FFF; }
+.share.exch .inputbox .placeholder:-ms-input-placeholder { color:#FFF; }
+/* placeholder end */
 
 
 /* pay */
