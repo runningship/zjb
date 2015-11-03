@@ -392,7 +392,13 @@ opacity:1}
 .default .righter>.table{ height: 100%; background: none}
 .default .righter>.table .thead{ height: 27px;}
 
-.default .logo{ display: inline-block; margin:5px 0 0 5px; height: 40px; width: 40px; background: #FFF url('images/logo.png') no-repeat center; background-size: 100% 100%; border-radius: 30px; box-shadow: 0 0 5px #666;}
+.default .logo{ display: inline-block;  background: #FFF url('images/logo.png') no-repeat center; background-size: 100% 100%;
+box-shadow: 0 0 5px #666;margin: 3px 0 0 3px;
+height: 44px;
+width: 44px;
+border-radius: 5px;
+box-shadow: 0 0 5px #000;}
+
 .default .menuSide { position: relative; height: 100%;-webkit-user-select: none;}
 .default .menuSide .iconfont{ width: 100%; display: inline-block; text-align: center; line-height: 20px; font-size: 22px;}
 .default .menuSide li,
