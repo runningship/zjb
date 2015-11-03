@@ -311,7 +311,10 @@ $(document).ready(function(){
 		 
 });
 
-function showAds(){
+function showAds(img){
+	if(img){
+		$('#ad_container img').attr('src',img);
+	}
 	$('#ad_container img').removeClass('fadeOutUp').addClass('fadeInDown');
 	$('#ad_container').show();
 }
