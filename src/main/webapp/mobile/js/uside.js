@@ -244,8 +244,8 @@ function openViewLog(){
 
 function clearSysCache(){
 	api.clearCache();
-	config = JSON.parse('{}');
-	saveConfig(config);
+	//config = JSON.parse('{}');
+	//saveConfig(config);
 	api.setPrefs({
         key:'version',
         value:''

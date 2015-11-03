@@ -74,14 +74,14 @@ function loadData(){
 					}
 					if(ret.zjia){
 						if(isChuzu){
-							$('#zjia').text(ret.zjia+'元');
+							$('#zjia').text(ret.zjia);
 						}else{
 							$('#zjia').text(ret.zjia+'万');
 						}
 						
 					}
 					if(ret.djia){
-						$('#djia').text(ret.djia+'元');
+						$('#djia').text(ret.djia);
 					}
 					if(ret.lceng){
 						$('#lceng').text(ret.lceng+'/'+ret.zceng);

@@ -31,7 +31,7 @@ function loadData(clear){
 	
 function SeeThis(area){
 	var searchParams = JSON.parse('{}');
-	searchParams.search=area;
+	searchParams.specArea=area;
     api.openWin({
         name: 'viewArea',
         pageParam: {searchParams: searchParams ,isChuzu:isChuzu},

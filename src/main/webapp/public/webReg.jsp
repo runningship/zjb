@@ -21,7 +21,7 @@ request.setAttribute("invitationCode", invitationCode);
 <script type="text/javascript" src="js/layer/layer.js"></script>
 <script type="text/javascript" src="../js/buildHtml.js"></script>
 <script type="text/javascript">
-var server_host="192.168.1.222:8081";
+var server_host="www.zhongjiebao.com:8081";
 var sendingVerifyCode=false;
 $(document).ready(function() {
     $(document).find('.form-active').find('.input').focusin(function(){
