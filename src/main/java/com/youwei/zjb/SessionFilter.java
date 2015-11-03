@@ -40,6 +40,7 @@ public class SessionFilter implements Filter{
 		excludes.add("/welcome.html");
 		excludes.add("/welcome2.html");
 		excludes.add("/v/start.html");
+		excludes.add("/version.jsp");
 		excludes.add("/start.html");
 		excludes.add("/c/city/list");
 		excludes.add("/v/pay/return_url.html");

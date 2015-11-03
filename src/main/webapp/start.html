@@ -12,10 +12,10 @@
 <link href="/style/css.css" rel="stylesheet">
 <link href="/style/style.css" rel="stylesheet">
 <script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.js" type="text/javascript"></script>
-<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script type="text/javascript" src="/js/buildHtml.js"></script>
+<!-- <script src="/js/jquery.j.tool.js" type="text/javascript"></script> -->
+<!-- <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script> -->
+<!-- <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script> -->
+<!-- <script type="text/javascript" src="/js/buildHtml.js"></script> -->
 <script type="text/javascript" src="/js/sysinfo.js?3"></script>
 <script type="text/javascript">
 try{
@@ -28,8 +28,20 @@ try{
 }catch(e){
     console.log(e);
 }
+var gui;
+var fs;
+var http;
+var os;
+var urlPrefix = 'http://localhost:8081';
+var localDir = 'resources';
 window.onload=function() {
-    var json = loadConfigAsJSON();
+	fs=require("fs");
+	http = require('http');
+ 	update();
+ 	//return;
+	gui = require('nw.gui');
+	
+	var json = loadConfigAsJSON();
     addJSFlags();
     addNodeMain();
     addGPUFlag();
@@ -85,6 +97,76 @@ function addJSFlags(){
 	}catch(e){
 		console.log("add js flags fail."+e);
 	}
+}
+
+//读取
+function loadConfigAsJSON(){
+    if(!fs.existsSync("config.data")){
+        fs.writeFileSync("config.data", "{}", 'utf8')
+    }
+    var data=fs.readFileSync("config.data","utf-8");
+    var json;
+    try{
+        json = JSON.parse(data);
+    }catch(e){
+        console.error("load config.data faild,"+e);
+        json = JSON.parse("{}");
+    }
+    return json;
+}
+
+var download = function(url, dest, cb) {
+	if(dest.indexOf('responsive.min.css')>-1){
+		console.log(dest);
+	}
+	var dir = dest+'/..';
+	mkdirs(dir);
+// 	if(!fs.existsSync(dest+'/..')){
+// 		fs.mkdirSync(dest+'/..');
+// 	}
+	var file = fs.createWriteStream(dest);
+	var request = http.get(url, function(response) {
+		response.pipe(file);
+		file.on('finish', function() {
+			file.close(cb);
+		});
+	});
+}
+
+function update(){
+	$.ajax({
+	    type: 'get',
+	    url: '/version.jsp',
+	   	success: function(data){
+	   		var json = JSON.parse(data);
+	     	for(var i=0;i<json.files.length;i++){
+	     		var file = json.files[i];
+	     		if(file.indexOf('.html')>-1 || file.indexOf('.jsp')>-1){
+	     			continue;
+	     		}
+	     		if(!fs.existsSync('./'+localDir+file)){
+	     			download(urlPrefix+file, localDir+file, function(){});
+	     		}else{
+	     			var sta = fs.statSync('./'+localDir+file);
+		     		var serverVersion = json[file];
+		     		if(serverVersion!=sta.size){
+		     			download(urlPrefix+file, localDir+file, function(){});
+		     		}
+	     		}
+	     	}
+	    }
+	  });
+}
+
+function mkdirs(path){
+	if(fs.existsSync(path)){
+		return;
+	}
+	var parent = path+'/../';
+	if(!fs.existsSync(parent)){
+		mkdirs(parent);
+	}
+	fs.mkdirSync(path);
 }
 </script>
 </head>

@@ -7,10 +7,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String agent = request.getHeader("User-Agent");
-if(agent.contains("Chrome/35.0.1916.157")){
+if(agent.contains("Chrome/35.0.1916.157") || agent.contains("Chrome/30.0.1599.66")){
 	System.out.println("from node webkit");
 	request.setAttribute("nwjs", true);
+	request.setAttribute("useLocalResource", 0);
+}else{
+	request.setAttribute("useLocalResource", 0);
 }
+
+
 //Enumeration<String> names = request.getHeaderNames();
 //CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 Calendar now = Calendar.getInstance();
@@ -38,24 +43,43 @@ Date end= now.getTime();
 <title>中介宝</title>
 <meta name="description" content="中介宝房源软件系统">
 <meta name="keywords" content="房源软件,房源系统,中介宝">
-<link href="/style/css.css" rel="stylesheet">
-<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/style/style.css" rel="stylesheet">
+
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/cssOa.css" /> -->
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/cocoWindow.css" /> -->
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/cocoWinLayer.css" /> -->
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/im.css" /> -->
-<script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/js/buildHtml.js" type="text/javascript"></script>
-<!-- <script src="file:///D:\code\zjb\src\main\webapp\js\buildHtml.js" type="text/javascript"></script> -->
-<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="/js/jquery.timers.js" type="text/javascript"></script>
-<script src="/js/jquery.input.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-<script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+
+<c:if test="${useLocalResource==1}">
+	<link href="file:///resources/style/css.css" rel="stylesheet">
+	<link href="file:///resources/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="file:///resources/style/style.css" rel="stylesheet">
+	<script src="file:///resources/js/jquery.js" type="text/javascript"></script>
+	<script src="file:///resources/js/buildHtml.js" type="text/javascript"></script>
+	<script src="file:///resources/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+	<script src="file:///resources/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+	<script src="file:///resources/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+	<script src="file:///resources/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="file:///resources/js/jquery.timers.js" type="text/javascript"></script>
+	<script src="file:///resources/js/jquery.input.js" type="text/javascript"></script>
+	<script src="file:///resources/js/jquery.j.tool.v2.js" type="text/javascript"></script>
+	<script src="file:///resources/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+</c:if>
+<c:if test="${useLocalResource!=1}">
+	<link href="/style/css.css" rel="stylesheet">
+	<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="/style/style.css" rel="stylesheet">
+	<script src="/js/jquery.js" type="text/javascript"></script>
+	<script src="/js/buildHtml.js" type="text/javascript"></script>
+	<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+	<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+	<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+	<script src="/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="/js/jquery.timers.js" type="text/javascript"></script>
+	<script src="/js/jquery.input.js" type="text/javascript"></script>
+	<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
+	<script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+</c:if>
+
 <script type="text/javascript">
 function setSideMenuCurr(){
     var menuerBox=$('.menuSide'),
@@ -269,7 +293,7 @@ var icoOA;
 var icoGC;
 function showAds(){
     var xx = $('#iframe_house')[0];
-    xx.contentWindow.showAds();
+    xx.contentWindow.showAds('/ad/img/zjb/erweima.png');
 }
 $(document).ready(function() {
 var times;
