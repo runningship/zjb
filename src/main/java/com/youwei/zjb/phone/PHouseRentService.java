@@ -118,7 +118,12 @@ public class PHouseRentService {
 				dao.saveOrUpdate(track);
 			}else{
 				track.viewTime = new Date();
-				track.viewCount = track.viewCount+1;
+				if(track.viewCount==null){
+					track.viewCount = 2;
+				}else{
+					track.viewCount = track.viewCount+1;
+				}
+				
 				dao.saveOrUpdate(track);
 			}
 		}
