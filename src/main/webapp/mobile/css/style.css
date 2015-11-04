@@ -187,7 +187,7 @@ form
 .formList li.tow.t3 .inputbox{ display: inline-block; width: 40%;}
 .formList li.tow.t3 .btnbox{ width: 30%; }
 .formList li.tow .btnbox .btn{ margin-top: 4px; }
-.formbtn { padding: 5pt; }
+.formbtn { padding: 5pt; word-spacing: 2pt; letter-spacing: 2pt; }
 
 /* switch */
 a.switch{ display: block; width: 40pt; height: 15pt; background: #FFF; border-radius: 50px; position: relative; text-align: center; }
