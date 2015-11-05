@@ -20,11 +20,12 @@ import javax.mail.internet.MimeMultipart;
 
 public class MailUtil {
 
-	private static final String senderAccont = "253187898@qq.com";
+	private static final String senderAccont = "runningship@163.com";
 	private static final String senderPwd = "yexinzhou@123";
+//	private static final String senderPwd = "dafenqi3.0";
 	public static void send_email(List<String> toList  , String subject , String content) throws IOException, AddressException, MessagingException{
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.qq.com");
+        properties.put("mail.smtp.host", "smtp.163.com");
         properties.put("mail.smtp.port", "25");
         properties.put("mail.smtp.auth", "true");
         Authenticator authenticator = new Email_Authenticator(senderAccont, senderPwd);
