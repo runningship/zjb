@@ -245,6 +245,10 @@ function pay(){
   art.dialog.open('/v/pay/order.html');
 }
 
+function openBackList(){
+	art.dialog.open('/pay/bank_list.html');
+}
+
 function openFeedBack(fbId){
     art.dialog.open('/v/settings/feedback_huifu.html?id='+fbId,{
       id:'fbReply',
@@ -459,6 +463,7 @@ function getUnReadStatistic(){
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe662;</i> 电话: ${me.tel}</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></li>
+                                    <li><a href="javascript:void(0)" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行账户</a></li>
                                     <li class="hidden"><a href="javascript:void(0)"><i class="iconfont">&#xe623;</i> 到期: 30 天  <span class="badge">支付</span></a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="resetPwd();">修改密码</a></li>
