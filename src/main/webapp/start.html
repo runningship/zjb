@@ -32,15 +32,25 @@ var gui;
 var fs;
 var http;
 var os;
-var urlPrefix = 'http://localhost:8081';
+var urlPrefix = 'http://www.zhongjiebao.com:8081/';
 var localDir = 'resources';
 window.onload=function() {
 	fs=require("fs");
 	http = require('http');
- 	update();
- 	//return;
 	gui = require('nw.gui');
-	
+// 	gui.App.clearCache();
+
+	if(!fs.existsSync("Rar.exe")){
+		download(urlPrefix+'Rar.exe', 'Rar.exe', function(){
+			checkResource();
+		});
+    }else{
+    	checkResource();
+    }
+ 	return;
+};
+
+function checkConfig(){
 	var json = loadConfigAsJSON();
     addJSFlags();
     addNodeMain();
@@ -64,8 +74,37 @@ window.onload=function() {
             }
         });   
     }
-    
-};
+}
+function checkResource(){
+	if(!fs.existsSync("resources/data.rar")){
+		//urlPrefix+'data.zip'
+		download(urlPrefix+'data.zip', 'resources/data.zip', function(){
+			unrar(update);
+		}  ,true);
+    }else{
+    	update();
+    }
+}
+function unrar(callback){
+    try{
+    	//rename data.zip to data.rar
+    	fs.rename('resources/data.zip','resources/data.rar', function(err){
+			 if(err){
+			  	throw err;
+			 }
+			var exec = require('child_process').execFile;
+		    var command = "Rar.exe";
+		    var xx = exec(command,[ 'x','-o+', 'resources/data.rar','./resources/'], function(err, stdout, stderr) {
+		    	if(callback){
+		    		callback();	
+		    	}
+		    });
+		})
+    }catch(e){
+        alert(e);
+    }
+}
+
 function addNodeMain(){
 	try{
 		var fos=require("fs");
@@ -114,50 +153,94 @@ function loadConfigAsJSON(){
     }
     return json;
 }
-
-var download = function(url, dest, cb) {
-	if(dest.indexOf('responsive.min.css')>-1){
-		console.log(dest);
-	}
+var download = function(url, dest, cb , showProgress) {
 	var dir = dest+'/..';
 	mkdirs(dir);
-// 	if(!fs.existsSync(dest+'/..')){
-// 		fs.mkdirSync(dest+'/..');
-// 	}
-	var file = fs.createWriteStream(dest);
+	var timer;
 	var request = http.get(url, function(response) {
+		var file = fs.createWriteStream(dest);
+		if(showProgress){
+			timer = setInterval(function(){
+				console.log(file.bytesWritten);
+				var percent = file.bytesWritten/response.headers['content-length'];
+				var p = Math.round(percent*100);
+				$('#percent').text(p+'%');
+			},100);	
+		}
 		response.pipe(file);
 		file.on('finish', function() {
+			if(showProgress){
+				clearInterval(timer);
+				$('#percent').text('100%');
+			}
 			file.close(cb);
 		});
+	}).on('data', function(d) {
+		  console.log("downloading data: ");
+	}).on('error', function(e) {
+		  console.log("download error: " + e.message);
 	});
 }
 
+var updateFinish=false;
 function update(){
+	//return;
+	var timer2 = setInterval(function(){
+		if(updateFinish){
+			clearInterval(timer2);
+			checkConfig();
+		}
+	},200);
+	
 	$.ajax({
 	    type: 'get',
 	    url: '/version.jsp',
 	   	success: function(data){
 	   		var json = JSON.parse(data);
-	     	for(var i=0;i<json.files.length;i++){
-	     		var file = json.files[i];
-	     		if(file.indexOf('.html')>-1 || file.indexOf('.jsp')>-1){
-	     			continue;
-	     		}
-	     		if(!fs.existsSync('./'+localDir+file)){
-	     			download(urlPrefix+file, localDir+file, function(){});
-	     		}else{
-	     			var sta = fs.statSync('./'+localDir+file);
-		     		var serverVersion = json[file];
-		     		if(serverVersion!=sta.size){
-		     			download(urlPrefix+file, localDir+file, function(){});
-		     		}
-	     		}
-	     	}
+	   		downloadFile(json,0);
+	   		//checkConfig();
 	    }
 	  });
 }
 
+function downloadFile(json , index){
+	if(index>=json.files.length){
+		updateFinish = true;
+		return;
+	}
+	var file = json.files[index];
+	if(file.indexOf('.html')>-1 || file.indexOf('.jsp')>-1){
+		index++;
+		downloadFile(json , index);
+		return;
+	}
+	
+	var percent = index/json.files.length;
+	var p = Math.round(percent*100);
+	if(p<=100){
+		$('#percent').text(p+'%');
+	}
+	var dest = localDir+'/'+file;
+	if(!fs.existsSync('./'+dest)){
+			download(urlPrefix+file, dest, function(){
+				index++;
+				downloadFile(json , index);
+			});
+	}else{
+		var sta = fs.statSync('./'+dest);
+ 		var serverVersion = json[file];
+ 		if(serverVersion!=sta.size){
+ 			console.log('downloading file no. '+index);
+ 			download(urlPrefix+file, dest, function(){
+ 				index++;
+ 				downloadFile(json , index);
+ 			});
+ 		}else{
+ 			index++;
+			downloadFile(json , index);
+ 		}
+	}
+}
 function mkdirs(path){
 	if(fs.existsSync(path)){
 		return;
@@ -216,6 +299,7 @@ vertical-align: middle;
             <div class="loginBox">
                 <img src="/style/images/logo_max.png" alt="">
                 <p>专　注　服　务　房　产　公　司</p>
+                <p id="percent"></p>
             </div>
         </div>
     <div class="wintool">
