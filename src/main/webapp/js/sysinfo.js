@@ -9,7 +9,7 @@ function loadHardwareInfo(callback){
         try{
         	result = fs.readFileSync("sys.data","utf-8");
         }catch(e){
-        	infoAlert('获取机器码失败，此为360误删中介宝核心文件所致，请联系中介宝客服解决.');
+        	alert('获取机器码失败，此为360误删中介宝核心文件所致，请联系中介宝客服解决.');
         	return;
         }
         result= result.trim();

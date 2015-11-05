@@ -120,6 +120,15 @@ function loadData(){
 						$('.gjList').show();
 					}
 					for(var i=0;i<ret.data.length;i++){
+						if(ret.data[i].uname==null || ret.data[i].uname=='' || ret.data[i].uname==' '){
+							if(ret.data[i].tel){
+								//显示手机号码
+								var xx = ret.data[i].tel;
+								ret.data[i].uname=xx[0]+'*********'+xx[xx.length-1];
+							}else{
+								ret.data[i].uname='用户';
+							}
+						}
 						if(ret.data[i].avatar){
 							ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+ret.data[i].avatar+'.jpg';
 						}else{
@@ -163,7 +172,7 @@ function loadData(){
 	}
 	
 	function addRentGenJin(){
-		var conts = $('#conts').text();
+		var conts = $('#conts').val();
 		if(conts==''){
 			alert('请先填写跟进信息');
 			return;
