@@ -113,7 +113,37 @@ function addDelete(id,obj){
 //	 	selectAll=0;
 //	 }
  }
-     
+ 
+ function empty(){
+		var url="";
+		if(isChuzu){
+			if(houseType=='fav'){
+				url = 'http://'+server_host+'/c/mobile/fav/emptyRent?userId='+userId;
+			}else{
+				url = 'http://'+server_host+'/c/mobile/user/emptyTracks?chuzu=1&userId='+userId;
+			}
+		}else{
+			if(houseType=='fav'){
+				url='http://'+server_host+'/c/mobile/fav/empty?&userId='+userId;
+			}else{
+				url ='http://'+server_host+'/c/mobile/user/emptyTracks?chuzu=0&userId='+userId;
+			}
+		}
+		//
+		YW.ajax({
+				url: url,
+				method:'post',
+				cache:false,
+				returnAll:false
+			},function(ret , err){
+				if(ret){
+					currentPage=1;
+					loadData(true);
+				}else{
+				}
+		});
+	}
+ 
 function delItems(){
 	if(!Ids || Ids==''){
 		alert('请至少选择一项');
@@ -141,7 +171,7 @@ function delItems(){
 			returnAll:false
 		},function(ret , err){
 			if(ret){
-				alert('已取消收藏');
+				alert('删除成功');
 				currentPage=1;
 				loadData(true);
 		        Ids = [];

@@ -89,6 +89,7 @@ function startEdit(){
 	$('#startEdit').hide();
 	$('#endEdit').show();
 	$('#footer').show();
+	$('#empty').show();
 	api.execScript({
 	    frameName: 'favFrame',
 	    script: 'startEditAction()'
@@ -98,6 +99,7 @@ function endEdit(){
 	$('#startEdit').show();
 	$('#endEdit').hide();
 	$('#footer').hide();
+	$('#empty').hide();
 	api.execScript({
 	    frameName: 'favFrame',
 	    script: 'endEditAction()'
@@ -112,6 +114,21 @@ function selectAll(){
 	});
 }
 
+function empty(){
+	api.confirm({
+		msg: '确定要清空数据吗?',
+	    buttons:['取消', '确定']
+	},function(ret,err){
+	    if(ret.buttonIndex == 2){
+	    	api.execScript({
+	    	    frameName: 'favFrame',
+	    	    script: 'empty()'
+	    	});
+	    }
+	});
+	
+	
+}
 function deleteAll(){
 	api.execScript({
 	    frameName: 'favFrame',
@@ -143,6 +160,7 @@ function deleteAll(){
         </span>
         <span class="right">
             <a href="#" class="btns" id="startEdit" onclick="startEdit();"><i class="iconfont">&#xe61c;</i></a>
+            <a href="#" class="btns" id="empty" onclick="empty();" style="display:none">清空</a>
             <a href="#" class="btns" id="endEdit" onclick="endEdit();" style="display:none">取消</a>
             <a href="#" class="btns" style="display:none" id="search" onclick="openSearch();"><i class="iconfont">&#xe602;</i></a>
         </span>

@@ -1,5 +1,7 @@
 package com.youwei.zjb.phone;
 
+import java.util.List;
+
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
@@ -33,7 +35,6 @@ public class PFavService {
 			result = triggerFav(Integer.valueOf(hid) , userId);
 		}
 		mv.data.put("isfav", result);
-		System.out.println(1);
 		return mv;
 	}
 	
@@ -52,7 +53,34 @@ public class PFavService {
 			result = triggerRentFav(Integer.valueOf(hid) , userId);
 		}
 		mv.data.put("isfav", result);
-		System.out.println(1);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView empty(Integer userId){
+		ModelAndView mv = new ModelAndView();
+		String favStr = "@"+userId+"|";
+		List<House> list = dao.listByParams(House.class, "from House where fav like ? ", "%"+favStr+"%");
+		if(!list.isEmpty()){
+			for(House h : list){
+				h.fav="";
+				dao.saveOrUpdate(h);
+			}
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView emptyRent(Integer userId){
+		ModelAndView mv = new ModelAndView();
+		String favStr = "@"+userId+"|";
+		List<HouseRent> list = dao.listByParams(HouseRent.class, "from HouseRent where fav like ? ", "%"+favStr+"%");
+		if(!list.isEmpty()){
+			for(HouseRent h : list){
+				h.fav="";
+				dao.saveOrUpdate(h);
+			}
+		}
 		return mv;
 	}
 	
@@ -66,7 +94,7 @@ public class PFavService {
 	}
 	
 	@WebMethod
-	public ModelAndView listRent(Page<House> page , Integer userId){
+	public ModelAndView listRent(Page<HouseRent> page , Integer userId){
 		ModelAndView mv = new ModelAndView();
 		String favStr = "@"+userId+"|";
 		page = dao.findPage(page, "from HouseRent where fav like ? ", "%"+favStr+"%");

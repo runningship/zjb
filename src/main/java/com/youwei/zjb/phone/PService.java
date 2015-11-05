@@ -117,6 +117,19 @@ public class PService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView emptyTracks(Integer userId ,Integer chuzu){
+		ModelAndView mv = new ModelAndView();
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql = new StringBuilder("delete from Track where uid=? and chuzu=?");
+		params.add(userId);
+		params.add(chuzu);
+		dao.execute(hql.toString(), params.toArray());
+		mv.data.put("result", "0");
+		mv.data.put("msg", "删除成功");
+		return mv;
+	}
+	
 //	@WebMethod(name="user/info.asp")
 //	public ModelAndView userInfo(Integer userId){
 //		ModelAndView mv = new ModelAndView();
