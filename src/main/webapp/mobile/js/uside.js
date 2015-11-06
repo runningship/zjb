@@ -27,7 +27,7 @@ function init(){
 			//$('#tel').html(config.user.tel);
 			//$('#tel').css('color','red');
 			$('#tel').text(config.user.tel);
-			if(config.user.debug==2){
+			if(config.user.debug==2 && api.systemType=='android'){
 				$('#settings').show();
 			}
 			if(config.user.pwd){

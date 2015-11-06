@@ -1,4 +1,4 @@
-var server_host = "192.168.1.222:8081";
+var server_host = "www.zhongjiebao.com:8081";
 //定位所在城市
 var myCity;
 var config;
@@ -6,6 +6,14 @@ function getConfig(callback){
 	if(api.systemType=='ios'){
 		//$('#header').css('margin-top','25px');
 	}
+	api.getPrefs({
+	    key:'online'
+    },function(ret,err){
+    	var result;
+    	if(ret.value==undefined || ret.value=='0' || ret.value==null){
+    		server_host = "192.168.1.222:8081";
+    	}
+    });
 	api.getPrefs({
 	    key: 'config'
 	}, function(ret, err){

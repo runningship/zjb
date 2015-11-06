@@ -34,7 +34,11 @@ for(File file : allFiles){
 }
 jobj.put("files", files);
 //jobj.put("statusBarHeight", 25);
-jobj.put("version",15110309);
-//jobj.put("version","debug");
+String server = request.getServerName();
+if("192.168.1.222".equals(server)){
+	jobj.put("version","debug");	
+}else{
+	jobj.put("version",15110309);	
+}
 out.write(jobj.toString());
 %>

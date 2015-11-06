@@ -167,7 +167,7 @@ public class SessionFilter implements Filter{
 				}
 			}
 			req.setAttribute("user", me);
-			req.setAttribute("auths", auths);
+			req.setAttribute("auths", auths.toString());
 		}
 		
 		ThreadSession.setCityCoordinate(me.cityCoordinate);

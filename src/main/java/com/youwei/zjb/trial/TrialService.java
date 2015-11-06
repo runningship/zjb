@@ -33,7 +33,6 @@ public class TrialService {
 	public ModelAndView add(Trial trial){
 		ModelAndView mv = new ModelAndView();
 		trial.finish=0;
-		LogUtil.info("收到试用请求:city="+ThreadSession.getCityPY());
 		ThreadSession.setCityPY("hefei");
 		dao.saveOrUpdate(trial);
 //		mv.returnText="<script>window.location=\"http://www.zhongjiebao.com/success.html\"</script>";
@@ -45,6 +44,7 @@ public class TrialService {
 		msg.append("姓名: ").append(trial.uname).append("<br/>");
 		msg.append("手机号码: ").append(trial.tel).append("<br/>");
 		msg.append("qq: ").append(trial.qq).append("<br/>");
+		LogUtil.info("收到试用请求:"+msg);
 		try{
 			IMServer.sendMsgToGroup(1, msg.toString());
 		}catch(Exception ex){

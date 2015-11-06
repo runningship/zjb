@@ -57,7 +57,7 @@ html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体; -webkit-user
 	   background-color:#dedede; height:100%;
 }
 .MainLeft ul li i, .MainLeftBottom i, .MainRightTop li i, .MR_ConTit ul li i{ 
-       background:url(/style/images/icons.png) no-repeat; display:inline-block;
+       background:url(./images/icons.png) no-repeat; display:inline-block;
 }
 
 .MainLeftTop{ width:100%; height:50px; border-bottom:1px solid #46484c; background:-webkit-gradient(linear, 0 0, 0 100%, from(#5ce5c6), to(#1aaa82));-moz-user-select: none; -khtml-user-select: none; user-select: none;}
@@ -577,12 +577,12 @@ background-color: #6FBEFF; color:#000;
 
 
 
-.ck_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -32px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+.ck_iconColor{ display:inline-block; background:url(./images/icon_colora.png) -8px -32px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
 
-.sc_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -6px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+.sc_iconColor{ display:inline-block; background:url(./images/icon_colora.png) -8px -6px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
 
-.py_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -57px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+.py_iconColor{ display:inline-block; background:url(./images/icon_colora.png) -8px -57px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
 
-.bj_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -85px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+.bj_iconColor{ display:inline-block; background:url(./images/icon_colora.png) -8px -85px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
 
-.cx_iconColor{ display:inline-block; background:url(/style/images/icon_colora.png) -8px -115px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}
+.cx_iconColor{ display:inline-block; background:url(./images/icon_colora.png) -8px -115px no-repeat; width:0; height:16px; padding-left:15px; overflow:hidden;}

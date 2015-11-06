@@ -188,6 +188,7 @@ function update(){
 	var timer2 = setInterval(function(){
 		if(updateFinish){
 			clearInterval(timer2);
+			$('#percent').text('');
 			checkConfig();
 		}
 	},200);
@@ -198,7 +199,6 @@ function update(){
 	   	success: function(data){
 	   		var json = JSON.parse(data);
 	   		downloadFile(json,0);
-	   		//checkConfig();
 	    }
 	  });
 }

@@ -1,8 +1,61 @@
+<%@page import="org.bc.sdak.SimpDaoTool"%>
+<%@page import="com.youwei.zjb.entity.Role"%>
+<%@page import="java.util.List"%>
+<%@page import="com.youwei.zjb.user.UserHelper"%>
+<%@page import="com.youwei.zjb.user.entity.Department"%>
+<%@page import="com.youwei.zjb.ThreadSessionHelper"%>
+<%@page import="com.youwei.zjb.user.entity.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+
+String agent = request.getHeader("User-Agent");
+if(agent.contains("Chrome/35.0.1916.157") || agent.contains("Chrome/30.0.1599.66")){
+	System.out.println("from node webkit");
+	request.setAttribute("nwjs", true);
+	request.setAttribute("useLocalResource", 1);
+}else{
+	request.setAttribute("useLocalResource", 0);
+}
+
+User u = ThreadSessionHelper.getUser();
+Department comp = u.Company();
+if(comp==null || comp.share!=1){
+	request.setAttribute("seeAll", false);
+	request.setAttribute("seeGX", false);
+	request.setAttribute("seeComp", true);
+}else{
+	request.setAttribute("seeAll", true);
+	request.setAttribute("seeGX", true);
+	request.setAttribute("seeComp", false);
+}
+if(UserHelper.hasAuthority(u, "fy_sh")){
+	request.setAttribute("fy_sh", "");
+}else{
+	//没有审核权的用户只能看到审核通过对数据
+	request.setAttribute("fy_sh", "1");
+}
+
+// if(u.cid!=1){
+// 	List<Role> role = SimpDaoTool.getGlobalCommonDaoService().listByParams(Role.class, "from Role where title='管理员' and cid<>1 and cid=?", u.cid);
+// 	if(role!=null && role.size()>0){
+// 		request.setAttribute("seeAds", "0");
+// 	}else{
+// 		request.setAttribute("seeAds", "1");
+// 	}
+// }else{
+// 	request.setAttribute("seeAds", "1");
+// }
+//request.setAttribute("cityPy", ThreadSessionHelper.getCityPinyin());
+
+%>
+<jsp:include page="../inc/top.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>房源</title>
+<c:if test="${useLocalResource!=1}">
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 <link rel="stylesheet" type="text/css" href="/style/font/iconfont.css" />
 <link href="/style/animate.min.css" rel="stylesheet" />
@@ -13,6 +66,19 @@
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
 <script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
+</c:if>
+<c:if test="${useLocalResource==1}">
+<link rel="stylesheet" type="text/css" href="file:///resources/style/css_ky.css" />
+<link rel="stylesheet" type="text/css" href="file:///resources/style/font/iconfont.css" />
+<link href="file:///resources/style/animate.min.css" rel="stylesheet" />
+<script type="text/javascript" src="file:///resources/js/jquery.js"></script>
+<script type="text/javascript" src="file:///resources/js/buildHtml.js"></script>
+<script type="text/javascript" src="file:///resources/js/pagination.js"></script>
+<script type="text/javascript" src="file:///resources/js/DatePicker/WdatePicker.js"></script>
+<script src="file:///resources/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="file:///resources/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="file:///resources/js/jquery.j.tool.v2.js" type="text/javascript"></script>
+</c:if>
 <script type="text/javascript">
 var houseData;
 var houseGJbox;
@@ -393,7 +459,7 @@ function onSetDataEnd(){
           <div  style="display:table; width:100%; height:100%; overflow:hidden;" class="not-select">
             <div id="menuTop" style="display:inline-block;">
               <ul class="MainRightTop KY_W titlebar">
-                  <li class="slect nobar" onclick="window.location='/v/house/house_v2.html'"><i class="i1"></i>出售</li>
+                  <li class="slect nobar" onclick="window.location='/house/house_v2.jsp'"><i class="i1"></i>出售</li>
                   <li class="line"></li>
                   <li class="nobar" onclick="window.location='/v/house/house_rent_v2.html'"><i class="i2"></i>出租</li>
                   <li class="line"></li>
@@ -422,7 +488,7 @@ function onSetDataEnd(){
               
               <div class="MainRightInputMain KY_W not-select" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
-                    <input type="hidden" id="sh" name="sh" value="$${sh}">
+                    <input type="hidden" id="sh" name="sh" value="${fy_sh }">
                     <input type="hidden" name="order" id="order" />
                     <input type="hidden" name="orderBy" id="orderBy" />
                     <input type="hidden" name="latStart" id="latStart"  value=""/>
@@ -468,9 +534,15 @@ function onSetDataEnd(){
                         <li>
                             <button class="selectMethod not-select zonghe"  type="button" >综合<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
-                                <p onclick="addQueryStr('scope')"  id="seeAll"><label><input type="radio" text="" name="scope" value="all" checked="checked" > 所有</label> </p> 
-                                <p onclick="addQueryStr('scope')" id="seeComp"><label><input type="radio" text="公司" name="scope" value="comp" >公司</label> </p> 
-                                <p onclick="addQueryStr('scope')"  id="seeGX"><label><input type="radio" text="共享" name="scope" value="seeGX" > 共享</label> </p> 
+                            	<c:if test="${seeAll }">
+                            		<p onclick="addQueryStr('scope')"  id="seeAll"><label><input type="radio" text="" name="scope" value="all" checked="checked" > 所有</label> </p>
+                            	</c:if>
+                                <p onclick="addQueryStr('scope')" id="seeComp"><label>
+                                	<input type="radio" text="公司" name="scope" value="comp"  <c:if test="${seeComp }">   checked="checked" </c:if> >公司</label> 
+                                </p>
+                                <c:if test="${seeGX }"> 
+                                	<p onclick="addQueryStr('scope')"  id="seeGX"><label><input type="radio" text="共享" name="scope" value="seeGX" > 共享</label> </p>
+                                </c:if> 
                             </div>
                         </li>
                         <li>
@@ -487,7 +559,8 @@ function onSetDataEnd(){
                                 <p><label style="cursor:pointer" onclick="openMapSearch(1)"> 学 区</label></p>
                             </div>
                         </li>
-                        <li auth="fy_sh">
+                        <c:if test="${authNames.contains('fy_sh') }">
+                        <li>
                             <button class="selectMethod not-select" type="button" >审核<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('shehe')"><label><input text="" name="shehe" type="radio" value="" checked="checked" onclick="$('#sh').val(this.value);">全部</label> </p> 
@@ -495,6 +568,7 @@ function onSetDataEnd(){
                                 <p onclick="addQueryStr('shehe')"><label><input text="未审" name="shehe" type="radio" value="0" onclick="$('#sh').val(this.value);">未审</label> </p> 
                             </div>
                         </li>
+                        </c:if>
                    </ul>
                    
                    <ul class="InputMainLine KY_W not-select">
@@ -580,7 +654,9 @@ function onSetDataEnd(){
                                              <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" id="FY_TableTit">
                                                     <tr>
                                                       <th width="60">编号</th>
-                                                      <th auth="fy_sh|fy_edit|fy_del" width="75">操作</th>
+                                                      <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
+                                                      <th width="75">操作</th>
+                                                      </c:if>
                                                       <th width="50">状态</th>
                                                       <th width="60">区域</th>
                                                       <th style=" width:200px; min-width:50px;">楼盘名称</th>
@@ -607,11 +683,19 @@ function onSetDataEnd(){
                                                     <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover" id="KY_TableMain">
                                                         <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
                                                           <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
-                                                          <td  width="75"  auth="fy_sh|fy_edit|fy_del">
-                                                            <a href="##" auth="fy_sh" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
-                                                            <a href="#" auth="fy_edit" show="showAction($[cid],$${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
-                                                            <a href="##" auth="fy_del" show="showAction($[cid],$${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
-                                                          </td>
+                                                          <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
+	                                                          <td  width="75" >
+	                                                          	<c:if test="${authNames.contains('fy_sh') }">
+	                                                            	<a href="##" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
+	                                                            </c:if>
+	                                                            <c:if test="${authNames.contains('fy_edit') }">
+	                                                            	<a href="#" auth="fy_edit" show="showAction($[cid],$${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
+	                                                            </c:if>
+	                                                            <c:if test="${authNames.contains('fy_del') }">
+	                                                            	<a href="##" show="showAction($[cid],$${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
+	                                                            </c:if>
+	                                                          </td>
+                                                          </c:if>
                                                           <td width="50" class="ztai_$[ztai]">$[ztai]</td>
                                                           <td width="60">$[quyu]</td>
                                                           <td class="br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></div></td>
