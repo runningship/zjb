@@ -40,13 +40,16 @@ function updateIfNeed(){
 	        api.getPrefs({
                 key:'version'
             },function(data,err){
-            	if(data.value && ret.version!='debug' && data.value==ret.version){
-            		openIndexFrame();
-            		return;
-            	}else{
-            		$('body').css('background' , '#000');
-            		//alert(loop);
-//            		setInterval(loop, 16);
+            	fs.exist({
+            	    path: 'file://'+fsPrefix+'/html/welcome.html'
+            	},function(ret,err){
+            	    if(ret.exist){
+            	    	if(data.value && ret.version!='debug' && data.value==ret.version){
+                    		openIndexFrame();
+                    		return;
+                    	}
+            	    }
+            	    $('body').css('background' , '#000');
             		loadstart();
             		loadtext('系统启动中...');
             		update(serverVersion , 0);
@@ -54,7 +57,6 @@ function updateIfNeed(){
 						var percent = downloadProcess/fileCount;
 						var p = Math.round(percent*100);
 						if(p<=100){
-//							$('#percent').text(p+'%');
 							loading(p);
 						}
 			        	if(downloadProcess>fileCount){
@@ -66,7 +68,7 @@ function updateIfNeed(){
 			        		clearInterval(xx);
 			        	}
 			        },100);
-            	}
+            	});
             });
 	    }else {
 	    	alert('网络连接失败');

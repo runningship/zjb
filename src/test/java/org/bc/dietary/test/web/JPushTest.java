@@ -10,6 +10,7 @@ import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.notification.AndroidNotification;
+import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
 
 public class JPushTest {
@@ -19,10 +20,11 @@ public class JPushTest {
 	public void testPush() throws IOException{
 		JPushClient mClient = new JPushClient(masterSecret, appKey);
 		PushPayload payload = PushPayload.newBuilder()
-                .setPlatform(Platform.all())
+                .setPlatform(Platform.ios())
                 .setAudience(Audience.alias("15856985122"))
-                .setNotification(Notification.newBuilder().setAlert("您有一条新的消息").addPlatformNotification(AndroidNotification.newBuilder().addExtra("type", "forum").build()).build())
-               // .setMessage(Message.content("服务端的消息33"))
+                .setNotification(Notification.newBuilder().setAlert("ipad收到一条新消息").addPlatformNotification(IosNotification.newBuilder().addExtra("type", "forum").build()).build())
+                //.setMessage(Message.content("服务端的消息33"))
+                //.setNotification(Notification.newBuilder().setAlert("您有一条新的消息").addPlatformNotification(AndroidNotification.newBuilder().addExtra("type", "forum").build()).build())
                 .build();
         mClient.sendPush(payload);
 	}
