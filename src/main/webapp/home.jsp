@@ -403,7 +403,7 @@ function getUnReadStatistic(){
                 </div>
                 <div class="tr tbody">
                     <ul class="menuSide">
-                        <li class="curr"><a href="/v/house/house_v2.html" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span>房源</span></a></li>
+                        <li class="curr"><a href="/house/house_v2.jsp" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span>房源</span></a></li>
 <%--                         <c:if test="${auths.indexOf('fy_fz_on')>-1}"> --%>
 <!--                         <li ><a href="/houseOwner/OwnerList.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="房主"><i class="iconfont">&#xe601;</i><span>房主</span></a></li> -->
 <%--                         </c:if> --%>

@@ -8,17 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-
-String agent = request.getHeader("User-Agent");
-if(agent.contains("Chrome/35.0.1916.157") || agent.contains("Chrome/30.0.1599.66")){
-	System.out.println("from node webkit");
-	request.setAttribute("nwjs", true);
-	request.setAttribute("useLocalResource", 1);
-}else{
-	request.setAttribute("useLocalResource", 0);
-}
-
 User u = ThreadSessionHelper.getUser();
+
 Department comp = u.Company();
 if(comp==null || comp.share!=1){
 	request.setAttribute("seeAll", false);
@@ -29,6 +20,7 @@ if(comp==null || comp.share!=1){
 	request.setAttribute("seeGX", true);
 	request.setAttribute("seeComp", false);
 }
+request.setAttribute("cid", comp.id);
 if(UserHelper.hasAuthority(u, "fy_sh")){
 	request.setAttribute("fy_sh", "");
 }else{
@@ -208,7 +200,7 @@ function shenheFy(id , obj){
 
 function houseEdit(id){
   // event.cancelBubble=true;
-  art.dialog.open("/house/house_edit.html?id="+id,{id:'seemap'})
+  art.dialog.open("/house/house_edit.jsp?id="+id,{id:'seemap'})
 }
 
 function deletehouse(id){
@@ -228,7 +220,7 @@ function deletehouse(id){
 
 function getSider(id){
     if(id){
-        $('#sideCont').attr('src','/v/house/houseSee_v2.html?id='+id+'&chuzu='+chuzu);
+        $('#sideCont').attr('src','/house/houseSee_v2.jsp?id='+id+'&chuzu='+chuzu);
     }
 }
 
@@ -467,7 +459,7 @@ function onSetDataEnd(){
                        <i class="i3" ></i>登记
                        <div class="topMenuChid">
                             <span></span>
-                            <a href="javascript:void(0)" onclick="openAddHouse('/v/house/house_add.html?act=add&chuzu=0')">出售登记</a> 
+                            <a href="javascript:void(0)" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">出售登记</a> 
                             <a href="javascript:void(0)" onclick="openAddHouse('/v/house/house_rent_add.html?act=add&chuzu=1')">出租登记</a> 
                        </div>
                   </li>
@@ -686,13 +678,13 @@ function onSetDataEnd(){
                                                           <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
 	                                                          <td  width="75" >
 	                                                          	<c:if test="${authNames.contains('fy_sh') }">
-	                                                            	<a href="##" show="showAction($[cid],$${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
+	                                                            	<a href="##" show="showAction($[cid],${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
 	                                                            </c:if>
 	                                                            <c:if test="${authNames.contains('fy_edit') }">
-	                                                            	<a href="#" auth="fy_edit" show="showAction($[cid],$${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
+	                                                            	<a href="#" auth="fy_edit" show="showAction($[cid],${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
 	                                                            </c:if>
 	                                                            <c:if test="${authNames.contains('fy_del') }">
-	                                                            	<a href="##" show="showAction($[cid],$${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
+	                                                            	<a href="##" show="showAction($[cid],${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
 	                                                            </c:if>
 	                                                          </td>
                                                           </c:if>
