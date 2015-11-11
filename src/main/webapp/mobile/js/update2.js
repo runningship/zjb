@@ -42,8 +42,8 @@ function updateIfNeed(){
             },function(data,err){
             	fs.exist({
             	    path: 'file://'+fsPrefix+'/html/welcome.html'
-            	},function(ret,err){
-            	    if(ret.exist){
+            	},function(fsret,err){
+            	    if(fsret.exist){
             	    	if(data.value && ret.version!='debug' && data.value==ret.version){
                     		openIndexFrame();
                     		return;

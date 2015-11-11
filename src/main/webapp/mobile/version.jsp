@@ -38,7 +38,8 @@ String server = request.getServerName();
 if("192.168.1.222".equals(server)){
 	jobj.put("version","debug");	
 }else{
-	jobj.put("version",15110309);	
+	jobj.put("version",15110904);	
 }
+//jobj.put("version",15110904);
 out.write(jobj.toString());
 %>
