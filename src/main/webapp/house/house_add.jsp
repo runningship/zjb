@@ -34,7 +34,6 @@ request.setAttribute("data", mv.data);
 <link href="/style/css.css" rel="stylesheet">
 <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="/style/style.css" rel="stylesheet">
-<link href="/js/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
@@ -49,7 +48,6 @@ request.setAttribute("data", mv.data);
 <link href="file:///resources/style/css.css" rel="stylesheet">
 <link href="file:///resources/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="file:///resources/style/style.css" rel="stylesheet">
-<link href="file:///resources/js/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
 <script src="file:///resources/js/jquery.js" type="text/javascript"></script>
 <script src="file:///resources/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="file:///resources/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>

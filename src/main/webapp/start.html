@@ -82,7 +82,15 @@ function checkResource(){
 			unrar(update);
 		}  ,true);
     }else{
-    	update();
+    	if(fs.existsSync("resources/js") && fs.existsSync("resources/js/pagination.js") ){
+    		update();
+    	}else{
+    		var exec = require('child_process').execFile;
+		    var command = "Rar.exe";
+		    var xx = exec(command,[ 'x','-o+', 'resources/data.rar','./resources/'], function(err, stdout, stderr) {
+	    		update();	
+		    });
+    	}
     }
 }
 function unrar(callback){
