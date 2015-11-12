@@ -25,4 +25,6 @@ public class HouseImage {
 	public String thumb;
 	
 	public Date addtime;
+	
+	public Integer isPrivate;
 }

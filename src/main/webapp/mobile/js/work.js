@@ -90,6 +90,12 @@ function openViewLog(){
 	});
 }
 
+function openChat(){
+	api.openWin({
+	    name: 'chat',
+	    url: 'chat/msg.html'
+	});
+}
 function openPics(){
 //	api.getPicture({
 //	    sourceType: 'album',
@@ -141,11 +147,27 @@ function openPics(){
 	    }
 	}, function(ret){
 	    if(ret){
-	        var arr = [];
+	        var arr = "";
 	        for(var i=0;i<ret.list.length;i++){
-	        	arr.push(ret.list[i].path);
+	        	arr+=ret.list[i].path+";"
 	        }
 //	        blockAlert(JSON.stringify(ret.list));
+	        YW.ajax({
+	    		url:'http://'+server_host+'/c/mobile/houseImage/setPrivateImage',
+	    		method:'post',
+	    		data:{
+	            	values: {hid:12456,chuzu:0,path:arr}
+	        	},
+	    		cache:false,
+	    		returnAll:false
+	    	},function(ret , err){
+	    		if(ret && ret.result==0){
+	    			alert('设置图片成功');
+	    		}else{
+	    			alert(ret.msg);
+	    		}
+	    	});
+	        
 	        var obj = api.require('imageBrowser');
 	        obj.openImages({
 	            imageUrls: arr,

@@ -1,25 +1,22 @@
 package com.youwei.zjb.house;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.bc.sdak.CommonDaoService;
-import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
-import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
-
-import com.youwei.zjb.util.WXUtil;
 
 import cn.jpush.api.utils.StringUtils;
 
-@Module(name="/weixin/houseOwner/")
+import com.youwei.zjb.house.entity.HouseImage;
+import com.youwei.zjb.util.WXUtil;
+
+@Module(name="/mobile/houseImage/")
 public class HouseImageService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
@@ -49,6 +46,22 @@ public class HouseImageService {
 					return mv;
 				}
 			}
+		}
+		mv.data.put("result", "0");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView setPrivateImage(HouseImage image){
+		ModelAndView mv = new ModelAndView();
+		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid"}, new Object[]{image.hid , image.chuzu});
+		if(po!=null){
+			po.path = image.path;
+			dao.saveOrUpdate(po);
+		}else{
+			image.addtime = new Date();
+			image.isPrivate = 1;
+			dao.saveOrUpdate(image);
 		}
 		mv.data.put("result", "0");
 		return mv;
