@@ -63,7 +63,7 @@ box-orient:horizontal;
 .footer .item{ color: #AFAFAF; display: block; width: 33.33%; text-align: center; line-height: 25px; }
 .footer .item i{ display: block; height: 25px; line-height: 35px; font-size: 20px; }
 .footer .item i.y{ display: none; }
-.footer .item.active { color: #18B4ED; }
+.footer .item.active { color: #18B4ED;-webkit-transition:all 0s; }
 .footer .item.active i.y{ display: block; }
 .footer .item.active i.n{ display: none; }
 .footer .item h2{ height: 25px; line-height: 22px; }
@@ -89,6 +89,8 @@ i.green{ color: #65C000; }
 i.violet{ color: #DC38AB; }
 i.orange{ color: #FF6100; }
 i.reg{ color: #FF0000; }
+
+.bd5{ border: 5pt solid #EFEFEF; border-left: 0; border-right: 0; padding: 5pt 0; }
 /*
 form
  */
@@ -203,6 +205,24 @@ a.switch input:checked ~ label i{ left: auto; right: -3px; }
 a.switch input:checked ~ label i:before{ display: none; }
 a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);text-shadow: 0 1px 0 #E0EAD7; }
 /* switch end */
+
+
+/* ImgListBox */
+.ImgListBox *{-webkit-transition:all 0s;}
+.ImgListBox{ display: block;  }
+.ImgListBox li{ display: inline-block; width: 30.3%; position: relative; vertical-align:middle; margin: 5pt 0 0 1%;  }
+.ImgListBox li a{ display: block; width: 100%; height: 100%; border: 1px solid #EEE; border-radius:5pt; text-align: center; vertical-align: top; }
+.ImgListBox li a img{ display: block; border: 0; width: 100%; height: auto; }
+.ImgListBox li a.jia{ position: absolute; border: 0; }
+.ImgListBox li a.jia i{ font-size: 40pt;  font-weight: bold; color: #999;}
+.ImgListBox li a.jia::after,
+.ImgListBox li a.jia::before{content: ''; box-sizing: border-box; position: absolute; width: 20pt; height: 20pt; border: 3pt solid #CCC; }
+.ImgListBox li a.jia::after{ left: 0; bottom: 0; border-top: 0pt; border-right: 0pt;}
+.ImgListBox li a.jia::before{ top: 0; right: 0; border-left: 0pt; border-bottom: 0pt; }
+.ImgListBox li a.jia span{ position: absolute; width: 20pt; height: 20pt; border:3pt solid #CCC; }
+
+.ImgListBox li a.jia span.l{ left: 0; top: 0; border-bottom: 0pt; border-right: 0pt;}
+.ImgListBox li a.jia span.r{ bottom: 0; right: 0; border-left: 0pt; border-top: 0pt;}
 
 /* tipbox */
 .tipbox{display: block; height: 30pt; line-height: 30pt; border-bottom: 1px solid #EEE; background: #F6F6F6; padding: 0 10pt; font-size: 12pt; }
@@ -389,7 +409,7 @@ house
 .house.details .footer .option label{ display: block; -webkit-box-flex: 1; text-align: center; border:none; border-left: 1px solid #EEE; height: 36pt; line-height: 36pt; }
 .house.details .footer .option label:first-child{ border-left: none; }
 .house.details .footer .entered{ border-top: 1px solid #EEE;}
-.house.details .footer .entered .inputbox{-webkit-box-flex: 10; max-height: 60pt; line-height: 26pt; overflow: hidden;  text-align: left;}
+.house.details .footer .entered .inputbox{-webkit-box-flex: 10; max-height: 60pt; line-height: 35pt; overflow: hidden;  text-align: left;}
 .house.details .footer .entered .btns{ display: block; width: 60px;-webkit-box-flex: 0; text-align: center; line-height: 35pt; background: #18B4ED; color: #FFF }
 
 
