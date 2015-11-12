@@ -37,6 +37,8 @@ public class SessionFilter implements Filter{
 		excludes.add("/c/dept/listDept");
 		excludes.add("/login/index.html");
 		excludes.add("/login/iframe_reg.html");
+		excludes.add("/login/index.jsp");
+		excludes.add("/login/iframe_reg.jsp");
 		excludes.add("/welcome.html");
 		excludes.add("/welcome2.html");
 		excludes.add("/v/start.html");

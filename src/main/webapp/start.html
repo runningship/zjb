@@ -60,7 +60,7 @@ function checkConfig(){
             //留在当前页面，选择城市
             window.location="/welcome.html?pcinfo=";
         }else{
-            window.location="http://"+json.domain+":8081/login/index.html?2&pcinfo=";
+            window.location="http://"+json.domain+":8081/login/index.jsp?2&pcinfo=";
         }
     }else{
         loadHardwareInfo(function(pcinfo){
@@ -70,7 +70,7 @@ function checkConfig(){
                 //留在当前页面，选择城市
                 window.location="/welcome.html?pcinfo="+pcinfo;
             }else{
-                window.location="http://"+json.domain+":8081/login/index.html?&pcinfo="+pcinfo;
+                window.location="http://"+json.domain+":8081/login/index.jsp?&pcinfo="+pcinfo;
             }
         });   
     }

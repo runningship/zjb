@@ -7,6 +7,7 @@
 <%@page import="org.bc.web.ModelAndView"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 String idStr = request.getParameter("id");
 int id = Integer.valueOf(idStr);
@@ -17,7 +18,9 @@ CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(Common
 House po = dao.get(House.class, id);
 FangXing fxing = FangXing.parse(po.hxf, po.hxt,po.hxw);
 request.setAttribute("house", po);
-request.setAttribute("hxing", fxing.getName());
+if(fxing!=null){
+	request.setAttribute("hxing", fxing.getName());	
+}
 request.setAttribute("data", mv.data);
 %>
 <jsp:include page="../inc/top.jsp" />
@@ -216,10 +219,10 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="idCnum" class="col-xs-4 control-label">面积总价:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="${house.mji }" name="mji" desc="面积" id="mji" placeholder="">
+                                <input type="text" class="form-control" value="<fmt:formatNumber  value="${house.mji}"  type="number"  pattern="###.##" />" name="mji" desc="面积" id="mji" placeholder="">
                             </div>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" value="${house.zjia }" name="zjia" desc="总价" id="zjia" placeholder="">
+                                <input type="text" class="form-control" value="<fmt:formatNumber  value="${house.zjia}"  type="number"  pattern="###.#" />" name="zjia" desc="总价" id="zjia" placeholder="">
                                 <span style="position: absolute;top: 8px;right: -15px;">万元</span>
                             </div>
                         </div>
