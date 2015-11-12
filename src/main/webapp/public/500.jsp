@@ -5,10 +5,13 @@
 <%@page import="java.util.List"%>
 <%@page import="net.sf.json.JSONArray"%>
 <%@page import="com.youwei.zjb.sys.CityService"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  isErrorPage="true" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+	//exception.printStackTrace(response.getWriter());
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +62,13 @@
        	</c:forEach>
       </ul>
     </div>
+</div>
+
+<div style="display:none">
+	错误堆栈信息：<br/>
+	<c:forEach var="trace" items="${pageContext.exception.stackTrace}">
+	<p>${trace}</p>
+	</c:forEach>
 </div>
 </body>
 </html>
