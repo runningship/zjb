@@ -8,9 +8,8 @@
 <%
 String agent = request.getHeader("User-Agent");
 if(agent.contains("Chrome/35.0.1916.157") || agent.contains("Chrome/30.0.1599.66")){
-	System.out.println("from node webkit");
 	request.setAttribute("nwjs", true);
-	request.setAttribute("useLocalResource", 0);
+	request.setAttribute("useLocalResource", 1);
 }else{
 	request.setAttribute("useLocalResource", 0);
 }
@@ -297,7 +296,7 @@ var icoOA;
 var icoGC;
 function showAds(){
     var xx = $('#iframe_house')[0];
-    xx.contentWindow.showAds('/ad/img/zjb/erweima.png');
+    xx.contentWindow.showAds('/ad/img/zjb/baidu.png');
 }
 $(document).ready(function() {
 var times;
@@ -431,7 +430,7 @@ function getUnReadStatistic(){
                         </li>
                         </c:if>
                         <c:if test="${auths.indexOf('sz_on')>-1}">
-                            <li class=" positionBottom"><a href="/v/settings/uc_index.html" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
+                            <li class=" positionBottom"><a href="/settings/uc_index.jsp" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                         </c:if>
                             
                     </ul>
