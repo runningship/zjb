@@ -1,3 +1,5 @@
+<%@page import="org.bc.web.ModelAndView"%>
+<%@page import="com.youwei.zjb.sys.ConfigService"%>
 <%@page import="org.bc.sdak.SimpDaoTool"%>
 <%@page import="com.youwei.zjb.entity.Role"%>
 <%@page import="java.util.List"%>
@@ -39,7 +41,9 @@ if(UserHelper.hasAuthority(u, "fy_sh")){
 // 	request.setAttribute("seeAds", "1");
 // }
 //request.setAttribute("cityPy", ThreadSessionHelper.getCityPinyin());
-
+ConfigService cs = new ConfigService();
+ModelAndView mv = cs.getQueryOptions();
+request.setAttribute("queryOptions", mv.data);
 %>
 <jsp:include page="../inc/top.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -299,15 +303,22 @@ $(document).ready(function(){
   ChangeW();
   
     Page.Init();
-    $.get('/c/config/getQueryOptions', function(data) {
-      queryOptions=JSON.parse(data);
-      buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
-      buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
-      buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
-      buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-      buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
-      doSearchAndSelectFirst();
-    });
+//     $.get('/c/config/getQueryOptions', function(data) {
+//       queryOptions=JSON.parse(data);
+//       buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
+//       buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
+//       buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
+//       buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
+//       buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
+//       doSearchAndSelectFirst();
+//     });
+    buildHtmlWithJsonArray("id_lxing",${queryOptions.lxing},true);
+    buildHtmlWithJsonArray("id_fxing", ${queryOptions.fxing},true);
+    buildHtmlWithJsonArray("id_zhuangxiu",${queryOptions.zhuangxiu} ,true);
+    buildHtmlWithJsonArray("id_quyu", ${queryOptions.quyu},true);
+    buildHtmlWithJsonArray("id_zhuangtai", ${queryOptions.ztai_sell},true, true);
+    doSearchAndSelectFirst();
+    
     $("button.selectMethod").parent().hover(function(){
       $(this).siblings().find("div.ulErMenu").hide();
       $(this).find("div.ulErMenu").show();
@@ -489,7 +500,7 @@ function onSetDataEnd(){
                     <input type="hidden" name="lngEnd" id="lngEnd" />
                    <ul class="InputMainLine KY_W not-select" style=" margin-bottom:8px;">
                    
-                        <li><input class="input-sm w110" type="text" placeholder="电话" name="tel" /></li>
+                        <li><input class="input-sm w110" type="text" placeholder="电话" id="tel" name="tel" /></li>
                         <li>
                             <span class="SpanName not-select">楼盘</span>
                             <input id="search" class="input-sm input-left w208" type="text" placeholder="" autocomplete="off" name="area" />
@@ -728,7 +739,7 @@ function onSetDataEnd(){
 
 <div id="ad_container" style="display:none" class="adboxs">
     <div class="adboxitem">
-        <img src="/ad/img/zjb/erweima.png" alt="" class=" animated fadeInDown" >
+        <img src="/ad/img/zjb/baidu.png" alt="" class=" animated fadeInDown" >
     </div>
 </div>
 </body>

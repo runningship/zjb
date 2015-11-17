@@ -88,6 +88,9 @@ dao.saveOrUpdate(vl);
 <script src="file:///resources/js/jquery.j.tool.js?2" type="text/javascript"></script>
 <script type="text/javascript" src="file:///resources/js/buildHtml.js"></script>
 </c:if>
+<style type="text/css">
+.click{cursor: pointer; color:#06C; text-decoration: underline;}
+</style>
 <script type="text/javascript">
 var houseGJbox;
 chuzu=getParam('chuzu');
@@ -225,7 +228,8 @@ $(document).ready(function() {
               if(thiTel.indexOf('http')>-1){
             	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <img src="'+thiTel+'"/> </p>';
               }else{
-            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span class="tel">'+ thiTel +'</span> <span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span></p>';  
+            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click">'+ thiTel +'</span> '
+            	  	+'<span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span><span>中介</span></p>';  
               }
               
           });
@@ -239,9 +243,9 @@ $(document).ready(function() {
                     var Thisa=$(this),
                     ThiTel=Thisa.find('.tel').text(),
                     ThiTelFrom=Thisa.find('.telFrom');
-                    getTelFrom(ThiTel,Thisa,function(e){
-                        ThiTelFrom.html('['+ e +']');
-                    });
+//                     getTelFrom(ThiTel,Thisa,function(e){
+//                         ThiTelFrom.html('['+ e +']');
+//                     });
                 });
                 $('[data-toggle=tooltip]').tooltip();
             }else{
@@ -286,6 +290,11 @@ $('#area').on('click',function(){
 
 function junjiaTJ(area){
 	 art.dialog.open('/house/areaPrice.jsp?area='+area,{id:'areaPrice',title:'统计',width:1000,height:550});
+}
+
+function searchTel(span){
+	$(window.parent.document).find('#tel').val($(span).text());
+	window.parent.doSearchAndSelectFirst();
 }
 </script>
 </head>
@@ -451,7 +460,7 @@ function junjiaTJ(area){
                   <td>
                     <table width="100%">
                       <tr>
-                        <td class="biaoti">房主：</td>
+<!--                         <td class="biaoti">房主：</td> -->
                         <td class="neirong telBox" seeHM="${house.seeHM}"></td>
                       </tr>
                     </table>
