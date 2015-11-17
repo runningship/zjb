@@ -63,7 +63,7 @@
 		String show_url = "http://www.zhongjiebao.com/";
 		//必填，需以http://开头的完整路径，例如：http://www.商户网址.com/myorder.html
 		//订单描述
-		String body = new String(request.getParameter("WIDbody").getBytes("ISO-8859-1"),"UTF-8");
+		String body = new String(request.getParameter("WIDbody").getBytes("utf8"),"UTF-8");
 		//选填
 		//超时时间
 		//String it_b_pay = new String(request.getParameter("WIDit_b_pay").getBytes("ISO-8859-1"),"UTF-8");

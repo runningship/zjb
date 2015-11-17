@@ -45,7 +45,7 @@
 		//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
 		params.put(name, valueStr);
 	}
-	LogUtil.info("收到支付宝异步web回调："+params);
+	
 	//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
 		//商户订单号
 
@@ -57,12 +57,16 @@
 
 		//交易状态
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-
+		
+		String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
+		
+		String body = new String(request.getParameter("body").getBytes("utf8"),"UTF-8");
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 		
 		//计算得出通知验证结果
 		boolean verify_result = AlipayNotify.verify(params);
 		
+		LogUtil.info("收到支付宝异步web回调："+trade_status +","+params);
 		//if(verify_result){//验证成功
 			//////////////////////////////////////////////////////////////////////////////////////////
 			//请在这里加上商户的业务逻辑程序代码
@@ -74,6 +78,24 @@
 					//如果有做过处理，不执行商户的业务程序
 				CommonDaoService	dao = SimpDaoTool.getGlobalCommonDaoService();
 				Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , String.valueOf(out_trade_no));
+				
+				if(po==null){
+					User user = SimpDaoTool.getGlobalCommonDaoService().get(User.class, Integer.valueOf(request.getParameter("uid")));
+					String monthAdd = new String(request.getParameter("monthAdd").getBytes("ISO-8859-1"),"UTF-8");
+					Charge charge = new Charge();
+					charge.uid = user.id;
+					charge.uname = user.uname;
+					charge.tradeNo = out_trade_no;
+					charge.fee = Float.valueOf(total_fee);
+					charge.payType = 1;
+					charge.clientType = "mobile";
+					charge.addtime = new Date();
+					charge.finish = 0;
+					charge.beizhu = body;
+					charge.monthAdd = Integer.valueOf(monthAdd);
+					SimpDaoTool.getGlobalCommonDaoService().saveOrUpdate(charge);
+				}
+				po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , String.valueOf(out_trade_no));
 				if(po!=null){
 					try{
 						User user = dao.get(User.class, po.uid);
@@ -110,17 +132,18 @@
 						}
 						MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
 						boolean invitationActive = mService.activeInvitation(user);
-						RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
-						request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
-						request.setAttribute("fee", po.fee);
-						request.setAttribute("invitationActive", invitationActive);
-						rd.forward(request, response);
+// 						RequestDispatcher rd = request.getRequestDispatcher("payOK.jsp");
+// 						request.setAttribute("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+// 						request.setAttribute("fee", po.fee);
+// 						request.setAttribute("invitationActive", invitationActive);
+// 						rd.forward(request, response);
+						out.println("success");
 					}catch(Exception ex){
 						LogUtil.log(Level.WARN, "web charge fail", ex);
-						out.println("订单验证失败，请联系中介宝客服. <br />");
+						out.println("success");
 					}
 				}else{
-					out.println("订单验证失败，请联系中介宝客服 <br />");
+					out.println("success");
 				}
 			}
 			
