@@ -271,7 +271,7 @@ public class PService {
 	}
 	
 	@WebMethod
-	public ModelAndView paySuccess(Integer monthAdd ,Integer userId,String uname,String tradeNO,Float fee,Integer payType){
+	public ModelAndView paySuccess(Integer monthAdd ,Integer userId,String tradeNO,Float fee,Integer payType){
 		ModelAndView mv = new ModelAndView();
 		Charge po = dao.getUniqueByKeyValue(Charge.class, "tradeNO", tradeNO);
 		if(po!=null){
@@ -279,6 +279,7 @@ public class PService {
 			mv.data.put("result", "1");
 			return mv;
 		}
+		User user = dao.get(User.class, userId);
 		Charge charge = new Charge();
 		charge.uid = userId;
 		charge.tradeNo = tradeNO;
@@ -291,8 +292,8 @@ public class PService {
 		//注意要以fee为准
 		//在很低的概率下，用户迅速选择年度，而后ajax完成将价格改成季付
 		charge.monthAdd = monthAdd;
+		charge.uname = user.uname;
 		dao.saveOrUpdate(charge);
-		User user = dao.get(User.class, userId);
 //		user.mobileDeadtime
 		Calendar cal = Calendar.getInstance();
 		if(user.mobileDeadtime==null){
