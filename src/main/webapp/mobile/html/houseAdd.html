@@ -18,63 +18,10 @@
 <script src="../js/regForm.js"></script>
 <script src="../js/houseAdd.js"></script>
 <style type="text/css">
+.ImgListBox li a img{width:110px;height:100px;}
 </style>
 <script type="text/javascript">
-function ImgAutoBox(img){
-    function imgAct(){
-        var ThiW=Thi.width(),
-        ThiH=Thi.height(),
-        isW='W',
-        ThiP=Thi.parent(),
-        ThiPW=ThiP.width(),
-        ThiPH=ThiP.height();
-        if(ThiH>ThiW){isW='H'}
-        if(isW=='W'){
-            Thi.css({
-                'height': ThiPH,
-                'width': 'auto'
-                
-            });
-            ThiWn=(Thi.width()-ThiPW)/2;
-            Thi.css({'margin-left':-ThiWn})
-        }else{
-            Thi.css({
-                'width': ThiPW,
-                'height': 'auto'
-            });
-            ThiHn=(Thi.height()-ThiPH)/2;
-            Thi.css({'margin-top':-ThiHn})
-        }
-        ThiP.css('overflow', 'hidden');
-    }
-    var Thi=img;
-    var img = new Image(); 
-    img.src =Thi.attr("src");
-    if(img.complete){
-        imgAct();
-    }else{
-        img.onload = function(){
-            imgAct();
-        }
-    }
-}
-function ImgListBox(a){
-    if(!a){a=$('.ImgListBox')}
-    var Thi=a,
-    ThiLi=Thi.children('li');
-    ThiLi.each(function(index, el) {
-        var This=$(this),
-        ThiIMG=This.find('img');
-        ThiW=This.width();
-        This.height(ThiW);
-        This.find('a.jia').css({
-            'height': ThiW+'px',
-            'line-height':ThiW+'px'
-        });
-        ImgAutoBox(ThiIMG);
-    });
 
-}
 $(document).ready(function() {
     ImgListBox();
 });
@@ -92,13 +39,10 @@ $(document).ready(function() {
         </span>
     </div>
     <div id="mainer" class="mainer">
-    <div class="wrap bd5" style="display:none">
+    <div class="wrap bd5" style="display:">
         <ul class="ImgListBox">
-            <li><a href="#" class=""><img src="../images/1.jpg" alt=""></a></li>
-            <li><a href="#" class=""><img src="../images/2.jpg" alt=""></a></li>
-            <li><a href="#" class=""><img src="../images/1.jpg" alt=""></a></li>
-            <li><a href="#" class=""><img src="../images/1.jpg" alt=""></a></li>
-            <li><a href="#" class="jia"><i class="iconfont">&#xe6a2;</i><span class="l"></span><span class="r"></span></a></li>
+<!--         	<li class="houseImage" path="'+pathArr[i]+'" thumb="'+thumbArr[i]+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" ontouchend="gtouchend()" onclick="showBigImage();"><a href="#" class=""><img style="" src="../images/1.jpg" alt=""></a></li> -->
+            <li onclick="addPics();"><a href="#" class="jia"><i class="iconfont">&#xe6a2;</i><span class="l"></span><span class="r"></span></a></li>
         </ul>
     </div>
     <div class="wrap">
@@ -125,7 +69,7 @@ $(document).ready(function() {
             </li>
             <li>
                 <span class="title">房号：</span>
-                <span class="inputbox"><input class="text isFormItem" id="fhao" name="fhao" value="" desc="房号" placeholder="房号" data-rule="noNull" data-tip="请输入房号" data-tipErr="请输入房号"></span>
+                <span class="inputbox"><input type="number" class="text isFormItem" id="fhao" name="fhao" value="" desc="房号" placeholder="房号" data-rule="noNull" data-tip="请输入房号" data-tipErr="请输入房号"></span>
             </li>
             <li>
                 <span class="title">楼层：</span>

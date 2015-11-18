@@ -8,6 +8,8 @@ apiready=function(){
 	});
 };
 
+var imgArr="";
+var thumbArr="";
 function init(){
 	if(api.pageParam.isChuzu){
 		$('#title').text('添加租房');
@@ -28,6 +30,8 @@ function save(){
         	data[a[i].name]=a[i].value;
         }
         data.beizhu=$('[name=beizhu]').val();
+        data.houseImgPath=imgArr;
+        data.houseImgThumbPath = thumbArr;
         var url = 'http://'+server_host+'/c/mobile/addPrivateHouse';
         if(api.pageParam.isChuzu){
         	url = 'http://'+server_host+'/c/mobile/rent/addPrivateHouse';
@@ -44,7 +48,7 @@ function save(){
     			api.execScript({
     				name:'myHouse',
     			    frameName: 'myHouseFrame',
-    			    script: 'refreshPage()'
+    			    script: 'switchType('+api.pageParam.isChuzu+')'
     			});
     			closexx();
     		}else{

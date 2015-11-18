@@ -23,11 +23,9 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.house.FangXing;
 import com.youwei.zjb.house.HouseQuery;
 import com.youwei.zjb.house.RentState;
-import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.District;
-import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseImage;
 import com.youwei.zjb.house.entity.HouseRent;
-import com.youwei.zjb.house.entity.HouseTel;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Track;
 import com.youwei.zjb.util.DataHelper;
@@ -275,7 +273,7 @@ public class PHouseRentService {
 	}
 	
 	@WebMethod
-	public ModelAndView addPrivateHouse(HouseRent house , String hxing , String fangzhuTel){
+	public ModelAndView addPrivateHouse(HouseRent house , String hxing , String fangzhuTel , String houseImgPath , String houseImgThumbPath){
 		ModelAndView mv = new ModelAndView();
 		DataHelper.validte(house);
 		house.isdel = 0;
@@ -299,6 +297,16 @@ public class PHouseRentService {
 		house.hxw = fx.getHxw();
 		house.tel = fangzhuTel;
 		dao.saveOrUpdate(house);
+		if(StringUtils.isNotEmpty(houseImgPath)){
+			HouseImage img = new HouseImage();
+			img.addtime = new Date();
+			img.chuzu=1;
+			img.hid = house.id;
+			img.isPrivate = 1;
+			img.path = houseImgPath;
+			img.thumb = houseImgThumbPath;
+			dao.saveOrUpdate(img);
+		}
 		mv.data.put("msg", "发布成功");
 		mv.data.put("result", 0);
 		return mv;
@@ -318,6 +326,11 @@ public class PHouseRentService {
 		}else{
 			LogUtil.warning("房源的户型信息错误,hid="+hid);
 		}
+		HouseImage image = dao.getUniqueByParams(HouseImage.class, new String[]{"chuzu" , "hid"}, new Object[]{1 , hid});
+		if(image!=null){
+			mv.data.put("imgPath", image.path);
+			mv.data.put("houseImgThumbPath", image.thumb);
+		}
 		return mv;
 	}
 	
@@ -332,7 +345,7 @@ public class PHouseRentService {
 	}
 	
 	@WebMethod
-	public ModelAndView updatePrivateHouse(HouseRent house , String hxing , String fangzhuTel){
+	public ModelAndView updatePrivateHouse(HouseRent house , String hxing , String fangzhuTel , String houseImgPath , String houseImgThumbPath){
 		DataHelper.validte(house);
 		if(StringUtils.isEmpty(hxing)){
 			throw new GException(PlatformExceptionType.ParameterMissingError,"hxing","");
@@ -363,9 +376,33 @@ public class PHouseRentService {
 		po.beizhu = house.beizhu;
 		po.tel = house.tel;
 		dao.saveOrUpdate(po);
+		
+		HouseImage image = dao.getUniqueByParams(HouseImage.class, new String[]{"chuzu" , "hid"}, new Object[]{1 , house.id});
+		if(image!=null){
+			image.path = houseImgPath;
+			image.thumb = houseImgThumbPath;
+			dao.saveOrUpdate(image);
+		}
 		mv.data.put("msg", "修改成功");
 		//mv.data.put("house", JSONHelper.toJSON(po , DataHelper.dateSdf.toPattern()));
 		mv.data.put("result", 0);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView deleteHouseImage(Integer hid , String houseImgPath , String houseImgThumbPath){
+		ModelAndView mv = new ModelAndView();
+		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid" , "chuzu"}, new Object[]{hid , 1});
+		if(StringUtils.isEmpty(houseImgPath) || StringUtils.isEmpty(houseImgThumbPath) || po==null){
+			return mv;
+		}
+		if(StringUtils.isNotEmpty(po.path)){
+			po.path= po.path.replace(houseImgPath, "");
+		}
+		if(StringUtils.isNotEmpty(po.thumb)){
+			po.thumb= po.thumb.replace(houseImgThumbPath, "");
+		}
+		dao.saveOrUpdate(po);
 		return mv;
 	}
 }

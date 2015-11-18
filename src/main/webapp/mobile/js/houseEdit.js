@@ -7,7 +7,8 @@ apiready=function(){
 		init();
 	});
 };
-
+var imgArr ="";
+var thumbArr="";
 function init(){
 	if(api.pageParam.isChuzu){
 		$('#title').text('编辑租房');
@@ -50,6 +51,28 @@ function init(){
 			$('select[name=zxiu]').val(ret.house.zxiu);
 			$('select[name=quyu]').val(ret.house.quyu);
 			$('[name=beizhu]').val(ret.house.beizhu);
+			$('[name=fangshi]').val(ret.house.fangshi);
+			setTimeout(function(){
+				if(ret.imgPath){
+					imgArr = ret.imgPath;
+					if(ret.houseImgThumbPath){
+						thumbArr = ret.houseImgThumbPath.split(';');
+					}else{
+						thumbArr = ret.imgPath.split(';');
+					}
+					
+					var pathArr = ret.imgPath.split(';');
+					var ImgListBox = $('.ImgListBox');
+					for(var i=thumbArr.length-1;i>=0;i--){
+						if(thumbArr[i]==""){
+							continue;
+						}
+						ImgListBox.prepend('<li class="houseImage" path="'+pathArr[i]+'" thumb="'+thumbArr[i]+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" ontouchend="gtouchend()" onclick="showBigImage();"><a href="#" class=""><img style="" src="'+thumbArr[i]+'" alt=""></a></li>');
+					}
+					//ImgListBox();
+				}
+			},500);
+			
 		}else{
 			alert('加载数据失败请重试.');
 		}
@@ -87,6 +110,23 @@ function delHouse(){
 	    }
 	});
 }
+function deleteHouseImage(currentImg){
+	var url = 'http://'+server_host+'/c/mobile/deleteHouseImage';
+	if(api.pageParam.isChuzu){
+		url = 'http://'+server_host+'/c/mobile/rent/deleteHouseImage';
+	}
+	YW.ajax({
+    	url: url,
+		method:'post',
+		data:{values:{hid:api.pageParam.hid,houseImgPath:$(currentImg).attr('path') , houseImgThumbPath:$(currentImg).attr('thumb')}},
+		cache:false,
+		returnAll:false
+	},function(ret , err){
+		if(ret){
+			currentImg.remove();
+		}
+	});
+}
 function save(){
         var a=$('form[name=form1]').serializeArray();
         var data = JSON.parse('{}');
@@ -98,6 +138,15 @@ function save(){
         if(api.pageParam.isChuzu){
         	url ='http://'+server_host+'/c/mobile/rent/updatePrivateHouse'; 
         }
+        var arr = $('.houseImage');
+        var path="";
+        var thumb="";
+        for(var i=0;i<arr.length;i++){
+        	path+=$(arr[i]).attr('path')+";";
+        	thumb+=$(arr[i]).attr('thumb')+";";
+        }
+        data.houseImgPath=path;
+        data.houseImgThumbPath = thumb;
         YW.ajax({
         	url: url,
             data:{values:data},
