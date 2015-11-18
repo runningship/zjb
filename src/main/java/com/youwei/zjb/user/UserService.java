@@ -26,6 +26,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.entity.Role;
+import com.youwei.zjb.house.entity.Agent;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.sys.entity.PC;
@@ -208,6 +209,32 @@ public class UserService {
 		User po = dao.get(User.class, id);
 		mv.data = JSONHelper.toJSON(po);
 		mv.data.remove("pwd");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView labelAgent(String tel , Integer hid){
+		ModelAndView mv = new ModelAndView();
+		Integer uid = ThreadSessionHelper.getUser().id;
+		Agent po = dao.getUniqueByParams(Agent.class, new String[]{"tel" , "labelUid"}, new Object[]{tel , uid});
+		if(po==null){
+			Agent agent = new Agent();
+			agent.tel = tel;
+			agent.labelUid = uid;
+			agent.hid = hid;
+			dao.saveOrUpdate(agent);
+		}
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView revokeLabelAgent(String tel){
+		ModelAndView mv = new ModelAndView();
+		Integer uid = ThreadSessionHelper.getUser().id;
+		Agent po = dao.getUniqueByParams(Agent.class, new String[]{"tel" , "labelUid"}, new Object[]{tel , uid});
+		if(po!=null){
+			dao.delete(po);
+		}
 		return mv;
 	}
 	
