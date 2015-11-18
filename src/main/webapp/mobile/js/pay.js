@@ -2,6 +2,7 @@
 	var payType = 1;
 	var userInfo;
     var amount =100;
+    var addingRecord=false;
 	apiready = function(){
 		getConfig(function(cfg){
 			config = cfg;
@@ -19,13 +20,21 @@ function aliPay(){
 	var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&cityPy='+config.city.cityPy+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee='+amount+'&WIDbody='+body;
 	//var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee='+amount+'&WIDbody='+body;
 	if(api.systemType=='android'){
-		api.openApp({
-		    androidPkg: 'android.intent.action.VIEW',
-		    mimeType: 'text/html',
-		    uri: url
-		},function(ret,err){
-		    
-		});
+		var obj = api.require('aliPay');
+		if(obj==null){
+			blockAlert('升级最新版, 支付更简单');
+			api.openApp({
+			    androidPkg: 'android.intent.action.VIEW',
+			    mimeType: 'text/html',
+			    uri: url
+			},function(ret,err){
+			    
+			});
+		}else{
+			androidPay(obj);
+			return;
+		}
+		//return;
 	}else{
 		api.openApp({
 			iosUrl : url
@@ -46,13 +55,13 @@ function aliPay(){
 	});
 }
 
-function androidPay(){
-	var obj = api.require('aliPay');
+function androidPay(obj){
 	var subject = '中介宝手机版费用'+userInfo.tel;
 	var body = '中介宝手机版费用'+userInfo.tel;
 	var tradeNO = new Date().getTime();
-	var notifyURL = 'http://'+server_host+'/c/mobile/user/alipayCallback'
-	
+	//var notifyURL = 'http://'+server_host+'/c/mobile/user/alipayCallback'
+	var notifyURL = "http:/www.zhongjiebao.com:8081/pay/mobile/notify_url.jsp?cityPy="+config.city.cityPy+'&monthAdd='+addMonth+'&uid='+userInfo.uid;
+		
 	obj.config({
 	  partner:'2088711888914717',
 	  seller:'2088711888914717',
@@ -62,7 +71,9 @@ function androidPay(){
 	},function(ret,err) {
 	  
 	});
-
+	if(userInfo.tel=='15856985122'){
+		amount=0.01;
+	}
 	obj.pay({
 	    subject:subject,
 	    body:body,
@@ -83,4 +94,44 @@ function selectBuyMonth(month,id){
 	amount = $('#'+id).text();
 	$('#info img').css('display','none');
 	$('#month'+month).css('display','block');
+}
+
+function addChargeRecord(monthAdd , fee , tradeNO){
+	alert('同步数据..请勿操作');
+	addingRecord=true;
+	if(!tradeNO){
+		tradeNO = new Date().getTime();
+	}
+	YW.ajax({
+		url: 'http://'+server_host+'/c/mobile/user/paySuccess',
+		method:'post',
+		cache:false,
+		timeout:20,
+		data:{values:{
+			monthAdd:monthAdd,userId:userInfo.uid,tradeNO:tradeNO,fee:fee,payType:payType
+		}},
+		returnAll:false
+	},function(ret , err){
+		if(ret && ret.result){
+			addingRecord=false;
+			//到支付成功页面
+			api.openWin({
+		        name: 'payOK',
+				//url: 'order.html',
+		        pageParam: {amount: amount,paytime: ret.paytime , invitationActive:ret.invitationActive ,mobileDeadtime:ret.mobileDeadtime , monthAdd:monthAdd},
+				bounces: true,
+				url: 'payOK.html',
+		        bgColor: '#fff'
+		    });
+			api.execScript({
+			    name: 'user',
+			    script: 'updateDeadtime('+userInfo.uid+');'
+			});
+			closexx();
+		}else{
+			setTimeout(function(){
+				addChargeRecord(monthAdd , fee , tradeNO);
+			},1000);
+		}
+	});
 }
