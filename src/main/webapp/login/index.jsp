@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	request.setAttribute("useLocalResource", 0);
+	request.setAttribute("useLocalResource", 1);
 %>
 <!DOCTYPE html>
 <html>
@@ -422,7 +422,7 @@ $(document).on('click', '.act_menu a', function(event) {
             isFocus();
         }else if(ThiPliIndex==1){
             if($('#iframe').attr('src')==''){
-                $('#iframe').attr('src','iframe_reg.html?2&cityPy='+json.city_py+'&cityName='+cityNames+'&domain='+domains);
+                $('#iframe').attr('src','iframe_reg.jsp?2&cityPy='+json.city_py+'&cityName='+cityNames+'&domain='+domains);
             }
             $("#iframe").contents().find('#authCode').focus();
         }
