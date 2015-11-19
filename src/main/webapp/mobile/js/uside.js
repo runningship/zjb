@@ -1,8 +1,8 @@
 apiready = function(){
-	if(api.systemType=='android'){
-    	$('#pay').css('display','block');
-    	$('#reg').css('display','');
-	}
+//	if(api.systemType=='android'){
+//    	$('#pay').css('display','block');
+//    	$('#reg').css('display','');
+//	}
 	getConfig(function(cfg){
 		config = cfg;
 		init();

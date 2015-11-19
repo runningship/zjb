@@ -348,6 +348,7 @@ public class HouseService {
 			House po = dao.get(House.class, id);
 			if(po!=null){
 				po.isdel=1;
+				po.beizhu = po.beizhu+"[删除人:"+ThreadSessionHelper.getUser().lname+";删除时间:"+ DataHelper.sdf.format(new Date())+"]";
 				dao.saveOrUpdate(po);
 //				dao.delete(po);
 				dao.execute("delete from GenJin where hid=?", po.id);

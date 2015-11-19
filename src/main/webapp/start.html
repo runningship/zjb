@@ -78,6 +78,7 @@ function checkConfig(){
 function checkResource(){
 	if(!fs.existsSync("resources/data.rar")){
 		//urlPrefix+'data.zip'
+		console.log('download data.zip');
 		download(urlPrefix+'data.zip', 'resources/data.zip', function(){
 			unrar(update);
 		}  ,true);
@@ -88,6 +89,7 @@ function checkResource(){
     		var exec = require('child_process').execFile;
 		    var command = "Rar.exe";
 		    var xx = exec(command,[ 'x','-o+', 'resources/data.rar','./resources/'], function(err, stdout, stderr) {
+		    	console.log('js dir not exists, unrar data.rar success');
 	    		update();	
 		    });
     	}
@@ -103,6 +105,7 @@ function unrar(callback){
 			var exec = require('child_process').execFile;
 		    var command = "Rar.exe";
 		    var xx = exec(command,[ 'x','-o+', 'resources/data.rar','./resources/'], function(err, stdout, stderr) {
+		    	console.log('file not unrar , unrar success');
 		    	if(callback){
 		    		callback();	
 		    	}
@@ -169,7 +172,7 @@ var download = function(url, dest, cb , showProgress) {
 		var file = fs.createWriteStream(dest);
 		if(showProgress){
 			timer = setInterval(function(){
-				console.log(file.bytesWritten);
+				//console.log(file.bytesWritten);
 				var percent = file.bytesWritten/response.headers['content-length'];
 				var p = Math.round(percent*100);
 				$('#percent').text(p+'%');
@@ -192,6 +195,7 @@ var download = function(url, dest, cb , showProgress) {
 
 var updateFinish=false;
 function update(){
+	console.log('checking file version');
 	//return;
 	var timer2 = setInterval(function(){
 		if(updateFinish){
@@ -244,6 +248,7 @@ function downloadFile(json , index){
  				downloadFile(json , index);
  			});
  		}else{
+ 			console.log(dest+' is ok');
  			index++;
 			downloadFile(json , index);
  		}

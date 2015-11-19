@@ -81,9 +81,9 @@ apiready=function(){
 			$('#city').text(config.city.cityName);
 		}
 	});
-    if(api.systemType=='android'){
-    	$('#reg').css('display','block');
-	}
+//    if(api.systemType=='android'){
+//    	$('#reg').css('display','block');
+//	}
 };
 
 function openReg(){
