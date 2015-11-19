@@ -1,3 +1,5 @@
+<%@page import="net.sf.json.JSONObject"%>
+<%@page import="com.youwei.zjb.house.entity.Agent"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.youwei.zjb.user.entity.Department"%>
 <%@page import="java.util.Date"%>
@@ -46,6 +48,19 @@ if(h.fav!=null && h.fav.contains(favStr)){
 String tel =h.tel;
 if(StringUtils.isNotEmpty(tel)){
 	request.setAttribute("tel", tel);
+	JSONObject agents = new JSONObject();
+	for(String tmp : tel.split("/")){
+		if(StringUtils.isEmpty(tmp)){
+			continue;
+		}
+		Agent agent = dao.getUniqueByParams(Agent.class, new String[]{"tel" , "labelUid"}, new Object[]{tmp , ThreadSessionHelper.getUser().id});
+		if(agent!=null){
+			agents.put(tmp, "agent");
+		}else{
+			agents.put(tmp, "fangzhu");
+		}
+	}
+	request.setAttribute("agents", agents);
 }else{
 	request.setAttribute("tel", h.telImg);
 }
@@ -90,6 +105,8 @@ dao.saveOrUpdate(vl);
 </c:if>
 <style type="text/css">
 .click{cursor: pointer; color:#06C; text-decoration: underline;}
+.fangzhu{position:absolute;top:4px;right:4px;}
+.onselect{position:relative;}
 </style>
 <script type="text/javascript">
 var houseGJbox;
@@ -139,6 +156,7 @@ function sideBtnFun(){
                 houseId:$('#dimHouseId').text(),
                 chuzu:chuzu
             }
+            
             if(ThiIsFav=='1'){
               //表示当前点击按钮的作用是收藏房源,因此此时房源是未收藏状态
                 if(chuzu=='1'){
@@ -186,6 +204,33 @@ function sideBtnFun(){
         }
     });
 }
+
+function labelAgent(obj){
+	var tel = $(obj).attr("id");
+	var type = $(obj).attr("type");
+	if(type=='fangzhu'){
+		YW.ajax({
+	        type: 'get',
+	        url: '/c/user/labelAgent?tel='+tel+'&hid=${house.id}',
+	        mysuccess: function(data){
+	            $('#'+tel).attr('title' , '点击取消标注中介');
+	            $('#'+tel).attr('type' , 'agent');
+	            $('#'+tel).text('中介');
+	        }
+	    });	
+	}else{
+		YW.ajax({
+	        type: 'get',
+	        url: '/c/user/revokeLabelAgent?tel='+tel,
+	        mysuccess: function(data){
+	        	$('#'+tel).attr('title' , '点击标注为中介');
+	        	$('#'+tel).attr('type' , 'fangzhu');
+	            $('#'+tel).text('房主');
+	        }
+	    });
+	}
+}
+
 $(document).ready(function() {
 	if($('#sourceLink').attr('link')==''){
 		$('#sourceLinkTr').css('display','none');
@@ -218,19 +263,29 @@ $(document).ready(function() {
         }else{
           ThiBoxDiv.html('点此查看房主资料').addClass('onOpen');
           var TelBoxStr='';
+          var agents = JSON.parse('${agents}');
           $.each(telArr, function(index, val) {
-          var thiTel=telArr[index],thiLxr='';
-              if(lxrArr.length>index){
-                  thiLxr=lxrArr[index]
-              }else{
-                  thiLxr=lxrArr[0]
-              }
-              if(thiTel.indexOf('http')>-1){
-            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <img src="'+thiTel+'"/> </p>';
-              }else{
-            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click">'+ thiTel +'</span> '
-            	  	+'<span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span><span>中介</span></p>';  
-              }
+          		var thiTel=telArr[index],thiLxr='';
+              	if(lxrArr.length>index){
+                  thiLxr=lxrArr[index];
+	              }else{
+	                  thiLxr=lxrArr[0];
+	              }
+	              if(thiTel.indexOf('http')>-1){
+	            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <img src="'+thiTel+'"/> </p>';
+	              }else{
+	            	  var type=agents[thiTel],title="",text="";
+	            	  if(type=='agent'){
+	            		  title="点击取消标记为中介";
+	            		  text="中介";
+	            	  }else{
+	            		  title="点击标记为中介";
+	            		  text="房主";
+	            	  }
+	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click">'+ thiTel +'</span> '
+	            	  	+'<span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span>'
+	            	  	+'<span id="'+thiTel+'" onclick="labelAgent(this)" title="'+title+'" type="'+type+'" class="fangzhu click">'+text+'</span></p>';  
+	              }
               
           });
           TelBoxStr=TelBoxStr+'<i>^</i>'
