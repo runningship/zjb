@@ -28,6 +28,9 @@ for(File file : allFiles){
 	if(file.isDirectory()){
 		continue;
 	}
+	if(file.getPath().contains("\\ad\\")){
+		continue;
+	}
 	String fileName =file.getAbsolutePath().replace(rootPath, "").replace("\\","/"); 
 	jobj.put(fileName , file.length());
 	files.add(fileName);
