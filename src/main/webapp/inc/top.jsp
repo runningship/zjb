@@ -18,4 +18,5 @@ User user = (User)request.getSession().getAttribute("user");
   	}else{
   		request.setAttribute("useLocalResource", 0);
   	}
+  	request.setAttribute("useLocalResource", 1);
 %>

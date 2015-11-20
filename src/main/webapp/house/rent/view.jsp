@@ -1,22 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%
+	request.setAttribute("refPrefix", "file:///resources");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="description" content="中介宝房源软件系统">
 <meta name="keywords" content="房源软件,房源系统,中介宝">
-<link href="/style/css.css" rel="stylesheet">
-<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/style/style.css" rel="stylesheet">
-<link href="/style/css_ky.css" rel="stylesheet">
-<script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="/js/jquery.input.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.js" type="text/javascript"></script>
-<script type="text/javascript" src="/js/buildHtml.js"></script>
+<link href="${refPrefix}/style/css.css" rel="stylesheet">
+<link href="${refPrefix}/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="${refPrefix}/style/style.css" rel="stylesheet">
+<link href="${refPrefix}/style/css_ky.css" rel="stylesheet">
+<script src="${refPrefix}/js/jquery.js" type="text/javascript"></script>
+<script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.j.tool.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/buildHtml.js" type="text/javascript" ></script>
 <script type="text/javascript">
 var houseGJbox;
 chuzu=getParam('chuzu');

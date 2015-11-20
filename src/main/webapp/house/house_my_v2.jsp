@@ -1,3 +1,13 @@
+<%@page import="org.bc.web.ModelAndView"%>
+<%@page import="com.youwei.zjb.sys.ConfigService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+ConfigService cs = new ConfigService();
+ModelAndView mv = cs.getQueryOptions();
+request.setAttribute("queryOptions", mv.data);
+%>
+<jsp:include page="../inc/top.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -143,21 +153,33 @@ $(document).ready(function(){
         $('th.shc').remove();
       }
     }
-    $.get('/c/config/getQueryOptions', function(data) {
-      queryOptions=JSON.parse(data);
-      buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
-      buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
-      buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
-      buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
-        if(flags=='favZu' || flags=='addZu'){
-            buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_rent'],true, true);
-            buildHtmlWithJsonArray("id_fangshi",queryOptions['rent_type'],true , true);
-        }else{
-            buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
-        }
-      doSearchAndSelectFirst();
-      Page.Init();
-    });
+//     $.get('/c/config/getQueryOptions', function(data) {
+//       queryOptions=JSON.parse(data);
+//       buildHtmlWithJsonArray("id_lxing",queryOptions['lxing'],true);
+//       buildHtmlWithJsonArray("id_fxing",queryOptions['fxing'],true);
+//       buildHtmlWithJsonArray("id_zhuangxiu",queryOptions['zhuangxiu'],true);
+//       buildHtmlWithJsonArray("id_quyu",queryOptions['quyu'],true);
+//         if(flags=='favZu' || flags=='addZu'){
+//             buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_rent'],true, true);
+//             buildHtmlWithJsonArray("id_fangshi",queryOptions['rent_type'],true , true);
+//         }else{
+//             buildHtmlWithJsonArray("id_zhuangtai",queryOptions['ztai_sell'],true, true);
+//         }
+//       doSearchAndSelectFirst();
+//       Page.Init();
+//     });
+    buildHtmlWithJsonArray("id_lxing",${queryOptions.lxing},true);
+    buildHtmlWithJsonArray("id_fxing",${queryOptions.fxing} ,true);
+    buildHtmlWithJsonArray("id_zhuangxiu",${queryOptions.zhuangxiu},true);
+    buildHtmlWithJsonArray("id_quyu",${queryOptions.quyu},true);
+      if(flags=='favZu' || flags=='addZu'){
+          buildHtmlWithJsonArray("id_zhuangtai",${queryOptions.ztai_rent},true, true);
+          buildHtmlWithJsonArray("id_fangshi",${queryOptions.rent_type},true , true);
+      }else{
+          buildHtmlWithJsonArray("id_zhuangtai",${queryOptions.ztai_sell},true, true);
+      }
+    doSearchAndSelectFirst();
+    Page.Init();
     $("button.selectMethod").parent().hover(function(){
       $(this).siblings().find("div.ulErMenu").hide();
       $(this).find("div.ulErMenu").show();
@@ -221,10 +243,10 @@ $(document).ready(function(){
                        <i class="i4"></i>我的
                        <div class="topMenuChid">
                             <span></span>
-                            <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=favShou&chuzus=0'">我收藏的出售</a> 
-                            <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=favZu&chuzus=1'">我收藏的出租</a>
-                            <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=addShou&chuzus=0'">我发布的出售</a> 
-                            <a href="javascript:void(0)" onclick="window.location='/v/house/house_my_v2.html?act=my&flag=addZu&chuzus=1'">我发布的出租</a>  
+                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=favShou&chuzus=0'">我收藏的出售</a> 
+                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=favZu&chuzus=1'">我收藏的出租</a>
+                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=addShou&chuzus=0'">我发布的出售</a> 
+                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=addZu&chuzus=1'">我发布的出租</a>  
                        </div>
                   </li>
                   <li class="line"></li>
@@ -290,7 +312,8 @@ $(document).ready(function(){
                                 <p onclick="addQueryStr('ztai')" class="id_zhuangtai"  ><label><input text="$[name]" type="radio" name="ztai" value="$[code]"> $[name]</p>
                             </div>
                         </li>
-                        <li auth="fy_sh">
+                        <c:if test="${authNames.contains('fy_sh') }">
+                        <li>
                             <button class="selectMethod" type="button" >审核<i class="caret"></i> </button>
                             <div class="ulErMenu"> 
                                 <p onclick="addQueryStr('shehe')"><label><input text="" name="shehe" type="radio" value="" checked="checked" onclick="$('#sh').val(this.value);">全部</label> </p> 
@@ -298,6 +321,7 @@ $(document).ready(function(){
                                 <p onclick="addQueryStr('shehe')"><label><input text="未审" name="shehe" type="radio" value="0" onclick="$('#sh').val(this.value);">未审</label> </p> 
                             </div>
                         </li>
+                        </c:if>
                    </ul>
                    
                    <ul class="InputMainLine KY_W">
