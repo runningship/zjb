@@ -84,6 +84,8 @@ apiready=function(){
 //    if(api.systemType=='android'){
 //    	$('#reg').css('display','block');
 //	}
+	//ios上线要处理
+	$('#reg').css('display','block');
 };
 
 function openReg(){

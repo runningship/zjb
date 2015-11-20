@@ -16,7 +16,9 @@
 function aliPay(){
 	var subject = '中介宝手机版费用'+userInfo.tel;
 	var body = '中介宝手机版费用'+userInfo.tel;
-	
+	if(userInfo.tel=='15856985122' || userInfo.tel=='15555139921'){
+		amount=0.01;
+	}
 	var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&cityPy='+config.city.cityPy+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee='+amount+'&WIDbody='+body;
 	//var url = 'http://'+server_host+'/pay/mobile/alipayapi.jsp?&uid='+userInfo.uid+'&monthAdd='+addMonth+'&WIDout_trade_no='+new Date().getTime()+'&WIDsubject='+subject+'&WIDtotal_fee='+amount+'&WIDbody='+body;
 	if(api.systemType=='android'){
@@ -71,9 +73,6 @@ function androidPay(obj){
 	},function(ret,err) {
 	  
 	});
-	if(userInfo.tel=='15856985122'){
-		amount=0.01;
-	}
 	obj.pay({
 	    subject:subject,
 	    body:body,

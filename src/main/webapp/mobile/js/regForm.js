@@ -261,6 +261,7 @@ function addPics(){
     		        }
     		    }
     		}, function(ret){
+    			//blockAlert(JSON.stringify(ret));
     		    if(ret){
     		    	var ImgListBox = $('.ImgListBox');
     		        for(var i=ret.list.length-1;i>=0;i--){
@@ -287,6 +288,7 @@ function showBigImage(){
     	}
     	arr.push(tmp[i]);
     }
+    //blockAlert(imgArr);
     obj.openImages({
         imageUrls: arr,
         showList:false

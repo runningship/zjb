@@ -3,6 +3,9 @@ apiready = function(){
 //    	$('#pay').css('display','block');
 //    	$('#reg').css('display','');
 //	}
+	//ios上线时要处理
+	$('#pay').css('display','block');
+	$('#reg').css('display','');
 	getConfig(function(cfg){
 		config = cfg;
 		init();
@@ -27,7 +30,7 @@ function init(){
 			//$('#tel').html(config.user.tel);
 			//$('#tel').css('color','red');
 			$('#tel').text(config.user.tel);
-			if(config.user.debug==2 && api.systemType=='android'){
+			if(config.user.debug==2){
 				$('#settings').show();
 			}
 			if(config.user.pwd){
