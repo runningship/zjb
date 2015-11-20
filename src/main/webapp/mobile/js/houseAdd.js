@@ -47,8 +47,7 @@ function save(){
     			blockAlert('发布成功');
     			api.execScript({
     				name:'myHouse',
-    			    frameName: 'myHouseFrame',
-    			    script: 'switchType('+api.pageParam.isChuzu+')'
+    			    script: 'openContentFram('+api.pageParam.isChuzu+')'
     			});
     			closexx();
     		}else{

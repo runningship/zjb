@@ -107,6 +107,7 @@ dao.saveOrUpdate(vl);
 .click{cursor: pointer; color:#06C; text-decoration: underline;}
 .fangzhu{position:absolute;top:4px;right:4px;}
 .onselect{position:relative;}
+.red{color:red;}
 </style>
 <script type="text/javascript">
 var houseGJbox;
@@ -215,7 +216,7 @@ function labelAgent(obj){
 	        mysuccess: function(data){
 	            $('#'+tel).attr('title' , '点击取消标注中介');
 	            $('#'+tel).attr('type' , 'agent');
-	            $('#'+tel).text('中介');
+	            $('#'+tel).text('中介').css('color' , 'red');
 	        }
 	    });	
 	}else{
@@ -225,7 +226,7 @@ function labelAgent(obj){
 	        mysuccess: function(data){
 	        	$('#'+tel).attr('title' , '点击标注为中介');
 	        	$('#'+tel).attr('type' , 'fangzhu');
-	            $('#'+tel).text('房主');
+	            $('#'+tel).text('房主').css('color' , '#06C');
 	        }
 	    });
 	}
@@ -261,7 +262,7 @@ $(document).ready(function() {
           ThiBoxDiv.addClass('alert-danger');
           ThiBoxDiv.html('未共享，联系业务员');
         }else{
-          ThiBoxDiv.html('点此查看房主资料').addClass('onOpen');
+          
           var TelBoxStr='';
           var agents = JSON.parse('${agents}');
           $.each(telArr, function(index, val) {
@@ -275,20 +276,23 @@ $(document).ready(function() {
 	            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <img src="'+thiTel+'"/> </p>';
 	              }else{
 	            	  var type=agents[thiTel],title="",text="";
+	            	  var color="";
 	            	  if(type=='agent'){
 	            		  title="点击取消标记为中介";
 	            		  text="中介";
+	            		  color="red";
 	            	  }else{
 	            		  title="点击标记为中介";
 	            		  text="房主";
 	            	  }
 	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click">'+ thiTel +'</span> '
 	            	  	+'<span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span>'
-	            	  	+'<span id="'+thiTel+'" onclick="labelAgent(this)" title="'+title+'" type="'+type+'" class="fangzhu click">'+text+'</span></p>';  
+	            	  	+'<span id="'+thiTel+'" onclick="labelAgent(this)" title="'+title+'" type="'+type+'" class="fangzhu click '+color+' ">'+text+'</span></p>';  
 	              }
               
           });
-          TelBoxStr=TelBoxStr+'<i>^</i>'
+          TelBoxStr=TelBoxStr+'<i>^</i>';
+          ThiBoxDiv.html('点此查看房主资料').addClass('onOpen');
         };
         ThiBox.on('click', 'i,.onOpen', function(event) {
 //          alert(ThiBox.find('p').length)

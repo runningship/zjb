@@ -35,23 +35,29 @@ apiready = function(){
 	api.pageParam.searchMyPrivateHouse=true;
 	getConfig(function(cfg){
 		config = cfg;
-		api.openFrame({
-	        name: 'myHouseFrame',
-			url: 'house.html?'+new Date().getTime(),
-			reload:true,
-	        bounces: false,
-	        pageParam:api.pageParam,
-	        vScrollBarEnabled:true,
-	        rect: {
-	            x: 0,
-	            y: header.height()+statusBarHeight,
-	            w: 'auto',
-	            h: mainer.height()-statusBarHeight
-	        }
-	    });
+		openContentFram();
 	});
 };
 
+function openContentFram(isChuzu){
+	if(isChuzu){
+		api.pageParam.isChuzu=isChuzu;
+	}
+	api.openFrame({
+        name: 'myHouseFrame',
+		url: 'house.html?'+new Date().getTime(),
+		reload:true,
+        bounces: false,
+        pageParam:api.pageParam,
+        vScrollBarEnabled:true,
+        rect: {
+            x: 0,
+            y: header.height()+statusBarHeight,
+            w: 'auto',
+            h: mainer.height()-statusBarHeight
+        }
+    });
+}
 //更新出租出售按钮效果 
 function updateActionType(){
 	$('.btnGroup a').removeClass('active');
