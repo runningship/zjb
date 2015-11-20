@@ -10,6 +10,7 @@ function doLogin(){
 		alert('请输入登录密码');
 		return;
 	}
+	tel = tel.trim();
 	//请先选择城市
 	YW.ajax({
 		url:'http://'+server_host+'/c/mobile/user/login',

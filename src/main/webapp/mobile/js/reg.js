@@ -9,6 +9,7 @@ function getVerfiyCode(btn){
 		alert('请先填写有效手机号码');
 		return;
 	}
+	tel = tel.trim();
 	$(btn).addClass('gray');
 //	var set = $('.blue');
 //	if(!set){
@@ -71,6 +72,7 @@ function doReg(){
 		alert('请输入登录密码');
 		return;
 	}
+	tel = tel.trim();
 	//提示信息
 	YW.ajax({
 		url:'http://'+server_host+'/c/mobile/user/verifyCode',

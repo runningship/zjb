@@ -60,7 +60,7 @@
 		
 		String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
 		
-		String body = new String(request.getParameter("body").getBytes("utf8"),"UTF-8");
+		
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 		
 		//计算得出通知验证结果
@@ -77,6 +77,7 @@
 					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 					//如果有做过处理，不执行商户的业务程序
 				CommonDaoService	dao = SimpDaoTool.getGlobalCommonDaoService();
+				String body = new String(request.getParameter("body").getBytes("utf8"),"UTF-8");
 				Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , String.valueOf(out_trade_no));
 				
 				if(po==null){
