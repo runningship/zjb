@@ -16,6 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:include page="../inc/top.jsp" />
 <%
 CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 String id = request.getParameter("id");
@@ -49,6 +50,7 @@ String tel =h.tel;
 if(StringUtils.isNotEmpty(tel)){
 	request.setAttribute("tel", tel);
 	JSONObject agents = new JSONObject();
+	JSONObject labelCounts = new JSONObject();
 	for(String tmp : tel.split("/")){
 		if(StringUtils.isEmpty(tmp)){
 			continue;
@@ -59,8 +61,19 @@ if(StringUtils.isNotEmpty(tel)){
 		}else{
 			agents.put(tmp, "fangzhu");
 		}
+		long count = dao.countHql("select count(*) from Agent where tel=?", tmp);
+		labelCounts.put(tmp, count);
 	}
-	request.setAttribute("agents", agents);
+	if(agents.isEmpty()){
+		request.setAttribute("agents", "{}");
+	}else{
+		request.setAttribute("agents", agents);	
+	}
+	if(labelCounts.isEmpty()){
+		request.setAttribute("labelCounts", "{}");
+	}else{
+		request.setAttribute("labelCounts", labelCounts);	
+	}
 }else{
 	request.setAttribute("tel", h.telImg);
 }
@@ -70,8 +83,9 @@ vl.uid = ThreadSessionHelper.getUser().id;
 vl.isMobile = 0;
 vl.viewTime = new Date();
 dao.saveOrUpdate(vl);
+request.setAttribute("useLocalResource", 0);
 %>
-<jsp:include page="../inc/top.jsp" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,15 +119,33 @@ dao.saveOrUpdate(vl);
 </c:if>
 <style type="text/css">
 .click{cursor: pointer; color:#06C; text-decoration: underline;}
-.fangzhu{position:absolute;top:4px;right:4px;}
+.fangzhu{position:absolute;top:2px;right:4px;color: #FFF; background: rgba(0,0,0,0.1);border-radius: 1px;display: inline-block;padding: 0 3px;font-size: 12px;}
 .onselect{position:relative;}
 .red{color:red;}
+.black{color:#3c763d;}
+.noshow{display:none;}
+
+body .telTable td{ padding: 0px;}
+body .telTable .telBox{ border: 0; }
+body .telTable .telBox div{ border-radius: 0; }
+body .telTable .telBox div p{ padding-left: 5px; }
+body .telTable .telBox div p .lxr{ width: 50px;display: inline-block;text-align: right;}
+body .telTable .telBox .alert {text-align: left;}
+body .telTable .telBox .alert>i,
+body .telTable .telBox .onOpen{ text-align: center; }
+
+.fangzhu i{  display: inline-block; }
+.telBox i {  background: none;      font-size: 12px;    margin-right: 2px;}
+.telBox b{display: inline-block;    font-weight: normal;}
 </style>
 <script type="text/javascript">
 var houseGJbox;
 chuzu=getParam('chuzu');
 function replaceAlls(a){
   var aa=a;
+  if(aa==null || aa==undefined){
+	  return "";
+  }
   aa=aa.replace(/ /g, '');
   aa=aa.replace(/　/g, '');
   aa=aa.replace(/，/g, ',');
@@ -206,17 +238,39 @@ function sideBtnFun(){
     });
 }
 
+function telMouseover(tel,type){
+	if(type=='agent'){
+		return;
+	}
+	$('#'+tel).show();
+}
+function telMouseout(tel,type){
+	if(type=='agent'){
+		return;
+	}
+	$('#'+tel).hide();
+}
 function labelAgent(obj){
+	event.cancelBubble=true;
+	event.preventDefault();
 	var tel = $(obj).attr("id");
 	var type = $(obj).attr("type");
+	var num = $(obj).find('b').text();
+	if(num==null || num==undefined || num==''){
+		num = 0;
+	}else{
+		num = Number.parseInt(num);
+	}
+	
 	if(type=='fangzhu'){
 		YW.ajax({
 	        type: 'get',
 	        url: '/c/user/labelAgent?tel='+tel+'&hid=${house.id}',
 	        mysuccess: function(data){
-	            $('#'+tel).attr('title' , '点击取消标注中介');
+	            //$('#'+tel).attr('title' , '点击取消标注中介');
+	            num++;
 	            $('#'+tel).attr('type' , 'agent');
-	            $('#'+tel).text('中介').css('color' , 'red');
+	            $('#'+tel).html('<i class=" red" title="点击取消标注中介">中介</i><b title="已被'+num+'人标记为中介">'+num+'</b>');
 	        }
 	    });	
 	}else{
@@ -224,9 +278,14 @@ function labelAgent(obj){
 	        type: 'get',
 	        url: '/c/user/revokeLabelAgent?tel='+tel,
 	        mysuccess: function(data){
-	        	$('#'+tel).attr('title' , '点击标注为中介');
+	        	//$('#'+tel).attr('title' , '点击标注为中介');
+	        	num--;
+	        	var tmp='<b></b>';
+	        	if(num>0){
+	        		tmp='<b title="已被'+num+'人标记为中介">'+num+'</b>';
+	        	}
 	        	$('#'+tel).attr('type' , 'fangzhu');
-	            $('#'+tel).text('房主').css('color' , '#06C');
+	            $('#'+tel).html('<i class=" black" title="点击标记为中介">标注中介</i>'+tmp);
 	        }
 	    });
 	}
@@ -265,6 +324,8 @@ $(document).ready(function() {
           
           var TelBoxStr='';
           var agents = JSON.parse('${agents}');
+          var labelCounts=JSON.parse('${labelCounts}');
+          
           $.each(telArr, function(index, val) {
           		var thiTel=telArr[index],thiLxr='';
               	if(lxrArr.length>index){
@@ -272,22 +333,33 @@ $(document).ready(function() {
 	              }else{
 	                  thiLxr=lxrArr[0];
 	              }
+              	
 	              if(thiTel.indexOf('http')>-1){
 	            	  TelBoxStr=TelBoxStr+'<p class="onselect"><span class="lxr">'+ thiLxr +'</span> <img src="'+thiTel+'"/> </p>';
 	              }else{
 	            	  var type=agents[thiTel],title="",text="";
-	            	  var color="";
-	            	  if(type=='agent'){
-	            		  title="点击取消标记为中介";
-	            		  text="中介";
-	            		  color="red";
-	            	  }else{
-	            		  title="点击标记为中介";
-	            		  text="房主";
+	            	  var num=labelCounts[thiTel];
+	            	  var show="";
+	            	  var mouseover="";
+	            	  var mouseout="";
+	            	  var bHtml="<b></b>";
+	            	  if(num>0){
+	            		  bHtml='<b title="已被'+num+'人标记为中介">'+num+'</b>';
 	            	  }
-	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click">'+ thiTel +'</span> '
+	            	  if(type=='agent'){
+	            		  //title="点击取消标记为中介";
+	            		  text='<i class=" red"  title="点击取消标记为中介">中介</i>'+bHtml;
+	            		  //color="red";
+	            	  }else{
+	            		  //title="点击标记为中介";
+	            		  text='<i class=" black" title="点击标记为中介">标注中介</i>'+bHtml;
+	            		  //show="noshow";
+	            		  //mouseover = "telMouseover("+thiTel+",'"+type+"')";
+	            		  //mouseout = "telMouseout("+thiTel+",'"+type+"')";
+	            	  }
+	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="'+mouseover+'" onmouseout="'+mouseout+'" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click">'+ thiTel +'</span> '
 	            	  	+'<span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span>'
-	            	  	+'<span id="'+thiTel+'" onclick="labelAgent(this)" title="'+title+'" type="'+type+'" class="fangzhu click '+color+' ">'+text+'</span></p>';  
+	            	  	+'<span id="'+thiTel+'" onclick="labelAgent(this)" title="'+title+'" type="'+type+'" class="fangzhu click '+show+' ">'+text+'</span></p>';  
 	              }
               
           });
@@ -514,7 +586,7 @@ function searchTel(span){
           <tr>
             <td colspan="2" class="Zuo">
             
-              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao telTable">
                 <tr>
                   <td>
                     <table width="100%">
