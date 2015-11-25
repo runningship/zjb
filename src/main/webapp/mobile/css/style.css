@@ -90,7 +90,9 @@ i.violet{ color: #DC38AB; }
 i.orange{ color: #FF6100; }
 i.reg{ color: #FF0000; }
 
-.bd5{ border: 5pt solid #EFEFEF; border-left: 0; border-right: 0; padding: 5pt 0; }
+.bd5{ border: 5pt solid #EFEFEF; border-left: 0; border-right: 0; border-top: 0; padding: 5pt 0; }
+.bt5{ border-top: 6pt solid #EFEFEF; }
+.pd5pt{ padding: 5pt; }
 /*
 form
  */
@@ -663,6 +665,66 @@ box-orient: horizontal; border-bottom: 1px solid #999;}
 .expList{ display: block;  }
 .expList li{ display: inline-block; float: left; width: 36pt; height: 36pt; line-height: 36pt; border: 1px solid #F0 0; background: #F00; overflow: hidden; margin: 2pt 0 0 2pt; }
 .expList li img{ width: 100%; height: 100%; }
+
+
+
+
+/* 
+ pic
+ */
+.subList{ display: -webkit-box;-webkit-box-orient:horizontal;}
+.subList li{ display: block; -webkit-box-flex: 1;}
+
+.subBtn{ display: block; margin: 0 auto; background: #18B4ED; color: #FFF; text-align: center; padding: 20pt 0; font-size: 16pt; border-radius: 2pt; }
+.subBtn i.iconfont{ font-size: 20pt; }
+
+/* ImgListBox */
+.ImgListBoxs *{-webkit-transition:all 0s;}
+.ImgListBoxs{ display: block;  }
+.ImgListBoxs:after {content: "\0020";display: block;clear: both;}
+.ImgListBoxs li{ display: block; float: left; width: 50%; position: relative; vertical-align:middle; }
+.ImgListBoxs.L3 li{ width: 33.3%; }
+.ImgListBoxs.L4 li{ width: 25%;  }
+.ImgListBoxs li a{ display: block; width: 100%; height: 100%; border: 1px solid #FFF; border-radius:0pt; text-align: center; vertical-align: top; }
+.ImgListBoxs li a img{ display: block; border: 0; width: 100%; height: auto; }
+
+.ImgListBoxs li a.jia{ position: absolute; border: 0; }
+.ImgListBoxs li a.jia i{ font-size: 40pt; color: #999;}
+.ImgListBoxs li a.jia::after,
+.ImgListBoxs li a.jia::before{content: ''; box-sizing: border-box; position: absolute; width: 20pt; height: 20pt; border: 3pt solid #CCC; }
+.ImgListBoxs li a.jia::after{ left: 0; bottom: 0; border-top: 0pt; border-right: 0pt;}
+.ImgListBoxs li a.jia::before{ top: 0; right: 0; border-left: 0pt; border-bottom: 0pt; }
+.ImgListBoxs li a.jia span{ position: absolute; width: 20pt; height: 20pt; border:3pt solid #CCC; }
+
+.ImgListBoxs li a.jia span.l{ left: 0; top: 0; border-bottom: 0pt; border-right: 0pt;}
+.ImgListBoxs li a.jia span.r{ bottom: 0; right: 0; border-left: 0pt; border-top: 0pt;}
+
+/* pic up */
+.pic.up .wrap .h3{ font-size: 12pt; padding: 5pt; }
+.pic.up .wrap { padding: 1pt 0 6pt; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
