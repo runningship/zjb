@@ -76,8 +76,14 @@
 				//判断该笔订单是否在商户网站中已经做过处理
 					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 					//如果有做过处理，不执行商户的业务程序
+				String body="";
+				try{
+					body = new String(request.getParameter("body").getBytes("utf8"),"UTF-8");
+				}catch(Exception ex){
+
+				}
+				
 				CommonDaoService	dao = SimpDaoTool.getGlobalCommonDaoService();
-				String body = new String(request.getParameter("body").getBytes("utf8"),"UTF-8");
 				Charge po = dao.getUniqueByKeyValue(Charge.class,"tradeNO" , String.valueOf(out_trade_no));
 				
 				if(po==null){
@@ -141,7 +147,7 @@
 						out.println("success");
 					}catch(Exception ex){
 						LogUtil.log(Level.WARN, "web charge fail", ex);
-						out.println("success");
+						out.println("fail");
 					}
 				}else{
 					out.println("success");
