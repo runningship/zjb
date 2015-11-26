@@ -218,7 +218,7 @@ public class PiazzaService {
 		notice.reads = 0;
 		notice.replys = 0;
 		dao.saveOrUpdate(notice);
-		List<Map> uids = dao.listAsMap("select id as uid from User");
+		List<Map> uids = dao.listAsMap("select id as uid from User where lname is not null and llock=1");
 		for(Map map : uids){
 			NoticeReceiver nr = new NoticeReceiver();
 			nr.noticeId = notice.id;

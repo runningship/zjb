@@ -83,7 +83,7 @@ html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体;}
 
 .oaTit{ height:50px; width:50%;}
 
-.oaTitBgInfo{ background-color:#1c3748; }
+.oaTitBgInfo{/*  background-color:#1c3748;  */}
 
 .oaTitBgCoco{ background-color:#07b5be;}
 

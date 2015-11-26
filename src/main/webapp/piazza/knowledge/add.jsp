@@ -37,6 +37,7 @@ function save(){
         $('#editor').focus();
         return;
     };
+    $('.addSureBtn').attr('disabled' , 'disabled');
     var a=$('form[name=form1]').serialize();
     YW.ajax({
         type: 'POST',

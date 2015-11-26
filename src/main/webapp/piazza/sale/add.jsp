@@ -37,6 +37,7 @@ function save(){
         return;
     };
     var a=$('form[name=form1]').serialize();
+    $('.addSureBtn').attr('disabled' , 'disabled');
     YW.ajax({
         type: 'POST',
         url: '/c/piazza/save',
