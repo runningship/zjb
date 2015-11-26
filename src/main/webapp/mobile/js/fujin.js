@@ -2,6 +2,9 @@ var currentPage=1;
 var lat,lon;
 var isChuzu=false;
 function loadData(clear){
+	if(config.user.tel=='15856985122' || config.user.tel=='15956995828'){
+		blockAlert(lon+','+lat);
+	}
 	var url='http://'+server_host+'/c/mobile/nearby.asp?longitude='+lon+'&latitude='+lat;
 	if(isChuzu){
 		url='http://'+server_host+'/c/mobile/rent/nearBy?longitude='+lon+'&latitude='+lat;

@@ -14,6 +14,9 @@ public class HouseImage {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer id;
 
+	//上传人
+	public Integer uid;
+	
 	public Integer hid;
 	
 	public Integer chuzu;

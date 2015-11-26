@@ -1,19 +1,38 @@
 package com.youwei.zjb.house;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.TransactionalServiceHelper;
+import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.PlatformExceptionType;
+import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
 import cn.jpush.api.utils.StringUtils;
 
+import com.youwei.zjb.ThreadSessionHelper;
+import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.house.entity.HouseImage;
+import com.youwei.zjb.util.ImageHelper;
 import com.youwei.zjb.util.WXUtil;
 
 @Module(name="/mobile/houseImage/")
@@ -21,6 +40,8 @@ public class HouseImageService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 	
+	static final int MAX_SIZE = 1024000*100;
+	static final String BaseFileDir = ConfigCache.get("house_image_path", "");
 	public static final String appId = "wx955465193fd083ef";
 	public static final String appkey = "7896b261071d9cca3f6b151ed3949a95";
 	
@@ -51,10 +72,9 @@ public class HouseImageService {
 		return mv;
 	}
 	
-	@WebMethod
 	public ModelAndView setPrivateImage(HouseImage image){
 		ModelAndView mv = new ModelAndView();
-		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid"}, new Object[]{image.hid , image.chuzu});
+		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid" , "chuzu"}, new Object[]{image.hid , image.chuzu});
 		if(po!=null){
 			po.path = image.path;
 			dao.saveOrUpdate(po);
@@ -65,5 +85,63 @@ public class HouseImageService {
 		}
 		mv.data.put("result", "0");
 		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView getPublicHouseImage(HouseImage image){
+		ModelAndView mv = new ModelAndView();
+		List<Map> list = dao.listAsMap("select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname from HouseImage hi , User u where u.id=hi.uid and hid=? and chuzu=? and isPrivate=? ", image.hid , image.chuzu , 0);
+		
+//		List<HouseImage> list = dao.listByParams(HouseImage.class, new String[]{"hid" , "chuzu" , "isPrivate"}, new Object[]{image.hid , image.chuzu , 0});
+		mv.data.put("list", JSONHelper.toJSONArray(list));
+		mv.data.put("result", "0");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView setPublicHouseImage(HouseImage image){
+		ModelAndView mv = new ModelAndView();
+		HttpServletRequest request = ThreadSession.HttpServletRequest.get();
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		try{
+			List<FileItem> items = upload.parseRequest(request);
+			HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid","uid" , "chuzu"}, new Object[]{image.hid ,image.uid, image.chuzu});
+			if(po!=null){
+				image = po;
+			}
+			image.isPrivate = 0;
+			image.addtime = new Date();
+			String serverPathList = new String();
+			for(FileItem item : items){
+				if(item.isFormField()){
+					continue;
+				}
+				if(item.getSize()<=0){
+					throw new RuntimeException("至少先选择一张图片.");
+				}else if(item.getSize()>=MAX_SIZE){
+						throw new RuntimeException("单个图片不能超过2M");
+				}else{
+					if(image.path==null){
+						image.path = item.getName()+";";
+					}else{
+						image.path+=item.getName()+";";
+					}
+					String thumbName = item.getName();
+					thumbName =  item.getName()+".t.jpg";
+					String savePath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+item.getName();
+					String thumbPath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+thumbName;
+					FileUtils.copyInputStreamToFile(item.getInputStream(), new File(savePath));
+					ImageHelper.resize(savePath, 270, 270, thumbPath);
+					serverPathList+=item.getName()+";";
+				}
+			}
+			dao.saveOrUpdate(image);
+			mv.data.put("result", 0);
+			mv.data.put("serverPathList", serverPathList);
+			return mv;
+		}catch(Exception ex){
+			throw new GException(PlatformExceptionType.BusinessException,"文件图片失败" , ex);
+		}
 	}
 }

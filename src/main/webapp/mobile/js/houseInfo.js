@@ -45,6 +45,7 @@ function loadData(){
 						$('#area').text(ret.area+'  '+fdhao);
 						$('#footer').show();
 						$('#favBtn').show();
+						//$('#image').show();
 						var tels = ret.tel.split(',');
 					    for(var i=0;i<tels.length ;i++){
 							var xx = JSON.parse('{}');
@@ -257,3 +258,12 @@ function loadData(){
 		        }
 		    );
 	}
+
+function openImages(){
+	api.openWin({
+	    name: 'picGenji',
+	    //url: 'http://toddmotto.com/labs/echo/',
+	    url: 'pic_up.html',
+	    pageParam: api.pageParam
+	});
+}
