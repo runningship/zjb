@@ -54,7 +54,7 @@ function checkConfig(){
 	var json = loadConfigAsJSON();
     addJSFlags();
     addNodeMain();
-    addGPUFlag();
+    //addGPUFlag();
     if(gui.App.manifest['--use_uuid_lic']){
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市

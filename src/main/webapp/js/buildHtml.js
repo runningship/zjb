@@ -106,10 +106,10 @@ window.infoAlert = function(data){
 }
 YW={
     options:{
-        beforeSend: function(XMLHttpRequest){
+        beforeSend: function(xlr){
             // $(window.parent.document.body).append('<img src="/style/images/ajax-loading.gif" style="display:block;position:absolute;margin-left:auto;margin-right:auto;" id="loading" />');
         },
-        complete: function(XMLHttpRequest, textStatus){
+        complete: function(xlr, textStatus){
             // $('#loading').remove();
         },
         error: function(data){
@@ -119,6 +119,7 @@ YW={
         	}
         },
         success:function(data , mysuccess){
+        	clearTimeout(YW.out);
         	if(data.responseText!=undefined && data.responseText.indexOf('relogin')!=-1){
                 eval(data);
         		return;
@@ -203,8 +204,15 @@ YW={
             };
         }
         
-        options.timeout=10000,
-        $.ajax(options);
+        options.timeout=10000;
+        YW.out = setTimeout(function(){
+    		if(YW.xlr.readyState<2){
+    			YW.xlr.abort();
+    			console.log('request aborted');
+    			alert('网络超时,请重试...');
+    		}
+    	},3000);
+        YW.xlr = $.ajax(options);
     }
 }
 
@@ -387,6 +395,14 @@ function ChangeW(){
 window.onresize = function(){
   ChangeW();
 }
+
+$(function(){
+	try{
+		process.on("uncaughtException", function(e) { 
+			//console.log(e); 
+		});
+	}catch(e){	}
+});
 
 
 

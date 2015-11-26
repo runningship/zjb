@@ -5,16 +5,8 @@
 <%@page import="org.bc.sdak.CommonDaoService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="inc/resource.jsp"></jsp:include>
 <%
-String agent = request.getHeader("User-Agent");
-if(agent.contains("Chrome/35.0.1916.157") || agent.contains("Chrome/30.0.1599.66")){
-	request.setAttribute("nwjs", true);
-	request.setAttribute("useLocalResource", 1);
-}else{
-	request.setAttribute("useLocalResource", 0);
-}
-
-
 //Enumeration<String> names = request.getHeaderNames();
 //CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
 Calendar now = Calendar.getInstance();
@@ -142,7 +134,7 @@ var iframeIndex=100;
 function setiframe(id,src){
     iframeIndex+=1;
 var iframeBox=$('#iframeBox'),
-    iframeDom='<iframe src="'+src+'" id="iframe_'+id+'" name="iframe_'+id+'" class="iframe" width="100%" height="100%" marginheight="0" frameborder="0" style="overflow:auto;"></iframe>';
+    iframeDom='<iframe onload="alert(1);" src="'+src+'" id="iframe_'+id+'" name="iframe_'+id+'" class="iframe" width="100%" height="100%" marginheight="0" frameborder="0" style="overflow:auto;"></iframe>';
     //设置绝对定位元素的宽对等于父元素的宽度
     
     iframeBox.find('.iframe').hide();
