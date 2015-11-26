@@ -61,6 +61,7 @@
 	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
 	<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 	<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/js/buildHtml.js"></script>
 	<script type="text/javascript">
 var annis;
         function anni(){

@@ -122,7 +122,7 @@ request.setAttribute("useLocalResource", 0);
 .fangzhu{position:absolute;top:2px;right:4px;color: #FFF; background: rgba(0,0,0,0.1);border-radius: 1px;display: inline-block;padding: 0 3px;font-size: 12px;}
 .onselect{position:relative;}
 .red{color:red;}
-.black{color:#3c763d;}
+.black{color:#3c763d;font-size:12px;}
 .noshow{display:none;}
 
 body .telTable td{ padding: 0px;}
@@ -134,8 +134,9 @@ body .telTable .telBox .alert {text-align: left;}
 body .telTable .telBox .alert>i,
 body .telTable .telBox .onOpen{ text-align: center; }
 
-.fangzhu i{  display: inline-block; }
-.telBox i {  background: none;      font-size: 12px;    margin-right: 2px;}
+.telBox i { height:15px;font-size:14px; }
+.fangzhu i{  font-size: 12px; display: inline-block;background: none; margin-right: 2px;}
+
 .telBox b{display: inline-block;    font-weight: normal;}
 </style>
 <script type="text/javascript">
@@ -285,7 +286,7 @@ function labelAgent(obj){
 	        		tmp='<b title="已被'+num+'人标记为中介">'+num+'</b>';
 	        	}
 	        	$('#'+tel).attr('type' , 'fangzhu');
-	            $('#'+tel).html('<i class=" black" title="点击标记为中介">标注中介</i>'+tmp);
+	            $('#'+tel).html('<i class=" black" title="点击标记为中介">标注为中介</i>'+tmp);
 	        }
 	    });
 	}
@@ -323,8 +324,14 @@ $(document).ready(function() {
         }else{
           
           var TelBoxStr='';
-          var agents = JSON.parse('${agents}');
-          var labelCounts=JSON.parse('${labelCounts}');
+          var agents = JSON.parse('{}');
+          var labelCounts=JSON.parse('{}');
+          try{
+            agents = JSON.parse('${agents}');
+            labelCounts=JSON.parse('${labelCounts}');
+          }catch(e){
+            
+          }
           
           $.each(telArr, function(index, val) {
           		var thiTel=telArr[index],thiLxr='';
@@ -352,7 +359,7 @@ $(document).ready(function() {
 	            		  //color="red";
 	            	  }else{
 	            		  //title="点击标记为中介";
-	            		  text='<i class=" black" title="点击标记为中介">标注中介</i>'+bHtml;
+	            		  text='<i class=" black" title="点击标记为中介">标注为中介</i>'+bHtml;
 	            		  //show="noshow";
 	            		  //mouseover = "telMouseover("+thiTel+",'"+type+"')";
 	            		  //mouseout = "telMouseout("+thiTel+",'"+type+"')";
@@ -578,7 +585,7 @@ function searchTel(span){
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zhuyao">
                 <tr>
                   <td class="biaoti">其它：</td>
-                  <td class="neirong TextColor1" style="padding-right:10px;">${house.beizhu} &nbsp;</td>
+                  <td style="word-break: break-all; word-wrap:break-word;" class="neirong TextColor1" style="padding-right:10px;">${house.beizhu} &nbsp;</td>
                 </tr>
               </table>
             </td>
