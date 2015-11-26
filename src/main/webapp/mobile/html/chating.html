@@ -111,13 +111,13 @@
     <div class="footer">
         <div class="chatBox" >
             <div class="l"><a href="#" class="btns btnExp"><i class="iconfont">&#xe65c;</i></a></div>
-            <div class="c content" id="content" contenteditable="true"></div>
+            <div class="c content" id="content" contenteditable="true"  beforeinput="keyup()" onclick="scrollTo();"></div>
             <div class="r"><a href="#" class="btns submit" id="submit">发送</a></div>
         </div>
         <div class="chatExpBox">
             <ul class="expList clearfix">
-                <li><img src="../images/3.jpg" alt=""></li>
-                <li><img src="../images/4.png" alt=""></li>
+                <li><img src="../images/3.jpg" alt="" /></li>
+                <li><img src="../images/4.png" alt="" /></li>
             </ul>
         </div>
     </div>
@@ -129,8 +129,13 @@ function scrollTo(a,t,callback){
     if(!t){t=300}
     var a=a,
     t=t;
-    scrollTops=a.children(0).innerHeight() - a.innerHeight();
-    a.animate({scrollTop: scrollTops},t,callback);
+    setTimeout(function(){
+    	scrollTops=a.children(0).innerHeight() - a.innerHeight();
+    	//alert(scrollTops);
+    	console.log(scrollTops);
+    	a.animate({scrollTop: scrollTops},t,callback);	
+    },1000);
+    
 }
 /* Hv action */
 function setHvData(name,value){
@@ -175,13 +180,13 @@ function ifContFocus(){
     var C=$('.content'),
     R=$('.submit');
     C.on('input',function(){
-        if($(this).text()){
+        if($(this).html()){
             R.addClass('focus');
         }else{
             R.removeClass('focus');
         }
     })
-    if(C.text()){
+    if(C.html()){
         R.addClass('focus');
     }else{
         R.removeClass('focus');
@@ -204,6 +209,7 @@ myFace='龙',
 youName='',
 youFace='';
 function setChatList(v){
+	v = v.replace(/div/g ,'span');
 var str='<li class="M">'
     +'<div class="B">'
     +'<strong>'
@@ -219,19 +225,20 @@ var str='<li class="M">'
     +'</span>'
     +'</div>'
     +'</li>';
+    alert(str);
     return str;
 }
 $(document).on('click touch', '.submit', function(event) {
     var Thi=$(this),
     content=$('.content'),
-    contentVal=content.text();
+    contentVal=content.html();
     if(contentVal){
         //layer.msg(content.val());
         var EnCodeVal=contentVal//HtmlEncode(contentVal);
         alert(EnCodeVal)
         $('.mainer').children(0).append(setChatList(EnCodeVal))
 
-        content.text('');
+        content.html('');
         scrollTo();
         contentReVal();
     }
@@ -274,6 +281,23 @@ function insertHtmlAtCaret(html) {
         }
     }
     }
+}
+
+function keyup(){
+	if(event.keyCode==8){
+		onDeleteChar();
+	}
+}
+function onDeleteChar(){
+	var nodes = window.getSelection().baseNode.childNodes;
+	if(nodes.length==0){
+		return;
+	}
+	node = nodes[nodes.length-1];
+	if(node.nodeName=='#text'){
+		return;
+	}
+	$(node).remove();
 }
 $(document).on('click touch', function(event) {
     $('.chatExpBox').removeClass('show');
