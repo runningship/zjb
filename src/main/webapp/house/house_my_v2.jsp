@@ -224,34 +224,7 @@ $(document).ready(function(){
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;">
-            <div id="menuTop" style="display:inline-block; width:100%;">
-              <ul class="MainRightTop KY_W" onselectstart="return false;">
-                  <li onclick="window.location='/house/house_v2.jsp'"><i class="i1"></i>出售</li>
-                  <li class="line"></li>
-                  <li onclick="window.location='/house/house_rent_v2.jsp'"><i class="i2"></i>出租</li>
-                  <li class="line"></li>
-                  <li class="MenuBox" style="position:relative;">
-                       <i class="i3"></i>登记
-                       <div class="topMenuChid">
-                            <span></span>
-                            <a href="javascript:void(0)" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">出售登记</a> 
-                            <a href="javascript:void(0)" onclick="openAddHouse('/v/house/house_rent_add.html?act=add&chuzu=1')">出租登记</a> 
-                       </div>
-                  </li>
-                  <li class="line"></li>
-                  <li class="MenuBox slect" style="position:relative;">
-                       <i class="i4"></i>我的
-                       <div class="topMenuChid">
-                            <span></span>
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=favShou&chuzus=0'">我收藏的出售</a> 
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=favZu&chuzus=1'">我收藏的出租</a>
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=addShou&chuzus=0'">我发布的出售</a> 
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=addZu&chuzus=1'">我发布的出租</a>  
-                       </div>
-                  </li>
-                  <li class="line"></li>
-              </ul>
-              </div>
+              <jsp:include page="menuTop.jsp" />
               <div class="MainRightInputMain KY_W" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
                    <ul class="InputMainLine KY_W" style=" margin-bottom:8px;">

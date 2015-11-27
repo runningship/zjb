@@ -12,43 +12,23 @@
 <title>中介宝 5.0</title>
 <meta name="description" content="中介宝房源软件系统">
 <meta name="keywords" content="房源软件,房源系统,中介宝">
-<c:if test="${useLocalResource!=1}">
-<link href="/style/css.css" rel="stylesheet">
-<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/style/style.css" rel="stylesheet">
-<script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="/js/jquery.timers.js" type="text/javascript"></script>
-<script src="/js/jquery.input.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.js" type="text/javascript"></script>
-<script src="/js/jquery.SuperSlide.2.1.1.source.js" type="text/javascript"></script>
-<link href="/js/Ladda/ladda-themeless.min.css" rel="stylesheet">
-<script src="/js/Ladda/spin.min.js" type="text/javascript" async="async"></script>
-<script src="/js/Ladda/ladda.js" type="text/javascript" async="async"></script>
-<script type="text/javascript" src="/js/buildHtml.js"></script>
-</c:if>
-<c:if test="${useLocalResource==1}">
-<link href="file:///resources/style/css.css" rel="stylesheet">
-<link href="file:///resources/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="file:///resources/style/style.css" rel="stylesheet">
-<script src="file:///resources/js/jquery.js" type="text/javascript"></script>
-<script src="file:///resources/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<script src="file:///resources/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="file:///resources/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.timers.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.input.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.j.tool.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.SuperSlide.2.1.1.source.js" type="text/javascript"></script>
-<link href="file:///resources/js/Ladda/ladda-themeless.min.css" rel="stylesheet">
-<script src="file:///resources/js/Ladda/spin.min.js" type="text/javascript" async="async"></script>
-<script src="file:///resources/js/Ladda/ladda.js" type="text/javascript" async="async"></script>
-<script type="text/javascript" src="file:///resources/js/buildHtml.js"></script>
-</c:if>
-<script type="text/javascript" src="/js/sysinfo.js"></script>
+<link href="${refPrefix}/style/css.css" rel="stylesheet">
+<link href="${refPrefix}/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="${refPrefix}/style/style.css" rel="stylesheet">
+<link href="${refPrefix}/js/Ladda/ladda-themeless.min.css" rel="stylesheet">
+<script src="${refPrefix}/js/jquery.js" type="text/javascript"></script>
+<script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.timers.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.j.tool.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.SuperSlide.2.1.1.source.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/Ladda/spin.min.js" type="text/javascript" ></script>
+<script src="${refPrefix}/js/Ladda/ladda.js" type="text/javascript" ></script>
+<script src="${refPrefix}/js/buildHtml.js" type="text/javascript" ></script>
+<script src="${refPrefix}/js/sysinfo.js" type="text/javascript" ></script>
 <script type="text/javascript">
 try{
     win.restore();

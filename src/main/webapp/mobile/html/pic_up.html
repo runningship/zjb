@@ -13,8 +13,13 @@
 <script src="../js/common.js" type="text/javascript"></script>
 <script type="text/javascript" src="../js/buildHtml.js"></script>
 <script type="text/javascript" src="../js/echo.js"></script>
+<!-- <script src="../js/jquery.lazyload.js" type="text/javascript"></script> -->
 <style type="text/css">
-.mainer img{background:#FFF url(../images/ajax.gif) no-repeat center center}
+/*.mainer img{background:#FFF url(../images/ajax.gif) no-repeat center center}*/
+.mainer *{-webkit-transition:all 0s;}
+body .ImgListBoxs li{ height: 250px; -webkit-transition:all 0s;}
+body .ImgListBoxs a{ -webkit-transition:all 0s;}
+body .ImgListBoxs img{ -webkit-transition:all 0s;}
 </style>
 <script type="text/javascript">
 function ImgAutoBox(img){
@@ -72,9 +77,9 @@ function ImgListBox(a){
     });
 
 }
-$(document).ready(function() {
-    ImgListBox($('.ImgListBoxs'));
-});
+// $(document).ready(function() {
+//     ImgListBox($('.ImgListBoxs'));
+// });
 var imgList=[];
 var myItemIndex=-1;
 var myImgCount=0;
@@ -90,7 +95,6 @@ function getPics(){
 			for(var i=0;i<imgList.length;i++){
 				appendItem(imgList[i], tempHtml , true);
 			}
-			
 
 		    echo.init({
 		      offset: 100,
@@ -100,6 +104,7 @@ function getPics(){
 		        //console.log(element, 'has been', op + 'ed')
 		      }
 		    });
+			ImgListBox($('.ImgListBoxs'));
 		    
 		}else{
 			blockAlert('加载图片失败');
@@ -139,7 +144,7 @@ function appendItem(imgObj , tempHtml ,lazy){
 				offset = myImgCount+i;
 			}
 			if(lazy){
-				tmp.find('ul').append('<li onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/blank.gif" data-echo="http://192.168.1.222/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
+				tmp.find('ul').append('<li onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/loading.jpg" data-echo="http://192.168.1.222/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}else{
 				tmp.find('ul').append('<li onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="http://192.168.1.222/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}
@@ -231,7 +236,7 @@ apiready=function(){
 	getConfig(function(cfg){
 		config = cfg;
 		getPics();
-		
+		//$("img").lazyload();
 	});
 }
 function uploadImages(paths){
@@ -277,6 +282,8 @@ function showBigImage(li , picUid , activeIndex){
         showList:false
     });
 }
+
+   
 </script>
 </head>
 <body>

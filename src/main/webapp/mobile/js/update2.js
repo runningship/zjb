@@ -143,8 +143,8 @@ api.download({
 
 //打开欢迎页面
 function openIndexFrame(){
-	window.location='file://'+fsPrefix+'/html/welcome.html';
-	//window.location='http://192.168.1.222:8081/mobile/html/welcome.html';
+	//window.location='file://'+fsPrefix+'/html/welcome.html';
+	window.location='http://192.168.1.222:8081/mobile/html/welcome.html';
 	//window.location='file://'+fsPrefix+'/html/house.html';
 }
 

@@ -263,7 +263,7 @@ function openImages(){
 	api.openWin({
 	    name: 'picGenji',
 	    //url: 'http://toddmotto.com/labs/echo/',
-	    url: 'pic_up.html',
+	    url: 'pic_up.html?'+new Date().getTime(),
 	    pageParam: api.pageParam
 	});
 }

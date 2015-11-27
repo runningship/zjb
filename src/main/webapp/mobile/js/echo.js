@@ -36,8 +36,8 @@
     if(!useDebounce && !!poll) {
       return;
     }
+    //alert('scroll');
     clearTimeout(poll);
-    alert('scroll');
     poll = setTimeout(function(){
       echo.render();
       poll = null;
@@ -62,13 +62,13 @@
     useDebounce = opts.debounce !== false;
     unload = !!opts.unload;
     callback = opts.callback || callback;
-    root = $('#mainer');
     echo.render();
+    root = $('#mainer')[0];
     if (document.addEventListener) {
-    	root.on('scroll' ,debounceOrThrottle);
-    	root.on('load' ,debounceOrThrottle);
-    	//$('#mainer').addEventListener('scroll', debounceOrThrottle, false);
-    	//$('#mainer').document.addEventListener('load', debounceOrThrottle, false);
+    	// root.on('scroll' ,debounceOrThrottle);
+    	// root.on('load' ,debounceOrThrottle);
+     root.addEventListener('scroll', debounceOrThrottle, false);
+     root.addEventListener('load', debounceOrThrottle, false);
     } else {
       root.attachEvent('onscroll', debounceOrThrottle);
       root.attachEvent('onload', debounceOrThrottle);
@@ -85,7 +85,6 @@
       b: (root.innerHeight || document.documentElement.clientHeight) + offset.b,
       r: (root.innerWidth || document.documentElement.clientWidth) + offset.r
     };
-    blockAlert(JSON.stringify(view));
     for (var i = 0; i < length; i++) {
       elem = nodes[i];
       if (inView(elem, view)) {
@@ -107,7 +106,8 @@
         }
 
         callback(elem, 'load');
-      } else if (unload && !!(src = elem.getAttribute('data-echo-placeholder'))) {
+      }
+      else if (unload && !!(src = elem.getAttribute('data-echo-placeholder'))) {
 
         if (elem.getAttribute('data-echo-background') !== null) {
           elem.style.backgroundImage = "url(" + src + ")";
@@ -126,7 +126,6 @@
   };
 
   echo.detach = function () {
-	  alert('detach');
     if (document.removeEventListener) {
       root.removeEventListener('scroll', debounceOrThrottle);
     } else {

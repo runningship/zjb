@@ -19,6 +19,7 @@ ModelAndView mv = cs.getQueryOptions();
 request.setAttribute("data", mv.data);
 %>
 <jsp:include page="../inc/top.jsp" />
+<jsp:include page="../inc/resource.jsp" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,34 +31,19 @@ request.setAttribute("data", mv.data);
 <title>中介宝房源软件系统</title>
 <meta name="description" content="中介宝房源软件系统">
 <meta name="keywords" content="房源软件,房源系统,中介宝">
-<c:if test="${useLocalResource!=1}">
-<link href="/style/css.css" rel="stylesheet">
-<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/style/style.css" rel="stylesheet">
-<script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="/js/jquery.timers.js" type="text/javascript"></script>
-<script src="/js/jquery.input.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-<script type="text/javascript" src="/js/buildHtml.js"></script>
-</c:if>
-<c:if test="${useLocalResource==1}">
-<link href="file:///resources/style/css.css" rel="stylesheet">
-<link href="file:///resources/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="file:///resources/style/style.css" rel="stylesheet">
-<script src="file:///resources/js/jquery.js" type="text/javascript"></script>
-<script src="file:///resources/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<script src="file:///resources/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="file:///resources/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.timers.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.input.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-<script src="file:///resources/js/buildHtml.js"  type="text/javascript" ></script>
-</c:if>
+<link href="${refPrefix}/style/css.css" rel="stylesheet">
+<link href="${refPrefix}/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="${refPrefix}/style/style.css" rel="stylesheet">
+<script src="${refPrefix}/js/jquery.js" type="text/javascript"></script>
+<script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.timers.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.j.tool.v2.js" type="text/javascript"></script>
+<script type="text/javascript" src="${refPrefix}/js/buildHtml.js"></script>
+
 <script type="text/javascript">
 var id;
 var queryOptions;

@@ -40,28 +40,15 @@ request.setAttribute("queryOptions", mv.data);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>出租房源</title>
-<c:if test="${useLocalResource!=1}">
-<link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
-<link rel="stylesheet" type="text/css" href="/style/font/iconfont.css" />
-<script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/buildHtml.js"></script>
-<script type="text/javascript" src="/js/pagination.js"></script>
-<script type="text/javascript" src="/js/DatePicker/WdatePicker.js"></script>
-<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-</c:if>
-<c:if test="${useLocalResource==1}">
-<link rel="stylesheet" type="text/css" href="file:///resources/style/css_ky.css" />
-<link rel="stylesheet" type="text/css" href="file:///resources/style/font/iconfont.css" />
-<script type="text/javascript" src="file:///resources/js/jquery.js"></script>
-<script type="text/javascript" src="file:///resources/js/buildHtml.js"></script>
-<script type="text/javascript" src="file:///resources/js/pagination.js"></script>
-<script type="text/javascript" src="file:///resources/js/DatePicker/WdatePicker.js"></script>
-<script src="file:///resources/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="file:///resources/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="file:///resources/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-</c:if>
+<link rel="stylesheet" type="text/css" href="${refPrefix}/style/css_ky.css" />
+<link rel="stylesheet" type="text/css" href="${refPrefix}/style/font/iconfont.css" />
+<script type="text/javascript" src="${refPrefix}/js/jquery.js"></script>
+<script type="text/javascript" src="${refPrefix}/js/buildHtml.js"></script>
+<script type="text/javascript" src="${refPrefix}/js/pagination.js"></script>
+<script type="text/javascript" src="${refPrefix}/js/DatePicker/WdatePicker.js"></script>
+<script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.j.tool.v2.js" type="text/javascript"></script>
 <script type="text/javascript">
 var houseData;
 var houseGJbox;
@@ -269,35 +256,8 @@ $(document).ready(function(){
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;">
-            <div id="menuTop" style="display:inline-block;">
-              <ul class="MainRightTop KY_W" onselectstart="return false;">
-                  <li onclick="window.location='/house/house_v2.jsp'"><i class="i1"></i>出售</li>
-                  <li class="line"></li>
-                  <li class="slect" onclick="window.location='/house/house_rent_v2.jsp'"><i class="i2"></i>出租</li>
-                  <li class="line"></li>
-                  <li class="MenuBox" style="position:relative;">
-                       <i class="i3"></i>登记
-                       <div class="topMenuChid">
-                            <span></span>
-                            <a href="javascript:void(0)" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">出售登记</a> 
-                            <a href="javascript:void(0)" onclick="openAddHouse('/v/house/house_rent_add.html?act=add&chuzu=1')">出租登记</a> 
-                       </div>
-                  </li>
-                  <li class="line"></li>
-                  <li class="MenuBox" style="position:relative;">
-                       <i class="i4"></i>我的
-                       <div class="topMenuChid">
-                            <span></span>
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=favShou&chuzus=0'">我收藏的出售</a> 
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=favZu&chuzus=1'">我收藏的出租</a>
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=addShou&chuzus=0'">我发布的出售</a> 
-                            <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=addZu&chuzus=1'">我发布的出租</a>  
-                       </div>
-                  </li>
-                  <li class="line"></li>
-              </ul>
-              </div>
-              <div class="MainRightInputMain KY_W" style="margin-bottom:5px;">
+				<jsp:include page="/house/menuTop.jsp" />
+				<div class="MainRightInputMain KY_W" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                    <input type="hidden" id="sh" name="sh" value="${fy_sh}">
                    <ul class="InputMainLine KY_W" style=" margin-bottom:8px;">

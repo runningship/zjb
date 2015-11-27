@@ -40,37 +40,19 @@ Date end= now.getTime();
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/cocoWinLayer.css" /> -->
 <!-- <link rel="stylesheet" type="text/css" href="/oa/style/im.css" /> -->
 
-<c:if test="${useLocalResource==1}">
-	<link href="file:///resources/style/css.css" rel="stylesheet">
-	<link href="file:///resources/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="file:///resources/style/style.css" rel="stylesheet">
-	<link href="file:///resources/style/animate.min.css" rel="stylesheet" />
-	<script src="file:///resources/js/jquery.js" type="text/javascript"></script>
-	<script src="file:///resources/js/buildHtml.js" type="text/javascript"></script>
-	<script src="file:///resources/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-	<script src="file:///resources/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-	<script src="file:///resources/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-	<script src="file:///resources/js/jquery.timers.js" type="text/javascript"></script>
-	<script src="file:///resources/js/jquery.input.js" type="text/javascript"></script>
-	<script src="file:///resources/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-	<script src="file:///resources/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
-</c:if>
-<c:if test="${useLocalResource!=1}">
-	<link href="/style/css.css" rel="stylesheet">
-	<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="/style/style.css" rel="stylesheet">
-	<link href="/style/animate.min.css" rel="stylesheet" />
-	<script src="/js/jquery.js" type="text/javascript"></script>
-	<script src="/js/buildHtml.js" type="text/javascript"></script>
-	<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-	<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-	<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-	<script src="/js/jquery.timers.js" type="text/javascript"></script>
-	<script src="/js/jquery.input.js" type="text/javascript"></script>
-	<script src="/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-	<script src="/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
-</c:if>
-
+<link href="${refPrefix}/style/css.css" rel="stylesheet">
+<link href="${refPrefix}/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="${refPrefix}/style/style.css" rel="stylesheet">
+<link href="${refPrefix}/style/animate.min.css" rel="stylesheet" />
+<script src="${refPrefix}/js/jquery.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/buildHtml.js" type="text/javascript"></script>
+<script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.timers.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.j.tool.v2.js" type="text/javascript"></script>
+<script src="${refPrefix}/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript">
 function setSideMenuCurr(){
     var menuerBox=$('.menuSide'),
@@ -134,7 +116,7 @@ var iframeIndex=100;
 function setiframe(id,src){
     iframeIndex+=1;
 var iframeBox=$('#iframeBox'),
-    iframeDom='<iframe onload="alert(1);" src="'+src+'" id="iframe_'+id+'" name="iframe_'+id+'" class="iframe" width="100%" height="100%" marginheight="0" frameborder="0" style="overflow:auto;"></iframe>';
+    iframeDom='<iframe src="'+src+'" id="iframe_'+id+'" name="iframe_'+id+'" class="iframe" width="100%" height="100%" marginheight="0" frameborder="0" style="overflow:auto;"></iframe>';
     //设置绝对定位元素的宽对等于父元素的宽度
     
     iframeBox.find('.iframe').hide();
