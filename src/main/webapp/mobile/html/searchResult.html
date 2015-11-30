@@ -24,20 +24,24 @@ apiready = function(){
 	if(api.systemType=='ios'){
 		//statusBarHeight = 25;
 	}
-	api.openFrame({
-        name: 'areaFrame',
-		url: 'house.html',
-		reload:true,
-        bounces: false,
-        pageParam:{isChuzu:api.pageParam.isChuzu,searchParams:api.pageParam},
-        vScrollBarEnabled:true,
-        rect: {
-            x: 0,
-            y: header.height()+statusBarHeight,
-            w: 'auto',
-            h: mainer.height()-statusBarHeight
-        }
-    });
+	//blockAlert(mainer.height()-statusBarHeight);
+	setTimeout(function(){
+		api.openFrame({
+	        name: 'areaFrame',
+			url: 'house.html',
+			reload:true,
+	        bounces: false,
+	        pageParam:{isChuzu:api.pageParam.isChuzu,searchParams:api.pageParam},
+	        vScrollBarEnabled:true,
+	        rect: {
+	            x: 0,
+	            y: header.height()+statusBarHeight,
+	            w: 'auto',
+	            h: mainer.height()-statusBarHeight
+	        }
+	    });
+	},100);
+	
 };
 
 </script>

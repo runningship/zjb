@@ -222,6 +222,25 @@
 		}]
 	}]
 },{
+	"name":"squar",
+	"type":"module",
+	"text":"广场管理",
+	"zjb-only":true,
+	"children":[{
+		"name":"squar_module",
+		"text":"广场",
+		"type":"virtual",
+		"children":[{
+			"name":"squar_knowledge_del",
+			"text":"删除房产知识",
+			"type":"menu"
+		},{
+			"name":"squar_sale_del",
+			"text":"删除服务信息",
+			"type":"menu"
+		}]
+	}]
+},{
 	"name":"map",
 	"type":"module",
 	"text":"地图",

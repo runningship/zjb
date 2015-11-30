@@ -90,10 +90,27 @@ public class HouseImageService {
 	@WebMethod
 	public ModelAndView getPublicHouseImage(HouseImage image){
 		ModelAndView mv = new ModelAndView();
-		List<Map> list = dao.listAsMap("select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname from HouseImage hi , User u where u.id=hi.uid and hid=? and chuzu=? and isPrivate=? ", image.hid , image.chuzu , 0);
+		List<Map> list = dao.listAsMap("select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel from HouseImage hi , User u where u.id=hi.uid and hid=? and chuzu=? and isPrivate=? ", image.hid , image.chuzu , 0);
 		
 //		List<HouseImage> list = dao.listByParams(HouseImage.class, new String[]{"hid" , "chuzu" , "isPrivate"}, new Object[]{image.hid , image.chuzu , 0});
 		mv.data.put("list", JSONHelper.toJSONArray(list));
+		mv.data.put("result", "0");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView delPublicHouseImage(HouseImage image){
+		ModelAndView mv = new ModelAndView();
+		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid","uid" , "chuzu"}, new Object[]{image.hid ,image.uid, image.chuzu});
+		if(po!=null && po.path!=null){
+			po.path = po.path.replace(image.path+";", "");
+			dao.saveOrUpdate(po);
+			String thumbName = image.path+".t.jpg";
+			String savePath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+image.path;
+			String thumbPath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+thumbName;
+			FileUtils.deleteQuietly(new File(savePath));
+			FileUtils.deleteQuietly(new File(thumbPath));
+		}
 		mv.data.put("result", "0");
 		return mv;
 	}

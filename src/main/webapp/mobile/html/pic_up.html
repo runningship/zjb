@@ -17,9 +17,12 @@
 <style type="text/css">
 /*.mainer img{background:#FFF url(../images/ajax.gif) no-repeat center center}*/
 .mainer *{-webkit-transition:all 0s;}
-body .ImgListBoxs li{ height: 250px; -webkit-transition:all 0s;}
+body .ImgListBoxs li{ height: auto; -webkit-transition:all 0s;}
+.ImgListBoxs.L4 .other{width:98%;}
+.ImgListBoxs .other a img{width:100%;height:150pt;margin-left:1%;}
 body .ImgListBoxs a{ -webkit-transition:all 0s;}
 body .ImgListBoxs img{ -webkit-transition:all 0s;}
+.mainer .tips{    text-align: center;    color: #bbb; display:none; backgroud:#fff}
 </style>
 <script type="text/javascript">
 function ImgAutoBox(img){
@@ -85,13 +88,16 @@ var myItemIndex=-1;
 var myImgCount=0;
 function getPics(){
 	YW.ajax({
-	    url: 'http://192.168.1.222:8081/c/mobile/houseImage/getPublicHouseImage?chuzu='+cz+'&hid='+api.pageParam.id+'&uid='+config.user.uid,
-	    method: 'get',
+	    url: 'http://'+server_host+'/c/mobile/houseImage/getPublicHouseImage?chuzu='+cz+'&hid='+api.pageParam.id+'&uid='+config.user.uid,
+	    method: 'post'
 	},function(ret,err){
 		if(ret && ret.result==0){
 			var template = $('.template');
 			var tempHtml = template[0].outerHTML;
 			imgList = ret.list;
+			if(imgList.length==0){
+				$('.mainer .tips').show();
+			}
 			for(var i=0;i<imgList.length;i++){
 				appendItem(imgList[i], tempHtml , true);
 			}
@@ -104,7 +110,7 @@ function getPics(){
 		        //console.log(element, 'has been', op + 'ed')
 		      }
 		    });
-			ImgListBox($('.ImgListBoxs'));
+			//ImgListBox($('.ImgListBoxs'));
 		    
 		}else{
 			blockAlert('加载图片失败');
@@ -130,25 +136,30 @@ function appendItem(imgObj , tempHtml ,lazy){
 	tmp.removeClass('template');
 	tmp.find('ul').attr('path' , imgObj.path);
 	if(imgObj.path){
-		var count=0;
 		var arr = stringToArray(imgObj.path);
+		var count=arr.length;
+		if(count==0){
+			$('.mainer .tips').show();
+		}
 		for(var i=0;i<arr.length;i++){
 			var path = arr[i];
-			if(path==''){
-				continue;
-			}
-			count++;
 			//blockAlert(tmp.find('ul'));
 			var offset = i;
+			var belongClass="";
 			if(imgObj.uid==config.user.uid){
 				offset = myImgCount+i;
+			}else{
+				belongClass="other";
 			}
 			if(lazy){
-				tmp.find('ul').append('<li onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/loading.jpg" data-echo="http://192.168.1.222/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
+				tmp.find('ul').append('<li class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/loading.jpg" data-echo="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}else{
-				tmp.find('ul').append('<li onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="http://192.168.1.222/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
+				tmp.find('ul').append('<li  class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" ontouchend="gtouchend()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}
-			
+			if(imgObj.uid!=config.user.uid){
+				break;
+			}
+			//break;
 		}
 		if(imgObj.uid==config.user.uid){
 			if($('.myItem').length>0){
@@ -164,22 +175,30 @@ function appendItem(imgObj , tempHtml ,lazy){
 				$('.myItem').find('ul').attr('path' , allPath);
 			}else{
 				tmp.addClass('myItem');
-				tmp.find('.uname').text('我的照片');	
+				tmp.find('.uname').text('我上传的照片');	
 				$('#mainer').prepend(tmp);
 				myImgCount = count;
 				tmp.find('.count').text(count);
 			}
 			
 		}else{
-			tmp.find('.uname').text(imgObj.uname);
+			if(imgObj.tel){
+				var xx=imgObj.tel;
+				xx = xx[0]+'*********'+xx[xx.length-1];
+				tmp.find('.uname').text(xx);	
+			}else{
+				tmp.find('.uname').text('手机用户');
+			}
 			tmp.find('.count').text(count);
 			$('#mainer').append(tmp);
 		}
-		
+	}else{
+		$('.mainer .tips').show();
 	}
 }
 
 function addPics(){
+	
 	api.actionSheet({
         buttons:['拍照' , '相册']
     },function(ret,err){
@@ -205,12 +224,12 @@ function addPics(){
     		});
        }else if(ret.buttonIndex==2){
     	   api.getPicture({
-   		    sourceType: 'album',
+   		    sourceType: 'library',
    		    encodingType: 'jpg',
    		    mediaValue: 'pic',
    		    destinationType: 'url',
    		    allowEdit: false,
-   		    quality: 75,
+   		    quality: 50,
    		 	targetWidth:1080,
    		    saveToPhotoAlbum: true
    		}, function(ret, err){ 
@@ -241,7 +260,7 @@ apiready=function(){
 }
 function uploadImages(paths){
 	YW.ajax({
-	    url: 'http://192.168.1.222:8081/c/mobile/houseImage/setPublicHouseImage?chuzu='+cz+'&hid='+hid+'&uid='+config.user.uid,
+	    url: 'http://'+server_host+'/c/mobile/houseImage/setPublicHouseImage?chuzu='+cz+'&hid='+hid+'&uid='+config.user.uid,
 	    method: 'post',
 	    timeout: 30,
 	    dataType: 'json',
@@ -253,6 +272,7 @@ function uploadImages(paths){
 		if(ret && ret.result==0){
 			alert('上传成功');
 			//添加到本地
+			$('.mainer .tips').hide();
 			var template = $('.template');
 			var tempHtml = template[0].outerHTML;
 			var imgObj = JSON.parse('{}');
@@ -266,6 +286,7 @@ function uploadImages(paths){
 }
 
 function showBigImage(li , picUid , activeIndex){
+	gtouchend();
 	var path = $(li).parent().attr('path');
     var obj = api.require('imageBrowser');
     var tmp = path.split(';');
@@ -274,7 +295,7 @@ function showBigImage(li , picUid , activeIndex){
     	if(tmp[i]==""){
     		continue;
     	}
-    	arr.push('http://192.168.1.222/zjb_house_images/'+hid+'/'+picUid+'/'+tmp[i]);
+    	arr.push('http://'+img_server_host+'/zjb_house_images/'+hid+'/'+picUid+'/'+tmp[i]);
     }
     obj.openImages({
         imageUrls: arr,
@@ -283,7 +304,68 @@ function showBigImage(li , picUid , activeIndex){
     });
 }
 
-   
+var currentImg;
+var timeOutEvent = 0;
+//定时器
+//开始按
+function gtouchstart(obj) {
+	currentImg = obj;
+    timeOutEvent = setTimeout("longPress()", 500);
+    //这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
+    return false;
+};
+//手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+function gtouchend() {
+    clearTimeout(timeOutEvent);
+    //清除定时器
+    if (timeOutEvent != 0) {
+        //这里写要执行的内容（尤如onclick事件）
+        //alert("你这是点击，不是长按");
+    }
+    return false;
+};
+//如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按
+function gtouchmove() {
+    clearTimeout(timeOutEvent);
+    //清除定时器
+    timeOutEvent = 0;
+};
+//真正长按后应该执行的内容
+function longPress() {
+    timeOutEvent = 0;
+    //执行长按要执行的内容，如弹出菜单
+    //alert("长按事件触发发");
+    var uid = $(currentImg).attr('uid');
+    if(uid!=config.user.uid){
+		return;
+	}
+    api.actionSheet({
+        cancelTitle: '取消',
+        destructiveTitle: '删除'
+    },function(ret,err){
+       if(ret.buttonIndex==1){
+    	   deleteHouseImage(currentImg);
+       }
+    });
+}
+
+function deleteHouseImage(currentImg){
+	var uid = $(currentImg).attr('uid');
+	var hid = $(currentImg).attr('hid');
+	var path = $(currentImg).attr('path');
+	
+	YW.ajax({
+    	url: 'http://'+server_host+'/c/mobile/houseImage/delPublicHouseImage?chuzu='+cz,
+		method:'post',
+		data:{values:{path:path,hid:hid,uid:uid}},
+		cache:false,
+		returnAll:false
+	},function(ret , err){
+		if(ret){
+			currentImg.remove();
+		}
+	});
+}
 </script>
 </head>
 <body>
@@ -299,13 +381,14 @@ function showBigImage(li , picUid , activeIndex){
         </span>
     </div>
     <div id="mainer" class="mainer">
-        
+        <div class="tips">赶快来上传照片吧~~</div>
     </div>
 </div>
  
  <div class="wrap bt5 template hidden">
-    <h3 class="h3"><span class="fr">共<span class="count">4</span>张</span><span class="uname">我上传的图片</span></h3>
+    <h3 class="h3"><span class="fr">共<span class="count">4</span>张</span><span class="uname"></span></h3>
     <ul class="ImgListBoxs L4">
+<!--     	<li onclick="showBigImage()"><a href="#" class=""><img src="http://192.168.1.222/zjb_house_images/317899/608/p-65fe7b70.jpg.t.jpg" alt=""></a></li> -->
     </ul>
 </div>
 </body>

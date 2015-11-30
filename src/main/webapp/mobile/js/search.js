@@ -306,3 +306,9 @@ function deleteHistoryItem(item){
 	    value:newResult
     });
 }
+
+function keyup(){
+	if(event.keyCode==13){
+		doSearch();
+	}
+}
