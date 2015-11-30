@@ -35,6 +35,7 @@ ModelAndView mv = cs.getQueryOptions();
 request.setAttribute("queryOptions", mv.data);
 %>
 <jsp:include page="../inc/top.jsp" />
+<jsp:include page="../inc/resource.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -256,7 +257,7 @@ $(document).ready(function(){
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;">
-				<jsp:include page="/house/menuTop.jsp" />
+				<jsp:include page="/house/menuTop.jsp?type=chuzu" />
 				<div class="MainRightInputMain KY_W" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                    <input type="hidden" id="sh" name="sh" value="${fy_sh}">
@@ -345,7 +346,7 @@ $(document).ready(function(){
                    
                    <ul class="InputMainLine KY_W">
                    
-                        <li style="width:122px;"><input class="input-sm w110" type="text" placeholder="编号" name="id"  desc="编号"/><input class="input-sm w110" type="text" placeholder="路段" name="address" /></li>
+                        <li style="width:110px;"><input class="input-sm w110" type="text" placeholder="编号" name="id"  desc="编号"/><input class="input-sm w110" type="text" placeholder="路段" name="address" /></li>
                         <li>
                             <span class="SpanNameH2"><em>面积</em></span>
                             <div class="DivBoxW1 Fleft">

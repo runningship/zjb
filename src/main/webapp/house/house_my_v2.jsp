@@ -224,7 +224,7 @@ $(document).ready(function(){
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;">
-              <jsp:include page="menuTop.jsp" />
+              <jsp:include page="menuTop.jsp?type=my" />
               <div class="MainRightInputMain KY_W" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">
                    <ul class="InputMainLine KY_W" style=" margin-bottom:8px;">

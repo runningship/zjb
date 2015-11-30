@@ -287,6 +287,10 @@ ul.jtree li.a_dept > span.button.noline_close,
 ul.ztree li.a_dept > span.button.noline_docu
 ul.jtree li.a_role > span.button.noline_close,
 ul.ztree li.a_role > span.button.noline_docu{ background-position: 5px 0;}
+.ztree li span{line-height:26px;}
+.ztree li ul{margin-top:8px; !important}
+.ztree li span.button.noline_open{margin-top:7px;}
+
 /* 输入提示菜单 */
 .autocomplete{position:absolute;z-index: 999; max-height: 339px; overflow: auto; box-shadow:0 0 5px #09f; border:1px solid #09F; border-top:none; background: #FFF; display: none; }
 .autocomplete a{ display: block; height: 26px; line-height: 26px; border-bottom: 1px solid #EEE; padding: 0 5px; overflow: hidden;  color:#999;}
@@ -406,7 +410,7 @@ box-shadow: 0 0 5px #000;}
 .default .menuSide li a,
 .default .menuSideTool li a{ display: block;}
 .default .menuSide li a span,
-.default .menuSideTool li a span{ display: block; height: auto; overflow: hidden; font-size:12px;}
+.default .menuSideTool li a span{ display: block; height: auto; overflow: hidden; font-size:12px;padding-top: 8px;}
 
 
 .default .menuSide li span{ font-size:24px;}

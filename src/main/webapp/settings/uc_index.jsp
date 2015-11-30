@@ -18,8 +18,8 @@
 <meta name="keywords" content="房源软件,房源系统,中介宝">
 <link href="${refPrefix }/style/css.css" rel="stylesheet">
 <link href="${refPrefix }/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="${refPrefix }/style/style.css" rel="stylesheet">
 <link href="${refPrefix }/js/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+<link href="${refPrefix }/style/style.css" rel="stylesheet">
 <script src="${refPrefix }/js/jquery.js" type="text/javascript"></script>
 <script src="${refPrefix }/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="${refPrefix }/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
@@ -128,7 +128,6 @@ $(document).ready(function() {
 $(window).resize(function() {      //类别
 });
 </script>
-
 </head>
 <body>
 <div class="html list title addSide">

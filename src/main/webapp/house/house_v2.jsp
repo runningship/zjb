@@ -120,7 +120,7 @@ function buildQueryOptions(){
      <div class="MainRight">
           
           <div  style="display:table; width:100%; height:100%; overflow:hidden;" class="not-select">
-				<jsp:include page="menuTop.jsp" />
+				<jsp:include page="menuTop.jsp?type=chushou" />
               <div class="MainRightInputMain KY_W not-select" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                     <input type="hidden" id="sh" name="sh" value="${fy_sh }">
@@ -208,7 +208,7 @@ function buildQueryOptions(){
                    
                    <ul class="InputMainLine KY_W not-select">
                    
-                        <li style="width:122px;"><input class="input-sm w110" type="text" placeholder="编号" name="id"  desc="编号"/>
+                        <li style="width:110px;"><input class="input-sm w110" type="text" placeholder="编号" name="id"  desc="编号"/>
                         <input class="input-sm w110" type="text" placeholder="路段" name="address" /></li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>面积</em></span>

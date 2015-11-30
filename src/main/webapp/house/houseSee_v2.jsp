@@ -91,42 +91,20 @@ dao.saveOrUpdate(vl);
 <head>
 <meta name="description" content="中介宝房源软件系统">
 <meta name="keywords" content="房源软件,房源系统,中介宝">
-<link href="${refPrefix}/style/css.css" rel="stylesheet">
-<link href="${refPrefix}/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="${refPrefix}/style/style.css" rel="stylesheet">
-<link href="${refPrefix}/style/css_ky.css" rel="stylesheet">
+<%-- <link href="${refPrefix}/style/css.css" rel="stylesheet"> --%>
+<%-- <link href="${refPrefix}/bootstrap/css/bootstrap.css" rel="stylesheet"> --%>
+<%-- <link href="${refPrefix}/style/style.css" rel="stylesheet"> --%>
+<%-- <link href="${refPrefix}/style/css_ky.css" rel="stylesheet"> --%>
 <script src="${refPrefix}/js/jquery.js" type="text/javascript"></script>
-<script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script>
-<script src="${refPrefix}/js/jquery.j.tool.js?2" type="text/javascript"></script>
-<script type="text/javascript" src="${refPrefix}/js/buildHtml.js"></script>
-<style type="text/css">
-.click{cursor: pointer; color:#06C; text-decoration: underline;}
-.fangzhu{position:absolute;top:2px;right:4px;color: #FFF; background: rgba(0,0,0,0.1);border-radius: 1px;display: inline-block;padding: 0 3px;font-size: 12px;}
-.onselect{position:relative;}
-.red{color:red;}
-.black{color:#3c763d;font-size:12px;}
-.noshow{display:none;}
-
-body .telTable td{ padding: 0px;}
-body .telTable .telBox{ border: 0; }
-body .telTable .telBox div{ border-radius: 0; }
-body .telTable .telBox div p{ padding-left: 5px; }
-body .telTable .telBox div p .lxr{ width: 50px;display: inline-block;text-align: right;}
-body .telTable .telBox .alert {text-align: left;}
-body .telTable .telBox .alert>i,
-body .telTable .telBox .onOpen{ text-align: center; }
-
-.telBox i { height:15px;font-size:14px; }
-.fangzhu i{  font-size: 12px; display: inline-block;background: none; margin-right: 2px;}
-
-.telBox b{display: inline-block;    font-weight: normal;}
-</style>
+<%-- <script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script> --%>
+<%-- <script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script> --%>
+<%-- <script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script> --%>
+<%-- <script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script> --%>
+<%-- <script src="${refPrefix}/js/jquery.j.tool.js?2" type="text/javascript"></script> --%>
+<%-- <script type="text/javascript" src="${refPrefix}/js/buildHtml.js"></script> --%>
 <script type="text/javascript">
 var houseGJbox;
-chuzu=getParam('chuzu');
+var chuzu;
 function replaceAlls(a){
   var aa=a;
   if(aa==null || aa==undefined){
@@ -278,6 +256,11 @@ function labelAgent(obj){
 }
 
 $(document).ready(function() {
+});
+
+function init(){
+
+	//chuzu = getParam('chuzu');
 	if($('#sourceLink').attr('link')==''){
 		$('#sourceLinkTr').css('display','none');
 	}
@@ -393,17 +376,19 @@ $(document).ready(function() {
             return false;
         });
     }
-    var GenjinTbody=$('.see_house_genjin').find('tbody'),
-    GenjinTbodyHtml=GenjinTbody.html().replace(/(\n)+|(\r\n)+/g, "");
-    GenjinTbodyHtml=GenjinTbodyHtml.replace(/ /g,'');
+    var GenjinTbody=$('.see_house_genjin').find('tbody');
+    var GenjinTbodyHtml=GenjinTbody.html();
+    if(GenjinTbodyHtml){
+    	GenjinTbodyHtml = GenjinTbodyHtml.replace(/(\n)+|(\r\n)+/g, "");
+        GenjinTbodyHtml =GenjinTbodyHtml.replace(/ /g,'');	
+    }
 
     if(${gjList.size()==0}){
       $('.see_house_genjin').find('tbody').html('<tr><td class="side_noThing">暂无跟进...</td></tr>');
       //$('.see_house_genjin').find('tbody').html('<tr><td style="padding:3px;"><img src="../../style/images/zjb.png" style="width:240px;"/></td></tr>');
       $('#addGenjinBtn').tooltip('show');
     }
-
-});
+}
 $('#area').on('click',function(){
   var Thi=$(this),
   ThiVal=Thi.find('b').text();
@@ -420,6 +405,46 @@ function searchTel(span){
 	window.parent.doSearchAndSelectFirst();
 }
 </script>
+<script type="text/javascript">
+loadCss('${refPrefix}/style/css.css');
+loadCss('${refPrefix}/bootstrap/css/bootstrap.css');
+loadCss('${refPrefix}/style/style.css');
+loadCss('${refPrefix}/style/css_ky.css');
+
+loadJs('${refPrefix}/js/buildHtml.js');
+loadJs('${refPrefix}/js/jquery.j.tool.js');
+loadJs('${refPrefix}/bootstrap/js/bootstrap.js');
+loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
+loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
+//loadJs('${refPrefix}/js/house/houseSee_v2.js');
+setTimeout(init , 200);
+//init();
+</script>
+
+
+<style type="text/css">
+.click{cursor: pointer; color:#06C; text-decoration: underline;}
+.fangzhu{position:absolute;top:2px;right:4px;color: #FFF; background: rgba(0,0,0,0.1);border-radius: 1px;display: inline-block;padding: 0 3px;font-size: 12px;}
+.onselect{position:relative;}
+.red{color:red;}
+.black{color:#3c763d;font-size:12px;}
+.noshow{display:none;}
+
+body .telTable td{ padding: 0px;}
+body .telTable .telBox{ border: 0; }
+body .telTable .telBox div{ border-radius: 0; }
+body .telTable .telBox div p{ padding-left: 5px; }
+body .telTable .telBox div p .lxr{ width: 50px;display: inline-block;text-align: right;}
+body .telTable .telBox .alert {text-align: left;}
+body .telTable .telBox .alert>i,
+body .telTable .telBox .onOpen{ text-align: center; }
+
+.telBox i { height:15px;font-size:14px; }
+.fangzhu i{  font-size: 12px; display: inline-block;background: none; margin-right: 2px;}
+
+.telBox b{display: inline-block;    font-weight: normal;}
+</style>
+
 </head>
 <body >
 <div class="sideCont" style="width:100%; display:table; height:100%;-webkit-user-select: text;">

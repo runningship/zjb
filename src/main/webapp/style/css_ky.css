@@ -162,12 +162,12 @@ to {background: #007759; border:1px solid #00241b;}
 
 .InputMainLine li span{ background-color:#eeeeee; padding:0 5px;  border-bottom-right-radius: 0; border-top-right-radius: 0;}
 
-.InputMainLine li input.input-sm{ height:28px; line-height:1.5; font-size:12px;}
+.InputMainLine li input.input-sm{ height:30px; line-height:1.5; font-size:12px;}
 
 .InputMainLine li .w110{ width:110px;}
 .InputMainLine li .w102{ width:96.5px;}
 .InputMainLine li .w76{ width:70px;}
-.InputMainLine li .w208{ width:196px;}
+.InputMainLine li .w208{ width:192px;}
 .InputMainLine li .w45{ width:42px; text-align:center;}
 .InputMainLine li .w46{ width:45px; text-align:center;}
 .InputMainLine li .w130{ width:130px; text-align:center;}
@@ -241,7 +241,7 @@ i.caret {
 }
 
 .DivBoxW1 {
-    width: 82px;
+    width: 75px;
 }
 
 .LiBoxW1 {

@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	request.setAttribute("type", request.getParameter("type"));
+%>
 <div id="menuTop" style="display:inline-block;">
       <ul class="MainRightTop KY_W titlebar">
-          <li class="slect nobar" onclick="window.location='/house/house_v2.jsp'"><i class="i1"></i>出售</li>
+          <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="window.location='/house/house_v2.jsp'"><i class="i1"></i>出售</li>
           <li class="line"></li>
-          <li class="nobar" onclick="window.location='/house/house_rent_v2.jsp'"><i class="i2"></i>出租</li>
+          <li class=" <c:if test="${type eq 'chuzu' }">slect</c:if> nobar" onclick="window.location='/house/house_rent_v2.jsp'"><i class="i2"></i>出租</li>
           <li class="line"></li>
           <li class="MenuBox nobar" style="position:relative;" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">
                <i class="i3" ></i>登记
@@ -14,7 +18,7 @@
                </div>
           </li>
           <li class="line"></li>
-          <li class="MenuBox nobar" style="position:relative;">
+          <li class="MenuBox nobar <c:if test="${type eq 'my' }">slect</c:if>" style="position:relative;">
                <i class="i4"></i>我的
                <div class="topMenuChid">
                     <span></span>
