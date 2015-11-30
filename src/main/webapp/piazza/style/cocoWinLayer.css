@@ -9,7 +9,7 @@
 
 .cocoLayerTit i.closeBg, .cocoListLayerTit i.closeBg{ width:20px; height:21px; background:url(../cocoImages/close.png) no-repeat; position:absolute;}
 
-.cocoLayerTit i.close, .cocoListLayerTit i.close{ background-position:0 -47px; top:6px; right:10px;}
+.cocoLayerTit i.close, .cocoListLayerTit i.close{ background-position:0 -47px; top:6px; right:10px; cursor:pointer}
 .cocoLayerTit i.close:hover, .cocoListLayerTit i.close:hover{ background-position:-25px -47px;}
 
 .cocoLayerMain{ margin:8px; max-height:390px; border:1px solid #dddddd; overflow:hidden; overflow-y:auto; font-size:12px;}

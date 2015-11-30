@@ -3,17 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
-<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script type="text/javascript" src="/js/buildHtml.js"></script>
-<script type="text/javascript" src="/oa/js/messagesBox.js"></script>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link rel="stylesheet" type="text/css" href="style/cssOa.css" />
 <link rel="stylesheet" type="text/css" href="style/cocoWinLayer.css" />
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
+<script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/buildHtml.js"></script>
+<script type="text/javascript" src="/oa/js/messagesBox.js"></script>
 </head>
 <script type="text/javascript">
 var artPage = 1;
@@ -133,6 +133,7 @@ function buildArticle(page){
             <li><span class="line"></span></li>
             <li href="#" onclick="window.location.reload()"><i class=" Bg gg"></i><span class="color2">增值服务平台</span></li>
           </ul>
+          <div style="position: absolute;top: 17px;left: 400px;font-size: 12px; color: #aaa;">本版块（广场）是开放平台，所有中介宝用户可以查看！</div>
         </div>
         <div class="td oaTit oaTitBgInfo">
         </div>

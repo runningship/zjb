@@ -85,9 +85,12 @@ $(function(){
                     <div class="ggListBoxBot">
                     <span class="tuBox"><i class="Bg zan"></i>$[replys]</span>
                     <i show="${user.id}==$[senderId]" class="Bg xgSel" onclick="openNewWin('editKnowledge','800','600','编辑内容','edit.jsp?id=$[id]')"></i>
-<%--                     <c:if test="${auths.indexOf('oa_article_del')<0}"> --%>
+                    <c:if test="${auths.indexOf('squar_knowledge_del')>-1}">
+                      <i class="Bg hfSel" onclick="deleteThis($[id]);return false;" ></i>
+                    </c:if>
+                    <c:if test="${auths.indexOf('squar_knowledge_del')<0}">
                       <i show="${user.id}==$[senderId]" class="Bg hfSel" onclick="deleteThis($[id]);return false;" ></i>
-<%--                     </c:if> --%>
+                    </c:if>
                     </div>
                </div>
           </div>
