@@ -241,8 +241,8 @@ function buildQueryOptions(){
                         <li>
                             <span class="SpanNameH2 not-select"><em>建筑<br />年代</em></span>
                             <div class="DivBoxW1 Fleft">
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="yearStart" />
-                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="yearEnd" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="dateyearStart" />
+                            <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="dateyearEnd" />
                             </div>
                         </li>
                         <li>

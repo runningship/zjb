@@ -558,13 +558,17 @@ public class HouseService {
 			hql.append(" and h.zjia<= ? ");
 			params.add(query.zjiaEnd);
 		}
-		if(query.yearStart!=null){
+		try{
+		if(query.dateyearStart!=null){
 			hql.append(" and h.dateyear>= ? ");
-			params.add(query.yearStart);
+			params.add(query.dateyearStart);
 		}
-		if(query.yearEnd!=null){
+		if(query.dateyearEnd!=null){
 			hql.append(" and h.dateyear<= ? ");
-			params.add(query.yearEnd);
+			params.add(query.dateyearEnd);
+		}
+		}catch(Exception ex){
+			throw new GException(PlatformExceptionType.BusinessException,"年代必须是数字");
 		}
 		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateStart,DateSeparator.After,params));
 		hql.append(HqlHelper.buildDateSegment("h.dateadd",query.dateEnd, DateSeparator.Before , params));

@@ -31,13 +31,16 @@ public class HouseQuery{
 	public List<String> zxiu;
 	public String dhao;
 	public String fhao;
-	public Integer yearStart;
-	public Integer yearEnd;
+	public String yearStart;
+	public String yearEnd;
 	public Integer fangshi;
 	public String favStr;
 	public String scope="";
 	public Integer sh;
 
+	public Integer dateyearStart;
+	public Integer dateyearEnd;
+	
 	public String action;
 	public String area;
 	public String tel;
