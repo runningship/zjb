@@ -27,8 +27,8 @@ if(h==null){
 	return ;
 }
 //mji zjia
-String hql="select tt.conts as conts , d.dname , tt.uname , tt.addtime from (select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.did as did,u.uname as uname,"
-					+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu from house_gj gj ,uc_user u "
+String hql="select tt.conts as conts , d.dname , tt.uname , tt.addtime tt.ztai as ztai from (select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.did as did,u.uname as uname,"
+					+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu  from house_gj gj ,uc_user u "
 					+" where gj.hid = ? and u.id=gj.uid  and gj.chuzu=?) tt "
 					+" left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did order by tt.addtime desc";
 			
@@ -647,6 +647,7 @@ body .telTable .telBox .onOpen{ text-align: center; }
           	<c:forEach items="${gjList }" var="gj">
             <tr class="list">
               <td style="padding-left:5px;padding-right:5px">
+              	<div style="margin-bottom:4px;max-width:248px;">${gj.ztai}</div>
                 <div style="margin-bottom:4px;max-width:248px;">${gj.conts}</div>
                 <p style="display:inline-block;width:110px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden"><span title="${gj.uname}">${gj.dname}-${gj.uname}</span></p>
                  <span style="float:right;color:#999999"><fmt:formatDate value="${gj.addtime}" pattern="yyyy-MM-dd HH:mm"/></span>
