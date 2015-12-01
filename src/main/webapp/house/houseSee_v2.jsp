@@ -443,6 +443,11 @@ body .telTable .telBox .onOpen{ text-align: center; }
 .fangzhu i{  font-size: 12px; display: inline-block;background: none; margin-right: 2px;}
 
 .telBox b{display: inline-block;    font-weight: normal;}
+
+.bottomAction{ border-right: none; display: -moz-box;display: -webkit-box;display: box;-moz-box-orient: horizontal;-webkit-box-orient: horizontal;box-orient: horizontal;/*white-space:nowrap;word-break: keep-all;*/}
+.bottomAction li{-webkit-box-flex: 1;display: block; border-left: 1px solid #CFCFCF;}
+.bottomAction li:first-child{border: none;}
+.bottomAction li a{ width: 100%; border: none; }
 </style>
 
 </head>
@@ -663,12 +668,16 @@ body .telTable .telBox .onOpen{ text-align: center; }
           <ul class="bottomAction" style="margin-bottom:-3px;">
             <li>
               <a href="#" data-toggle="tooltip" title="添加跟进" class="btns" data-type="addGenjin" id="addGenjinBtn"><i class="iconfont">&#xe640;</i> 添加跟进</a>
+            </li>
+            <li>
               <c:if test="${fav==0 }">
               <a href="#" data-toggle="tooltip" title="收藏房源" class="btns" data-type="fav" fav="1"><i fav="1" class="iconfont">&#xe648;</i> 收藏</a>
               </c:if>
               <c:if test="${fav==1 }">
               <a href="#" data-toggle="tooltip" title="已收藏房源" class="btns" data-type="fav" fav="0"><i fav="0" class="iconfont">&#xe62e;</i> 已收藏</a>
               </c:if>
+            </li>
+            <li>
               <a href="#" data-toggle="tooltip" title="地图查看" class="btns" data-type="map" data-area="${house.area}"><i class="iconfont">&#xe60e;</i> 地图</a>
             </li>
           </ul>

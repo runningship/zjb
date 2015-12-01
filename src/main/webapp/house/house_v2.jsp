@@ -247,9 +247,9 @@ function buildQueryOptions(){
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>发布<br />日期</em></span>
-                            <div class="DivBoxW1 Fleft">
-                            <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="onSetDateStart();" style="width:70px">
-        <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="onSetDataEnd();" style="width:70px">
+                            <div class="DivBoxW1 Fleft" style="width: 80px;">
+                            <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="onSetDateStart();" style="width:100%">
+        <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="onSetDataEnd();" style="width:100%">
                             </div>
                         </li>
                         

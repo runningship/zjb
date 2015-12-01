@@ -31,8 +31,8 @@ public class HouseQuery{
 	public List<String> zxiu;
 	public String dhao;
 	public String fhao;
-	public String yearStart;
-	public String yearEnd;
+	public Integer yearStart;
+	public Integer yearEnd;
 	public Integer fangshi;
 	public String favStr;
 	public String scope="";

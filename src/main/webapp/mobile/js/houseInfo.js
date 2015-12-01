@@ -45,7 +45,7 @@ function loadData(){
 						$('#area').text(ret.area+'  '+fdhao);
 						$('#footer').show();
 						$('#favBtn').show();
-						//$('#image').show();
+						$('#image').show();
 						var tels = ret.tel.split(',');
 					    for(var i=0;i<tels.length ;i++){
 							var xx = JSON.parse('{}');

@@ -39,14 +39,14 @@ window.onload=function() {
 	http = require('http');
 	gui = require('nw.gui');
 // 	gui.App.clearCache();
-
-	if(!fs.existsSync("Rar.exe")){
-		download(urlPrefix+'Rar.exe', 'Rar.exe', function(){
-			checkResource();
-		});
-    }else{
-    	checkResource();
-    }
+	checkConfig();
+// 	if(!fs.existsSync("Rar.exe")){
+// 		download(urlPrefix+'Rar.exe', 'Rar.exe', function(){
+// 			checkResource();
+// 		});
+//     }else{
+//     	checkResource();
+//     }
  	return;
 };
 
@@ -54,7 +54,7 @@ function checkConfig(){
 	var json = loadConfigAsJSON();
     addJSFlags();
     addNodeMain();
-    //addGPUFlag();
+    addGPUFlag();
     if(gui.App.manifest['--use_uuid_lic']){
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市

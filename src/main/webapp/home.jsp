@@ -682,7 +682,7 @@ var time_ani2=setTimeout(function(){
             <span class="line line_bottom"></span>
             <span class="line line_left"></span>
         </div>
-        <h2 class="shenbian animated">天冷了，房源在您身边————中介宝</h2>
+        <h2 class="shenbian animated">天冷了，房源在您身边——中介宝</h2>
         <div class="fontBox">
             <p class="br"></p>
         </div>

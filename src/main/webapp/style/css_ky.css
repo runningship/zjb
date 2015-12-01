@@ -237,7 +237,8 @@ i.caret {
 
 
 .inputBox {
-    width: 71px;
+    /*width: 71px;*/
+    width: 100%;
 }
 
 .DivBoxW1 {
