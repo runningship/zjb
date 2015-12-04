@@ -30,4 +30,10 @@ public class HouseImage {
 	public Date addtime;
 	
 	public Integer isPrivate;
+	
+	public Integer sh;
+	
+	public Integer zanCount;
+	
+	public Integer shitCount;
 }

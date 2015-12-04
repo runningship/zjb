@@ -74,6 +74,7 @@ loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
 loadJs('${refPrefix}/js/DatePicker/WdatePicker.js');
 loadJs('${refPrefix}/js/jquery.j.tool.v2.js');
 loadJs('${refPrefix}/js/house/house_v2.js');
+window.top.iframeChanged('iframe_house');
 </script>
 <script type="text/javascript" >
 function buildQueryOptions(){
@@ -255,7 +256,7 @@ function buildQueryOptions(){
                         
                         <li class="LiBoxW1">
                              <button id="searchBtn" class="ButtonW1 ButtonS hand not-select" type="submit">搜索</button>
-                             <button class="ButtonW1 ButtonQ hand not-select" type="button" onclick="window.location.reload();">清空</button>
+                             <button class="ButtonW1 ButtonQ hand not-select" type="button" onclick="_open('/house/house_v2.jsp?type=chushou')">清空</button>
                         </li>
                         
                    </ul>
@@ -371,7 +372,7 @@ function buildQueryOptions(){
 
 <div id="ad_container" style="display:none" class="adboxs">
     <div class="adboxitem">
-        <img src="/ad/img/zjb/baidu.png" alt="" class=" animated fadeInDown" >
+        <img src="/ad/img/zjb/ad_gujing.png" alt="" class=" animated fadeInDown" >
     </div>
 </div>
 </body>

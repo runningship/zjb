@@ -19,15 +19,15 @@ function loadData(clear){
 	}
 	if(isChuzu){
 		if(houseType=='fav'){
-			url = 'http://'+server_host+'/c/mobile/rent/list?userid='+userId+'&currentPageNo='+currentPage;
+			url = 'http://'+server_host+'/c/mobile/rent/list?userid='+userId+'&page='+currentPage;
 		}else{
-			url = 'http://'+server_host+'/c/mobile/user/tracksRent?userId='+userId+'&currentPageNo='+currentPage;
+			url = 'http://'+server_host+'/c/mobile/user/tracksRent?userId='+userId+'&page='+currentPage;
 		}
 	}else{
 		if(houseType=='fav'){
-			url='http://'+server_host+'/c/mobile/list?userid='+userId+'&currentPageNo='+currentPage;
+			url='http://'+server_host+'/c/mobile/list?userid='+userId+'&page='+currentPage;
 		}else{
-			url = 'http://'+server_host+'/c/mobile/user/tracks?userId='+userId+'&currentPageNo='+currentPage;
+			url = 'http://'+server_host+'/c/mobile/user/tracks?userId='+userId+'&page='+currentPage;
 		}
 	}
 	YW.ajax({
@@ -191,12 +191,22 @@ function SeeThis(id){
 		addDelete(id,obj);
 		return;
 	}
-	api.openWin({
-        name: 'info',
-        pageParam: {id:id},
-		url: 'house_details.html',
-		delay:300
-    });
+	if(isChuzu){
+		api.openWin({
+	        name: 'info',
+	        pageParam: {id:id , isChuzu:true},
+			url: 'house_rent_details.html',
+			delay:300
+	    });
+	}else{
+		api.openWin({
+	        name: 'info',
+	        pageParam: {id:id},
+			url: 'house_details.html',
+			delay:300
+	    });
+	}
+	
 	$('#'+id).addClass('read');
  }
  

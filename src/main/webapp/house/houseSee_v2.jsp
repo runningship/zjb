@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.youwei.zjb.house.entity.HouseImageGJ"%>
+<%@page import="com.youwei.zjb.cache.ConfigCache"%>
 <%@page import="net.sf.json.JSONObject"%>
 <%@page import="com.youwei.zjb.house.entity.Agent"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
@@ -27,8 +30,8 @@ if(h==null){
 	return ;
 }
 //mji zjia
-String hql="select tt.conts as conts , d.dname , tt.uname , tt.addtime tt.ztai as ztai from (select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.did as did,u.uname as uname,"
-					+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu  from house_gj gj ,uc_user u "
+String hql="select tt.conts as conts , d.dname , tt.uname , tt.addtime ,tt.ztai as ztai from (select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.did as did,u.uname as uname,"
+					+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu from house_gj gj ,uc_user u "
 					+" where gj.hid = ? and u.id=gj.uid  and gj.chuzu=?) tt "
 					+" left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did order by tt.addtime desc";
 			
@@ -84,6 +87,19 @@ vl.uid = ThreadSessionHelper.getUser().id;
 vl.isMobile = 0;
 vl.viewTime = new Date();
 dao.saveOrUpdate(vl);
+
+User u = ThreadSessionHelper.getUser();
+// String sql = "select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel,hi.zanCount as zanCount , hi.shitCount as shitCount  from HouseImage hi , uc_user u "
+// 		+"where u.id=hi.uid and hid=? and chuzu=0 and isPrivate=0";
+// List<Map> list = dao.listSqlAsMap(sql, h.id);
+
+// List<HouseImageGJ> zanList = dao.listByParams(HouseImageGJ.class, "from HouseImageGJ where hid=? and uid=? ", h.id , u.id);
+// request.setAttribute("zanList", JSONHelper.toJSONArray(zanList));
+// request.setAttribute("imgList", list);
+request.setAttribute("zanList", "[]");
+request.setAttribute("imgList", new ArrayList<Map>());
+String host = ConfigCache.get("domainName", "www.zhongjiebao.com");
+request.setAttribute("host", host);
 %>
 
 <!DOCTYPE html>
@@ -257,12 +273,28 @@ function labelAgent(obj){
 
 $(document).ready(function() {
 });
-
+var imgJSON = JSON.parse("{}");
+var zanList = JSON.parse('${zanList}');
 function init(){
-
+	//构造房源图片 json格式 
+	var imgs = $('.imgListBox img');
+	var data = [];
+	for(var i=0;i<imgs.length;i++){
+		var obj = JSON.parse("{}");
+		obj.src=$(imgs[i]).attr('src');
+		obj.start=i;
+		obj.zanCount = $(imgs[i]).attr('zanCount');
+		obj.shitCount = $(imgs[i]).attr('shitCount');
+		data.push(obj);
+	}
+  imgJSON.data = data;
+  imgJSON.zan = zanList;
+	imgJSON.status=1;
+	imgJSON.start=0;
+	
 	//chuzu = getParam('chuzu');
-	if($('#sourceLink').attr('link')==''){
-		$('#sourceLinkTr').css('display','none');
+	if($('#sourceLink').attr('link')!=''){
+		$('#sourceLinkTr').css('display','');
 	}
     sideBtnFun();
     $('[data-toggle=tooltip]').tooltip();
@@ -283,7 +315,7 @@ function init(){
         ThiBox.prepend('<div class="alert alert-success btn-xs"></div>');
         var ThiBoxBtn=ThiBox.find('.telSee'),
         ThiBoxDiv=ThiBox.find('div')
-        ThiBoxDiv.css({'display':'block','overflow':'hidden'});
+        ThiBoxDiv.css({'display':'block','overflow':'hidden','min-height': '28px'});
         $('.telBox').find('p:last-child').css({'margin':'0'});
         if(ThiBox.attr('seeHM')=="0"){
           ThiBoxDiv.removeClass('alert-success');
@@ -388,6 +420,36 @@ function init(){
       //$('.see_house_genjin').find('tbody').html('<tr><td style="padding:3px;"><img src="../../style/images/zjb.png" style="width:240px;"/></td></tr>');
       $('#addGenjinBtn').tooltip('show');
     }
+    
+    ImgListBox($('.see_house_images .imgbox img.img'));
+
+    $(document).on('click','.btnIcon',function(){
+      //alert($('.see_house_genjin').offset().top)
+      var Thi=$(this),
+      DSname=Thi.data('sname');
+      //alert(DSname)
+      ScrollGoto($('.'+DSname));
+    })
+
+      var T1=$('.TableMainL'),
+      T2=$('.see_house_genjin'),
+      T3=$('.see_house_images');
+      var T1top=(T1.offset().top-34),
+      T2top=(T2.offset().top-34),
+      T3top=(T3.offset().top-34);
+    $('.sideMainer').scroll(function(e){
+      //alert($(this).scrollTop())
+      var Thi=$(this),
+      ThiScrollTop=Thi.scrollTop();
+      //alert(T1top+'|'+T2top+'|'+ThiScrollTop)
+      if(ThiScrollTop<=T2top){
+        $('.TableMainLeftTit h2').text('房源详细');
+      }else if(ThiScrollTop<=T3top){
+        $('.TableMainLeftTit h2').text('跟进列表');
+      }else if(ThiScrollTop>=T3top){
+        $('.TableMainLeftTit h2').text('房源图片');
+      }
+    });
 }
 $('#area').on('click',function(){
   var Thi=$(this),
@@ -417,7 +479,7 @@ loadJs('${refPrefix}/bootstrap/js/bootstrap.js');
 loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
 loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
 //loadJs('${refPrefix}/js/house/houseSee_v2.js');
-setTimeout(init , 200);
+setTimeout(init , 300);
 //init();
 </script>
 
@@ -456,14 +518,21 @@ body .telTable .telBox .onOpen{ text-align: center; }
 
      <div style="display:table-row;">   
         <div class="sideHead TableMainLeftTit" style="display:table-cell;">
-            房源详细
+        	<c:if test="${imgList.size()>0 }">
+            <span class="fr">
+              <a class="btnIcon" data-sname="TableMainL" title="到顶部"><i class="iconfont">&#xe617;</i></a>
+              <a class="btnIcon" data-sname="see_house_genjin" title="到跟进"><i class="iconfont">&#xe633;</i></a>
+              <a class="btnIcon" data-sname="see_house_images" title="到图片"><i class="iconfont">&#xe634;</i></a>
+            </span>
+            </c:if>
+            <h2>房源详细</h2>
         </div>
      </div>
         
         
      <div style="display:table-row;">     
         <div style="display:table-cell; width:100%;">
-        <div style="height:100%; overflow:hidden; overflow-y:auto;">
+        <div class="sideMainer" style="height:100%; overflow:hidden; overflow-y:auto;">
         <table width="100%" class="TableMainL" id="seeHouse ">
         <tbody>
           <tr>
@@ -626,7 +695,7 @@ body .telTable .telBox .onOpen{ text-align: center; }
                   <td class="neirong TextColor1">${house.forlxr} ${house.fortel}&nbsp;</td>
                 </tr>
                 <c:if test="${authNames.contains('fy_sh') }">
-                <tr id="sourceLinkTr">
+                <tr id="sourceLinkTr" style="display:none">
                   <td class="biaoti biaotiMax"></td>
                   <td class="neirong TextColor1"><a id="sourceLink" link="${house.href}" href="javascript:void(0)" onclick="window.top.gui.Shell.openExternal('${house.href}');">原链接</a></td>
                 </tr>
@@ -640,15 +709,15 @@ body .telTable .telBox .onOpen{ text-align: center; }
         <table class="TableMainLGj see_house_genjin" width="100%">
           <thead>
             <tr>
-              <th><h2>跟进列表</h2></th>
+              <th><h2 class="h2">跟进列表</h2></th>
             </tr>
           </thead>
           <tbody>
           	<c:forEach items="${gjList }" var="gj">
             <tr class="list">
               <td style="padding-left:5px;padding-right:5px">
-              	<div style="margin-bottom:4px;max-width:248px;">${gj.ztai}</div>
                 <div style="margin-bottom:4px;max-width:248px;">${gj.conts}</div>
+                <div style="margin-bottom:4px;max-width:248px;font-size:11px">(状态变更:${gj.ztai})</div>
                 <p style="display:inline-block;width:110px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden"><span title="${gj.uname}">${gj.dname}-${gj.uname}</span></p>
                  <span style="float:right;color:#999999"><fmt:formatDate value="${gj.addtime}" pattern="yyyy-MM-dd HH:mm"/></span>
               </td>
@@ -656,6 +725,118 @@ body .telTable .telBox .onOpen{ text-align: center; }
             </c:forEach>
           </tbody>
         </table>
+<script type="text/javascript">
+function ImgAutoBox(img){
+    function imgAct(){
+        var ThiW=Thi.width(),
+        ThiH=Thi.height(),
+        isW='W',
+        ThiP=Thi.parent(),
+        ThiPW=ThiP.width(),
+        ThiPH=ThiP.height();
+        if(ThiH>ThiW){isW='H'}
+        if(isW=='W'){
+            Thi.css({
+                'height': ThiPH,
+                'width': 'auto'
+                
+            });
+            ThiWn=(Thi.width()-ThiPW)/2;
+            Thi.css({'margin-left':-ThiWn})
+        }else{
+            Thi.css({
+                'width': ThiPW,
+                'height': 'auto'
+            });
+            ThiHn=(Thi.height()-ThiPH)/2;
+            Thi.css({'margin-top':-ThiHn})
+        }
+        ThiP.css('overflow', 'hidden');
+    }
+    var Thi=img;
+    var img = new Image(); 
+    img.src =Thi.attr("src");
+    if(img.complete){
+        imgAct();
+    }else{
+        img.onload = function(){
+            imgAct();
+        }
+    }
+}
+function ImgListBox(a){
+    if(!a){a=$('.imgbox img')}
+    var Thi=a,ThiBoxWidth=0;
+    Thi.each(function(index, el) {
+        var This=$(this),
+        ThiIMG=This,
+        ThiBox=This.parents('.imgbox');
+        if(ThiBoxWidth==0){ThiBoxWidth=ThiBox.width()}
+        //ThiBoxWidth=''?ThiBox.width():ThiBoxWidth;
+        ThiBox.height(ThiBoxWidth);
+        This.find('a.jia').css({
+            'height': ThiBoxWidth+'px',
+            'line-height':ThiBoxWidth+'px'
+        });
+        ImgAutoBox(ThiIMG);
+    });
+}
+
+function ScrollGoto(a){
+    if(a.length>0){
+      var ThiPTop=($('.TableMainL').offset().top-34)*(-1)
+        var ThiTop=a.offset().top+ThiPTop;
+        if(ThiTop<100){ThiTop=ThiTop-34}
+        //alert(a.offset().top)
+        $('.sideMainer').animate({'scrollTop': ThiTop},500, function(){});
+    }
+}
+$(document).on('click', '.imgListBox .imgbox', function(event) {
+	imgJSON.start = $(this).index();
+  	window.parent.openMaxPic(imgJSON)
+  	event.preventDefault();
+});
+</script>
+<style type="text/css">
+.TableMainLeftTit{ position: relative; }
+.TableMainLeftTit .fr{ position: absolute; top:4px; right: 5px; height: 26px; line-height: 22px; border: 1px solid #CFCFCF; border-radius: 2px; background:#EFEFEF; box-shadow: -1px -1px 0px #FFF; }
+.TableMainLeftTit .fr a{ display: block; height: inherit; line-height: inherit; float: left; padding: 0 2px; color: #999; text-shadow: -1px -1px 0px #FFF; }
+.TableMainLeftTit .fr i{ font-size: 18px; }
+h2{ margin: 0; padding: 0; font-size: 100%; line-height: inherit; }
+
+h2.h2{border-bottom: 1px solid #d1d1d1;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e9e9e9));}
+
+.see_house_images{}
+.see_house_images th h2 i{ font-size: 12px; font-weight: normal; }
+.see_house_images tbody td{ padding: 0; }
+.imgListBox {}
+.imgListBox a.imgbox{ display:block; float: left; width: 32%; margin-left: 1%; margin-top: 1%; overflow: hidden; }
+.imgListBox a.imgbox img.img{ width: 100%; }
+</style>
+        <c:if test="${imgList.size()>0 }">
+	        <table class="TableMainLGj see_house_images" width="100%">
+	          <thead>
+	            <tr>
+	              <th><h2 class="h2">房源图片 <i>5</i></h2></th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr class="list">
+	              <td>
+	                <div class="imgListBox">
+	                	<c:forEach items="${imgList }"  var="img">
+	                		<a href="#1" class="imgbox"  ><img zanCount="${img.zanCount }"  shitCount="${img.shitCount }" src="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}" alt="" class="img"></a>	
+	                	</c:forEach>
+	                </div>
+	              </td>
+	            </tr>
+	          </tbody>
+	        </table>
+		</c:if>
+		<c:if test="${imgList.size()==0 }">
+			<div class="see_house_images"></div>
+		</c:if>
         </div>
         </div>
      </div>

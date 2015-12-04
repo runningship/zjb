@@ -80,15 +80,15 @@ public class PGenjinService {
 		if(String.valueOf(SellState.在售.getCodeString()).equals(h.ztai)){
 			if(SellState.已售.getCode()==type || SellState.停售.getCode()==type){
 				if(count>=3){
-					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
+					gj.ztai=SellState.parse(h.ztai).toString()+"->"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
 					dao.saveOrUpdate(h);
 				}else{
-					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
+					gj.ztai=SellState.parse(h.ztai).toString()+"->"+SellState.parse(String.valueOf(type)).toString();
 				}
 			}else{
-				gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
+				gj.ztai=SellState.parse(h.ztai).toString()+"->"+SellState.parse(String.valueOf(type)).toString();
 			}
 		}else if(String.valueOf(SellState.已售.getCodeString()).equals(h.ztai)){
 			if(count>=1){
@@ -96,7 +96,7 @@ public class PGenjinService {
 					dao.delete(h);
 					delete = true;
 				}else{
-					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
+					gj.ztai=SellState.parse(h.ztai).toString()+"->"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
 					dao.saveOrUpdate(h);
@@ -109,7 +109,7 @@ public class PGenjinService {
 					dao.delete(h);
 					delete = true;
 				}else{
-					gj.ztai=SellState.parse(h.ztai).toString()+"-"+SellState.parse(String.valueOf(type)).toString();
+					gj.ztai=SellState.parse(h.ztai).toString()+"->"+SellState.parse(String.valueOf(type)).toString();
 					h.ztai = String.valueOf(type);
 					h.dategjlock = new Date();
 					dao.saveOrUpdate(h);
@@ -147,7 +147,7 @@ public class PGenjinService {
 		
 		gj.addtime = new Date();
 		HouseRent hr = dao.get(HouseRent.class, gj.hid);
-		gj.ztai = RentState.parse(hr.ztai)+"-"+RentState.parse(String.valueOf(gj.flag));
+		gj.ztai = RentState.parse(hr.ztai)+"->"+RentState.parse(String.valueOf(gj.flag));
 		dao.saveOrUpdate(gj);
 		mv.data.put("result", "1");
 		mv.data.put("msg", "添加成功");

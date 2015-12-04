@@ -265,7 +265,7 @@ $(document).ready(function(){
 //         }else{
 //           art.dialog.open("/ad/leshi.html",{id:'ads',width:406,height:406,title:'',lock:true,padding:0}); 
 //         }
-        //$('#ad_container').show();
+        $('#ad_container').show();
         window.top.hasShowAds=true;
       //}
     }

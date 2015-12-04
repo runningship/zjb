@@ -152,9 +152,9 @@ function appendItem(imgObj , tempHtml ,lazy){
 				belongClass="other";
 			}
 			if(lazy){
-				tmp.find('ul').append('<li class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/loading.jpg" data-echo="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
+				tmp.find('ul').append('<li hiid="'+imgObj.id+'" class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/loading.jpg" data-echo="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}else{
-				tmp.find('ul').append('<li  class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" ontouchend="gtouchend()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
+				tmp.find('ul').append('<li hiid="'+imgObj.id+'" class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" ontouchend="gtouchend()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}
 			if(imgObj.uid!=config.user.uid){
 				break;
@@ -171,7 +171,7 @@ function appendItem(imgObj , tempHtml ,lazy){
 				$('.myItem').find('.count').text(myImgCount);
 				//修改 ul path属性
 				var allPath = $('.myItem').find('ul').attr('path');
-				allPath+= imgObj.path;
+				allPath+= ';'+imgObj.path;
 				$('.myItem').find('ul').attr('path' , allPath);
 			}else{
 				tmp.addClass('myItem');
@@ -189,8 +189,19 @@ function appendItem(imgObj , tempHtml ,lazy){
 			}else{
 				tmp.find('.uname').text('手机用户');
 			}
-			tmp.find('.count').text(count);
-			$('#mainer').append(tmp);
+			
+			if($('.'+imgObj.tel).length>0){
+				var count = $('.'+imgObj.tel).find('.count').text();
+				$('.'+imgObj.tel).find('.count').text(parseInt(count)+1);
+				//add path to ul
+				var p = $('.'+imgObj.tel).find('ul').attr('path');
+				$('.'+imgObj.tel).find('ul').attr('path' , p+';'+imgObj.path);
+			}else{
+				tmp.addClass(imgObj.tel);
+				tmp.find('.count').text(count);
+				$('#mainer').append(tmp);
+			}
+			
 		}
 	}else{
 		$('.mainer .tips').show();
@@ -353,11 +364,11 @@ function deleteHouseImage(currentImg){
 	var uid = $(currentImg).attr('uid');
 	var hid = $(currentImg).attr('hid');
 	var path = $(currentImg).attr('path');
-	
+	var id = $(currentImg).attr('hiid');
 	YW.ajax({
     	url: 'http://'+server_host+'/c/mobile/houseImage/delPublicHouseImage?chuzu='+cz,
 		method:'post',
-		data:{values:{path:path,hid:hid,uid:uid}},
+		data:{values:{path:path,hid:hid,uid:uid , id:id}},
 		cache:false,
 		returnAll:false
 	},function(ret , err){

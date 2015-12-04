@@ -132,6 +132,19 @@ var iframeBox=$('#iframeBox'),
     // $(iframeBox).width($(iframeBox).parent().width());
 }
 
+var frameCheckTimer;
+function beforeIframeChange(frameId , targetUrl){
+	$('#'+frameId)[0].contentWindow.location = targetUrl;
+	frameCheckTimer = setTimeout(function(){
+		clearTimeout(frameCheckTimer);
+		beforeIframeChange(frameId , targetUrl);
+	} , 5000);
+}
+
+function iframeChanged(frameId){
+	clearTimeout(frameCheckTimer);
+}
+
 $(function() {
 
 try{
@@ -672,7 +685,7 @@ var time_ani2=setTimeout(function(){
 </div>
 
 
-<div class="adboxs" style="    z-index: 9999;">
+<div class="adboxs"  id="ad_phone" style="display:none; z-index: 9999;">
     <div class="adboxitem">
         <h3 class="saoma animated">扫码下载APP客户端</h3>
         <div class="lineBox">
@@ -689,5 +702,6 @@ var time_ani2=setTimeout(function(){
             <a href="#" class="btn white posa posaFK">意见问题反馈</a>
     </div>
 </div>
+
 </body>
 </html>

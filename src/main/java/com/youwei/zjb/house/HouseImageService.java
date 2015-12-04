@@ -32,6 +32,7 @@ import cn.jpush.api.utils.StringUtils;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.house.entity.HouseImage;
+import com.youwei.zjb.house.entity.HouseImageGJ;
 import com.youwei.zjb.util.ImageHelper;
 import com.youwei.zjb.util.WXUtil;
 
@@ -90,7 +91,11 @@ public class HouseImageService {
 	@WebMethod
 	public ModelAndView getPublicHouseImage(HouseImage image){
 		ModelAndView mv = new ModelAndView();
-		List<Map> list = dao.listAsMap("select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel from HouseImage hi , User u where u.id=hi.uid and hid=? and chuzu=? and isPrivate=? ", image.hid , image.chuzu , 0);
+//		List<Map> list = dao.listAsMap("select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel from HouseImage hi , User u , HouseImageGJ gj"
+//				+ " where u.id=hi.uid and gj.hiid=hi.id and hid=? and chuzu=? and isPrivate=? ", image.hid , image.chuzu , 0);
+		
+		List<Map> list = dao.listSqlAsMap("select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel,hi.zanCount as zanCount , hi.shitCount as shitCount from HouseImage hi , uc_user u "
+						+"where u.id=hi.uid and hid=? and chuzu=? and isPrivate=?", image.hid , image.chuzu , 0);
 		
 //		List<HouseImage> list = dao.listByParams(HouseImage.class, new String[]{"hid" , "chuzu" , "isPrivate"}, new Object[]{image.hid , image.chuzu , 0});
 		mv.data.put("list", JSONHelper.toJSONArray(list));
@@ -99,18 +104,92 @@ public class HouseImageService {
 	}
 	
 	@WebMethod
+	public ModelAndView zanHouseImage(Integer hiid , Integer uid , int zan){
+		ModelAndView mv = new ModelAndView();
+		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , uid});
+		HouseImage image = dao.get(HouseImage.class, hiid);
+		if(po==null){
+			HouseImageGJ gj = new HouseImageGJ();
+			gj.hiid = hiid;
+			gj.zan = zan;
+			gj.uid = uid;
+			gj.hid = image.hid;
+			dao.saveOrUpdate(gj);
+		}else{
+			if(po.zan==null){
+				po.zan=0;
+			}
+			if(po.zan==0 && zan==1){
+				image.zanCount++;
+			}else if(po.zan==1 && zan==0){
+				image.zanCount--;
+			}
+			po.zan = zan;
+			dao.saveOrUpdate(po);
+			dao.saveOrUpdate(image);
+		}
+		mv.data.put("result", "0");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView shitHouseImage(Integer hiid , Integer uid , Integer shit){
+		ModelAndView mv = new ModelAndView();
+		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , uid});
+		HouseImage image = dao.get(HouseImage.class, hiid);
+		if(po==null){
+			HouseImageGJ gj = new HouseImageGJ();
+			gj.hiid = hiid;
+			gj.shit = shit;
+			gj.uid = uid;
+			gj.hid = image.hid;
+			dao.saveOrUpdate(gj);
+		}else{
+			if(po.shit==null){
+				po.shit=0;
+			}
+			if(po.shit==0 && shit==1){
+				image.shitCount++;
+			}else if(po.shit==1 && shit==0){
+				image.shitCount--;
+			}
+			po.zan = shit;
+			dao.saveOrUpdate(po);
+			dao.saveOrUpdate(image);
+		}
+		mv.data.put("result", "0");
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView delPublicHouseImage(HouseImage image){
 		ModelAndView mv = new ModelAndView();
-		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid","uid" , "chuzu"}, new Object[]{image.hid ,image.uid, image.chuzu});
-		if(po!=null && po.path!=null){
-			po.path = po.path.replace(image.path+";", "");
-			dao.saveOrUpdate(po);
-			String thumbName = image.path+".t.jpg";
-			String savePath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+image.path;
-			String thumbPath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+thumbName;
-			FileUtils.deleteQuietly(new File(savePath));
-			FileUtils.deleteQuietly(new File(thumbPath));
+		if(image.id!=null){
+			HouseImage po = dao.get(HouseImage.class, image.id);
+			if(po!=null){
+				dao.delete(po);
+				FileUtils.deleteQuietly(new File(po.path));
+				FileUtils.deleteQuietly(new File(po.path+".t.jpg"));
+			}
 		}
+//		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid","uid" , "chuzu" , "isPrivate"}, new Object[]{image.hid ,image.uid, image.chuzu , 0});
+//		if(po!=null && po.path!=null){
+//			po.path = po.path.replace(image.path+";", "");
+//			dao.saveOrUpdate(po);
+//			String thumbName = image.path+".t.jpg";
+//			String savePath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+image.path;
+//			String thumbPath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+thumbName;
+//			FileUtils.deleteQuietly(new File(savePath));
+//			FileUtils.deleteQuietly(new File(thumbPath));
+//		}
+		mv.data.put("result", "0");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView genjin(HouseImageGJ gj){
+		ModelAndView mv = new ModelAndView();
+		dao.saveOrUpdate(gj);
 		mv.data.put("result", "0");
 		return mv;
 	}
@@ -123,12 +202,13 @@ public class HouseImageService {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		try{
 			List<FileItem> items = upload.parseRequest(request);
-			HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid","uid" , "chuzu"}, new Object[]{image.hid ,image.uid, image.chuzu});
-			if(po!=null){
-				image = po;
-			}
-			image.isPrivate = 0;
-			image.addtime = new Date();
+//			HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid","uid" , "chuzu"}, new Object[]{image.hid ,image.uid, image.chuzu});
+//			if(po!=null){
+//				image = po;
+//			}
+//			image.isPrivate = 0;
+//			image.addtime = new Date();
+//			image.sh = 0;
 			String serverPathList = new String();
 			for(FileItem item : items){
 				if(item.isFormField()){
@@ -139,11 +219,12 @@ public class HouseImageService {
 				}else if(item.getSize()>=MAX_SIZE){
 						throw new RuntimeException("单个图片不能超过2M");
 				}else{
-					if(image.path==null){
-						image.path = item.getName()+";";
-					}else{
-						image.path+=item.getName()+";";
-					}
+					image.isPrivate = 0;
+					image.addtime = new Date();
+					image.sh = 0;
+					image.path = item.getName();
+					image.zanCount = 0;
+					image.shitCount = 0;
 					String thumbName = item.getName();
 					thumbName =  item.getName()+".t.jpg";
 					String savePath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+item.getName();
