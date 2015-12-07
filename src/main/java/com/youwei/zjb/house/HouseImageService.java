@@ -104,16 +104,23 @@ public class HouseImageService {
 	}
 	
 	@WebMethod
-	public ModelAndView zanHouseImage(Integer hiid , Integer uid , int zan){
+	public ModelAndView zanHouseImage(Integer hiid , int zan){
 		ModelAndView mv = new ModelAndView();
+		Integer uid = ThreadSessionHelper.getUser().id;
 		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , uid});
 		HouseImage image = dao.get(HouseImage.class, hiid);
+		if(image==null){
+			throw new GException(PlatformExceptionType.BusinessException,"" , "图片不存在");
+		}
 		if(po==null){
 			HouseImageGJ gj = new HouseImageGJ();
 			gj.hiid = hiid;
 			gj.zan = zan;
 			gj.uid = uid;
 			gj.hid = image.hid;
+			if(gj.shit==null){
+				gj.shit = 0;
+			}
 			dao.saveOrUpdate(gj);
 		}else{
 			if(po.zan==null){
@@ -133,16 +140,23 @@ public class HouseImageService {
 	}
 	
 	@WebMethod
-	public ModelAndView shitHouseImage(Integer hiid , Integer uid , Integer shit){
+	public ModelAndView shitHouseImage(Integer hiid , Integer shit){
 		ModelAndView mv = new ModelAndView();
+		Integer uid = ThreadSessionHelper.getUser().id;
 		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , uid});
 		HouseImage image = dao.get(HouseImage.class, hiid);
+		if(image==null){
+			throw new GException(PlatformExceptionType.BusinessException,"" , "图片不存在");
+		}
 		if(po==null){
 			HouseImageGJ gj = new HouseImageGJ();
 			gj.hiid = hiid;
 			gj.shit = shit;
 			gj.uid = uid;
 			gj.hid = image.hid;
+			if(gj.zan==null){
+				gj.zan = 0;
+			}
 			dao.saveOrUpdate(gj);
 		}else{
 			if(po.shit==null){
@@ -153,7 +167,7 @@ public class HouseImageService {
 			}else if(po.shit==1 && shit==0){
 				image.shitCount--;
 			}
-			po.zan = shit;
+			po.shit = shit;
 			dao.saveOrUpdate(po);
 			dao.saveOrUpdate(image);
 		}

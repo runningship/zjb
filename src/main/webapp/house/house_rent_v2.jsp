@@ -212,6 +212,7 @@ $(document).ready(function(){
     buildHtmlWithJsonArray("id_zhuangxiu",${queryOptions.zhuangxiu} ,true);
     buildHtmlWithJsonArray("id_quyu", ${queryOptions.quyu},true);
     buildHtmlWithJsonArray("id_zhuangtai", ${queryOptions.ztai_sell},true, true);
+    buildHtmlWithJsonArray("id_fangshi",${queryOptions.rent_type},true , true);
     doSearchAndSelectFirst();
     
     $("button.selectMethod").parent().hover(function(){

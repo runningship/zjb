@@ -194,7 +194,7 @@ $(document).ready(function() {
                         </li>
                         <li>
                           <span class="SpanName not-select">状态</span>
-                            <select name="status" id="status" class="input-sm input-rightB w102" style="width:80px;">
+                            <select name="status" id="status" class="input-sm input-left w102" style="width:80px;">
                               <option value="">所有</option>
                               <option value="待返回">待返回</option>
                               <option value="已返回">已返回</option>
@@ -203,7 +203,7 @@ $(document).ready(function() {
                         </li>
                         <li>
                           <span class="SpanName not-select">类型</span>
-                            <select name="type" class="input-sm input-rightB w102" style="width:80px;">
+                            <select name="type" class="input-sm input-left w102" style="width:80px;">
                               <option value="">所有</option>
                               <option value="0">带看</option>
                               <option value="1">陪看</option>
@@ -252,19 +252,19 @@ $(document).ready(function() {
                                    <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" style=" margin-bottom:-1px;">
                                     <tr>
                                             <th width="60" style="background:none;">客户姓名</th>
-                                            <th width="150" style="background:none;">客户电话</th>
+                                            <th width="100" style="background:none;">客户电话</th>
                                             <!--<th style="width:200px; min-width:50px;">楼盘名称</th>-->
                                             <!-- <th width="50">楼型</th> -->
                                             <!-- <th width="60">户型</th> -->
                                             <th style="background:none;">带看楼盘</th>
-                                            <th width="80" style="background:none;">看房方式</th>
-                                            <th width="80" style="background:none;">状态</th>
-                                            <th width="150" style="background:none;">外出时间</th>
-                                            <th width="150" style="background:none;">返回时间</th>
+                                            <th width="50" style="background:none;">看房方式</th>
+                                            <th width="60" style="background:none;">状态</th>
+                                            <th width="130" style="background:none;">外出时间</th>
+                                            <th width="130" style="background:none;">返回时间</th>
                                             <!-- <th width="50">单价</th> -->
                                             <th width="120" style="background:none;">业务员</th>
                                             <!-- <th width="50">装潢</th> -->
-                                            <th width="120" style="background:none;">操作</th>
+                                            <th width="80" style="background:none;">操作</th>
                                             
                                      </tr>
                                           
@@ -278,22 +278,22 @@ $(document).ready(function() {
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
                     <tr data-cid="$[id]" style="display:none;" class="id_client_list"  >
                       <td width="60" height="35"><strong>$[clientName]</strong></td>
-                      <td width="150" >$[ctels]</td>
+                      <td width="100" >$[ctels]</td>
                       <!--<td style="width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[areas]</div></td>-->
                       <!-- <td width="50">$[lxings]</td> -->
                       <!-- <td width="60">$[hxings]</td> -->
                       <td style="text-align:left">$[houseInfos]</td>
-                      <td width="80" runscript=true>gettype($[type])</td>
-                      <td width="80">
+                      <td width="50" runscript=true>gettype($[type])</td>
+                      <td width="60">
                         <span style="text-decoration:underline;" class="$[status] hand" show="$${userId}==$[uid] && '$[status]'=='待返回'" onclick="fanhui($[id],$[rowIndex]);">$[status]</span>
                         <span class="$[status]" show="$${userId}!=$[uid] && '$[status]'=='待返回'" >$[status]</span>
                         <span class="$[status]" show="'$[status]'!='待返回'" >$[status]</span>
                       </td>
-                      <td width="150" >$[outtime]</td>
-                      <td width="150" >$[backtime]</td>
+                      <td width="130" >$[outtime]</td>
+                      <td width="130" >$[backtime]</td>
                       <td style="text-align:left" width="120">$[dname]-$[uname]</td>
                       <!-- <td width="50">$[zxius]</td> -->
-                      <td width="120" align="left">
+                      <td width="80" align="left">
                         <a auth="yw_outhouse_sh" show="'$[status]'!='待返回'" href="##" onclick="openpiyue($[id],$[rowIndex]);" title="批阅" class="py_iconColor" style="color:#0081db;">批阅</a>
                         <!-- 查看只要有数据权限就可以操作 -->
                        <a href="###" onclick="openEdit($[id],$[rowIndex])" class="ck_iconColor" title="查看">查看</a>

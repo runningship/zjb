@@ -27,6 +27,7 @@ import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.house.entity.Agent;
+import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.sys.entity.PC;
@@ -223,6 +224,13 @@ public class UserService {
 			agent.labelUid = uid;
 			agent.hid = hid;
 			dao.saveOrUpdate(agent);
+			
+			long count = dao.countHql(" select count( distinct u.cid) as total from Agent agent ,User u where agent.labelUid = u.id and agent.hid = ? ", hid);
+			if(count>=5){
+				House house = dao.get(House.class, hid);
+				house.isdel = 1;
+				dao.saveOrUpdate(house);
+			}
 		}
 		return mv;
 	}

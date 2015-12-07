@@ -89,15 +89,21 @@ vl.viewTime = new Date();
 dao.saveOrUpdate(vl);
 
 User u = ThreadSessionHelper.getUser();
-// String sql = "select hi.id as id , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel,hi.zanCount as zanCount , hi.shitCount as shitCount  from HouseImage hi , uc_user u "
-// 		+"where u.id=hi.uid and hid=? and chuzu=0 and isPrivate=0";
-// List<Map> list = dao.listSqlAsMap(sql, h.id);
+String sql = "select hi.id as hiid , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel,hi.zanCount as zanCount , hi.shitCount as shitCount  from HouseImage hi , uc_user u "
+		+"where u.id=hi.uid and hid=? and chuzu=0 and isPrivate=0";
+List<Map> list = dao.listSqlAsMap(sql, h.id);
 
-// List<HouseImageGJ> zanList = dao.listByParams(HouseImageGJ.class, "from HouseImageGJ where hid=? and uid=? ", h.id , u.id);
-// request.setAttribute("zanList", JSONHelper.toJSONArray(zanList));
-// request.setAttribute("imgList", list);
-request.setAttribute("zanList", "[]");
-request.setAttribute("imgList", new ArrayList<Map>());
+List<HouseImageGJ> zanList = dao.listByParams(HouseImageGJ.class, "from HouseImageGJ where hid=? and uid=? ", h.id , u.id);
+JSONObject zanObj = new JSONObject();
+for(HouseImageGJ gj : zanList){
+	JSONObject tmp = new JSONObject();
+	tmp.put("zan", gj.zan);
+	tmp.put("shit", gj.shit);
+	zanObj.put(gj.hiid, tmp);
+}
+request.setAttribute("zanObj", zanObj);
+request.setAttribute("imgList", list);
+request.setAttribute("imgList", list);
 String host = ConfigCache.get("domainName", "www.zhongjiebao.com");
 request.setAttribute("host", host);
 %>
@@ -274,21 +280,29 @@ function labelAgent(obj){
 $(document).ready(function() {
 });
 var imgJSON = JSON.parse("{}");
-var zanList = JSON.parse('${zanList}');
+var zanObj = JSON.parse('${zanObj}');
 function init(){
 	//构造房源图片 json格式 
 	var imgs = $('.imgListBox img');
 	var data = [];
 	for(var i=0;i<imgs.length;i++){
 		var obj = JSON.parse("{}");
-		obj.src=$(imgs[i]).attr('src');
+		obj.src=$(imgs[i]).attr('path');
 		obj.start=i;
-		obj.zanCount = $(imgs[i]).attr('zanCount');
-		obj.shitCount = $(imgs[i]).attr('shitCount');
+		obj.hiid = $(imgs[i]).attr('hiid');
+		obj.zanCount = parseInt($(imgs[i]).attr('zanCount'));
+		obj.shitCount = parseInt($(imgs[i]).attr('shitCount'));
+		if(!zanObj[obj.hiid]){
+			obj.zan=0;
+			obj.shit = 0;
+		}else{
+			obj.zan = zanObj[obj.hiid].zan;
+			obj.shit = zanObj[obj.hiid].shit;
+		}
 		data.push(obj);
 	}
   imgJSON.data = data;
-  imgJSON.zan = zanList;
+  imgJSON.zanObj = zanObj;
 	imgJSON.status=1;
 	imgJSON.start=0;
 	
@@ -826,7 +840,7 @@ h2.h2{border-bottom: 1px solid #d1d1d1;
 	              <td>
 	                <div class="imgListBox">
 	                	<c:forEach items="${imgList }"  var="img">
-	                		<a href="#1" class="imgbox"  ><img zanCount="${img.zanCount }"  shitCount="${img.shitCount }" src="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}" alt="" class="img"></a>	
+	                		<a href="#" class="imgbox"  ><img hiid="${img.hiid }" zanCount="${img.zanCount }"  shitCount="${img.shitCount }"  path="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}"  src="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}.t.jpg" alt="" class="img"></a>	
 	                	</c:forEach>
 	                </div>
 	              </td>

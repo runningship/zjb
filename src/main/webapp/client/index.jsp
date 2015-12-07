@@ -243,6 +243,9 @@ $(document).ready(function() {
 </script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 <style type="text/css">
+input:not([type="image"]), textarea {
+    box-sizing: border-box;
+}
   .aui_content{padding:10px 15px; font-size: 14px;}
 </style>
 </head>

@@ -162,7 +162,7 @@ to {background: #007759; border:1px solid #00241b;}
 
 .InputMainLine li span{ background-color:#eeeeee; padding:0 5px;  border-bottom-right-radius: 0; border-top-right-radius: 0;}
 
-.InputMainLine li input.input-sm{ height:30px; line-height:1.5; font-size:12px;}
+.InputMainLine li input.input-sm{ height:30px; line-height:1.5; font-size:12px; box-sizing:border-box;}
 
 .InputMainLine li .w110{ width:110px;}
 .InputMainLine li .w102{ width:96.5px;}
