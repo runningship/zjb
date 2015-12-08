@@ -61,6 +61,7 @@ public class Department {
 	public Date addtime;
 	
 	//似乎无用，全为1
+	//开始使用 1为信息版, 0为软件版
 	public Integer flag;
 	
 	/**

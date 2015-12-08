@@ -99,6 +99,7 @@ public class DepartmentService {
 		po.tel = dept.tel;
 		po.beizhu = dept.beizhu;
 		po.sh = dept.sh;
+		po.flag = dept.flag;
 		po.useIm = dept.useIm;
 		if(dept.price!=null){
 			po.price = dept.price;

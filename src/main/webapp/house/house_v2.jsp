@@ -372,7 +372,7 @@ function buildQueryOptions(){
 
 <div id="ad_container" style="display:none" class="adboxs">
     <div class="adboxitem">
-        <img src="/ad/img/zjb/ad_gujing.png" alt="" class=" animated fadeInDown" >
+        <img src="/ad/img/zjb/ad_what_we_do.jpg" alt="" class=" animated fadeInDown" >
     </div>
 </div>
 </body>

@@ -156,10 +156,10 @@ layer.photos = function(options){
                 log.imgsname = (json.title || '');
                 log.name = data[json.start].name;
                 log.imgIndex = json.start + 1;
-                log.zanNum = data[json.start].zanCount;
                 log.zanOk = data[json.start].zan;
-                log.shitNum = data[json.start].shitCount;
-                log.shitOK = data[json.start].shit;
+                log.shitOk = data[json.start].shit;
+                log.zanCount = data[json.start].zanCount;
+                log.shitCount = data[json.start].shitCount;
                 log.hiid = data[json.start].hiid;
             } else {
                 layer.msg('没有任何图片', 2, 8);
@@ -237,36 +237,14 @@ layer.photos = function(options){
         }
     };
     
-    log.zanBox = function(){
-        //alert(log.imgIndex)
-        //log.zanNum;
-        zanNums=log.zanNum>0?log.zanNum:0;
-        shitNums=log.shitNum>0?log.shitNum:0;
-        log.imgzan.find('.xubox_zanZan em').text(zanNums);
-        log.imgzan.find('.xubox_zanShit em').text(shitNums);
-        if(log.zanOk>0){
-            log.imgzan.find('.xubox_zanZan').addClass('ok');
-        }else{
-            log.imgzan.find('.xubox_zanZan').removeClass('ok');
-        }
-        if(log.shitOk>0){
-            log.imgzan.find('.xubox_zanShit').addClass('ok');
-        }else{
-            log.imgzan.find('.xubox_zanShit').removeClass('ok');
-        }
-        // if(log.zanOk||log.shitOk){
-        //     log.imgzan.find('.xubox_zanZan').addClass('noBB');
-        //     log.imgzan.find('.xubox_zanShit').addClass('noBB');
-        // }
-    };
     
     //一些动作
     log.event = function(){
-        log.bigimg.hover(function(){
-            log.imgsee.show();
-        }, function(){
-            log.imgsee.hide();
-        });
+        // log.bigimg.hover(function(){
+        //     log.imgsee.show();
+        // }, function(){
+        //     log.imgsee.hide();
+        // });
         
         //上一张
         conf.imgprev = function(){
@@ -296,24 +274,23 @@ layer.photos = function(options){
         
         //赞 点赞
         conf.zanZan = function(){
+            var zanJsonData=json.data[log.imgIndex-1];
             YW.ajax({
                 type: 'POST',
                 url: '/c/mobile/houseImage/zanHouseImage',
-                data:{hiid:log.hiid , zan:log.zanOk^1},
+                data:{hiid:zanJsonData.hiid , zan:zanJsonData.zan^1},
                 dataType:'json',
                 mysuccess: function(data){
                 	if(data.result==0){
-                        if(log.zanOk>0){
-                		    json.data[log.imgIndex-1].zanCount--;
-                            json.data[log.imgIndex-1].zan=0;
-                            log.zanOk=0;
-                            log.imgzan.find('.xubox_zanZan em').text(--zanNums);
+                        if(zanJsonData.zan>0){
+                		    zanJsonData.zanCount--;
+                            zanJsonData.zan=0;
+                            log.imgzan.find('.xubox_zanZan em').text(zanJsonData.zanCount);
                             log.imgzan.find('.xubox_zanZan').removeClass('ok');
                         }else{
-                            json.data[log.imgIndex-1].zanCount++;
-                            json.data[log.imgIndex-1].zan=1;
-                            log.zanOk=1;
-                            log.imgzan.find('.xubox_zanZan em').text(++zanNums);
+                            zanJsonData.zanCount++;
+                            zanJsonData.zan=1;
+                            log.imgzan.find('.xubox_zanZan em').text(zanJsonData.zanCount);
                             log.imgzan.find('.xubox_zanZan').addClass('ok');
                         }
                 	}else{
@@ -331,24 +308,23 @@ layer.photos = function(options){
         
         //赞 点赞
         conf.zanShit = function(){
+            var zanJsonData=json.data[log.imgIndex-1];
             YW.ajax({
                 type: 'POST',
                 url: '/c/mobile/houseImage/shitHouseImage',
-                data:{hiid:log.hiid , shit:log.shitOk^1},
+                data:{hiid:zanJsonData.hiid , shit:zanJsonData.shit^1},
                 dataType:'json',
                 mysuccess: function(data){
                 	if(data.result==0){
-                        if(log.shitOk>0){
-                            json.data[log.imgIndex-1].shitCount--;
-                            json.data[log.imgIndex-1].shit=0;
-                            log.shitOk=0;
-                            log.imgzan.find('.xubox_zanShit em').text(--shitNums);
+                        if(zanJsonData.shit>0){
+                            zanJsonData.shitCount--;
+                            zanJsonData.shit=0;
+                            log.imgzan.find('.xubox_zanShit em').text(zanJsonData.shitCount);
                             log.imgzan.find('.xubox_zanShit').removeClass('ok');
                         }else{
-                            json.data[log.imgIndex-1].shitCount++;
-                            json.data[log.imgIndex-1].shit=1;
-                            log.shitOk=1;
-                            log.imgzan.find('.xubox_zanShit em').text(++shitNums);
+                            zanJsonData.shitCount++;
+                            zanJsonData.shit=1;
+                            log.imgzan.find('.xubox_zanShit em').text(zanJsonData.shitCount);
                             log.imgzan.find('.xubox_zanShit').addClass('ok');
                         }
                 	}else{

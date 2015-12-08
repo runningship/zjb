@@ -36,9 +36,12 @@ function _open(url){
           <li class="line"></li>
       </ul>
 </div>
+
+
+
 <!-- openMaxPic -->
 <script src="../js/layer_photo/layer.min.js" type="text/javascript"></script>
-<script src="../js/layer_photo/extend/layer.ext.js" type="text/javascript"></script>
+<script src="../js/layer_photo/extend/layer.ext.js?2" type="text/javascript"></script>
 <script type="text/javascript">
 
 function openMaxPic(imgJSON){

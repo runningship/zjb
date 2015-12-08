@@ -61,9 +61,12 @@ function getContent(){
       var yy = $('input[name=sh][value='+json['comp']['sh']+']').parent();
       $('input[name=sh][value='+json['comp']['sh']+']').attr('checked','checked');
       yy.addClass('active');
-      var yy = $('input[name=useIm][value='+json['comp']['useIm']+']').parent();
+      var zz = $('input[name=useIm][value='+json['comp']['useIm']+']').parent();
       $('input[name=useIm][value='+json['comp']['useIm']+']').attr('checked','checked');
-      yy.addClass('active');
+      zz.addClass('active');
+      var flag = $('input[name=flag][value='+json['comp']['flag']+']').parent();
+      $('input[name=flag][value='+json['comp']['flag']+']').attr('checked','checked');
+      flag.addClass('active');
     }
   });
 }
@@ -181,6 +184,19 @@ $(document).ready(function() {
                             </label>
                             <label class="btn btn-default">
                                 <input type="radio" value="0" name="useIm" id="useIm" autocomplete="off"> 禁止
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">版本:</label>
+                    <div class="col-xs-8">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default">
+                                <input type="radio" value="0" name="flag" id="flag" autocomplete="off" checked>软件版
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" value="1" name="flag" id="flag" autocomplete="off">信息版
                             </label>
                         </div>
                     </div>

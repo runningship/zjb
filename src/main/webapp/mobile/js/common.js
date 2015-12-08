@@ -1,5 +1,5 @@
 var server_host = "www.zhongjiebao.com:8081";
-var img_server_host="www.zhongjiebao";
+var img_server_host="www.zhongjiebao.com";
 //定位所在城市
 var myCity;
 var config;
