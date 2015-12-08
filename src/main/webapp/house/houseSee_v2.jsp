@@ -828,7 +828,7 @@ h2.h2{border-bottom: 1px solid #d1d1d1;
 .imgListBox a.imgbox{ display:block; float: left; width: 32%; margin-left: 1%; margin-top: 1%; overflow: hidden; }
 .imgListBox a.imgbox img.img{ width: 100%; }
 </style>
-        <!-- <c:if test="${imgList.size()>0 }"> -->
+        <c:if test="${imgList.size()>0 }">
 	        <table class="TableMainLGj see_house_images" width="100%">
 	          <thead>
 	            <tr>
@@ -847,13 +847,10 @@ h2.h2{border-bottom: 1px solid #d1d1d1;
 	            </tr>
 	          </tbody>
 	        </table>
-		<!-- </c:if> -->
-		<!-- <c:if test="${imgList.size()==0 }">
+		</c:if>
+		<c:if test="${imgList.size()==0 }">
 			<div class="see_house_images"></div>
-		</c:if> -->
-          <div class="downloadPhone">
-            
-          </div>
+		</c:if>
         </div>
         </div>
      </div>
