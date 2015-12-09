@@ -28,6 +28,7 @@ import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.InvitationActivation;
 import com.youwei.zjb.user.entity.InvitationCode;
+import com.youwei.zjb.user.entity.JifenRecod;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
@@ -309,6 +310,26 @@ public class MobileUserService {
 		muser.pwd = SecurityHelper.Md5(pwd);
 		dao.saveOrUpdate(muser);
 		
+		mv.data.put("result", "1");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView duihuanJF(String tel , Integer jifen){
+		ModelAndView mv = new ModelAndView();
+		User user = dao.getUniqueByKeyValue(User.class, "tel", tel);
+		if(user.jifen<jifen){
+			throw new GException(PlatformExceptionType.BusinessException,"您的积分不足"+jifen);
+		}
+		int days = jifen/5;
+		user.jifen = user.jifen-5*days;
+		addMobileDeadtime(user ,days);
+		dao.saveOrUpdate(user);
+		JifenRecod record = new JifenRecod();
+		record.addTime = new Date();
+		record.uid = user.id;
+		record.conts="使用"+5*days+"积分兑换"+days+"天手机版使用时间";
+		dao.saveOrUpdate(record);
 		mv.data.put("result", "1");
 		return mv;
 	}

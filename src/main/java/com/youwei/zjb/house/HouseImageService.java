@@ -31,8 +31,11 @@ import cn.jpush.api.utils.StringUtils;
 
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
+import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseImage;
 import com.youwei.zjb.house.entity.HouseImageGJ;
+import com.youwei.zjb.user.entity.JifenRecod;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.ImageHelper;
 import com.youwei.zjb.util.WXUtil;
 
@@ -128,6 +131,22 @@ public class HouseImageService {
 			}
 			if(po.zan==0 && zan==1){
 				image.zanCount++;
+				//图片上传人积分+1
+				User u = dao.get(User.class, image.uid);
+				if(u.jifen==null){
+					u.jifen=1;
+				}else{
+					u.jifen+=1;
+				}
+				dao.saveOrUpdate(u);
+				House house = dao.get(House.class, image.hid);
+				JifenRecod record = new JifenRecod();
+				record.addTime = new Date();
+				record.uid = u.id;
+				record.hiid = hiid;
+				record.conts = "有人赞了上传到房源 "+house.area+" "+house.dhao+"#"+house.fhao+" 的图片，获得1个积分";
+				record.beizhu="hid="+image.hid+",hiid="+hiid+",zanUid="+uid;
+				dao.saveOrUpdate(record);
 			}else if(po.zan==1 && zan==0){
 				image.zanCount--;
 			}

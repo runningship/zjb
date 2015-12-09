@@ -302,7 +302,9 @@ layer.photos = function(options){
         };
         log.bigimg.find('.xubox_zanZan').on('click', function(event){         
             event.preventDefault();
-            conf.zanZan();
+            if(!$(this).hasClass('ok')){
+                conf.zanZan();
+            }else{}
             //log.zanBox();
         });
         
@@ -336,7 +338,9 @@ layer.photos = function(options){
         };
         log.bigimg.find('.xubox_zanShit').on('click', function(event){         
             event.preventDefault();
-            conf.zanShit();
+            if(!$(this).hasClass('ok')){
+                conf.zanShit();
+            }else{}
             //log.zanBox();
         });
         

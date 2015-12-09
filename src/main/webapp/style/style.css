@@ -435,7 +435,7 @@ box-shadow: 0 0 5px #000;}
 
 .maxHW{ height: 100%; width: 100%;}
 .maxHW.list_noThing{ background: url(images/list_nothing.png) no-repeat center;}
-.side_noThing{ text-align: center;}
+.side_noThing{ text-align: center; }
 
 .list .header{ height: 36px; line-height: 36px; color:#333;}
 .list .bodyer{ position:relative; }
@@ -543,3 +543,42 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .glyphicon-plus:before {
 content: "\2b";
 }
+
+
+
+
+
+
+
+
+
+
+
+.see_house_images {}
+.see_house_images th h2 i{ font-size: 12px; font-weight: normal; }
+.see_house_images tbody td{ padding: 0; border: none; }
+.see_house_noImages{ text-align: center; padding: 10px 0 0 0; }
+
+.imgListBox {}
+.imgListBox a.imgbox{ display:block; float: left; width: 32%; margin-left: 1%; margin-top: 1%; overflow: hidden; }
+.imgListBox a.imgbox img.img{ width: 100%; }
+
+
+
+
+
+.see_house_gotoPhone{
+	background: #CA94EA url('images/bg_fk.png') repeat-y top center;
+	background-size: cover;
+	padding: 20px 6px 30px; margin-top: 20px; }
+.see_house_gotoPhone .imgbox,
+.see_house_gotoPhone .textbox{ display: inline-block; color: #FFF;vertical-align: top;}
+.see_house_gotoPhone .imgbox{ background: #A665CE; margin-left: 5px; }
+.see_house_gotoPhone h3{ font-size: 22px; margin-top: 0; padding-top: 7px; }
+.see_house_gotoPhone .btn{ background: #FFF; margin-top: 5px; color: #CA94EA; }
+.see_house_xiangxi{ display: none; margin-top: 15px; border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; background:rgba(255,255,255,0.1); }
+.see_house_xiangxi ul{ padding: 5px 0px 0px 5px; font-size: 12px; }
+.see_house_xiangxi ul li{ margin-bottom: 6px; }
+.see_house_xiangxi.show{ display: block; }
+
+

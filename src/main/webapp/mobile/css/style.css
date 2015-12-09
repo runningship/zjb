@@ -379,7 +379,7 @@ house
 .house.details{ font-size: 14pt; }
 .house.details .mainer{ background-color: #F6F6F6; }
 
-.house.details .mainer .item{ padding: 10pt; margin: 5px; margin-left: 0; margin-right: 0; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
+.house.details .mainer .item{ padding: 10pt 1pt; margin: 5px; margin-left: 0; margin-right: 0; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
 .house.details .mainer .item:first-child{ margin-top: 0; border-top: 0; }
 .house.details .mainer .title{ padding: 10px; padding-bottom: 0; }
 .house.details .mainer .title i{ font-size: 13pt; }
@@ -391,7 +391,7 @@ house
 .house.details .mainer .lists li:last-child{ border:0;}
 
 .house.details .mainer .hList{}
-.house.details .mainer .hList li{ width: 48%; display: inline-block; padding-top: 5pt; padding-bottom: 5pt; }
+.house.details .mainer .hList li{ width: 49%; display: inline-block; padding-top: 5pt; padding-bottom: 5pt; }
 .house.details .mainer .hList li.block{ width: 100%; }
 .house.details .mainer .hList li span{ display: inline-block; width:40pt; color: #999; text-align: right; padding-right: 5pt;}
 .house.details .mainer .hList li i.iconfont{ font-size: 18pt; color: #18B4ED; }

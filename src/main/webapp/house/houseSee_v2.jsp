@@ -532,13 +532,11 @@ body .telTable .telBox .onOpen{ text-align: center; }
 
      <div style="display:table-row;">   
         <div class="sideHead TableMainLeftTit" style="display:table-cell;">
-        	<c:if test="${imgList.size()>0 }">
             <span class="fr">
-              <a class="btnIcon" data-sname="TableMainL" title="到顶部"><i class="iconfont">&#xe617;</i></a>
-              <a class="btnIcon" data-sname="see_house_genjin" title="到跟进"><i class="iconfont">&#xe633;</i></a>
-              <a class="btnIcon" data-sname="see_house_images" title="到图片"><i class="iconfont">&#xe634;</i></a>
+              <a class="btnIcon" data-sname="TableMainL" title="顶部"><i class="iconfont">&#xe617;</i></a>
+              <a class="btnIcon" data-sname="see_house_genjin" title="跟进"><i class="iconfont">&#xe633;</i></a>
+              <a class="btnIcon" data-sname="see_house_images" title="图片"><i class="iconfont">&#xe634;</i></a>
             </span>
-            </c:if>
             <h2>房源详细</h2>
         </div>
      </div>
@@ -821,14 +819,7 @@ h2{ margin: 0; padding: 0; font-size: 100%; line-height: inherit; }
 h2.h2{border-bottom: 1px solid #d1d1d1;
     background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e9e9e9));}
 
-.see_house_images{}
-.see_house_images th h2 i{ font-size: 12px; font-weight: normal; }
-.see_house_images tbody td{ padding: 0; }
-.imgListBox {}
-.imgListBox a.imgbox{ display:block; float: left; width: 32%; margin-left: 1%; margin-top: 1%; overflow: hidden; }
-.imgListBox a.imgbox img.img{ width: 100%; }
 </style>
-        <c:if test="${imgList.size()>0 }">
 	        <table class="TableMainLGj see_house_images" width="100%">
 	          <thead>
 	            <tr>
@@ -838,24 +829,57 @@ h2.h2{border-bottom: 1px solid #d1d1d1;
 	          <tbody>
 	            <tr class="list">
 	              <td>
+        <c:if test="${imgList.size()>0 }">
 	                <div class="imgListBox">
 	                	<c:forEach items="${imgList }"  var="img">
 	                		<a href="#" class="imgbox"  ><img hiid="${img.hiid }" zanCount="${img.zanCount }"  shitCount="${img.shitCount }"  path="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}"  src="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}.t.jpg" alt="" class="img"></a>	
 	                	</c:forEach>
 	                </div>
+    </c:if>
+    <c:if test="${imgList.size()==0 }">
+                  <div class="see_house_noImages">
+                    <i class="iconfont">&#xe67c;</i> 暂无图片...
+                  </div>
+    </c:if>
 	              </td>
 	            </tr>
 	          </tbody>
 	        </table>
-		</c:if>
-		<c:if test="${imgList.size()==0 }">
-			<div class="see_house_images"></div>
-		</c:if>
+
+          <div class="see_house_gotoPhone">
+           <span class="imgbox"><img src="../style/images/zjb_all_101_rgba.png" alt="" class=""></span>
+           <span class="textbox">
+             <h3>中介宝APP</h3>
+             <div class="">5000+ 人在用<br><a href="#" class="btn btn_free">免费使用攻略</a></div>
+           </span>
+           <div class="see_house_xiangxi">
+             <ul class="">
+               <li>①.百度搜索中介宝，五星好评送手机版5天时间。</li>
+               <li>②.手机版上传房源真实照片，被点1个赞增加1个积分。</li>
+               <li>③.活动期间5积分可兑换1天手机版时间。</li>
+               <li>④.手机版已过期无法上传照片，参考①。</li>
+               <li>⑤.如有疑问请联系中介宝客服<br>　 QQ:9129588　0551-65314555。</li>
+             </ul>
+           </div>
+          </div>
         </div>
         </div>
      </div>
         
-        
+<script type="text/javascript">
+$(document).on('click', '.btn_free', function(event) {
+  var FreeSM=$('.see_house_xiangxi'),
+  isFree=FreeSM.hasClass('show');
+  if(isFree){
+    FreeSM.removeClass('show');
+    ScrollGoto($('.see_house_gotoPhone'));
+  }else{
+    FreeSM.addClass('show');
+    ScrollGoto($('.see_house_gotoPhone'));
+  }
+  event.preventDefault();
+});
+</script>
         
         
      <div style="display:table-row; height:30px; overflow:hidden;">     

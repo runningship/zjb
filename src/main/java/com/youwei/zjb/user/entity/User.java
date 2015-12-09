@@ -109,6 +109,8 @@ public class User {
 	
 	public Date lastPaytime;
 	
+	public Integer jifen;
+	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}
