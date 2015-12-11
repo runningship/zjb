@@ -84,53 +84,50 @@ function openDuiHuan(){
         bgColor: '#fff'
     });
 }
+function onClickClass(a){
+	$(a).addClass('current').siblings().removeClass('current');
+}
 </script>
 </head>
-<body class="share">
+<body class="integral">
 <div id="wrap" class="bodyer">
-    <div id="header" class="header alpha">
+    <div id="header" class="header">
         <span class="left">
             <a href="" onclick="closexx();" class="btns"><i class="iconfont">&#xe68a;</i></a>
+            <h2>积分/兑换</h2>
         </span>
         <span class="conter">
-            <h1>邀请好友</h1>
+            
         </span>
         <span class="right">
-            <a id="duihuan" style="display:" href="#" onclick="openDuiHuan();" class="btns">兑换</a>
+            <a href="#" onclick="openDuiHuan();" id="duihuan" class="btns font">兑换</a>
         </span>
     </div>
     <div id="mainer" class="mainer">
         <div class="headbox">
-            <div class="topTips">
-                分享邀请码，邀请好友有好礼！
+            <div class="intNumber">
+                <em>88</em><i>分</i>
             </div>
-            <div class="codebox">
-                <h2 id="invitationCode"></h2>
-                <p onclick="copyInvitationCode();">点此复制</p>
-            </div>
-            <div class="appList">
-                <ul>
-                    <li onclick="shareWeiXin();"><a href="javascript:void(0)" ><i class="iconfont">&#xe645;</i><h3>微信朋友圈</h3></a></li>
-                    <li onclick="shareWeiXin2();"><a href="javascript:void(0)" ><i class="iconfont">&#xe649;</i><h3>微信好友</h3></a></li>
-                    <li onclick="shareQQ();"><a href="javascript:void(0)" ><i class="iconfont">&#xe644;</i><h3>QQ好友</h3></a></li>
-                    <li onclick="shareQZone();"><a href="javascript:void(0)" ><i class="iconfont">&#xe647;</i><h3>QQ空间</h3></a></li>
-                </ul>
-            </div>
+    		<ul class="tabs">
+    			<li class="current" onclick="onClickClass(this);"><a class="">获得</a></li>
+    			<li class="" onclick="onClickClass(this);"><a class="">消费</a></li>
+    		</ul>
         </div>
         <div class="shareListBox">
-            <h2>已邀请好友</h2>
-            <ul >
-                <li>
-                    <span class="left">姓名</span>
-                    <span class="center">状态</span>
-                    <span class="right">奖励</span>
-                </li>
-                <li class="repeat" style="display:none">
-                    <span class="left">$[uname]</span>
-                    <span class="center" runscript="true">getStatus($[active])</span>
-                    <span class="right">$[bouns]</span>
-                </li>
+            <div class="item">
+            <ul class="workList list small">
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>2015-12-11</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
+                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
             </ul>
+            </div>
         </div>
     </div>
 </div>

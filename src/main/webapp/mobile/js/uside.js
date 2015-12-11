@@ -224,6 +224,27 @@ function openFav(){
 	});
 }
 
+function openJifen(){
+	if(!checkUser()){
+		api.openWin({
+		    name: 'login',
+		    url: 'login.html',
+		    pageParam: {forward: 'integral.html',winName:'integral'}
+		});
+		return;
+	}
+	//检查是否付费
+	if(!isUserFuFei(config)){
+		toFuFei();
+		return;
+	}
+	api.openWin({
+	    name: 'integral',
+	    url: 'integral.html',
+	    delay:100
+	});
+}
+
 function openViewLog(){
 	if(!checkUser()){
 		api.openWin({

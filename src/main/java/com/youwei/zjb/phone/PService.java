@@ -238,6 +238,9 @@ public class PService {
 			user.avatar = avatar;
 			dao.saveOrUpdate(user);
 		}
+		if(user.jifen==null){
+			user.jifen = 1;
+		}
 		mv.data.put("avatar", user.avatar);
 //		pushToOther(tel,deviceId);
 		return mv;

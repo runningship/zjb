@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class JifenRecod {
+public class JifenRecord {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -25,4 +25,8 @@ public class JifenRecod {
 	
 	public Date addTime;
 	
+	//1赚取 ,2 消费
+	public Integer type;
+	
+	public Integer offsetCount;
 }

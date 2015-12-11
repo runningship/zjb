@@ -11,6 +11,7 @@ import java.util.Set;
 import org.apache.log4j.Level;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
+import org.bc.sdak.Page;
 import org.bc.sdak.Transactional;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
@@ -28,7 +29,7 @@ import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.InvitationActivation;
 import com.youwei.zjb.user.entity.InvitationCode;
-import com.youwei.zjb.user.entity.JifenRecod;
+import com.youwei.zjb.user.entity.JifenRecord;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
@@ -325,11 +326,23 @@ public class MobileUserService {
 		user.jifen = user.jifen-5*days;
 		addMobileDeadtime(user ,days);
 		dao.saveOrUpdate(user);
-		JifenRecod record = new JifenRecod();
+		JifenRecord record = new JifenRecord();
 		record.addTime = new Date();
 		record.uid = user.id;
+		record.type = 2;
+		record.offsetCount = -5*days;
 		record.conts="使用"+5*days+"积分兑换"+days+"天手机版使用时间";
 		dao.saveOrUpdate(record);
+		mv.data.put("result", "1");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView listJifen(Page<JifenRecord> page, Integer uid){
+		ModelAndView mv = new ModelAndView();
+		page = dao.findPage(page, "from JifenRecord where uid = ?", uid);
+		//list = dao.listByParams(JifenRecord.class, "from JifenRecord where uid = ?", uid);
+		mv.data.put("page", JSONHelper.toJSON(page));
 		mv.data.put("result", "1");
 		return mv;
 	}
