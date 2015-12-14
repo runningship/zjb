@@ -30,6 +30,7 @@ function init(){
 			//$('#tel').html(config.user.tel);
 			//$('#tel').css('color','red');
 			$('#tel').text(config.user.tel);
+			$('#jifen').text(config.user.jifen);
 			if(config.user.debug==2){
 				$('#settings').show();
 			}
@@ -54,6 +55,13 @@ function init(){
 		}
 	}
 	api.parseTapmode();
+	
+	api.addEventListener({
+	    name: 'updateJF'
+	}, function(ret){
+		$('#jifen').text(ret.value.jifen);
+		$('#endtime').text(ret.value.mobileDeadtime);
+	});
 }
 
 function openLogin(){

@@ -206,12 +206,12 @@ YW={
         
         options.timeout=10000;
         YW.out = setTimeout(function(){
-    		if(YW.xlr.readyState<2){
+    		if(YW.xlr.readyState<1){
     			YW.xlr.abort();
     			console.log('request aborted');
     			alert('网络超时,请重试...');
     		}
-    	},3000);
+    	},5000);
         YW.xlr = $.ajax(options);
     }
 }

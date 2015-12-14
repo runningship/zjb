@@ -232,15 +232,18 @@ public class PService {
 		}
 		mv.data.put("debug", user.flag);
 		MobileUserDog.map.put(tel, deviceId);
+		if(user.jifen==null){
+			user.jifen = 1;
+			dao.saveOrUpdate(user);
+		}
+		mv.data.put("jifen", user.jifen);
 		if(user.avatar==null){
 			Random r = new Random();
 			int avatar = r.nextInt(167)+1;
 			user.avatar = avatar;
 			dao.saveOrUpdate(user);
 		}
-		if(user.jifen==null){
-			user.jifen = 1;
-		}
+		
 		mv.data.put("avatar", user.avatar);
 //		pushToOther(tel,deviceId);
 		return mv;

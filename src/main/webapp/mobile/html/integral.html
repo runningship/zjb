@@ -13,40 +13,33 @@
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/layer/layer.js"></script>
 <script type="text/javascript" src="../js/javascript.js"></script>
-<script type="text/javascript" src="../js/share.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/buildHtml.js"></script>
 <script type="text/javascript">
 
-var invitation;
+var currentPageNo =1;
 apiready = function(){
+	api.addEventListener({
+	    name: 'updateJF'
+	}, function(ret){
+		$('#count').text(ret.value.jifen);
+	});
 	getConfig(function(cfg){
 		config = cfg;
-		var city = config.city;
-		//加载信息
-		// 我的邀请码
-		// 邀请列表
-		YW.ajax({
-			url: 'http://'+server_host+'/c/mobile/user/getInviteList',
-			method:'post',
-			data:{
-	        	values: {uid:api.pageParam.uid}
-	    	},
-			cache:false,
-			returnAll:false
-		},function(ret , err){
-			if(ret && ret.result){
-				if(ret.isNewUser){
-					$('#duihuan').css('display','');
-				}
-				invitation = ret.invitation;
-				shareURL='http://'+server_host+'/public/webReg.jsp?cityPy='+city.cityPy+'&code='+ret.invitationCode;
-				$('#invitationCode').text(ret.invitationCode);
-				buildHtmlWithJsonArray('repeat',ret.inviteList , false,true);
-			}else{
-				blockAlert('请求失败');
-			}
-		});
+		$('#count').text(config.user.jifen);
+		var height = api.winHeight-$('.header').height()-$('.headbox').height();
+		api.openFrame({
+	        name: 'integralFrame',
+			url: 'integralFrame.html',
+			vScrollBarEnabled:true,
+			reload:false,
+	        rect: {
+	            x: 0,
+	            y: $('.header').height()+$('.headbox').height(),
+	            w: 'auto',
+	            h: height
+	        }
+	    });
 	});
 	
 	
@@ -64,30 +57,25 @@ apiready = function(){
 		    }
 		});
 	});
+	
 };
 
-function getStatus(active){
-	if(active){
-		return "已兑换(已激活)";
-	}else{
-		return "已兑换(未激活)";
-	}
-}
 function openDuiHuan(){
-	if(invitation){
-		api.pageParam.invitation = invitation;
-	}
 	api.openWin({
-        name: 'shareExch',
-		url: 'shareExch.html',
-		pageParam: api.pageParam,
-        bgColor: '#fff'
+        name: 'integral_exchange',
+		url: 'integral_exchange.html'
     });
 }
-function onClickClass(a){
+function setType(a , type){
 	$(a).addClass('current').siblings().removeClass('current');
+	api.sendEvent({
+	    name: 'setJifenType',
+	    extra: {type: type}
+	});
 }
 </script>
+<style type="text/css">
+</style>
 </head>
 <body class="integral">
 <div id="wrap" class="bodyer">
@@ -106,28 +94,14 @@ function onClickClass(a){
     <div id="mainer" class="mainer">
         <div class="headbox">
             <div class="intNumber">
-                <em>88</em><i>分</i>
+                <em id="count">0</em><i>分</i>
             </div>
     		<ul class="tabs">
-    			<li class="current" onclick="onClickClass(this);"><a class="">获得</a></li>
-    			<li class="" onclick="onClickClass(this);"><a class="">消费</a></li>
+    			<li class="current" onclick="setType(this , 1);"><a class="">获得</a></li>
+    			<li class="" onclick="setType(this, 2);"><a class="">消费</a></li>
     		</ul>
         </div>
-        <div class="shareListBox">
-            <div class="item">
-            <ul class="workList list small">
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>2015-12-11</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-                <li class=""><span class="right">+1</span><span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span><strong>照片被点赞<small>照片被点赞+1分</small></strong></li>
-            </ul>
-            </div>
+        <div class="shareListBoxContainer">
         </div>
     </div>
 </div>

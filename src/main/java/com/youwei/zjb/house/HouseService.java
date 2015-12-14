@@ -82,6 +82,10 @@ public class HouseService {
 	public ModelAndView add(House house , String hxing){
 		ModelAndView mv = new ModelAndView();
 		validte(house);
+		ModelAndView result = exist(house.area , house.dhao , house.fhao , house.seeGX==null ? "0": house.seeGX.toString());
+		if("1".equals(result.data.getString("exist"))){
+			throw new GException(PlatformExceptionType.BusinessException,"存在相同的房源");
+		}
 		User user = ThreadSessionHelper.getUser();
 		house.isdel = 0;
 		house.dateadd = new Date();

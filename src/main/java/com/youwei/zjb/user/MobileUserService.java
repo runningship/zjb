@@ -316,31 +316,32 @@ public class MobileUserService {
 	}
 	
 	@WebMethod
-	public ModelAndView duihuanJF(String tel , Integer jifen){
+	public ModelAndView duihuanJF(Integer uid , Integer jifen , Integer days){
 		ModelAndView mv = new ModelAndView();
-		User user = dao.getUniqueByKeyValue(User.class, "tel", tel);
+		User user = dao.get(User.class, uid);
 		if(user.jifen<jifen){
 			throw new GException(PlatformExceptionType.BusinessException,"您的积分不足"+jifen);
 		}
-		int days = jifen/5;
-		user.jifen = user.jifen-5*days;
+		user.jifen = user.jifen-jifen;
 		addMobileDeadtime(user ,days);
 		dao.saveOrUpdate(user);
 		JifenRecord record = new JifenRecord();
 		record.addTime = new Date();
 		record.uid = user.id;
 		record.type = 2;
-		record.offsetCount = -5*days;
-		record.conts="使用"+5*days+"积分兑换"+days+"天手机版使用时间";
+		record.offsetCount = -jifen;
+		record.conts="使用"+jifen+"积分兑换"+days+"天手机版使用时间";
 		dao.saveOrUpdate(record);
 		mv.data.put("result", "1");
+		mv.data.put("jifen", user.jifen);
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
 		return mv;
 	}
 	
 	@WebMethod
-	public ModelAndView listJifen(Page<JifenRecord> page, Integer uid){
+	public ModelAndView listJifen(Page<JifenRecord> page, Integer uid , Integer type){
 		ModelAndView mv = new ModelAndView();
-		page = dao.findPage(page, "from JifenRecord where uid = ?", uid);
+		page = dao.findPage(page, "from JifenRecord where uid = ? and type=? order by addTime desc", uid , type);
 		//list = dao.listByParams(JifenRecord.class, "from JifenRecord where uid = ?", uid);
 		mv.data.put("page", JSONHelper.toJSON(page));
 		mv.data.put("result", "1");

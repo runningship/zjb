@@ -146,7 +146,7 @@ public class HouseImageService {
 				record.hiid = hiid;
 				record.type = 1;
 				record.offsetCount = 1;
-				record.conts = "有人赞了上传到房源 "+house.area+" "+house.dhao+"#"+house.fhao+" 的图片，获得1个积分";
+				record.conts = "房源 "+house.area+" "+house.dhao+"#"+house.fhao+" 的图片获赞";
 				record.beizhu="hid="+image.hid+",hiid="+hiid+",zanUid="+uid;
 				dao.saveOrUpdate(record);
 			}else if(po.zan==1 && zan==0){

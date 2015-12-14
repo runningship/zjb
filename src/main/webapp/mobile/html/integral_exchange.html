@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>中介宝</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="../css/reset.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+<link href="../css/common.css" rel="stylesheet">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/buildHtml.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<!-- <script type="text/javascript" src="../js/javascript.js"></script> -->
+<script type="text/javascript">
+
+apiready = function(){
+	api.parseTapmode();
+	getConfig(function(cfg){
+		config=cfg;
+	});
+}
+function duihuan(days,jf){
+    YW.ajax({
+        url: 'http://'+server_host+'/c/mobile/user/duihuanJF',
+        method:'post',
+        data:{
+            values: {uid:config.user.uid , jifen:jf , days: days}
+        },
+        cache:false,
+        returnAll:false
+    },function(ret , err){
+        if(ret && ret.result){
+            layer.alert('您已兑换'+days+'天时间', {icon: 6});
+            config.user.jifen = ret.jifen;
+            config.user.mobileDeadtime = ret.mobileDeadtime;
+            saveConfig(config);
+            api.sendEvent({
+                name: 'updateJF',
+                extra: {"jifen" : ret.jifen , "mobileDeadtime":ret.mobileDeadtime}
+            });
+            api.closeWin();
+        }else{
+            blockAlert(ret.msg);
+        }
+    });
+}
+
+$(document).on('click', 'li.li_jifen ', function(event) {
+    var Thi=$(this),
+    ThiT=Thi.data('tian'),
+    ThiF=Thi.data('jf');
+    layer.confirm('确定兑换'+ThiT+'天？', {
+        icon: 7,
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        duihuan(ThiT,ThiF);
+    }, function(){
+        
+    });
+    event.preventDefault();
+});
+</script>
+</head>
+<body class="integral exchange">
+<div id="wrap" class="bodyer">
+    <div id="header" class="header">
+        <span class="left">
+            <a href="" onclick="closexx();" class="btns"><i class="iconfont">&#xe68a;</i></a>
+            <h2>积分兑换</h2>
+        </span>
+        <span class="conter">
+            
+        </span>
+        <span class="right"><!-- 
+            <a href="#" onclick="openDuiHuan();" id="duihuan" class="btns font">兑换</a> -->
+        </span>
+    </div>
+    <div id="mainer" class="mainer">
+        <div class="item">
+            <ul class="boxList ">
+                <li tapmode="tapped" class="li_jifen" data-tian="1" data-jf="5">
+                    <span class="fr"><b>5</b> 积分</span>
+                    <span class="fl">
+                        <h2>手机版时间 <b>1天</b></h2>
+                        <p>活动期间5积分可兑换1天</p>
+                    </span>
+                </li>
+                <li tapmode="tapped"  class="li_jifen" data-tian="7" data-jf="30">
+                    <span class="fr"><b>30</b> 积分</span>
+                    <span class="fl">
+                        <h2>手机版时间 <b>7天</b></h2>
+                        <p>活动期间30积分可兑换1天</p>
+                    </span>
+                </li>
+                <li tapmode="tapped"  class="li_jifen" data-tian="15" data-jf="60">
+                    <span class="fr"><b>60</b> 积分</span>
+                    <span class="fl">
+                        <h2>手机版时间 <b>15天</b></h2>
+                        <p>活动期间60积分可兑换15天</p>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

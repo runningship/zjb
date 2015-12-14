@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>中介宝</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="../css/reset.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/javascript.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/buildHtml.js"></script>
+<script type="text/javascript">
+
+var jifenType=1;
+var currentPageNo=1;
+var totalPageCount=0;
+apiready = function(){
+	api.addEventListener({
+	    name: 'setJifenType'
+	}, function(ret){
+	    if(ret && ret.value){
+	        var value = ret.value;
+	        jifenType = value.type;
+	        currentPageNo = 1;
+	        loadData(true);
+	    }
+	});
+	getConfig(function(cfg){
+		config = cfg;
+		loadData();
+	});
+	
+	api.setRefreshHeaderInfo({
+	 	bgColor: '#333',
+	    textColor: '#666'
+	},
+	function(ret,err){
+    	api.refreshHeaderLoadDone();
+    	//buildHtmlWithJsonArray( repeatClass ,[] , false,false);
+    	currentPageNo=1;
+    	loadData(true);
+	});
+	
+	api. addEventListener({name:'scrolltobottom'}, 
+		function(ret, err){
+			//设置提示信息
+			if(currentPageNo<totalPageCount){
+				currentPageNo++;
+			}else{
+				alert('没有更多了');
+				return;
+			}
+			setTimeout(loadData,100);
+		}
+	);
+}
+
+function loadData(clear){
+	YW.ajax({
+		url: 'http://'+server_host+'/c/mobile/user/listJifen',
+		method:'post',
+		data:{
+        	values: {uid:config.user.uid , currentPageNo:currentPageNo , type:jifenType}
+    	},
+		cache:false,
+		returnAll:false
+	},function(ret , err){
+		if(ret && ret.result){
+			totalPageCount = ret.page.totalPageCount;
+			if(true){
+				buildHtmlWithJsonArray('repeat',ret.page.data , false,false);	
+			}else{
+				buildHtmlWithJsonArray('repeat',ret.page.data , false,true);
+			}
+				
+		}else{
+			blockAlert('请求失败');
+		}
+	});
+}
+</script>
+<style type="text/css">
+html, body{overflow:visible;}
+.shareListBox .item{ padding:10pt;}
+</style>
+</head>
+<body class="integral shareListBox">
+      <div class="item ">
+	       <ul class="workList list small">
+	           <li class="repeat" style="display:none;">
+		           	<span show="jifenType==1"  class="right increase">+$[offsetCount]</span>
+		           	<span show="jifenType==2"  class="right reduce">$[offsetCount]</span>
+		           	<span class="left imgbox"><img src="../images/6.jpg" alt="" class=""></span>
+		           	<strong>$[conts]<small>$[addTime]</small></strong>
+	           	</li>
+	       </ul>
+      </div>
+</body>
+</html>

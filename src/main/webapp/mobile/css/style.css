@@ -542,7 +542,7 @@ work
 .workList.list.small li span.right.reduce{ color:#FF4A00; }
 .workList.list.small li i.iconfont{ font-size: 17pt; }
 .workList.list.small li i.fr{ color: #CCC; height: 26pt; line-height: 26pt}
-.workList.list.small li strong{ display:inline-block; font-size: 14pt; color: #6F6F6F; padding-top: 0px;line-height: 1.3em; }
+.workList.list.small li strong{ display:inline-block; font-size: 12pt; color: #6F6F6F; padding-top: 0px;line-height: 1.3em; }
 .workList.list.small li strong small{ display: block; line-height: 1em; font-size: 10pt; color: #9F9F9F; padding-top: 4px; }
 .workList.list.small li div{}
 .workList.list.small a.switch{ margin-top: 7px; }
@@ -619,14 +619,35 @@ work
 .integral .header{ background-color: #0CC5CA;}
 .integral .header a{ color: rgba(255,255,255,0.7);}
 .integral .header h2{ color: rgba(255,255,255,0.8);}
-.integral .mainer{ display: -webkit-box;-webkit-box-orient:vertical;-webkit-flex-flow: column;}
-.integral .headbox{ -webkit-box-flex:1;}
-.integral .shareListBox{ -webkit-box-flex:100; overflow: hidden;overflow-y: auto;}
+.integral .mainer{ display:table; width: 100%; }
+.integral .headbox{ -webkit-box-flex:1; }
+.integral .mainbox{ -webkit-box-flex:1; overflow: hidden;overflow-y: auto;}
 
 .integral .headbox{ text-align: center; border-bottom: 1px solid #EFEFEF; background-color: #0CC5CA; color: #FFF;}
 .integral .headbox .intNumber em{font-family:Helvetica;font-size: 100px; line-height: 1.5em; }
 .integral .headbox .intNumber i{ font-size: 16px; }
-.integral .headbox .tabs{ background: #FFF; margin-bottom: 3px; }
+.integral .headbox .tabs{ background: #FFF;  }
+
+.integral.exchange{}
+.integral.exchange .item{ border: none; }
+
+.integral.exchange .boxList li h2{ font-size: 14pt; }
+.integral.exchange .boxList li h2 b{ color: #9F9F9F; }
+.integral.exchange .boxList li p{ font-size: 10pt; color: #CFCFCF; margin-top: 3pt; }
+.integral.exchange .boxList li .fr{ font-size: 10pt; padding-top: 10pt; color: #CFCFCF; }
+.integral.exchange .boxList li .fr b{ font-size: 22pt; color: #9F9F9F; }
+.integral.exchange .boxList li.ok h2 b{ color: #F4642F; }
+.integral.exchange .boxList li.ok p{ color: #9F9F9F; }
+.integral.exchange .boxList li.ok .fr{ color: #9F9F9F;}
+.integral.exchange .boxList li.ok .fr b{ color: #F4642F;}
+
+.boxList{  }
+.boxList li{ margin-bottom: 10pt; border: 1px solid #EFEFEF; background: #F6F6F6; color: #6F6F6F; padding: 6pt 8pt; border-radius: 4pt; }
+.boxList li:after {content: "\0020";display: block;clear: both;}
+
+
+
+
 
 /* pay */
 .pay { background: #F6F6F6; }
