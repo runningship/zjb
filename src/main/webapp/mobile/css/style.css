@@ -325,11 +325,11 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 /* placeholder end */
 
 .search .sList{ font-size: 12pt;}
-.search .sList li{ position: relative; display: inline-block; float: left; width: 33.333333%; text-align: center; }
+.search .sList li{ position: relative; display: inline-block; float: left; width: 33.333333%; text-align: center; padding: 0; }
 .search .sList li a{ display: block; height: 28pt; line-height: 28pt; border: 1px solid #EEE; color: #777; border-top-width: 0; border-left-width: 0;}
 .search .sList li:first-child a{ color: #09F; font-weight: bold; border-top-width:1px; }
 .search .sList li:nth-child(-n+3) a{ border-top-width:1px; }
-.search .sList li:nth-child(3n+1) a{ border-left-width:1px;}
+.search .sList li:nth-child(3n+3) a{ border-left-width:1px;}
 .search .sList li i{ position: absolute; right: 3px; bottom: 3px; font-size: 6pt; width: 12pt; height: 12pt; line-height: 12pt; background: #CCC; border-radius: 20pt; color: #FFF; }
 .search .sList li.active i{ background: #18B4ED; }
 
@@ -426,6 +426,34 @@ house
 .house.details .footer .entered .inputbox{-webkit-box-flex: 10; max-height: 60pt; line-height: 35pt; overflow: hidden;  text-align: left;}
 .house.details .footer .entered .btns{ display: block; width: 60px;-webkit-box-flex: 0; text-align: center; line-height: 35pt; background: #18B4ED; color: #FFF }
 
+
+/* .house.seepic */
+.house.seepic .header{background: transparent;position: fixed;z-index: 9; width: 100%;}
+.house.seepic .mainer .item{padding: 0;}
+
+.house.seepic .owl-carousel {z-index: 2;}
+.house.seepic .owl-carousel .owl-item div{border-radius: 3pt;}
+.house.seepic .owl-carousel .owl-item img{
+display: block;
+width: 100%;
+height: auto;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+min-height: 100px;
+}
+.house.seepic .owl-carousel .owl-item.loading div.tool{ padding-top: 200pt; }
+.house.seepic div.tool{ position: fixed; bottom: 0; width: 100%; text-align: center; }
+.house.seepic div.tool a.btns{ display: inline-block; padding: 10pt 15pt; }
+.house.seepic div.tool a.btns b{ font-size: 16pt;}
+.house.seepic div.tool a.btns i{ font-size: 20pt; }
+
+.house.seepic div.tool.ok a{ color: #9F9F9F; }
+.house.seepic div.tool.ok a.btns.this{ color: #FF4A00; }
+
+.house.seepic .loadings {padding:20px 0;position: absolute;width: 100%;top: 10%; z-index: 1; text-align: center;}
+
+.house.seepic .loadings:after{ padding-top: 10pt; color: #9F9F9F; content:"loading...";}
 
 
 /* house add
@@ -537,7 +565,7 @@ work
 .workList.list.small li span.left.time{}
 .workList.list.small li span.left.time b,
 .workList.list.small li span.left.time i{ display: block; }
-.workList.list.small li span.right{ float: right; font-size:12pt; }
+.workList.list.small li span.right{ float: right; font-size:12pt; margin-right: 10pt; }
 .workList.list.small li span.right.increase{ color:#04B500; }
 .workList.list.small li span.right.reduce{ color:#FF4A00; }
 .workList.list.small li i.iconfont{ font-size: 17pt; }
@@ -631,11 +659,13 @@ work
 .integral.exchange{}
 .integral.exchange .item{ border: none; }
 
-.integral.exchange .boxList li h2{ font-size: 14pt; }
-.integral.exchange .boxList li h2 b{ color: #9F9F9F; }
+.integral.exchange .boxList li{background: #EFEFEF;}
+.integral.exchange .boxList li h2{ font-size: 14pt; color: #CFCFCF; }
+.integral.exchange .boxList li h2 b{ color: #CFCFCF; }
 .integral.exchange .boxList li p{ font-size: 10pt; color: #CFCFCF; margin-top: 3pt; }
 .integral.exchange .boxList li .fr{ font-size: 10pt; padding-top: 10pt; color: #CFCFCF; }
-.integral.exchange .boxList li .fr b{ font-size: 22pt; color: #9F9F9F; }
+.integral.exchange .boxList li .fr b{ font-size: 22pt; color: #CFCFCF; }
+.integral.exchange .boxList li.ok h2 {color: #6F6F6F ;}
 .integral.exchange .boxList li.ok h2 b{ color: #F4642F; }
 .integral.exchange .boxList li.ok p{ color: #9F9F9F; }
 .integral.exchange .boxList li.ok .fr{ color: #9F9F9F;}
@@ -661,7 +691,7 @@ work
 .pay .inputbox i{font-size: 20pt;color: #00A0E9;}
 
 .pay.ok .conts{  padding: 30px; background:url('../images/bg_jc.png') repeat-x bottom left; }
-.pay.ok .conts div.tits{ margin: 0 auto; width: 250px; padding-left: 30px; padding-bottom: 10px; border-bottom: 3px solid #66c000; color:#66c000;  }
+.pay.ok .conts div.tits{ margin: 0 auto; width: 250px; padding-left: 30px; padding-bottom: 10px; border-bottom: 3px solid #00A0E9; color:#00A0E9;  }
 .pay.ok .conts div.tits .icon{ margin-right: 10px; float: left; vertical-align: bottom; }
 .pay.ok .conts div.tits .icon i{ font-size: 40px; line-height: 40px; }
 .pay.ok .conts div.tits span.cont h2{font-size: 22px;}
@@ -804,3 +834,92 @@ box-orient: horizontal; border-bottom: 1px solid #999;}
 
 
 
+
+.loading {
+	padding:20px 0
+}
+.loader {
+	position:relative;
+	margin:0 auto;
+	width:4px;
+	height:20px;
+	background:#ff6700;
+	overflow:visible;
+	-webkit-animation-delay:0s;
+	animation-delay:0s;
+	-webkit-transform:scale(1,1);
+	-ms-transform:scale(1,1);
+	transform:scale(1,1)
+}
+.loader,.loader:before,.loader:after {
+	-webkit-transform-origin:50% 50%;
+	-ms-transform-origin:50% 50%;
+	transform-origin:50% 50%;
+	-webkit-animation-name:loader;
+	animation-name:loader;
+	-webkit-animation-duration:.3s;
+	animation-duration:.3s;
+	-webkit-animation-timing-function:linear;
+	animation-timing-function:linear;
+	-webkit-animation-iteration-count:infinite;
+	animation-iteration-count:infinite;
+	-webkit-animation-direction:alternate-reverse;
+	animation-direction:alternate-reverse
+}
+.loader:before,.loader:after {
+	position:absolute;
+	left:50%;
+	top:50%;
+	width:4px;
+	height:20px;
+	content:'';
+	background:#ff6700
+}
+.loader:before {
+	margin:-10px 0 0 -10px;
+	-webkit-animation-delay:.25s;
+	animation-delay:.25s;
+	-webkit-transform:scale(1,0.3);
+	-ms-transform:scale(1,0.3);
+	transform:scale(1,0.3)
+}
+.loader:after {
+	margin:-10px 0 0 6px;
+	-webkit-animation-delay:.5s;
+	animation-delay:.5s;
+	-webkit-transform:scale(1,0.5);
+	-ms-transform:scale(1,0.5);
+	transform:scale(1,0.5)
+}
+.loader-white,.loader-white:before,.loader-white:after {
+	background:#fff
+}
+.loader-gray,.loader-gray:before,.loader-gray:after {
+	background:rgba(0,0,0,0.3);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#4c000000",endColorstr="#4c000000")\9
+}
+@-webkit-keyframes loader {
+	0% {
+	-webkit-transform:scale(1,0.5);
+	opacity:.2;
+	filter:alpha(opacity=20)\9
+}
+100% {
+	-webkit-transform:scale(1,1);
+	opacity:1;
+	filter:alpha(opacity=100)\9
+}
+}@keyframes loader {
+	0% {
+	-webkit-transform:scale(1,0.5);
+	transform:scale(1,0.5);
+	opacity:.2;
+	filter:alpha(opacity=20)\9
+}
+100% {
+	-webkit-transform:scale(1,1);
+	transform:scale(1,1);
+	opacity:1;
+	filter:alpha(opacity=100)\9
+}
+}

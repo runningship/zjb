@@ -84,20 +84,24 @@ function ImgListBox(a){
 //     ImgListBox($('.ImgListBoxs'));
 // });
 var imgList=[];
+var zanList = [];
 var myItemIndex=-1;
 var myImgCount=0;
 function getPics(){
 	YW.ajax({
-	    url: 'http://'+server_host+'/c/mobile/houseImage/getPublicHouseImage?chuzu='+cz+'&hid='+api.pageParam.id+'&uid='+config.user.uid,
+	    url: 'http://'+server_host+'/c/mobile/houseImage/getPublicHouseImage?chuzu='+cz+'&hid='+api.pageParam.id+'&myId='+config.user.uid,
 	    method: 'post'
 	},function(ret,err){
 		if(ret && ret.result==0){
 			var template = $('.template');
 			var tempHtml = template[0].outerHTML;
 			imgList = ret.list;
+			zanList = ret.zanList;
 			if(imgList.length==0){
 				$('.mainer .tips').show();
 			}
+			//blockAlert(JSON.stringify(imgList));
+			//blockAlert(JSON.stringify(zanList));
 			for(var i=0;i<imgList.length;i++){
 				appendItem(imgList[i], tempHtml , true);
 			}
@@ -296,6 +300,38 @@ function uploadImages(paths){
 	});
 }
 
+function showBigImage2(li , picUid ,activeIndex){
+	gtouchend();
+	var arr = [];
+	for(var i=0;i<imgList.length;i++){
+		var data = imgList[i];
+		if(data.uid!=picUid){
+			continue;
+		}
+		var obj = JSON.parse('{}');
+		
+		obj.hiid = data.id;
+		obj.zan = 0;
+		obj.shit = 0;
+		for(var j=0;j<zanList.length;j++){
+			if(zanList[j].hiid==obj.hiid){
+				obj.zan=zanList[j].zan;
+				obj.shit=zanList[j].shit;
+				break;
+			}
+		}
+		obj.zanCount = data.zanCount;
+		obj.shitCount = data.shitCount;
+		obj.path = 'http://'+img_server_host+'/zjb_house_images/'+hid+'/'+picUid+'/'+data.path;
+		arr.push(obj);
+	}
+	//blockAlert(JSON.stringify(arr));
+	api.openWin({
+        name: 'seePic',
+        url: 'house_seePic.html',
+        pageParam: {imgArr : arr}
+    });
+}
 function showBigImage(li , picUid , activeIndex){
 	gtouchend();
 	var path = $(li).parent().attr('path');
@@ -313,6 +349,7 @@ function showBigImage(li , picUid , activeIndex){
         activeIndex: activeIndex,
         showList:false
     });
+    
 }
 
 var currentImg;

@@ -832,7 +832,9 @@ h2.h2{border-bottom: 1px solid #d1d1d1;
         <c:if test="${imgList.size()>0 }">
 	                <div class="imgListBox">
 	                	<c:forEach items="${imgList }"  var="img">
-	                		<a href="#" class="imgbox"  ><img hiid="${img.hiid }" zanCount="${img.zanCount }"  shitCount="${img.shitCount }"  path="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}"  src="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}.t.jpg" alt="" class="img"></a>	
+	                		<c:if test="${ not empty img.path }">
+	                			<a href="#" class="imgbox"  ><img hiid="${img.hiid }" zanCount="${img.zanCount }"  shitCount="${img.shitCount }"  path="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}"  src="http://${host }/zjb_house_images/${img.hid }/${img.uid}/${img.path}.t.jpg" alt="" class="img"></a>
+	                		</c:if>	
 	                	</c:forEach>
 	                </div>
     </c:if>

@@ -347,4 +347,14 @@ public class MobileUserService {
 		mv.data.put("result", "1");
 		return mv;
 	}
+	
+	@WebMethod
+	public ModelAndView getJifen(Integer uid){
+		ModelAndView mv = new ModelAndView();
+		User user = dao.get(User.class, uid);
+		mv.data.put("jifen", user.jifen);
+		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+		mv.data.put("result", "1");
+		return mv;
+	}
 }

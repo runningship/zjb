@@ -40,6 +40,8 @@ apiready = function(){
 	            h: height
 	        }
 	    });
+		
+		updateJifenFromServer();
 	});
 	
 	
@@ -59,6 +61,27 @@ apiready = function(){
 	});
 	
 };
+
+function updateJifenFromServer(){
+	YW.ajax({
+		url:'http://'+server_host+'/c/mobile/user/getJifen',
+		method:'post',
+		data:{
+        	values: {uid:config.user.uid}
+    	},
+		cache:false,
+		returnAll:false
+	},function(ret , err){
+		if(ret && ret.result=="1"){
+			config.user.jifen = ret.jifen;
+			saveConfig(config);
+			api.sendEvent({
+                name: 'updateJF',
+                extra: {"jifen" : ret.jifen , "mobileDeadtime":ret.mobileDeadtime}
+            });
+		}
+	});
+}
 
 function openDuiHuan(){
 	api.openWin({

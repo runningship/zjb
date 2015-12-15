@@ -94,7 +94,11 @@ public class SessionFilter implements Filter{
 			calls.put(path,0);
 		}
 		Integer count = calls.get(path);
-		count++;
+		if(count==null){
+			count=0;
+		}else{
+			count++;
+		}
 		calls.put(path, count);
 //		System.out.println("----------->clientId="+clientId+",path="+path+",oldSession="+oldSessionId+",session="+session.getId());
 		ThreadSession.setHttpSession(session);
