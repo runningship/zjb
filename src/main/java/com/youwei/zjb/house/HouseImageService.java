@@ -109,10 +109,14 @@ public class HouseImageService {
 	}
 	
 	@WebMethod
-	public ModelAndView zanHouseImage(Integer hiid , int zan){
+	public ModelAndView zanHouseImage(Integer hiid , int zan , Integer zanUid){
 		ModelAndView mv = new ModelAndView();
-		Integer uid = ThreadSessionHelper.getUser().id;
-		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , uid});
+		//手机版没有session user
+		//Integer uid = ThreadSessionHelper.getUser().id;
+		if(zanUid==null){
+			zanUid = ThreadSessionHelper.getUser().id;
+		}
+		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , zanUid});
 		HouseImage image = dao.get(HouseImage.class, hiid);
 		if(image==null){
 			throw new GException(PlatformExceptionType.BusinessException,"" , "图片不存在");
@@ -123,7 +127,7 @@ public class HouseImageService {
 			HouseImageGJ gj = new HouseImageGJ();
 			gj.hiid = hiid;
 			gj.zan = zan;
-			gj.uid = uid;
+			gj.uid = zanUid;
 			gj.hid = image.hid;
 			if(gj.shit==null){
 				gj.shit = 0;
@@ -138,7 +142,7 @@ public class HouseImageService {
 				u.jifen+=1;
 			}
 			dao.saveOrUpdate(u);
-			addJifenRecord(house ,u.id , hiid);
+			addJifenRecord(house ,u.id , hiid , zanUid);
 		}else{
 			if(po.zan==null){
 				po.zan=0;
@@ -153,19 +157,19 @@ public class HouseImageService {
 					u.jifen+=1;
 				}
 				dao.saveOrUpdate(u);
-				addJifenRecord(house ,u.id , hiid);
+				addJifenRecord(house ,u.id , hiid , zanUid);
 			}else if(po.zan==1 && zan==0){
 				image.zanCount--;
 			}
 			po.zan = zan;
 			dao.saveOrUpdate(po);
-			dao.saveOrUpdate(image);
 		}
+		dao.saveOrUpdate(image);
 		mv.data.put("result", "0");
 		return mv;
 	}
 	
-	private void addJifenRecord(House house , Integer imgUid, Integer hiid){
+	private void addJifenRecord(House house , Integer imgUid, Integer hiid , Integer zanUid){
 		JifenRecord record = new JifenRecord();
 		record.addTime = new Date();
 		record.uid = imgUid;
@@ -173,14 +177,17 @@ public class HouseImageService {
 		record.type = 1;
 		record.offsetCount = 1;
 		record.conts = "房源 "+house.area+" "+house.dhao+"#"+house.fhao+" 的图片获赞";
-		record.beizhu="hid="+house.id+",hiid="+hiid+",zanUid="+ThreadSessionHelper.getUser().id;
+		record.beizhu="hid="+house.id+",hiid="+hiid+",zanUid="+ zanUid;
 		dao.saveOrUpdate(record);
 	}
 	@WebMethod
-	public ModelAndView shitHouseImage(Integer hiid , Integer shit){
+	public ModelAndView shitHouseImage(Integer hiid , Integer shit , Integer shitUid){
 		ModelAndView mv = new ModelAndView();
-		Integer uid = ThreadSessionHelper.getUser().id;
-		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , uid});
+//		Integer uid = ThreadSessionHelper.getUser().id;
+		if(shitUid==null){
+			shitUid = ThreadSessionHelper.getUser().id;
+		}
+		HouseImageGJ po = dao.getUniqueByParams(HouseImageGJ.class, new String[]{"hiid" , "uid"}, new Object[]{hiid , shitUid});
 		HouseImage image = dao.get(HouseImage.class, hiid);
 		if(image==null){
 			throw new GException(PlatformExceptionType.BusinessException,"" , "图片不存在");
@@ -189,12 +196,13 @@ public class HouseImageService {
 			HouseImageGJ gj = new HouseImageGJ();
 			gj.hiid = hiid;
 			gj.shit = shit;
-			gj.uid = uid;
+			gj.uid = shitUid;
 			gj.hid = image.hid;
 			if(gj.zan==null){
 				gj.zan = 0;
 			}
 			dao.saveOrUpdate(gj);
+			image.shitCount++;
 		}else{
 			if(po.shit==null){
 				po.shit=0;
@@ -206,8 +214,8 @@ public class HouseImageService {
 			}
 			po.shit = shit;
 			dao.saveOrUpdate(po);
-			dao.saveOrUpdate(image);
 		}
+		dao.saveOrUpdate(image);
 		mv.data.put("result", "0");
 		return mv;
 	}

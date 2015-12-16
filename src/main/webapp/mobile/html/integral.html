@@ -13,6 +13,7 @@
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/layer/layer.js"></script>
 <script type="text/javascript" src="../js/javascript.js"></script>
+<script type="text/javascript" src="../js/jquery.countUp.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/buildHtml.js"></script>
 <script type="text/javascript">
@@ -26,7 +27,8 @@ apiready = function(){
 	});
 	getConfig(function(cfg){
 		config = cfg;
-		$('#count').text(config.user.jifen);
+		//$('#count').text(config.user.jifen);
+		setCount(config.user.jifen);
 		var height = api.winHeight-$('.header').height()-$('.headbox').height();
 		api.openFrame({
 	        name: 'integralFrame',
@@ -96,6 +98,25 @@ function setType(a , type){
 	    extra: {type: type}
 	});
 }
+
+function setCount(num){
+var nums=!num||num<1?0:num;
+var options = {
+  useEasing : true, 
+  useGrouping : true, 
+  separator : ',', 
+  decimal : '.', 
+  prefix : '', 
+  suffix : '' 
+};
+var counts = new CountUp("count", 0, nums, 0, 2.5, options);
+counts.start();
+}
+// $(document).ready(function() {
+// 	var num=$('#count').text();
+// 	num=parseInt(num);
+// 	setCount(num);
+// });
 </script>
 <style type="text/css">
 </style>

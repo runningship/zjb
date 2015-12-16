@@ -156,9 +156,9 @@ function appendItem(imgObj , tempHtml ,lazy){
 				belongClass="other";
 			}
 			if(lazy){
-				tmp.find('ul').append('<li hiid="'+imgObj.id+'" class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/loading.jpg" data-echo="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
+				tmp.find('ul').append('<li hiid="'+imgObj.id+'" class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" onclick="showBigImage2(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="../images/loading.jpg" data-echo="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}else{
-				tmp.find('ul').append('<li hiid="'+imgObj.id+'" class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" ontouchend="gtouchend()" onclick="showBigImage(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
+				tmp.find('ul').append('<li hiid="'+imgObj.id+'" class="'+belongClass+'" hid="'+hid+'" uid="'+imgObj.uid+'" path="'+path+'" ontouchstart="gtouchstart(this)" ontouchmove="gtouchmove()" ontouchend="gtouchend()" onclick="showBigImage2(this,'+imgObj.uid+' , '+offset+');"><a href="#" class=""><img src="http://'+img_server_host+'/zjb_house_images/'+hid+'/'+imgObj.uid+'/'+path+'.t.jpg" alt=""></a></li>');
 			}
 			if(imgObj.uid!=config.user.uid){
 				break;
@@ -272,6 +272,53 @@ apiready=function(){
 		getPics();
 		//$("img").lazyload();
 	});
+	api.addEventListener({
+	    name: 'updateImgGJ'
+	}, function(ret){
+	    if(ret && ret.value){
+	        var data = ret.value;
+	        //blockAlert('update....'+JSON.stringify(ret));
+	        for(var i=0;i<imgList.length;i++){
+	        	var img = imgList[i];
+	        	if(img.id==data.hiid){
+	        		if(data.type=='zan'){
+						img.zanCount++;
+					}else{
+						img.shitCount++;
+					}
+	        		break;
+	        	}
+	        }
+	        var has=false;
+	        for(var j=0;j<zanList.length;j++){
+				if(zanList[j].hiid==data.hiid){
+					//blockAlert('找到更新的了....'+data.hiid);
+					if(data.type=='zan'){
+						zanList[j].zan = data.value;
+					}else{
+						zanList[j].shit = data.value;
+					}
+					has = true;
+					break;
+				}
+			}
+	        if(has==false){
+	        	var obj = JSON.parse('{}');
+		        obj.hiid = data.hiid;
+		        obj.uid=config.user.uid;
+		        if(data.type=='zan'){
+		        	obj.zan = data.value;	
+		        	obj.shit = 0;
+		        }else{
+		        	obj.zan = 0;
+		        	obj.shit = data.value;	
+		        }
+		        obj.hid=hid;
+		        //blockAlert('新增点赞信息:'+JSON.stringify(obj));
+		        zanList.push(obj);
+	        }
+	    }
+	});
 }
 function uploadImages(paths){
 	YW.ajax({
@@ -301,6 +348,10 @@ function uploadImages(paths){
 }
 
 function showBigImage2(li , picUid ,activeIndex){
+	if(picUid==config.user.uid){
+		showBigImage(li , picUid ,activeIndex);
+		return;
+	}
 	gtouchend();
 	var arr = [];
 	for(var i=0;i<imgList.length;i++){

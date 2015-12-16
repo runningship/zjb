@@ -36,6 +36,7 @@ box-orient: horizontal;
 .header a.btns.font{ width: auto; padding-right: 5pt; font-size: 13pt; }
 .header i{font-size: 16pt;}
 
+.header.opacity{ background: transparent; }
 .header.alpha a{ color: rgba(255,255,255,0.7);}
 .header.alpha h1,
 .header.alpha h2{ color: rgba(255,255,255,0.8);}
@@ -428,7 +429,9 @@ house
 
 
 /* .house.seepic */
-.house.seepic .header{background: transparent;position: fixed;z-index: 9; width: 100%;}
+.house.seepic .header{ -webkit-transition:all 2s; position: fixed;z-index: 9; width: 100%;}
+.house.seepic .header.opacity a{border-radius: 100pt;height: 26pt;background: rgba(0,0,0,.1);margin-top: 5pt;margin-left: 5pt;line-height: 32px;}
+.house.seepic .header.opacity a i{text-shadow: 0 0 10px rgba(0,0,0,0.5);}
 .house.seepic .mainer .item{padding: 0;}
 
 .house.seepic .owl-carousel {z-index: 2;}
@@ -443,7 +446,7 @@ border-radius: 3px;
 min-height: 100px;
 }
 .house.seepic .owl-carousel .owl-item.loading div.tool{ padding-top: 200pt; }
-.house.seepic div.tool{ position: fixed; bottom: 0; width: 100%; text-align: center; }
+.house.seepic div.tool{ position: fixed; bottom: 0; width: 100%; z-index: 9; text-align: center; background: rgba(255,255,255,0.5); }
 .house.seepic div.tool a.btns{ display: inline-block; padding: 10pt 15pt; }
 .house.seepic div.tool a.btns b{ font-size: 16pt;}
 .house.seepic div.tool a.btns i{ font-size: 20pt; }
