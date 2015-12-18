@@ -160,6 +160,12 @@ public class MobileUserService {
 		}else{
 			mv.data.put("invitationActive", 1);
 		}
+		if(user.mobileDeadtime==null || user.mobileDeadtime.before(new Date())){
+			mv.data.put("fufei" , 0);
+		}else{
+			mv.data.put("fufei" , 1);
+		}
+		
 		return mv;
 	}
 	
@@ -335,6 +341,12 @@ public class MobileUserService {
 		mv.data.put("result", "1");
 		mv.data.put("jifen", user.jifen);
 		mv.data.put("mobileDeadtime", DataHelper.dateSdf.format(user.mobileDeadtime));
+		mv.data.put("mobileDeadtimeInLong", user.mobileDeadtime.getTime());
+		if(user.mobileDeadtime==null || user.mobileDeadtime.before(new Date())){
+			mv.data.put("fufei" , 0);
+		}else{
+			mv.data.put("fufei" , 1);
+		}
 		return mv;
 	}
 	

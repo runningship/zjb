@@ -14,6 +14,7 @@ apiready = function(){
 function init(){
 	if(config){
 		if(config.user){
+			updateDeadtime();
 			if(config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
 			}else{
@@ -197,6 +198,7 @@ function updateDeadtime(){
 		config.user.invitationActive=ret.invitationActive;
 		config.user.mobileDeadtime=ret.mobileDeadtime;
 		config.user.mobileDeadtimeInLong=ret.mobileDeadtimeInLong;
+		config.user.fufei = ret.fufei;
 		if(ret.invitationActive==1){
 			$('#gift').css('display','none');			
 		}else{
@@ -221,11 +223,6 @@ function openFav(){
 		});
 		return;
 	}
-	//检查是否付费
-	if(!isUserFuFei(config)){
-		toFuFei();
-		return;
-	}
 	api.openWin({
 	    name: 'fav',
 	    url: 'favIndex.html',
@@ -243,11 +240,7 @@ function openJifen(){
 		});
 		return;
 	}
-	//检查是否付费
-	if(!isUserFuFei(config)){
-		toFuFei();
-		return;
-	}
+	
 	api.openWin({
 	    name: 'integral',
 	    url: 'integral.html',

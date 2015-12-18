@@ -35,10 +35,11 @@ function duihuan(days,jf){
         returnAll:false
     },function(ret , err){
         if(ret && ret.result){
-            layer.alert('您已兑换'+days+'天时间', {icon: 6});
             config.user.jifen = ret.jifen;
             config.user.mobileDeadtime = ret.mobileDeadtime;
+            config.user.fufei = ret.fufei;
             saveConfig(config);
+            blockAlert('您已兑换'+days+'天时间');
             api.sendEvent({
                 name: 'updateJF',
                 extra: {"jifen" : ret.jifen , "mobileDeadtime":ret.mobileDeadtime}

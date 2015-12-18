@@ -227,8 +227,9 @@ public class HouseImageService {
 			HouseImage po = dao.get(HouseImage.class, image.id);
 			if(po!=null){
 				dao.delete(po);
-				FileUtils.deleteQuietly(new File(po.path));
-				FileUtils.deleteQuietly(new File(po.path+".t.jpg"));
+				String savePath = BaseFileDir+File.separator +image.hid+File.separator +image.uid+File.separator+image.path;
+				FileUtils.deleteQuietly(new File(savePath));
+				FileUtils.deleteQuietly(new File(savePath+".t.jpg"));
 			}
 		}
 //		HouseImage po = dao.getUniqueByParams(HouseImage.class, new String[]{"hid","uid" , "chuzu" , "isPrivate"}, new Object[]{image.hid ,image.uid, image.chuzu , 0});

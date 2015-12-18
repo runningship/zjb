@@ -852,15 +852,17 @@ h2.h2{border-bottom: 1px solid #d1d1d1;
            <span class="imgbox"><img src="../style/images/zjb_all_101_rgba.png" alt="" class=""></span>
            <span class="textbox">
              <h3>中介宝APP</h3>
-             <div class="">5000+ 人在用<br><a href="#" class="btn btn_free">免费使用攻略</a></div>
+             <div class="">5000+ 人在用<br><a href="#" class="btn btn_free">五星好评双重送</a></div>
            </span>
            <div class="see_house_xiangxi">
              <ul class="">
-               <li>①.百度搜索中介宝，五星好评送手机版5天时间。</li>
-               <li>②.手机版上传房源真实照片，被点1个赞增加1个积分。</li>
-               <li>③.活动期间5积分可兑换1天手机版时间。</li>
-               <li>④.手机版已过期无法上传照片，参考①。</li>
-               <li>⑤.如有疑问请联系中介宝客服<br>　 QQ:9129588　0551-65314555。</li>
+               <li>①.各大APP应用商城五星好评送手机版5天时间(每个手机号码只送1次)。</li>
+               <li>②.百度搜索中介宝，五星好评送手机版5天时间。</li>
+               <li>③.手机版上传房源真实照片，被点1个赞增加1个积分。</li>
+               <li>④.活动期间5积分可兑换1天手机版时间。</li>
+               <li>⑤.手机版已过期无法上传照片，请参考一和二。</li>
+               <li>⑥.五星好评后拍照或截图发给中介宝客服。</li>
+               <li>⑦.如有疑问请联系中介宝客服<br>　 QQ:9129588　0551-65314555。</li>
              </ul>
            </div>
           </div>

@@ -594,7 +594,7 @@ var time_ani2=setTimeout(function(){
         <div class="lefter td title">
             <div class="table">
                 <div class="tr thead">
-                    <span title="$${version} 更新概要&#13; 1.系统管理&#13; 2权限优化" class="logo title"></span>
+                    <span title="$${version} 更新概要&#13; 1.系统管理&#13; 2权限优化" class="logo title nobar"></span>
                 </div>
                 <div class="tr tbody">
                     <ul class="menuSide">

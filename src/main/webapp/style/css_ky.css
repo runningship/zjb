@@ -13,8 +13,8 @@ html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体; -webkit-user
 
 
     ::-webkit-scrollbar {  
-      width: 7px;  
-      height: 7px; position:absolute;
+      width: 12px;  
+      height: 10px; position:absolute;
     }  
       
     ::-webkit-scrollbar-track,  
@@ -30,8 +30,9 @@ html,body{ height: 100%;font: 100% 微软雅黑, 宋体, 新宋体; -webkit-user
     ::-webkit-scrollbar-thumb {  
       min-height: 20px;  
       background-clip: content-box;  
-      box-shadow: 0 0 0 5px rgba(0,0,0,.7) inset;  
+      box-shadow: 0 0 0 5px rgba(0,0,0,.3) inset;  
     }  
+::-webkit-scrollbar-thumb:vertical:hover{background-color:rgba(0,0,0,0.3);}
       
     ::-webkit-scrollbar-corner {  
       background: transparent;  

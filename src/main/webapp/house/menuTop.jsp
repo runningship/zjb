@@ -10,9 +10,9 @@ function _open(url){
 </script>
 <div id="menuTop" style="display:inline-block;">
       <ul class="MainRightTop KY_W titlebar">
-          <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="_open('/house/house_v2.jsp?type=chushou')"><i class="i1"></i>出售</li>
+          <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="_open('/house/house_v2.jsp')"><i class="i1"></i>出售</li>
           <li class="line"></li>
-          <li class=" <c:if test="${type eq 'chuzu' }">slect</c:if> nobar" onclick="window.location='/house/house_rent_v2.jsp?type=chuzu'"><i class="i2"></i>出租</li>
+          <li class=" <c:if test="${type eq 'chuzu' }">slect</c:if> nobar" onclick="window.location='/house/house_rent_v2.jsp'"><i class="i2"></i>出租</li>
           <li class="line"></li>
           <li class="MenuBox nobar" style="position:relative;" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">
                <i class="i3" ></i>登记
@@ -22,6 +22,7 @@ function _open(url){
                     <a href="javascript:void(0)" onclick="openAddHouse('/v/house/house_rent_add.html?act=add&chuzu=1')">出租登记</a> 
                </div>
           </li>
+          
           <li class="line"></li>
           <li class="MenuBox nobar <c:if test="${type eq 'my' }">slect</c:if>" style="position:relative;">
                <i class="i4"></i>我的
@@ -33,6 +34,8 @@ function _open(url){
                     <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=addZu&chuzus=1'">我发布的出租</a>  
                </div>
           </li>
+          <li class="line"></li>
+          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar" onclick="window.location='/house/house_new.jsp'"><i class="i1"></i>新房</li>
           <li class="line"></li>
       </ul>
 </div>

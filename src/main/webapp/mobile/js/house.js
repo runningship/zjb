@@ -43,6 +43,12 @@ apiready = function(){
 	);
 	setTimeout(loadData,200);
 	//loadData();
+	
+	api.addEventListener({
+	    name: 'updateJF'
+	}, function(ret){
+		refreshPage();
+	});
 };
 function loadData(clear){
 	var url = 'http://'+server_host+'/c/mobile/list?page='+currentPage;
