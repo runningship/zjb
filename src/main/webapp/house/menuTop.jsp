@@ -8,6 +8,17 @@ function _open(url){
 	window.top.beforeIframeChange('iframe_house' , url);
 }
 </script>
+<style type="text/css">
+  .MainRightTop li.newhouseA{ background: #E97143; color: #FFF; }
+  .MainRightTop li.newhouseA:hover,
+  .MainRightTop li.newhouseA.slect{
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#FF9B4A), to(#B8422F));
+  }
+  .MainRightTop li.newhouseA i.i1,
+  .MainRightTop li.newhouseA.slect i.i1 {
+    background-position: 0 -134px;
+  }
+</style>
 <div id="menuTop" style="display:inline-block;">
       <ul class="MainRightTop KY_W titlebar">
           <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="_open('/house/house_v2.jsp')"><i class="i1"></i>出售</li>
@@ -35,7 +46,7 @@ function _open(url){
                </div>
           </li>
           <li class="line"></li>
-          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar" onclick="window.location='/house/house_new.jsp'"><i class="i1"></i>新房</li>
+          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="window.location='/house/house_new.jsp'"><i class="i1"></i>新房</li>
           <li class="line"></li>
       </ul>
 </div>

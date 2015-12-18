@@ -56,11 +56,17 @@ $(document).on('click','.newHouseList a',function(e){
     var T=$(this),
     TV=T.next().find('input'),
     TJson=TV.attr('data-info');
+    var tel = TV.val();
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+    if(!myreg.test(tel)){
+        alert('请输入有效的手机号码！');
+        return false; 
+    }
     //ajax....
     YW.ajax({
         type: 'POST',
         url: 'houseTuijian.jsp',
-        data:{conts:TJson, tel:TV.val()},
+        data:{conts:TJson, tel : tel},
         mysuccess: function(data){
             infoAlert('您的请求已经提交成功，稍后中介宝客服将与您电话联系.');
             //$('.ss_alertBox').hide();
@@ -158,7 +164,7 @@ var ArrList=['a1','a2','a3','a4','a5','a6'];
 <div class="bodyer">
   <div class="mainer KY_Main KY_W">
     <div class="maintop">
-      
+      <h1>20万定金，享受<b>6.5折</b>超级优惠！</h1>
     </div>
     <div class="NH_list">
       <ul class="NHL_ul newHouseList" id="newHouseList"></ul>
@@ -190,6 +196,8 @@ $(document).ready(function() {
     $(this).next().removeClass('hidden');
   }, function() {
     $(this).next().addClass('hidden');
+  }).click(function(event) {
+    event.preventDefault();
   });
   $(document).on('click', '.ss_alertBox .ss_alert_close', function(event) {
     $('.ss_alertBox').hide();
