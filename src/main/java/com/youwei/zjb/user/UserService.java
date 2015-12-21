@@ -467,6 +467,7 @@ public class UserService {
 		dao.saveOrUpdate(po);
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
 		ThreadSession.getHttpSession().setAttribute("pc", pcpo);
+		ThreadSession.getHttpSession().setAttribute("authNames", UserHelper.getAuthorityNames(user));
 		String operConts = "["+po.Department().namea+"-"+po.uname+ "] 登录成功";
 		operService.add(OperatorType.登录记录, operConts);
 		return mv;

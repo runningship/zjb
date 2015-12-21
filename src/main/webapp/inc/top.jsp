@@ -6,7 +6,7 @@
 	User user = (User)request.getSession().getAttribute("user");
   	if(user!=null){
   		request.setAttribute("me" , user);
-  		request.setAttribute("authNames",UserHelper.getAuthorityNames(user));
+  		request.setAttribute("authNames",session.getAttribute("authNames"));
   	}
   	
   	String agent = request.getHeader("User-Agent");

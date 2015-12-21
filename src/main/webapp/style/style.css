@@ -585,7 +585,8 @@ content: "\2b";
 
 
 .newhouse{ background: url('images/bg-1080.jpg') no-repeat top center; background-attachment: fixed; }
-.newhouse .bodyer{ background: url('images/newhouse.png') no-repeat top center; background-size: 100%; background-position: 0 50px;padding-top: 50px;}
+.newhouse .bodyer{padding-top: 50px;}
+.newhouse .bg{ background: url('images/newhouse.png') no-repeat top center; background-size: 100%;}
 .newhouse .mainer{ min-height: 600px; }
 .newhouse .mainer .maintop{ height: 150px; display: block; background: url('images/newhouse_yaohaiwanda_logo.png') no-repeat 50px 10px; color: #FFF; }
 .newhouse .mainer .maintop h1{ font-size: 30px; padding-left:480px; padding-top: 0px;}

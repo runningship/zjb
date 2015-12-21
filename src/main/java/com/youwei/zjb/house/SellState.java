@@ -45,7 +45,7 @@ public enum SellState {
 				}
 			}
 		}catch(Exception ex){
-			LogUtil.warning("state with error code "+ code);
+			//LogUtil.warning(""+ code);
 		}
 		return null;
 	}

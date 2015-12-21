@@ -103,7 +103,7 @@ function sideBtnFun(){
             return false;
         }else if(ThiType=='map'){
             ThiArea=Thi.data('area');
-            art.dialog.open('/v/house/baidu_map.html?area='+ThiArea,{id:'seemap',width:800,height:600});
+            art.dialog.open('/house/baidu_map.jsp?area='+ThiArea,{id:'seemap',width:800,height:600});
             return false;
         }else if(ThiType=='copy'){
             alert('不给复制');

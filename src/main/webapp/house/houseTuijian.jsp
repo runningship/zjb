@@ -17,14 +17,24 @@ trial.conts = conts;
 trial.tel = tel;
 trial.finish = 0;
 dao.saveOrUpdate(trial);
-String msg = "电话:"+tel+";详情:"+conts;
-try{
-	List<String> toList = new ArrayList<String>();
+final String msg = "电话:"+tel+";详情:"+conts;
+
+	final List<String> toList = new ArrayList<String>();
+	toList.add("2975066320@qq.com");//yulong
+	toList.add("947813825@qq.com");//gujun
 	toList.add("894350008@qq.com");
 	toList.add("253187898@qq.com");
-	MailUtil.send_email(toList, "新房带看申请",msg);
-}catch(Exception ex){
-	LogUtil.warning(msg.toString());
-}
+	toList.add("673508153@qq.com");//jinfei
+	Thread t = new Thread(){
+		public void run(){
+			try{
+				MailUtil.send_email(toList, "新房带看申请",msg);
+			}catch(Exception ex){
+				LogUtil.warning(msg.toString());
+			}
+		}
+	};
+	t.start();
+
 out.write("success");
 %>

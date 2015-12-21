@@ -9,39 +9,7 @@
 //$(document).bind("selectstart", function () { return false; });
 /*
 */
-//屏蔽右键菜单
-// document.oncontextmenu = function (event){
-// 	if(window.event){
-// 		event = window.event;
-// 	}try{
-// 		var the = event.srcElement;
-// 		if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA")){
-// 			return false;
-// 		}
-// 		return true;
-// 	}catch (e){
-// 		return false; 
-// 	} 
-// }
-//屏蔽全选
-// document.onselectstart = function (event){
-// 	if(window.event){
-// 		event = window.event;
-// 	}try{
-// 		var the = event.srcElement;
-//    if(!the.tagName){
-//     the=the.parentNode
-//    }
-//    if((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || (the.tagName == "SPAN" && (the.className == "lxr" || the.className == "tel")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect"){
-// 			//alert(the.getAttribute("selectstart"))
-//       return true;
-// 		}else{
-//       return false;
-//     }
-// 	}catch (e){
-// 		return false; 
-// 	} 
-// }
+
 $(document).keydown(function(event){  
 //alert('a'+event.keyCode)
     if ((event.altKey)&&   
@@ -65,6 +33,24 @@ $(document).keydown(function(event){
         return false; 
       }   
     }  
+	
+	
+	if ((event.keyCode==17)&&(event.keyCode==65))   
+   {   
+       if(window.event){
+        event = window.event;
+      }try{
+        var the = event.srcElement;
+        if ((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || (the.tagName == "SPAN" && (the.className == "lxr" || the.className == "tel")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect"){
+          return true;
+        }
+        return false;
+      }catch (e){
+        return false; 
+      }  
+   }   
+	
+	
     if(event.keyCode==9){  
       if(window.event){
         event = window.event;
@@ -149,12 +135,6 @@ function WinRevert(){/*恢复*/
   }
 
   WinMaxOrRev(1);
-//    alert(hex.getSize().height)
-//hex.sizeTo(1022,660);
-//window.resizeTo(window.screen.width, window.screen.height);
-/*var gui = require('nw.gui');
-  var win = gui.Window.get();
-  win.maximize();*/
 }
 function WinMaxRev(){/*最大化*/
 //alert(hex.formState)
@@ -223,7 +203,7 @@ function tableHover(){
 }
 
   //改善btn-group的操作感受
-    var btn_group_time;;
+    var btn_group_time;
     $(document).on('hide.bs.dropdown','.btn-group', function () {
       return false;
     }).on('show.bs.dropdown','.btn-group', function () {
@@ -354,6 +334,7 @@ function DesktopAlert(str) {
   }
  * setSearchValue(当前选中的行)
  */
+var prompting=false;
 function autoComplete(id){
     $(document).find('body').prepend('<div id="autoCompleteBox" class="autocomplete"></div>');
     var Thi=id,
@@ -371,16 +352,15 @@ function autoComplete(id){
        ThisArea=This.attr('area'),
        ThisAddress=This.data('address'),
        ThisQuyu=This.data('quyu');
-       setSearchValue(ThisIndex);
+       setSearchValue(ThisIndex,true);
        return false;
     });
-    Thi.on('keydown',function(event) {
-    }).on('keyup',function(event) {
-        var This=$(this),
-        ThisVal=This.val(),
+    Thi.on('keyup',function(event) {
+        var This=$(this);
+        var ThisVal=This.val(),
         param={search:ThisVal};
         if(ThisVal==''){
-        	return false;;
+        	return false;
         }
         ThiOptTop=Thi.offset().top+ThiHeight+3,
         ThiOptLeft=Thi.offset().left,
@@ -441,8 +421,9 @@ function autoComplete(id){
 	                    }else{
 	                        autocomplete.hide()
 	                    }
+	                    prompting = false;
 	                },complete:function(){
-	                    
+	                    prompting = false;
 	                },beforeSend:function(){}
 	            });
 	    	},500);
@@ -509,7 +490,6 @@ function getHouseToo(callback){
                 }
             }else{
                 api.title(apiTitle + '　<b style="color:#090;">无重复</b>');
-                callback;
             }
         }
     });
@@ -550,7 +530,6 @@ function getFunSettingSideEarch(){
       return false;
   });
 }
-
 
 function getSearch(val){
     //alert($('.jtree').html())
@@ -622,7 +601,7 @@ if(I_SUCCESS && I_SUCCESS==1){
     //extAlert(a,ms_data[1]+ms_data[2]);
     callback(ms_data[1]+ms_data[2])
 }else {
-    callback('');
+    callback('查询失败');
 }
 }
 })
@@ -804,6 +783,9 @@ function quit(){
         url: '/c/user/logout',
         success: function(data){
           WinClose(true);
+        },
+        error:function(){
+          WinClose(true);
         }
       });
   },function(){},'warning');
@@ -850,7 +832,44 @@ function checkTel(){
     for(var i = 0; i < str.length; i ++){
         if(check(str[i]) == false){
             infoAlert("号码"+str[i]+"填写错误?请检查电话号码的长度,如果想输入多个号码请用/隔开");
-            // inputBox.focus();
+            inputBox.focus();
+			return false;
         }
     }
+    return true;
+}
+
+function checkDateyear(input){
+   //检查建筑年代
+  // var year = $('#dateyear').val();
+  var year = input.val();
+  var reg = new RegExp(/^[0-9/]+$/);
+  if(year.length>0){
+    if(year.length!=4 || !reg.test(year)){
+      art.dialog.tips("年代必须为4位数字");
+      input.focus();
+      // event.preventDefault();
+      return false;
+    }else{
+      var now = new Date();
+      if(year>now.getFullYear() || year<1900){
+        art.dialog.tips("年代因该在1900到"+now.getFullYear()+"之间");
+        input.focus();
+        return false;
+      }
+    }
+  }
+  return true;
+}
+function openAddHouse(url){
+  art.dialog.open(url,{id:'house_add',width:642,height:500});
+}
+
+function initTopMenu(){
+  $(".MenuBox").hover(function(){
+    $(this).children("div.topMenuChid").hide();
+    $(this).children("div.topMenuChid").show();
+  },function(){
+       $(this).children("div.topMenuChid").hide(); 
+  });
 }

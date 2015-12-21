@@ -9,35 +9,7 @@
 //$(document).bind("selectstart", function () { return false; });
 /*
 */
-//屏蔽右键菜单
-// document.oncontextmenu = function (event){
-// 	if(window.event){
-// 		event = window.event;
-// 	}try{
-// 		var the = event.srcElement;
-// 		if (!((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || the.tagName == "TEXTAREA")){
-// 			return false;
-// 		}
-// 		return true;
-// 	}catch (e){
-// 		return false; 
-// 	} 
-// }
-//屏蔽全选
-// document.onselectionchange=function(event){
-//   var the = document.getSelection().extentNode;
-//   if(the.tagName==undefined){
-//     the = the.parentElement;
-//   }
-//   // console.log(sel.outerHTML);
-//   if(the.tagName=='BODY' || the.tagName=='LI' || the.tagName=='EM' || the.tagName=='SELECT' ){
-//       return false;
-//     }else if(the.classList.contains('not-select')){
-//       return false;
-//     }else{
-//       return true;
-//     }
-// }
+
  document.onselectstart = function (event){
  	if(window.event){
  		event = window.event;
@@ -55,34 +27,12 @@
     }else{
       return true;
     }
-   //  if((the.tagName == "INPUT" && (the.type.toLowerCase() == "text" || the.type.toLowerCase() == "password")) || (the.tagName == "SPAN" && (the.className == "lxr" || the.className == "tel")) || the.tagName == "TEXTAREA" || the.className == "neirong" || the.className == "telNum" || the.className == "onselect" ){
- 		// 	//alert(the.getAttribute("selectstart"))
-   //     return true;
- 		// }else if(the.tagName == "TD" || the.tagName == "TH"){
-   //     return true;
-   //  }else{
-   //    return false;
-   //  }
  	}catch (e){
  		return false; 
  	} 
  }
  //屏蔽全选  结束
 
-
- //添加例外
-    // var omitformtags = ["input", "table"];//设置可以的元素名称
-    // omitformtags = "|"+ omitformtags.join("|") + "|";
-    // function disableselect(){//判断是否是可选中的元素，不是的话就return false
-    //   if(event.srcElement.tagName==undefined){
-    //     return false;
-    //   }
-    //   if (omitformtags.indexOf("|"+event.srcElement.tagName.toLowerCase()+"|")==-1){
-    //     return false;
-    //   }
-    // }
-    // document.onselectstart = disableselect;
- //添加例外  结束
  
 $(document).keydown(function(event){  
 //alert('a'+event.keyCode)
@@ -167,8 +117,26 @@ function WinMaxOrRev(a){
   if($('.winBtnRevert').length>0){
     $('.winBtnRevert').css('display',winRevertNone);
   }
-  // ChangeW();
-  
+
+  //设置拖动栏
+  try{
+    // var menuTopW = $(window.frames[0].document).find('#menuTop').width();
+    var doc = $(selectedFrame[0].contentDocument);
+    var menuTopW = doc.find('#menuTop').width();
+    var bodyW = $(window.top.document).width()-50;
+    var bodyW = win.width-50;
+    var dragbar = $(window.top.document).find('#dragbar');
+    dragbar.width(bodyW-menuTopW-200);
+    dragbar.css('margin-right' , '200px')
+    //$(window.top.document).find('#dragbar').width(bodyW-menuTopW);
+    doc.find('.mainCont').width(win.width-50-270);
+    doc.find('#table-container').width(win.width-50-270);
+    var TableH=doc.find('.TableH');
+    var TableB=doc.find('.TableB');
+    tableFix(TableH,TableB);
+  }catch(e){
+    console.log('set drag bar width fail,'+e);
+  }
 }
 function WinMin(){/*最小化*/
 	win.minimize();
@@ -400,7 +368,6 @@ function autoComplete(id){
     ThiOptTop=Thi.offset().top+ThiHeight,
     ThiOptLeft=Thi.offset().left,
     autocomplete=$('#autoCompleteBox');
-    // autocomplete.width(0);
     // autocomplete.width(ThiWidth).css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
     autocomplete.css({'top':ThiOptTop+ThiHeight,'left':ThiOptLeft});
     autocomplete.on('click','a',function(event) {
@@ -485,7 +452,6 @@ function autoComplete(id){
 		        });
 	    	},500);
 	        
-	    //}
     }).on('focusin',function(event) {
         //if(autocomplete.html()){autocomplete.show();}
     	autocomplete.empty();
@@ -548,12 +514,10 @@ function getHouseToo(callback){
                 }
             }else{
                 api.title(apiTitle + '　<b style="color:#090;">无重复</b>');
-                //callback();
             }
         }
     });
 }
-
 
 /**
  * 列表循环完成后，替换相应class，一般用在审核未审核的样式上
@@ -612,7 +576,6 @@ function getSearch(val){
       }
     }
   }
-
 
 //获取url里需要的值
 function getParam(name){
@@ -882,7 +845,7 @@ function checkTel(){
     var reg = new RegExp(/^[0-9-/]+$/);
     var inputBox=$("#tel");
     var value=inputBox.val().trim();
-    if(value.length == 0){ return true; }
+    if(value.length == 0){ return false; }
     if(!reg.test(value)){
         infoAlert("输入错误！只能输入‘数字’或‘-’或‘/’");
         inputBox.focus();
@@ -894,7 +857,7 @@ function checkTel(){
         if(check(str[i]) == false){
             infoAlert("号码"+str[i]+"填写错误?请检查电话号码的长度,如果想输入多个号码请用/隔开");
             inputBox.focus();
-            return false;
+			return false;
         }
     }
     return true;

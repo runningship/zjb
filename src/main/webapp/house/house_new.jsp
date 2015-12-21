@@ -1,5 +1,10 @@
+<%@page import="com.youwei.zjb.user.entity.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+User user = (User)request.getSession().getAttribute("user");
+request.setAttribute("user", user);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,6 +61,9 @@ $(document).on('click','.newHouseList a',function(e){
     var T=$(this),
     TV=T.next().find('input'),
     TJson=TV.attr('data-info');
+    var obj = JSON.parse(TJson);
+    obj.account = '${user.lname}';
+    obj.uname = '${user.uname}';
     var tel = TV.val();
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
     if(!myreg.test(tel)){
@@ -66,7 +74,7 @@ $(document).on('click','.newHouseList a',function(e){
     YW.ajax({
         type: 'POST',
         url: 'houseTuijian.jsp',
-        data:{conts:TJson, tel : tel},
+        data:{conts: JSON.stringify(obj), tel : tel},
         mysuccess: function(data){
             infoAlert('您的请求已经提交成功，稍后中介宝客服将与您电话联系.');
             //$('.ss_alertBox').hide();
@@ -151,7 +159,6 @@ var ArrList=['a1','a2','a3','a4','a5','a6'];
   $('#newHouseList li').each(function(index, el) {
     var this_class=getArrayItems(ArrList,1);
     $(this).addClass(this_class[0]);
-    console.log(this_class[0]);
   });
 }
 </script>
@@ -160,51 +167,75 @@ var ArrList=['a1','a2','a3','a4','a5','a6'];
 </style>
 </head>
 <body class="newhouse">
-<jsp:include page="menuTop.jsp?type=new" />
-<div class="bodyer">
-  <div class="mainer KY_Main KY_W">
-    <div class="maintop">
-      <h1>20万定金，享受<b>6.5折</b>超级优惠！</h1>
-    </div>
-    <div class="NH_list">
-      <ul class="NHL_ul newHouseList" id="newHouseList"></ul>
+<div class="mainbox">
+  <div class="bodyer">
+  <jsp:include page="menuTop.jsp?type=new" />
+    <div class="mainer">
+      <div class="bg">
+        <div class="maintop">
+          <h1>另付20万，享受<b>6.5折</b>超级优惠！</h1>
+        </div>
+        <div class="NH_list">
+          <ul class="NHL_ul newHouseList" id="newHouseList"></ul>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="ss_alertBox">
-  <div class="ss_alert_tit">
-    <a href="#" class="ss_alert_close">X</a>
-  </div>
-  <div class="ss_alert_cont">
-    <div class="textcont">
-      <a href="" class="textconta">详情查看</a>
-      <div class="textconts hidden"><b>佣金<i>2</i>万元</b><br>在支付首付款后3-7个工作日结佣</div>
+  <div class="ss_alertBox">
+    <div class="ss_alert_tit">
+      <a href="#" class="ss_alert_close">X</a>
     </div>
-    <div class="adinputbox">
-      <a href="#" class="btns ss_alert_setPhone">提交</a>
-      <span class="inputbox"><input type="text" class="input" placeholder="手机号码"></span>
+    <div class="ss_alert_cont">
+      <div class="textcont">
+        <a href="" class="textconta">详情查看</a>
+        <div class="textconts hidden"><b>佣金<i>2</i>万元</b><br>在支付首付款后3-7个工作日结佣</div>
+      </div>
+      <div class="adinputbox">
+        <a href="#" class="btns ss_alert_setPhone">提交</a>
+        <span class="inputbox"><input type="text" class="input" placeholder="经纪人手机号码"></span>
+      </div>
+      <div class="ss_cont_left"></div>
     </div>
-    <div class="ss_cont_left"></div>
   </div>
+  <script type="text/javascript">
+  $(document).ready(function() {
+  	ChangeW();
+      initTopMenu();
+    $('.textconta').hover(function() {
+      $(this).next().removeClass('hidden');
+    }, function() {
+      $(this).next().addClass('hidden');
+    }).click(function(event) {
+      event.preventDefault();
+    });
+    $(document).on('click', '.ss_alertBox .ss_alert_close', function(event) {
+      $('.ss_alertBox').hide();
+      event.preventDefault();
+      /* Act on the event */
+    });
+  });
+
+  function resizebox(){
+    win=$(window),
+    winH=win.innerHeight(),
+    main=$('.mainer'),
+    menu=$('#menuTop'),
+    menuH=menu.innerHeight();
+    menu.css({'margin-top':-menuH})
+    menu.find('ul').css({'display':'inline-block','width':'auto'})
+    main.height(winH-menuH).css({
+      'overflow': 'hidden',
+      'overflow-y': 'auto'
+    });
+  }
+  $(document).ready(function(){
+    resizebox();
+  })
+  $(window).resize(function(){
+    resizebox();
+  })
+  </script>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	ChangeW();
-    initTopMenu();
-  $('.textconta').hover(function() {
-    $(this).next().removeClass('hidden');
-  }, function() {
-    $(this).next().addClass('hidden');
-  }).click(function(event) {
-    event.preventDefault();
-  });
-  $(document).on('click', '.ss_alertBox .ss_alert_close', function(event) {
-    $('.ss_alertBox').hide();
-    event.preventDefault();
-    /* Act on the event */
-  });
-});
-</script>
 </body>
 </html>

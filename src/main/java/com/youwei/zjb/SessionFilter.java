@@ -166,14 +166,15 @@ public class SessionFilter implements Filter{
 		User me = ThreadSessionHelper.getUser();
 		ThreadSession.setCityPY(me.cityPinyin);
 		if(path.endsWith(".jsp")){
-			StringBuilder auths = new StringBuilder();
-			if(me.getRole()!=null){
-				for(RoleAuthority ra : me.getRole().Authorities()){
-					auths.append(ra.name).append(",");
-				}
-			}
+//			StringBuilder auths = new StringBuilder();
+//			if(me.getRole()!=null){
+//				for(RoleAuthority ra : me.getRole().Authorities()){
+//					auths.append(ra.name).append(",");
+//				}
+//			}
 			req.setAttribute("user", me);
-			req.setAttribute("auths", auths.toString());
+//			req.setAttribute("auths", auths.toString());
+			req.setAttribute("auths", session.getAttribute("authNames"));
 		}
 		
 		ThreadSession.setCityCoordinate(me.cityCoordinate);

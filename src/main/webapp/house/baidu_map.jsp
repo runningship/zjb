@@ -1,4 +1,8 @@
-
+<%@page import="com.youwei.zjb.ThreadSessionHelper"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+request.setAttribute("cityCordinate", ThreadSessionHelper.getCityCordinate());
+%>
 <!doctype html>
 <html>
 <head>
@@ -31,7 +35,7 @@ return (reg.test(location.search))? encodeURIComponent(decodeURIComponent(RegExp
 <script type="text/javascript">
 var areas=getParam('area');
 var map = new BMap.Map("dituContent",{minZoom:10,maxZoom:21});            // 创建Map实例
-map.centerAndZoom(new BMap.Point($${city}), 15);
+map.centerAndZoom(new BMap.Point(${cityCordinate}), 15);
 // map.centerAndZoom(new BMap.Point(118.402505,31.339376), 15);
 
 // 初始化地图,设置中心点坐标和地图级别。

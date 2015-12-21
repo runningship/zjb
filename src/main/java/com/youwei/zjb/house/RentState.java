@@ -45,7 +45,7 @@ public enum RentState {
 				}
 			}
 		}catch(Exception ex){
-			LogUtil.warning("state with error code "+ code);
+			//LogUtil.warning("state with error code "+ code);
 		}
 		return null;
 	}
