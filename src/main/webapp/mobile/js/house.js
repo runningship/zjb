@@ -112,8 +112,7 @@ function SeeThis(id){
 			api.openWin({
 		        name: 'info',
 		        pageParam: {isChuzu:isChuzu, id:id},
-				url: 'house_details.html',
-				delay:300
+				url: 'house_details.html'
 		    });
 		}
 	}

@@ -20,10 +20,6 @@ apiready = function(){
 		isFufei = isUserFuFei(config);
 		hid = api.pageParam.id;
 		loadData();
-		if(isFufei){
-			//
-			loadGenJin()
-		}
 	});
 };
 function loadData(){
@@ -38,6 +34,9 @@ function loadData(){
 				returnAll:false
 			},function(ret , err){
 				if(ret){
+					if(isFufei){
+						loadGenJin();
+					}
 					houseDetail = ret;
 					area = ret.area;
 					fdhao = ret.dhao+' - '+ret.fhao;
@@ -91,7 +90,9 @@ function loadData(){
 					$('#hxing').text(ret.hxf+"室"+ret.hxt+"厅"+ret.hxw+"卫");
 					$('#zxiu').text(ret.zxiu);
 					$('#id').text(ret.id);
-					$('#imageCount').text(ret.imageCount+'张');
+					if(!ret.imageCount){
+						$('#imageCount').text(ret.imageCount+'张');
+					}
 					
 					if(ret.year){
 						$('#year').text(ret.year+'年');

@@ -18,15 +18,25 @@ function _open(url){
   .MainRightTop li.newhouseA.slect i.i1 {
     background-position: 0 -134px;
   }
+  .MainRightTop li i.iconfont{
+    margin: 0;
+    padding: 0;
+    background: none;
+    /* width: auto; */
+    height: auto;
+    text-align: center;
+    font-size: 22;
+    vertical-align: bottom;
+  }
 </style>
 <div id="menuTop" style="display:inline-block;">
       <ul class="MainRightTop KY_W titlebar">
-          <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="_open('/house/house_v2.jsp')"><i class="i1"></i>出售</li>
+          <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="_open('/house/house_v2.jsp')"><i class="iconfont">&#xe682;</i>出售</li>
           <li class="line"></li>
-          <li class=" <c:if test="${type eq 'chuzu' }">slect</c:if> nobar" onclick="window.location='/house/house_rent_v2.jsp'"><i class="i2"></i>出租</li>
+          <li class=" <c:if test="${type eq 'chuzu' }">slect</c:if> nobar" onclick="window.location='/house/house_rent_v2.jsp'"><i class="iconfont">&#xe681;</i>出租</li>
           <li class="line"></li>
           <li class="MenuBox nobar" style="position:relative;" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">
-               <i class="i3" ></i>登记
+               <i class="iconfont">&#xe684;</i>登记
                <div class="topMenuChid">
                     <span></span>
                     <a href="javascript:void(0)" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">出售登记</a> 
@@ -36,7 +46,7 @@ function _open(url){
           
           <li class="line"></li>
           <li class="MenuBox nobar <c:if test="${type eq 'my' }">slect</c:if>" style="position:relative;">
-               <i class="i4"></i>我的
+               <i class="iconfont">&#xe685;</i>我的
                <div class="topMenuChid">
                     <span></span>
                     <a href="javascript:void(0)" onclick="window.location='/house/house_my_v2.jsp?act=my&flag=favShou&chuzus=0'">我收藏的出售</a> 
@@ -46,7 +56,7 @@ function _open(url){
                </div>
           </li>
           <li class="line"></li>
-          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="window.location='/house/house_new.jsp'"><i class="i1"></i>新房</li>
+          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="window.location='/house/house_new.jsp'"><i class="iconfont">&#xe686;</i>新房</li>
           <li class="line"></li>
       </ul>
 </div>
