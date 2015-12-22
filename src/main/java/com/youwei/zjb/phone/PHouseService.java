@@ -143,6 +143,9 @@ public class PHouseService {
 		}
 		long readCount = dao.countHql("select count(*) from Track where hid=? and chuzu=?", houseId , 0);
 		mv.data.put("readCount", readCount);
+		//获取图片数量
+		long imageCount = dao.countHql("select count(*) from HouseImage where hid=? and chuzu=? and isPrivate=?", houseId , 0 , 0);
+		mv.data.put("imageCount", imageCount);
 		return mv;
 	}
 	@WebMethod

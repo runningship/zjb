@@ -1,3 +1,5 @@
+<%@page import="com.youwei.zjb.cache.HouseCacheVO"%>
+<%@page import="com.youwei.zjb.cache.HouseViewCache"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.youwei.zjb.house.entity.HouseImageGJ"%>
 <%@page import="com.youwei.zjb.cache.ConfigCache"%>
@@ -29,13 +31,21 @@ if(h==null){
 	out.write("404");
 	return ;
 }
-//mji zjia
 String hql="select tt.conts as conts , d.dname , tt.uname , tt.addtime ,tt.ztai as ztai from (select gj.ztai as ztai, gj.id as id,gj.hid as houseId,gj.conts as conts,gj.did as did,u.uname as uname,"
-					+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu from house_gj gj ,uc_user u "
-					+" where gj.hid = ? and u.id=gj.uid  and gj.chuzu=?) tt "
-					+" left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did order by tt.addtime desc";
-			
-List<Map> gjList = dao.listSqlAsMap(hql.toString(), Integer.valueOf(id) , 0);
+		+"gj.addtime as addtime,gj.sh as sh,gj.chuzu as chuzu from house_gj gj ,uc_user u "
+		+" where gj.hid = ? and u.id=gj.uid  and gj.chuzu=?) tt "
+		+" left join (select d.id as did, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did order by tt.addtime desc";
+List<Map> gjList = null;
+HouseCacheVO cachePO = HouseViewCache.getInstance().loadHouse(h.id);
+if(cachePO==null){
+	gjList = dao.listSqlAsMap(hql.toString(), Integer.valueOf(id) , 0);
+ 	cachePO = new HouseCacheVO();
+ 	cachePO.gjList = gjList;
+ 	cachePO.hid = h.id;
+ 	HouseViewCache.getInstance().putHouse(cachePO);
+}else{
+	gjList = cachePO.gjList;
+}
 request.setAttribute("house" , h);
 request.setAttribute("gjList" , gjList);
 User user = dao.get(User.class, h.uid);

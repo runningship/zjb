@@ -26,6 +26,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.entity.Role;
+import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.house.entity.Agent;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.sys.OperatorService;
@@ -467,7 +468,6 @@ public class UserService {
 		dao.saveOrUpdate(po);
 		SessionHelper.initHttpSession(ThreadSession.getHttpSession(), po , null);
 		ThreadSession.getHttpSession().setAttribute("pc", pcpo);
-		ThreadSession.getHttpSession().setAttribute("authNames", UserHelper.getAuthorityNames(user));
 		String operConts = "["+po.Department().namea+"-"+po.uname+ "] 登录成功";
 		operService.add(OperatorType.登录记录, operConts);
 		return mv;

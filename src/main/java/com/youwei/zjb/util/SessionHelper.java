@@ -5,7 +5,10 @@ import java.util.Date;
 import javax.servlet.http.HttpSession;
 
 import org.bc.sdak.SimpDaoTool;
+import org.bc.web.ThreadSession;
 
+import com.youwei.zjb.entity.RoleAuthority;
+import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.user.entity.UserSession;
 
@@ -33,5 +36,14 @@ public class SessionHelper {
 		
 		SimpDaoTool.getGlobalCommonDaoService().saveOrUpdate(us);
 		session.removeAttribute("relogin");
+		
+		ThreadSession.getHttpSession().setAttribute("authNames", UserHelper.getAuthorityNames(user));
+		StringBuilder auths = new StringBuilder();
+		if(user.getRole()!=null){
+			for(RoleAuthority ra : user.getRole().Authorities()){
+				auths.append(ra.name).append(",");
+			}
+		}
+		ThreadSession.getHttpSession().setAttribute("auths", auths.toString());
 	}
 }

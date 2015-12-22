@@ -173,6 +173,7 @@ var ArrList=['a1','a2','a3','a4','a5','a6'];
     <div class="mainer">
       <div class="bg">
         <div class="maintop">
+          <div class="ewmBox"><img src="../style/images/zjb_wx_150.png" alt=""><span>中介宝微信公众号</span></div>
           <h1>另付20万，享受<b>6.5折</b>超级优惠！</h1>
         </div>
         <div class="NH_list">

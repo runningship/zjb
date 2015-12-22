@@ -90,6 +90,9 @@ function loadData(){
 					$('#lxing').text(ret.lxing);
 					$('#hxing').text(ret.hxf+"室"+ret.hxt+"厅"+ret.hxw+"卫");
 					$('#zxiu').text(ret.zxiu);
+					$('#id').text(ret.id);
+					$('#imageCount').text(ret.imageCount+'张');
+					
 					if(ret.year){
 						$('#year').text(ret.year+'年');
 					}

@@ -49,10 +49,10 @@ Date end= now.getTime();
 <script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 <script src="${refPrefix}/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
-<script src="${refPrefix}/js/jquery.timers.js" type="text/javascript"></script>
-<script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script>
+<%-- <script src="${refPrefix}/js/jquery.timers.js" type="text/javascript"></script> --%>
+<%-- <script src="${refPrefix}/js/jquery.input.js" type="text/javascript"></script> --%>
 <script src="${refPrefix}/js/jquery.j.tool.v2.js" type="text/javascript"></script>
-<script src="${refPrefix}/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+<%-- <script src="${refPrefix}/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script> --%>
 <script type="text/javascript">
 function setSideMenuCurr(){
     var menuerBox=$('.menuSide'),

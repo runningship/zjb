@@ -36,8 +36,7 @@
         </span>
         <span class="conter"></span>
         <span class="right">
-          
-        	<a href="#" class="btns" id="image" style="display:none;color:#fff" onclick="openImages();"><i tapmode="tapped" class="iconfont">&#xe6bc;</i></a>
+<!--         	<a href="#" class="btns" id="image" style="display:;color:#fff" onclick="openImages();"><i tapmode="tapped" class="iconfont">&#xe6bc;</i></a> -->
         	<a href="#" class="btns" id="daohang" onclick="daohang();"><i tapmode="tapped"  class="iconfont">&#xe668;</i></a>
         	<a id="favBtn"  class="btns" style="display:none" onclick="triggerFav();"><i tapmode="tapped"  class="iconfont">&#xe659;</i></a>
         </span>
@@ -47,6 +46,14 @@
         	<p class="htimes" ><span>发布时间: </span><span id="dateadd"></span>
         	<span style="float:right">浏览: <span id="readCount"></span></span> </p>
             <ul class="hList">
+            	<li class="">
+                    <span>编号</span>
+                    <strong id="id"></strong>
+                </li>
+                <li style="display:none;" id="image" >
+                    <span>图片</span>
+                    <strong id="imageCount"></strong><a href="#" class="btns"  style="color:#fff" onclick="openImages();"><i tapmode="tapped" class="iconfont">&#xe6bc;</i></a>
+                </li>
                 <li class="">
                     <span>总价</span>
                     <strong id="zjia"><i>万</i></strong>

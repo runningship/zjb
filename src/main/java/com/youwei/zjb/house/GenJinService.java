@@ -17,6 +17,7 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
+import com.youwei.zjb.cache.HouseViewCache;
 import com.youwei.zjb.house.entity.GenJin;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.phone.PGenjinService;
@@ -66,6 +67,7 @@ public class GenJinService {
 			GenJin po = dao.get(GenJin.class, id);
 			if(po!=null){
 				dao.delete(po);
+				HouseViewCache.getInstance().remove(po.hid);
 			}
 		}
 		mv.data.put("result", 0);
@@ -84,6 +86,7 @@ public class GenJinService {
 					po.sh=0;
 				}
 				dao.saveOrUpdate(po);
+				HouseViewCache.getInstance().remove(po.hid);
 				mv.data.put("sh", po.sh);
 			}
 		}

@@ -12,6 +12,7 @@ import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.cache.HouseViewCache;
 import com.youwei.zjb.house.RentState;
 import com.youwei.zjb.house.SellState;
 import com.youwei.zjb.house.entity.GenJin;
@@ -123,6 +124,7 @@ public class PGenjinService {
 //			dao.saveOrUpdate(gj);
 //		}
 		dao.saveOrUpdate(gj);
+		HouseViewCache.getInstance().remove(gj.hid);
 		mv.data.put("result", "1");
 		mv.data.put("msg", "添加成功");
 		return mv;
