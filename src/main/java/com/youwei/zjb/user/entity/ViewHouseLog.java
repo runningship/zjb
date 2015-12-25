@@ -7,6 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * 用于访问记录统计，足迹使用Track类
+ * @author Administrator
+ *
+ */
 @Entity
 public class ViewHouseLog {
 

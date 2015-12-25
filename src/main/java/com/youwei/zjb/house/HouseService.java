@@ -84,7 +84,7 @@ public class HouseService {
 		validte(house);
 		ModelAndView result = exist(house.area , house.dhao , house.fhao , house.seeGX==null ? "0": house.seeGX.toString());
 		if("1".equals(result.data.getString("exist"))){
-			throw new GException(PlatformExceptionType.BusinessException,"存在相同的房源");
+			throw new GException(PlatformExceptionType.BusinessException,"存在相同的房源"+result.data.get("hid"));
 		}
 		User user = ThreadSessionHelper.getUser();
 		house.isdel = 0;
