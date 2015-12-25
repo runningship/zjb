@@ -14,7 +14,6 @@ apiready = function(){
 function init(){
 	if(config){
 		if(config.user){
-			updateDeadtime();
 			if(config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
 			}else{
@@ -38,10 +37,10 @@ function init(){
 			if(config.user.pwd){
 				$('#endtime').text(config.user.mobileDeadtime);
 				var t = Date.parse(config.user.mobileDeadtime+' 23:59:59');
-				//blockAlert(t-new Date().getTime());
 				if(t-new Date().getTime()<=0){
 					$('#endtime').css('color','red');
 				}
+				updateDeadtime();
 			}else{
 				$('#endtime').text('未登录');
 			}
@@ -118,7 +117,6 @@ function quit(){
 		config.user.pwd='';
 		saveConfig(config);
 		$('#endtime').text('未登录');
-		alert('已退出登录');
 		refreshPage();
 		api.execScript({
 		    name: 'index',

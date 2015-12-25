@@ -278,7 +278,7 @@ html,body{height: 100%; padding: 0; margin:0;}
 .content h2{ font-weight: normal; padding-left: 10px;}
 .content .ul_list li{ width: 49%; display: inline-block;}
 .content .ul_list li.dblock{ width: 100%;}
-.content .ul_list li .title{ display: inline-block; height: 42px; line-height:50px; width: 50px; float: left; text-align: right;}
+.content .ul_list li .title{ display: inline-block; height: 42px; line-height:50px; width: 50px; float: left; text-align: right;    padding: 0px;    background: none;  color: black;}
 .content .ul_list li .inputbox{ margin-left: 60px; }
 .content .ul_list li input.text,
 .content .ul_list li select.select{ display: block; border-bottom: 1px solid #EEE;  float: left;}

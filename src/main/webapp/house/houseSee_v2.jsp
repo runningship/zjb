@@ -91,15 +91,13 @@ if(StringUtils.isNotEmpty(tel)){
 }else{
 	request.setAttribute("tel", h.telImg);
 }
-ViewHouseLog vlpo = dao.getUniqueByKeyValue(ViewHouseLog.class, "hid", h.id);
-if(vlpo==null){
-	ViewHouseLog vl = new ViewHouseLog();
-	vl.hid = h.id;
-	vl.uid = ThreadSessionHelper.getUser().id;
-	vl.isMobile = 0;
-	vl.viewTime = new Date();
-	dao.saveOrUpdate(vl);	
-}
+
+ViewHouseLog vl = new ViewHouseLog();
+vl.hid = h.id;
+vl.uid = ThreadSessionHelper.getUser().id;
+vl.isMobile = 0;
+vl.viewTime = new Date();
+dao.saveOrUpdate(vl);
 
 User u = ThreadSessionHelper.getUser();
 String sql = "select hi.id as hiid , hi.uid as uid , hi.hid as hid, hi.path as path, u.uname as uname ,u.tel as tel,hi.zanCount as zanCount , hi.shitCount as shitCount  from HouseImage hi , uc_user u "

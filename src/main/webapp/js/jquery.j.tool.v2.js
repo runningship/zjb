@@ -479,9 +479,9 @@ function getHouseToo(callback){
     fhaov=fhao.val();
     var seeGXv;
     if(seeGX[0]==null || seeGX[0]==undefined){
-      seegxv = "0";
+    	seeGXv = "0";
     }else{
-      seeGX[0].checked?"1":"0";  
+    	seeGXv = seeGX[0].checked?"1":"0";  
     }
     if(getHouseTooStr==areav+dhaov+fhaov){
         return false;

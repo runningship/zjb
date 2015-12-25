@@ -40,7 +40,7 @@ function _open(url){
                <div class="topMenuChid">
                     <span></span>
                     <a href="javascript:void(0)" onclick="openAddHouse('/house/house_add.jsp?act=add&chuzu=0')">出售登记</a> 
-                    <a href="javascript:void(0)" onclick="openAddHouse('/v/house/house_rent_add.html?act=add&chuzu=1')">出租登记</a> 
+                    <a href="javascript:void(0)" onclick="openAddHouse('/house/house_rent_add.jsp?act=add&chuzu=1')">出租登记</a> 
                </div>
           </li>
           
