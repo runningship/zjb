@@ -74,12 +74,12 @@
 		
 		
 		//////////////////////////////////////////////////////////////////////////////////
-		
+		String partner = "2088711888914717";
 		//把请求参数打包成数组
 		Map<String, String> sParaTemp = new HashMap<String, String>();
 		sParaTemp.put("service", "alipay.wap.create.direct.pay.by.user");
-        sParaTemp.put("partner", AlipayConfig.partner);
-        sParaTemp.put("seller_id", AlipayConfig.seller_id);
+        sParaTemp.put("partner", partner);
+        sParaTemp.put("seller_id", partner);
         sParaTemp.put("_input_charset", AlipayConfig.input_charset);
 		sParaTemp.put("payment_type", payment_type);
 		sParaTemp.put("notify_url", notify_url);
