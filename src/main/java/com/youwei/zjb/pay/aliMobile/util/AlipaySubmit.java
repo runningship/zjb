@@ -13,6 +13,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
+import cn.jpush.api.utils.StringUtils;
+
 import com.youwei.zjb.pay.aliMobile.config.AlipayConfig;
 import com.youwei.zjb.pay.aliMobile.sign.RSA;
 import com.youwei.zjb.pay.aliMobile.util.httpClient.HttpProtocolHandler;
@@ -48,10 +50,15 @@ public class AlipaySubmit {
 	public static String buildRequestMysign(Map<String, String> sPara) {
     	String prestr = AlipayCore.createLinkString(sPara); //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         String mysign = "";
+        String privateKey = AlipayConfig.private_key;
+        String str = sPara.get("private_key");
+        if(StringUtils.isNotEmpty(str)){
+        	privateKey = str;
+        }
         if(AlipayConfig.sign_type.equals("RSA") ){
-        	mysign = RSA.sign(prestr, AlipayConfig.private_key, AlipayConfig.input_charset);
+        	mysign = RSA.sign(prestr, privateKey, AlipayConfig.input_charset);
         }else{
-        	mysign = MD5.sign(prestr, AlipayConfig.private_key, AlipayConfig.input_charset);
+        	mysign = MD5.sign(prestr, privateKey, AlipayConfig.input_charset);
         }
         return mysign;
     }
