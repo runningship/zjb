@@ -51,7 +51,7 @@
 		String out_trade_no = new String(request.getParameter("WIDout_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 		//商户网站订单系统中唯一订单号，必填
 		//订单名称
-		String subject = new String(request.getParameter("WIDsubject").getBytes("ISO-8859-1"),"UTF-8");
+		String subject = new String(request.getParameter("WIDsubject").getBytes("utf8"),"UTF-8");
 		//必填
 		//付款金额
 		String total_fee = new String(request.getParameter("WIDtotal_fee").getBytes("ISO-8859-1"),"UTF-8");
@@ -80,6 +80,7 @@
 		sParaTemp.put("service", "alipay.wap.create.direct.pay.by.user");
         sParaTemp.put("partner", partner);
         sParaTemp.put("seller_id", partner);
+        sParaTemp.put("private_key", "l4onuqtskar862nst6lfw60d3hqd82lu");
         sParaTemp.put("_input_charset", AlipayConfig.input_charset);
 		sParaTemp.put("payment_type", payment_type);
 		sParaTemp.put("notify_url", notify_url);
