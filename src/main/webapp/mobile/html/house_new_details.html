@@ -11,61 +11,129 @@
 <link href="../css/style.css" rel="stylesheet">
 <link href="../js/owl/owl.carousel.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
-<script src="../js/layer/layer.js" type="text/javascript"></script>
 <script src="../js/javascript.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/buildHtml.js" type="text/javascript"></script>
 <script src="../js/owl/owl.carousel.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
-/* 显示底部 */
-$('#mainer').scroll(function(){
-var T=$(this),
-    Ttop=T.scrollTop(),
-    F=$('.footer'),
-    FH=F.innerHeight(),
-    Fhas=F.hasClass('s');
-    if(Ttop>300){
-        if(!Fhas){
-        F.addClass('s').stop().animate({'bottom':0}, 300);
-        }
-    }else{
-        if(Fhas){
-        F.removeClass('s').stop().animate({'bottom':-FH},200);
-        }
-    }
-})
-/* 顶部大图 */
-$("#houseMaxPic").owlCarousel({
-    lazyLoad : true,
-    autoplay:100,
-    loop: true,
-    navigation:false,
-    singleItem : true,
-    autoHeight : true,
-    pagination:true,
-    addClassActive:true,
-    afterInit:function(e){
-        $('.header').addClass('opacity');
-    },
-    afterMove:function(e){
-    }
-})
-/* 中部大图 */
-$("#huxingPic").owlCarousel({
-    lazyLoad : true,
-    autoplay:100,
-    loop: true,
-    navigation:false,
-    singleItem : true,
-    autoHeight : true,
-    pagination:true,
-    addClassActive:true,
-    afterInit:function(e){
-    },
-    afterMove:function(e){
-    }
-})
+	/* 显示底部 */
+	$('#mainer').scroll(function(){
+	var T=$(this),
+	    Ttop=T.scrollTop(),
+	    F=$('.footer'),
+	    FH=F.innerHeight(),
+	    Fhas=F.hasClass('s');
+	    if(Ttop>200){
+	        if(!Fhas){
+	        F.addClass('s').stop().animate({'bottom':0}, 300);
+	        }
+	    }else{
+	        if(Fhas){
+	        F.removeClass('s').stop().animate({'bottom':-FH},200);
+	        }
+	    }
+        //if(Ttop<300){
+            var alphas=Ttop/200;
+            $('.header').css({'background-color':' rgba(255,102,85,'+alphas +')','-webkit-transition':'all .5s'})
+        //}
+	});
+
 });
+
+var estate;
+apiready=function(){
+	getConfig(function(cfg){
+		config = cfg;
+		init();
+	});
+}
+
+function init(){
+	var url = 'http://'+newhouse_server_host+'/new-house/c/m/info?estateId='+api.pageParam.estateId;
+	YW.ajax({
+		url: url,
+		method:'post',
+		cache:false,
+		 dataType: 'json',
+		data:{name:''},
+		returnAll:false
+	},function(ret , err){
+		if(ret){
+			estate = ret.estate;
+			$('.huxing').attr('data-src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
+			$('.xiaoguo').attr('data-src' , 'http://'+img_server_host+'/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
+			$('#name').text(ret.estate.name);
+			$('.yongjin .text').text(ret.estate.yongjin);
+			$('#junjia').text(ret.estate.junjia);
+			
+			$('#tel .text').text(ret.estate.tel);
+			$('#opentime .text').text(ret.estate.opentime);
+			$('#jiaofangDate .text').text(ret.estate.jiaofangDate);
+			
+			$('#wylx .text').text(ret.estate.wylx);
+			$('#jzlx .text').text(ret.estate.jzlx);
+			$('#addr .text').text(ret.estate.addr);
+			$('#tese .text').text(ret.estate.tese);
+			$('#mainHuxing .text').text(ret.estate.mainHuxing);
+			$('#shenghuo .text').text(ret.estate.shenghuo);
+			$('#jiaotong .text').text(ret.estate.jiaotong);
+			$('#xuequ .text').text(ret.estate.xuqu);
+			$('#developer .text').text(ret.estate.developer);
+			
+			buildHtmlWithJsonArray("xiaoguo",ret.xgImgList , true,false);
+			buildHtmlWithJsonArray("huxing",ret.hxImgList , true,false);
+			
+			initImg();
+			api.parseTapmode();
+		}else{
+			blockAlert('加载数据失败...');
+		}
+	});
+}
+
+function initImg(){
+	/* 顶部大图 */
+	$("#houseMaxPic").owlCarousel({
+	    lazyLoad : true,
+	    autoplay:100,
+	    loop: true,
+	    navigation:false,
+	    singleItem : true,
+	    autoHeight : true,
+	    pagination:true,
+	    addClassActive:true,
+	    afterInit:function(e){
+	        $('.header').addClass('opacity');
+	    },
+	    afterMove:function(e){
+	    }
+	})
+	/* 中部大图 */
+	$("#huxingPic").owlCarousel({
+	    lazyLoad : true,
+	    autoplay:100,
+	    loop: true,
+	    navigation:false,
+	    singleItem : true,
+	    autoHeight : true,
+	    pagination:true,
+	    addClassActive:true,
+	    afterInit:function(e){
+	    },
+	    afterMove:function(e){
+	    }
+	});
+}
+
+function openTuijian(){
+	api.openWin({
+	    name: 'house_new_recommend',
+	    url: 'house_new_recommend.html',
+	    pageParam: {estate:estate}
+	});
+}
 </script>
 <style type="text/css">
 .owl-carousel img{ width: 100%; display: block; }
@@ -82,7 +150,7 @@ $("#huxingPic").owlCarousel({
     <div id="header" class="header posf opacity alpha">
         <span class="left">
             <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
-            <h2>中环城ABC</h2>
+            <h2 id="name"></h2>
         </span>
         <span class="right">
             <a href="#" class="btns" id="s"><i class="iconfont">&#xe674;</i></a>
@@ -91,18 +159,15 @@ $("#huxingPic").owlCarousel({
     <div id="mainer" class="mainer">
         <div class="items">
             <div id="houseMaxPic" class="owl-carousel">
-              <div class="owl-info" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/实景图2.png.x.jpg"></div>
-              <div class="owl-info" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/实景图5.png.x.jpg"></div>
-              <div class="owl-info" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/效果图4.png.x.jpg"></div>
-              <div class="owl-info" data-hiid="2" data-zan="0" data-zanCount="12" data-shit="0" data-shitCount="122"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/B6-2户型.png.x.jpg"></div>
+              <div class="owl-info xiaoguo" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg"></div>
             </div>
         </div>
         <div class="item wa">
             <div class="fr">
-                <a href="#" class="btn orange round5">立即推荐</a>
+                <a href="#" class="btn orange round5" onclick="openTuijian();">立即推荐</a>
             </div>
-            <h1>佣金 <b class="orange">1%</b></h1>
-            <h2>均价<b class="orange">8000</b>元/平米</h2>
+            <h1>佣金 <b class="orange yongjin"><span class="text"></span></b></h1>
+            <h2>均价<b class="orange" id="junjia"></b>元/平米</h2>
             <div class="item wa1">
                 <span class="orange"><i class="iconfont">&#xe627;</i> 需带看</span>
             </div>
@@ -151,23 +216,22 @@ $("#huxingPic").owlCarousel({
             佣金政策
         </div>
         <div class="item wd">
-            <p>结佣公司：</p>
-            <p>结佣公司：</p>
-            <p>结佣公司：</p>
-            <p>结佣公司：</p>
-            <p>结佣公司：</p>
-            <p>结佣公司：</p>
-            <p>结佣公司：</p>
+            <p>结佣公司：中介宝</p>
+            <p>预计结佣周期："T+3"</p>
+            <p class="yongjin">独立经纪人佣金：<span class="text"></span></p>
+            <p>开发商界定规则：</p>
+            <p id="tel">案场联系：<span class="text"></span></p>
         </div>
         <div class="title">
             楼盘参数
         </div>
         <div class="item we">
             <ul class="workList list small">
-                <li>开盘时间：</li>
-                <li>物业状态：</li>
-                <li>在售房源：</li>
-                <li><i class="iconfont fr">&#xe62a;</i>楼盘地址</li>
+                <li id="opentime">开盘时间：<i class="text"></i></li>
+                <li id="jiaofangDate">交房时间：<i class="text"></i></li>
+                <li id="wylx">物业类型：<i class="text"></i></li>
+                <li id="mainHuxing">在售房源：<i class="text"></i></li>
+                <li id="addr"><i class="iconfont fr">&#xe62a;</i>项目地址：<i class="text"></i></li>
             </ul> 
         </div>
         <div class="title">
@@ -175,16 +239,19 @@ $("#huxingPic").owlCarousel({
         </div>
         <div class="item wf">
             <div id="huxingPic" class="owl-carousel">
-              <div class="owl-info" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/A3-1户型.png.x.jpg"></div>
-              <div class="owl-info" data-hiid="2" data-zan="0" data-zanCount="12" data-shit="0" data-shitCount="122"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/B6-2户型.png.x.jpg"></div>
+              <div class="owl-info huxing" style="display:none;" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg"></div>
             </div>
         </div>
         <div class="title">
             项目卖点
         </div>
         <div class="item wg">
-            <p>成功推荐客户赚:1%</p>
-            <p>成功推荐客户赚:1%</p>
+            <p id="tese">项目优势: <span class="text"></span></p>
+            <p id="mainHuxing">户型面积: <span class="text"></span></p>
+            <p id="shenghuo">生活配套: <span  class="text"></span></p>
+            <p id="jiaotong">交通配套: <span  class="text"></span></p>
+            <p id="xuequ">学区配套: <span  class="text"></span></p>
+            <p id="developer">开发商: <span  class="text"></span></p>
         </div>
         <div class="title">
             拓客技巧
@@ -197,9 +264,9 @@ $("#huxingPic").owlCarousel({
 </div>
 <div class="footer posf">
     <div class="fr">
-        <a href="#" class="btn round5">立即推荐</a>
+        <a href="#" class="btn round5" onclick="openTuijian();">立即推荐</a>
     </div>
-    <h2>佣金：1%</h2>
+    <h2 class="yongjin">佣金：<i class="text"></i></h2>
 </div>
 </body>
 </html>

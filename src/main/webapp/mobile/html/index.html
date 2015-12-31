@@ -138,19 +138,6 @@ function exitApp(){
                  });
 		    }
 		});
-//         api.addEventListener({
-//             name: 'keyback'
-//         }, function(ret, err){
-//             api.closeWidget({
-//                     id: 'A6989896004356',     //这里改成自己的应用ID
-//                     retData: {name:'closeWidget'},
-//                     silent:true
-//                 });
-//         });
-
-//         setTimeout(function(){
-//                 exitApp();
-//         },3000)
     });
 }
 
@@ -191,13 +178,15 @@ function switchHouseType(chuzu){
 function openHouses(){
 	lastAction="house";
 	$('.conter .h').show();
-	$('.conter .new_h').hide();
+	$('.new_h').hide();
 	$('.conter .w').hide();
+	//$('#search').css('visibility','visible');
 	$('#search').show();
 	if($('.house.active').length>0){
 		return;
 	}
 	actionType = "house";
+	$('#records').hide();
 	//open houses
 	$('#footer .item').removeClass('active');
 	$('#footer .house').addClass('active');
@@ -225,15 +214,15 @@ function openHouses(){
 }
 
 function openFujin(){
-	api.closeFrame({
-	    name: 'newhouse'
-	});
 	$('.conter .h').show();
-	$('.conter .new_h').show();
+	$('.new_h').hide();
 	$('.conter .w').hide();
 	if($('.fujin.active').length>0){
 		return;
 	}
+	//$('#search').css('visibility','visible');
+	$('#search').show();
+	$('#records').hide();
 	actionType = "fujin";
 	$('#footer .item').removeClass('active');
 	$('#footer .fujin').addClass('active');
@@ -264,12 +253,31 @@ function openFujin(){
 	updateActionType();
 }
 
+function openTuijianRecords(){
+	api.openWin({
+	    name: 'house_new_recordList',
+	    url: 'house_new_recordList.html',
+	    animation:{
+	    	type:"cube", 
+    	    duration:300      
+	    }
+	});
+}
+
+function switchToNewHouse(){
+// 	api.sendEvent({
+// 	    name: 'switchNewHouseAction',
+// 	    extra: {type: 'newhouse'}
+// 	});
+}
 function openNewHouse(){
 	lastAction="newhouse";
 	$('.conter .h').hide();
-	$('.conter .new_h').hide();
+	$('.new_h').show();
 	$('.conter .w').hide();
+	//$('#search').css('visibility','hidden');
 	$('#search').hide();
+	$('#records').show();
 	if($('.newhouse.active').length>0){
 		return;
 	}
@@ -279,11 +287,6 @@ function openNewHouse(){
         name: 'newhosue',
 		url: 'house_new.html',
 		reload:false,
-		animation:{
-		    type:"push",
-		    subType:"from_right",
-		    duration:300
-		},
         bounces: true,
         vScrollBarEnabled:true,
         rect: {
@@ -297,16 +300,16 @@ function openNewHouse(){
 }
 
 function openWork(){
-	api.closeFrame({
-	    name: 'newhouse'
-	});
 	lastAction="work";
 	$('.conter .h').hide();
-	$('.conter .new_h').hide();
+	$('.new_h').hide();
 	$('.conter .w').show();
 	if($('.work.active').length>0){
 		return;
 	}
+	//$('#search').css('visibility','visible');
+	$('#search').show();
+	$('#records').hide();
 	$('#footer .item').removeClass('active');
 	$('#footer .work').addClass('active');
 	api.openFrame({
@@ -433,13 +436,16 @@ function bindTecentPush(){
             <span class="btnGroup h">
                 <a href="javascript:void(0)" class="btns active chushou" onclick="switchHouseType(false);">出售</a><a href="javascript:void(0)" class="btns chuzu" onclick="switchHouseType(true);">出租</a>
             </span>
-            <span class="btnGroup new_h" style="display:none">
-                <a href="javascript:void(0)" class="btns active chushou" onclick="openNewHouse();">楼盘</a><a href="javascript:void(0)" class="btns chuzu" onclick="openClient();">客户</a>
-            </span>
+<!--             <span class="btnGroup new_h" style="display:none"> -->
+<!--                 <a href="javascript:void(0)" class="btns active" onclick="switchToNewHouse();">楼盘</a> -->
+<!--                 <a href="javascript:void(0)" class="btns" onclick="switchToRecords();">客户</a> -->
+<!--             </span> -->
+            <h1 class="new_h" style="display:none">楼盘</h1>
             <h1 class="w" style="display:none">工作</h1>
         </span>
         <span class="right" >
             <a tapmode="tapped" class="btns" id="search" onclick="openSearch();"><i class="iconfont">&#xe602;</i></a>
+            <span tapmode="tapped" class="btns hide" id="records" onclick="openTuijianRecords();">推荐记录</span>
         </span>
     </div>
     <div id="mainer" class="mainer">

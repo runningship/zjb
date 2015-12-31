@@ -6,6 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import com.youwei.zjb.pay.aliMobile.config.AlipayConfig;
+
 /* *
  *类名：AlipayNotify
  *功能：支付宝通知处理类
@@ -69,7 +71,7 @@ public class AlipayNotify {
         String preSignStr = AlipayCore.createLinkString(sParaNew);
         //获得签名验证结果
         boolean isSign = false;
-    	isSign = MD5.verify(preSignStr, sign, submit.key, submit.input_charset);
+    	isSign = MD5.verify(preSignStr, sign, AlipayConfig.private_key, submit.input_charset);
         return isSign;
     }
 
@@ -85,7 +87,7 @@ public class AlipayNotify {
     private static String verifyResponse(String notify_id) {
         //获取远程服务器ATN结果，验证是否是支付宝服务器发来的请求
 
-        String partner = submit.partner;
+        String partner = AlipayConfig.partner;
         String veryfy_url = HTTPS_VERIFY_URL + "partner=" + partner + "&notify_id=" + notify_id;
 
         return checkUrl(veryfy_url);

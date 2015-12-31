@@ -11,21 +11,22 @@ import org.bc.sdak.SimpDaoTool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import com.youwei.zjb.pay.aliMobile.config.AlipayConfig;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 
 public class submit {
 
-	public static final String partner = "2088801295914922";
-	public final static String key="5itxn2rr0fkwxbixlasbu7wco0ngzgpy";
+//	public static final String partner = "2088801295914922";
+//	public final static String key="5itxn2rr0fkwxbixlasbu7wco0ngzgpy";
 	public final static String input_charset = "utf-8";
 	static final String payment_type = "1";
 	static final String sign_type="MD5";
 	public Document initPage(Document doc , HttpServletRequest req){
 		Map<String, String> sParaTemp = new HashMap<String, String>();
 		sParaTemp.put("service", "create_direct_pay_by_user");
-        sParaTemp.put("partner", partner);
+        sParaTemp.put("partner", AlipayConfig.partner);
         sParaTemp.put("_input_charset", input_charset);
 		sParaTemp.put("payment_type", payment_type);
 		sParaTemp.put("return_url", req.getParameter("return_url"));
@@ -122,7 +123,7 @@ public class submit {
 	public static String buildRequestMysign(Map<String, String> sPara) {
     	String prestr = AlipayCore.createLinkString(sPara); //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         String mysign = "";
-    	mysign = MD5.sign(prestr, key, input_charset);
+    	mysign = MD5.sign(prestr, AlipayConfig.private_key, input_charset);
         return mysign;
     }
 }

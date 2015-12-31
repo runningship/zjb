@@ -1,4 +1,5 @@
 var server_host = "www.zhongjiebao.com:8081";
+var newhouse_server_host = "www.zhongjiebao.com";
 var img_server_host="www.zhongjiebao.com";
 //定位所在城市
 var myCity;
@@ -13,6 +14,7 @@ function getConfig(callback){
     	var result;
     	if(ret.value==undefined || ret.value=='0' || ret.value==null){
     		server_host = "192.168.1.222:8081";
+    		newhouse_server_host="192.168.1.222:9080";
     		img_server_host = "192.168.1.222";
     	}
     });

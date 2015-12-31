@@ -25,12 +25,14 @@ public class AlipayConfig {
 	
 	//↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 	// 合作身份者ID，以2088开头由16位纯数字组成的字符串
-	public static String partner = "2088801295914922";
+	//public static String partner = "2088801295914922";
+	public static String partner = "2088711888914717";
 	
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串
 	public static String seller_id = partner;
 	// 商户的私钥
-	public static String private_key = "5itxn2rr0fkwxbixlasbu7wco0ngzgpy";
+	public static String private_key = "l4onuqtskar862nst6lfw60d3hqd82lu";
+	//public static String private_key = "5itxn2rr0fkwxbixlasbu7wco0ngzgpy";
 	
 	// 支付宝的公钥，无需修改该值
 	public static String ali_public_key  = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";

@@ -13,8 +13,12 @@
 <link href="../js/owl/owl.carousel.css" rel="stylesheet">
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script src="../js/javascript.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/buildHtml.js" type="text/javascript"></script>
 <script src="../js/owl/owl.carousel.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+var currentPageNo=1;
+var totalPageCount=1;
 function navActive(t){
 var T=t,
 TP=T.parent(),
@@ -77,23 +81,71 @@ apiready=function(){
 	},
 	function(ret,err){
     	api.refreshHeaderLoadDone();
-    	//buildHtmlWithJsonArray(repeatClass,[] , false,false);
     	//currentPage=1;
-    	//loadData(true);
+    	loadData(true);
 	});
 
-	api. addEventListener({name:'scrolltobottom'}, 
+	api. addEventListener(
+		{
+			name:'scrolltobottom',
+			extra:{
+		        threshold:100            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, 
 		function(ret, err){
 			//设置提示信息
+			if(currentPageNo<totalPageCount){
+				currentPageNo++;
+			}else{
+				alert('没有更多数据了');
+				return;
+			}
+			setTimeout(loadData,100);
 		}
 	);
+	
+	getConfig(function(cfg){
+		config = cfg;
+		$('.repeat .img').attr('src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[uuid]/$[img].t.jpg');
+		loadData();
+	});
+	
+	api.addEventListener({
+	    name: 'switchNewHouseAction'
+	}, function(ret){
+	    if(ret && ret.value){
+	       window.location='house_new_recordList.html';
+	    }
+	});
 }
 
-function openHouseDetail(){
+function loadData(clear){
+	var url = 'http://'+newhouse_server_host+'/new-house/c/m/listSalesData?currentPageNo='+currentPageNo;
+	YW.ajax({
+		url: url,
+		method:'post',
+		cache:false,
+		 dataType: 'json',
+		data:{name:''},
+		returnAll:false
+	},function(ret , err){
+		if(ret){
+			totalPageCount = ret.page.totalPageCount;
+			if(clear){
+				buildHtmlWithJsonArray("repeat",ret.page.data , false,false);
+			}else{
+				buildHtmlWithJsonArray("repeat",ret.page.data , false,true);
+			}
+			api.parseTapmode();
+		}else{
+		}
+	});
+}
+function openHouseDetail(estateId){
 	api.openWin({
 	    name: 'house_new_details',
 	    url: 'house_new_details.html',
-	    pageParam: {name: 'test'}
+	    pageParam: {estateId: estateId}
 	});
 }
 </script>
@@ -135,128 +187,19 @@ html, body{overflow:visible;}
         </div>
         <div class="item posr_cont">
             <ul class="ULImgList">
-                <li class="" tapmode="tapped" onclick="openHouseDetail();"><a href="#">
-                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
+                <li class="repeat" tapmode="tapped" onclick="openHouseDetail($[id]);" style="display:none;"><a>
+                    <div class="imgbox"><img src="http://192.168.1.222/zjb_newhouse_images/$[uuid]/$[img].t.jpg" alt="" class="img"><p></p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
                     <div class="conts">
-                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-                        <h3>这里是标题</h3>
-                        <p><i class="font blue">均</i> 均价<b>8000</b>元/平米</p>
+                        <span class="fr"><i class="font red">佣</i> $[yongjin]</span>
+                        <h3>$[name]</h3>
+                        <p><i class="font blue">均</i> 均价<b>$[junjia]</b>元/平米</p>
                         <p><i class="font green">补</i> 补贴购房基金<b>0</b>元</p>
                         <div class="xx">
                             <span class="blue">需带看</span>
                             <span class="green">有效奖</span>
                             <span class="orange">额外奖</span>
                         </div>
-                    </div>
-                </a></li>
-                <li class="" ><a href="#">
-                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
-                    <div class="conts">
-                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-                        <h3>这里是标题</h3>
-                        <p><i class="font">均</i> 均价<b>8000</b>元/平米</p>
-                        <p><i class="font">补</i> 补贴购房基金<b>0</b>元</p>
-                        <div class="xx">
-                            <span class="blue">需带看</span>
-                            <span class="green">有效奖</span>
-                            <span class="orange">额外奖</span>
-                        </div>
-                    </div>
-                </a></li>
-                <li class=""><a href="#">
-                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
-                    <div class="conts">
-                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-                        <h3>这里是标题</h3>
-                        <p><i class="font blue">均</i> 均价<b>8000</b>元/平米</p>
-                        <p><i class="font green">补</i> 补贴购房基金<b>0</b>元</p>
-                        <div class="xx">
-                            <span class="blue">需带看</span>
-                            <span class="green">有效奖</span>
-                            <span class="orange">额外奖</span>
-                        </div>
-                    </div>
-                </a></li>
-                <li class="">
-	                <a href="#">
-	                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
-	                    <div class="conts">
-	                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-	                        <h3>这里是标题</h3>
-	                        <p><i class="font">均</i> 均价<b>8000</b>元/平米</p>
-	                        <p><i class="font">补</i> 补贴购房基金<b>0</b>元</p>
-	                        <div class="xx">
-	                            <span class="blue">需带看</span>
-	                            <span class="green">有效奖</span>
-	                            <span class="orange">额外奖</span>
-	                        </div>
-	                    </div>
-	                </a>
-                </li>
-                <li class="">
-	                <a href="#">
-	                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
-	                    <div class="conts">
-	                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-	                        <h3>这里是标题</h3>
-	                        <p><i class="font">均</i> 均价<b>8000</b>元/平米</p>
-	                        <p><i class="font">补</i> 补贴购房基金<b>0</b>元</p>
-	                        <div class="xx">
-	                            <span class="blue">需带看</span>
-	                            <span class="green">有效奖</span>
-	                            <span class="orange">额外奖</span>
-	                        </div>
-	                    </div>
-	                </a>
-                </li>
-                <li class="">
-	                <a href="#">
-	                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
-	                    <div class="conts">
-	                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-	                        <h3>这里是标题</h3>
-	                        <p><i class="font">均</i> 均价<b>8000</b>元/平米</p>
-	                        <p><i class="font">补</i> 补贴购房基金<b>0</b>元</p>
-	                        <div class="xx">
-	                            <span class="blue">需带看</span>
-	                            <span class="green">有效奖</span>
-	                            <span class="orange">额外奖</span>
-	                        </div>
-	                    </div>
-	                </a>
-                </li>
-                <li class="">
-	                <a href="#">
-	                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
-	                    <div class="conts">
-	                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-	                        <h3>这里是标题</h3>
-	                        <p><i class="font">均</i> 均价<b>8000</b>元/平米</p>
-	                        <p><i class="font">补</i> 补贴购房基金<b>0</b>元</p>
-	                        <div class="xx">
-	                            <span class="blue">需带看</span>
-	                            <span class="green">有效奖</span>
-	                            <span class="orange">额外奖</span>
-	                        </div>
-	                    </div>
-	                </a>
-                </li>
-                <li class="">
-	                <a href="#">
-	                    <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p>图片文字1</p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
-	                    <div class="conts">
-	                        <span class="fr"><i class="font red">佣</i> 3000元/套</span>
-	                        <h3>这里是标题</h3>
-	                        <p><i class="font">均</i> 均价<b>8000</b>元/平米</p>
-	                        <p><i class="font">补</i> 补贴购房基金<b>0</b>元</p>
-	                        <div class="xx">
-	                            <span class="blue">需带看</span>
-	                            <span class="green">有效奖</span>
-	                            <span class="orange">额外奖</span>
-	                        </div>
-	                    </div>
-	                </a>
-                </li>
+                    </div></a></li>
             </ul>
         </div>
 </body>

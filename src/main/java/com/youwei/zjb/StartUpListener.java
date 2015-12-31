@@ -31,12 +31,12 @@ public class StartUpListener implements ServletContextListener{
         .addELResolver(new PublicFieldSupportingELResolver());
 //		TaskScheduler ts = new TaskScheduler();
 //		ts.start();
-		try {
-			IMServer.startUp();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			IMServer.startUp();
+//		} catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		ZJBQuartzScheduler.AreaCoordinatStart();
 	}
 
