@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
+import org.bc.sdak.Transactional;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
 import org.bc.web.ModelAndView;
@@ -96,6 +97,7 @@ public class DistrictService {
 	}
 	
 	@WebMethod
+	@Transactional
 	public ModelAndView update(District district){
 		ModelAndView mv = new ModelAndView();
 		if(district.id==null){
@@ -105,6 +107,13 @@ public class DistrictService {
 			throw new GException(PlatformExceptionType.BusinessException, "小区名不能为空");
 		}
 		District po = service.get(District.class, district.id);
+		 if(!district.name.equals(po.name)  && !district.quyu.equals(po.quyu)){
+				service.execute("update House set quyu=? , area=? where area=?", district.quyu ,district.name, po.name);
+		} else if(!district.quyu.equals(po.quyu)){
+			service.execute("update House set quyu=? where area=?", district.quyu ,po.name);
+		}else if(!district.name.equals(po.name)){
+			service.execute("update House set area=? where area=?", district.name, po.name);
+		}
 		po.address = district.address;
 		po.name = district.name;
 		po.quyu = district.quyu;
