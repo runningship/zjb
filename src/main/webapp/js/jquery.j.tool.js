@@ -821,7 +821,13 @@ function checkTel(){
     var reg = new RegExp(/^[0-9-/]+$/);
     var inputBox=$("#tel");
     var value=inputBox.val().trim();
-    if(value.length == 0){ return false; }
+    if(value.length == 0){ 
+    	var inputAllBox=$("#TelAll");
+        value=inputAllBox.val().trim();
+        if(value.length == 0){
+        	return false; 
+        }
+    }
     if(!reg.test(value)){
         infoAlert("输入错误！只能输入‘数字’或‘-’或‘/’");
         inputBox.focus();

@@ -109,6 +109,7 @@ function initImg(){
 	    },
 	    afterMove:function(e){
 	    }
+        //jsonPath: 'houseMaxPic.json'
 	})
 	/* 中部大图 */
 	$("#huxingPic").owlCarousel({
@@ -136,10 +137,6 @@ function openTuijian(){
 }
 </script>
 <style type="text/css">
-.owl-carousel img{ width: 100%; display: block; }
-.owl-pagination{ position: absolute; bottom: 0px; right: 0; z-index: 9; padding: 0 10pt;  }
-.owl-page { display: inline-block; margin: 0 1pt; }
-.owl-page span{ display: block; width: 6pt; height:6pt; border-radius: 2pt; background: rgba(0,0,0,0.3);}
 .footer.posf{ height: auto; bottom: -50px; background-color: rgba(255,102,85,1); color: #FFF; padding: 2pt 5pt 0; z-index: 10; display: block; }
 .footer.posf h2{ font-size: 16pt;}
 .footer.posf .btn{ border:1px solid #FFF; color: #FFF; }
@@ -149,7 +146,7 @@ function openTuijian(){
 <div id="wrap" class="bodyer house new detail">
     <div id="header" class="header posf opacity alpha">
         <span class="left">
-            <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
+            <a onclick="api.closeWin();" class="btns"><i class="iconfont">&#xe628;</i></a>
             <h2 id="name"></h2>
         </span>
         <span class="right">

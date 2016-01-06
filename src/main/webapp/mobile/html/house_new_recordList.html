@@ -24,6 +24,9 @@ function navActive(t){
 	TP.addClass(c).siblings().removeClass(c);
 	if('所有'==t.text()){
 		$('.ULImgList li').show();
+	}else if('已带看'==t.text()){
+		$('.ULImgList li').hide();
+		$('.ULImgList li[daikan=1]').show();
 	}else{
 		$('.ULImgList li').hide();
 		$('.ULImgList li[status='+t.text()+']').show();	
@@ -100,7 +103,7 @@ function openGenjin(orderId , estateName){
         </div>
         <div class="item posr_cont">
             <ul class="ULImgList">
-                <li status="$[status]" tapmode="tapped" onclick="openGenjin($[id] , '$[estateName]');" class="repeat" style="display:none;;"><a>
+                <li status="$[status]"  daikan="$[daikan]" tapmode="tapped" onclick="openGenjin($[id] , '$[estateName]');" class="repeat" style="display:none;;"><a>
                     <span class="fr">
                         <div>$[status]</div>
                         <p>$[addtime]</p>

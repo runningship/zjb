@@ -69,7 +69,7 @@ box-orient:horizontal;
 }
 .footer.posf{ position: fixed; left:0; bottom: 0; width: 100%; }
 
-.footer .item{ color: #AFAFAF; display: block; width: 25%; text-align: center; line-height: 25px; }
+.footer .item{-webkit-box-flex:1; color: #AFAFAF; display: block; width: 25%; text-align: center; line-height: 25px; }
 .footer .item i{ display: block; height: 25px; line-height: 30px; font-size: 20px;}
 .footer .item i.y{ display: none; }
 .footer .item.active { color: #18B4ED;-webkit-transition:all 0s; }

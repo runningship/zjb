@@ -7,7 +7,7 @@
 
 .cocoLayerTit span, .cocoListLayerTit span{ color:#76e4e5; font-size:13px; margin-left:15px;}
 
-.cocoLayerTit i.closeBg, .cocoListLayerTit i.closeBg{ width:20px; height:21px; background:url(../cocoImages/close.png) no-repeat; position:absolute;}
+.cocoLayerTit i.closeBg, .cocoListLayerTit i.closeBg{ width:20px; height:21px; background:url(../cocoImages/close.png) no-repeat; position:absolute;cursor:pointer;}
 
 .cocoLayerTit i.close, .cocoListLayerTit i.close{ background-position:0 -47px; top:6px; right:10px;}
 .cocoLayerTit i.close:hover, .cocoListLayerTit i.close:hover{ background-position:-25px -47px;}

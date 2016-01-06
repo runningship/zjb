@@ -20,59 +20,58 @@
 var currentPageNo=1;
 var totalPageCount=1;
 function navActive(t){
-var T=t,
-TP=T.parent(),
-c='active';
-TP.addClass(c).siblings().removeClass(c);
+	var T=t,
+	TP=T.parent(),
+	c='active';
+	TP.addClass(c).siblings().removeClass(c);
+	}
+	$(document).on('click', '.tabs a', function(event) {
+	navActive($(this));
+});
+$(function(){
+	/* 显示底部 */
+	$('.mainer').scroll(function(){
+	var T=$(this),c='auto',
+	    Theader=$('.header'),
+	    TheaderH=Theader.innerHeight(),
+	    picBox=$('.MaxPic'),
+	    picBoxH=picBox.innerHeight(),
+	    Ttop=T.scrollTop(),
+	    Tab=$('.posf_tab'),
+	    TabH=Tab.innerHeight(),
+	    Tabtop=Tab.offset().top;
+
+	// 判断 tab 设置 header 的 opacity
+	var mt=picBoxH-TabH-5;
+	if(Ttop>=mt){
+	    T.addClass('auto');
+	    Theader.removeClass('opacity');
+	}else{
+	    T.removeClass('auto');
+	    Theader.addClass('opacity');
+	}
+
+	});
+});
+function initGuanggao(){
+	/* 顶部大图 */
+	$("#houseMaxPic").owlCarousel({
+	    lazyLoad : true,
+	    autoplay:100,
+	    loop: true,
+	    navigation:false,
+	    singleItem : true,
+	    autoHeight : true,
+	    pagination:true,
+	    addClassActive:true,
+	    afterInit:function(e){
+	    	$('.header').addClass('opacity');
+	    },
+	    afterMove:function(e){
+	    }
+	});
 }
-$(document).on('click', '.tabs a', function(event) {
-navActive($(this));
-});
-$(document).ready(function() {
 
-/* 显示底部 */
-$('.mainer').scroll(function(){
-var T=$(this),c='auto',
-    Theader=$('.header'),
-    TheaderH=Theader.innerHeight(),
-    picBox=$('.MaxPic'),
-    picBoxH=picBox.innerHeight(),
-    Ttop=T.scrollTop(),
-    Tab=$('.posf_tab'),
-    TabH=Tab.innerHeight(),
-    Tabtop=Tab.offset().top;
-
-// 判断 tab 设置 header 的 opacity
-var mt=picBoxH-TabH-5;
-if(Ttop>=mt){
-    T.addClass('auto');
-    Theader.removeClass('opacity');
-}else{
-    T.removeClass('auto');
-    Theader.addClass('opacity');
-}
-
-});
-
-/* 顶部大图 */
-$("#houseMaxPic").owlCarousel({
-    lazyLoad : true,
-    autoplay:100,
-    loop: true,
-    navigation:false,
-    singleItem : true,
-    autoHeight : true,
-    pagination:true,
-    addClassActive:true,
-    afterInit:function(e){
-    },
-    afterMove:function(e){
-    },
-    afterLazyLoad:function(e){
-        $('.header').addClass('opacity');
-    }
-})
-});
 
 apiready=function(){
 	api.setRefreshHeaderInfo({
@@ -81,8 +80,9 @@ apiready=function(){
 	},
 	function(ret,err){
     	api.refreshHeaderLoadDone();
-    	//currentPage=1;
+    	currentPage=1;
     	loadData(true);
+    	//window.location.reload();
 	});
 
 	api. addEventListener(
@@ -107,6 +107,7 @@ apiready=function(){
 	getConfig(function(cfg){
 		config = cfg;
 		$('.repeat .img').attr('src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[uuid]/$[img].t.jpg');
+		$('.guanggao_repeat .img').attr('src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[uuid]/$[img].x.jpg');
 		loadData();
 	});
 	
@@ -136,7 +137,12 @@ function loadData(clear){
 			}else{
 				buildHtmlWithJsonArray("repeat",ret.page.data , false,true);
 			}
+			if($('.guanggao_repeat').length>0){
+				buildHtmlWithJsonArray("guanggao_repeat",ret.tuijianList , true,false);
+				initGuanggao();	
+			}
 			api.parseTapmode();
+			
 		}else{
 		}
 	});
@@ -181,14 +187,14 @@ html, body{overflow:visible;}
 <!--         </div> -->
         <div class="items MaxPic">
             <div id="houseMaxPic" class="owl-carousel">
-              <div class="owl-info" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/A3-1户型.png.x.jpg"></div>
-              <div class="owl-info" data-hiid="2" data-zan="0" data-zanCount="12" data-shit="0" data-shitCount="122"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/B6-2户型.png.x.jpg"></div>
+              <div class="owl-info guanggao_repeat"  style="display:none;" onclick="openHouseDetail($[id]);" ><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/$[uuid]/$[img].x.jpg"></div>
+<!--               <div class="owl-info " ><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/A3-1户型.png.x.jpg"></div> -->
             </div>
         </div>
         <div class="item posr_cont">
             <ul class="ULImgList">
                 <li class="repeat" tapmode="tapped" onclick="openHouseDetail($[id]);" style="display:none;"><a>
-                    <div class="imgbox"><img src="http://192.168.1.222/zjb_newhouse_images/$[uuid]/$[img].t.jpg" alt="" class="img"><p></p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
+                    <div class="imgbox"><img  alt="" class="img"><p></p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
                     <div class="conts">
                         <span class="fr"><i class="font red">佣</i> $[yongjin]</span>
                         <h3>$[name]</h3>

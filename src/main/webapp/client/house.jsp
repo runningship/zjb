@@ -61,7 +61,7 @@ function doSearchAndSelectFirst(){
 
 function getSider(id){
     if(id){
-        $('#sideCont').attr('src','/v/house/houseSee_v2.html?id='+id+'&chuzu='+chuzu);
+        $('#sideCont').attr('src','/house/houseSee_v2.jsp?id='+id+'&chuzu='+chuzu);
     }
 }
 

@@ -93,7 +93,7 @@ function buildArticle(page){
              +    ' <div class="infoListImg Fleft"><img src="/oa/images/avatar/'+json[i]['senderAvatar']+'.jpg"></div>'
              +    ' <div class="Fleft userSelectTrue">    '  
              +       '<p><span class="yh">'+json[i]['senderName']+'</span><span class="time">'+json[i]['addtime']+'</span></p>'
-             +       '<p><a href="#" class="tit" onclick="openNewWin(\'viewSail\',\'980\',\'650\',\'查看内容\',\'sale/view.html?id='+json[i]['id']+'\')">'+json[i]['title']+'</a></p>'
+             +       '<p><a href="#" class="tit" onclick="openNewWin(\'viewSail\',\'980\',\'600\',\'查看内容\',\'sale/view.html?id='+json[i]['id']+'\')">'+json[i]['title']+'</a></p>'
              +     '</div>'
              +     '<div class="infoCaozuo">';
              // +     '<c:if test="${article.senderId==myId}">'
@@ -147,7 +147,7 @@ function buildArticle(page){
             <form onsubmit="searchKnowledge();return false;" name="form1" style="float: right;width:40%"><div  style="margin-top: 12px;margin-right: 65px;position:relative; ">
             <input id="knowledgeSearch" type="text" placeholder="关键字搜索" style="width:90%;height: 25px;border: 1px solid #fff;border-radius: 10px;" />
             <img src="images/search.png" style="height: 20px;position: absolute;top:5px;cursor:pointer" onclick="searchKnowledge();"></div>
-            <a href="#" style="margin-top: -39px;" onclick="openListWin('listKnowledge','980','650','全部内容','knowledge/list.jsp')">更多></a>  </form>
+            <a href="#" style="margin-top: -39px;" onclick="openListWin('listKnowledge','980','600','全部内容','knowledge/list.jsp')">更多></a>  </form>
           </div>
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">增值服务平台</span>
@@ -157,7 +157,7 @@ function buildArticle(page){
             <form name="form2" onsubmit="searchSale();return false;" style="float: right;width:40%;"><div style="margin-top: 12px;margin-right: 90px;position:relative ">
             <input id="saleSearch" type="text" name="title" placeholder="关键字搜索" style="height: 25px;width:90% ;border: 1px solid #fff;border-radius: 10px;" />
             <img src="images/search.png" style="height: 20px;position: absolute;top:5px;cursor:pointer" onclick="searchSale();"></div>
-            <a href="#" style="margin-right:40px;margin-top: -39px;" onclick="openListWin('listSail','980','650','全部内容','sale/list.jsp')">更多></a></div></form>
+            <a href="#" style="margin-right:40px;margin-top: -39px;" onclick="openListWin('listSail','980','600','全部内容','sale/list.jsp')">更多></a></div></form>
           </div>
           <div class="tr w100">
           
@@ -180,7 +180,7 @@ function buildArticle(page){
                         <div class="infoListImg Fleft"><img src="/oa/images/avatar/${article.senderAvatar }.jpg" /></div>
                         <div class="Fleft userSelectTrue">      
                           <p><span class="yh">${article.senderName }</span><span class="time"><fmt:formatDate value="${article.addtime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
-                          <p><a href="#" class="tit " onclick="openNewWin('viewKnowledge','980','650','查看内容','knowledge/view.html?id=${article.id}')">${article.title }</a></p>
+                          <p><a href="#" class="tit " onclick="openNewWin('viewKnowledge','980','600','查看内容','knowledge/view.html?id=${article.id}')">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
                           <!-- <c:if test="${article.senderId==myId}"> -->
@@ -234,7 +234,7 @@ function buildArticle(page){
                         <div class="ggBox read$[hasRead]" >
                           <div class="ggBoxContent" style="margin-left:0px;">
                             <p><span class="titL marginLeft10">Tit:</span>
-                            <a href="#" class="tit userSelectTrue" onclick="openNewWin('viewSail','980','650','查看内容','sale/view.html?id=$[id]')" >$[title]</a>
+                            <a href="#" class="tit userSelectTrue" onclick="openNewWin('viewSail','980','600','查看内容','sale/view.html?id=$[id]')" >$[title]</a>
                             <span class="infoBoxTit" style="display: inline;"><span class="time" style="float:right;margin-right:40px;line-height:25px;">$[addtime]</span></span>
                             </p>
                             <!--<p><span class="marginLeft10 con">${notice.conts}</span></p>-->
