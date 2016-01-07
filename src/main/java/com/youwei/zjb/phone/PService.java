@@ -38,6 +38,7 @@ import com.youwei.zjb.user.MobileUserService;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.InvitationActivation;
+import com.youwei.zjb.user.entity.MUserActiveDevice;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.MailUtil;
@@ -191,6 +192,23 @@ public class PService {
 //				break;
 //			}
 //		}
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		Date start = cal.getTime();
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		Date end = cal.getTime();
+		long activeCount = dao.countHql("select count ( distinct deviceId ) from MUserActiveDevice where tel=? and activeTime>=? and activeTime<=? group by tel", tel , start , end);
+		long myActiveCount = dao.countHql("select count (*) from MUserActiveDevice where tel=? and deviceId=? and activeTime>=? and activeTime<=? group by tel", tel , deviceId, start , end);
+		
+		if(activeCount>=2 && myActiveCount<1){
+			mv.data.put("result", "1");
+			mv.data.put("msg", "账号每天只能在两台设备上登录");
+			return mv;
+		}
 		Department dept = dao.get(Department.class, user.did);
 		Department comp = dao.get(Department.class, user.cid);
 		obj.put("result", "0");
@@ -207,8 +225,8 @@ public class PService {
 			}
 		}else{
 			//过期日期设置成昨天
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, -1);
+			Calendar cal2 = Calendar.getInstance();
+			cal2.add(Calendar.DAY_OF_MONTH, -1);
 			obj.put("mobileDeadtimeInLong", cal.getTime().getTime());
 			obj.put("mobileDeadtime", DataHelper.dateSdf.format(cal.getTime()));
 		}
@@ -243,7 +261,11 @@ public class PService {
 			user.avatar = avatar;
 			dao.saveOrUpdate(user);
 		}
-		
+		MUserActiveDevice device = new MUserActiveDevice();
+		device.activeTime = new Date();
+		device.deviceId = deviceId;
+		device.tel = tel;
+		dao.saveOrUpdate(device);
 		mv.data.put("avatar", user.avatar);
 //		pushToOther(tel,deviceId);
 		return mv;
