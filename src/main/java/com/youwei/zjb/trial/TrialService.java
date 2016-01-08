@@ -58,6 +58,7 @@ public class TrialService {
 			toList.add("253187898@qq.com");
 			toList.add("673508153@qq.com");//jinfei
 			toList.add("837132537@qq.com");//luokai
+			toList.add("907899254@qq.com");//caili
 			MailUtil.send_email(toList, "中介宝试用申请", msg.toString());
 		}catch(Exception ex){
 			LogUtil.warning(msg.toString());
