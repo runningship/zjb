@@ -131,6 +131,7 @@ function buildQueryOptions(){
                     <input type="hidden" name="latEnd" id="latEnd"  value=""/>
                     <input type="hidden" name="lngStart" id="lngStart" />
                     <input type="hidden" name="lngEnd" id="lngEnd" />
+                    <input type="hidden" name="pageSize" id="pageSize" value="25"/>
                    <ul class="InputMainLine KY_W not-select" style=" margin-bottom:8px;">
                    
                         <li><input class="input-sm w110" type="text" placeholder="电话" id="tel" name="tel" /></li>
@@ -312,7 +313,7 @@ function buildQueryOptions(){
                                   
                                   </div>
                                     
-                                 <div style="display:table-row;" >           
+                                 <div id="contentTable" style="display:table-row;" >           
 
                                             <div class="FY_RCon" style=" width:100%; display:table-cell;">
                                                 <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">

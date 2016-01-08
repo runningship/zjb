@@ -38,6 +38,8 @@ function doSearch(callback){
 }
 
 function doSearchAndSelectFirst(notFresh){
+	var pageSize = Math.round($('#contentTable').height()/25)
+	$('#pageSize').val(pageSize);
   //saveQuery();
   doSearch(function(){
     if(houseData.page.data.length>0){

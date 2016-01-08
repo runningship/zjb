@@ -650,7 +650,7 @@ public class HouseService {
 		
 		page.orderBy = "";
 		page.order = "";
-		page.setPageSize(25);
+		//page.setPageSize(25);
 		LogUtil.info("house query hql : "+ hql.toString());
 		page = dao.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
