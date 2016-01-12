@@ -56,6 +56,8 @@ var houseGJbox;
 var searching=false;
 var chuzu=getParam('chuzu');
 function doSearch(callback){
+	var pageSize = Math.round($('#contentTable').height()/25)
+	$('#pageSize').val(pageSize);
   if(searching){
     return;
   }
@@ -262,6 +264,7 @@ $(document).ready(function(){
 				<div class="MainRightInputMain KY_W" style="margin-bottom:5px;">
                 <form class="form-horizontal form1" onsubmit="doSearchAndSelectFirst();return false;" role="form" name="form1">
                    <input type="hidden" id="sh" name="sh" value="${fy_sh}">
+                   <input type="hidden" name="pageSize" id="pageSize" value="25"/>
                    <ul class="InputMainLine KY_W" style=" margin-bottom:8px;">
                    
                         <li><input class="input-sm w110" type="text" placeholder="电话" name="tel" /></li>
@@ -442,7 +445,7 @@ $(document).ready(function(){
                                   
                                   </div>
                                     
-                                 <div style="display:table-row;">           
+                                 <div id="contentTable" style="display:table-row;">           
 
                                             <div class="FY_RCon" style=" width:100%; display:table-cell;">
                                                 <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">

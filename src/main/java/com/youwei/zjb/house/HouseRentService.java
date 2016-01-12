@@ -451,7 +451,7 @@ public class HouseRentService {
 
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
-		page.setPageSize(25);
+		//page.setPageSize(25);
 		page = service.findPage(page, hql.toString(),params.toArray());
 		ModelAndView mv = new ModelAndView();
 		JSONObject jpage = JSONHelper.toJSON(page,DataHelper.dateSdf.toPattern());
