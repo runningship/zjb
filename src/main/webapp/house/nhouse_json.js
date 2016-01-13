@@ -6,7 +6,8 @@ var nhouseJson={"newhouse": [
         "mji": "96.87",
         "djia": "41884",
         "zjia": "4057264",
-        "beizhu": "一层"
+        "beizhu": "一层",
+        "zshou":0
     },
     {
         "hid": "2",
@@ -15,7 +16,8 @@ var nhouseJson={"newhouse": [
         "mji": "93.97",
         "djia": "40825",
         "zjia": "3836363",
-        "beizhu": "一层"
+        "beizhu": "一层",
+        "zshou":0
     },
     {
         "hid": "3",
@@ -24,7 +26,8 @@ var nhouseJson={"newhouse": [
         "mji": "128.8",
         "djia": "31852",
         "zjia": "4101244",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "4",
@@ -33,7 +36,8 @@ var nhouseJson={"newhouse": [
         "mji": "128.8",
         "djia": "31852",
         "zjia": "4101244",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "5",
@@ -42,7 +46,8 @@ var nhouseJson={"newhouse": [
         "mji": "153.4",
         "djia": "30265",
         "zjia": "4642582",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":1
     },
     {
         "hid": "6",
@@ -51,7 +56,8 @@ var nhouseJson={"newhouse": [
         "mji": "133.4",
         "djia": "28889",
         "zjia": "3854933",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":1
     },
     {
         "hid": "7",
@@ -60,7 +66,8 @@ var nhouseJson={"newhouse": [
         "mji": "148.1",
         "djia": "27937",
         "zjia": "4138514",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "8",
@@ -69,7 +76,8 @@ var nhouseJson={"newhouse": [
         "mji": "130.6",
         "djia": "26032",
         "zjia": "3400527",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "9",
@@ -78,7 +86,8 @@ var nhouseJson={"newhouse": [
         "mji": "131.1",
         "djia": "26032",
         "zjia": "3412502",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "10",
@@ -87,7 +96,8 @@ var nhouseJson={"newhouse": [
         "mji": "140.6",
         "djia": "30688",
         "zjia": "4313175",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":1
     },
     {
         "hid": "11",
@@ -96,7 +106,8 @@ var nhouseJson={"newhouse": [
         "mji": "142.8",
         "djia": "30370",
         "zjia": "4336889",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "12",
@@ -105,7 +116,8 @@ var nhouseJson={"newhouse": [
         "mji": "155.8",
         "djia": "29735",
         "zjia": "4631594",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "13",
@@ -114,7 +126,8 @@ var nhouseJson={"newhouse": [
         "mji": "144.3",
         "djia": "30370",
         "zjia": "4383052",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "14",
@@ -123,7 +136,8 @@ var nhouseJson={"newhouse": [
         "mji": "137.4",
         "djia": "30688",
         "zjia": "4215280",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "15",
@@ -132,7 +146,8 @@ var nhouseJson={"newhouse": [
         "mji": "142.6",
         "djia": "30374",
         "zjia": "4329600",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "16",
@@ -141,7 +156,8 @@ var nhouseJson={"newhouse": [
         "mji": "132.6",
         "djia": "23365",
         "zjia": "3098443",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "17",
@@ -150,7 +166,8 @@ var nhouseJson={"newhouse": [
         "mji": "128.8",
         "djia": "23894",
         "zjia": "3077092",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "18",
@@ -159,7 +176,8 @@ var nhouseJson={"newhouse": [
         "mji": "116.8",
         "djia": "27619",
         "zjia": "3225076",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "19",
@@ -168,7 +186,8 @@ var nhouseJson={"newhouse": [
         "mji": "159.2",
         "djia": "23704",
         "zjia": "3773867",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "20",
@@ -177,7 +196,8 @@ var nhouseJson={"newhouse": [
         "mji": "124.6",
         "djia": "29101",
         "zjia": "3625635",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "21",
@@ -186,7 +206,8 @@ var nhouseJson={"newhouse": [
         "mji": "126.8",
         "djia": "29101",
         "zjia": "3690820",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "22",
@@ -195,7 +216,8 @@ var nhouseJson={"newhouse": [
         "mji": "149.2",
         "djia": "23280",
         "zjia": "3474370",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "23",
@@ -204,7 +226,8 @@ var nhouseJson={"newhouse": [
         "mji": "123.1",
         "djia": "23810",
         "zjia": "2931905",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "24",
@@ -213,7 +236,8 @@ var nhouseJson={"newhouse": [
         "mji": "138.7",
         "djia": "26032",
         "zjia": "3610083",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "25",
@@ -222,7 +246,8 @@ var nhouseJson={"newhouse": [
         "mji": "161.3",
         "djia": "26032",
         "zjia": "4198921",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "26",
@@ -231,7 +256,8 @@ var nhouseJson={"newhouse": [
         "mji": "170.4",
         "djia": "25397",
         "zjia": "4328381",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "27",
@@ -240,7 +266,8 @@ var nhouseJson={"newhouse": [
         "mji": "153.3",
         "djia": "25820",
         "zjia": "3957706",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "28",
@@ -249,7 +276,8 @@ var nhouseJson={"newhouse": [
         "mji": "146.3",
         "djia": "26455",
         "zjia": "3870370",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":1
     },
     {
         "hid": "29",
@@ -258,7 +286,8 @@ var nhouseJson={"newhouse": [
         "mji": "146.3",
         "djia": "25926",
         "zjia": "3792963",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "30",
@@ -267,7 +296,8 @@ var nhouseJson={"newhouse": [
         "mji": "146.3",
         "djia": "25926",
         "zjia": "3792963",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "31",
@@ -276,7 +306,8 @@ var nhouseJson={"newhouse": [
         "mji": "146.3",
         "djia": "25926",
         "zjia": "3792963",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "32",
@@ -285,7 +316,8 @@ var nhouseJson={"newhouse": [
         "mji": "146.3",
         "djia": "25926",
         "zjia": "3792963",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "33",
@@ -294,7 +326,8 @@ var nhouseJson={"newhouse": [
         "mji": "153.3",
         "djia": "25291",
         "zjia": "3876605",
-        "beizhu": "一拖二"
+        "beizhu": "一拖二",
+        "zshou":0
     },
     {
         "hid": "34",
@@ -303,7 +336,8 @@ var nhouseJson={"newhouse": [
         "mji": "172.4",
         "djia": "35132",
         "zjia": "6056804",
-        "beizhu": "一层"
+        "beizhu": "一层",
+        "zshou":0
     },
     {
         "hid": "35",
@@ -312,7 +346,8 @@ var nhouseJson={"newhouse": [
         "mji": "92.73",
         "djia": "41355",
         "zjia": "3834803",
-        "beizhu": "一层"
+        "beizhu": "一层",
+        "zshou":0
     },
     {
         "hid": "36",
@@ -321,7 +356,8 @@ var nhouseJson={"newhouse": [
         "mji": "87.65",
         "djia": "41355",
         "zjia": "3624722",
-        "beizhu": "一层"
+        "beizhu": "一层",
+        "zshou":0
     },
     {
         "hid": "37",
@@ -330,7 +366,8 @@ var nhouseJson={"newhouse": [
         "mji": "101.8",
         "djia": "27069",
         "zjia": "2754519",
-        "beizhu": "二层"
+        "beizhu": "二层",
+        "zshou":0
     },
     {
         "hid": "3",
@@ -339,7 +376,8 @@ var nhouseJson={"newhouse": [
         "mji": "122.5",
         "djia": "24423",
         "zjia": "2992829",
-        "beizhu": "二层"
+        "beizhu": "二层",
+        "zshou":0
     },
     {
         "hid": "3",
@@ -348,6 +386,7 @@ var nhouseJson={"newhouse": [
         "mji": "119.9",
         "djia": "24952",
         "zjia": "2992539",
-        "beizhu": "二层"
+        "beizhu": "二层",
+        "zshou":0
     }
 ]}

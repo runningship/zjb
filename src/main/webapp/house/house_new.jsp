@@ -49,11 +49,14 @@ $(document).on('click','.newHouseList a',function(e){
   TPno=TP.siblings(),
   C='active',
   Thid=T.data('hid');
-  if(Thid&&TD){
+  if(Thid&&TD&&!TP.hasClass('a0')){
     var TDs=eval( TD );//$.parseJSON(TD);//
     TP.addClass(C).siblings().removeClass(C);
     //alert(Thid+'|'+TDs.area);
     alertBoxFun(TDs);
+  }else if(TP.hasClass('a0')){
+    alert('已售！');
+    $('.ss_alertBox').hide();
   }
   event.preventDefault();
 })
@@ -90,10 +93,10 @@ $(document).on('click','.newHouseList a',function(e){
 
 </style>
 <script src="../js/laytpl/laytpl.js" type="text/javascript"></script>
-<script src="nhouse_json.js" type="text/javascript" charset="utf-8"></script>
+<script src="nhouse_json.js?16113" type="text/javascript" charset="utf-8"></script>
 <script id="nhltpl" type="text/html">
 {{# for(var i = 0, len = d.newhouse.length; i < len; i++){ }}
-<li class=""><a href="" class="" data-hid="{{ d.newhouse[i].hid }}" data-info='{"hid":"{{ d.newhouse[i].hid }}","area":"{{ d.newhouse[i].area }}","flag":"{{ d.newhouse[i].flag }}","mji":"{{ d.newhouse[i].mji }}","djia":"{{ d.newhouse[i].djia }}","zjia":"{{ d.newhouse[i].zjia }}","beizhu":"{{ d.newhouse[i].beizhu }}"}'>
+<li class=" zshou{{ d.newhouse[i].zshou }}"><a href="" class="" data-hid="{{ d.newhouse[i].hid }}" data-info='{"hid":"{{ d.newhouse[i].hid }}","area":"{{ d.newhouse[i].area }}","flag":"{{ d.newhouse[i].flag }}","mji":"{{ d.newhouse[i].mji }}","djia":"{{ d.newhouse[i].djia }}","zjia":"{{ d.newhouse[i].zjia }}","beizhu":"{{ d.newhouse[i].beizhu }}","zshou":"{{ d.newhouse[i].zshou }}"}'>
   <h2 class="h"><span class="flag">{{ d.newhouse[i].flag }}</span>{{ d.newhouse[i].area }}</h2>
   <div class="hinfo">
     <span class="hibox">
@@ -119,6 +122,13 @@ $(document).ready(function() {
   // $.each(nhouseJson.newhouse, function(i, val) {
   //    alert(val.hid)
   // });
+  var obj=nhouseJson.newhouse;
+  obj.sort(getSortFun('desc', 'zshou'));
+  function getSortFun(order, sortBy) {
+    var ordAlpah = (order == 'asc') ? '>' : '<';
+    var sortFun = new Function('a', 'b', 'return a.' + sortBy + ordAlpah + 'b.' + sortBy + '?1:-1');
+    return sortFun;
+  }   
   var gettpl = document.getElementById('nhltpl').innerHTML;
   laytpl(gettpl).render(nhouseJson, function(html){
       document.getElementById('newHouseList').innerHTML = html;
@@ -158,7 +168,11 @@ var ArrList=['a1','a2','a3','a4','a5','a6'];
 //blockAlert(getArrayItems(ArrList,1));
   $('#newHouseList li').each(function(index, el) {
     var this_class=getArrayItems(ArrList,1);
-    $(this).addClass(this_class[0]);
+    if($(this).hasClass('zshou1')){
+      $(this).addClass(this_class[0]);
+    }else{
+      $(this).addClass('a0');
+    }
   });
 }
 </script>
