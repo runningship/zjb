@@ -1,11 +1,26 @@
+<%@page import="com.youwei.zjb.ThreadSessionHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	request.setAttribute("type", request.getParameter("type"));
+	request.setAttribute("tel", ThreadSessionHelper.getUser().tel);
 %>
 <script type="text/javascript">
 function _open(url){
 	window.top.beforeIframeChange('iframe_house' , url);
+}
+
+function openXinFang(){
+	window.location='/house/house_new.jsp';
+	return;
+	var tel = "${tel}";
+	if(!tel){
+		art.dialog.confirm('请先设置手机号码', function () {
+			art.dialog.open('/settings/user_edit.jsp');
+	  	},function(){},'info');
+	}else{
+		window.location='/house/house_new.jsp';
+	}
 }
 </script>
 <style type="text/css">
@@ -56,12 +71,10 @@ function _open(url){
                </div>
           </li>
           <li class="line"></li>
-          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="window.location='/house/house_new.jsp'"><i class="iconfont">&#xe686;</i>新房</li>
+          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();"><i class="iconfont">&#xe686;</i>新房</li>
           <li class="line"></li>
       </ul>
 </div>
-
-
 
 <!-- openMaxPic -->
 <script src="../js/layer_photo/layer.min.js" type="text/javascript"></script>

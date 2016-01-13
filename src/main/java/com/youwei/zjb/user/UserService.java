@@ -23,6 +23,7 @@ import org.bc.web.PlatformExceptionType;
 import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.KeyConstants;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.entity.Role;
@@ -183,6 +184,21 @@ public class UserService {
 		po.lock = user.lock;
 		po.mobileON = user.mobileON;
 		dao.saveOrUpdate(po);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView selfUpdate(User user){
+		ModelAndView mv = new ModelAndView();
+		if(StringUtils.isEmpty(user.uname)){
+			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
+		}
+		User po = dao.get(User.class, user.id);
+		po.uname = user.uname;
+		po.tel = user.tel;
+		dao.saveOrUpdate(po);
+		
+		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_User, po);
 		return mv;
 	}
 	
