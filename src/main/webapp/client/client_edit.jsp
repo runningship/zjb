@@ -23,15 +23,18 @@ var cid=${me.cid};
 var id;
 var dataScope="ky";
 function save(){
-  if(checkDateyear($('#yearFrom'))==false){
-      return ;
-    }
-  if(checkDateyear($('#yearTo'))==false){
-      return ;
-    }
-  if(checkTel()==false){
-    return;
-  }
+	 if(!$('#name').val()){
+		  alert('请先检查客户姓名');
+	      return ;
+	    }
+	  if(checkDateyear($('#areas'))==false){
+		  alert('请先输入期望楼盘名称');
+	      return ;
+	    }
+	  if(checkTel()==false){
+		  alert('请先检查客户电话号码');
+	    return;
+	  }
   var a=$('form[name=form1]').serialize();
   if ($('#uid').val()==undefined||$('#uid').val()=='') {
     alert('请先选择业务员');
