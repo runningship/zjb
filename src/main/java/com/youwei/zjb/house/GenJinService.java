@@ -28,6 +28,8 @@ import com.youwei.zjb.util.DataHelper;
 public class GenJinService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	PGenjinService pgjService = new PGenjinService();
+	
 	@WebMethod
 	public ModelAndView add(GenJin gj){
 		ModelAndView mv = new ModelAndView();
@@ -55,6 +57,9 @@ public class GenJinService {
 			HouseRent hr = dao.get(HouseRent.class, gj.hid);
 			gj.ztai = RentState.parse(hr.ztai)+"-"+RentState.parse(String.valueOf(gj.flag));
 			dao.saveOrUpdate(gj);
+			if(RentState.在租.getCode()!=gj.flag){
+				pgjService.houseRentGjRule(gj);
+			}
 			mv.data.put("msg", "保存成功");
 			return mv;
 		}

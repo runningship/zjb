@@ -151,9 +151,27 @@ public class PGenjinService {
 		HouseRent hr = dao.get(HouseRent.class, gj.hid);
 		gj.ztai = RentState.parse(hr.ztai)+"->"+RentState.parse(String.valueOf(gj.flag));
 		dao.saveOrUpdate(gj);
+		if(RentState.在租.getCode()!=gj.flag){
+			houseRentGjRule(gj);
+		}
 		mv.data.put("result", "1");
 		mv.data.put("msg", "添加成功");
 		return mv;
+	}
+	
+	public void houseRentGjRule(GenJin gj){
+		//不用公司两次已租或停租则删除
+		String hqlPC = "select count(distinct cid) from GenJin where chuzu=1 and hid=? and flag=?";
+		long countPC = dao.countHql(hqlPC, gj.hid , gj.flag);
+		String hqlMobile = "select count(distinct uid) from GenJin where chuzu=1 and hid=? and flag=? and cid is null";
+		long countMobile = dao.countHql(hqlMobile, gj.hid , gj.flag);
+		if((countPC+countMobile)>=2){
+			HouseRent po = dao.get(HouseRent.class, gj.hid);
+			if(po!=null){
+				dao.delete(po);
+				dao.execute("delete from GenJin where hid=? and chuzu=1", gj.hid);
+			}
+		}
 	}
 	
 	@WebMethod(name="house/genjin/list")

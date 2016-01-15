@@ -154,37 +154,6 @@ public class HouseRentService {
 	}
 	
 	@WebMethod
-	public ModelAndView view(Integer id){
-		ModelAndView mv = new ModelAndView();
-		HouseRent h = service.get(HouseRent.class, id);
-		mv.jspData.put("house", h);
-		
-		Department dept = service.get(Department.class, h.did);
-		User user = service.get(User.class, h.uid);
-		mv.jspData.put("fbr", (user==null || user.uname==null) ? "":user.uname);
-//		mv.jspData.put("ywyUname", h.forlxr==null ? "":h.forlxr);
-//		mv.jspData.put("ywyTel", h.fortel==null ? "":h.fortel);
-		mv.jspData.put("dname", dept==null? "":dept.namea);
-		RentState ztai = RentState.parse(h.ztai);
-		mv.jspData.put("ztai", ztai==null ? "": ztai);
-		RentType fs = RentType.parse(h.fangshi);
-		mv.jspData.put("fangshi", fs==null ? "": fs.toString());
-		String favStr = "@"+ThreadSessionHelper.getUser().id+"|";
-		if(h.fav!=null && h.fav.contains(favStr)){
-			mv.jspData.put("fav", "1");
-		}else{
-			mv.jspData.put("fav", "0");
-		}
-		
-		String hql = "select gj.conts as conts ,u.uname as uname , gj.addtime as addtime from GenJin gj , User u "
-				+ " where gj.hid=? and gj.uid=u.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
-		//TODO 参考AbstractSee
-		List<Map> gjList = service.listAsMap(hql, Integer.valueOf(id) , 1);
-		mv.jspData.put("gjList", gjList);
-		return mv;
-	}
-	
-	@WebMethod
 	public ModelAndView ruku(int id){
 		ModelAndView mv = new ModelAndView();
 		HouseRent po = service.get(HouseRent.class, id);
