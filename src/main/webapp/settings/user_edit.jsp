@@ -25,6 +25,11 @@
 <script type="text/javascript" src="/js/buildHtml.js"></script>
 <script type="text/javascript">
 function submits(){
+	var tel = $('#tel').val();
+	if(!validateMobile(tel)){
+		alert('请输入有效的手机号码');
+		return;
+	}
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
@@ -54,11 +59,64 @@ $(document).ready(function() {
           },focus: true
       },{
           name: '取消'
-      }).height(200);
+      });
 
 });
+var sendingVerifyCode = false;
+function getCode(){
+	event.preventDefault();
+	event.cancelBubbled=true;
+	var tel = $('#tel').val();
+	if(!validateMobile(tel)){
+		alert('请输入有效的手机号码');
+		return;
+	}
+	sendingVerifyCode = true;
+	$('.getCode').addClass('gray');
+	YW.ajax({
+	    type: 'POST',
+	    url: '/c/mobile/user/sendVerifyCode',
+	    data:{tel:tel},
+	    mysuccess: function(data){
+	    	alert('验证码已发送');
+	    	setGetCodeTimer();
+	    }
+	  });
+	
+}
 
+function validateMobile(tel){
+    var isMob = new RegExp(/^(1[34578][0-9]{9})$/);
+    if(!tel){
+        return false;
+    }
+    if(isMob.test(tel)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function setGetCodeTimer(){
+	var times=60;
+	var clock =  setInterval(function(){
+		times--;
+		if(times<1){
+			$('.getCode').html('获取验证码');
+			$('.getCode').removeClass('gray');
+			clearInterval(clock);
+			sendingVerifyCode = false;
+			return;
+		}
+		$('.getCode').html('已发送('+times+')');
+	},1000);
+}
 </script>
+<style type="text/css">
+.getCode{float: right;    padding: 6px 6px;    color: blue;}
+.verifyCode{width:60%;display:inline;}
+.gray{color:gray;}
+</style>
 </head>
 <body>
 <div class="html edit title">
@@ -78,7 +136,13 @@ $(document).ready(function() {
                 <div class="form-group">
                     <label class="col-xs-3 control-label">手机号码:</label>
                     <div class="col-xs-8">
-                        <input type="tel" class="form-control" name="tel" value="${user.tel }" placeholder="">
+                        <input type="tel" class="form-control"  id="tel" name="tel" value="${user.tel }" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">验证码:</label>
+                    <div class="col-xs-8">
+                        <input type="tel" class="form-control verifyCode" name="verifyCode" value="" placeholder=""><button class="getCode" onclick="getCode();return false;">获取验证码</button>
                     </div>
                 </div>
             </form>

@@ -36,7 +36,12 @@ $(document).ready(function() {
 	    }
         //if(Ttop<300){
             var alphas=Ttop/200;
-            $('.header').css({'background-color':' rgba(255,102,85,'+alphas +')','-webkit-transition':'all .5s'})
+            $('.header').css({'background-color':' rgba(255,102,85,'+alphas +')','-webkit-transition':'all .5s'});
+            if(alphas>=1){
+                $('.header').removeClass('shadow');
+            }else{
+                $('.header').addClass('shadow');
+            }
         //}
 	});
 
@@ -144,13 +149,13 @@ function openTuijian(){
 </head>
 <body>
 <div id="wrap" class="bodyer house new detail">
-    <div id="header" class="header posf opacity alpha">
+    <div id="header" class="header posf opacity alpha  shadow">
         <span class="left">
             <a onclick="api.closeWin();" class="btns"><i class="iconfont">&#xe628;</i></a>
             <h2 id="name"></h2>
         </span>
         <span class="right">
-            <a href="#" class="btns" id="s"><i class="iconfont">&#xe674;</i></a>
+            <a href="#" class="btns" id="s"></a>
         </span>
     </div>
     <div id="mainer" class="mainer">
@@ -171,12 +176,6 @@ function openTuijian(){
             <ul class="wa_info">
                 <li><a href="#" class="">
                     <span>
-                        <i class="iconfont orange">&#xe6e2;</i>
-                        <strong>第三方资金托管</strong>
-                    </span>
-                </a></li>
-                <li><a href="#" class="">
-                    <span>
                         <i class="iconfont orange">&#xe6e3;</i>
                         <strong>所有楼盘保价销售</strong>
                     </span>
@@ -193,8 +192,7 @@ function openTuijian(){
             优惠政策
         </div>
         <div class="item wb">
-            <p>成功推荐客户赚:1%</p>
-            <p>成功推荐客户赚:1%</p>
+            <p class="yongjin">成功推荐客户赚:<i class="text"></i></p>
         </div>
         <div class="title"></div>
         <div class="item wc">
@@ -216,7 +214,7 @@ function openTuijian(){
             <p>结佣公司：中介宝</p>
             <p>预计结佣周期："T+3"</p>
             <p class="yongjin">独立经纪人佣金：<span class="text"></span></p>
-            <p>开发商界定规则：</p>
+            <p>开发商界定规则：经纪人推荐的客户号码隐藏中间四位至开发商，若开发商核对后无此号码则初步判断有效</p>
             <p id="tel">案场联系：<span class="text"></span></p>
         </div>
         <div class="title">
@@ -254,8 +252,10 @@ function openTuijian(){
             拓客技巧
         </div>
         <div class="item wh">
-            <p>成功推荐客户赚:1%</p>
-            <p>成功推荐客户赚:1%</p>
+            <p>1.周边竞品截留</p>
+            <p>2.周边产业园客户拓展</p>
+            <p>3.周边商业派单活动摆展宣传</p>
+            <p>4.投资性客户宣传</p>
         </div>
     </div>
 </div>

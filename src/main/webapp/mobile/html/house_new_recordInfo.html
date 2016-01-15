@@ -66,6 +66,7 @@ function loadData(){
 		if(ret){
 			$('#sellerName').text(ret.order.sellerName);
 			$('#sellerTel').text(ret.order.sellerTel);
+			$('#ordertime').text(ret.order.addtime);
 			buildHtmlWithJsonArray("repeat",ret.genjiList , false,true);
 			api.parseTapmode();
 		}else{
@@ -98,6 +99,11 @@ function loadData(){
         </div>
         <div class="item posr_cont">
             <ul class="ul">
+            	<li>
+                    <span class="fl"><i class="iconfont">&#xe6e8;</i></span>
+                    <h3> <span>等待处理</span></h3>
+                    <p id="ordertime"></p>
+                </li>
                 <li class="repeat" style="display:none;">
                     <span class="fl"><i class="iconfont">&#xe6e8;</i></span>
                     <h3><b>$[uname]</b><span>将状态修改为</span><b>$[status]</b></h3>

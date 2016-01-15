@@ -43,7 +43,7 @@ apiready=function(){
 	});
 }
 
-function loadData(clear){
+function loadData(){
 	var url = 'http://'+newhouse_server_host+'/new-house/c/admin/order/listEstateData?currentPageNo='+1;
 	YW.ajax({
 		url: url,
@@ -57,6 +57,11 @@ function loadData(clear){
 	},function(ret , err){
 		if(ret){
 			totalPageCount = ret.page.totalPageCount;
+			if(ret.page.totalCount==0){
+				$('#emptyMsg').show();
+			}else{
+				$('#emptyMsg').hide();
+			}
 			buildHtmlWithJsonArray("repeat",ret.page.data , true,true);
 			api.parseTapmode();
 		}else{
@@ -88,8 +93,8 @@ function openGenjin(orderId , estateName){
         </span>
     </div>
     <div id="mainer" class="mainer">
-        <div class="item posf_tab">
-            <ul class="tabs nowrap orange">
+        <div class="item posf_tab l">
+            <ul class="tabs v nowrap orange">
             	<li class=" active"><a href="#">所有</a></li>
                 <li><a href="#">确认中</a></li>
                 <li><a href="#" class="">有效</a></li>
@@ -101,7 +106,8 @@ function openGenjin(orderId , estateName){
                 <li><a href="#" class="">无效</a></li>
             </ul>
         </div>
-        <div class="item posr_cont">
+        <div class="item posr_cont r">
+        	<div id="emptyMsg" style="text-align:center;display:none;">您还没有推荐过任何客户，赶快推荐拿佣金吧! </div>
             <ul class="ULImgList">
                 <li status="$[status]"  daikan="$[daikan]" tapmode="tapped" onclick="openGenjin($[id] , '$[estateName]');" class="repeat" style="display:none;;"><a>
                     <span class="fr">

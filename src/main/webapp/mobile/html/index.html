@@ -115,30 +115,43 @@ function openGroup(){
 // 		},1000);	
 // 	}
 }
-
+var lastKeyBackTime;
 function exitApp(){
     api.addEventListener({
         name: 'keyback'
     }, function(ret, err){
-//         api.toast({
-//                 msg: '再按一次退出',
-//                 duration:2000,
-//                 location: 'middle'
-//             });
-		api.confirm({
-			msg: '确定要退出程序吗?',
-		    buttons:['取消', '确定']
-		},function(ret,err){
-		    if(ret.buttonIndex == 2){
-		        //api.alert({msg:ret.text});
-		    	 api.closeWidget({
-                     id: 'A6989896004356',     //这里改成自己的应用ID
-                     retData: {name:'closeWidget'},
-                     silent:true
-                 });
-		    }
-		});
+    	var now = new Date().getTime();
+    	if(!lastKeyBackTime || now-lastKeyBackTime>2000){
+    		lastKeyBackTime = now;
+    		api.toast({
+                msg: '再按一次退出',
+                duration:2000,
+                location: 'bottom'
+            });
+    	}else{
+    		api.closeWidget({
+                id: 'A6989896004356',     //这里改成自己的应用ID
+                retData: {name:'closeWidget'},
+                silent:true
+            });
+    	}
     });
+}
+
+function confirmQuit(){
+	api.confirm({
+		msg: '确定要退出程序吗?',
+	    buttons:['取消', '确定']
+	},function(ret,err){
+	    if(ret.buttonIndex == 2){
+	        //api.alert({msg:ret.text});
+	    	 api.closeWidget({
+                 id: 'A6989896004356',     //这里改成自己的应用ID
+                 retData: {name:'closeWidget'},
+                 silent:true
+             });
+	    }
+	});
 }
 
 //更新出租出售按钮效果 
@@ -424,6 +437,9 @@ function bindTecentPush(){
     -webkit-flex: 1;
     flex: 1;
 }
+.footer .item{width:33%;}
+.footer .item.newhouse{display:none;}
+.header a.btns.hide{display:none;}
 </style>
 </head>
 <body>
@@ -445,7 +461,7 @@ function bindTecentPush(){
         </span>
         <span class="right" >
             <a tapmode="tapped" class="btns" id="search" onclick="openSearch();"><i class="iconfont">&#xe602;</i></a>
-            <span tapmode="tapped" class="btns hide" id="records" onclick="openTuijianRecords();">推荐记录</span>
+            <a tapmode="tapped" class="btns hide" id="records" onclick="openTuijianRecords();"><i class="iconfont">&#xe6ec;</i> </a>
         </span>
     </div>
     <div id="mainer" class="mainer">

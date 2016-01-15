@@ -117,7 +117,7 @@ $(document).ready(function() {
 //           return false;
 //         }
 //     });
-    $.get('menuTop.html?'+new Date().getTime(), function(data) {
+    $.get('/v/settings/menuTop.html?'+new Date().getTime(), function(data) {
         $('#menuTop').html(data);
         //设置拖动栏
         var bodyW = $(window.top.document).width()-50;
