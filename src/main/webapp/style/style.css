@@ -1,4 +1,4 @@
-/*
+*
  * All Css
  * @authors YiMiXia.com (7687849@qq.com)
  * @date    2014-08-06 11:02:12
@@ -597,6 +597,7 @@ content: "\2b";
 
 
 
+
 .newhouse{ background: url('images/bg-1080.jpg') no-repeat top center; background-attachment: fixed; }
 .newhouse .bodyer{padding-top: 50px;}
 .newhouse .bg{ background: url('images/newhouse.png') no-repeat top center; background-size: 100%;}
@@ -662,6 +663,20 @@ content: "\2b";
 .NHL_ul li.active { border: 2px solid rgba(255,255,255,1);}
 .NHL_ul li.active a, 
 .NHL_ul li a:hover{ background: rgba(255,255,255,1);}
+
+.NHL_ul li.a0 a,
+.NHL_ul li.a0 .hinfo .hibox div{ color:  rgba(255,255,255,0.3);}
+.NHL_ul li.a0 .hinfo .hibox strong{ background: rgba(255,255,255,0.3);}
+.NHL_ul li.a0 .h .flag,
+.NHL_ul li.a0 .hinfo .hibox strong{ color: rgba(85,85,85,0.5);}
+.NHL_ul li.a0 .hinfo .hibox div{ border-color: rgba(255,255,255,0.3); }
+.NHL_ul li.a0 .h .flag{background:rgba(255,255,255,0.3);}
+.NHL_ul li.a0 a{ background:rgba(85,85,85,0.5);}
+.NHL_ul li.a0.active { border: 2px solid rgba(255,255,255,1);}
+.NHL_ul li.a0.active a{ box-shadow:inset 1px 1px 10px 0px rgba(0,0,0,0.3);}
+.NHL_ul li.a0.active a, 
+.NHL_ul li.a0 a:hover{ background: rgba(85,85,85,0.5);}
+
 
 .NHL_ul li.a1 a,
 .NHL_ul li.a1 .hinfo .hibox div{ color: #FFF;}
