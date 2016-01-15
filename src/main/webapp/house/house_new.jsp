@@ -40,6 +40,9 @@ function alertBoxFun(j){
     leftContStr+='<p>'+j.zjia+' 元</p>';
     T.find('.ss_cont_left').html(leftContStr);
     T.find('.input').attr('data-info',JSON.stringify(j));
+    T.find('.yongjinshu i').text(j.yjin);
+  }else{
+    T.find('.yongjinshu i').text('致电咨询');
   }
 }
 $(document).on('click','.newHouseList a',function(e){
@@ -96,7 +99,7 @@ $(document).on('click','.newHouseList a',function(e){
 <script src="nhouse_json.js?16113" type="text/javascript" charset="utf-8"></script>
 <script id="nhltpl" type="text/html">
 {{# for(var i = 0, len = d.newhouse.length; i < len; i++){ }}
-<li class=" zshou{{ d.newhouse[i].zshou }}"><a href="" class="" data-hid="{{ d.newhouse[i].hid }}" data-info='{"hid":"{{ d.newhouse[i].hid }}","area":"{{ d.newhouse[i].area }}","flag":"{{ d.newhouse[i].flag }}","mji":"{{ d.newhouse[i].mji }}","djia":"{{ d.newhouse[i].djia }}","zjia":"{{ d.newhouse[i].zjia }}","beizhu":"{{ d.newhouse[i].beizhu }}","zshou":"{{ d.newhouse[i].zshou }}"}'>
+<li class=" zshou{{ d.newhouse[i].zshou }}"><a href="" class="" data-hid="{{ d.newhouse[i].hid }}" data-info='{"hid":"{{ d.newhouse[i].hid }}","area":"{{ d.newhouse[i].area }}","flag":"{{ d.newhouse[i].flag }}","mji":"{{ d.newhouse[i].mji }}","djia":"{{ d.newhouse[i].djia }}","zjia":"{{ d.newhouse[i].zjia }}","beizhu":"{{ d.newhouse[i].beizhu }}","yjin":"{{ d.newhouse[i].yongjin }}","zshou":"{{ d.newhouse[i].zshou }}"}'>
   <h2 class="h"><span class="flag">{{ d.newhouse[i].flag }}</span>{{ d.newhouse[i].area }}</h2>
   <div class="hinfo">
     <span class="hibox">
@@ -188,7 +191,7 @@ var ArrList=['a1','a2','a3','a4','a5','a6'];
       <div class="bg">
         <div class="maintop">
           <div class="ewmBox"><img src="../style/images/zjb_wx_150.png" alt=""><span>中介宝微信公众号</span></div>
-          <h1>另付20万，享受<b>6.5折</b>超级优惠！</h1>
+          <h1>另付20万，享受<b>6.5折</b>超级优惠！<br>公寓3万定金，享受<b>8.5折</b>！</h1>
         </div>
         <div class="NH_list">
           <ul class="NHL_ul newHouseList" id="newHouseList"></ul>
@@ -204,7 +207,7 @@ var ArrList=['a1','a2','a3','a4','a5','a6'];
     <div class="ss_alert_cont">
       <div class="textcont">
         <a href="" class="textconta">详情查看</a>
-        <div class="textconts hidden"><b>佣金<i>2</i>万元</b><br>在支付首付款后3-7个工作日结佣</div>
+        <div class="textconts hidden"><b>佣金<span class="yongjinshu"><i>2万</i>元</span></b><br>在支付首付款后3-7个工作日结佣</div>
       </div>
       <div class="adinputbox">
         <a href="#" class="btns ss_alert_setPhone">提交</a>

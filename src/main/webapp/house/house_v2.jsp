@@ -101,7 +101,7 @@ function buildQueryOptions(){
 .GaB a:hover{ background-color:#05684c; color:#ffffff;}
 .GaB a span{ margin:0 15px;}
 
-.adboxs { position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center;}
+.adboxs { position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center; z-index: 9999999;}
 .adboxs .adboxitem{ margin:8% auto 0;}
 </style>
 </head>

@@ -30,6 +30,7 @@ import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.house.entity.Agent;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.sys.entity.PC;
@@ -188,11 +189,21 @@ public class UserService {
 	}
 	
 	@WebMethod
-	public ModelAndView selfUpdate(User user){
+	public ModelAndView selfUpdate(User user , String verifyCode){
 		ModelAndView mv = new ModelAndView();
 		if(StringUtils.isEmpty(user.uname)){
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
+		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+		if(tvc==null){
+			//验证码不正确
+			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+		}
+		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+			//验证码已经过期
+			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+		}
+		
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
 		po.tel = user.tel;

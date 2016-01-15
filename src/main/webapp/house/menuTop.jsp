@@ -1,9 +1,14 @@
+<%@page import="com.youwei.zjb.cache.ConfigCache"%>
 <%@page import="com.youwei.zjb.ThreadSessionHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	request.setAttribute("type", request.getParameter("type"));
 	request.setAttribute("tel", ThreadSessionHelper.getUser().tel);
+	String new_house_server = ConfigCache.get("new_house_server", "www.zhongjiebao.com");
+	String new_house_server_port = ConfigCache.get("new_house_server_port", "8080");
+	request.setAttribute("new_house_server", new_house_server);
+	request.setAttribute("new_house_server_port", new_house_server_port);
 %>
 <script type="text/javascript">
 function _open(url){
@@ -11,16 +16,22 @@ function _open(url){
 }
 
 function openXinFang(){
-	window.location='/house/house_new.jsp';
-	return;
+	//window.location='/house/house_new.jsp';
+	//return;
 	var tel = "${tel}";
 	if(!tel){
 		art.dialog.confirm('请先设置手机号码', function () {
 			art.dialog.open('/settings/user_edit.jsp');
 	  	},function(){},'info');
 	}else{
-		window.location='/house/house_new.jsp';
+		window.location='/house/house_new_v2.jsp';
 	}
+}
+
+function openOrderList(){
+	event.preventDefault();
+	event.cancelBubble=true;
+	art.dialog.open('http://${new_house_server}:${new_house_server_port}/new-house/public/orderList.jsp?tel=${user.tel}',{width:500,height:600,title:'客户列表'});
 }
 </script>
 <style type="text/css">
@@ -71,7 +82,13 @@ function openXinFang(){
                </div>
           </li>
           <li class="line"></li>
-          <li class=" <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();"><i class="iconfont">&#xe686;</i>新房</li>
+          <li style="position:relative;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();">
+          		<i class="iconfont">&#xe686;</i>新房
+          		<div class="topMenuChid">
+                    <span></span>
+                    <a href="javascript:void(0)" onclick="openOrderList();return false;">推荐记录</a> 
+               </div>
+          </li>
           <li class="line"></li>
       </ul>
 </div>

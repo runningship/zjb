@@ -1,6 +1,49 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="com.youwei.zjb.ThreadSessionHelper"%>
+<%@page import="com.youwei.zjb.house.RentType"%>
+<%@page import="com.youwei.zjb.house.RentState"%>
+<%@page import="com.youwei.zjb.user.entity.User"%>
+<%@page import="com.youwei.zjb.user.entity.Department"%>
+<%@page import="org.bc.sdak.TransactionalServiceHelper"%>
+<%@page import="org.bc.sdak.CommonDaoService"%>
+<%@page import="com.youwei.zjb.house.entity.HouseRent"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%
+CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+Integer id = Integer.valueOf(request.getParameter("id"));
+HouseRent h = service.get(HouseRent.class, id);
+if(h==null){
+	out.write("房源信息不存在或已被删除");
+	return;
+}
+request.setAttribute("house", h);
+
+Department dept = service.get(Department.class, h.did);
+User user = service.get(User.class, h.uid);
+request.setAttribute("fbr", (user==null || user.uname==null) ? "":user.uname);
+//mv.jspData.put("ywyUname", h.forlxr==null ? "":h.forlxr);
+//mv.jspData.put("ywyTel", h.fortel==null ? "":h.fortel);
+request.setAttribute("dname", dept==null? "":dept.namea);
+RentState ztai = RentState.parse(h.ztai);
+request.setAttribute("ztai", ztai==null ? "": ztai);
+RentType fs = RentType.parse(h.fangshi);
+request.setAttribute("fangshi", fs==null ? "": fs.toString());
+String favStr = "@"+ThreadSessionHelper.getUser().id+"|";
+if(h.fav!=null && h.fav.contains(favStr)){
+	request.setAttribute("fav", "1");
+}else{
+	request.setAttribute("fav", "0");
+}
+
+String hql = "select gj.conts as conts ,u.uname as uname , gj.addtime as addtime from GenJin gj , User u "
+		+ " where gj.hid=? and gj.uid=u.id and gj.chuzu=  ? and gj.sh=1 order by addtime desc";
+//TODO 参考AbstractSee
+List<Map> gjList = service.listAsMap(hql, Integer.valueOf(id) , 1);
+request.setAttribute("gjList", gjList);
+%>
 <jsp:include page="../../inc/resource.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
