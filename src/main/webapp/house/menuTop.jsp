@@ -82,12 +82,15 @@ function openOrderList(){
                </div>
           </li>
           <li class="line"></li>
-          <li style="position:relative;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();">
+          <li style="position:relative;display:none;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();">
           		<i class="iconfont">&#xe686;</i>新房
           		<div class="topMenuChid">
                     <span></span>
                     <a href="javascript:void(0)" onclick="openOrderList();return false;">推荐记录</a> 
                </div>
+          </li>
+          <li style="position:relative;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="window.location='/house/house_new.jsp';">
+          		<i class="iconfont">&#xe686;</i>新房
           </li>
           <li class="line"></li>
       </ul>
