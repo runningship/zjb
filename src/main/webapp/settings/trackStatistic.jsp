@@ -52,7 +52,7 @@ $(document).ready(function() {
 // 列表内容
 	Page.Init();
     doSearch();
-    $.get('menuTop.html?+new Date().getTime()', function(data) {
+    $.get('/v/settings/menuTop.html?+new Date().getTime()', function(data) {
         $('#menuTop').html(data);
     });
 });

@@ -89,7 +89,7 @@ $(document).ready(function() {
         rel=Thi.data('rel'),
         this_hid=Thi.data('hid');
     });
-    $.get('menuTop.html?'+new Date().getTime(), function(data) {
+    $.get('/v/settings/menuTop.html?'+new Date().getTime(), function(data) {
         $('#menuTop').html(data);
     });
 });
