@@ -8,6 +8,7 @@ import java.util.Map;
 import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
@@ -95,6 +96,7 @@ public class PGenjinService {
 			if(count>=1){
 				if(type==SellState.已售.getCode() || type==SellState.停售.getCode()){
 					dao.delete(h);
+					LogUtil.info("跟进跟进规则删除房源:"+JSONHelper.toJSON(h));
 					delete = true;
 				}else{
 					gj.ztai=SellState.parse(h.ztai).toString()+"->"+SellState.parse(String.valueOf(type)).toString();
@@ -108,6 +110,7 @@ public class PGenjinService {
 			if(count>=1){
 				if(type==SellState.停售.getCode() || type==SellState.已售.getCode()){
 					dao.delete(h);
+					LogUtil.info("跟进跟进规则删除房源:"+JSONHelper.toJSON(h));
 					delete = true;
 				}else{
 					gj.ztai=SellState.parse(h.ztai).toString()+"->"+SellState.parse(String.valueOf(type)).toString();

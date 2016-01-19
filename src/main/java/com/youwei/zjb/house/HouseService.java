@@ -17,6 +17,7 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.SimpDaoTool;
+import org.bc.sdak.Transactional;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.HqlHelper;
 import org.bc.sdak.utils.JSONHelper;
@@ -309,23 +310,28 @@ public class HouseService {
 	}
 	
 	@WebMethod
-	public ModelAndView physicalDeleteBatch(List<Object> ids){
+	@Transactional
+	public ModelAndView physicalDeleteBatch(String ids){
 		List<Integer> params = new ArrayList<Integer>();
 		ModelAndView mv = new ModelAndView();
 		mv.data.put("result", 0);
 		if(ids.isEmpty()){
 			return mv;
 		}
-		StringBuilder hql = new StringBuilder("delete from House where id in (-1");
 		StringBuilder gjHql = new StringBuilder("delete from GenJin where hid in (-1");
-		for(Object id : ids){
-			hql.append(",").append("?");
+		String uname = ThreadSessionHelper.getUser().lname;
+		for(String id : ids.split(";")){
+			if(StringUtils.isEmpty(id)){
+				continue;
+			}
+			House po = dao.get(House.class, Integer.valueOf(id));
+			po.isdel =1 ;
+			po.beizhu+=";删除人:"+uname+";删除时间:"+DataHelper.sdf.format(new Date());
+			dao.saveOrUpdate(po);
 			gjHql.append(",").append("?");
 			params.add(Integer.valueOf(id.toString()));
 		}
-		hql.append(")");
 		gjHql.append(")");
-		dao.execute(hql.toString(), params.toArray());
 		dao.execute(gjHql.toString(), params.toArray());
 		return mv;
 	}

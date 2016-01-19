@@ -290,6 +290,7 @@ function buildQueryOptions(){
                                      
                                              <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" id="FY_TableTit">
                                                     <tr>
+                                                    	<th width="20"><a href="javascript:void(0)"  onclick="batchDeletehouse();";>删除</a></th>
                                                       <th width="60">编号</th>
                                                       <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
                                                       <th width="75">操作</th>
@@ -305,6 +306,9 @@ function buildQueryOptions(){
                                                       <th width="50">楼层</th>
                                                       <th width="50">装潢</th>
                                                       <th width="90" style="padding-right:7px;"><a href="javascript:void(0)" onclick="setPageOrder('dateadd')">发布时间</a><span id="dateaddOrder" next="asc" class="order">↓</span></th>
+                                                      <c:if test="${authNames.contains('fy_show_updatetime')}">
+                                                      <th width="90" style="padding-right:7px;"><a href="javascript:void(0)" onclick="setPageOrder('updatetime')">更新时间</a><span id="updatetimeOrder" next="asc" class="order"></span></th>
+                                                      </c:if>
                                                     </tr>
                                               </table>
                                              
@@ -319,6 +323,7 @@ function buildQueryOptions(){
                                                 <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover" id="KY_TableMain">
                                                         <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
+                                                        	<td width="20"><input class="checkbox" type="checkbox"  data-id="$[id]" onclick="chooseHouse();" /></td>
                                                           <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
                                                           <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
 	                                                          <td  width="75" >
@@ -333,6 +338,7 @@ function buildQueryOptions(){
 	                                                            </c:if>
 	                                                          </td>
                                                           </c:if>
+                                                          
                                                           <td width="50" class="ztai_$[ztai]">$[ztai]</td>
                                                           <td width="60">$[quyu]</td>
                                                           <td class="br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></div></td>
@@ -344,6 +350,9 @@ function buildQueryOptions(){
                                                           <td width="50">$[lceng]/$[zceng]</td>
                                                           <td width="50">$[zxiu]</td>
                                                           <td width="90" class="sy" runscript="true" title="$[dateadd]" style="padding-right:7px;">'$[dateadd]'.split(' ')[0]</td>
+                                                          <c:if test="${authNames.contains('fy_show_updatetime')}">
+                                                          	<td width="90" class="sy" style="padding-right:7px;">$[updatetime]</td>
+                                                          </c:if>
                                                       </tr>
                                                     </table>
                                                 </div>

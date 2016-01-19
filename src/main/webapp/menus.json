@@ -19,13 +19,13 @@
 			"text":"删除",
 			"type":"menu"
 		},{
-			"name":"fy_ruku",
-			"text":"入库",
+			"name":"fy_show_updatetime",
+			"text":"显示更新时间",
 			"zjb-only":true,
 			"type":"menu"
 		},{
-			"name":"fy_fz_on",
-			"text":"房主",
+			"name":"fy_ruku",
+			"text":"入库",
 			"zjb-only":true,
 			"type":"menu"
 		},{

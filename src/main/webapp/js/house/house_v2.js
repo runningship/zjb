@@ -146,6 +146,31 @@ function deletehouse(id){
   },function(){},'warning');
 }
 
+function batchDeletehouse(){
+  event.cancelBubble=true;
+  art.dialog.confirm('删除后不可恢复，确定要删除吗？', function () {
+	  var items = $('.checkbox');
+	  var ids='';
+	  for(var i=0;i<items.length;i++){
+		  if(items[i].checked){
+			  ids+=$(items[i]).attr('data-id')+';';
+		  }
+	  }
+	  YW.ajax({
+	    type: 'POST',
+	    url: '/c/house/physicalDeleteBatch?ids='+ids,
+	    mysuccess: function(data){
+	      $(event.srcElement).attr('action','page');
+	      doSearchAndSelectFirst();
+	      alert('删除成功');
+	    }
+	  });
+  },function(){},'warning');
+}
+
+function chooseHouse(){
+	event.cancelBubble=true;
+}
 function getSider(id){
     if(id){
         $('#sideCont').attr('src','/house/houseSee_v2.jsp?id='+id+'&chuzu='+chuzu);
