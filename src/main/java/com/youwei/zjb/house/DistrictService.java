@@ -11,18 +11,25 @@ import org.bc.sdak.Page;
 import org.bc.sdak.Transactional;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
+import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.District;
+import com.youwei.zjb.sys.OperatorService;
+import com.youwei.zjb.sys.OperatorType;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 
 @Module(name="/areas/")
 public class DistrictService {
 
 	CommonDaoService service = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	
+	OperatorService operService = TransactionalServiceHelper.getTransactionalService(OperatorService.class);
 	
 	@WebMethod
 	public ModelAndView add(District district){
@@ -114,6 +121,9 @@ public class DistrictService {
 		}else if(!district.name.equals(po.name)){
 			service.execute("update House set area=? where area=?", district.name, po.name);
 		}
+		 User user = ThreadSessionHelper.getUser();
+		 String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了楼盘信息["+po.quyu+"-->"+district.quyu+"]";
+		 LogUtil.info(operConts);
 		po.address = district.address;
 		po.name = district.name;
 		po.quyu = district.quyu;
@@ -122,6 +132,7 @@ public class DistrictService {
 		po.pinyin=DataHelper.toPinyin(district.name);
 		po.pyShort=DataHelper.toPinyinShort(district.name);
 		service.saveOrUpdate(po);
+		operService.add(OperatorType.房源记录, operConts);
 		mv.data.put("msg", "保存成功");
 		return mv;
 	}
