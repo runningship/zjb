@@ -326,7 +326,7 @@ public class HouseService {
 			}
 			House po = dao.get(House.class, Integer.valueOf(id));
 			po.isdel =1 ;
-			po.beizhu+=";删除人:"+uname+";删除时间:"+DataHelper.sdf.format(new Date());
+			po.beizhu+=";(批量)删除人:"+uname+";删除时间:"+DataHelper.sdf.format(new Date());
 			dao.saveOrUpdate(po);
 			gjHql.append(",").append("?");
 			params.add(Integer.valueOf(id.toString()));

@@ -121,6 +121,9 @@ public class DistrictService {
 		}else if(!district.name.equals(po.name)){
 			service.execute("update House set area=? where area=?", district.name, po.name);
 		}
+		if(StringUtils.isNotEmpty(district.address) && !district.address.equals(po.address)){
+			service.execute("update House set address=? where area=?", district.address, po.name);
+		}
 		 User user = ThreadSessionHelper.getUser();
 		 String operConts = "["+user.Department().namea+"-"+user.uname+ "] 修改了楼盘信息["+po.quyu+"-->"+district.quyu+"]";
 		 LogUtil.info(operConts);
