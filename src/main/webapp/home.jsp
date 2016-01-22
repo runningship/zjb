@@ -605,30 +605,30 @@ var time_ani2=setTimeout(function(){
 <%--                         <c:if test="${auths.indexOf('fy_fz_on')>-1}"> --%>
 <!--                         <li ><a href="/houseOwner/OwnerList.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="房主"><i class="iconfont">&#xe601;</i><span>房主</span></a></li> -->
 <%--                         </c:if> --%>
-                        <c:if test="${auths.indexOf('ky_on')>-1}">
+                        <c:if test="${authNames.contains('ky_on')}">
                         <li ><a href="/client/index.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span>客源</span></a></li>
                         </c:if>
-                        <c:if test="${auths.indexOf('yw_on')>-1}">
+                        <c:if test="${authNames.contains('yw_on')}">
                         <li ><a href="/v/yewu/outHouse.html" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span>业务</span></a></li>
                         </c:if>
-                        <c:if test="${auths.indexOf('ht_on')>-1}">
+                        <c:if test="${authNames.contains('ht_on')}">
                         <li ><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="hetong" data-toggle="tooltip" data-placement="right" title="合同"><i class="iconfont">&#xe614;</i><span>合同</span></a></li>
                         </c:if>
-                        <c:if test="${auths.indexOf('cw_on')>-1}">
+                        <c:if test="${authNames.contains('cw_on')}">
                             <li><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="caiwu" data-toggle="tooltip" data-placement="right" title="财务"><i class="iconfont">&#xe613;</i><span>财务</span></a></li>    
                         </c:if>
-                        <c:if test="${auths.indexOf('oa_on')>-1}">
+                        <c:if test="${authNames.contains('oa_on')}">
                             <li ><a href="/oa/index.jsp" class="ibtn oaClass" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         </c:if>
                         <li >
                         	<a href="/piazza/index.jsp" class="ibtn guangchang" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
                         </li>
-                        <c:if test="${auths.indexOf('map_on')>-1}">
+                        <c:if test="${authNames.contains('map_on')}">
                          <li >
                         	<a href="/map/xuequ.jsp" class="ibtn guangchang" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe67d;</i><span>地图</span></a>
                         </li>
                         </c:if>
-                        <c:if test="${auths.indexOf('sz_on')>-1}">
+                        <c:if test="${authNames.contains('sz_on')}">
                             <li class=" positionBottom"><a href="/settings/uc_index.jsp" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                         </c:if>
                             

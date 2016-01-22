@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	request.setAttribute("user", ThreadSessionHelper.getUser());
+	request.setAttribute("cityPy", ThreadSessionHelper.getCityPinyin());
 %>
 <!DOCTYPE html>
 <html>
@@ -76,7 +77,7 @@ function getCode(){
 	YW.ajax({
 	    type: 'POST',
 	    url: '/c/mobile/user/sendVerifyCode',
-	    data:{tel:tel},
+	    data:{tel:tel , cityPy:'${cityPy}'},
 	    mysuccess: function(data){
 	    	alert('验证码已发送');
 	    	setGetCodeTimer();

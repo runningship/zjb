@@ -108,7 +108,48 @@ doSearch();
 });
 $(window).resize(function() {      //类别
 });
+
+var targetId="";
+function setTargetId(id){
+	targetId=id;
+}
+function mergeDistrict(){
+	var ids=[];
+	var box = $('.checkbox');
+	for(var i=0;i<box.length;i++){
+		if(box[i].checked){
+			ids.push($(box[i]).attr('data-id'));
+		}
+	}
+	if(ids.length==0){
+		alert('请先选择需要合并的楼盘');
+		return;
+	}
+	if(!targetId){
+		alert('请先选择合并的目标楼盘');
+		return ;
+	}
+	
+	
+	art.dialog.confirm('确定要合并选中的楼盘吗？', function () {
+	      YW.ajax({
+	        type: 'POST',
+	        url: '/c/areas/merge?targetId='+targetId+'&ids='+ids.join(),
+	        data:'',
+	        mysuccess: function(data){
+	        	targetId="";
+	            doSearch();
+	            alert('合并成功');
+	        }
+	      });
+	  },function(){},'warning');
+}
 </script>
+<style type="text/css">
+.checkbox{position:absolute;top: 0px; right: 6px}
+.radio{position:absolute;top: 0px;    left: 6px}
+
+</style>
 </head>
 <body>
 <div class="html list title addSide">
@@ -140,6 +181,7 @@ $(window).resize(function() {      //类别
 
       <table class="table table-nopadding TableH " >
         <tr>
+        	<th><a href="javascript:void(0)" onclick="mergeDistrict();">合并</a></th>
           <th>名称</th>
           <th>区域</th>
           <th>拼音</th>
@@ -157,6 +199,7 @@ $(window).resize(function() {      //类别
         <table class="table table-hover table-striped table-nopadding TableB" >
           <tbody>
           <tr data-hid="$[id]" style="display:none;" class="id_House_list">
+          	<td style="width:45px;position:relative;"><input class="radio"  onclick="setTargetId($[id])" name="targetId" type="radio"/><input data-id="$[id]"  class="checkbox" type="checkbox"/></td>
             <td style="width:100px">$[name]</td>
             <td style="width:100px">$[quyu]</td>
             <td style="width:150px">$[pinyin]</td>
