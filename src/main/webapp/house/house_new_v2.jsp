@@ -1,3 +1,4 @@
+<%@page import="com.youwei.zjb.ThreadSessionHelper"%>
 <%@page import="com.youwei.zjb.cache.ConfigCache"%>
 <%@page import="com.youwei.zjb.user.entity.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -9,13 +10,14 @@ String new_house_server = ConfigCache.get("new_house_server", "www.zhongjiebao.c
 String new_house_server_port = ConfigCache.get("new_house_server_port", "8080");
 request.setAttribute("new_house_server", new_house_server);
 request.setAttribute("new_house_server_port", new_house_server_port);
+request.setAttribute("cityPy", ThreadSessionHelper.getCityPinyin());
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Examples</title>
+<title></title>
 <link rel="stylesheet" type="text/css" href="../style/css.css" />
 <link rel="stylesheet" type="text/css" href="../style/style.css" />
 <link rel="stylesheet" type="text/css" href="../style/css_ky.css" />
@@ -36,7 +38,7 @@ request.setAttribute("new_house_server_port", new_house_server_port);
   <div class="bodyer">
   <jsp:include page="menuTop.jsp?type=new" />
     <div class="mainer">
-    	<iframe src="http://${new_house_server }:${new_house_server_port }/new-house/public/houses.jsp?tel=${user.tel }"></iframe>
+    	<iframe src="http://${new_house_server }:${new_house_server_port }/new-house/public/houses.jsp?cityPy=${cityPy }&tel=${user.tel }"></iframe>
     </div>
   </div>
 

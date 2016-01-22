@@ -141,6 +141,25 @@ public class DistrictService {
 	}
 	
 	@WebMethod
+	@Transactional
+	public ModelAndView merge(String ids , Integer targetId){
+		ModelAndView mv = new ModelAndView();
+		District target = service.get(District.class, targetId);
+		for(String id : ids.split(",")){
+			if(StringUtils.isEmpty(id)){
+				continue;
+			}
+			if(id.equals(String.valueOf(targetId))){
+				continue;
+			}
+			District po = service.get(District.class, Integer.valueOf(id));
+			service.execute("update House set area=? , quyu=?, address=? where area=?", target.name, target.quyu,target.address, po.name);
+			service.delete(po);
+		}
+		return mv;
+	}
+	
+	@WebMethod
 	public ModelAndView prompt(Page<Map> page , String search){
 		ModelAndView mv = new ModelAndView();
 		String hql = "";

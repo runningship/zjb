@@ -16,8 +16,6 @@ function _open(url){
 }
 
 function openXinFang(){
-	//window.location='/house/house_new.jsp';
-	//return;
 	var tel = "${tel}";
 	if(!tel){
 		art.dialog.confirm('请先设置手机号码', function () {
