@@ -120,6 +120,10 @@ function addNodeMain(){
 	try{
 		var fos=require("fs");
 		fos.writeFileSync("node-main.js", 'process.on("uncaughtException", function(e) { console.log(e); });', 'utf8');
+		if(gui.App.manifest['node-main']!='node-main.js'){
+			gui.App.manifest['node-main']='node-main.js';
+		    fos.writeFileSync("package.json", JSON.stringify(gui.App.manifest , null , '\t'), 'utf8');
+		}
 	}catch(e){
 		console.log("add js flags fail."+e);
 	}
