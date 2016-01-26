@@ -38,9 +38,9 @@ public class JobScheduler extends Thread{
 		jobSofang.setDetailPageInterval(100);
 		jobs.put(jobSofang.getJobName(), jobSofang);
 		
-		NotificationJob nJob = new NotificationJob();
-		nJob.setListPageInterval(3600);
-		jobs.put(nJob.getJobName(), nJob);
+//		NotificationJob nJob = new NotificationJob();
+//		nJob.setListPageInterval(3600);
+//		jobs.put(nJob.getJobName(), nJob);
 		
 		String flag = ConfigCache.get("startJob", "1");
 		if("1".equals(flag)){

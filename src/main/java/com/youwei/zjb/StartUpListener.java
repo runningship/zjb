@@ -16,6 +16,7 @@ import org.hibernate.cfg.AvailableSettings;
 
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.im.IMServer;
+import com.youwei.zjb.job.JobScheduler;
 import com.youwei.zjb.job.ZJBQuartzScheduler;
 
 public class StartUpListener implements ServletContextListener{
@@ -37,6 +38,7 @@ public class StartUpListener implements ServletContextListener{
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		JobScheduler pullRentHouseJob = new JobScheduler();
 		ZJBQuartzScheduler.AreaCoordinatStart();
 	}
 

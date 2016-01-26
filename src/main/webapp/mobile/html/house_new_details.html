@@ -67,8 +67,8 @@ function init(){
 	},function(ret , err){
 		if(ret){
 			estate = ret.estate;
-			$('.huxing').attr('data-src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
-			$('.xiaoguo').attr('data-src' , 'http://'+img_server_host+'/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
+			$('.huxing img').attr('data-src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
+			$('.xiaoguo img').attr('data-src' , 'http://'+img_server_host+'/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
 			$('#name').text(ret.estate.name);
 			$('.yongjin .text').text(ret.estate.yongjin);
 			$('#junjia').text(ret.estate.junjia);
@@ -89,7 +89,6 @@ function init(){
 			
 			buildHtmlWithJsonArray("xiaoguo",ret.xgImgList , true,false);
 			buildHtmlWithJsonArray("huxing",ret.hxImgList , true,false);
-			
 			initImg();
 			api.parseTapmode();
 		}else{
@@ -161,7 +160,7 @@ function openTuijian(){
     <div id="mainer" class="mainer">
         <div class="items">
             <div id="houseMaxPic" class="owl-carousel">
-              <div class="owl-info xiaoguo" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg"></div>
+              <div class="owl-info xiaoguo" ><img class="lazyOwl" data-src=""></div>
             </div>
         </div>
         <div class="item wa">
@@ -234,7 +233,7 @@ function openTuijian(){
         </div>
         <div class="item wf">
             <div id="huxingPic" class="owl-carousel">
-              <div class="owl-info huxing" style="display:none;" data-hiid="1" data-zan="1" data-zanCount="11" data-shit="0" data-shitCount="111"><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg"></div>
+              <div class="owl-info huxing" style="display:none;" ><img class="lazyOwl" data-src=""></div>
             </div>
         </div>
         <div class="title">

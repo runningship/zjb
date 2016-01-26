@@ -706,5 +706,39 @@ var time_ani2=setTimeout(function(){
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).on('click', '.adboxsa', function(event) {
+        var Thi=$(this),
+        ThiImg=Thi.find('.adboxitem');
+        ThiImg.removeClass('fadeInDown').addClass('fadeOutUp');
+        Thi.addClass('fadeOut');
+        var tms=setTimeout(function(){
+           Thi.remove();
+        },700);
+        event.preventDefault();
+    });
+</script>
+<style type="text/css">
+.adboxsa { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999999; text-align: center; background: url(/ad/2016/ad_year2016bg.jpg); }
+.adboxsa .adboxitema{ position: relative; margin:0 auto; height: 600px; width: 800px; padding: 30px; background: url(/ad/2016/ad_year2016t.png) no-repeat top center; }
+.adboxsa .adposa{ position: absolute; }
+.adboxsa .adboxcont{ padding-top: 190px; color: #FFE5B8; font-size: 30px; font-family:"microsoft yahei"}
+.adboxsa .adboxcont p{ padding: 0; margin: 0; }
+.adboxsa .adboxcont p.PT20{ padding-top: 16px; }
+.adboxsa .adboxcont p.tipss{ padding-top: 10px; font-size: 14px;}
+.adboxsa .adboxcont p.FS40{ font-size: 40px;}
+</style>
+<div class="adboxsa animated">
+    <div class="adboxitema animated fadeInDown">
+        <div class="adboxcont">
+            <p>即日起至2016年2月14日</p>
+            <p>手机版充一个月送一个月</p>
+            <p>充一个季度送一个季度</p>
+            <p class="FS40">充一年送一年</p>
+            <p class="PT20"><img src="/ad/2016/ad_year2016ewm.png" alt=""></p>
+            <p class="tipss">扫描二维码即可下载中介宝手机版</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>

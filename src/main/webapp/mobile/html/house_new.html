@@ -97,7 +97,7 @@ apiready=function(){
 			if(currentPageNo<totalPageCount){
 				currentPageNo++;
 			}else{
-				alert('没有更多数据了');
+				//alert('没有更多数据了');
 				return;
 			}
 			setTimeout(loadData,100);
@@ -107,7 +107,7 @@ apiready=function(){
 	getConfig(function(cfg){
 		config = cfg;
 		$('.repeat .img').attr('src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[uuid]/$[img].t.jpg');
-		$('.guanggao_repeat .img').attr('src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[uuid]/$[img].x.jpg');
+		$('.guanggao_repeat img').attr('data-src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[uuid]/$[img].x.jpg');
 		loadData();
 	});
 	
@@ -187,7 +187,7 @@ html, body{overflow:visible;}
 <!--         </div> -->
         <div class="items MaxPic">
             <div id="houseMaxPic" class="owl-carousel">
-              <div class="owl-info guanggao_repeat"  style="display:none;" onclick="openHouseDetail($[id]);" ><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/$[uuid]/$[img].x.jpg"></div>
+              <div class="owl-info guanggao_repeat"  style="display:none;" onclick="openHouseDetail($[id]);" ><img  class="lazyOwl" data-src=""></div>
 <!--               <div class="owl-info " ><img class="lazyOwl" data-src="http://192.168.1.222/zjb_newhouse_images/42183ec4-9a1e-410s-a274-a32b947d38d9/A3-1户型.png.x.jpg"></div> -->
             </div>
         </div>
@@ -203,7 +203,7 @@ html, body{overflow:visible;}
                         <div class="xx">
                             <span class="blue">需带看</span>
                             <span class="green">有效奖</span>
-                            <span class="orange">额外奖</span>
+<!--                             <span class="orange">额外奖</span> -->
                         </div>
                     </div></a></li>
             </ul>
