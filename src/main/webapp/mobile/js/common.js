@@ -14,8 +14,8 @@ function getConfig(callback){
     	var result;
     	if(ret.value==undefined || ret.value=='0' || ret.value==null){
     		server_host = "192.168.1.222:8081";
-    		newhouse_server_host="192.168.1.222:9080";
-    		img_server_host = "192.168.1.222";
+    		//newhouse_server_host="192.168.1.222:9080";
+    		//img_server_host = "192.168.1.222";
     	}
     });
 	api.getPrefs({
