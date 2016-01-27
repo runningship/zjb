@@ -267,14 +267,24 @@ function openFujin(){
 }
 
 function openTuijianRecords(){
-	api.openWin({
-	    name: 'house_new_recordList',
-	    url: 'house_new_recordList.html',
-	    animation:{
-	    	type:"cube", 
-    	    duration:300      
-	    }
-	});
+	if(config.user && config.user.tel && config.user.pwd){
+		api.openWin({
+		    name: 'house_new_recordList',
+		    url: 'house_new_recordList.html',
+		    animation:{
+		    	type:"cube", 
+	    	    duration:300      
+		    }
+		});	
+	}else{
+		blockAlert('请先登录');
+		api.openWin({
+		    name: 'login',
+		    url: 'login.html',
+		    delay:200
+		});
+	}
+	
 }
 
 function switchToNewHouse(){
@@ -290,7 +300,7 @@ function openNewHouse(){
 	$('.conter .w').hide();
 	//$('#search').css('visibility','hidden');
 	$('#search').hide();
-	$('#records').show();
+	$('#records').css('display','inline-block');
 	if($('.newhouse.active').length>0){
 		return;
 	}
@@ -439,7 +449,7 @@ function bindTecentPush(){
 }
 /* .footer .item{width:33%;} */
 /* .footer .item.newhouse{display:none;} */
-/* .header a.btns.hide{display:none;} */
+.header a.btns.hide{display:none;}
 </style>
 </head>
 <body>

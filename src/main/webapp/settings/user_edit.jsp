@@ -146,8 +146,15 @@ function setGetCodeTimer(){
                         <input type="tel" class="form-control verifyCode" name="verifyCode" value="" placeholder=""><button class="getCode" onclick="getCode();return false;">获取验证码</button>
                     </div>
                 </div>
+                 <div class="form-group">
+                    <label class="col-xs-3 control-label"> </label>
+                    <div class="col-xs-8">
+                        一个电脑版账号只能绑定一个手机号码。
+如需开通多个账号，请联系中介宝客服。
+电话：0551-65314555  QQ：9129588
+                    </div>
+                </div>
             </form>
-
         </div>
     </div>
 </div>

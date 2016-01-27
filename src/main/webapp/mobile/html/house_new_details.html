@@ -86,6 +86,8 @@ function init(){
 			$('#jiaotong .text').text(ret.estate.jiaotong);
 			$('#xuequ .text').text(ret.estate.xuqu);
 			$('#developer .text').text(ret.estate.developer);
+			$('#totalYongjin').text(ret.estate.yongjinTotal);
+			$('#jieyongCount').text(ret.estate.jieyongCount);
 			
 			buildHtmlWithJsonArray("xiaoguo",ret.xgImgList , true,false);
 			buildHtmlWithJsonArray("huxing",ret.hxImgList , true,false);
@@ -191,18 +193,18 @@ function openTuijian(){
             优惠政策
         </div>
         <div class="item wb">
-            <p class="yongjin">成功推荐客户赚:<i class="text"></i></p>
+            <p class="yongjin">成功推荐客户赚:<i class="text"></i>元</p>
         </div>
         <div class="title"></div>
         <div class="item wc">
             <ul class="wc_info">
                 <li>
                     <p>成功推荐(次)</p>
-                    <strong>0</strong>
+                    <strong id="jieyongCount">0</strong>
                 </li>
                 <li>
                     <p>用户共赚佣金(元)</p>
-                    <strong>0</strong>
+                    <strong id="totalYongjin">0</strong>
                 </li>
             </ul>
         </div>

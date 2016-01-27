@@ -182,14 +182,13 @@ function mergeDistrict(){
       <table class="table table-nopadding TableH " >
         <tr>
         	<th><a href="javascript:void(0)" onclick="mergeDistrict();">合并</a></th>
+          <th>操作</th>
           <th>名称</th>
           <th>区域</th>
           <th>拼音</th>
           <th>缩写</th>
           <th>地址</th>
           <th>经纬度</th>
-          <th>添加时间</th>
-          <th>操作</th>
         </tr>
       </table>
     </div>
@@ -200,19 +199,18 @@ function mergeDistrict(){
           <tbody>
           <tr data-hid="$[id]" style="display:none;" class="id_House_list">
           	<td style="width:45px;position:relative;"><input class="radio"  onclick="setTargetId($[id])" name="targetId" type="radio"/><input data-id="$[id]"  class="checkbox" type="checkbox"/></td>
-            <td style="width:100px">$[name]</td>
-            <td style="width:100px">$[quyu]</td>
-            <td style="width:150px">$[pinyin]</td>
-            <td style="width:150px">$[pyShort]</td>
-            <td style="width:300px">$[address]</td>
-            <td style="width:200px">$[maplat] , $[maplng]</td>
-            <td style="width:200px">$[addtime]</td>
-            <td>
+            <td style="width:130px">
               <a href="javascript:void(0)" class="btns" data-type="edit" onclick="editArea($[id])">编辑</a>
               <a href="javascript:void(0)" class="btns" data-type="edit" onclick="viewArea('$[name]')">查看</a>
               <a href="javascript:void(0)" class="btns" data-type="del" onclick="deleteArea($[id])">删除</a>
               <a href="javascript:void(0)" class="btns" data-type="map" onclick="editMap($[id],'$[name]')"> 地图</a>
             </td>
+            <td style="width:100px">$[name]</td>
+            <td style="width:60px">$[quyu]</td>
+            <td style="width:120px">$[pinyin]</td>
+            <td style="width:80px">$[pyShort]</td>
+            <td>$[address]</td>
+            <td style="width:200px">$[maplat] , $[maplng]</td>
           </tr>
           </tbody>
         </table>
