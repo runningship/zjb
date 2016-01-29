@@ -129,6 +129,12 @@ function setGetCodeTimer(){
                     <input type="hidden" name="id" id="id">
                 </div>
                 <div class="form-group">
+                    <label class="col-xs-3 control-label">账    号 :</label>
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" name="uname" value="${user.lname }"  disabled="disabled" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-xs-3 control-label">用 户 名:</label>
                     <div class="col-xs-8">
                         <input type="text" class="form-control" name="uname" value="${user.uname }" placeholder="">
@@ -148,7 +154,7 @@ function setGetCodeTimer(){
                 </div>
                  <div class="form-group">
                     <label class="col-xs-3 control-label"> </label>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8" style="word-break: break-all;">
                         一个电脑版账号只能绑定一个手机号码。
 如需开通多个账号，请联系中介宝客服。
 电话：0551-65314555  QQ：9129588
