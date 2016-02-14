@@ -37,8 +37,9 @@ apiready = function(){
 		if(config && config.user && config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
 		}else{
-			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb_blue.png');
 		}
+		//$('#avatar').attr('src','../images/zjb_blue.png');
 		isLayoutOpen = api.pageParam.isLayoutOpen;
 		//bindTecentPush();
 		exitApp();

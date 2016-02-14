@@ -19,6 +19,7 @@ function init(){
 			}else{
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 			}
+			//$('#avatar').attr('src','../images/zjb_blue.png');
 			if(config.user.pwd){
 				$('#active').css('display','');
 				$('#inactive').css('display','none');

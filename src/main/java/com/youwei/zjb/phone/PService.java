@@ -365,7 +365,9 @@ public class PService {
 		while(names.hasMoreElements()){
 			String key = names.nextElement();
 			String[] val = request.getParameterValues(key);
-			LogUtil.info(key+"="+val);
+			if(val.length>0){
+				LogUtil.info(key+"="+val[0]);
+			}
 		}
 		return mv;
 	}

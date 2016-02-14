@@ -94,8 +94,16 @@ function addOrder(){
 		blockAlert('请先填写客户姓名');
 		return;
 	}
+	if(buyerName.length>4){
+		blockAlert('客户姓名不能超过4个字');
+		return;
+	}
 	if(!buyerTel){
 		blockAlert('请先填写客户电话');
+		return;
+	}
+	if(buyerTel.length!=11){
+		blockAlert('请输入有效的电话号码');
 		return;
 	}
 	if(estateIds.length==0){
