@@ -290,7 +290,7 @@ function showAds(){
     $('.adboxs').show();
 }
 $(document).ready(function() {
-var times;
+	var times;
     $('.showAds').hover(function(){
         times=setTimeout(showAds,500);
     },function(){
@@ -299,6 +299,7 @@ var times;
         showAds();
         clearTimeout(times);
     });
+    showAds();
 });
 
 function icoDD(c,n){
@@ -705,7 +706,7 @@ var time_ani2=setTimeout(function(){
             <a href="#" class="btn white posa posaFK">意见问题反馈</a>
     </div>
 </div>
-
+<!-- 
 <script type="text/javascript">
     $(document).on('click', '.adboxsa', function(event) {
         var Thi=$(this),
@@ -718,6 +719,7 @@ var time_ani2=setTimeout(function(){
         event.preventDefault();
     });
 </script>
+
 <style type="text/css">
 .adboxsa { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999999; text-align: center; background: url(/ad/2016/ad_year2016bg.jpg); }
 .adboxsa .adboxitema{ position: relative; margin:0 auto; height: 600px; width: 800px; padding: 30px; background: url(/ad/2016/ad_year2016t.png) no-repeat top center; }
@@ -728,6 +730,7 @@ var time_ani2=setTimeout(function(){
 .adboxsa .adboxcont p.tipss{ padding-top: 10px; font-size: 14px;}
 .adboxsa .adboxcont p.FS40{ font-size: 40px;}
 </style>
+
 <div class="adboxsa animated">
     <div class="adboxitema animated fadeInDown">
         <div class="adboxcont">
@@ -740,5 +743,6 @@ var time_ani2=setTimeout(function(){
         </div>
     </div>
 </div>
+ -->
 </body>
 </html>

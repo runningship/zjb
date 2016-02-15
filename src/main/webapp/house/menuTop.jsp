@@ -52,6 +52,7 @@ function openOrderList(){
     font-size: 22;
     vertical-align: bottom;
   }
+/*   #tuijianRecord{background-color:#E97143} */
 </style>
 <div id="menuTop" style="display:inline-block;">
       <ul class="MainRightTop KY_W titlebar">
@@ -82,7 +83,7 @@ function openOrderList(){
           <li class="line"></li>
           <li style="position:relative;display:;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();">
           		<i class="iconfont">&#xe686;</i>新房
-          		<div class="topMenuChid">
+          		<div class="topMenuChid"  id="tuijianRecord">
                     <span></span>
                     <a href="javascript:void(0)" onclick="openOrderList();return false;">推荐记录</a> 
                </div>
