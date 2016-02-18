@@ -53,7 +53,6 @@ public class House {
 	/**
 	 * 楼层
 	 */
-	@Column(nullable=false)
 	public Integer lceng;
 
 	/**

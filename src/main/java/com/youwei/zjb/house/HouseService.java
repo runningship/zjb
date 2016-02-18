@@ -154,11 +154,11 @@ public class HouseService {
 //		}
 		List<District> list = dao.listByParams(District.class, hql, params.toArray());
 		if(list.isEmpty()){
-//			if(u.cid!=1){
-//				//只有中介宝用户才可以
-//				setMessageToMetis("出现新的楼盘: "+house.id+","+house.area+","+house.quyu+","+house.address);
-//				return;
-//			}
+			if(u.cid!=1){
+				//只有中介宝用户才可以
+				LogUtil.info(u.lname+"出现新的楼盘: "+house.id+","+house.area+","+house.quyu+","+house.address);
+				return;
+			}
 			District d= new District();
 			d.address = house.address;
 			d.name = house.area;

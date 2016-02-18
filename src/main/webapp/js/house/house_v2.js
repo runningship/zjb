@@ -153,6 +153,9 @@ function batchDeletehouse(){
 	  var ids='';
 	  for(var i=0;i<items.length;i++){
 		  if(items[i].checked){
+			  if($(items[i]).attr('data-id').indexOf('$')>-1){
+				  continue;
+			  }
 			  ids+=$(items[i]).attr('data-id')+';';
 		  }
 	  }
@@ -368,4 +371,8 @@ function onSetDateStart(){
 
 function onSetDataEnd(){
 	var wp2 = WdatePicker({lang:'zh-cn',startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'idTimes\')}'});
+}
+
+function selectAll(obj){
+	$('.checkbox').prop('checked' , obj.checked);
 }

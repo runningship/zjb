@@ -21,6 +21,7 @@
 		},{
 			"name":"fy_batch_del",
 			"text":"批量删除",
+			"zjb-only":true,
 			"type":"menu"
 		},{
 			"name":"fy_show_updatetime",
