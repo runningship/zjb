@@ -421,7 +421,7 @@ h2{ font-size: 16px; color: #FFF; font-weight: normal;opacity:0; margin-top: 30p
 .br{border-top: 1px solid #FFF; }
 
 .posa{ position: absolute; }
-.posaFK{ bottom: 10px; right: 10px; text-decoration: none; color: #F99; opacity: 0; }
+.posaFK{ bottom: 10px; right: 10px; text-decoration: none; color:rgba(255,255,255,0.7); opacity: 0; }
 
 /*
 <animation-name>
@@ -444,9 +444,11 @@ ease-in-out：（加速然后减速）
 //数字为次数，动画播放次涒为无限次
 animation-delay:0; //动画何时执行
 animation-direction:alternate;//反向循环
+
+232, 84, 84,1
  */
 .adbox_ani1{
-background: rgba(232, 84, 84,1);box-shadow: 2px 10px 20px rgba(0,0,0,0.5);
+background: rgb(65, 235, 219);box-shadow: 2px 10px 20px rgba(0,0,0,0.5);
 -webkit-animation-name: 'adbox_ani1';
 -webkit-animation-duration: 3.5s;
 -webkit-animation-timing-function: ease;
@@ -507,9 +509,9 @@ animation-direction:alternate;
 }
 
 @-webkit-keyframes 'adbox_ani1' {
-    0%{background: rgba(232, 84, 84,0);box-shadow: 2px 10px 20px rgba(0,0,0,0.0)}
-    50% {background: rgba(232, 84, 84,1);box-shadow: 2px 10px 20px rgba(0,0,0,0.0)}
-    100% {background: rgba(232, 84, 84,1);box-shadow: 2px 10px 20px rgba(0,0,0,0.5)}
+    0%{background: rgba(65, 235, 219,0);box-shadow: 2px 10px 20px rgba(0,0,0,0.0)}
+    50% {background: rgba(65, 235, 219,1);box-shadow: 2px 10px 20px rgba(0,0,0,0.0)}
+    100% {background: rgba(65, 235, 219,1);box-shadow: 2px 10px 20px rgba(0,0,0,0.5)}
 }
 
 @-webkit-keyframes 'line_top' {
@@ -699,7 +701,7 @@ var time_ani2=setTimeout(function(){
             <span class="line line_bottom"></span>
             <span class="line line_left"></span>
         </div>
-        <h2 class="shenbian animated">天冷了，房源在您身边——中介宝</h2>
+        <h2 class="shenbian animated">春天了，动起来——中介宝</h2>
         <div class="fontBox">
             <p class="br"></p>
         </div>
