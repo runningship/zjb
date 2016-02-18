@@ -290,7 +290,7 @@ function buildQueryOptions(){
                                      
                                              <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" id="FY_TableTit">
                                                     <tr>
-                                                    	<c:if test="authNames.contains('fy_batch_del') }"><th width="20"><a href="javascript:void(0)"  onclick="batchDeletehouse();";>删除</a></th></c:if>
+                                                    	<c:if test="${authNames.contains('fy_batch_del') }"><th width="40"><input type="checkbox" onclick="selectAll(this);"/><a href="javascript:void(0)"  onclick="batchDeletehouse();";>删除</a></th></c:if>
                                                       <th width="60">编号</th>
                                                       <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
                                                       <th width="75">操作</th>
@@ -323,7 +323,7 @@ function buildQueryOptions(){
                                                 <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover" id="KY_TableMain">
                                                         <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
-                                                        	<c:if test="authNames.contains('fy_batch_del') }"><td width="20"><input class="checkbox" type="checkbox"  data-id="$[id]" onclick="chooseHouse();" /></td></c:if>
+                                                        	<c:if test="${authNames.contains('fy_batch_del') }"><td width="20"><input class="checkbox" type="checkbox"  data-id="$[id]" onclick="chooseHouse();" /></td></c:if>
                                                           <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
                                                           <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
 	                                                          <td  width="75" >
