@@ -73,7 +73,7 @@ loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
 loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
 loadJs('${refPrefix}/js/DatePicker/WdatePicker.js');
 loadJs('${refPrefix}/js/jquery.j.tool.v2.js');
-loadJs('${refPrefix}/js/house/house_v2.js');
+loadJs('${refPrefix}/js/house/house_v2.js?12');
 window.top.iframeChanged('iframe_house');
 </script>
 <script type="text/javascript" >

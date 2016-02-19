@@ -214,17 +214,17 @@ function updateHouse(id,data){
   getSider(id);
   var json = JSON.parse(data);
   var tr = $('tr[data-hid='+json['house']['id']+']');
-  var a = tr.children()[2]
-  var b = tr.children()[3]
-  var c = tr.children()[4]
-  var d = tr.children()[5]
-  var e = tr.children()[6]
-  var f = tr.children()[7]
-  var g = tr.children()[8]
-  var h = tr.children()[9]
-  var i = tr.children()[10]
-  var j = tr.children()[11]
-  var k = tr.children()[12]
+  var a = tr.children()[3]
+  var b = tr.children()[4]
+  var c = tr.children()[5]
+  var d = tr.children()[6]
+  var e = tr.children()[7]
+  var f = tr.children()[8]
+  var g = tr.children()[9]
+  var h = tr.children()[10]
+  var i = tr.children()[11]
+  var j = tr.children()[12]
+  var k = tr.children()[13]
   $(a).html(json['house']['ztai']);
   $(b).html(json['house']['quyu']);
   $(c).html(json['house']['area']+' '+json['house']['dhao']+'-'+json['house']['fhao']);
