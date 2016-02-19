@@ -1,5 +1,6 @@
 package com.youwei.zjb.phone;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,14 +14,21 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bc.sdak.CommonDaoService;
+import org.bc.sdak.GException;
 import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.JSONHelper;
 import org.bc.sdak.utils.LogUtil;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
+import org.bc.web.PlatformExceptionType;
 import org.bc.web.ThreadSession;
 import org.bc.web.WebMethod;
 
@@ -32,6 +40,7 @@ import cn.jpush.api.push.model.audience.Audience;
 
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
+import com.youwei.zjb.house.entity.HouseImage;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.MobileUserDog;
 import com.youwei.zjb.user.MobileUserService;
@@ -41,6 +50,7 @@ import com.youwei.zjb.user.entity.InvitationActivation;
 import com.youwei.zjb.user.entity.MUserActiveDevice;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
+import com.youwei.zjb.util.ImageHelper;
 import com.youwei.zjb.util.MailUtil;
 import com.youwei.zjb.util.SecurityHelper;
 
@@ -52,6 +62,9 @@ public class PService {
 	private static final String masterSecret ="17bfb60aef56934949f1b231";
 	private static final String appKey ="71f5687861a727f2827ba04a";
 	MobileUserService mService = TransactionalServiceHelper.getTransactionalService(MobileUserService.class);
+	
+	static final int MAX_SIZE = 1024000*100;
+	static final String BaseFileDir = ConfigCache.get("user_avatar_path", "");
 	
 	private static final String iosShenHeVersion = "";
 	@WebMethod
@@ -241,6 +254,7 @@ public class PService {
 		obj.put("tel", tel);
 //		obj.put("payWay", "online");
 		obj.put("iosShenHeVersion", iosShenHeVersion);
+		obj.put("avatarPath", user.avatarPath);
 		mv.data = obj;
 		InvitationActivation activation = dao.getUniqueByKeyValue(InvitationActivation.class, "inviteeUid", user.id);
 		if(activation!=null){
@@ -385,6 +399,53 @@ public class PService {
 		mv.data.put("monthPay", "40");
 		mv.data.put("seasonPay", "100");
 		mv.data.put("yearPay", "300");
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView setUserAvatar(Integer uid){
+		ModelAndView mv = new ModelAndView();
+		HttpServletRequest request = ThreadSession.HttpServletRequest.get();
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		User po = dao.get(User.class, uid);
+		try{
+			List<FileItem> items = upload.parseRequest(request);
+			for(FileItem item : items){
+				if(item.isFormField()){
+					continue;
+				}
+				if(item.getSize()<=0){
+					throw new RuntimeException("至少先选择一张图片.");
+				}else if(item.getSize()>=MAX_SIZE){
+						throw new RuntimeException("单个图片不能超过2M");
+				}else{
+					String thumbName = item.getName();
+					thumbName =  item.getName()+".t.jpg";
+					String savePath = BaseFileDir+File.separator +po.id+File.separator +item.getName();
+					String thumbPath = BaseFileDir+File.separator +po.id+File.separator+thumbName;
+					FileUtils.copyInputStreamToFile(item.getInputStream(), new File(savePath));
+					ImageHelper.resize(savePath, 200, 200, thumbPath);
+					po.avatarPath = thumbName;
+					mv.data.put("avatarPath", po.avatarPath);
+					dao.saveOrUpdate(po);
+				}
+			}
+			mv.data.put("result", 0);
+			return mv;
+		}catch(Exception ex){
+			throw new GException(PlatformExceptionType.BusinessException,"文件图片失败" , ex);
+		}
+	}
+	
+	@WebMethod
+	public ModelAndView updateUser(User user){
+		ModelAndView mv = new ModelAndView();
+		User po = dao.get(User.class, user.id);
+		po.uname = user.uname;
+		dao.saveOrUpdate(po);
+		mv.data.put("uname", user.uname);
+		mv.data.put("result", 0);
 		return mv;
 	}
 }

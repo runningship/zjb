@@ -39,6 +39,9 @@ apiready = function(){
 		}else{
 			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb_blue.png');
 		}
+		if(config.user.avatarPath){
+			$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+		}
 		//$('#avatar').attr('src','../images/zjb_blue.png');
 		isLayoutOpen = api.pageParam.isLayoutOpen;
 		//bindTecentPush();
@@ -56,7 +59,9 @@ function refreshIndex(){
 		}else{
 			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 		}
-		
+		if(config.user.avatarPath){
+			$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+		}
 		api.execScript({
 		    name: 'index',
 		    frameName:'house',

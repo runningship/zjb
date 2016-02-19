@@ -111,6 +111,8 @@ public class User {
 	
 	public Integer jifen;
 	
+	public String avatarPath;
+	
 	public Role getRole(){
 		return SimpDaoTool.getGlobalCommonDaoService().get(Role.class, roleId);
 	}

@@ -68,7 +68,7 @@ YW={
     		opts.data.values=JSON.parse('{}');
     	}
     	opts.data.values.deviceId = api.deviceId;
-    	if(config.city && config.city.cityPy){
+    	if(config && config.city && config.city.cityPy){
         	opts.data.values.cityPy=config.city.cityPy;
     	}else{
     		if(!opts.data.values.ignoreCityCheck){

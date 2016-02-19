@@ -656,7 +656,7 @@ work
 
 .tabs.block{display: -webkit-box;}
 .tabs.block li{-webkit-box-flex: 1;display: block; padding: 0;}
-
+
 .tabs.nowrap{ white-space: nowrap;  }
 
 
@@ -753,6 +753,25 @@ work
 /* settings */
 .settings{}
 .settings .mainer {background-color: #F6F6F6;}
+
+/* settings */
+.settings.user{}
+.settings.user .header{ z-index: 9; }
+.settings.user .mainer { padding: 0;}
+.settings.user .mainer .facebox{ display: block; position: relative; overflow: hidden; }
+.settings.user .mainer .facebg{ display: block; position: absolute; top: -60px; right: -60px; bottom: -60px; left: -60px; background:no-repeat center; background-size: cover;
+/*-webkit-filter: blur(30px);
+   -moz-filter: blur(10px);
+    -ms-filter: blur(10px);   
+     -o-filter: blur(5px);
+        filter: blur(10px);
+*/
+ }
+.settings.user .mainer .faces{ display: block; width: 100pt; height: 100pt; overflow: hidden; border-radius: 50%; position: relative; margin: 24pt auto 0; background:no-repeat center; background-size: cover; box-shadow: 0px 3px 10px rgba(0,0,0,0.3); }
+.settings.user .mainer .faces img{ display: block; }
+.settings.user .mainer .facename{ display: block; position: relative; margin: 10pt auto 15pt; text-align: center; font-size: 14pt; color: #FFF; text-shadow: 0 0 5px #000;}
+.settings.user .mainer .faceurl{ display: none; }
+.settings.user .mainer .facebgs{ display: none; }
 
 /* pwds */
 .pwds{}

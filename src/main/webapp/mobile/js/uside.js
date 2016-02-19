@@ -19,6 +19,9 @@ function init(){
 			}else{
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 			}
+			if(config.user.avatarPath){
+				$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+			}
 			//$('#avatar').attr('src','../images/zjb_blue.png');
 			if(config.user.pwd){
 				$('#active').css('display','');
@@ -277,4 +280,15 @@ function clearSysCache(){
         value:''
     });
 	alert('缓存清理成功');
+}
+
+function openUserProfile(){
+	if(!checkUser()){
+		alert('请先登录');
+		return;
+	}
+	api.openWin({
+	    name: 'profile',
+	    url: 'user_profile.html'
+	});
 }
