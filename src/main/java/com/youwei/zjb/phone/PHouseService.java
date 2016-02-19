@@ -262,6 +262,7 @@ public class PHouseService {
 			hql.append(" )");
 		}
 		//hql.append(" and h.ztai=4");
+		hql.append(" and (h.isdel=0 or h.isdel is null) ");
 		Page<Map> page = new Page<Map>();
 		page.orderBy = "h.dateadd";
 		page.order = Page.DESC;
