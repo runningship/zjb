@@ -14,6 +14,7 @@ import org.bc.web.WebMethod;
 
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.user.UserHelper;
 
 @Module(name="/mobile/fav/")
 public class PFavService {
@@ -75,6 +76,15 @@ public class PFavService {
 		ModelAndView mv = new ModelAndView();
 		String favStr = "@"+userId+"|";
 		List<HouseRent> list = dao.listByParams(HouseRent.class, "from HouseRent where fav like ? ", "%"+favStr+"%");
+		if(!list.isEmpty()){
+			for(HouseRent h : list){
+				h.fav="";
+				dao.saveOrUpdate(h);
+			}
+		}
+		Integer pcUid = UserHelper.getAnotherUser(userId);
+		favStr = "@"+pcUid+"|";
+		list = dao.listByParams(HouseRent.class, "from HouseRent where fav like ? ", "%"+favStr+"%");
 		if(!list.isEmpty()){
 			for(HouseRent h : list){
 				h.fav="";

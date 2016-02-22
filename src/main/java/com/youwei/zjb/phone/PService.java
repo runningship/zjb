@@ -217,9 +217,9 @@ public class PService {
 		long activeCount = dao.countHql("select count ( distinct deviceId ) from MUserActiveDevice where tel=? and activeTime>=? and activeTime<=? group by tel", tel , start , end);
 		long myActiveCount = dao.countHql("select count (*) from MUserActiveDevice where tel=? and deviceId=? and activeTime>=? and activeTime<=? group by tel", tel , deviceId, start , end);
 		
-		if(activeCount>=2 && myActiveCount<1){
+		if(activeCount>=1 && myActiveCount<1){
 			mv.data.put("result", "1");
-			mv.data.put("msg", "账号每天只能在两台设备上登录");
+			mv.data.put("msg", "账号每天只能在1台设备上登录");
 			return mv;
 		}
 		Department dept = dao.get(Department.class, user.did);

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
+import org.bc.sdak.TransactionalServiceHelper;
 
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.entity.Role;
@@ -14,6 +16,8 @@ import com.youwei.zjb.user.entity.User;
 
 public class UserHelper {
 
+	static CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
+	
 	public static List<User> getUserWithAuthority(String authName){
 		String hql = "select u from User u, RoleAuthority ra where u.roleId=ra.roleId and ra.name='"+authName+"' and u.cid=?";
 		List<User> list1 = SimpDaoTool.getGlobalCommonDaoService().listByParams(User.class, hql , ThreadSessionHelper.getUser().cid);
@@ -95,4 +99,15 @@ public class UserHelper {
 		}
 		return users;
 	}
+	
+	public static Integer getAnotherUser(Integer uid){
+		User user1 = dao.get(User.class, uid);
+		List<User> list = dao.listByParams(User.class, "from User where  tel=?", user1.tel);
+		for(User u : list){
+			if(!user1.id.equals(u.id)){
+				return u.id;
+			}
+		}
+		return null;
+}
 }

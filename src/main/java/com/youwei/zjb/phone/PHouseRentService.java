@@ -27,7 +27,9 @@ import com.youwei.zjb.house.entity.District;
 import com.youwei.zjb.house.entity.HouseImage;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.CityService;
+import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.Track;
+import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 @Module(name="/mobile/rent/")
 public class PHouseRentService {
@@ -144,6 +146,13 @@ public class PHouseRentService {
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
 					+ " h.lceng as lceng, h.zceng as zceng , h.fangshi as fangshi , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from HouseRent h  where h.sh=1 and h.ztai=1 and h.fav like ?");
 			params.add("%"+favStr+"%");
+			User muser = dao.get(User.class, query.userid);
+			Integer pcUid = UserHelper.getAnotherUser(muser.id);
+			if(pcUid!=null){
+				String favStr2 = "@"+pcUid+"|";
+				hql.append(" or h.fav like ?");
+				params.add("%"+favStr2+"%");
+			}
 		}else if(query.searchMyPrivateHouse!=null && query.searchMyPrivateHouse==1){
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"

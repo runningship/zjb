@@ -185,7 +185,7 @@ public class PGenjinService {
 			mv.data.put("msg", "没有跟进信息");
 			return mv;
 		}
-		List<Map> list = dao.listAsMap("select gj.id as id , u.uname as uname ,u.avatar as avatar, u.tel as tel,"
+		List<Map> list = dao.listAsMap("select gj.id as id , u.id as uid, u.uname as uname ,u.avatar as avatar, u.avatarPath as avatarPath, u.tel as tel,"
 				+ " gj.conts as conts, gj.addtime as dateadd from GenJin gj, User u where gj.hid=? "
 				+ "and gj.sh=1 and u.id=gj.uid order by gj.addtime desc", houseId);
 		mv.data.put("data",JSONHelper.toJSONArray(list , DataHelper.sdf3.toPattern()));
