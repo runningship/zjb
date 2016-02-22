@@ -134,7 +134,9 @@ function loadData(){
 								ret.data[i].uname='用户';
 							}
 						}
-						if(ret.data[i].avatar){
+						if(ret.data[i].avatarPath){
+							ret.data[i].avatarPath = 'http://'+img_server_host+'/user_avatar_path/'+ret.data[i].uid+'/'+ret.data[i].avatarPath;
+						}else if (ret.data[i].avatar){
 							ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+ret.data[i].avatar+'.jpg';
 						}else{
 							ret.data[i].avatarPath=api.wgtRootDir+'/v4/avatar/'+0+'.jpg';

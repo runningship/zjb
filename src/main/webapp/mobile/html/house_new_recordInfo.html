@@ -67,6 +67,11 @@ function loadData(){
 			$('#sellerName').text(ret.order.sellerName);
 			$('#sellerTel').text(ret.order.sellerTel);
 			$('#ordertime').text(ret.order.addtime);
+			blockAlert(JSON.stringify(ret.order));
+			if(ret.order.yongjin){
+				$('#yongjin').show();
+				$('#yongjin .value').text(ret.order.yongjin);	
+			}
 			buildHtmlWithJsonArray("repeat",ret.genjiList , false,true);
 			api.parseTapmode();
 		}else{
@@ -104,7 +109,7 @@ function loadData(){
                     <h3> <span>等待处理</span></h3>
                     <p id="ordertime"></p>
                 </li>
-                <li class="repeat" style="display:none;">
+                <li class="repeat" style="display:;">
                     <span class="fl"><i class="iconfont">&#xe6e8;</i></span>
                     <h3><b>$[uname]</b><span>将状态修改为</span><b>$[status]</b></h3>
                     <p>$[addtime]</p>
