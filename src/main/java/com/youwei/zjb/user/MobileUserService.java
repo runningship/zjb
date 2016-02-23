@@ -310,7 +310,7 @@ public class MobileUserService {
 			//验证码已经过期
 			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
 		}
-		User muser  = dao.getUniqueByKeyValue(User.class,"tel", tel);
+		User muser  = dao.getUniqueByParams(User.class, new String[]{"tel" , "mobileON"}, new Object[]{tel , 1});
 		if(muser==null){
 			throw new GException(PlatformExceptionType.BusinessException,"手机号码未注册");
 		}
