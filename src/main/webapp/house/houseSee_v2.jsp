@@ -340,7 +340,7 @@ function init(){
         ThiBox.prepend('<div class="alert alert-success btn-xs"></div>');
         var ThiBoxBtn=ThiBox.find('.telSee'),
         ThiBoxDiv=ThiBox.find('div')
-        ThiBoxDiv.css({'display':'block','overflow':'hidden','min-height': '28px'});
+        ThiBoxDiv.css({'display':'block','min-height': '28px'});
         $('.telBox').find('p:last-child').css({'margin':'0'});
         if(ThiBox.attr('seeHM')=="0"){
           ThiBoxDiv.removeClass('alert-success');
@@ -389,11 +389,11 @@ function init(){
 	            		  //mouseover = "telMouseover("+thiTel+",'"+type+"')";
 	            		  //mouseout = "telMouseout("+thiTel+",'"+type+"')";
 	            	  }
-	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="'+mouseover+'" onmouseout="'+mouseout+'" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click">'+ thiTel +'</span> '
-	            	  	+'<span class="telFrom"></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span>'
+	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="'+mouseover+'" onmouseout="'+mouseout+'" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click hoverTitle">'+ thiTel +'<span class="hoverTitBox"  id="GTF'+thiTel+'"   ></span><span class="hoverJT"></span></span> '
+	            	  	+'<span data="'+thiTel+'" class="telFrom" ></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span>'
 	            	  	+'<span id="'+thiTel+'" onclick="labelAgent(this)" title="'+title+'" type="'+type+'" class="fangzhu click '+show+' ">'+text+'</span></p>';  
 	              }
-              
+	              
           });
           TelBoxStr=TelBoxStr+'<i>^</i>';
           ThiBoxDiv.html('点此查看房主资料').addClass('onOpen');
@@ -406,6 +406,9 @@ function init(){
                     var Thisa=$(this),
                     ThiTel=Thisa.find('.tel').text(),
                     ThiTelFrom=Thisa.find('.telFrom');
+                    ThiTelFrom.each(function(index , obj){
+                    	getTelForm($(obj).attr('data'));
+                    });
 //                     getTelFrom(ThiTel,Thisa,function(e){
 //                         ThiTelFrom.html('['+ e +']');
 //                     });
@@ -503,7 +506,7 @@ loadJs('${refPrefix}/js/jquery.j.tool.js');
 loadJs('${refPrefix}/bootstrap/js/bootstrap.js');
 loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
 loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
-//loadJs('${refPrefix}/js/house/houseSee_v2.js');
+loadJs('${refPrefix}/js/house/getTelFrom.js');
 setTimeout(init , 300);
 //init();
 </script>
@@ -913,7 +916,7 @@ $(document).on('click', '.btn_free', function(event) {
               </c:if>
             </li>
             <li>
-              <a href="#" data-toggle="tooltip" title="地图查看" class="btns" data-type="map" data-area="${house.area}"><i class="iconfont">&#xe60e;</i> 地图</a>
+              <a href="#" data-toggle="tooltip" title="地图查看" class="btns" data-type="map" data-area="${house.area}" class="hoverTitle"><i class="iconfont">&#xe60e;</i> 地图</a>
             </li>
           </ul>
         </div>
@@ -921,6 +924,17 @@ $(document).on('click', '.btn_free', function(event) {
 
 
 </div>
+<style type="text/css">
+.hoverTitle{ position: relative; }
+.hoverTitle .hoverTitBox{ display: none; position: absolute; background: #FFF;left: 0;top: -26px;text-align: center;width: 100%; border: 1px solid #999; border-radius: 1px; }
+.hoverTitle:hover .hoverTitBox{ display: block;  }
+.hoverTitle .hoverJTs{ position: absolute; bottom: 0; left: 45%; display: block; border-top: 6px solid #999; border-left: 6pt solid transparent; border-bottom: 6pt solid  transparent; border-right: 6pt solid  transparent;}
+
+.hoverTitle .hoverTitBox{ font-size: 14px; font-family: 'microsoft yahei'; color: #696969; }
+</style>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>
 
