@@ -299,7 +299,8 @@ $(document).ready(function() {
         showAds();
         clearTimeout(times);
     });
-    showAds();
+    //显示小广告
+    //showAds();
 });
 
 function icoDD(c,n){
@@ -708,7 +709,7 @@ var time_ani2=setTimeout(function(){
             <a href="#" class="btn white posa posaFK">意见问题反馈</a>
     </div>
 </div>
-<!-- 
+
 <script type="text/javascript">
     $(document).on('click', '.adboxsa', function(event) {
         var Thi=$(this),
@@ -723,8 +724,8 @@ var time_ani2=setTimeout(function(){
 </script>
 
 <style type="text/css">
-.adboxsa { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999999; text-align: center; background: url(/ad/2016/ad_year2016bg.jpg); }
-.adboxsa .adboxitema{ position: relative; margin:0 auto; height: 600px; width: 800px; padding: 30px; background: url(/ad/2016/ad_year2016t.png) no-repeat top center; }
+.adboxsa { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999999; text-align: center; background: url(/ad/2016/ad_2016_spring.jpg); background-size:cover; }
+.adboxsa .adboxitema{ position: relative; margin:0 auto; height: 600px; width: 800px; padding: 30px; background: url(/ad/2016/ad_2016.png) no-repeat top center; }
 .adboxsa .adposa{ position: absolute; }
 .adboxsa .adboxcont{ padding-top: 190px; color: #FFE5B8; font-size: 30px; font-family:"microsoft yahei"}
 .adboxsa .adboxcont p{ padding: 0; margin: 0; }
@@ -734,17 +735,16 @@ var time_ani2=setTimeout(function(){
 </style>
 
 <div class="adboxsa animated">
-    <div class="adboxitema animated fadeInDown">
-        <div class="adboxcont">
-            <p>即日起至2016年2月14日</p>
-            <p>手机版充一个月送一个月</p>
-            <p>充一个季度送一个季度</p>
-            <p class="FS40">充一年送一年</p>
-            <p class="PT20"><img src="/ad/2016/ad_year2016ewm.png" alt=""></p>
-            <p class="tipss">扫描二维码即可下载中介宝手机版</p>
-        </div>
-    </div>
+<!--     <div class="adboxitema animated fadeInDown"> -->
+<!--         <div class="adboxcont"> -->
+<!--             <p>即日起至2016年2月14日</p> -->
+<!--             <p>手机版充一个月送一个月</p> -->
+<!--             <p>充一个季度送一个季度</p> -->
+<!--             <p class="FS40">充一年送一年</p> -->
+<!--             <p class="PT20"><img src="/ad/2016/ad_year2016ewm.png" alt=""></p> -->
+<!--             <p class="tipss">扫描二维码即可下载中介宝手机版</p> -->
+<!--         </div> -->
+<!--     </div> -->
 </div>
- -->
 </body>
 </html>
