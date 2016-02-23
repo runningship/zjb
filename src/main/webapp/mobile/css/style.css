@@ -435,7 +435,8 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 house
  */
 .house .header .imgbox{ float: left; display: block; width: 30px; height: 30px; line-height: 30px; border-radius: 100px; overflow: hidden; margin-right: 15px;margin-top: 11px; margin-left: 10px; }
-.house .header .imgbox img{    width: 100%;  height: auto;}
+.house .header .imgbox img{    width: 100%;  height: 100%;}
+
 /* house details */
 .house.details{ font-size: 14pt; }
 .house.details .mainer{ background-color: #F6F6F6; }
@@ -750,6 +751,9 @@ work
 .house.new.recordInfo .posr_cont .ul li span.fl{ position: absolute; left: -26pt; top: 8pt; }
 .house.new.recordInfo .posr_cont .ul li span.fl i{ color: #FF6100; font-size: 18pt; }
 
+.house.new.recordInfo .posr_cont .ul li.overs{ position: relative; border:none; }
+.oversa{ position: absolute; display: block; transform: rotate(-12deg); height: 60px; line-height: 50px; padding: 0px 10px; border-radius: 5px; background: #FFF; border: 3px solid #FF6100; color: #FF6100;}
+.oversa h2{ font-size: 36pt; }
 
 /* settings */
 .settings{}

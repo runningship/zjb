@@ -34,14 +34,18 @@ apiready = function(){
 	getConfig(function(cfg){
 		api.parseTapmode();
 		config = cfg;
-		if(config && config.user && config.user.avatar){
+		if(config && config.user){
+			if(config.user.avatarPath){
+				$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+			}else if(config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
+			}else{
+				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');	
+			}
 		}else{
-			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb_blue.png');
+			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 		}
-		if(config.user.avatarPath){
-			$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
-		}
+		
 		//$('#avatar').attr('src','../images/zjb_blue.png');
 		isLayoutOpen = api.pageParam.isLayoutOpen;
 		//bindTecentPush();
@@ -54,14 +58,18 @@ apiready = function(){
 function refreshIndex(){
 	getConfig(function(cfg){
 		config = cfg;
-		if(config && config.user && config.user.avatar){
+		if(config && config.user){
+			if(config.user.avatarPath){
+				$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+			}else if(config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
+			}else{
+				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+			}
 		}else{
 			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
 		}
-		if(config.user.avatarPath){
-			$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
-		}
+		
 		api.execScript({
 		    name: 'index',
 		    frameName:'house',
