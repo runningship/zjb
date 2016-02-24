@@ -274,6 +274,10 @@ function notify(){
 function editProfile(){
 	art.dialog.open('/settings/user_edit.jsp');
 }
+
+function openReg(){
+	art.dialog.open('/settings/uc_index_u_reg.jsp');
+}
 </script>
 <script>
 /*function popup(childFrame,callback){
@@ -658,11 +662,13 @@ var time_ani2=setTimeout(function(){
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe64f;</i> 姓名: ${me.uname}</a></li>
+                                    <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: ${me.uname}</a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe651;</i> 账号: ${me.lname}</a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe61b;</i> ${cname}-${dname}</a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe657;</i> 职位: ${role.title}</a></li>
                                     <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe662;</i> 电话: ${me.tel}</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    <li onclick="openReg();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 注册账号</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></li>
                                     <li><a href="javascript:void(0)" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行账户</a></li>

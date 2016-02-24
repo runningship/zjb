@@ -323,6 +323,45 @@ public class UserService {
 		return mv;
 	}
 	
+	@WebMethod
+	public ModelAndView reg(User user , String verifyCode){
+		ModelAndView mv = new ModelAndView();
+		if(StringUtils.isEmpty(user.uname)){
+			throw new GException(PlatformExceptionType.BusinessException,"姓名不能为空");
+		}
+		if(StringUtils.isEmpty(user.pwd)){
+			throw new GException(PlatformExceptionType.BusinessException,"请先设置密码");
+		}
+		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+		if(tvc==null){
+			//验证码不正确
+			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+		}
+		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+			//验证码已经过期
+			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+		}
+		
+		User operUser = ThreadSessionHelper.getUser();
+		user.did = operUser.did;
+		user.cid = operUser.cid;
+		User po = dao.getUniqueByKeyValue(User.class, "tel", user.tel);
+//		if(po!=null){
+//			throw new GException(PlatformExceptionType.BusinessException, "该手机号码已有电脑版账户");
+//		}
+		user.addtime = new Date();
+		//user.flag = 1;
+		user.sh = 1;
+		user.lock=1;
+		user.pwd = SecurityHelper.Md5(user.pwd);
+		//TODO
+		dao.saveOrUpdate(user);
+		String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 添加了用户["+user.Department().namea+"-"+user.uname+"]";
+		operService.add(OperatorType.人事记录, operConts);
+		mv.data.put("msg", "添加用户成功");
+		return mv;
+	}
+	
 	private void fillQuery(UserQuery query,StringBuilder hql, List<Object> params){
 		if(StringUtils.isNotEmpty(query.name)){
 			hql.append(" and u.uname like ? ");
