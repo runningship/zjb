@@ -389,7 +389,7 @@ function init(){
 	            		  //mouseover = "telMouseover("+thiTel+",'"+type+"')";
 	            		  //mouseout = "telMouseout("+thiTel+",'"+type+"')";
 	            	  }
-	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="'+mouseover+'" onmouseout="'+mouseout+'" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click hoverTitle">'+ thiTel +'<span class="hoverTitBox"  id="GTF'+thiTel+'"   ></span><span class="hoverJT"></span></span> '
+	            	  TelBoxStr=TelBoxStr+'<p class="onselect" onmouseover="'+mouseover+'" onmouseout="'+mouseout+'" ><span class="lxr">'+ thiLxr +'</span> <span onclick="searchTel(this)" class="tel click hoverTitle" data-gtf="'+thiTel+'">'+ thiTel +'<span class="hoverTitBox"  id="GTF'+thiTel+'"  ></span><span class="hoverJT"></span></span> '
 	            	  	+'<span data="'+thiTel+'" class="telFrom" ></span> <span class="baidu iconfont" data-toggle="tooltip" style="cursor:pointer" title="百度">&#xe64a;</span>'
 	            	  	+'<span id="'+thiTel+'" onclick="labelAgent(this)" title="'+title+'" type="'+type+'" class="fangzhu click '+show+' ">'+text+'</span></p>';  
 	              }
@@ -406,9 +406,9 @@ function init(){
                     var Thisa=$(this),
                     ThiTel=Thisa.find('.tel').text(),
                     ThiTelFrom=Thisa.find('.telFrom');
-                    ThiTelFrom.each(function(index , obj){
-                    	getTelForm($(obj).attr('data'));
-                    });
+                    // ThiTelFrom.each(function(index , obj){
+                    // 	getTelForm($(obj).attr('data'));
+                    // });
 //                     getTelFrom(ThiTel,Thisa,function(e){
 //                         ThiTelFrom.html('['+ e +']');
 //                     });
@@ -435,6 +435,15 @@ function init(){
             // });
             return false;
         });
+        ThiBox.on("mouseover mouseout",'.hoverTitle',function(event){
+          var T=$(this),
+          Tel=T.attr('data-gtf');
+          if(event.type == "mouseover"){
+            getTelForm(Tel);
+          }else if(event.type == "mouseout"){
+            //Tel
+          }
+        })
     }
     var GenjinTbody=$('.see_house_genjin').find('tbody');
     var GenjinTbodyHtml=GenjinTbody.html();
@@ -495,6 +504,10 @@ function searchTel(span){
 	window.parent.doSearchAndSelectFirst();
 }
 </script>
+
+<script type="text/javascript">
+</script>
+
 <script type="text/javascript">
 loadCss('${refPrefix}/style/css.css');
 loadCss('${refPrefix}/bootstrap/css/bootstrap.css');
@@ -708,7 +721,6 @@ body .telTable .telBox .onOpen{ text-align: center; }
                   <td>
                     <table width="100%">
                       <tr>
-<!--                         <td class="biaoti">房主：</td> -->
                         <td class="neirong telBox" seeHM="${house.seeHM}"></td>
                       </tr>
                     </table>
@@ -932,9 +944,6 @@ $(document).on('click', '.btn_free', function(event) {
 
 .hoverTitle .hoverTitBox{ font-size: 14px; font-family: 'microsoft yahei'; color: #696969; }
 </style>
-<script type="text/javascript">
-
-</script>
 </body>
 </html>
 

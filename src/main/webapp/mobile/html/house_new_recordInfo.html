@@ -67,10 +67,9 @@ function loadData(){
 			$('#sellerName').text(ret.order.sellerName);
 			$('#sellerTel').text(ret.order.sellerTel);
 			$('#ordertime').text(ret.order.addtime);
-			blockAlert(JSON.stringify(ret.order));
 			if(ret.order.yongjin){
-				$('#yongjin').show();
-				$('#yongjin .value').text(ret.order.yongjin);	
+				$('.overs').show();
+				$('.overs .value').text('已结佣 '+ret.order.yongjin+'元');	
 			}
 			buildHtmlWithJsonArray("repeat",ret.genjiList , false,true);
 			api.parseTapmode();
@@ -80,7 +79,6 @@ function loadData(){
 }
 </script>
 <style type="text/css">
-
 </style>
 </head>
 <body>
@@ -109,13 +107,16 @@ function loadData(){
                     <h3> <span>等待处理</span></h3>
                     <p id="ordertime"></p>
                 </li>
-                <li class="repeat" style="display:;">
+                <li class="repeat" style="display:none;">
                     <span class="fl"><i class="iconfont">&#xe6e8;</i></span>
                     <h3><b>$[uname]</b><span>将状态修改为</span><b>$[status]</b></h3>
                     <p>$[addtime]</p>
                 </li>
-                <li class="overs">
-                    <div class="oversa"><h2>已结佣</h2></div>
+            </ul>
+            <div></div>
+            <ul>
+            	<li class="overs" style="display:none">
+                    <div class="oversa"><h2 class="value">已结佣 2000元</h2></div>
                 </li>
             </ul>
         </div>

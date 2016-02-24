@@ -1,10 +1,11 @@
 function GTFCallback(data){
-	$('#GTF'+data.mobile).html('['+data.province + data.cityname +']');
+	$('#GTF'+data.mobile).html(''+data.province + data.cityname +'');
 	//$('#GTF'+data.mobile).attr('title' , ''+data.province + data.cityname +'');
 }
 
 function getTelFormIng(tel){
   if(tel){
+    $('#GTF'+tel).html('加载归属地');
     $.ajax({
         dataType: 'jsonp',
       type: 'get',
@@ -27,3 +28,4 @@ function getTelForm(tels){
         }
     }
 }
+
