@@ -662,21 +662,22 @@ var time_ani2=setTimeout(function(){
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: ${me.uname}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: ${me.uname}</a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe651;</i> 账号: ${me.lname}</a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe61b;</i> ${cname}-${dname}</a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe657;</i> 职位: ${role.title}</a></li>
-                                    <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe662;</i> 电话: ${me.tel}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe662;</i> 电话: ${me.tel}</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li onclick="openReg();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 注册账号</a></li>
+                                    <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 修改资料</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></li>
                                     <li><a href="javascript:void(0)" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行账户</a></li>
                                     <li class="hidden"><a href="javascript:void(0)"><i class="iconfont">&#xe623;</i> 到期: 30 天  <span class="badge">支付</span></a></li>
                                     <li role="presentation" class="divider"></li>
-                                    <li><a href="javascript:void(0)" onclick="resetPwd();">修改密码</a></li>
+                                    <!-- <li><a href="javascript:void(0)" onclick="resetPwd();">修改密码</a></li> -->
                                     <!-- <li><a href="javascript:void(0)" onclick="fankui();">建议反馈</a></li> -->
-                                    <li><a href="javascript:void(0)" onclick="relogin();">重新登录</a></li>
+                                    <li><a href="javascript:void(0)" onclick="relogin();">重新登录/切换账号</a></li>
                                     <!-- <li><a href="javascript:void(0)" onclick="pay();">在线付费</a></li> -->
                                 </ul>
                             </li>
@@ -730,7 +731,7 @@ var time_ani2=setTimeout(function(){
 </script>
 
 <style type="text/css">
-.adboxsa { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999999; text-align: center; background: url(/ad/2016/ad_2016_spring.jpg); background-size:cover; }
+.adboxsa { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999999; text-align: center; background: url(/ad/2016/ad_2016_spring.jpg); background-size:cover; background-position: top center;}
 .adboxsa .adboxitema{ position: relative; margin:0 auto; height: 600px; width: 800px; padding: 30px; background: url(/ad/2016/ad_2016.png) no-repeat top center; }
 .adboxsa .adposa{ position: absolute; }
 .adboxsa .adboxcont{ padding-top: 190px; color: #FFE5B8; font-size: 30px; font-family:"microsoft yahei"}

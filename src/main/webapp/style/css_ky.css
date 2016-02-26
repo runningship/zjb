@@ -224,6 +224,7 @@ i.caret {
 	border:1px solid #00654c; 
 	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175); 
 	white-space: nowrap;
+	background-color: rgba(0,135,101,0.85);
 }
 
 .ulErMenu p{ width:100%; padding:5px 0 5px 0; display:block; border-bottom:1px solid #00654c;}

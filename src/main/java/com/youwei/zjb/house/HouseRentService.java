@@ -212,7 +212,13 @@ public class HouseRentService {
 	public ModelAndView listMyFav(HouseQuery query ,Page<HouseRent> page){
 		User user = ThreadSessionHelper.getUser();
 		String favStr = "@"+user.id+"|";
-		query.favStr = favStr;
+		Integer mUid = UserHelper.getAnotherUser(user.id);
+		if(mUid==null){
+			query.favStr = " h.fav like '%"+favStr +"%'";
+		}else{
+			String favStr2 = "@"+mUid+"|";
+			query.favStr = " (h.fav like '%"+favStr +"%'  or h.fav like '%"+favStr2+"%') ";
+		}
 		return listAll(query ,page);
 	}
 	
@@ -282,8 +288,9 @@ public class HouseRentService {
 			params.add(query.fhao+"%");
 		}
 		if(StringUtils.isNotEmpty(query.favStr)){
-			hql.append(" and h.fav like ? ");
-			params.add("%"+query.favStr+"%");
+//			hql.append(" and h.fav like ? ");
+//			params.add("%"+query.favStr+"%");
+			hql.append(" and "+query.favStr);
 		}
 		if(StringUtils.isNotEmpty(query.tel)){
 			query.tel = query.tel.replace(" ", "");

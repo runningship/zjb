@@ -1,6 +1,7 @@
 package com.youwei.zjb.user;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -161,6 +162,12 @@ public class UserService {
 		}
 		po.pwd = SecurityHelper.Md5(newPwd);
 		dao.saveOrUpdate(po);
+		Integer muid = UserHelper.getAnotherUser(po.id);
+		User muser = dao.get(User.class, muid);
+		if(muser!=null){
+			muser.pwd = SecurityHelper.Md5(newPwd);
+			dao.saveOrUpdate(muser);
+		}
 		return mv;
 	}
 	
@@ -183,7 +190,9 @@ public class UserService {
 			po.mobileDeadtime = user.mobileDeadtime;
 		}
 		po.lock = user.lock;
-		po.mobileON = user.mobileON;
+		if(user.mobileON!=null){
+			po.mobileON = user.mobileON;
+		}
 		dao.saveOrUpdate(po);
 		return mv;
 	}
@@ -194,19 +203,23 @@ public class UserService {
 		if(StringUtils.isEmpty(user.uname)){
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
-		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
-		if(tvc==null){
-			//验证码不正确
-			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
-		}
-		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
-			//验证码已经过期
-			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
-		}
+//		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+//		if(tvc==null){
+//			//验证码不正确
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+//		}
+//		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+//			//验证码已经过期
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+//		}
 		
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
 		po.tel = user.tel;
+		if(user.pwd!=null){
+			po.pwd = SecurityHelper.Md5(user.pwd);
+			//TODO 同步修改手机版密码
+		}
 		dao.saveOrUpdate(po);
 		
 		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_User, po);
@@ -323,6 +336,12 @@ public class UserService {
 		return mv;
 	}
 	
+	/**
+	 * 如果手机号码没有开通手机，则同时开通手机版
+	 * 如果手机号码已注册手机版，并且没有电脑账号关联改手机号码，则添加一个电脑版账号，并关联改手机号码
+	 * 如果有本店的电脑版账号已经关联该号码，则提示 手机号码绑定电脑版账户*******
+	 * 如果有其他店的电脑版账号X关联该手机号码，则直接修改账号X至本店新电脑版账号
+	 */
 	@WebMethod
 	public ModelAndView reg(User user , String verifyCode){
 		ModelAndView mv = new ModelAndView();
@@ -332,25 +351,75 @@ public class UserService {
 		if(StringUtils.isEmpty(user.pwd)){
 			throw new GException(PlatformExceptionType.BusinessException,"请先设置密码");
 		}
-		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
-		if(tvc==null){
-			//验证码不正确
-			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
-		}
-		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
-			//验证码已经过期
-			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
-		}
+//		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+//		if(tvc==null){
+//			//验证码不正确
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+//		}
+//		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+//			//验证码已经过期
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+//		}
 		
 		User operUser = ThreadSessionHelper.getUser();
+		
+		Department comp = operUser.Company();
+		int count=0;
+		List<Map> result = dao.listAsMap("select max(lname) as maxLName from User where cid=?", comp.id);
+		if(!result.isEmpty()){
+			Object mlname = result.get(0).get("maxLName");
+			if(mlname!=null && !"null".equals(mlname)){
+				count = Integer.valueOf(mlname.toString());
+			}
+		}
+		String pattern="0000000";
+		String lname="";
+		 java.text.DecimalFormat df = new java.text.DecimalFormat(pattern);
+		 if(count==0){
+			 lname=comp.cnum+"0001";
+		 }else{
+			 lname=df.format(count+1);
+		 }
+		 user.lname = lname;
+		 
+		User muser = dao.getUniqueByParams(User.class, new String[]{"mobileON" , "tel"}, new Object[]{1 , user.tel});
+		if(muser==null){
+			// 开通手机版
+			user.mobileON = 1;
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			user.mobileDeadtime = cal.getTime();
+		}
+		
+		List<User> list = dao.listByParams(User.class, "from User where cid=? and did = ? and tel=?", operUser.cid , operUser.did , user.tel);
+		if(list.size()>0){
+			throw new GException(PlatformExceptionType.BusinessException,"aaaaaa", "该手机号码已绑定到电脑版账户"+list.get(0).lname);
+		}
+		list = dao.listByParams(User.class, "from User where did <> ? and tel=?",operUser.did ,  user.tel);
+		if(list.size()>0){
+			//如果有其他店的电脑版账号X关联该手机号码，则直接修改账号X至本店新电脑版账号
+			User po = list.get(0);
+			String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 变更了用户["+po.Department().namea+"-"+user.uname+"]到"+operUser.Department().namea+":"+user.lname;
+			po.cid = operUser.cid;
+			po.did = operUser.did;
+			po.lname = user.lname;
+			if(po.mobileON==null || po.mobileON==0){
+				po.mobileON = 1;
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				po.mobileDeadtime = cal.getTime();
+			}
+			dao.saveOrUpdate(po);
+			//saveor update
+			// add log
+			operService.add(OperatorType.人事记录, operConts);
+			mv.data.put("lname", lname);
+			mv.data.put("msg", "添加用户成功");
+			return mv;
+		}
 		user.did = operUser.did;
 		user.cid = operUser.cid;
-		User po = dao.getUniqueByKeyValue(User.class, "tel", user.tel);
-//		if(po!=null){
-//			throw new GException(PlatformExceptionType.BusinessException, "该手机号码已有电脑版账户");
-//		}
 		user.addtime = new Date();
-		//user.flag = 1;
 		user.sh = 1;
 		user.lock=1;
 		user.pwd = SecurityHelper.Md5(user.pwd);
@@ -359,6 +428,8 @@ public class UserService {
 		String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 添加了用户["+user.Department().namea+"-"+user.uname+"]";
 		operService.add(OperatorType.人事记录, operConts);
 		mv.data.put("msg", "添加用户成功");
+		mv.data.put("lname", lname);
+		mv.data.put("tel", user.tel);
 		return mv;
 	}
 	

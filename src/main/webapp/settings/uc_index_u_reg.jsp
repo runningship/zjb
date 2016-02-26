@@ -10,24 +10,8 @@
 <%
 CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
 User user = ThreadSessionHelper.getUser();
-Department comp = user.Company();
-int count=0;
-List<Map> list = dao.listAsMap("select max(lname) as maxLName from User where cid=?", comp.id);
-if(!list.isEmpty()){
-	Object mlname = list.get(0).get("maxLName");
-	if(mlname!=null && !"null".equals(mlname)){
-		count = Integer.valueOf(mlname.toString());
-	}
-}
-String pattern="0000000";
-String lname="";
- java.text.DecimalFormat df = new java.text.DecimalFormat(pattern);
- if(count==0){
-	 lname=comp.cnum+"0001";
- }else{
-	 lname=df.format(count+1);
- }
- request.setAttribute("lname", lname);
+
+ //request.setAttribute("lname", lname);
  request.setAttribute("cityPy", ThreadSessionHelper.getCityPinyin());
 %>
 <!DOCTYPE html>
@@ -54,8 +38,17 @@ String lname="";
 <script src="/js/jquery.input.js" type="text/javascript"></script>
 <script src="/js/jquery.j.tool.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
+
+<link  href="/js/YMX_input/css/style.css" rel="stylesheet">
+<!-- <script src="/js/YMX_input/YMX_input.js" type="text/javascript"></script> -->
+
 <script type="text/javascript">
 function submits(){
+	var tel = $('#tel').val();
+	if(!checkMobile(tel)){
+		alert('请输入正确的手机号码');
+		return;
+	}
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
@@ -63,6 +56,13 @@ function submits(){
     data:a,
     mysuccess: function(data){
         alert('添加成功');
+        var json = JSON.parse(data);
+        setTimeout(function(){
+        	$('#reg_tel').text(json.tel);
+        	$('#lname').text(json.lname);
+        	$('.form1').addClass('dn');
+            $('.alert').removeClass('dn');
+        } , 1000);
     }
   });
 }
@@ -93,31 +93,26 @@ function getVerfiyCode(btn){
 	if(sendingVerifyCode){
 		return;
 	}
-	var tel = $('#tel').val();
-	if(!tel){
+	var tel = $('#tel'),
+    telV = tel.val();
+	if(!telV){
 		alert('请先填写有效手机号码');
+        tel.focus();
 		return;
 	}
-	tel = tel.trim();
+	telV = telV.trim();
 	$(btn).addClass('gray');
-	//提示信息
-	YW.ajax({
-		url:'/c/mobile/user/sendVerifyCode',
-		method:'post',
-		data: {tel:tel , cityPy:'${cityPy}'},
-		cache:false,
-		returnAll:false
-	},function(ret , err){
-		if(ret){
-			sendingVerifyCode = true;
-			setcode();
-		}else{
-			alert(err.msg);
-		}
-	});
-	
 	sendingVerifyCode = true;
-	setcode();
+	YW.ajax({
+	    type: 'POST',
+	    url: '/c/mobile/user/sendVerifyCode',
+	    data:{tel:telV , cityPy:'${cityPy}'},
+	    mysuccess: function(data){
+	    	alert('验证码已发送');
+            $('.verifyCode').focus();
+			setcode();
+	    }
+	  });
 }
 
 function setcode(){
@@ -139,49 +134,45 @@ function setcode(){
 .yzm{width: 60%;    float: left;}
 .getCode{    float: right;  color: blue; padding:5px 22px;}
 .gray{color:gray;}
+
+body{ width: 500px; height: auto; }
+.form1{ padding: 20px 60px 20px 0;}
+.form-ul{  }
+
+.alert{ padding: 20px 40px 20px 10px;  color: #737383; text-align: center; }
+.alert i{ font-size: 36px;}
+.alert h1{ font-size: 50px;  }
+.alert div{ font-weight: normal; font-size: 20px;}
+.alert div i{ font-size: 26px;}
+.alert .conts{}
+
+.dn{ display: none; }
+.ewmbox{ float: left; padding-bottom: 50px; }
 </style>
 </head>
 <body>
-<div class="html edit title">
-    <div class="bodyer mainCont">
-        <div class="maxHW" style="min-width: 500px;">
-            <form name="form1" class="form-horizontal form_label_right form1" role="form" onsubmit="submits();return false;">
-                
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">登录帐号:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="lname" readonly="readonly" value="${lname}" id="lname" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">姓名:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="uname" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">登录密码:</label>
-                    <div class="col-xs-8">
-                        <input type="password" class="form-control" name="pwd" value="" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">电话:</label>
-                    <div class="col-xs-8">
-                        <input id="tel"  type="text" class="form-control" name="tel" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">验证码:</label>
-                    <div class="col-xs-8">
-                        <input type="text"   class="form-control yzm" name="verifyCode" placeholder="">
-                        <button class="getCode" onclick="getVerfiyCode(this);return false;">验证码</button>
-                    </div>
-                </div>
-            </form>
-
-        </div>
+<div class="bodybox">
+    <form name="form1" class=" form-box form1" role="form" onsubmit="submits();return false;">
+        <ul class="form-ul">
+            <li class=""><label class="form-section form-active"><strong class="input-label">姓名：</strong><input type="text" class="input placeholders" name="uname" placeholder="您的姓名"><span class="tip">有</span></label></li>
+            <li class=""><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" placeholder="您的手机号"><span class="tip">有</span></label></li>
+            <li class=""><label class="form-section form-active"><strong class="input-label">密码：</strong><input type="password" class="input placeholders" name="pwd" placeholder="登录密码"></label></li>
+            <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码：</strong><a href="#" class="btn btn_act code getCode" data-type="regCode" data-txt="发送验证码" onclick="getVerfiyCode(this);return false;">发送验证码</a><input type="text" class="input placeholders c" name="verifyCode" placeholder="收到的验证码"></label></li>
+            <li class="">
+                <input type="submit" class="submit hidden" value="submit">
+            </li>
+          </ul>
+    </form>
+    <div class="alert dn">
+        <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
+        <!-- <i class="iconfont">&#xe67b;</i> -->
+        <div><i class="iconfont">&#xe67b;</i> 您的电脑帐号注册成功:</div>
+        <h1 id="lname"></h1>
+        <h3>手机帐号：<span id="reg_tel"></span></h3>
+        <p class="conts">（登录密码一致。请用该账号登录电脑版，可实现电脑版和手机版“收藏、新房推荐记录”等数据的同步！）</p>
     </div>
 </div>
+
+
 </body>
 </html>

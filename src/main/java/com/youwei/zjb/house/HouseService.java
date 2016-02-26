@@ -372,7 +372,13 @@ public class HouseService {
 	public ModelAndView listMyFav(HouseQuery query ,Page<House> page){
 		User user = ThreadSessionHelper.getUser();
 		String favStr = "@"+user.id+"|";
-		query.favStr = favStr;
+		Integer mUid = UserHelper.getAnotherUser(user.id);
+		if(mUid==null){
+			query.favStr = " h.fav like '%"+favStr +"%'";
+		}else{
+			String favStr2 = "@"+mUid+"|";
+			query.favStr = " (h.fav like '%"+favStr +"%'  or h.fav like '%"+favStr2+"%') ";
+		}
 		return listAll(query ,page);
 	}
 	

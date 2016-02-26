@@ -24,62 +24,84 @@
 <script src="/js/dialog/jquery.artDialog.source.js?skin=win8s" type="text/javascript"></script>
 <script src="/js/dialog/plugins/iframeTools.source.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/buildHtml.js"></script>
+
+<link  href="/js/YMX_input/css/style.css" rel="stylesheet">
+<script src="/js/YMX_input/js/YMX_input.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 function submits(){
-	var tel = $('#tel').val();
-	if(!validateMobile(tel)){
+    var uname = $('.uname'),
+    unameV = uname.val(),
+    unameL = unameV.length;
+    if(!unameV){
+        alert('请输入您的姓名');
+        uname.focus();
+        return;
+    }else if(unameL<=1&&unameL>4){
+        alert('请输入您的真实姓名');
+        uname.focus();
+        return;
+    }
+	var tel = $('#tel'),
+    telV = tel.val();
+	if(!validateMobile(telV)){
 		alert('请输入有效的手机号码');
+        tel.focus();
 		return;
 	}
-  var a=$('form[name=form1]').serialize();
-  YW.ajax({
-    type: 'POST',
-    url: '/c/user/selfUpdate',
-    data:a,
-    mysuccess: function(data){
-        //art.dialog.close();
-        alert('修改成功');
-        window.top.location.reload();
-    }
-  });
+    var a=$('form[name=form1]').serialize();
+    YW.ajax({
+        type: 'POST',
+        url: '/c/user/selfUpdate',
+        data:a,
+        mysuccess: function(data){
+            //art.dialog.close();
+            alert('修改成功');
+        }
+    });
 }
 
+var parent = art.dialog.parent,       // 父页面window对象
+api = art.dialog.open.api,  //      art.dialog.open扩展方法
+form1=$('.form1');
 $(document).ready(function() {
-    var parent = art.dialog.parent,       // 父页面window对象
-    api = art.dialog.open.api,  //      art.dialog.open扩展方法
-    form1=$('.form1');
     if (!api) return;
     // 操作对话框
     api.title('修改个人信息')
     // 自定义按钮
       .button({
-          name: '保存',
+          name: '确定',
           callback: function () {
-            form1.submit();
+            //form1.submit();
+            $('.submit').click();
             return false;
           },focus: true
       },{
           name: '取消'
-      });
+      })
 
 });
 var sendingVerifyCode = false;
 function getCode(){
 	event.preventDefault();
 	event.cancelBubbled=true;
-	var tel = $('#tel').val();
-	if(!validateMobile(tel)){
+	var tel = $('#tel'),
+    telV = tel.val();
+	if(!validateMobile(telV)){
 		alert('请输入有效的手机号码');
+        tel.focus();
 		return;
 	}
+    telV = telV.trim();
 	sendingVerifyCode = true;
 	$('.getCode').addClass('gray');
 	YW.ajax({
 	    type: 'POST',
 	    url: '/c/mobile/user/sendVerifyCode',
-	    data:{tel:tel , cityPy:'${cityPy}'},
+	    data:{tel:telV , cityPy:'${cityPy}'},
 	    mysuccess: function(data){
 	    	alert('验证码已发送');
+            $('.verifyCode').focus();
 	    	setGetCodeTimer();
 	    }
 	  });
@@ -112,57 +134,53 @@ function setGetCodeTimer(){
 		$('.getCode').html('已发送('+times+')');
 	},1000);
 }
+function addU(){
+    parent.openReg();
+}
+$(document).ready(function() {
+    $('.uname').focus();
+});
 </script>
 <style type="text/css">
 .getCode{float: right;    padding: 6px 6px;    color: blue;}
 .verifyCode{width:60%;display:inline;}
 .gray{color:gray;}
+
+body{ width: 500px; height: auto; }
+.form1{ padding: 20px 60px 20px 0;}
+.form-ul{  }
+
+.alert{ padding: 20px 40px 20px 10px;  color: #737383; text-align: center; }
+.alert i{ font-size: 36px;}
+.alert h1{ font-size: 50px;  }
+.alert div{ font-weight: normal; font-size: 20px;}
+.alert div i{ font-size: 26px;}
+.alert .conts{}
+
+.dn{ display: none; }
+.ewmbox{ float: left; padding-bottom: 50px; }
+
 </style>
 </head>
 <body>
-<div class="html edit title">
-    <div class="bodyer mainCont">
-        <div class="maxHW" style="min-width: 500px;">
-            <form name="form1" class="form-horizontal form1" role="form" onsubmit="submits();return false;">
-            	<input type="hidden" name="id" value="${user.id }"/>
-                <div>
-                    <input type="hidden" name="id" id="id">
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">账    号 :</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="uname" value="${user.lname }"  disabled="disabled" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">用 户 名:</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="uname" value="${user.uname }" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">手机号码:</label>
-                    <div class="col-xs-8">
-                        <input type="tel" class="form-control"  id="tel" name="tel" value="${user.tel }" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">验证码:</label>
-                    <div class="col-xs-8">
-                        <input type="tel" class="form-control verifyCode" name="verifyCode" value="" placeholder=""><button class="getCode" onclick="getCode();return false;">获取验证码</button>
-                    </div>
-                </div>
-                 <div class="form-group">
-                    <label class="col-xs-3 control-label"> </label>
-                    <div class="col-xs-8" style="word-break: break-all;">
-                        一个电脑版账号只能绑定一个手机号码。
-如需开通多个账号，请联系中介宝客服。
-电话：0551-65314555  QQ：9129588
-                    </div>
-                </div>
-            </form>
-        </div>
+<div class="bodybox">
+    <form name="form1" class=" form-box form1" role="form" onsubmit="submits();return false;">
+        <ul class="form-ul">
+            <li class=""><label class="form-section  form-active"><strong class="input-label">账号：</strong><input type="text" class="input placeholders " name="lname" value="${user.lname }"  disabled="disabled" placeholder="用户名/手机/input"><span class="tip"></span></label></li>
+            <li class="xm"><label class="form-section form-active"><strong class="input-label">姓名：</strong><input type="text" class="input placeholders uname" name="uname" value="${user.uname }" placeholder="您的姓名"><span class="tip"></span></label></li>
+            <li class="zjh"><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" value="${user.tel }" placeholder="您的手机号"><span class="tip"></span></label></li>
+            <li class="mm"><label class="form-section form-active"><strong class="input-label">密码：</strong><input type="password" class="input placeholders" name="pwd" placeholder="不修改请留空"></label></li>
+            <li class="yzm"><label class="form-section tow form-active"><strong class="input-label">验证码：</strong><a href="#" class="btn btn_act code getCode" data-type="regCode" data-txt="发送验证码" class="" onclick="getCode();return false;">发送验证码</a><input type="text" class="input placeholders c verifyCode" name="verifyCode" value="" placeholder="收到的验证码"></label></li>
+        </ul>
+        <input type="hidden" name="id"  value="${user.id}" >
+        <input type="submit" class="submit" style="display: none;">
+    </form>
+    <div class="alert dn">
+        <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
+        <div><i class="iconfont">&#xe67b;</i> 成功修改个人信息！</div>
+        <p class="conts">（绑定手机可实现电脑版和手机版“收藏、新房推荐记录”等数据的同步！）</p>
     </div>
 </div>
+
 </body>
 </html>

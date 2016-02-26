@@ -64,6 +64,13 @@ $(document).ready(function() {
 });
 $(window).resize(function() {      //类别
 });
+
+function quickGenjin(status , text){
+	console.log(1);
+	$('input[value='+status+']').prop('checked' , 'checked');
+	$('#idPassword').text(text);
+	submits();
+}
 </script>
             <form class="form1 formGJ" role="form" style="width:240px; padding-bottom: 6px;" onsubmit="submits();return false;">
                 
@@ -95,6 +102,27 @@ $(window).resize(function() {      //类别
                     <textarea class="form-control" rows="3" id="idPassword"></textarea>
                 </div>
                 <div class="form-group form_group">
-                    <button type="submit" class="btn btn-primary btn-block btn_submit" tabindex="12" placeholder="选择状态后提交..."><span class="ladda-label">提  交</span></button>
+                    <button type="submit" class="btn btn-primary btn-block btn_submit hidden" tabindex="12" placeholder="选择状态后提交..."><span class="ladda-label">提  交</span></button>
+<div class="btn-group dropup btn_group_style">
+    <button type="submit" class="btn btn-primary a btn_submit" tabindex="12" placeholder="选择状态后提交..."><span class="ladda-label">提  交</span></button>
+    <button type="button" class="btn btn-primary b dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        　<span class="caret"></span>　
+    </button>
+    <ul class="dropdown-menu">
+        <li onclick="quickGenjin(6,'已售')"><a href="#">已售</a></li>
+        <li  onclick="quickGenjin(7,'停售')"><a href="#">停售</a></li>
+        <li onclick="quickGenjin(7,'停机')"><a href="#">停机</a></li>
+        <li onclick="quickGenjin(7,'中介')"><a href="#">中介</a></li>
+        <li onclick="quickGenjin(4,'推荐')"><a href="#">推荐</a></li>
+    </ul>
+</div>
                 </div>
             </form>
+<style type="text/css">
+.btn_group_style{ display: block; float: none; margin-left:0; padding-bottom: 34px; }
+.btn_group_style .a{ width: 75%; }
+.btn_group_style .b{ width: 25%; }
+.dropdown-menu{ left: auto; right: 0; }
+.dropdown-menu > li > a{ padding: 6px 20px; margin: -6px 0; }
+.dropdown-menu > li > a:hover{ background: #428bca; }
+</style>

@@ -167,7 +167,12 @@ YW={
                         $(arr[0]).focus();
                         alert(desc+json.msg);
                     }else{
-                        alert(json['msg']);   
+                    	if(YW.options.myerror){
+                    		myerror(json);
+                    	}else{
+                    		alert(json['msg']);
+                    	}
+                           
                     }
                     
                 }else if(data.return_status){
@@ -405,6 +410,16 @@ $(function(){
 });
 
 
-
+function checkMobile(s){
+    var isMob = new RegExp(/^(1[34578][0-9]{9})$/);
+    if(s=="" || s==null || s==undefined){
+        return true;
+    }
+    if(isMob.test(s)){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 

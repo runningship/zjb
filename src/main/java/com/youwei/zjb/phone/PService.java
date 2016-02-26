@@ -44,6 +44,7 @@ import com.youwei.zjb.house.entity.HouseImage;
 import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.MobileUserDog;
 import com.youwei.zjb.user.MobileUserService;
+import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.InvitationActivation;
@@ -280,6 +281,12 @@ public class PService {
 		device.deviceId = deviceId;
 		device.tel = tel;
 		dao.saveOrUpdate(device);
+		Integer pcuid = UserHelper.getAnotherUser(user.id);
+		User pcuser = dao.get(User.class, pcuid);
+		if(pcuser!=null){
+			mv.data.put("pcLname", pcuser.lname);
+			mv.data.put("pcDeadTime", pcuser.Department().deadline);
+		}
 		mv.data.put("avatar", user.avatar);
 //		pushToOther(tel,deviceId);
 		return mv;

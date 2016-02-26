@@ -421,7 +421,7 @@ function init(){
             return false;
         });
         ThiBox.on('click', 'span.baidu', function(event) {
-            var ThiTel=$(this).parent().find('.tel').html();
+            var ThiTel=$(this).parent().find('.tel').attr('data-gtf');
             // art.dialog.open('http://www.ip138.com:8080/search.asp?mobile='+ThiTel+'&action=mobile',{
             //     title:'手机号码归属搜索',
             //     height:230,
@@ -500,7 +500,7 @@ function junjiaTJ(area){
 }
 
 function searchTel(span){
-	$(window.parent.document).find('#tel').val($(span).text());
+	$(window.parent.document).find('#tel').val($(span).attr('data-gtf'));
 	window.parent.doSearchAndSelectFirst();
 }
 </script>
