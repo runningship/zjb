@@ -503,8 +503,9 @@ public class HouseService {
 			params.add(query.fhao+"%");
 		}
 		if(StringUtils.isNotEmpty(query.favStr)){
-			hql.append(" and h.fav like ? ");
-			params.add("%"+query.favStr+"%");
+//			hql.append(" and h.fav like ? ");
+//			params.add("%"+query.favStr+"%");
+			hql.append(" and "+query.favStr);
 		}
 //		if(query.id!=null){
 //			hql.append(" and h.id = ?");

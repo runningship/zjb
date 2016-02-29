@@ -203,16 +203,17 @@ public class UserService {
 		if(StringUtils.isEmpty(user.uname)){
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
-		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
-		if(tvc==null){
-			//验证码不正确
-			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
-		}
-		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
-			//验证码已经过期
-			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
-		}
-		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=?", user.tel);
+//		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+//		if(tvc==null){
+//			//验证码不正确
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+//		}
+//		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+//			//验证码已经过期
+//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+//		}
+		User me = ThreadSessionHelper.getUser();
+		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=? and id<>? ", user.tel , me.id);
 		if(list.size()>0){
 			throw new GException(PlatformExceptionType.BusinessException,"aaaaaa", "该手机号码已绑定到电脑版账户"+list.get(0).lname);
 		}
@@ -625,4 +626,21 @@ public class UserService {
 		return mv;
 	}
 
+	@WebMethod
+	public ModelAndView hasPcBinding(String phoneNum){
+		ModelAndView mv = new ModelAndView();
+		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=?", phoneNum);
+		if(list.size()>0){
+			User user = ThreadSessionHelper.getUser();
+			if(user.id==list.get(0).id){
+				mv.data.put("result", 0);
+			}else{
+				mv.data.put("result", 1);
+				mv.data.put("lname", list.get(0).lname);
+			}
+		}else{
+			mv.data.put("result", 0);
+		}
+		return mv;
+	}
 }

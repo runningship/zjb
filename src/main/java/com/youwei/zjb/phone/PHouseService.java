@@ -160,18 +160,21 @@ public class PHouseService {
 //			hql.append("select h.id as id ,"
 //					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
 //					+ " h.lceng as lceng, h.zceng as zceng from House h , Favorite f where h.sh=1 and f.houseId=h.id and f.userId=?");
-			String favStr = "@"+query.userid+"|";
+			
 			hql.append("select h.id as id ,"
 					+ " h.area as area,h.dhao as dhao,h.fhao as fhao,h.ztai as ztai, h.quyu as quyu,h.djia as djia,h.zjia as zjia,h.mji as mji,"
-					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h  where h.sh=1 and h.ztai=4 and h.fav like ?");
-			params.add("%"+favStr+"%");
+					+ " h.lceng as lceng, h.zceng as zceng , h.hxf as hxf , h.hxt as hxt, h.hxw as hxw from House h  where h.sh=1 and h.ztai=4 ");
+			//params.add("%"+favStr+"%");
 			
 			User muser = dao.get(User.class, query.userid);
 			Integer pcUid = UserHelper.getAnotherUser(muser.id);
+			String favStr = "@"+query.userid+"|";
 			if(pcUid!=null){
 				String favStr2 = "@"+pcUid+"|";
-				hql.append(" or h.fav like ?");
-				params.add("%"+favStr2+"%");
+				String tmp = " and (h.fav like '%"+favStr +"%'  or h.fav like '%"+favStr2+"%') ";
+				hql.append(tmp);
+			}else{
+				hql.append(" and h.fav like '%"+favStr+"%' ");
 			}
 			
 		}else if(query.searchMyPrivateHouse!=null && query.searchMyPrivateHouse==1){

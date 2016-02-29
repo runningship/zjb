@@ -98,7 +98,7 @@ public class PFavService {
 	public ModelAndView list(Page<House> page , Integer userId){
 		ModelAndView mv = new ModelAndView();
 		String favStr = "@"+userId+"|";
-		page = dao.findPage(page, "from House where fav like ? ", "%"+favStr+"%");
+		page = dao.findPage(page, "from House where fav like ? and (isdel=0 or isdel is null) ", "%"+favStr+"%");
 		mv.data.put("page", JSONHelper.toJSON(page));
 		return mv;
 	}

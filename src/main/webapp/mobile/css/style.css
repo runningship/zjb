@@ -345,7 +345,7 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 /* user */
 .user.side{ background: #333; }
 .user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
-.user.side .header .imgbox{ float: left; display: block; width: 80px; height: 80px; line-height: 80px; border-radius: 100px; overflow: hidden; margin-right: 15px; }
+.user.side .header .imgbox{ float: left; display: block; width: 85px; height: 85px; line-height: 80px; border-radius: 100px; overflow: hidden; margin-right: 15px; }
 .user.side .header .imgbox img{    width: 100%;  height: 100%;}
 
 .user.side .header .uText{ padding-top: 6px; }

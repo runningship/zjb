@@ -285,7 +285,9 @@ public class PService {
 		User pcuser = dao.get(User.class, pcuid);
 		if(pcuser!=null){
 			mv.data.put("pcLname", pcuser.lname);
-			mv.data.put("pcDeadTime", pcuser.Department().deadline);
+//			if(pcuser.Department().deadline!=null){
+//				mv.data.put("pcDeadTime", DataHelper.dateSdf.format(pcuser.Department().deadline));
+//			}
 		}
 		mv.data.put("avatar", user.avatar);
 //		pushToOther(tel,deviceId);

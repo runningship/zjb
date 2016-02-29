@@ -30,6 +30,12 @@ function init(){
 			if(config.user.uname){
 				$('#uname').text(config.user.uname);
 			}
+			if(config.user.pcLname){
+				$('#pcLname').text("电脑账号: "+config.user.pcLname);
+			}
+//			if(config.user.pcDeadTime){
+//				$('#pcDeadTime').text("到期时间: "+config.user.pcDeadTime);
+//			}
 			//blockAlert(config.user.tel);
 			//$('#tel').html(config.user.tel);
 			//$('#tel').css('color','red');

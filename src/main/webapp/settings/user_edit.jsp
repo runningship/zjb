@@ -29,6 +29,10 @@
 <script src="/js/YMX_input/js/YMX_input.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+// 只让某个DIV显示，同级其他隐藏
+function divShow(T){
+$('.'+T).addClass('db').removeClass('dn').siblings().removeClass('db').addClass('dn');
+}
 function submits(){
     var uname = $('.uname'),
     unameV = uname.val(),
@@ -55,6 +59,7 @@ function submits(){
         url: '/c/user/selfUpdate',
         data:a,
         mysuccess: function(data){
+            divShow('yes');
             //art.dialog.close();
             alert('修改成功');
         }
@@ -73,7 +78,7 @@ $(document).ready(function() {
           name: '确定',
           callback: function () {
             //form1.submit();
-            $('.submit').click();
+            $('.db').find('.submit').click();
             return false;
           },focus: true
       },{
@@ -104,7 +109,7 @@ function getCode(){
             $('.verifyCode').focus();
 	    	setGetCodeTimer();
 	    }
-	  });
+    });
 	
 }
 
@@ -140,9 +145,44 @@ function addU(){
 $(document).ready(function() {
     $('.uname').focus();
 });
+
+function isPhoneUse(){
+    var tel = $('#tel'),
+    telV = tel.val(),
+    telP = tel.parents('label');
+    YW.ajax({
+        type: 'POST',
+        url: '/c/user/hasPcBinding',
+        data:{phoneNum:telV},
+        mysuccess: function(result){
+            var data = JSON.parse(result);
+            console.log('data:'+data)
+            if(data.result==0){
+                telP.removeClass('form-err').find('.tip').text('可用');
+            }else{
+                telP.addClass('form-err').find('.tip').text('已被绑定:'+data.lname);
+            }
+        }
+    });
+}
+$(document).on('keyup', '#tel', function(event) {
+    var Thi=$(this),
+    ThiV   = Thi.val(),
+    ThiLen = ThiV.length,
+    ThiP   = Thi.parents('label');
+    console.log(ThiLen)
+    if(ThiLen==11){
+        isPhoneUse();
+    }else{
+        ThiP.removeClass('form-err').find('.tip').text('');
+    }
+    //event.preventDefault();
+    /* Act on the event */
+});
 </script>
 <style type="text/css">
-.getCode{float: right;    padding: 6px 6px;    color: blue;}
+input{outline:none} 
+.getCode{float: right; padding: 6px 6px; color: blue;}
 .verifyCode{width:60%;display:inline;}
 .gray{color:gray;}
 
@@ -150,7 +190,7 @@ body{ width: 500px; height: auto; }
 .form1{ padding: 20px 60px 20px 0;}
 .form-ul{  }
 
-.alert{ padding: 20px 40px 20px 10px;  color: #737383; text-align: center; }
+.alert{ padding: 20px 10px 20px 10px;  color: #737383; text-align: center; }
 .alert i{ font-size: 36px;}
 .alert h1{ font-size: 50px;  }
 .alert div{ font-weight: normal; font-size: 20px;}
@@ -160,25 +200,38 @@ body{ width: 500px; height: auto; }
 .dn{ display: none; }
 .ewmbox{ float: left; padding-bottom: 50px; }
 
+.form-err{ color: #F00; }
+.form-err .input-label{ color: #F00;}
+.form-err input.input{ color: #F00; border-color: #F00; background: #FEFFC4; }
+.form-err span.tip{ color: #F00; }
 </style>
 </head>
 <body>
 <div class="bodybox">
-    <form name="form1" class=" form-box form1" role="form" onsubmit="submits();return false;">
+    <form name="form1" class=" form-box form1 db" role="form" onsubmit="submits();return false;">
         <ul class="form-ul">
             <li class=""><label class="form-section  form-active"><strong class="input-label">账号：</strong><input type="text" class="input placeholders " name="lname" value="${user.lname }"  disabled="disabled" placeholder="用户名/手机/input"><span class="tip"></span></label></li>
             <li class="xm"><label class="form-section form-active"><strong class="input-label">姓名：</strong><input type="text" class="input placeholders uname" name="uname" value="${user.uname }" placeholder="您的姓名"><span class="tip"></span></label></li>
-            <li class="zjh"><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" value="${user.tel }" placeholder="您的手机号"><span class="tip"></span></label></li>
+            <li class="zjh"><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" maxlength="11" value="${user.tel }" placeholder="您的手机号"autocomplete="off"><span class="tip">已被绑定：000024</span></label></li>
             <li class="mm"><label class="form-section form-active"><strong class="input-label">密码：</strong><input type="password" class="input placeholders" name="pwd" placeholder="不修改请留空"></label></li>
             <li class="yzm"><label class="form-section tow form-active"><strong class="input-label">验证码：</strong><a href="#" class="btn btn_act code getCode" data-type="regCode" data-txt="发送验证码" class="" onclick="getCode();return false;">发送验证码</a><input type="text" class="input placeholders c verifyCode" name="verifyCode" value="" placeholder="收到的验证码"></label></li>
         </ul>
         <input type="hidden" name="id"  value="${user.id}" >
         <input type="submit" class="submit" style="display: none;">
     </form>
-    <div class="alert dn">
+    <div class="alert yes dn">
         <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
         <div><i class="iconfont">&#xe67b;</i> 成功修改个人信息！</div>
         <p class="conts">（绑定手机可实现电脑版和手机版“收藏、新房推荐记录”等数据的同步！）</p>
+        <a onclick="api.close()" class="submit"></a>
+    </div>
+    <div class="alert no1 dn">
+        <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
+        <!-- <i class="iconfont">&#xe67b;</i> -->
+        <div><i class="iconfont">&#xe69e;</i> 您的手机号已经绑定电脑版账号为：</div>
+        <h1 class="lname"></h1>
+        <p class="conts">（登录密码一致。请用该账号登录电脑版，可实现电脑版和手机版“收藏、新房推荐记录”等数据的同步！）</p>
+        <a onclick="api.close()" class="submit"></a>
     </div>
 </div>
 

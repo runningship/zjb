@@ -53,7 +53,8 @@ function getContent(){
       $('#uname').val(json['uname']); 
       $('#mobileDeadtime').val(json['mobileDeadtime']); 
       $('.btn-primary').removeClass('active');
-
+	  $('#mobile').hide();
+      
       var zz = $('input[name=mobileON][value='+json['mobileON']+']').parent();
       $('input[name=mobileON][value='+json['mobileON']+']').attr('checked','checked');
       zz.addClass('active');
@@ -126,7 +127,7 @@ $(document).ready(function() {
                     <div class="col-xs-8">
                   <input type="text" class="form-control input-sm" name="mobileDeadtime" id="mobileDeadtime" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd'})" >
                 </div>
-                <div auth="sz_sys_mobile" class="form-group">
+                <div id="mobile" auth="sz_sys_mobile" class="form-group">
                     <label class="col-xs-3 control-label">手机端:</label>
                     <div class="col-xs-8">
                         <div class="btn-group" data-toggle="buttons">
