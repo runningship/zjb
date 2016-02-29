@@ -148,9 +148,11 @@
 .icon-shoucang1:before { content: "\e67f"; }
 .icon-shoucang1:before { content: "\e680"; }
 .icon-kehuguanli1:before { content: "\e66f"; }
+.icon-kulian:before { content: "\e69e"; }
 .icon-chushoufangyuan:before { content: "\e670"; }
 .icon-gerenzhongxinhetong:before { content: "\e671"; }
 .icon-yewuchangjing:before { content: "\e672"; }
+.icon-yonghuzhinan:before { content: "\e69c"; }
 .icon-kehu01:before { content: "\e673"; }
 .icon-iconfontqian:before { content: "\e674"; }
 .icon-Contracts:before { content: "\e675"; }
@@ -171,3 +173,4 @@
 .icon-zjbmy:before { content: "\e685"; }
 .icon-zjbxin:before { content: "\e686"; }
 .icon-zhuce:before { content: "\e69b"; }
+.icon-iconfontbianji:before { content: "\e69d"; }

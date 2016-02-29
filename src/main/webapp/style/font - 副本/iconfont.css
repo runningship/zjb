@@ -160,6 +160,7 @@
 .icon-124shouyemianfeifuwu:before { content: "\e67c"; }
 .icon-zhongjiebao:before { content: "\e687"; }
 .icon-yuangongzhanghao:before { content: "\e67e"; }
+.icon-dengLuZhuCe:before { content: "\e68b"; }
 .icon-xingbiexuanze:before { content: "\e68a"; }
 .icon-you:before { content: "\e68e"; }
 .icon-zuo:before { content: "\e68f"; }
@@ -169,3 +170,4 @@
 .icon-zjbjia:before { content: "\e684"; }
 .icon-zjbmy:before { content: "\e685"; }
 .icon-zjbxin:before { content: "\e686"; }
+.icon-zhuce:before { content: "\e69b"; }

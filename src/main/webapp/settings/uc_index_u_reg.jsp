@@ -43,6 +43,10 @@ User user = ThreadSessionHelper.getUser();
 <!-- <script src="/js/YMX_input/YMX_input.js" type="text/javascript"></script> -->
 
 <script type="text/javascript">
+// 只让某个DIV显示，同级其他隐藏
+function divShow(T){
+$('.'+T).addClass('db').removeClass('dn').siblings().removeClass('db').addClass('dn');
+}
 function submits(){
 	var tel = $('#tel').val();
 	if(!checkMobile(tel)){
@@ -59,26 +63,36 @@ function submits(){
         var json = JSON.parse(data);
         setTimeout(function(){
         	$('#reg_tel').text(json.tel);
-        	$('#lname').text(json.lname);
-        	$('.form1').addClass('dn');
-            $('.alert').removeClass('dn');
+        	$('.lname').text(json.lname);
+            divShow('yes');//显示添加成功的页面
+        	//$('.form1').addClass('dn');
+            //$('.alert').removeClass('dn');
         } , 1000);
+    },
+    myerror:function(data){
+    	if(data.field=='lname'){
+    		$('.lname').text(data.msg);
+        	divShow('no1');//显示错误1的页面
+    	}else{
+    		alert(data['msg']);	
+    	}
     }
   });
 }
 
-$(document).ready(function() {
     var parent = art.dialog.parent,       // 父页面window对象
-    api = art.dialog.open.api,  //      art.dialog.open扩展方法
-    form1=$('.form1');
+    api = art.dialog.open.api;  //      art.dialog.open扩展方法
+$(document).ready(function() {
+    var form1=$('.form1');
     if (!api) return;
     // 操作对话框
     api.title('添加用户')
     // 自定义按钮
       .button({
-          name: '保存',
+          name: '确定',
           callback: function () {
-            form1.submit();
+            $('.db').find('.submit').click();
+            //form1.submit();
             return false;
           },focus: true
       },{
@@ -139,7 +153,7 @@ body{ width: 500px; height: auto; }
 .form1{ padding: 20px 60px 20px 0;}
 .form-ul{  }
 
-.alert{ padding: 20px 40px 20px 10px;  color: #737383; text-align: center; }
+.alert{ padding: 20px 10px 20px 10px;  color: #737383; text-align: center; }
 .alert i{ font-size: 36px;}
 .alert h1{ font-size: 50px;  }
 .alert div{ font-weight: normal; font-size: 20px;}
@@ -152,7 +166,7 @@ body{ width: 500px; height: auto; }
 </head>
 <body>
 <div class="bodybox">
-    <form name="form1" class=" form-box form1" role="form" onsubmit="submits();return false;">
+    <form name="form1" class="boxs form-box form1 db" role="form" onsubmit="submits();return false;">
         <ul class="form-ul">
             <li class=""><label class="form-section form-active"><strong class="input-label">姓名：</strong><input type="text" class="input placeholders" name="uname" placeholder="您的姓名"><span class="tip">有</span></label></li>
             <li class=""><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" placeholder="您的手机号"><span class="tip">有</span></label></li>
@@ -163,13 +177,22 @@ body{ width: 500px; height: auto; }
             </li>
           </ul>
     </form>
-    <div class="alert dn">
+    <div class="alert boxs yes dn">
         <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
         <!-- <i class="iconfont">&#xe67b;</i> -->
         <div><i class="iconfont">&#xe67b;</i> 您的电脑帐号注册成功:</div>
-        <h1 id="lname"></h1>
+        <h1 class="lname"></h1>
         <h3>手机帐号：<span id="reg_tel"></span></h3>
         <p class="conts">（登录密码一致。请用该账号登录电脑版，可实现电脑版和手机版“收藏、新房推荐记录”等数据的同步！）</p>
+        <a onclick="api.close()" class="submit"></a>
+    </div>
+    <div class="alert boxs no1 dn">
+        <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
+        <!-- <i class="iconfont">&#xe67b;</i> -->
+        <div><i class="iconfont">&#xe69e;</i> 您的手机号已经绑定电脑版账号为：</div>
+        <h1 class="lname"></h1>
+        <p class="conts">（登录密码一致。请用该账号登录电脑版，可实现电脑版和手机版“收藏、新房推荐记录”等数据的同步！）</p>
+        <a onclick="api.close()" class="submit"></a>
     </div>
 </div>
 

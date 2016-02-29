@@ -168,7 +168,7 @@ YW={
                         alert(desc+json.msg);
                     }else{
                     	if(YW.options.myerror){
-                    		myerror(json);
+                    		YW.options.myerror(json);
                     	}else{
                     		alert(json['msg']);
                     	}
@@ -195,7 +195,9 @@ YW={
         if(options.error==undefined){
             options.error = YW.options.error;
         }
-        
+        if(options.myerror){
+            YW.options.myerror=options.myerror;
+        }
 //        if(options.mysuccess!=undefined){
 //            options.success = function(data){
 //            	YW.options.success(data);

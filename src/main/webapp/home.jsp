@@ -669,7 +669,7 @@ var time_ani2=setTimeout(function(){
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe662;</i> 电话: ${me.tel}</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li onclick="openReg();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 注册账号</a></li>
-                                    <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 修改资料</a></li>
+                                    <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe69d;</i> 修改资料</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></li>
                                     <li><a href="javascript:void(0)" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行账户</a></li>

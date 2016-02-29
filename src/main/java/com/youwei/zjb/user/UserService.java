@@ -203,16 +203,19 @@ public class UserService {
 		if(StringUtils.isEmpty(user.uname)){
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
-//		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
-//		if(tvc==null){
-//			//验证码不正确
-//			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
-//		}
-//		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
-//			//验证码已经过期
-//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
-//		}
-		
+		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+		if(tvc==null){
+			//验证码不正确
+			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+		}
+		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+			//验证码已经过期
+			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+		}
+		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=?", user.tel);
+		if(list.size()>0){
+			throw new GException(PlatformExceptionType.BusinessException,"aaaaaa", "该手机号码已绑定到电脑版账户"+list.get(0).lname);
+		}
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
 		po.tel = user.tel;
@@ -351,15 +354,16 @@ public class UserService {
 		if(StringUtils.isEmpty(user.pwd)){
 			throw new GException(PlatformExceptionType.BusinessException,"请先设置密码");
 		}
-//		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
-//		if(tvc==null){
-//			//验证码不正确
-//			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
-//		}
-//		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
-//			//验证码已经过期
-//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
-//		}
+		
+		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+		if(tvc==null){
+			//验证码不正确
+			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+		}
+		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+			//验证码已经过期
+			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+		}
 		
 		User operUser = ThreadSessionHelper.getUser();
 		
@@ -393,7 +397,7 @@ public class UserService {
 		
 		List<User> list = dao.listByParams(User.class, "from User where cid=? and did = ? and tel=?", operUser.cid , operUser.did , user.tel);
 		if(list.size()>0){
-			throw new GException(PlatformExceptionType.BusinessException,"aaaaaa", "该手机号码已绑定到电脑版账户"+list.get(0).lname);
+			throw new GException(PlatformExceptionType.BusinessException,"lname", list.get(0).lname);
 		}
 		list = dao.listByParams(User.class, "from User where did <> ? and tel=?",operUser.did ,  user.tel);
 		if(list.size()>0){
