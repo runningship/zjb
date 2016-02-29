@@ -203,15 +203,15 @@ public class UserService {
 		if(StringUtils.isEmpty(user.uname)){
 			throw new GException(PlatformExceptionType.BusinessException,"用户名不能为空");
 		}
-//		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
-//		if(tvc==null){
-//			//验证码不正确
-//			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
-//		}
-//		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
-//			//验证码已经过期
-//			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
-//		}
+		TelVerifyCode tvc = dao.getUniqueByParams(TelVerifyCode.class, new String[]{"tel","code" },  new Object[]{user.tel , verifyCode});
+		if(tvc==null){
+			//验证码不正确
+			throw new GException(PlatformExceptionType.BusinessException,"验证码不正确");
+		}
+		if(System.currentTimeMillis() - tvc.sendtime.getTime()>300*1000){
+			//验证码已经过期
+			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
+		}
 		User me = ThreadSessionHelper.getUser();
 		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=? and id<>? ", user.tel , me.id);
 		if(list.size()>0){
