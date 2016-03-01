@@ -176,6 +176,12 @@ function chooseHouse(){
 }
 function getSider(id){
     if(id){
+//    	var frame = $('#sideCont');
+//    	frame.attr('src', 'about:blank');  
+//    	frame[0].contentWindow.document.write('');//清空iframe的内容
+//    	frame[0].contentWindow.close();//避免iframe内存泄漏
+//    	frame[0].remove();
+//    	$('.MainRightConL').append('<iframe id="sideCont" src="" style="width:100%;height:100%;border:none"></iframe>');
         $('#sideCont').attr('src','/house/houseSee_v2.jsp?id='+id+'&chuzu='+chuzu);
     }
 }

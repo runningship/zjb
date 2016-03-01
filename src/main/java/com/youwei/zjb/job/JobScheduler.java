@@ -13,14 +13,14 @@ public class JobScheduler extends Thread{
 	private Map<String,HouseRentJob> jobs = new HashMap<String,HouseRentJob>();
 	
 	public JobScheduler(){
-		Pull58Rent job58 = new Pull58Rent();
-		job58.setDetailPageInterval(10000);
-		jobs.put(job58.getJobName(), job58);
-		
-		PullGJRent jobGJ = new PullGJRent();
-		jobGJ.setDetailPageInterval(1000);
-		jobGJ.setListPageInterval(40000);
-		jobs.put(jobGJ.getJobName(), jobGJ);
+//		Pull58Rent job58 = new Pull58Rent();
+//		job58.setDetailPageInterval(10000);
+//		jobs.put(job58.getJobName(), job58);
+//		
+//		PullGJRent jobGJ = new PullGJRent();
+//		jobGJ.setDetailPageInterval(1000);
+//		jobGJ.setListPageInterval(40000);
+//		jobs.put(jobGJ.getJobName(), jobGJ);
 		
 		Pull365Rent job365 = new Pull365Rent();
 		job365.setDetailPageInterval(100);

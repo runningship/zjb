@@ -53,7 +53,7 @@ function getContent(){
       $('#uname').val(json['uname']); 
       $('#mobileDeadtime').val(json['mobileDeadtime']); 
       $('.btn-primary').removeClass('active');
-	  $('#mobile').hide();
+	  //$('#mobile').hide();
       
       var zz = $('input[name=mobileON][value='+json['mobileON']+']').parent();
       $('input[name=mobileON][value='+json['mobileON']+']').attr('checked','checked');

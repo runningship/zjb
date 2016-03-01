@@ -281,14 +281,16 @@ public class PService {
 		device.deviceId = deviceId;
 		device.tel = tel;
 		dao.saveOrUpdate(device);
-		Integer pcuid = UserHelper.getAnotherUser(user.id);
-		User pcuser = dao.get(User.class, pcuid);
-		if(pcuser!=null){
-			mv.data.put("pcLname", pcuser.lname);
-//			if(pcuser.Department().deadline!=null){
-//				mv.data.put("pcDeadTime", DataHelper.dateSdf.format(pcuser.Department().deadline));
-//			}
+		if(user.lname==null){
+			Integer pcuid = UserHelper.getAnotherUser(user.id);
+			User pcuser = dao.get(User.class, pcuid);
+			if(pcuser!=null){
+				mv.data.put("pcLname", pcuser.lname);
+			}
+		}else{
+			mv.data.put("pcLname", user.lname);
 		}
+		
 		mv.data.put("avatar", user.avatar);
 //		pushToOther(tel,deviceId);
 		return mv;

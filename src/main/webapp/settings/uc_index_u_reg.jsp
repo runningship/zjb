@@ -48,9 +48,26 @@ function divShow(T){
 $('.'+T).addClass('db').removeClass('dn').siblings().removeClass('db').addClass('dn');
 }
 function submits(){
-	var tel = $('#tel').val();
-	if(!checkMobile(tel)){
+    var uname = $('.uname'),
+    unameV = uname.val(),
+    unameL = unameV.length;
+    if(!unameV){
+        alert('请输入您的姓名');
+        uname.focus();
+        uname.parents('label').addClass('form-err').find('.tip').text('请输入您的姓名');
+        return;
+    }else if(unameL<=1||unameL>4){
+        alert('请输入您的真实姓名');
+        uname.focus();
+        uname.parents('label').addClass('form-err').find('.tip').text('请输入您的真实姓名');
+        return;
+    }
+    var tel = $('#tel'),
+    telV = tel.val();
+	if(!validateMobile(telV)){
 		alert('请输入正确的手机号码');
+        tel.focus();
+        tel.parents('label').addClass('form-err').find('.tip').text('请输入正确的手机号');
 		return;
 	}
   var a=$('form[name=form1]').serialize();
@@ -59,7 +76,7 @@ function submits(){
     url: '/c/user/reg',
     data:a,
     mysuccess: function(data){
-        alert('添加成功');
+        //alert('添加成功');
         var json = JSON.parse(data);
         setTimeout(function(){
         	$('#reg_tel').text(json.tel);
@@ -100,6 +117,17 @@ $(document).ready(function() {
       });
 });
 
+function validateMobile(tel){
+    var isMob = new RegExp(/^(1[34578][0-9]{9})$/);
+    if(!tel){
+        return false;
+    }
+    if(isMob.test(tel)){
+        return true;
+    }else{
+        return false;
+    }
+}
 var sendingVerifyCode;
 function getVerfiyCode(btn){
 	event.preventDefault();
@@ -109,9 +137,10 @@ function getVerfiyCode(btn){
 	}
 	var tel = $('#tel'),
     telV = tel.val();
-	if(!telV){
+	if(!validateMobile(telV)){
 		alert('请先填写有效手机号码');
         tel.focus();
+        tel.parents('label').addClass('form-err').find('.tip').text('请输入正确的手机号');
 		return;
 	}
 	telV = telV.trim();
@@ -143,6 +172,28 @@ function setcode(){
 		$('.getCode').html('已发送('+times+')');
 	},1000);
 }
+
+
+$(document).on('keyup focus change', '#tel', function(event) {
+    var Thi=$(this),
+    ThiV   = Thi.val(),
+    ThiLen = ThiV.length,
+    ThiP   = Thi.parents('label');
+//    console.log(ThiLen)
+    if(ThiLen==11){
+        ThiP.removeClass('form-err').find('.tip').text('');
+    }else if(!validateMobile(ThiV)){
+        ThiP.addClass('form-err').find('.tip').text('请输入正确的手机号');
+    }else{
+        ThiP.removeClass('form-err').find('.tip').text('');
+    }
+    //event.preventDefault();
+    /* Act on the event */
+}).on('change', 'input.input', function(event) {
+    var Thi=$(this),
+    ThiP   = Thi.parents('label');
+    ThiP.removeClass('form-err').find('.tip').text('');
+})
 </script>
 <style type="text/css">
 .yzm{width: 60%;    float: left;}
@@ -162,14 +213,19 @@ body{ width: 500px; height: auto; }
 
 .dn{ display: none; }
 .ewmbox{ float: left; padding-bottom: 50px; }
+
+.form-err{ color: #F00; }
+.form-err .input-label{ color: #F00;}
+.form-err input.input{ color: #F00; border-color: #F00; background: #FEFFC4; }
+.form-err span.tip{ color: #F00; }
 </style>
 </head>
 <body>
 <div class="bodybox">
     <form name="form1" class="boxs form-box form1 db" role="form" onsubmit="submits();return false;">
         <ul class="form-ul">
-            <li class=""><label class="form-section form-active"><strong class="input-label">姓名：</strong><input type="text" class="input placeholders" name="uname" placeholder="您的姓名"><span class="tip">有</span></label></li>
-            <li class=""><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" placeholder="您的手机号"><span class="tip">有</span></label></li>
+            <li class=""><label class="form-section form-active"><strong class="input-label">姓名：</strong><input type="text" class="input placeholders uname" name="uname" placeholder="您的姓名"><span class="tip">有</span></label></li>
+            <li class=""><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" placeholder="您的手机号" maxlength="11" autocomplete="off"><span class="tip">有</span></label></li>
             <li class=""><label class="form-section form-active"><strong class="input-label">密码：</strong><input type="password" class="input placeholders" name="pwd" placeholder="登录密码"></label></li>
             <li class=""><label class="form-section tow form-active"><strong class="input-label">验证码：</strong><a href="#" class="btn btn_act code getCode" data-type="regCode" data-txt="发送验证码" onclick="getVerfiyCode(this);return false;">发送验证码</a><input type="text" class="input placeholders c" name="verifyCode" placeholder="收到的验证码"></label></li>
             <li class="">

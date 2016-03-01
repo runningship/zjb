@@ -61,7 +61,7 @@ function submits(){
         mysuccess: function(data){
             divShow('yes');
             //art.dialog.close();
-            alert('修改成功');
+            //alert('修改成功');
         }
     });
 }
@@ -97,6 +97,11 @@ function getCode(){
         tel.focus();
 		return;
 	}
+    if(tel.parents('label').hasClass('form-err')){
+        alert('已被店内其他帐号绑定！');
+        tel.focus();
+        return;
+    }
     telV = telV.trim();
 	sendingVerifyCode = true;
 	$('.getCode').addClass('gray');
@@ -161,18 +166,21 @@ function isPhoneUse(){
                 telP.removeClass('form-err').find('.tip').text('可用');
             }else{
                 telP.addClass('form-err').find('.tip').text('已被绑定:'+data.lname);
+
             }
         }
     });
 }
-$(document).on('keyup', '#tel', function(event) {
+$(document).on('keyup focus change', '#tel', function(event) {
     var Thi=$(this),
     ThiV   = Thi.val(),
     ThiLen = ThiV.length,
     ThiP   = Thi.parents('label');
-    console.log(ThiLen)
+//    console.log(ThiLen)
     if(ThiLen==11){
-        isPhoneUse();
+        ThiP.removeClass('form-err').find('.tip').text('');
+    }else if(!validateMobile(ThiV)){
+        ThiP.addClass('form-err').find('.tip').text('请输入正确的手机号');
     }else{
         ThiP.removeClass('form-err').find('.tip').text('');
     }
@@ -200,6 +208,9 @@ body{ width: 500px; height: auto; }
 .dn{ display: none; }
 .ewmbox{ float: left; padding-bottom: 50px; }
 
+.yes { padding-top: 0; padding-bottom: 0; }
+.yes .ewmbox{ float: none; padding:0; padding-top: 20px; }
+
 .form-err{ color: #F00; }
 .form-err .input-label{ color: #F00;}
 .form-err input.input{ color: #F00; border-color: #F00; background: #FEFFC4; }
@@ -212,7 +223,7 @@ body{ width: 500px; height: auto; }
         <ul class="form-ul">
             <li class=""><label class="form-section  form-active"><strong class="input-label">账号：</strong><input type="text" class="input placeholders " name="lname" value="${user.lname }"  disabled="disabled" placeholder="用户名/手机/input"><span class="tip"></span></label></li>
             <li class="xm"><label class="form-section form-active"><strong class="input-label">姓名：</strong><input type="text" class="input placeholders uname" name="uname" value="${user.uname }" placeholder="您的姓名"><span class="tip"></span></label></li>
-            <li class="zjh"><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" maxlength="11" value="${user.tel }" placeholder="您的手机号"autocomplete="off"><span class="tip">已被绑定：000024</span></label></li>
+            <li class="zjh"><label class="form-section form-active"><strong class="input-label">手机号：</strong><input type="text" class="input placeholders" id="tel" name="tel" maxlength="11" value="${user.tel }" placeholder="您的手机号"autocomplete="off"><span class="tip">当前账号绑定</span></label></li>
             <li class="mm"><label class="form-section form-active"><strong class="input-label">密码：</strong><input type="password" class="input placeholders" name="pwd" placeholder="不修改请留空"></label></li>
             <li class="yzm"><label class="form-section tow form-active"><strong class="input-label">验证码：</strong><a href="#" class="btn btn_act code getCode" data-type="regCode" data-txt="发送验证码" class="" onclick="getCode();return false;">发送验证码</a><input type="text" class="input placeholders c verifyCode" name="verifyCode" value="" placeholder="收到的验证码"></label></li>
         </ul>
@@ -220,9 +231,9 @@ body{ width: 500px; height: auto; }
         <input type="submit" class="submit" style="display: none;">
     </form>
     <div class="alert yes dn">
-        <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
-        <div><i class="iconfont">&#xe67b;</i> 成功修改个人信息！</div>
+        <h2><i class="iconfont">&#xe67b;</i> 成功修改个人信息！</h2>
         <p class="conts">（绑定手机可实现电脑版和手机版“收藏、新房推荐记录”等数据的同步！）</p>
+        <p class="ewmbox"><img src="../style/images/ajb_all_600.png" width="120" alt="" class="ewm"><br>        下载中介宝APP</p>
         <a onclick="api.close()" class="submit"></a>
     </div>
     <div class="alert no1 dn">

@@ -515,7 +515,7 @@ loadCss('${refPrefix}/style/style.css');
 loadCss('${refPrefix}/style/css_ky.css');
 
 loadJs('${refPrefix}/js/buildHtml.js');
-loadJs('${refPrefix}/js/jquery.j.tool.js');
+//loadJs('${refPrefix}/js/jquery.j.tool.js');
 loadJs('${refPrefix}/bootstrap/js/bootstrap.js');
 loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
 loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
