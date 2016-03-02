@@ -286,77 +286,77 @@ function buildQueryOptions(){
                                 </div>
                                 <div style="display:table-row;">  
                                                   
-                                      <div style=" width:100%; display:table-cell;">
+                                    <div style=" width:100%; display:table-cell;">
                                      
-                                             <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" id="FY_TableTit">
-                                                    <tr>
-                                                    	<c:if test="${authNames.contains('fy_batch_del') }"><th width="40"><input type="checkbox" onclick="selectAll(this);"/><a href="javascript:void(0)"  onclick="batchDeletehouse();";>删除</a></th></c:if>
-                                                      <th width="60">编号</th>
-                                                      <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
-                                                      <th width="75">操作</th>
-                                                      </c:if>
-                                                      <th width="50">状态</th>
-                                                      <th width="60">区域</th>
-                                                      <th style=" width:200px; min-width:50px;">楼盘名称</th>
-                                                      <th width="50">楼型</th>
-                                                      <th width="60">户型</th>
-                                                      <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('mji')">面积</a><span id="mjiOrder" next="asc" class="order"></span></th>
-                                                      <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('zjia')">总价(万)</a><span id="zjiaOrder" next="asc" class="order"></span></th>
-                                                      <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('djia')">单价</a><span id="djiaOrder" next="asc" class="order"></span></th>
-                                                      <th width="50">楼层</th>
-                                                      <th width="50">装潢</th>
-                                                      <th width="90" style="padding-right:7px;"><a href="javascript:void(0)" onclick="setPageOrder('dateadd')">发布时间</a><span id="dateaddOrder" next="asc" class="order">↓</span></th>
-                                                      <c:if test="${authNames.contains('fy_show_updatetime')}">
-                                                      <th width="90" style="padding-right:7px;"><a href="javascript:void(0)" onclick="setPageOrder('updatetime')">更新时间</a><span id="updatetimeOrder" next="asc" class="order"></span></th>
-                                                      </c:if>
-                                                    </tr>
-                                              </table>
+                                        <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain" id="FY_TableTit">
+                                            <tr>
+                                            	<c:if test="${authNames.contains('fy_batch_del') }"><th width="40"><input type="checkbox" onclick="selectAll(this);"/><a href="javascript:void(0)"  onclick="batchDeletehouse();";>删除</a></th></c:if>
+                                              <th width="60">编号</th>
+                                              <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
+                                              <th width="75">操作</th>
+                                              </c:if>
+                                              <th width="50">状态</th>
+                                              <th width="60">区域</th>
+                                              <th style=" width:200px; min-width:50px;">楼盘名称</th>
+                                              <th width="50">楼型</th>
+                                              <th width="60">户型</th>
+                                              <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('mji')">面积</a><span id="mjiOrder" next="asc" class="order"></span></th>
+                                              <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('zjia')">总价(万)</a><span id="zjiaOrder" next="asc" class="order"></span></th>
+                                              <th width="50"><a href="javascript:void(0)" onclick="setPageOrder('djia')">单价</a><span id="djiaOrder" next="asc" class="order"></span></th>
+                                              <th width="50">楼层</th>
+                                              <th width="50">装潢</th>
+                                              <th width="90" style="padding-right:7px;"><a href="javascript:void(0)" onclick="setPageOrder('dateadd')">发布时间</a><span id="dateaddOrder" next="asc" class="order">↓</span></th>
+                                              <c:if test="${authNames.contains('fy_show_updatetime')}">
+                                              <th width="90" style="padding-right:7px;"><a href="javascript:void(0)" onclick="setPageOrder('updatetime')">更新时间</a><span id="updatetimeOrder" next="asc" class="order"></span></th>
+                                              </c:if>
+                                            </tr>
+                                        </table>
                                              
                                      
-                                      </div>
+                                    </div>
                                   
                                   </div>
                                     
                                  <div id="contentTable" style="display:table-row;" >           
 
-                                            <div class="FY_RCon" style=" width:100%; display:table-cell;">
-                                                <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">
-                                                    <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover" id="KY_TableMain">
-                                                        <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
-                                                        	<c:if test="${authNames.contains('fy_batch_del') }"><td width="20"><input class="checkbox" type="checkbox"  data-id="$[id]" onclick="chooseHouse();" /></td></c:if>
-                                                          <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
-                                                          <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
-	                                                          <td  width="75" >
-	                                                          	<c:if test="${authNames.contains('fy_sh') }">
-	                                                            	<a href="##" show="showAction($[cid],${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
-	                                                            </c:if>
-	                                                            <c:if test="${authNames.contains('fy_edit') }">
-	                                                            	<a href="#" auth="fy_edit" show="showAction($[cid],${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
-	                                                            </c:if>
-	                                                            <c:if test="${authNames.contains('fy_del') }">
-	                                                            	<a href="##" show="showAction($[cid],${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
-	                                                            </c:if>
-	                                                          </td>
-                                                          </c:if>
-                                                          
-                                                          <td width="50" class="ztai_$[ztai]">$[ztai]</td>
-                                                          <td width="60">$[quyu]</td>
-                                                          <td class="br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></div></td>
-                                                          <td width="50">$[lxing]</td>
-                                                          <td width="60">$[hxf]-$[hxt]-$[hxw]</td>
-                                                          <td width="50">$[mji]</td>
-                                                          <td width="50">$[zjia]</td>
-                                                          <td width="50" class="cs">$[djia]</td>
-                                                          <td width="50">$[lceng]/$[zceng]</td>
-                                                          <td width="50">$[zxiu]</td>
-                                                          <td width="90" class="sy" runscript="true" title="$[dateadd]" style="padding-right:7px;">'$[dateadd]'.split(' ')[0]</td>
-                                                          <c:if test="${authNames.contains('fy_show_updatetime')}">
-                                                          	<td width="90" class="sy" style="padding-right:7px;">$[updatetime]</td>
-                                                          </c:if>
-                                                      </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                    <div class="FY_RCon" style=" width:100%; display:table-cell;">
+                                        <div style="height:100%; float:left; overflow:hidden; overflow-y:auto;">
+                                            <table border="0" cellspacing="0" cellpadding="0" class="KY_TableMain TableB table-hover" id="KY_TableMain">
+                                                <tr data-hid="$[id]" style="display:none;" class="id_House_list" >
+                                                	<c:if test="${authNames.contains('fy_batch_del') }"><td width="20"><input class="checkbox" type="checkbox"  data-id="$[id]" onclick="chooseHouse();" /></td></c:if>
+                                                  <td width="60"><span class="piliang hidden"><input type="checkbox" name="ids" value="$[id]" style="display:none"> </span>$[id]</td>
+                                                  <c:if test="${authNames.contains('fy_sh') || authNames.contains('fy_edit') || authNames.contains('fy_del') }">
+                                                      <td  width="75" >
+                                                      	<c:if test="${authNames.contains('fy_sh') }">
+                                                        	<a href="##" show="showAction($[cid],${cid},$[seeGX])" class="shenhe_$[sh]" data-hid="$[id]" runscript="true" data-rel="del" onclick="shenheFy($[id],this)">getShenHeText($[sh])</a>
+                                                        </c:if>
+                                                        <c:if test="${authNames.contains('fy_edit') }">
+                                                        	<a href="#" auth="fy_edit" show="showAction($[cid],${cid},$[seeGX])" class="edit" data-hid="$[id]" onclick="houseEdit($[id])" data-rel="edit">改</a>
+                                                        </c:if>
+                                                        <c:if test="${authNames.contains('fy_del') }">
+                                                        	<a href="##" show="showAction($[cid],${cid},$[seeGX])" class="del" data-hid="$[id]" data-rel="del" onclick="deletehouse($[id])">删</a>
+                                                        </c:if>
+                                                      </td>
+                                                  </c:if>
+                                                  
+                                                  <td width="50" class="d_ztai ztai_$[ztai]">$[ztai]</td>
+                                                  <td width="60" class="d_quyu">$[quyu]</td>
+                                                  <td class="d_area br_area" style=" width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[area] <span show="$[seeFH]==1">$[dhao]-$[fhao]</span></div></td>
+                                                  <td width="50" class="d_lxing">$[lxing]</td>
+                                                  <td width="60" class="d_hxing">$[hxf]-$[hxt]-$[hxw]</td>
+                                                  <td width="50" class="d_mji">$[mji]</td>
+                                                  <td width="50" class="d_zjia">$[zjia]</td>
+                                                  <td width="50" class="d_djia cs">$[djia]</td>
+                                                  <td width="50" class="d_lceng">$[lceng]/$[zceng]</td>
+                                                  <td width="50" class="d_zxiu">$[zxiu]</td>
+                                                  <td width="90" class="d_adate sy" runscript="true" title="$[dateadd]" style="padding-right:7px;">'$[dateadd]'.split(' ')[0]</td>
+                                                  <c:if test="${authNames.contains('fy_show_updatetime')}">
+                                                  	<td width="90" class="d_udate sy" style="padding-right:7px;">$[updatetime]</td>
+                                                  </c:if>
+                                              </tr>
+                                            </table>
+                                        </div>
+                                    </div>
                                   </div>
 
                                 <div style="display:table-row; height:35px; overflow:hidden;">     

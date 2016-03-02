@@ -220,28 +220,28 @@ function updateHouse(id,data){
   getSider(id);
   var json = JSON.parse(data);
   var tr = $('tr[data-hid='+json['house']['id']+']');
-  var a = tr.children()[3]
-  var b = tr.children()[4]
-  var c = tr.children()[5]
-  var d = tr.children()[6]
-  var e = tr.children()[7]
-  var f = tr.children()[8]
-  var g = tr.children()[9]
-  var h = tr.children()[10]
-  var i = tr.children()[11]
-  var j = tr.children()[12]
-  var k = tr.children()[13]
-  $(a).html(json['house']['ztai']);
-  $(b).html(json['house']['quyu']);
-  $(c).html(json['house']['area']+' '+json['house']['dhao']+'-'+json['house']['fhao']);
-  $(d).html(json['house']['lxing']);
-  $(e).html(json['house']['hxf']+'-'+json['house']['hxt']+'-'+json['house']['hxw']);
-  $(f).html(json['house']['mji']);
-  $(g).html(json['house']['zjia']);
-  $(h).html(json['house']['djia']);
-  $(i).html(json['house']['lceng']+'/'+json['house']['zceng']);
-  $(j).html(json['house']['zxiu']);
-  $(k).html(json['house']['dateadd']);
+  var d_ztai = tr.children('.d_ztai')
+  var d_quyu = tr.children('.d_quyu')
+  var d_area = tr.children('.d_area')
+  var d_lxing = tr.children('.d_lxing')
+  var d_hxing = tr.children('.d_hxing')
+  var d_mji = tr.children('.d_mji')
+  var d_zjia = tr.children('.d_zjia')
+  var d_djia = tr.children('.d_djia')
+  var d_lceng = tr.children('.d_lceng')
+  var d_zxiu = tr.children('.d_zxiu')
+  var d_adate = tr.children('.d_adate')
+  $(d_ztai).html(json['house']['ztai']);
+  $(d_quyu).html(json['house']['quyu']);
+  $(d_area).html(json['house']['area']+' '+json['house']['dhao']+'-'+json['house']['fhao']);
+  $(d_lxing).html(json['house']['lxing']);
+  $(d_hxing).html(json['house']['hxf']+'-'+json['house']['hxt']+'-'+json['house']['hxw']);
+  $(d_mji).html(json['house']['mji']);
+  $(d_zjia).html(json['house']['zjia']);
+  $(d_djia).html(json['house']['djia']);
+  $(d_lceng).html(json['house']['lceng']+'/'+json['house']['zceng']);
+  $(d_zxiu).html(json['house']['zxiu']);
+  $(d_adate).html(json['house']['dateadd']);
 }
 
     $(document).on('click', '.adboxs', function(event) {
