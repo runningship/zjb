@@ -31,6 +31,7 @@ import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.house.entity.Agent;
 import com.youwei.zjb.house.entity.House;
+import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.house.entity.TelVerifyCode;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
@@ -400,27 +401,32 @@ public class UserService {
 		if(list.size()>0){
 			throw new GException(PlatformExceptionType.BusinessException,"lname", list.get(0).lname);
 		}
+//		list = dao.listByParams(User.class, "from User where did <> ? and tel=?",operUser.did ,  user.tel);
+//		if(list.size()>0){
+//			//如果有其他店的电脑版账号X关联该手机号码，则直接修改账号X至本店新电脑版账号
+//			User po = list.get(0);
+//			String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 变更了用户["+po.Department().namea+"-"+user.uname+"]到"+operUser.Department().namea+":"+user.lname;
+//			po.cid = operUser.cid;
+//			po.did = operUser.did;
+//			po.lname = user.lname;
+//			if(po.mobileON==null || po.mobileON==0){
+//				po.mobileON = 1;
+//				Calendar cal = Calendar.getInstance();
+//				cal.add(Calendar.DAY_OF_MONTH, 1);
+//				po.mobileDeadtime = cal.getTime();
+//			}
+//			dao.saveOrUpdate(po);
+//			//saveor update
+//			// add log
+//			operService.add(OperatorType.人事记录, operConts);
+//			mv.data.put("lname", lname);
+//			mv.data.put("msg", "添加用户成功");
+//			return mv;
+//		}
 		list = dao.listByParams(User.class, "from User where did <> ? and tel=?",operUser.did ,  user.tel);
+		User oldUser = null;
 		if(list.size()>0){
-			//如果有其他店的电脑版账号X关联该手机号码，则直接修改账号X至本店新电脑版账号
-			User po = list.get(0);
-			String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 变更了用户["+po.Department().namea+"-"+user.uname+"]到"+operUser.Department().namea+":"+user.lname;
-			po.cid = operUser.cid;
-			po.did = operUser.did;
-			po.lname = user.lname;
-			if(po.mobileON==null || po.mobileON==0){
-				po.mobileON = 1;
-				Calendar cal = Calendar.getInstance();
-				cal.add(Calendar.DAY_OF_MONTH, 1);
-				po.mobileDeadtime = cal.getTime();
-			}
-			dao.saveOrUpdate(po);
-			//saveor update
-			// add log
-			operService.add(OperatorType.人事记录, operConts);
-			mv.data.put("lname", lname);
-			mv.data.put("msg", "添加用户成功");
-			return mv;
+			oldUser = list.get(0);
 		}
 		user.did = operUser.did;
 		user.cid = operUser.cid;
@@ -432,10 +438,33 @@ public class UserService {
 		dao.saveOrUpdate(user);
 		String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 添加了用户["+user.Department().namea+"-"+user.uname+"]";
 		operService.add(OperatorType.人事记录, operConts);
+		
+		if(oldUser!=null){
+			//如果有其他店的电脑版账号X关联该手机号码,  则在新的添加账号，同时将老账号的数据同步到新数据上
+			//入房源的收藏（将老uid改成新的uid）
+			oldUser.tel="";
+			dao.saveOrUpdate(oldUser);
+			moveDataToUser(oldUser , user);
+		}
 		mv.data.put("msg", "添加用户成功");
 		mv.data.put("lname", lname);
 		mv.data.put("tel", user.tel);
 		return mv;
+	}
+	
+	private void moveDataToUser(User oldUser , User newUser){
+		String oldFavStr = "@"+oldUser.id+"|";
+		String newFavStr = "@"+oldUser.id+"|";
+		List<House> list = dao.listByParams(House.class, "from House where fav like ? ", "%"+oldFavStr+"%");
+		for(House h : list){
+			h.fav = h.fav.replace(oldFavStr, newFavStr);
+			dao.saveOrUpdate(h);
+		}
+		List<HouseRent> listRent = dao.listByParams(HouseRent.class, "from House where fav like ? ", "%"+oldFavStr+"%");
+		for(HouseRent hr : listRent){
+			hr.fav = hr.fav.replace(oldFavStr, newFavStr);
+			dao.saveOrUpdate(hr);
+		}
 	}
 	
 	private void fillQuery(UserQuery query,StringBuilder hql, List<Object> params){
@@ -508,7 +537,7 @@ public class UserService {
 		StringBuilder hql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel, u.lasttime as lasttime, u.lastPaytime as lastPaytime ,u.addtime as addtime ,u.mobileDeadtime as endtime,u.mobileON as mobileON  "
-				+ "from User  u  where u.tel is not null and u.tel <> '' ");
+				+ "from User  u  where u.mobileDeadtime is not null ");
 		if(StringUtils.isNotEmpty(query.tel)){
 			query.tel = query.tel.trim();
 			query.tel = query.tel.replace(String.valueOf((char)160), "");
