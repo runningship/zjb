@@ -382,3 +382,10 @@ function onSetDataEnd(){
 function selectAll(obj){
 	$('.checkbox').prop('checked' , obj.checked);
 }
+
+function getZjia(zjia){
+	if(zjia==0){
+		return '面议';
+	}
+	return zjia;
+}

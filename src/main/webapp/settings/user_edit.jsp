@@ -60,6 +60,10 @@ function submits(){
         data:a,
         mysuccess: function(data){
             divShow('yes');
+            var json = JSON.parse("{}");
+            json.tel = telV;
+            json.uname = unameV;
+            parent.EditToolUser(json);
             //art.dialog.close();
             //alert('修改成功');
         }

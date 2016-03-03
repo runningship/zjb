@@ -213,24 +213,74 @@ public class UserService {
 			//验证码已经过期
 			throw new GException(PlatformExceptionType.BusinessException,"验证码已经过期");
 		}
-		User me = ThreadSessionHelper.getUser();
-		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=? and id<>? ", user.tel , me.id);
-		if(list.size()>0){
-			throw new GException(PlatformExceptionType.BusinessException,"aaaaaa", "该手机号码已绑定到电脑版账户"+list.get(0).lname);
-		}
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
-		po.tel = user.tel;
+		User me = ThreadSessionHelper.getUser();
+		if(user.tel.equals(me.tel)){
+			dao.saveOrUpdate(po);
+			ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_User, po);
+			return mv;
+		}
+		
+		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=? and id<>? ", user.tel , me.id);
+		User oldUser = null;
+		if(list.size()>0){
+			oldUser = list.get(0);
+		}
 		if(user.pwd!=null){
 			po.pwd = SecurityHelper.Md5(user.pwd);
 			//TODO 同步修改手机版密码
+			Integer muid = UserHelper.getAnotherUser(po.id);
+			User muser = dao.get(User.class, muid);
+			if(muser!=null){
+				muser.pwd = SecurityHelper.Md5(user.pwd);
+				dao.saveOrUpdate(muser);
+			}
 		}
-		dao.saveOrUpdate(po);
+		if(oldUser==null){
+			po.tel = user.tel;
+			dao.saveOrUpdate(po);
+		}else{
+			if(oldUser.did==me.did){
+				throw new GException(PlatformExceptionType.BusinessException,"aaaaaa", "该手机号码已绑定到电脑版账户"+oldUser.lname);
+			}
+			oldUser.tel="";
+			po.tel = user.tel;
+			dao.saveOrUpdate(oldUser);
+			dao.saveOrUpdate(po);
+			moveDataToUser(oldUser, po);
+		}
+		enableMobile(oldUser , po);
 		
 		ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_User, po);
 		return mv;
 	}
 	
+	private void enableMobile(User oldUser, User newUser) {
+		List<User> list = dao.listByParams(User.class, "from User where cid is null and tel=? ", newUser.tel);
+		User muser = list.isEmpty() ? null:list.get(0);
+		if(muser!=null){
+			//手机账号独立,不用管
+		}else{
+			if(newUser.mobileDeadtime==null){
+				if(oldUser==null || oldUser.mobileDeadtime==null){
+					//新开通
+					newUser.mobileON = 1;
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.DAY_OF_MONTH, 1);
+					newUser.mobileDeadtime = cal.getTime();
+				}else{
+					newUser.mobileON = oldUser.mobileON;
+					newUser.mobileDeadtime = oldUser.mobileDeadtime;
+					newUser.avatar = oldUser.avatar;
+					newUser.avatarPath = oldUser.avatarPath;
+				}
+			}else{
+				//只是修改手机号码而已
+			}
+			dao.saveOrUpdate(newUser);
+		}
+	}
 	@WebMethod
 	public ModelAndView updatemobile(User user){
 		ModelAndView mv = new ModelAndView();
@@ -380,61 +430,29 @@ public class UserService {
 		}
 		String pattern="0000000";
 		String lname="";
-		 java.text.DecimalFormat df = new java.text.DecimalFormat(pattern);
-		 if(count==0){
-			 lname=comp.cnum+"0001";
-		 }else{
+		java.text.DecimalFormat df = new java.text.DecimalFormat(pattern);
+		if(count==0){
+			lname=comp.cnum+"0001";
+		}else{
 			 lname=df.format(count+1);
-		 }
-		 user.lname = lname;
-		 
-		User muser = dao.getUniqueByParams(User.class, new String[]{"mobileON" , "tel"}, new Object[]{1 , user.tel});
-		if(muser==null){
-			// 开通手机版
-			user.mobileON = 1;
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, 1);
-			user.mobileDeadtime = cal.getTime();
 		}
-		
-		List<User> list = dao.listByParams(User.class, "from User where cid=? and did = ? and tel=?", operUser.cid , operUser.did , user.tel);
-		if(list.size()>0){
-			throw new GException(PlatformExceptionType.BusinessException,"lname", list.get(0).lname);
-		}
-//		list = dao.listByParams(User.class, "from User where did <> ? and tel=?",operUser.did ,  user.tel);
-//		if(list.size()>0){
-//			//如果有其他店的电脑版账号X关联该手机号码，则直接修改账号X至本店新电脑版账号
-//			User po = list.get(0);
-//			String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 变更了用户["+po.Department().namea+"-"+user.uname+"]到"+operUser.Department().namea+":"+user.lname;
-//			po.cid = operUser.cid;
-//			po.did = operUser.did;
-//			po.lname = user.lname;
-//			if(po.mobileON==null || po.mobileON==0){
-//				po.mobileON = 1;
-//				Calendar cal = Calendar.getInstance();
-//				cal.add(Calendar.DAY_OF_MONTH, 1);
-//				po.mobileDeadtime = cal.getTime();
-//			}
-//			dao.saveOrUpdate(po);
-//			//saveor update
-//			// add log
-//			operService.add(OperatorType.人事记录, operConts);
-//			mv.data.put("lname", lname);
-//			mv.data.put("msg", "添加用户成功");
-//			return mv;
-//		}
-		list = dao.listByParams(User.class, "from User where did <> ? and tel=?",operUser.did ,  user.tel);
-		User oldUser = null;
-		if(list.size()>0){
-			oldUser = list.get(0);
-		}
-		user.did = operUser.did;
+		user.lname = lname;
+	 	user.did = operUser.did;
 		user.cid = operUser.cid;
 		user.addtime = new Date();
 		user.sh = 1;
 		user.lock=1;
 		user.pwd = SecurityHelper.Md5(user.pwd);
-		//TODO
+		
+		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=? ", user.tel );
+		User oldUser = null;
+		if(list.size()>0){
+			oldUser = list.get(0);
+		}
+		if(oldUser!=null && operUser.did==oldUser.did){
+			throw new GException(PlatformExceptionType.BusinessException,"lname", list.get(0).lname);
+		}
+		
 		dao.saveOrUpdate(user);
 		String operConts = "["+operUser.Department().namea+"-"+operUser.uname+ "] 添加了用户["+user.Department().namea+"-"+user.uname+"]";
 		operService.add(OperatorType.人事记录, operConts);
@@ -446,6 +464,7 @@ public class UserService {
 			dao.saveOrUpdate(oldUser);
 			moveDataToUser(oldUser , user);
 		}
+		enableMobile(oldUser, user);
 		mv.data.put("msg", "添加用户成功");
 		mv.data.put("lname", lname);
 		mv.data.put("tel", user.tel);
@@ -454,13 +473,13 @@ public class UserService {
 	
 	private void moveDataToUser(User oldUser , User newUser){
 		String oldFavStr = "@"+oldUser.id+"|";
-		String newFavStr = "@"+oldUser.id+"|";
+		String newFavStr = "@"+newUser.id+"|";
 		List<House> list = dao.listByParams(House.class, "from House where fav like ? ", "%"+oldFavStr+"%");
 		for(House h : list){
 			h.fav = h.fav.replace(oldFavStr, newFavStr);
 			dao.saveOrUpdate(h);
 		}
-		List<HouseRent> listRent = dao.listByParams(HouseRent.class, "from House where fav like ? ", "%"+oldFavStr+"%");
+		List<HouseRent> listRent = dao.listByParams(HouseRent.class, "from HouseRent where fav like ? ", "%"+oldFavStr+"%");
 		for(HouseRent hr : listRent){
 			hr.fav = hr.fav.replace(oldFavStr, newFavStr);
 			dao.saveOrUpdate(hr);

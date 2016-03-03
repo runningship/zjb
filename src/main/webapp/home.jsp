@@ -662,11 +662,11 @@ var time_ani2=setTimeout(function(){
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: ${me.uname}</a></li>
-                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe651;</i> 账号: ${me.lname}</a></li>
-                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe61b;</i> ${cname}-${dname}</a></li>
-                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe657;</i> 职位: ${role.title}</a></li>
-                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe662;</i> 电话: ${me.tel}</a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: <b class="me_uname">${me.uname}</b></a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe651;</i> 账号: <b class="me_lname">${me.lname}</b></a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe61b;</i> <b class="me_cname">${cname}-${dname}</b></a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe657;</i> 职位: <b class="me_title">${role.title}</b></a></li>
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe662;</i> 电话: <b class="me_tel">${me.tel}</b></a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li onclick="openReg();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 注册账号</a></li>
                                     <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe69d;</i> 修改资料</a></li>
@@ -697,7 +697,14 @@ var time_ani2=setTimeout(function(){
 </div>
 
 </div>
-
+<script type="text/javascript">
+function EditToolUser(json){
+    var S=json;//eval(json);
+    if (!S) return false;
+    $('.me_tel').text(S.tel);
+    $('.me_uname').text(S.uname);
+}
+</script>
 
 <div class="adboxs"  id="ad_phone" style="display:none; z-index: 9999;">
     <div class="adboxitem">

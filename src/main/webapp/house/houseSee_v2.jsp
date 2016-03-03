@@ -659,7 +659,10 @@ body .telTable .telBox .onOpen{ text-align: center; }
                 <tr extend_id="zjia">
                   <td class="biaoti">总价：</td>
                   <td class="neirong TextColor1">
-                  <span style=" color:#F00; font-weight:bold;"><fmt:formatNumber  value="${house.zjia}"  type="number"  pattern="###.#" /></span> 万元
+	                  <c:if test="${house.zjia==0 }">面议</c:if>
+	                  <c:if test="${house.zjia!=0 }">
+	                  		<span style=" color:#F00; font-weight:bold;"><fmt:formatNumber  value="${house.zjia}"  type="number"  pattern="###.#" /></span> 万元
+	                  </c:if>
                   </td>
                 </tr>
               </table>

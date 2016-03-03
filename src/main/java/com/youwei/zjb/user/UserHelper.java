@@ -8,6 +8,8 @@ import org.bc.sdak.CommonDaoService;
 import org.bc.sdak.SimpDaoTool;
 import org.bc.sdak.TransactionalServiceHelper;
 
+import cn.jpush.api.utils.StringUtils;
+
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.entity.Role;
 import com.youwei.zjb.entity.RoleAuthority;
@@ -102,6 +104,9 @@ public class UserHelper {
 	
 	public static Integer getAnotherUser(Integer uid){
 		User user1 = dao.get(User.class, uid);
+		if(StringUtils.isEmpty(user1.tel)){
+			return null;
+		}
 		List<User> list = dao.listByParams(User.class, "from User where  tel=?", user1.tel);
 		for(User u : list){
 			if(!user1.id.equals(u.id)){

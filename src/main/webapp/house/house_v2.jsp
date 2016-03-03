@@ -73,7 +73,7 @@ loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
 loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
 loadJs('${refPrefix}/js/DatePicker/WdatePicker.js');
 loadJs('${refPrefix}/js/jquery.j.tool.v2.js');
-loadJs('${refPrefix}/js/house/house_v2.js?15');
+loadJs('${refPrefix}/js/house/house_v2.js?16');
 window.top.iframeChanged('iframe_house');
 </script>
 <script type="text/javascript" >
@@ -345,7 +345,7 @@ function buildQueryOptions(){
                                                   <td width="50" class="d_lxing">$[lxing]</td>
                                                   <td width="60" class="d_hxing">$[hxf]-$[hxt]-$[hxw]</td>
                                                   <td width="50" class="d_mji">$[mji]</td>
-                                                  <td width="50" class="d_zjia">$[zjia]</td>
+                                                  <td width="50"  runscript="true"  class="d_zjia">getZjia($[zjia])</td>
                                                   <td width="50" class="d_djia cs">$[djia]</td>
                                                   <td width="50" class="d_lceng">$[lceng]/$[zceng]</td>
                                                   <td width="50" class="d_zxiu">$[zxiu]</td>

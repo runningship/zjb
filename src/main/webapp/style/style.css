@@ -234,6 +234,7 @@ ul.pagination.ymx_page > li:last-child > span {border-top-right-radius: 0px;bord
 .html .wintools ul.dropdown-menu > li > a:hover span,
 .html .wintools ul.dropdown-menu > li > a:focus span{color: #428bca;text-decoration: none;background-color: #fff;}
 .html .wintools ul a i{font-size: 20px;}
+.html .wintools ul a b{ font-weight: normal;}
 .html .wintools .winBtn.winBtnMenu i{background-position: -10px  3px }
 .html .wintools .winBtn.winBtnMin i{background-position:-60px  3px }
 .html .wintools .winBtn.winBtnMax i{background-position:-110px  3px }
