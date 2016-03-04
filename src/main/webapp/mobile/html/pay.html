@@ -30,6 +30,14 @@ apiready = function(){
 	});
 };
 
+function tickdown(){
+	var end = Date.parse('2016-03-16 00:00:00');
+	var now = new Date().getTime();
+	var left = Math.floor((end-now)/1000);
+	var day = Math.floor(left/3600/24);
+	var hour = Math.floor(left/3600);
+}
+
 function aliPay(){
 var subject = '中介宝手机版费用'+userInfo.tel;
 var body = '中介宝手机版费用'+userInfo.tel;
@@ -153,6 +161,53 @@ YW.ajax({
 	});
 }
 </script>
+<script type="text/javascript">
+var id='saleEnd',
+b='2016 03 16 00:00:00';
+var Hdate='',dateToDates='';
+Hdates = new Date();
+var time_now_server,time_now_client,time_end,time_server_client,timerID;
+time_end=new Date(b);
+time_end=time_end.getTime();
+time_now_server=Hdates;
+time_now_server=time_now_server.getTime();
+time_now_client=new Date();
+time_now_client=time_now_client.getTime();
+time_server_client=time_now_server-time_now_client;
+
+function show_times(){
+var timer = document.getElementById(id);
+if(!timer){return;}
+timer.innerHTML =time_server_client;
+var time_now,time_distance,str_time;
+var int_day,int_hour,int_minute,int_second;
+var time_now=new Date();
+time_now=time_now.getTime()+time_server_client;
+time_distance=time_end-time_now;
+if(time_distance>0){
+int_day=Math.floor(time_distance/86400000)
+time_distance-=int_day*86400000;
+int_hour=Math.floor(time_distance/3600000)
+time_distance-=int_hour*3600000;
+int_minute=Math.floor(time_distance/60000)
+time_distance-=int_minute*60000;
+int_second=Math.floor(time_distance/1000)
+if(int_hour<10)
+int_hour="0"+int_hour;
+if(int_minute<10)
+int_minute="0"+int_minute;
+if(int_second<10)
+int_second="0"+int_second;
+str_time=int_day+"天"+int_hour+"小时"+int_minute+"分钟"+int_second+"秒";
+timer.innerHTML=str_time;
+setTimeout("show_times()",1000);
+}else{
+timer.innerHTML =timer.innerHTML;
+clearTimeout(timerID)
+} 
+}
+setTimeout("show_times()",1000);
+</script>
 <style type="text/css">
 	.gift{text-align: center;
   height: 40px;
@@ -167,6 +222,7 @@ YW.ajax({
     text-indent: 18pt;
     word-break: break-all;padding-top: 5pt;
     color: red;}
+.saleEnd{    position: absolute;    top: 26pt;    font-size: 9pt;    color: darkgrey;    height: 12pt;    line-height: 12pt;    right: 0pt;}
 </style>
 </head>
 <body class="pay">
@@ -204,8 +260,9 @@ YW.ajax({
                 <li class="no" onclick="selectBuyMonth(12,'yearPay');">
                     <label class="formItem check ">
                         <span class="icon"><i class="iconfont y">&#xe627;</i><i class="iconfont n">&#xe631;</i></span>
-                        <span class="inputbox">年付 <span id="yearPay">300</span>元  <b>已优惠 180元</b></span>
+                        <span class="inputbox">年付 <span id="yearPay">300</span>元  <b>已优惠 180元</b><span class="saleEnd" id="saleEnd"></span></span>
                         <input type="radio" class="hidden checkbox" name="checkbox" id="checkbox" value="40" >
+                        
                     </label>
                 </li>
             </ul>

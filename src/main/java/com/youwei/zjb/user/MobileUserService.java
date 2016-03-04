@@ -317,6 +317,13 @@ public class MobileUserService {
 		muser.pwd = SecurityHelper.Md5(pwd);
 		dao.saveOrUpdate(muser);
 		
+		//同步修改电脑版账号密码
+		Integer pcuid = UserHelper.getAnotherUser(muser.id);
+		User pcuser = dao.get(User.class, pcuid);
+		if(pcuser!=null){
+			pcuser.pwd = muser.pwd;
+			dao.saveOrUpdate(pcuser);
+		}
 		mv.data.put("result", "1");
 		return mv;
 	}

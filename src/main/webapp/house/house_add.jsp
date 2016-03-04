@@ -147,6 +147,10 @@ $(document).ready(function() {
     }
 });
 </script>
+<style type="text/css">
+.tooltip-inner{ white-space: nowrap;}
+.tooltip-inner i.iconfont{font-size: 12px;}
+</style>
 </head>
 <body>
 <div class="html edit title" style="height:500px; width:620px;">
@@ -297,13 +301,13 @@ $(document).ready(function() {
                             <label for="seeGX" class="col-xs-2 control-label">权限:</label>
                             <div class="col-xs-10">
                             <span class="btn-group">
-                                <label class="btn btn-default" data-toggle="tooltip" title="☑为所有用户可看<br>□为本公司可看　" data-html="true">
+                                <label class="btn btn-default" data-toggle="tooltip" title="<i class='iconfont'>&#xe6a1;</i>为所有用户可看<br><i class='iconfont'>&#xe6a0;</i>为本公司可看　" data-html="true">
                                     <input type="checkbox" value="1" name="seeGX" id="seeGX" autocomplete="off" tabindex="12"> 发布至共享平台
                                 </label>
-                                <label class="btn btn-default" data-toggle="tooltip" title="☑为所有用户可看<br>□为自己可看　　" data-html="true">
+                                <label class="btn btn-default" data-toggle="tooltip" title="<i class='iconfont'>&#xe6a1;</i>为所有用户可看<br><i class='iconfont'>&#xe6a0;</i>为自己可看　　" data-html="true">
                                     <input type="checkbox" value="1" name="seeFH" id="seeFH" autocomplete="off" tabindex="12" checked> 显示房号栋号
                                 </label>
-                                <label class="btn btn-default" data-toggle="tooltip" title="☑共享房主号码　　<br>□仅显示业务员号码" data-html="true">
+                                <label class="btn btn-default" data-toggle="tooltip" title="<i class='iconfont'>&#xe6a1;</i>共享房主号码　　<br><i class='iconfont'>&#xe6a0;</i>仅显示业务员号码" data-html="true">
                                     <input type="checkbox" value="1" name="seeHM" id="seeHM" autocomplete="off" tabindex="12" checked> 显示房主号码
                                 </label>
                             </span>

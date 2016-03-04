@@ -48,7 +48,12 @@ function getContent(){
     mysuccess: function(result){
       var json = JSON.parse(result);
       $('#id').val(json['id']);
-      $('#lname').val(json['lname']);
+      if(json.lname){
+    	  $('#lname').val(json['lname']);  
+      }else{
+    	  $('#pcaccount').hide();
+      }
+      
       $('#tel').val(json['tel']); 
       $('#uname').val(json['uname']); 
       $('#mobileDeadtime').val(json['mobileDeadtime']); 
@@ -98,7 +103,7 @@ $(document).ready(function() {
                 <div>
                     <input type="hidden" name="id" id="id">
                 </div>
-                <div class="form-group">
+                <div id="pcaccount" class="form-group">
                     <label class="col-xs-3 control-label">电脑账号:</label>
                     <div class="col-xs-8">
                         <input type="text" class="form-control"  disabled="disabled"  id="lname" placeholder="">

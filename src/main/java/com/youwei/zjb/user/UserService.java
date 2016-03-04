@@ -229,6 +229,8 @@ public class UserService {
 		}
 		if(user.pwd!=null){
 			po.pwd = SecurityHelper.Md5(user.pwd);
+			po.tel = user.tel;
+			dao.saveOrUpdate(po);
 			//TODO 同步修改手机版密码
 			Integer muid = UserHelper.getAnotherUser(po.id);
 			User muser = dao.get(User.class, muid);
@@ -306,6 +308,14 @@ public class UserService {
 		User po = dao.get(User.class, id);
 		mv.data = JSONHelper.toJSON(po);
 		mv.data.remove("pwd");
+		if(po.cid==null){
+			Integer pcuid = UserHelper.getAnotherUser(po.id);
+			User pcuser = dao.get(User.class, pcuid);
+			if(pcuser!=null){
+				mv.data.put("lname", pcuser.lname);
+			}
+			
+		}
 		return mv;
 	}
 	
