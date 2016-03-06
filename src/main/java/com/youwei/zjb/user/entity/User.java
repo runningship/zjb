@@ -104,6 +104,9 @@ public class User {
 	
 	public Integer mobileON;
 	
+	//手机版开通时间
+	public Date mobileCreateTime;
+	
 	//手机版过期时间
 	public Date mobileDeadtime;
 	

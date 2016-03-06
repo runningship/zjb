@@ -117,7 +117,7 @@ public class MobileUserService {
 			}
 		}else{
 			muser = new User();
-			muser.addtime = new Date();
+			muser.mobileCreateTime = new Date();
 		}
 		muser.pwd = SecurityHelper.Md5(pwd);
 		if(StringUtils.isNotEmpty(uname)){

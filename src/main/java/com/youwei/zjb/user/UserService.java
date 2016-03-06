@@ -271,6 +271,7 @@ public class UserService {
 					Calendar cal = Calendar.getInstance();
 					cal.add(Calendar.DAY_OF_MONTH, 1);
 					newUser.mobileDeadtime = cal.getTime();
+					newUser.mobileCreateTime = new Date();
 				}else{
 					newUser.mobileON = oldUser.mobileON;
 					newUser.mobileDeadtime = oldUser.mobileDeadtime;
@@ -565,7 +566,7 @@ public class UserService {
 		ModelAndView mv = new ModelAndView();
 		StringBuilder hql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel, u.lasttime as lasttime, u.lastPaytime as lastPaytime ,u.addtime as addtime ,u.mobileDeadtime as endtime,u.mobileON as mobileON  "
+		hql.append("select u.lname as lname, u.uname as uname,u.id as uid, u.roleId as roleId , u.tel as tel, u.lasttime as lasttime, u.lastPaytime as lastPaytime ,u.mobileCreateTime as addtime ,u.mobileDeadtime as endtime,u.mobileON as mobileON  "
 				+ "from User  u  where u.mobileDeadtime is not null ");
 		if(StringUtils.isNotEmpty(query.tel)){
 			query.tel = query.tel.trim();
