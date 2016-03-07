@@ -223,6 +223,7 @@ setTimeout("show_times()",1000);
     word-break: break-all;padding-top: 5pt;
     color: red;}
 .saleEnd{    position: absolute;    top: 26pt;    font-size: 9pt;    color: darkgrey;    height: 12pt;    line-height: 12pt;    right: 0pt;}
+.originalPrice{text-decoration:line-through; color:#aaa; font-size:9pt;}
 </style>
 </head>
 <body class="pay">
@@ -260,7 +261,7 @@ setTimeout("show_times()",1000);
                 <li class="no" onclick="selectBuyMonth(12,'yearPay');">
                     <label class="formItem check ">
                         <span class="icon"><i class="iconfont y">&#xe627;</i><i class="iconfont n">&#xe631;</i></span>
-                        <span class="inputbox">年付 <span id="yearPay">300</span>元  <b>已优惠 180元</b><span class="saleEnd" id="saleEnd"></span></span>
+                        <span class="inputbox">年付 <span id="yearPay">300</span>元  <span class="originalPrice">(原价365元)</span><b>已优惠 180元</b><span class="saleEnd" id="saleEnd"></span></span>
                         <input type="radio" class="hidden checkbox" name="checkbox" id="checkbox" value="40" >
                         
                     </label>

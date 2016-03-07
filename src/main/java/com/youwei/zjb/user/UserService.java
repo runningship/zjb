@@ -41,6 +41,7 @@ import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 import com.youwei.zjb.util.SecurityHelper;
 import com.youwei.zjb.util.SessionHelper;
+import com.youwei.zjb.util.SmsHelper;
 
 @Module(name="/user/")
 public class UserService {
@@ -262,7 +263,9 @@ public class UserService {
 		List<User> list = dao.listByParams(User.class, "from User where cid is null and tel=? ", newUser.tel);
 		User muser = list.isEmpty() ? null:list.get(0);
 		if(muser!=null){
-			//手机账号独立,不用管
+			//手机账号独立,修改手机账号密码
+			muser.pwd = newUser.pwd;
+			dao.saveOrUpdate(muser);;
 		}else{
 			if(newUser.mobileDeadtime==null){
 				if(oldUser==null || oldUser.mobileDeadtime==null){
@@ -476,6 +479,7 @@ public class UserService {
 			moveDataToUser(oldUser , user);
 		}
 		enableMobile(oldUser, user);
+		SmsHelper.sendPcRegSuccessMsg(user.tel, lname);
 		mv.data.put("msg", "添加用户成功");
 		mv.data.put("lname", lname);
 		mv.data.put("tel", user.tel);

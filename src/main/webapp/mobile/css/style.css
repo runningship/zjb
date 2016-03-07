@@ -128,7 +128,7 @@ form
 /* form checkbox */
 .formItem{ padding: 0 3px; display: table; width: 100%; height: 50px; line-height: 50px; border-bottom: 1px solid #DFDFDF; }
 .formItem .icon,.formItem .inputbox{ display: table-cell; height: inherit; line-height: inherit; position: relative;}
-.formItem .icon{ width: 30px; text-align: center; }
+.formItem .icon{ width: 30px; text-align: left; }
 .formItem .icon i{ font-size: 20px; color: #CFCFCF;}
 .formItem .inputbox .input{ width: 100%; padding-left: 10px; font-weight: normal; font-size: 16px; height: inherit; line-height: inherit; border:none;background: none; }
 .formItem .inputbox .btn{ position: absolute; top: 5px; right: 10px; padding: 0 20px; background: #18B4ED; border-radius: 50px; height: 40px; line-height: 40x; color: #FFF; }
@@ -137,7 +137,7 @@ form
 
 .formItem.sty2{ border-bottom: 1px solid #DFDFDF; padding: 0 20px; }
 .formItem.check { cursor: pointer; }
-.formItem.check .icon{ width: 50px; }
+.formItem.check .icon{ width: 31px; }
 .formItem.check .icon i{ color: #68BF01;}
 .formItem.check .icon i.y{ display: none; }
 .formItem.check .inputbox{ padding-right: 20px; }
@@ -865,8 +865,8 @@ work
 /* pay */
 .pay { background: #F6F6F6; }
 .pay .formUL{ margin:10px 0; background: #FFF; border: 1px solid #CFCFCF; border-left: none; border-right:0; }
-.pay .formUL li{ margin-left: 30px; }
-.pay .formUL li.tit{ border-bottom: 1px solid #DFDFDF; margin: 0; padding-left: 30px; height: 36px; line-height: 36px; }
+.pay .formUL li{ margin-left:14px; }
+.pay .formUL li.tit{ border-bottom: 1px solid #DFDFDF; margin: 0; padding-left:20px; height: 36px; line-height: 36px; }
 .pay .formUL li.no .formItem{ border-bottom: none; }
 .pay .btn.block{ margin:20px 10px 0;letter-spacing:8px; }
 .pay .imgbox{ display: inline-block; display: none; }
