@@ -155,6 +155,20 @@ function checkUser(){
 	return false;
 }
 
+function hasLogin(){
+	if(!config){
+		return false;
+	}
+	if(!config.user){
+		//没登录
+		return false;
+	}
+	if(!config.user.pwd){
+		//没登录
+		return false;
+	}
+	return true;
+}
 function isUserFuFei(){
 	if(!config){
 		return false;

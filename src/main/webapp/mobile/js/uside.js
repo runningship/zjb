@@ -46,10 +46,6 @@ function init(){
 			}
 			if(config.user.pwd){
 				$('#endtime').text(config.user.mobileDeadtime);
-				var t = Date.parse(config.user.mobileDeadtime+' 23:59:59');
-				if(t-new Date().getTime()<=0){
-					$('#endtime').css('color','red');
-				}
 				updateDeadtime();
 			}else{
 				$('#endtime').text('未登录');
@@ -71,6 +67,12 @@ function init(){
 	}, function(ret){
 		$('#jifen').text(ret.value.jifen);
 		$('#endtime').text(ret.value.mobileDeadtime);
+	});
+	
+	api.addEventListener({
+	    name: 'paySuccess'
+	}, function(ret){
+		window.location.reload();
 	});
 }
 
@@ -202,7 +204,11 @@ function updateDeadtime(){
 		returnAll:false
 	},function(ret , err){
 		$('#endtime').text(ret.mobileDeadtime);
-		$('#endtime').css('color','white');
+		//$('#endtime').css('color','white');
+		var t = Date.parse(ret.mobileDeadtime+' 23:59:59');
+		if(t-new Date().getTime()<=0){
+			$('#endtime').css('color','red');
+		}
 		config.user.invitationActive=ret.invitationActive;
 		config.user.mobileDeadtime=ret.mobileDeadtime;
 		config.user.mobileDeadtimeInLong=ret.mobileDeadtimeInLong;

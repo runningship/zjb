@@ -109,7 +109,11 @@ obj.pay({
 		alert('支付成功');
 		addChargeRecord(addMonth,amount);
 	}else{
-		blockAlert(ret.msg);
+		if(ret.msg){
+			blockAlert(ret.msg);	
+		}else{
+			blockAlert(ret.statusMessage);
+		}
 	}
 });
 }
@@ -148,10 +152,15 @@ YW.ajax({
 			url: 'payOK.html',
 	        bgColor: '#fff'
 	    });
-		api.execScript({
-		    name: 'user',
-		    script: 'updateDeadtime('+userInfo.uid+');'
+		api.sendEvent({
+		    name: 'paySuccess',
+		    extra: {
+		    }
 		});
+// 		api.execScript({
+// 		    name: 'user',
+// 		    script: 'updateDeadtime('+userInfo.uid+');'
+// 		});
 		closexx();
 	}else{
 		setTimeout(function(){

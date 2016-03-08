@@ -51,6 +51,11 @@ function doLogin(){
 				    script: 'refreshIndex();'
 				});
 				//alert('登录成功');
+				api.sendEvent({
+				    name: 'loginSuccess',
+				    extra: {
+				    }
+				});
 				forward();
 		}else{
 			alert(ret.msg);

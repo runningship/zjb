@@ -19,6 +19,19 @@ apiready = function(){
 		}
 		isFufei = isUserFuFei(config);
 		hid = api.pageParam.id;
+		
+		api.addEventListener({
+		    name: 'loginSuccess'
+		}, function(ret, err){
+			window.location.reload();
+		});
+		
+		api.addEventListener({
+		    name: 'paySuccess'
+		}, function(ret){
+			window.location.reload();
+		});
+		
 		loadData();
 	});
 };
@@ -57,7 +70,12 @@ function loadData(){
 						buildHtmlWithJsonArray('tel_repeat',tel_json , false,true);
 						api.parseTapmode();
 					}else{
-						$('#kefu').show();
+						//如果没有登录 提示登录
+						if(!hasLogin()){
+							$('#toLogin').show();
+						}else{
+							$('#toXufei').show();
+						}
 						$('#area').text(ret.area);
 					}
 					$('#dateadd').text(ret.dateadd);
@@ -272,4 +290,21 @@ function openImages(){
 	    url: 'pic_up.html?'+new Date().getTime(),
 	    pageParam: api.pageParam
 	});
+}
+
+function openLogin(){
+	api.openWin({
+	    name: 'login',
+	    url: 'login.html',
+	    delay:200
+	});
+}
+
+function openFufei(){
+	api.openWin({
+        name: 'pay',
+		url: 'pay.html',
+		delay:200,
+		pageParam: {uid: config.user.uid}
+    });
 }
