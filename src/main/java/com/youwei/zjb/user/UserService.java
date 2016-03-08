@@ -217,17 +217,6 @@ public class UserService {
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
 		User me = ThreadSessionHelper.getUser();
-		if(user.tel.equals(me.tel)){
-			dao.saveOrUpdate(po);
-			ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_User, po);
-			return mv;
-		}
-		
-		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=? and id<>? ", user.tel , me.id);
-		User oldUser = null;
-		if(list.size()>0){
-			oldUser = list.get(0);
-		}
 		if(user.pwd!=null){
 			po.pwd = SecurityHelper.Md5(user.pwd);
 			po.tel = user.tel;
@@ -240,6 +229,18 @@ public class UserService {
 				dao.saveOrUpdate(muser);
 			}
 		}
+		if(user.tel.equals(me.tel)){
+			dao.saveOrUpdate(po);
+			ThreadSession.getHttpSession().setAttribute(KeyConstants.Session_User, po);
+			return mv;
+		}
+		
+		List<User> list = dao.listByParams(User.class, "from User where cid is not null and tel=? and id<>? ", user.tel , me.id);
+		User oldUser = null;
+		if(list.size()>0){
+			oldUser = list.get(0);
+		}
+		
 		if(oldUser==null){
 			po.tel = user.tel;
 			dao.saveOrUpdate(po);
