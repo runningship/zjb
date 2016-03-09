@@ -117,7 +117,9 @@ public class PFavService {
 		if(h==null){
 			throw new GException(PlatformExceptionType.BusinessException, "房源已被删除或不存在!");
 		}
+		Integer pcuid = UserHelper.getAnotherUser(uid);
 		String favStr = "@"+uid+"|";
+		String favStr2 = "@"+pcuid+"|";
 		int result = 0;
 		if(h.fav==null){
 			h.fav= favStr;
@@ -130,6 +132,11 @@ public class PFavService {
 				h.fav = h.fav.replace(favStr, "");
 				result=0;
 			}
+			if(!h.fav.contains(favStr2)){
+				h.fav+=favStr2;
+			}else{
+				h.fav = h.fav.replace(favStr2, "");
+			}
 		}
 		dao.saveOrUpdate(h);
 		return result;
@@ -140,7 +147,9 @@ public class PFavService {
 		if(h==null){
 			throw new GException(PlatformExceptionType.BusinessException, "房源已被删除或不存在!");
 		}
+		Integer pcuid = UserHelper.getAnotherUser(uid);
 		String favStr = "@"+uid+"|";
+		String favStr2 = "@"+pcuid+"|";
 		int result = 0;
 		if(h.fav==null){
 			h.fav= favStr;
@@ -152,6 +161,11 @@ public class PFavService {
 			}else{
 				h.fav = h.fav.replace(favStr, "");
 				result=0;
+			}
+			if(!h.fav.contains(favStr2)){
+				h.fav+=favStr2;
+			}else{
+				h.fav = h.fav.replace(favStr2, "");
 			}
 		}
 		dao.saveOrUpdate(h);

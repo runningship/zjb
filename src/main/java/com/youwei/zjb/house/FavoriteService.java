@@ -13,6 +13,7 @@ import org.bc.web.WebMethod;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
+import com.youwei.zjb.user.UserHelper;
 import com.youwei.zjb.user.entity.User;
 
 @Module(name="/house/fav/")
@@ -61,10 +62,13 @@ public class FavoriteService {
 	public ModelAndView deleteSell(Integer houseId){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSessionHelper.getUser();
+		Integer muid = UserHelper.getAnotherUser(user.id);
 		String favStr = "@"+user.id+"|";
+		String favStr2 = "@"+muid+"|";
 		House h = dao.get(House.class, houseId);
 		if(h.fav!=null){
 			h.fav = h.fav.replace(favStr, "");
+			h.fav = h.fav.replace(favStr2, "");
 			dao.saveOrUpdate(h);
 		}
 		mv.data.put("msg", "已取消关注");
@@ -75,10 +79,13 @@ public class FavoriteService {
 	public ModelAndView deleteRent(Integer houseId){
 		ModelAndView mv = new ModelAndView();
 		User user = ThreadSessionHelper.getUser();
+		Integer muid = UserHelper.getAnotherUser(user.id);
 		String favStr = "@"+user.id+"|";
+		String favStr2 = "@"+muid+"|";
 		HouseRent h = dao.get(HouseRent.class, houseId);
 		if(h.fav!=null){
 			h.fav = h.fav.replace(favStr, "");
+			h.fav = h.fav.replace(favStr2, "");
 			dao.saveOrUpdate(h);
 		}
 		mv.data.put("msg", "已取消关注");

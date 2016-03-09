@@ -61,6 +61,7 @@ public class StartUpListener implements ServletContextListener{
 //				settings.put(AvailableSettings.USER, "root");
 //				settings.put(AvailableSettings.PASS, "");
 				settings.put(AvailableSettings.SHOW_SQL, "false");
+				settings.put(AvailableSettings.GENERATE_STATISTICS, "true");
 //				settings.put(AvailableSettings.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //				settings.put(AvailableSettings.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
 				

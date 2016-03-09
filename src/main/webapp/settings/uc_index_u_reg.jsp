@@ -174,6 +174,10 @@ function setcode(){
 }
 
 
+$(document).ready(function() {
+    $('.uname').focus();
+});
+
 $(document).on('keyup focus change', '#tel', function(event) {
     var Thi=$(this),
     ThiV   = Thi.val(),
