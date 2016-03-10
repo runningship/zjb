@@ -68,6 +68,16 @@ public class PFavService {
 				dao.saveOrUpdate(h);
 			}
 		}
+		
+		Integer pcUid = UserHelper.getAnotherUser(userId);
+		String favStr2 = "@"+pcUid+"|";
+		List<House> list2 = dao.listByParams(House.class, "from House where fav like ? ", "%"+favStr2+"%");
+		if(!list2.isEmpty()){
+			for(House h : list2){
+				h.fav="";
+				dao.saveOrUpdate(h);
+			}
+		}
 		return mv;
 	}
 	
