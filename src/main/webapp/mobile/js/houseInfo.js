@@ -32,6 +32,12 @@ apiready = function(){
 			window.location.reload();
 		});
 		
+		api.addEventListener({
+		    name:'swiperight'
+		},function(ret,err){
+		    api.closeWin();
+		});
+		
 		loadData();
 	});
 };

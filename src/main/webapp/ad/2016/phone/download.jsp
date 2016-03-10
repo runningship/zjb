@@ -4,10 +4,10 @@
 <head>
 <style type="text/css">
 body{ }
-.adboxs { position: absolute; top: 0%; right: 0; bottom: 0; left: 0; text-align: center; background:rgba(0,0,0,0.5);}
-.adboxs .adboxitem{ margin:0 auto; width: 400px; height: 550px; padding-top: 100px; position: relative;}
+.adboxs.ad_phone { position: absolute; top: 0%; right: 0; bottom: 0; left: 0; text-align: center; background:rgba(0,0,0,0.5);}
+.adboxs.ad_phone .adboxitem{ margin:0 auto; width: 400px; height: 550px; padding-top: 100px; position: relative;}
 
-.lineBox{ position: relative; display: inline-block;text-decoration: none;
+.ad_phone .lineBox{ position: relative; display: inline-block;text-decoration: none;
 font-size: 15px;color: #33ab6a;font-weight: bold;text-align: center;
 width: 180px;height: 180px;line-height: 180px;
 border: 2px solid rgba(255,255,255,.0); 
@@ -16,27 +16,27 @@ border: 2px solid rgba(255,255,255,.0);
 box-sizing: border-box;
 -webkit-transition: 0.4s;-o-transition: 0.4s;transition: 0.4s;
 }
-.lineBox img{ display: block; margin: 13px 0 0 13px; }
-.lineBox .line{ position: absolute; display: inline-block; background-color: #FFF;
+.ad_phone .lineBox img{ display: block; margin: 13px 0 0 13px; }
+.ad_phone .lineBox .line{ position: absolute; display: inline-block; background-color: #FFF;
 -webkit-transition: 1.5s ease;-o-transition: 1.5s ease;transition: 1.5s ease;}
-.lineBox .line_top{ height: 2px;width: 0;left: -50%;top: -2px;}
-.lineBox .line_right{ height: 0;width: 2px;top: -50%;right: -2px;}
-.lineBox .line_bottom{ width: 2px;height: 0;bottom: -50%;left: -2px;}
-.lineBox .line_left{ height: 2px;width: 0;right: -50%;bottom: -2px;}
-.lineBox:hover .line_top{width:100%;left:-0px;}
-.lineBox:hover .line_right{height:100%;top:-0px;}
-.lineBox:hover .line_bottom{height:100%;bottom:-0px;}
-.lineBox:hover .line_left{width:100%;right:-0px;}
+.ad_phone .lineBox .line_top{ height: 2px;width: 0;left: -50%;top: -2px;}
+.ad_phone .lineBox .line_right{ height: 0;width: 2px;top: -50%;right: -2px;}
+.ad_phone .lineBox .line_bottom{ width: 2px;height: 0;bottom: -50%;left: -2px;}
+.ad_phone .lineBox .line_left{ height: 2px;width: 0;right: -50%;bottom: -2px;}
+.ad_phone .lineBox:hover .line_top{width:100%;left:-0px;}
+.ad_phone .lineBox:hover .line_right{height:100%;top:-0px;}
+.ad_phone .lineBox:hover .line_bottom{height:100%;bottom:-0px;}
+.ad_phone .lineBox:hover .line_left{width:100%;right:-0px;}
 
 
-.adboxs{ font-family: "microsoft yahei","黑体";}
-h3{ font-size: 14px; color: #FFF; font-weight: normal; margin-bottom: 20px; }
-h2{ font-size: 16px; color: #FFF; font-weight: normal;opacity:0; margin-top: 30px; margin-bottom: 20px; }
-.fontBox{ width: 70%; margin: 0 auto; text-align: left; padding:0 20px; opacity: 0; }
-.br{border-top: 1px solid #FFF; }
+.adboxs.ad_phone { font-family: "microsoft yahei","黑体";}
+.ad_phone h3{ font-size: 14px; color: #FFF; font-weight: normal; margin-bottom: 20px; }
+.ad_phone h2{ font-size: 16px; color: #FFF; font-weight: normal;opacity:0; margin-top: 30px; margin-bottom: 20px; }
+.ad_phone .fontBox{ width: 70%; margin: 0 auto; text-align: left; padding:0 20px; opacity: 0; }
+.ad_phone .br{border-top: 1px solid #FFF; }
 
-.posa{ position: absolute; }
-.posaFK{ bottom: 10px; right: 10px; text-decoration: none; color:rgba(255,255,255,0.7); opacity: 0; }
+.ad_phone .posa{ position: absolute; }
+.ad_phone .posaFK{ bottom: 10px; right: 10px; text-decoration: none; color:rgba(255,255,255,0.7); opacity: 0; }
 
 /*
 <animation-name>
@@ -62,7 +62,7 @@ animation-direction:alternate;//反向循环
 
 232, 84, 84,1
  */
-.adbox_ani1{
+.ad_phone .adbox_ani1{
 background: rgb(65, 235, 219);box-shadow: 2px 10px 20px rgba(0,0,0,0.5);
 -webkit-animation-name: 'adbox_ani1';
 -webkit-animation-duration: 3.5s;
@@ -71,28 +71,28 @@ background: rgb(65, 235, 219);box-shadow: 2px 10px 20px rgba(0,0,0,0.5);
 animation-delay:0s;
 }
 
-.lineBox .line_top{
+.ad_phone .lineBox .line_top{
 -webkit-animation-name: 'line_top';
 -webkit-animation-duration: 3.5s;
 -webkit-animation-timing-function: ease;
 -webkit-animation-iteration-count: 1;
 animation-delay:0;
 }
-.lineBox .line_right{
+.ad_phone .lineBox .line_right{
 -webkit-animation-name: 'line_right';
 -webkit-animation-duration: 3.5s;
 -webkit-animation-timing-function: ease;
 -webkit-animation-iteration-count: 1;
 animation-delay:0;
 }
-.lineBox .line_bottom{
+.ad_phone .lineBox .line_bottom{
 -webkit-animation-name: 'line_bottom';
 -webkit-animation-duration: 3.5s;
 -webkit-animation-timing-function: ease;
 -webkit-animation-iteration-count: 1;
 animation-delay:0;
 }
-.lineBox .line_left{
+.ad_phone .lineBox .line_left{
 -webkit-animation-name: 'line_left';
 -webkit-animation-duration: 3.5s;
 -webkit-animation-timing-function: ease;
@@ -100,7 +100,7 @@ animation-delay:0;
 animation-delay:0;
 }
 
-.lineBox{
+.ad_phone .lineBox{
 -webkit-animation-name: 'lineBox1';
 -webkit-animation-duration: 1.5s;
 -webkit-animation-timing-function: ease;
@@ -108,14 +108,14 @@ animation-delay:0;
 animation-delay:1.5s;
 
 }
-.lineBox img{
+.ad_phone .lineBox img{
 -webkit-animation-name: 'img1';
 -webkit-animation-duration: 1s;
 -webkit-animation-timing-function: ease;
 -webkit-animation-iteration-count: 1;
 animation-delay:2.0s;
 }
-.lineBox.ani2{
+.ad_phone .lineBox.ani2{
 -webkit-animation-name: 'lineBox2';
 -webkit-animation-duration: 1.5s;
 -webkit-animation-timing-function: linear;
@@ -170,7 +170,7 @@ animation-direction:alternate;
 </head>
 
 <script type="text/javascript">
-$(document).on('click', '.adboxs', function(event) {
+$(document).on('click', '.adboxs.ad_phone', function(event) {
     var Thi=$(this),
     ThiImg=Thi.find('img');
         ThiImg.removeClass('fadeInDown').addClass('fadeOutUp');
@@ -179,7 +179,7 @@ $(document).on('click', '.adboxs', function(event) {
     },700);
     event.preventDefault();
 });
-$(document).on('click','.posaFK', function(event) {
+$(document).on('click','.ad_phone .posaFK', function(event) {
 	fankui();
     event.preventDefault();
 });
@@ -213,7 +213,7 @@ var time_ani2=setTimeout(function(){
 });
 </script>
 
-<div class="adboxs"  id="ad_phone" style="display:none; z-index: 9999;">
+<div class="adboxs ad_phone"  id="ad_phone" style="display:none; z-index: 9999;">
     <div class="adboxitem">
         <h3 class="saoma animated">扫码下载APP客户端</h3>
         <div class="lineBox">
