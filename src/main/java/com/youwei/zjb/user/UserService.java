@@ -217,13 +217,18 @@ public class UserService {
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
 		User me = ThreadSessionHelper.getUser();
+		Integer muid = UserHelper.getAnotherUser(po.id);
+		User muser = dao.get(User.class, muid);
+		if(muser!=null){
+			muser.uname = user.uname;
+			dao.saveOrUpdate(muser);
+		}
 		if(user.pwd!=null){
 			po.pwd = SecurityHelper.Md5(user.pwd);
 			po.tel = user.tel;
 			dao.saveOrUpdate(po);
 			//TODO 同步修改手机版密码
-			Integer muid = UserHelper.getAnotherUser(po.id);
-			User muser = dao.get(User.class, muid);
+			
 			if(muser!=null){
 				muser.pwd = SecurityHelper.Md5(user.pwd);
 				dao.saveOrUpdate(muser);
@@ -266,6 +271,7 @@ public class UserService {
 		if(muser!=null){
 			//手机账号独立,修改手机账号密码
 			muser.pwd = newUser.pwd;
+			muser.uname = newUser.uname;
 			dao.saveOrUpdate(muser);;
 		}else{
 			if(newUser.mobileDeadtime==null){

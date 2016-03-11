@@ -455,6 +455,13 @@ public class PService {
 		User po = dao.get(User.class, user.id);
 		po.uname = user.uname;
 		dao.saveOrUpdate(po);
+		
+		Integer pcuid = UserHelper.getAnotherUser(user.id);
+		User pcUser = dao.get(User.class, pcuid);
+		if(pcUser!=null){
+			pcUser.uname = user.uname;
+			dao.saveOrUpdate(pcUser);
+		}
 		mv.data.put("uname", user.uname);
 		mv.data.put("result", 0);
 		return mv;
