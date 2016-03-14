@@ -156,9 +156,9 @@ public class HouseService {
 		if(list.isEmpty()){
 			if(u.cid!=1){
 				//只有中介宝用户才可以
-				LogUtil.info(u.lname+"出现新的楼盘: "+house.id+","+house.area+","+house.quyu+","+house.address);
 				return;
 			}
+			LogUtil.info(u.lname+"出现新的楼盘: "+house.id+","+house.area+","+house.quyu+","+house.address);
 			District d= new District();
 			d.address = house.address;
 			d.name = house.area;
@@ -167,6 +167,7 @@ public class HouseService {
 			d.pinyin=DataHelper.toPinyin(d.name);
 			d.pyShort=DataHelper.toPinyinShort(d.name);
 			d.sh=0;
+			d.uid = u.id;
 			try{
 				Map<String,Double> map = LngAndLatUtil.getLngAndLat(d.name,ThreadSession.getCityPY());
 				d.maplat = map.get("lat").floatValue();
@@ -647,7 +648,7 @@ public class HouseService {
 			hql.append(" and d.maplng<=? ");
 			params.add(query.lngEnd);
 		}
-		hql.append(" and (isdel=0 or isdel is null) order by ");
+		hql.append(" and isdel=0 order by ");
 		if(StringUtils.isNotEmpty(page.orderBy)){
 			hql.append("h.").append(page.orderBy);
 		}

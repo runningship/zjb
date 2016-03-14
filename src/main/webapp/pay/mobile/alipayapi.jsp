@@ -1,3 +1,4 @@
+<%@page import="org.bc.sdak.utils.LogUtil"%>
 <%@page import="com.youwei.zjb.cache.ConfigCache"%>
 <%@page import="java.util.Date"%>
 <%@page import="org.bc.sdak.SimpDaoTool"%>
@@ -92,7 +93,7 @@
 		//sParaTemp.put("body", body);
 		//sParaTemp.put("it_b_pay", it_b_pay);
 		//sParaTemp.put("extern_token", extern_token);
-		
+		LogUtil.info(sParaTemp.toString());
 		//建立请求
 		String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"get","确认");
 		

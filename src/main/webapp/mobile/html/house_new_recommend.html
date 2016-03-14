@@ -78,7 +78,7 @@ function openContact(){
 	    function(ret,err){
 	        if(ret.status){
 	            $('#name').val(ret.name);
-	            $('#tel').val(ret.phone);
+	            $('#tel').val(ret.phone.replace("-" , "").replace("-" , ""));
 	        }else{
 	            api.alert({msg:err.msg});
 	        }    
