@@ -341,6 +341,7 @@ public class PService {
 		charge.clientType="mobile";
 		charge.addtime = new Date();
 		charge.status = "TRADE_SUCCESS";
+		charge.beizhu="andorid "+user.tel;
 		charge.finish = 1;
 		//注意要以fee为准
 		//在很低的概率下，用户迅速选择年度，而后ajax完成将价格改成季付

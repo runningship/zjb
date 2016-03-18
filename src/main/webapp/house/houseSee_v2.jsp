@@ -503,6 +503,14 @@ function searchTel(span){
 	$(window.parent.document).find('#tel').val($(span).attr('data-gtf'));
 	window.parent.doSearchAndSelectFirst();
 }
+
+function openOriginalLink(link){
+	if(!window.top.gui){
+		window.open(link , '_blank');
+	}else{
+		window.top.gui.Shell.openExternal(link);
+	}
+}
 </script>
 
 <script type="text/javascript">
@@ -738,7 +746,7 @@ body .telTable .telBox .onOpen{ text-align: center; }
                 <c:if test="${authNames.contains('fy_sh') }">
                 <tr id="sourceLinkTr" style="display:none">
                   <td class="biaoti biaotiMax"></td>
-                  <td class="neirong TextColor1"><a id="sourceLink" link="${house.href}" href="javascript:void(0)" onclick="window.top.gui.Shell.openExternal('${house.href}');">原链接</a></td>
+                  <td class="neirong TextColor1"><a id="sourceLink" link="${house.href}" href="javascript:void(0)"  onclick="openOriginalLink('${house.href}')"  >原链接</a></td>
                 </tr>
                 </c:if>
               </table>

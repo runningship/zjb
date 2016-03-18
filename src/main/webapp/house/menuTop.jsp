@@ -26,10 +26,27 @@ function openXinFang(){
 	}
 }
 
+function openBank(){
+	var tel = "${tel}";
+	if(!tel){
+		art.dialog.confirm('请先设置手机号码', function () {
+			art.dialog.open('/settings/user_edit.jsp');
+	  	},function(){},'info');
+	}else{
+		window.location='/house/bank_loan.jsp';
+	}
+}
+
 function openOrderList(){
 	event.preventDefault();
 	event.cancelBubble=true;
 	art.dialog.open('http://${new_house_server}:${new_house_server_port}/new-house/public/orderList.jsp?tel=${user.tel}',{width:500,height:600,title:'客户列表'});
+}
+
+function openBankOrderList(){
+	event.preventDefault();
+	event.cancelBubble=true;
+	art.dialog.open('http://${new_house_server}:${new_house_server_port}/new-house/public/bank/orderList.jsp?selletTel=${user.tel}',{width:500,height:600,title:'客户列表'});
 }
 </script>
 <style type="text/css">
@@ -82,14 +99,19 @@ function openOrderList(){
           </li>
           <li class="line"></li>
           <li style="position:relative;display:;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();">
-          		<i class="iconfont">&#xe686;</i>新房
+          		<i class="iconfont">&#xe6a3;</i>新房
           		<div class="topMenuChid"  id="tuijianRecord">
                     <span></span>
                     <a href="javascript:void(0)" onclick="openOrderList();return false;">推荐记录</a> 
                </div>
           </li>
-          <li style="position:relative;display:none;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="window.location='/house/house_new.jsp';">
-          		<i class="iconfont">&#xe686;</i>新房
+          <li class="line"></li>
+          <li style="position:relative;display:;"  class="MenuBox nobar <c:if test="${type eq 'bank' }">slect</c:if> nobar newhouseA" onclick="openBank();">
+          		<i class="iconfont">&#xe6a4;</i>银行
+          		<div class="topMenuChid"  id="loanRecord">
+                    <span></span>
+                    <a href="javascript:void(0)" onclick="openBankOrderList();return false;">推荐记录</a> 
+               </div>
           </li>
           <li class="line"></li>
       </ul>

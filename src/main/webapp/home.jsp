@@ -442,11 +442,13 @@ function getUnReadStatistic(){
         </div>
         <div class="righter td title">
             <div class="table" >
-                <div class="tr thead title">
+                <div class="tr tbody">
+                    <div id="iframeBox" class="maxHW"></div>
+
                     <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:40px;"></div>
                     <div class="wintool title nobar">
                         <ul class="wintools" style="padding-left:50px;">
-<!--                         	<li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
+<!--                            <li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
                             <li><a href="#"  onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li>
                             <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li>
                             <li><a href="#" onclick="fankui();" title="请给予我们您的宝贵意见" class="winBtns "><i class="iconfont">&#xe633;</i></a></li>
@@ -478,9 +480,6 @@ function getUnReadStatistic(){
                             <li><a href="" class="winBtn black winBtnClose" data-q="close"><i></i></a></li>
                         </ul>    
                     </div>
-                </div>
-                <div class="tr tbody">
-                    <div id="iframeBox" class="maxHW" style="margin-top:-40px;height:105%"></div>
                 </div>
             </div>
         </div>
