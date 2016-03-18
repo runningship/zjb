@@ -31,7 +31,7 @@ function doSearch(){
   var a=$('form[name=form1]').serialize();
   YW.ajax({
     type: 'POST',
-    url: '/c/mobile/charge?userId='+uid,
+    url: '/c/muser/charge?userId='+uid,
     data:a,
     mysuccess: function(data){
         var houseData=JSON.parse(data);

@@ -28,7 +28,7 @@ import com.youwei.zjb.sys.CityService;
 import com.youwei.zjb.user.entity.Charge;
 import com.youwei.zjb.util.DataHelper;
 
-@Module(name="/mobile/")
+@Module(name="/muser/")
 public class ChargeService {
 
 	CommonDaoService dao = TransactionalServiceHelper.getTransactionalService(CommonDaoService.class);
