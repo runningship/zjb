@@ -92,6 +92,7 @@
 					String monthAdd = new String(request.getParameter("monthAdd").getBytes("ISO-8859-1"),"UTF-8");
 					Charge charge = new Charge();
 					charge.uid = user.id;
+					charge.status = trade_status;
 					charge.uname = user.uname;
 					charge.tradeNo = out_trade_no;
 					charge.fee = Float.valueOf(total_fee);
@@ -153,6 +154,8 @@
 				}else{
 					out.println("success");
 				}
+			}else{
+				out.println("success");
 			}
 			
 			//该页面可做页面美工编辑

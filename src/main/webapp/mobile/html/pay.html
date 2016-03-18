@@ -86,8 +86,8 @@ function androidPay(obj){
 var subject = '中介宝手机版费用'+userInfo.tel;
 var body = '中介宝手机版费用'+userInfo.tel;
 var tradeNO = new Date().getTime();
-//var notifyURL = 'http://'+server_host+'/c/mobile/user/alipayCallback'
-var notifyURL = "http:/www.zhongjiebao.com:8081/pay/mobile/notify_url.jsp?cityPy="+config.city.cityPy+'&monthAdd='+addMonth+'&uid='+userInfo.uid;
+//var notifyURL = ' http://zjb.tunnel.qydev.com/c/mobile/user/alipayCallback'
+var notifyURL = "http://www.zhongjiebao.com:8081/pay/mobile/notify_url.jsp?cityPy="+config.city.cityPy+'&monthAdd='+addMonth+'&uid='+userInfo.uid;
 	
 obj.config({
   partner:'2088711888914717',
@@ -107,7 +107,22 @@ obj.pay({
 },function(ret,err) {
 	if(ret.statusCode=='9000' ){
 		alert('支付成功');
-		addChargeRecord(addMonth,amount);
+		//addChargeRecord(addMonth,amount);
+		//到支付成功页面
+		api.openWin({
+	        name: 'payOK',
+			//url: 'order.html',
+	        pageParam: {amount: amount,paytime: ret.paytime , invitationActive:ret.invitationActive ,mobileDeadtime:ret.mobileDeadtime , monthAdd: addMonth},
+			bounces: true,
+			url: 'payOK.html',
+	        bgColor: '#fff'
+	    });
+		api.sendEvent({
+		    name: 'paySuccess',
+		    extra: {
+		    }
+		});
+		closexx();
 	}else{
 		if(ret.msg){
 			blockAlert(ret.msg);	
@@ -157,10 +172,6 @@ YW.ajax({
 		    extra: {
 		    }
 		});
-// 		api.execScript({
-// 		    name: 'user',
-// 		    script: 'updateDeadtime('+userInfo.uid+');'
-// 		});
 		closexx();
 	}else{
 		setTimeout(function(){
@@ -215,7 +226,7 @@ timer.innerHTML =timer.innerHTML;
 clearTimeout(timerID)
 } 
 }
-setTimeout("show_times()",1000);
+//setTimeout("show_times()",1000);
 </script>
 <style type="text/css">
 	.gift{text-align: center;
@@ -270,7 +281,7 @@ setTimeout("show_times()",1000);
                 <li class="no" onclick="selectBuyMonth(12,'yearPay');">
                     <label class="formItem check ">
                         <span class="icon"><i class="iconfont y">&#xe627;</i><i class="iconfont n">&#xe631;</i></span>
-                        <span class="inputbox">年付 <span id="yearPay">300</span>元  <span class="originalPrice">(原价365元)</span><b>已优惠 180元</b><span class="saleEnd" id="saleEnd"></span></span>
+                        <span class="inputbox">年付 <span id="yearPay">365</span>元 <b>已优惠 115元</b></span>
                         <input type="radio" class="hidden checkbox" name="checkbox" id="checkbox" value="40" >
                         
                     </label>

@@ -19,7 +19,7 @@ apiready = function(){
 	$('#payAmount').text(amount);
 	$('#paytime').text(api.pageParam.paytime);
 	$('#monthAdd').text(api.pageParam.monthAdd);
-	$('#mobileDeadtime').text(api.pageParam.mobileDeadtime);
+// 	$('#mobileDeadtime').text(api.pageParam.mobileDeadtime);
 	if(api.pageParam.invitationActive){
 		getUserInfo(function(user){
 			user.invitationActive=1;
@@ -69,7 +69,7 @@ function closexx(){
             <ul class="payOkList">
                 <li>付款金额：<b id="payAmount"></b>元</li>
                 <li>续&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时  : <b id="monthAdd"></b>个月</li>
-                <li>到期时间：<b id="mobileDeadtime"></b></li>
+<!--                 <li>到期时间：<b id="mobileDeadtime"></b></li> -->
                 <li>付款方式：支付宝支付</li>
             </ul>
         </div>
