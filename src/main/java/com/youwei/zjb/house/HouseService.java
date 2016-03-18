@@ -212,6 +212,10 @@ public class HouseService {
 	public ModelAndView update(House house , String hxing){
 		validte(house);
 		ModelAndView mv = new ModelAndView();
+		ModelAndView result = exist(house.area , house.dhao , house.fhao , house.seeGX==null ? "0": house.seeGX.toString());
+		if("1".equals(result.data.getString("exist"))){
+			throw new GException(PlatformExceptionType.BusinessException,"存在相同的房源"+result.data.get("hid"));
+		}
 		House po = dao.get(House.class, house.id);
 		po.area = house.area;
 		po.address = house.address;
@@ -277,11 +281,11 @@ public class HouseService {
 		if(state!=null){
 			mv.data.getJSONObject("house").put("ztai", state.toString());
 		}
-//		try{
-//			addDistrictIfNotExist(house);
-//		}catch(Exception ex){
-//			LogUtil.log(Level.WARN,"add district of house failed,hid= "+house.id,ex);
-//		}
+		try{
+			addDistrictIfNotExist(house);
+		}catch(Exception ex){
+			LogUtil.log(Level.WARN,"add district of house failed,hid= "+house.id,ex);
+		}
 		mv.data.put("result", 0);
 		return mv;
 	}
