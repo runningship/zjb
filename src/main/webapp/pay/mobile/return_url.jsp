@@ -106,6 +106,9 @@
 						try{
 							List<String> toList = new ArrayList<String>();
 							toList.add("253187898@qq.com");
+							if(!"hefei".equals(ThreadSessionHelper.getCityPinyin())){
+								toList.add("907899254@qq.com");	
+							}
 							MailUtil.send_email(toList, "手机版费用", po.fee+"电话:"+user.tel+",城市:"+ThreadSessionHelper.getCityPinyin());
 						}catch(Exception ex){
 							LogUtil.warning("pay return ---");
