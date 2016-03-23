@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 只用于手机版用户
+ */
 @Entity
 @Table(name="phone_house_seeout")
 public class Track {

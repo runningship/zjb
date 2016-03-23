@@ -9,6 +9,7 @@ import javax.persistence.Id;
 
 /**
  * 用于访问记录统计，足迹使用Track类
+ * 纯用于监控使用
  * @author Administrator
  *
  */
