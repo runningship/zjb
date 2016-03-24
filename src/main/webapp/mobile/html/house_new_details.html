@@ -88,6 +88,7 @@ function init(){
 			$('#developer .text').text(ret.estate.developer);
 			$('#totalYongjin').text(ret.estate.yongjinTotal);
 			$('#jieyongCount').text(ret.estate.jieyongCount);
+			$('#daikanRule .text').text(ret.estate.daikanRule);
 			
 			buildHtmlWithJsonArray("xiaoguo",ret.xgImgList , true,false);
 			buildHtmlWithJsonArray("huxing",ret.hxImgList , true,false);
@@ -217,6 +218,7 @@ function openTuijian(){
             <p class="yongjin">独立经纪人佣金：<span class="text"></span></p>
             <p>开发商界定规则：经纪人推荐的客户号码隐藏中间四位至开发商，若开发商核对后无此号码则初步判断有效</p>
             <p id="tel">案场联系：<span class="text"></span></p>
+            <p id="daikanRule">带看规则：<span class="text"></span></p>
         </div>
         <div class="title">
             楼盘参数

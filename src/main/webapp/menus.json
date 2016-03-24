@@ -261,6 +261,25 @@
 		}]
 	}]
 },{
+	"name":"tongji",
+	"type":"module",
+	"text":"统计",
+	"zjb-only":true,
+	"children":[{
+		"name":"tongji_module",
+		"text":"统计",
+		"type":"virtual",
+		"children":[{
+			"name":"tongji_on",
+			"text":"开启统计功能",
+			"type":"menu"
+		},{
+			"name":"tongji_ov_on",
+			"text":"过度访问统计",
+			"type":"menu"
+		}]
+	}]
+},{
 	"name":"sz",
 	"type":"module",
 	"text":"后台管理",
@@ -388,17 +407,6 @@
 		"children":[{
 			"name":"sz_phone_on",
 			"text":"管理手机用户",
-			"zjb-only":true,
-			"type":"menu"
-		}]
-	},{
-		"name":"sz_tj",
-		"text":"访问统计",
-		"zjb-only":true,
-		"type":"virtual",
-		"children":[{
-			"name":"sz_tj_on",
-			"text":"房源访问统计",
 			"zjb-only":true,
 			"type":"menu"
 		}]

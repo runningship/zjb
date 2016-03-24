@@ -427,6 +427,11 @@ function getUnReadStatistic(){
                         	<a href="/map/xuequ.jsp" class="ibtn guangchang" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe67d;</i><span>地图</span></a>
                         </li>
                         </c:if>
+                        <c:if test="${authNames.contains('tongji_on')}">
+                         <li >
+                        	<a href="/tongji/trackStatistic.jsp" class="ibtn tongji" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe628;</i><span>统计</span></a>
+                        </li>
+                        </c:if>
                         <c:if test="${authNames.contains('sz_on')}">
                             <li class=" positionBottom"><a href="/settings/uc_index.jsp" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                         </c:if>
