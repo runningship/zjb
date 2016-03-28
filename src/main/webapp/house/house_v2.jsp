@@ -103,6 +103,13 @@ function buildQueryOptions(){
 
 .adboxs { position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center; z-index: 9999999;}
 .adboxs .adboxitem{ margin:8% auto 0;}
+
+@media screen and (max-width:) {
+    
+}
+.MainRightTop li{}
+
+
 </style>
 </head>
 
@@ -134,7 +141,7 @@ function buildQueryOptions(){
                     <input type="hidden" name="pageSize" id="pageSize" value="25"/>
                    <ul class="InputMainLine KY_W not-select" style=" margin-bottom:8px;">
                    
-                        <li><input class="input-sm w110" type="text" placeholder="电话" id="tel" name="tel" /></li>
+                        <li><input class="input-sm w110" type="text" placeholder="编号" id="id" name="id" /></li>
                         <li>
                             <span class="SpanName not-select">楼盘</span>
                             <input id="search" class="input-sm input-left w208" type="text" placeholder="" autocomplete="off" name="area" />
@@ -190,7 +197,7 @@ function buildQueryOptions(){
                             </div>
                         </li>
                         <li>
-                            <button class="selectMethod not-select"   type="button"  style="background-color:#6CEBC5">地图<i class="caret"></i></button>
+                            <button class="selectMethod not-select ditu downMore" type="button" >地图<i class="caret"></i></button>
                             <div class="ulErMenu"> 
                                 <p ><label style="cursor:pointer" onclick="openMapSearch(0);"> 框 选</label></p>
                                 <p><label style="cursor:pointer" onclick="openMapSearch(1)"> 学 区</label></p>
@@ -210,7 +217,7 @@ function buildQueryOptions(){
                    
                    <ul class="InputMainLine KY_W not-select">
                    
-                        <li style="width:110px;"><input class="input-sm w110" type="text" placeholder="编号" name="id"  desc="编号"/>
+                        <li style="width:110px;"><input class="input-sm w110" type="text" placeholder="电话" name="tel"  id="tel" desc="编号"/>
                         <input class="input-sm w110" type="text" placeholder="路段" name="address" /></li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>面积</em></span>

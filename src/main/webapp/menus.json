@@ -78,10 +78,6 @@
 		"text":"客源",
 		"type":"virtual",
 		"children":[{
-			"name":"ky_on",
-			"text":"开启客源功能",
-			"type":"menu"
-		},{
 			"name":"ky_data_dept",
 			"text":"分店",
 			"type":"menu"
@@ -96,15 +92,6 @@
 	"type":"module",
 	"text":"业务管理",
 	"children":[{
-		"name":"yw_module",
-		"text":"",
-		"type":"virtual",
-		"children":[{
-			"name":"yw_on",
-			"text":"开启业务功能",
-			"type":"menu"
-		}]
-	},{
 		"name":"yw_outhouse",
 		"text":"外出看房",
 		"type":"virtual",
@@ -242,40 +229,6 @@
 		},{
 			"name":"squar_sale_del",
 			"text":"删除服务信息",
-			"type":"menu"
-		}]
-	}]
-},{
-	"name":"map",
-	"type":"module",
-	"text":"地图",
-	"zjb-only":true,
-	"children":[{
-		"name":"map_module",
-		"text":"地图设置",
-		"type":"virtual",
-		"children":[{
-			"name":"map_on",
-			"text":"开启地图设置",
-			"type":"menu"
-		}]
-	}]
-},{
-	"name":"tongji",
-	"type":"module",
-	"text":"统计",
-	"zjb-only":true,
-	"children":[{
-		"name":"tongji_module",
-		"text":"统计",
-		"type":"virtual",
-		"children":[{
-			"name":"tongji_on",
-			"text":"开启统计功能",
-			"type":"menu"
-		},{
-			"name":"tongji_ov_on",
-			"text":"过度访问统计",
 			"type":"menu"
 		}]
 	}]
@@ -429,6 +382,33 @@
 		"children":[{
 			"name":"sz_feedback_on",
 			"text":"开启意见反馈管理",
+			"zjb-only":true,
+			"type":"menu"
+		}]
+	},{
+		"name":"sz_map",
+		"text":"地图",
+		"zjb-only":true,
+		"type":"virtual",
+		"children":[{
+			"name":"sz_map_xuequ",
+			"text":"学区",
+			"zjb-only":true,
+			"type":"menu"
+		}]
+	},{
+		"name":"sz_tongji",
+		"text":"地图",
+		"zjb-only":true,
+		"type":"virtual",
+		"children":[{
+			"name":"sz_tongji_normal",
+			"text":"访问统计",
+			"zjb-only":true,
+			"type":"menu"
+		},{
+			"name":"sz_tongji_overvisit",
+			"text":"过度访问统计",
 			"zjb-only":true,
 			"type":"menu"
 		}]

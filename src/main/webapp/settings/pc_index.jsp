@@ -89,9 +89,6 @@ $(document).ready(function() {
         rel=Thi.data('rel'),
         this_hid=Thi.data('hid');
     });
-    $.get('/v/settings/menuTop.html?'+new Date().getTime(), function(data) {
-        $('#menuTop').html(data);
-    });
 });
 
 function delPC(id){
@@ -150,6 +147,7 @@ function setOrderField(field){
     <div class="header">
         <div class="maxHW title">
             <ul class="menuLi clearfix title" id="menuTop">
+            	<jsp:include page="menuTop.jsp"></jsp:include>
             </ul>
         </div>
     <form name="form1" onsubmit="doSearch();return false;" role="form" style="display:none">

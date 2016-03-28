@@ -76,13 +76,10 @@ function setOrderField(field){
 $(document).ready(function() {
   Page.Init();
   doSearch(1);
-    $.get('/v/settings/menuTop.html?'+new Date().getTime(), function(data) {
-        $('#menuTop').html(data);
-        //设置拖动栏
-        var bodyW = $(window.top.document).width()-50;
-        //-200为margin-right:200
-        $(window.top.document).find('#dragbar').width(bodyW-$('#menuTop').width()-200);
-    });
+   //设置拖动栏
+   var bodyW = $(window.top.document).width()-50;
+   //-200为margin-right:200
+   $(window.top.document).find('#dragbar').width(bodyW-$('#menuTop').width()-200);
 });
 $(window).resize(function() {      //类别
 });
@@ -94,6 +91,7 @@ $(window).resize(function() {      //类别
     <div class="header">
         <div class="maxHW title">
             <ul class="menuLi clearfix title" id="menuTop">
+            	<jsp:include page="menuTop.jsp"></jsp:include>
             </ul>
         </div>
   <form class="form-horizontal form1" onsubmit="doSearch();return false;" role="form" name="form1">

@@ -96,6 +96,9 @@ function buildArticle(page){
 }
 
 </script>
+<style type="text/css">
+ul.titBox{margin-left: 60px;}
+</style>
 <body>
 <div class="oa_Main oa_W" id="oaMainPage">
   <div class="oaMain">
@@ -109,7 +112,7 @@ function buildArticle(page){
             <!-- <li><span class="line"></span></li>
             <li><i class=" Bg wzsc"></i><span class="color3">网址收藏</span></li> -->
           </ul>
-          <div style="position: absolute;top: 17px;left: 400px;font-size: 12px; color: #aaa;">本版块（OA）是公司内部平台，只有公司内部人员可以查看！</div>
+          <div style="position: absolute;top: 17px;right: 230px;font-size: 12px; color: #aaa;">本版块（OA）是公司内部平台，只有公司内部人员可以查看！</div>
         </div>
         <div class="td oaTit oaTitBgInfo">
         </div>

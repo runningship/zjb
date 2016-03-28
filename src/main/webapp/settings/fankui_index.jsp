@@ -81,9 +81,6 @@ $(document).ready(function() {
         doSearch();
     });
 
-    $.get('/v/settings/menuTop.html?'+new Date().getTime(), function(data) {
-        $('#menuTop').html(data);
-    });
 });
 $(window).resize(function() {      //类别
 });
@@ -94,6 +91,7 @@ $(window).resize(function() {      //类别
     <div class="header">
       <div class="maxHW title">
           <ul class="menuLi clearfix title" id="menuTop">
+          	<jsp:include page="menuTop.jsp"></jsp:include>
           </ul>
       </div>
       <form class="form-horizontal form1 " onsubmit="doSearch();return false;" role="form" name="form1">

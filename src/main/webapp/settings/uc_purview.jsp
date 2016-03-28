@@ -111,9 +111,6 @@ $(document).ready(function() {
         rel=Thi.data('rel'),
         this_hid=Thi.data('hid');
     });
-    $.get('/v/settings/menuTop.html?'+new Date().getTime(), function(data) {
-        $('#menuTop').html(data);
-    });
 });
 
 </script>
@@ -123,6 +120,7 @@ $(document).ready(function() {
     <div class="header">
         <div class="maxHW title">
             <ul class="menuLi clearfix title" id="menuTop">
+            	<jsp:include page="menuTop.jsp"></jsp:include>
             </ul>
         </div>
 

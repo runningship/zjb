@@ -256,7 +256,7 @@ input:not([type="image"]), textarea {
      <div class="MainRight">
           
           <div style="display:table; width:100%; height:100%; overflow:hidden;" class="not-select">
-            <div id="menuTop"  style="display:inline-block;">
+            <div id="menuTop" >
               <ul class="MainRightTop KY_W">
                   <li onclick="window.location='/client/index.jsp'" class="slect"><i class="i5"></i>求购</li>
                   <li class="line"></li>

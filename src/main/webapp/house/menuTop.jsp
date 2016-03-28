@@ -50,7 +50,7 @@ function openBankOrderList(){
 }
 </script>
 <style type="text/css">
-  .MainRightTop li.newhouseA{ background: #E97143; color: #FFF; }
+/*  .MainRightTop li.newhouseA{ background: #E97143; color: #FFF; }
   .MainRightTop li.newhouseA:hover,
   .MainRightTop li.newhouseA.slect{
     background: -webkit-gradient(linear, 0 0, 0 100%, from(#FF9B4A), to(#B8422F));
@@ -58,7 +58,7 @@ function openBankOrderList(){
   .MainRightTop li.newhouseA i.i1,
   .MainRightTop li.newhouseA.slect i.i1 {
     background-position: 0 -134px;
-  }
+  }*/
   .MainRightTop li i.iconfont{
     margin: 0;
     padding: 0;
@@ -70,8 +70,9 @@ function openBankOrderList(){
     vertical-align: bottom;
   }
 /*   #tuijianRecord{background-color:#E97143} */
+
 </style>
-<div id="menuTop" style="display:inline-block;">
+<div id="menuTop" >
       <ul class="MainRightTop KY_W titlebar">
           <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="_open('/house/house_v2.jsp')"><i class="iconfont">&#xe682;</i>出售</li>
           <li class="line"></li>

@@ -376,7 +376,21 @@ function getUnReadStatistic(){
 	  });
 }
 </script>
-
+<style type="text/css">
+.menuSide li{-webkit-app-region:no-drag;}
+.thead{ background: #FFF;}
+.default{background: url('style/images/alb_bn.jpg');
+    background-size: cover;}
+.default .lefter{background: rgba(0,0,0,0.6);}
+.default .logo{ box-shadow: none;}
+.iconLogo{ display: block; font-size: 50px;
+position: absolute;
+z-index: 999999;
+top: -5px;
+padding: 0 0 0 15px; color: #20BA5E; }
+.default .menuSide li a{ color: #FFF; }
+.default .menuSide li.curr{box-shadow: inset 0px 0px 20px rgba(0,0,0,0.4); border: 0;}
+</style>
 </head>
 <body>
 <div id="allMainBoxer" style="width:100%; height:100%; overflow:hidden; position:relative;">
@@ -394,22 +408,18 @@ function getUnReadStatistic(){
 
     <div class="tr">
         <div class="lefter td title">
-            <div class="table">
-                <div class="tr thead">
-                    <span title="$${version} 更新概要&#13; 1.系统管理&#13; 2权限优化" class="logo title nobar"></span>
+            <div class="table titlebar">
+                <div class="tr thead titlebar">
+                    <i class="iconfont iconLogo">&#xe687;</i>
                 </div>
-                <div class="tr tbody">
+                <div class="tr tbody titlebar">
                     <ul class="menuSide">
                         <li class="curr"><a href="/house/house_v2.jsp" class="ibtn" data-type="url" data-id="house" data-toggle="tooltip" data-placement="right" title="房源"><i class="iconfont">&#xe636;</i><span>房源</span></a></li>
 <%--                         <c:if test="${auths.indexOf('fy_fz_on')>-1}"> --%>
 <!--                         <li ><a href="/houseOwner/OwnerList.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="房主"><i class="iconfont">&#xe601;</i><span>房主</span></a></li> -->
 <%--                         </c:if> --%>
-                        <c:if test="${authNames.contains('ky_on')}">
                         <li ><a href="/client/index.jsp" class="ibtn" data-type="url" data-id="client" data-toggle="tooltip" data-placement="right" title="客源"><i class="iconfont">&#xe601;</i><span>客源</span></a></li>
-                        </c:if>
-                        <c:if test="${authNames.contains('yw_on')}">
                         <li ><a href="/v/yewu/outHouse.html" class="ibtn" data-type="url" data-id="yewu" data-toggle="tooltip" data-placement="right" title="业务"><i class="iconfont">&#xe608;</i><span>业务</span></a></li>
-                        </c:if>
                         <c:if test="${authNames.contains('ht_on')}">
                         <li ><a href="/v/plugin/wait/wait.html" class="ibtn" data-type="url" data-id="hetong" data-toggle="tooltip" data-placement="right" title="合同"><i class="iconfont">&#xe614;</i><span>合同</span></a></li>
                         </c:if>
@@ -422,20 +432,10 @@ function getUnReadStatistic(){
                         <li >
                         	<a href="/piazza/index.jsp" class="ibtn guangchang" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
                         </li>
-                        <c:if test="${authNames.contains('map_on')}">
-                         <li >
-                        	<a href="/map/xuequ.jsp" class="ibtn guangchang" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe67d;</i><span>地图</span></a>
-                        </li>
-                        </c:if>
-                        <c:if test="${authNames.contains('tongji_on')}">
-                         <li >
-                        	<a href="/tongji/trackStatistic.jsp" class="ibtn tongji" data-type="url" data-id="xuequ" data-toggle="tooltip" data-placement="right" title="地图"><i class="iconfont">&#xe628;</i><span>统计</span></a>
-                        </li>
-                        </c:if>
                         <c:if test="${authNames.contains('sz_on')}">
                             <li class=" positionBottom"><a href="/settings/uc_index.jsp" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
                         </c:if>
-                            
+                            <li style="visibility: hidden;"><br><br></li>
                     </ul>
                 </div>
 <!--                 <div class="tr tfoot">
@@ -451,9 +451,14 @@ function getUnReadStatistic(){
                     <div id="iframeBox" class="maxHW"></div>
 
                     <div id="dragbar" class="maxHW title titlebar" style="float:right;width:400px;height:40px;"></div>
+<style type="text/css">
+/*.html .wintools .winBtns { width: auto; height: 50px; line-height: 50px; font-size: 14px; padding: 0 5px; white-space:nowrap;  }
+i.pr{ padding-right: 3px; }*/
+</style>
                     <div class="wintool title nobar">
                         <ul class="wintools" style="padding-left:50px;">
 <!--                            <li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
+                            <!-- <li><a href="#" title="中介宝外网" class="winBtns "><i class="iconfont pr">&#xe673;</i>顾某人</a></li> -->
                             <li><a href="#"  onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li>
                             <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li>
                             <li><a href="#" onclick="fankui();" title="请给予我们您的宝贵意见" class="winBtns "><i class="iconfont">&#xe633;</i></a></li>
