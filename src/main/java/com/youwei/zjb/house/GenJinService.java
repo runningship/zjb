@@ -146,7 +146,7 @@ public class GenJinService {
 		
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeStart, DateSeparator.After, params));
 		hql.append(HqlHelper.buildDateSegment("gj.addtime", query.addtimeEnd, DateSeparator.Before, params));
-		hql.append(") tt  left join (select d.id as did, c.flag as flag, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did where d.flag=1  order by tt.addtime desc");
+		hql.append(") tt  left join (select d.id as did, c.flag as flag, d.namea as dname, c.namea as cname from uc_comp c, uc_comp d where d.fid=c.id) d on d.did=tt.did  order by tt.addtime desc");
 		//where d.cid<>345
 		//hql.append(" order by gj.addtime desc ");
 		page.pageSize=20;

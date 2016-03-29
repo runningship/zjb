@@ -55,10 +55,10 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="html list title addSide">
-    <div class="header">
+<div class="winThree list title addSide">
+    <div class="winHeader">
       <div class="maxHW title">
-      		<ul class="menuLi clearfix title" id="menuTop">
+      		<ul class="winMenuTop menuLi clearfix title" id="menuTop">
       			<jsp:include page="menuTop.jsp"></jsp:include>
           </ul>
           
@@ -98,7 +98,7 @@ $(document).ready(function() {
         </tr>
       </table>
     </div>
-    <div class="bodyer ">
+    <div class="winBodyer " style=" top: 127px;">
       <div class="maxHW" style="min-width: 700px;">
 
         <table class="table table-hover table-striped table-nopadding TableB" >
@@ -115,7 +115,7 @@ $(document).ready(function() {
         </table>
       </div>
     </div>
-    <div class="footer">
+    <div class="winFooter">
         <div class="maxHW mainCont ymx_page foot_page_box"></div>
     </div>
 </div>

@@ -70,7 +70,7 @@ function getSider(){
         var sideTop=parseInt(getSideH())*-1+6;
         $('#sideCont').html(data).find('.sideHead').css({top:sideTop});
         var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+1;
-        $('#sideCont').css({'padding-top':sideHeadHeight})
+        //$('#sideCont').css({'padding-top':sideHeadHeight})
         $('#search').click();
     });
 }
@@ -128,12 +128,14 @@ $(document).ready(function() {
 $(window).resize(function() {      //类别
 });
 </script>
+<style type="text/css">
+</style>
 </head>
 <body>
-<div class="html list title addSide">
-    <div class="header">
+<div class="winThree list title addSide">
+    <div class="winHeader">
         <div class="maxHW title">
-            <ul class="menuLi clearfix title" id="menuTop">
+            <ul class="winMenuTop menuLi clearfix " id="menuTop">
             	<jsp:include page="menuTop.jsp"></jsp:include>
             </ul>
         </div>
@@ -163,8 +165,8 @@ $(window).resize(function() {      //类别
   </table>
  
     </div>
-    <div class="bodyer mainCont">
-      <div class="sideCont" id="sideCont">
+    <div class="winBodyer mainCont">
+      <div class="winSider sideCont" id="sideCont">
       
       </div>
       <div class="maxHW" style="min-width: 700px;">
@@ -188,7 +190,7 @@ $(window).resize(function() {      //类别
         </table>
       </div>
     </div>
-    <div class="footer">
+    <div class="winFooter">
         <div class="maxHW mainCont ymx_page foot_page_box"></div>
     </div>
 </div>

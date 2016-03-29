@@ -96,15 +96,15 @@ $(document).ready(function() {
 </style>
 </head>
 <body>
-<div class="html list title addSide">
-    <div class="header">
+<div class="winThree list title addSide">
+    <div class="winHeader">
         <div class="maxHW title">
-            <ul class="menuLi clearfix title" id="menuTop">
+            <ul class="winMenuTop menuLi clearfix title" id="menuTop">
             	<jsp:include page="menuTop.jsp"></jsp:include>
             </ul>
         </div>
     </div>
-    <div id="allmap" style="overflow:hidden;zoom:1;position:relative;height:100%">	
+    <div id="allmap" class="winBodyer" style=" top: 50px; bottom: 0; overflow:hidden;zoom:1;position:relative;height:100%">	
 		<div id="map" style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;"></div>
 	</div>
     <form style="display:none" name="form1">

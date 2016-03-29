@@ -494,19 +494,19 @@ height: 35px; line-height: 35px; background-color: #FFF;border-top: 1px solid #D
 .list .ymx_page .btn-group .btn{ border-top:none; border-bottom:none; border-radius:0;}
 .list .ymx_page .btn-group > .btn:first-child { border-left:none;}
 
-.menuLi i.font_icon{ font-family:"微软雅黑","mrciosoft yaei" !important; font-size: 14px; font-weight: bold; border:2px solid #333; padding:0 3px;vertical-align: top; border-radius: 6px}
-.menuLi{ margin:0; padding-left: 10px; display: inline-block;}
-.menuLi>li{ float: left; margin:0 5px }
-.menuLi>li.curr>a { border-bottom: 3px solid #278ADD;}
-.menuLi>li>i{ vertical-align: middle;}
-.menuLi>li>a{ font-size: 16px; padding:5px 8px; border:1px solid #FFF;}
-.menuLi>li li a{display: block;}
-.menuLi>li>a:hover,.menuLi>li a.hover{ color: #09F; border-bottom: 3px solid #E0E0E0;}
-.menuLi>li.hover>a { color: #09F;}
-.menuLi>li>a:hover>i,.menuLi>li.hover>a>i{ color: #09F; border-color:#09F;}
-.menuLi>li.curr>a>{ color: #09F; border-bottom: 3px solid #E0E0E0;}
-.menuLi>li.curr>a>i{ color: #09F; border-color:#09F;}
-.menuLi.btn-group.open .dropdown-toggle{box-shadow:none;}
+.menuLis i.font_icon{ font-family:"微软雅黑","mrciosoft yaei" !important; font-size: 14px; font-weight: bold; border:2px solid #333; padding:0 3px;vertical-align: top; border-radius: 6px}
+.menuLis{ margin:0; padding-left: 10px; display: inline-block;}
+.menuLis>li{ float: left; margin:0 5px }
+.menuLis>li.curr>a { border-bottom: 3px solid #278ADD;}
+.menuLis>li>i{ vertical-align: middle;}
+.menuLis>li>a{ font-size: 16px; padding:5px 8px; border:1px solid #FFF;}
+.menuLis>li li a{display: block;}
+.menuLis>li>a:hover,.menuLis>li a.hover{ color: #09F; border-bottom: 3px solid #E0E0E0;}
+.menuLis>li.hover>a { color: #09F;}
+.menuLis>li>a:hover>i,.menuLis>li.hover>a>i{ color: #09F; border-color:#09F;}
+.menuLis>li.curr>a>{ color: #09F; border-bottom: 3px solid #E0E0E0;}
+.menuLis>li.curr>a>i{ color: #09F; border-color:#09F;}
+.menuLis.btn-group.open .dropdown-toggle{box-shadow:none;}
 
 .list .form1{ padding: 5px 5px 0; }
 .list .TableH{ border-bottom:1px solid #eee;}
@@ -789,3 +789,40 @@ content: "\2b";
 
 
 
+
+.winThree{ position: relative; height: 100%; width: 100%; }
+.winHeader{ position: absolute; top:0; left: 0; right: 0; height: 50px; }
+.winBodyer{ position: absolute; top: 81px; left: 0; right: 0; bottom: 34px; }
+.winFooter{ position: absolute; left: 0; bottom: 0; right: 0; height: 34px; }
+.winSider{ position: absolute; top: 0; left: 0; bottom: 0; width: 270px; height: 100%;border-right: 1px solid #EEE; }
+.winSider .sideHead{position: absolute;top: -30px;width: 100%;height: 31px;line-height: 31px;padding-left: 30px;color: #999;}
+.winSider .sideMain{ height: 100%; overflow: hidden; overflow-y: auto; width: 100%; }
+.winSider .sideFoot{ position: absolute; bottom: -34px; z-index: 999999; }
+
+html .winHeader table th{ border: none; }
+.list.addSide .mainCont th{ border: none; background: none;color: #999;font-weight: normal; }
+.list .winSider td{ border: none; }
+.list .TableB tr:nth-child(2) td{border: none;}
+.winSider .sideMain td{ border: none;}
+
+.winMenuTop{display: block;background: #FFF;padding-left: 60px;border-bottom: 1px solid #EAEAEA;}
+.winMenuTop li{ float: left;cursor: pointer;height: 50px;line-height: 50px;margin: 0px 10px 0 15px;padding: 0 10px;border: none;font-size: 18px;color: #00b67d;
+-webkit-transition: all 0.3s;
+-webkit-transition-property: all;
+-webkit-transition-duration: 0.3s;
+-webkit-transition-timing-function: initial;
+-webkit-transition-delay: initial; }
+.winMenuTop li a{color: #00b67d;}
+.winMenuTop li i{ display: none; }
+.winMenuTop li:hover{ background: none; border-bottom: 3px solid #36AFFF; color: #20BA5E; border-color: #20BA5E;}
+.winMenuTop li.curr { background: none; border-bottom: 3px solid #36AFFF; color: #20BA5E; border-color: #20BA5E; }
+
+.winFooter .mainCont{border-top: 1px solid #CCC;}
+.winFooter .mainCont .page_btn_group{ border-left: 1px solid #CCC; }
+
+
+
+ul.jtree li a.curSelectedNode{background-color:#31C27C;}
+#rMenu.list-group {border-radius: 4px;}
+#rMenu.list-group a{ border: none; }
+#rMenu.list-group .list-group-item:hover{ background-color: #31C27C; color:#FFF;}

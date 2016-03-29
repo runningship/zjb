@@ -108,12 +108,12 @@ function buildQueryOptions(){
     
 }
 .MainRightTop li{}
-
+*{-webkit-app-region:drag;}
 
 </style>
 </head>
 
-<body>
+<body class=" titlebar">
 
 <div id="GoAndBack" class="GaB">
 
@@ -263,8 +263,8 @@ function buildQueryOptions(){
                         </li>
                         
                         <li class="LiBoxW1">
-                             <button id="searchBtn" class="ButtonW1 ButtonS hand not-select" type="submit">搜索</button>
-                             <button class="ButtonW1 ButtonQ hand not-select" type="button" onclick="_open('/house/house_v2.jsp?type=chushou')">清空</button>
+                             <button id="searchBtn" class="ButtonW1 ButtonS hand not-select titlebar" type="submit">搜索</button>
+                             <button class="ButtonW1 ButtonQ hand not-select titlebar" type="button" onclick="_open('/house/house_v2.jsp?type=chushou')">清空</button>
                         </li>
                         
                    </ul>

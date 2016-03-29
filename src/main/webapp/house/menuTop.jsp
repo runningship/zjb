@@ -72,9 +72,9 @@ function openBankOrderList(){
 /*   #tuijianRecord{background-color:#E97143} */
 
 </style>
-<div id="menuTop" >
+<div id="menuTop" class=" titlebar" >
       <ul class="MainRightTop KY_W titlebar">
-          <li class=" <c:if test="${type eq 'chushou' }">slect</c:if>   nobar" onclick="_open('/house/house_v2.jsp')"><i class="iconfont">&#xe682;</i>出售</li>
+          <li class=" <c:if test="${type eq 'chushou' }">slect</c:if> titlebar" onclick="_open('/house/house_v2.jsp')"><i class="iconfont">&#xe682;</i>出售</li>
           <li class="line"></li>
           <li class=" <c:if test="${type eq 'chuzu' }">slect</c:if> nobar" onclick="window.location='/house/house_rent_v2.jsp'"><i class="iconfont">&#xe681;</i>出租</li>
           <li class="line"></li>

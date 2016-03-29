@@ -87,10 +87,10 @@ $(window).resize(function() {      //类别
 
 </head>
 <body>
-<div class="html list title addSide">
-    <div class="header">
+<div class="winThree list title addSide">
+    <div class="winHeader">
         <div class="maxHW title">
-            <ul class="menuLi clearfix title" id="menuTop">
+            <ul class="winMenuTop menuLi clearfix title" id="menuTop">
             	<jsp:include page="menuTop.jsp"></jsp:include>
             </ul>
         </div>
@@ -116,11 +116,9 @@ $(window).resize(function() {      //类别
         </select>
       </div>
       <div class="input-group input-group-max" style="width:300px;">
-                            <span class="SpanNameH2 not-select" style="float:left;margin-right:10px;margin-left:30px;"><em>日期</em></span>
-                            <div class="DivBoxW1 Fleft" style="display:inline">
-                            <input type="text" class="form-control input-left input-sm" name="rqtimeStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px;height:35px;">
+        <span class="input-group-addon" ><em>日期</em></span>
+        <input type="text" class="form-control input-left input-sm" name="rqtimeStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100px;height:35px;">
         <input type="text" class="form-control input-left input-sm" name="rqtimeEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100px;height:35px;">
-                            </div>
 	        </div>
       <div class="btn-group">
           <button type="button" class="btn btn-primary " onclick="doSearch(1);">搜索</button>
@@ -140,7 +138,7 @@ $(window).resize(function() {      //类别
   </table>
  
     </div>
-    <div class="bodyer">
+    <div class="winBodyer" style=" top: 127px;">
       <div class="maxHW" style="min-width: 700px;">
 
         <table class="table table-hover table-striped table-nopadding TableB" >
@@ -161,7 +159,7 @@ $(window).resize(function() {      //类别
         </table>
       </div>
     </div>
-    <div class="footer">
+    <div class="winFooter">
         <div class="maxHW mainCont ymx_page foot_page_box"></div>
     </div>
 </div>

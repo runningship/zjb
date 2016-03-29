@@ -387,7 +387,8 @@ function getUnReadStatistic(){
 position: absolute;
 z-index: 999999;
 top: -5px;
-padding: 0 0 0 15px; color: #20BA5E; }
+padding: 0 0 0 15px; color: #20BA5E;
+-webkit-app-region:drag; }
 .default .menuSide li a{ color: #FFF; }
 .default .menuSide li.curr{box-shadow: inset 0px 0px 20px rgba(0,0,0,0.4); border: 0;}
 </style>
@@ -455,7 +456,7 @@ padding: 0 0 0 15px; color: #20BA5E; }
 /*.html .wintools .winBtns { width: auto; height: 50px; line-height: 50px; font-size: 14px; padding: 0 5px; white-space:nowrap;  }
 i.pr{ padding-right: 3px; }*/
 </style>
-                    <div class="wintool title nobar">
+                    <div class="wintool title nobar" style="display: none;">
                         <ul class="wintools" style="padding-left:50px;">
 <!--                            <li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
                             <!-- <li><a href="#" title="中介宝外网" class="winBtns "><i class="iconfont pr">&#xe673;</i>顾某人</a></li> -->
@@ -490,12 +491,86 @@ i.pr{ padding-right: 3px; }*/
                             <li><a href="" class="winBtn black winBtnClose" data-q="close"><i></i></a></li>
                         </ul>    
                     </div>
+
+                    <div class="widnowTools">
+                        <div class="windowToolb" style="display: none;">
+                            <div class="windowTooli pad">
+                                <a href="javascript:void(0);" class=""><i class="iconfont">&#xe68b;</i></a>
+                                <a href="javascript:void(0);" class=""><i class="iconfont">&#xe68b;</i></a>
+                                <a href="javascript:void(0);" class=""><i class="iconfont">&#xe68b;</i></a>
+                            </div>
+                        </div>
+                        <div class="windowToolb" style="display: none;">
+                            <div class="windowTooli pad winTGroup">
+                                <a href="javascript:void(0);" class="">下拉 <em class="triangle down winTTit"></em></a>
+                                <div class="winTCont">
+                                    这里是内容
+                                </div>
+                            </div>
+                        </div>
+                        <div class="windowToolb winTBtnBox">
+                            <div class="windowTooli winTBtn">
+                                <a href="javascript:void(0);" class="s winBtn" data-q="min"><i class="iconfont">&#xe6a9;</i></a><a href="javascript:void(0);" class="s winBtn winBtnMax" data-q="max"><i class="iconfont">&#xe6a8;</i></a><a href="javascript:void(0);" class="s winBtn winBtnRevert" data-q="rev"><i class="iconfont">&#xe6a8;</i></a><a href="javascript:void(0);" class="c winBtn" data-q="close"><i class="iconfont">&#xe6a7;</i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<style type="text/css">
+.triangle{ display: inline-block;width: 0;height: 0; }
+.triangle.down{
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+border-top: 5px solid gray;}
+.triangle.up{
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+border-bottom: 5px solid red;}
+.triangle.left{
+border-top: 5px solid transparent;
+border-right: 5px solid red;
+border-bottom: 5px solid transparent;}
+.triangle.right{
+border-top: 5px solid transparent;
+border-left: 5px solid red;
+border-bottom: 5px solid transparent;}
 
+html .widnowTools{ position: absolute;top: 1px;right: 1px;z-index: 9990; }
+html .widnowTools * {-webkit-transition:all .5s;}
+html .widnowTools a{ text-decoration: none; }
+html .windowToolb{ white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1); position: relative; display: inline-block; float: left;}
+html .windowTooli{ line-height: 50px; }
+html .windowTooli:after {content: "\0020"; display: block;clear: both;}
+html .windowTooli.pad a{ padding: 0 10px; }
+html .windowTooli.pad a:hover{  }
+
+html .windowTooli .s{ width: 0px; }
+.default .windowTooli a{ float: left; display: inline-block; height: 49px; line-height: 49px; color: #000; overflow: hidden; }
+html .windowTooli i{ font-size: 14px; display: block; font-weight: normal; }
+html .windowToolb.winTBtnBox{ width: 16px;  }
+html .windowTooli.winTBtn{ position: absolute; top: 0; right: 0; height: 49px; background: #FFF;border-left: 1px solid rgba(0,0,0,0.1); }
+html .windowTooli.winTBtn a{ float: none; }
+html .windowTooli.winTBtn a.s:hover{ background: #20BA5E;}
+html .windowTooli.winTBtn a.c:hover{ background: rgba(255,0,0,0.7);}
+
+html .windowTooli.winTBtn a.s:hover,
+html .windowTooli.winTBtn a.c:hover {color: #FFF;-webkit-transition:all 0.01s;}
+html .windowTooli.winTBtn:hover .s{ display: inline-block; width: auto; }
+html .windowTooli.winTBtn:hover i{ font-size: 30px;}
+html .windowTooli.winTBtn:hover i{-webkit-transition:all 0.2s;}
+
+
+.winTGroup{ position: relative; }
+.winTGroup .winTTit{}
+.winTGroup .winTCont{ position: absolute; right: 0; top: 49px; background: #FFF; overflow: hidden; height: 0;
+ border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+.winTGroup:hover{-webkit-transition:all .5s; }
+.winTGroup:hover .winTTit{ }
+.winTGroup:hover .winTCont{ box-shadow: 0px 4px 10px rgba(0,0,0,0.3); height: auto; }
+</style>
 </div>
 <script type="text/javascript">
 function EditToolUser(json){

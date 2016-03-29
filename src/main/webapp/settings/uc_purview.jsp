@@ -39,7 +39,7 @@ function getSider(id){
         var sideTop=parseInt(getSideH())*-1+6;
         $('#sideCont').html(data).find('.sideHead').css({top:sideTop});
         var sideHeadHeight=$('#sideCont').find('.sideHead').innerHeight()+1;
-        $('#sideCont').css({'padding-top':sideHeadHeight})
+       // $('#sideCont').css({'padding-top':sideHeadHeight})
         $('#search').click();
     });
 }
@@ -116,10 +116,10 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="html list title addSide settings">
-    <div class="header">
+<div class="winThree list title addSide settings">
+    <div class="winHeader">
         <div class="maxHW title">
-            <ul class="menuLi clearfix title" id="menuTop">
+            <ul class="winMenuTop menuLi clearfix title" id="menuTop">
             	<jsp:include page="menuTop.jsp"></jsp:include>
             </ul>
         </div>
@@ -132,8 +132,8 @@ $(document).ready(function() {
   </table>
  
     </div>
-    <div class="bodyer mainCont">
-  <div class="sideCont" id="sideCont"></div>
+    <div class="winBodyer mainCont">
+        <div class="winSider sideCont" id="sideCont"></div>
         <div class="maxHW" style="min-width: 700px;">
           <table class="table table-hover table-striped table-nopadding TableB" >
             <tbody>
@@ -161,7 +161,7 @@ $(document).ready(function() {
           </table>
         </div>
     </div>
-    <div class="footer">
+    <div class="winFooter">
         <div class="maxHW mainCont">
         </div>
     </div>

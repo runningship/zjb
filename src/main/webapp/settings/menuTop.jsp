@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 <li class="act_cy hover"><a href="uc_index.jsp?act=cy" data-type="url"><i class="icon iconfont font_icon">员</i> 成员</a></li>
-                <li  class="act_qx hover"><a href="uc_purview.jsp?act=qx" data-type="url"><i class="icon iconfont font_icon">权</i> 职位权限</a></li>
+                <li  class="act_qx hover"><a href="uc_purview.jsp?act=qx" data-type="url"><i class="icon iconfont font_icon">权</i> 职位</a></li>
                 <c:if test="${authNames.contains('sz_pc_on')}">
-                    <li auth="sz_pc_on" class="act_sq hover"><a href="pc_index.jsp?act=sq" data-type="url"><i class="icon iconfont font_icon">机</i> 电脑授权</a></li>
+                    <li auth="sz_pc_on" class="act_sq hover"><a href="pc_index.jsp?act=sq" data-type="url"><i class="icon iconfont font_icon">机</i> 授权</a></li>
                 </c:if>
                 <c:if test="${authNames.contains('sz_phone_on')}">
                     <li auth="sz_phone_on" class="act_phone hover"><a href="phone_index.jsp?act=phone" data-type="url"><i class="icon iconfont font_icon">手</i> 手机</a></li>
