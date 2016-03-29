@@ -214,7 +214,7 @@ public class HouseService {
 		ModelAndView mv = new ModelAndView();
 		ModelAndView result = exist(house.area , house.dhao , house.fhao , house.seeGX==null ? "0": house.seeGX.toString());
 		if("1".equals(result.data.getString("exist"))){
-			if(house.id == result.data.getInt("hid")){
+			if(house.id != result.data.getInt("hid")){
 				throw new GException(PlatformExceptionType.BusinessException,"存在相同的房源"+result.data.get("hid"));
 			}
 		}
