@@ -36,7 +36,7 @@ request.setAttribute("new_house_server_port", new_house_server_port);
 <body class="newhouse">
 <div class="mainbox">
   <div class="bodyer">
-  <jsp:include page="menuTop.jsp?type=new" />
+  <jsp:include page="menuTop.jsp?type=bank" />
     <div class="mainer">
     	<iframe src="http://${new_house_server }:${new_house_server_port }/new-house/public/bank/list.jsp?sellerTel=${user.tel }&sellerName=${user.uname}&comp=${comp}"></iframe>
     </div>
@@ -54,7 +54,7 @@ function resizebox(){
   menu=$('#menuTop'),
   menuH=menu.innerHeight();
   menu.css({'margin-top':-menuH})
-  menu.find('ul').css({'display':'inline-block','width':'auto'})
+  //menu.find('ul').css({'display':'inline-block','width':'auto'})
   main.height(winH-menuH);
 }
 $(document).ready(function(){

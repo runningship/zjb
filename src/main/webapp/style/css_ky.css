@@ -628,7 +628,7 @@ position: absolute; top: -5px; left: 45%;}
 .MainRight { background: none; }
 #menuTop{ display: block; }
 .MainRightTop{ display: block; background: #FFF; padding-left: 60px;
-    border-bottom: 1px solid #EAEAEA;}
+    border-bottom: 1px solid #EAEAEA; height: 51px;}
 .MainRightTop li{ height: 48px; line-height: 50px; margin: 0px 10px 0 15px; padding: 0 10px; border: none; font-size: 18px; }
 .MainRightTop li:hover{ background: none;color: #20BA5E; border:none; }
 .MainRightTop li.slect{ background: none; border-bottom: 3px solid #36AFFF; color: #20BA5E; border-color: #20BA5E; }

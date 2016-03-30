@@ -213,7 +213,7 @@ var time_ani2=setTimeout(function(){
 });
 </script>
 
-<div class="adboxs ad_phone"  id="ad_phone" style="display:none; z-index: 9999;">
+<div class="adboxs ad_phone"  id="ad_phone" style="display:none; z-index: 9999999;">
     <div class="adboxitem">
         <h3 class="saoma animated">扫码下载APP客户端</h3>
         <div class="lineBox">

@@ -54,7 +54,7 @@ function resizebox(){
   menu=$('#menuTop'),
   menuH=menu.innerHeight();
   menu.css({'margin-top':-menuH})
-  menu.find('ul').css({'display':'inline-block','width':'auto'})
+  //menu.find('ul').css({'display':'inline-block','width':'auto'})
   main.height(winH-menuH);
 }
 $(document).ready(function(){

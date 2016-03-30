@@ -41,7 +41,7 @@
     });
 </script>
 <style type="text/css">
-.adboxs.regPhone { position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background: rgba(0,0,0,0.75);z-index: 999;}
+.adboxs.regPhone { position: absolute; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background: rgba(0,0,0,0.75);z-index: 999999;}
 .adboxs.regPhone .adboxitem{ margin:10% auto 0; position: relative; width: 980px;}
 .adboxs.regPhone .ab{ position: absolute; bottom: 29px; display: block; height: 46px; width: 150px; background: rgba(0,0,0,0.0); }
 .adboxs.regPhone .ab1{ right: 390px; width: 240px; }
