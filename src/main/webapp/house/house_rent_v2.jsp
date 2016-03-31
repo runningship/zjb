@@ -367,23 +367,23 @@ $(document).ready(function(){
                         </li>
                         <li>
                             <span class="SpanNameH2"><em>楼层</em></span>
-                            <div class="DivBoxW1 Fleft">
+                            <div class="DivBoxW1 Fleft" style="width: 83px;">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2"><em>建筑<br />年代</em></span>
-                            <div class="DivBoxW1 Fleft">
+                            <div class="DivBoxW1 Fleft" style="width: 82px;">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="yearStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="yearEnd" />
                             </div>
                         </li>
                         <li>
-                            <span class="SpanNameH2"><em>发布<br />日期</em></span>
-                            <div class="DivBoxW1 Fleft">
-                            <input type="text" class="form-control input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:78px">
-        <input type="text" class="form-control input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:78px">
+                            <span class="SpanNameH2 not-select"><em>发布<br />日期</em></span>
+                            <div class="DivBoxW1 Fleft" style="width: 82px;">
+                            <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="var timeend=$dp.$('idTime');WdatePicker({lang:'zh-cn',onpicked:function(){idTime.focus();},maxDate:'#F{$dp.$D(\'idTime\')}'})" style="width:100%">
+                            <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="WdatePicker({lang:'zh-cn',minDate:'#F{$dp.$D(\'idTimes\')}'})" style="width:100%">
                             </div>
                         </li>
                         

@@ -5,7 +5,6 @@
 <%@page import="org.bc.sdak.CommonDaoService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="inc/resource.jsp"></jsp:include>
 <%
 //Enumeration<String> names = request.getHeaderNames();
 //CommonDaoService dao = SimpDaoTool.getGlobalCommonDaoService();
@@ -44,6 +43,7 @@ Date end= now.getTime();
 <link href="${refPrefix}/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="${refPrefix}/style/style.css" rel="stylesheet">
 <link href="${refPrefix}/style/animate.min.css" rel="stylesheet" />
+<jsp:include page="inc/resource.jsp"></jsp:include>
 <script src="${refPrefix}/js/jquery.js" type="text/javascript"></script>
 <script src="${refPrefix}/js/buildHtml.js" type="text/javascript"></script>
 <script src="${refPrefix}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
@@ -386,7 +386,6 @@ function getUnReadStatistic(){
 .iconLogo{ display: block; font-size: 50px;
 position: absolute;
 z-index: 999999;
-top: -5px;
 padding: 0 0 0 15px; color: #20BA5E;
 -webkit-app-region:drag; }
 .default .menuSide li a{ color: #FFF; }
@@ -492,25 +491,42 @@ i.pr{ padding-right: 3px; }*/
                         </ul>    
                     </div>
 
-                    <div class="widnowTools">
-                        <div class="windowToolb" style="display: none;">
-                            <div class="windowTooli pad">
-                                <a href="javascript:void(0);" class=""><i class="iconfont">&#xe68b;</i></a>
-                                <a href="javascript:void(0);" class=""><i class="iconfont">&#xe68b;</i></a>
+                    <div class="winToolx">
+                        <div class="winToolb" style="display: none;">
+                            <div class="winTooli pad">
                                 <a href="javascript:void(0);" class=""><i class="iconfont">&#xe68b;</i></a>
                             </div>
                         </div>
-                        <div class="windowToolb" style="display: none;">
-                            <div class="windowTooli pad winTGroup">
-                                <a href="javascript:void(0);" class="">下拉 <em class="triangle down winTTit"></em></a>
+                        <div class="winToolb">
+                            <div class="winTooli pad winTGroup">
+                                <a href="javascript:void(0);" class="winTTit"><i class="iconfont">&#xe68b;</i> ${me.uname} <em class="triangle down "></em></a>
                                 <div class="winTCont">
-                                    这里是内容
+                                    <ul class="WinTCUl">
+                                        <li class="WinTCLi"><a href="javascript:void(0);" title="${cname}-${dname} (${role.title})"><i class="iconfont">&#xe651;</i> ${cname}-${dname} <span class="fr">${role.title}</span></a></li>
+                                        <li class="WinTCLi"><a href="javascript:void(0);" title="手机：${me.tel}&#10;帐号：${me.lname}"><i class="iconfont">&#xe662;</i> ${me.tel} <span class="fr">${me.lname}</span></a></li>
+                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
+                                        <li class="WinTCLi WinNs WinN2">
+                                            <div class="WinN"><a href="javascript:void(0);" class="gray" title="注册帐号" onclick="openReg();"><i class="iconfont">&#xe69b;</i> 注册帐号</a>
+                                            </div><div class="WinN"><a href="javascript:void(0);" class="gray" title="修改资料" onclick="editProfile();"><i class="iconfont">&#xe69d;</i> 修改资料</a>
+                                            </div>
+                                        </li>
+                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
+                                        <li class="WinTCLi WinNs WinN2">
+                                            <div class="WinN"><a href="javascript:void(0);" title="在线支付" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></div><div class="WinN"><a href="javascript:void(0);" title="银行汇款转账" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行转账</a></div></li>
+                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
+                                        <li class="WinTCLi"><a href="javascript:void(0);" title="请给予我们您的宝贵意见" onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');"><i class="iconfont">&#xe666;</i> 外网<span class="fr"></span></a></li>
+                                        <li class="WinTCLi"><a href="javascript:void(0);" title="请给予我们您的宝贵意见" onclick="fankui();"><i class="iconfont">&#xe633;</i> 意见建议<span class="fr">反馈</span></a></li>
+                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
+                                        <li class="WinTCLi"><a href="javascript:void(0);" title="重新登录/切换账号" onclick="relogin();"><i class="iconfont">&#xe650;</i> 重新登录<span class="fr">切换账号</span></a></li>
+                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
+                                        <li class="WinTCLi"><a href="javascript:void(0);" class="noh movre ewm"><span class="imgbox"><img src="style/images/ajb_all_600.png" ></span><div class="tac">扫码下载手机版</div></a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="windowToolb winTBtnBox">
-                            <div class="windowTooli winTBtn">
-                                <a href="javascript:void(0);" class="s winBtn" data-q="min"><i class="iconfont">&#xe6a9;</i></a><a href="javascript:void(0);" class="s winBtn winBtnMax" data-q="max"><i class="iconfont">&#xe6a8;</i></a><a href="javascript:void(0);" class="s winBtn winBtnRevert" data-q="rev"><i class="iconfont">&#xe6a8;</i></a><a href="javascript:void(0);" class="c winBtn" data-q="close"><i class="iconfont">&#xe6a7;</i></a>
+                        <div class="winToolb winTBtnBox">
+                            <div class="winTooli winTBtn">
+                                <a href="javascript:void(0);" class="s winBtn" data-q="min"><i class="iconfont">&#xe6a9;</i></a><a href="javascript:void(0);" class="s winBtn winBtnMax" data-q="max"><i class="iconfont">&#xe6a8;</i></a><a href="javascript:void(0);" class="s winBtn winBtnRevert" data-q="rev"><i class="iconfont">&#xe6b3;</i></a><a href="javascript:void(0);" class="c winBtn" data-q="close"><i class="iconfont">&#xe6ae;</i></a>
                             </div>
                         </div>
                     </div>
@@ -520,6 +536,22 @@ i.pr{ padding-right: 3px; }*/
     </div>
 </div>
 <style type="text/css">
+.tac{ text-align: center; }
+.iconfont{-webkit-text-stroke-width: 0.2px;}
+.iconfont {
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+.WinNs{}
+.WinNs:after {content: "\0020"; display: block;clear: both;}
+.WinNs .WinN{ display: inline-block; text-align: center; }
+.WinNs .WinN a{border-right: 1px solid #EEE;}
+.WinNs .WinN:last-child a{ border: none; }
+.WinN2 .WinN{ width: 50%; }
+.WinN3 .WinN{ width: 33.3%; }
+.WinN4 .WinN{ width: 25%; }
+
 .triangle{ display: inline-block;width: 0;height: 0; }
 .triangle.down{
 border-left: 5px solid transparent;
@@ -538,38 +570,80 @@ border-top: 5px solid transparent;
 border-left: 5px solid red;
 border-bottom: 5px solid transparent;}
 
-html .widnowTools{ position: absolute;top: 1px;right: 1px;z-index: 9990; }
-html .widnowTools * {-webkit-transition:all .5s;}
-html .widnowTools a{ text-decoration: none; }
-html .windowToolb{ white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1); position: relative; display: inline-block; float: left;}
-html .windowTooli{ line-height: 50px; }
-html .windowTooli:after {content: "\0020"; display: block;clear: both;}
-html .windowTooli.pad a{ padding: 0 10px; }
-html .windowTooli.pad a:hover{  }
+html .winToolx{ position: absolute;top: 1px;right: 1px;z-index: 990; }
+html .winToolx * {-webkit-transition:all .5s;}
+html .winToolx a{ text-decoration: none; }
+html .winToolb{ white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1); position: relative; display: inline-block; float: left;}
+html .winTooli{ line-height: 50px; }
+html .winTooli:after {content: "\0020"; display: block;clear: both;}
+html .winTooli.pad>a{ padding: 0 10px; }
+html .winTooli.pad>a:hover{  }
 
-html .windowTooli .s{ width: 0px; }
-.default .windowTooli a{ float: left; display: inline-block; height: 49px; line-height: 49px; color: #000; overflow: hidden; }
-html .windowTooli i{ font-size: 14px; display: block; font-weight: normal; }
-html .windowToolb.winTBtnBox{ width: 16px;  }
-html .windowTooli.winTBtn{ position: absolute; top: 0; right: 0; height: 49px; background: #FFF;border-left: 1px solid rgba(0,0,0,0.1); }
-html .windowTooli.winTBtn a{ float: none; }
-html .windowTooli.winTBtn a.s:hover{ background: #20BA5E;}
-html .windowTooli.winTBtn a.c:hover{ background: rgba(255,0,0,0.7);}
+/*html .winTooli .s{ width: 0px; }*/
+.default .winTooli>a{ float: left; display: inline-block; height: 49px; line-height: 49px; color: #000; overflow: hidden; }
+html .winTooli i{ font-size: 16px; font-weight: normal; vertical-align: middle; }
+html .winToolb.winTBtnBox{  }
+html .winTooli.winTBtn{ height: 49px; background: #FFF; }
+html .winTooli.winTBtn i{ display: block; font-size: 20px; }
+html .winTooli.winTBtn a{ float: none; }
+html .winTooli.winTBtn a.s:hover{ background: #20BA5E;}
+html .winTooli.winTBtn a.c:hover{ background: rgba(255,0,0,0.7);}
 
-html .windowTooli.winTBtn a.s:hover,
-html .windowTooli.winTBtn a.c:hover {color: #FFF;-webkit-transition:all 0.01s;}
-html .windowTooli.winTBtn:hover .s{ display: inline-block; width: auto; }
-html .windowTooli.winTBtn:hover i{ font-size: 30px;}
-html .windowTooli.winTBtn:hover i{-webkit-transition:all 0.2s;}
+html .winTooli.winTBtn a.s:hover,
+html .winTooli.winTBtn a.c:hover {color: #FFF;-webkit-transition:all 0.01s;}
+/*html .winTooli.winTBtn:hover .s{ display: inline-block; width: auto; }*/
+/*html .winTooli.winTBtn:hover i{ font-size: 30px;}*/
+html .winTooli.winTBtn:hover i{-webkit-transition:all 0.2s;}
 
+html .winToolb.winTBtnBox.Posa{ width: 16px;}
+html .winToolb.winTBtnBox.Posa .winTooli .s{ width: 0px; }
+html .winToolb.winTBtnBox.Posa .winTooli.winTBtn{ position: absolute; top: 0; right: 0;border-left: 1px solid rgba(0,0,0,0.1);}
+html .winToolb.winTBtnBox.Posa .winTooli.winTBtn:hover .s{ display: inline-block; width: auto; }
+html .winToolb.winTBtnBox.Posa .winTooli.winTBtn:hover i{ font-size: 30px;}
 
 .winTGroup{ position: relative; }
 .winTGroup .winTTit{}
-.winTGroup .winTCont{ position: absolute; right: 0; top: 49px; background: #FFF; overflow: hidden; height: 0;
+.winTGroup .winTCont{ position: absolute; right: 0; top: 49px; min-width: 250px; background: #FFF; overflow: hidden; height: 0;
  border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
 .winTGroup:hover{-webkit-transition:all .5s; }
 .winTGroup:hover .winTTit{ }
 .winTGroup:hover .winTCont{ box-shadow: 0px 4px 10px rgba(0,0,0,0.3); height: auto; }
+
+.WinTCUl{ padding: 10px 0 0;}
+.WinTCLi{ }
+.WinTCLider{ padding: 9px 0; }
+.divider{ height: 1px; width: 100%;
+overflow: hidden;
+background-color: #e5e5e5;}
+.WinTCLi a{ color: #666; padding: 0 10px; height: 40px;line-height: 40px; display: block; margin: -5px 0 -5px; }
+.WinTCLi a.gray{ background: #F3F3F3; }
+.WinTCLi a:after {content: "\0020"; display: block;clear: both;}
+.WinTCLi a:hover{ background:#20BA5E;  }
+.WinTCLi .fr{ color: #CCC; }
+.WinTCLi a:hover .fr,
+.WinTCLi a:hover i{ color: #FFF;  }
+.WinTCLi a.noh{ height: auto; line-height: auto; }
+
+
+.imgbox{ width: 100%; display: inline-block; }
+.imgbox img{display: block; height: auto; width: 100%; }
+.imgbox.autoW img{ height: 100%; width: auto; }
+.WinTCLi a.movre.ewm:hover { padding-top: 9px; }
+.WinTCLi a.movre.ewm:hover .imgbox{ height: auto; width: 100%;  }
+.WinTCLi a.movre.ewm:hover .imgbox img{ display: inline-block; height: auto; width: 100%;  }
+
+.winTGroup .triangle.down{    transform-origin: 50% 48%;
+    -webkit-transform-origin: 50% 50%;
+    -webkit-transition: transform .2s ease-in;
+    -moz-transition: transform .2s ease-in;
+    -o-transition: transform .2s ease-in;
+    transition: transform .2s ease-in;}
+.winTGroup:hover  .triangle.down{    transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    cursor: default;}
 </style>
 </div>
 <script type="text/javascript">
@@ -580,7 +654,7 @@ function EditToolUser(json){
     $('.me_uname').text(S.uname);
 }
 </script>
-<jsp:include page="ad/2016/phone/download.jsp"></jsp:include>
+<%-- <jsp:include page="ad/2016/phone/download.jsp"></jsp:include> --%>
 <jsp:include page="ad/2016/reg/ad_bank.jsp"></jsp:include>
 <%-- <jsp:include page="ad/2016/reg/ad_regPhone.jsp"></jsp:include> --%>
 <%-- <jsp:include page="ad/2016/zufang/index.jsp"></jsp:include> --%>

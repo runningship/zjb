@@ -133,8 +133,8 @@ $(document).ready(function() {
  
     </div>
     <div class="winBodyer mainCont">
-        <div class="winSider sideCont" id="sideCont"></div>
-        <div class="maxHW" style="min-width: 700px;">
+        <div class="winSider" id="sideCont"></div>
+        <div class="winMainer maxHW" style="min-width: 700px;">
           <table class="table table-hover table-striped table-nopadding TableB" >
             <tbody>
             <tr data-hid="$[id]" style="display:none;" class="id_purview_list auth_first">

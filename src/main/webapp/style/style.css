@@ -798,6 +798,7 @@ content: "\2b";
 .winSider .sideHead{position: absolute;top: -30px;width: 100%;height: 31px;line-height: 31px;padding-left: 30px;color: #999;}
 .winSider .sideMain{ height: 100%; overflow: hidden; overflow-y: auto; width: 100%; }
 .winSider .sideFoot{ position: absolute; bottom: -34px; z-index: 999999; }
+.winMainer{ overflow: hidden; overflow-y: auto;}
 
 html .winHeader table th{ border: none; }
 .list.addSide .mainCont th{ border: none; background: none;color: #999;font-weight: normal; }

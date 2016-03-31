@@ -66,7 +66,7 @@ function openBankOrderList(){
     /* width: auto; */
     height: auto;
     text-align: center;
-    font-size: 22;
+    font-size: 25px;
     vertical-align: bottom;
   }
 /*   #tuijianRecord{background-color:#E97143} */
@@ -100,15 +100,15 @@ function openBankOrderList(){
           </li>
           <li class="line"></li>
           <li style="position:relative;display:;"  class="MenuBox nobar <c:if test="${type eq 'new' }">slect</c:if> nobar newhouseA" onclick="openXinFang();">
-          		<i class="iconfont">&#xe6a3;</i>新房
+          		<i class="iconfont">&#xe6a3;</i>新房<em class="ico"><i class="iconfont">&#xe6b1;</i></em>
           		<div class="topMenuChid"  id="tuijianRecord">
                     <span></span>
                     <a href="javascript:void(0)" onclick="openOrderList();return false;">推荐记录</a> 
                </div>
           </li>
           <li class="line"></li>
-          <li style="position:relative;display:;"  class="MenuBox nobar <c:if test="${type eq 'bank' }">slect</c:if> nobar newhouseA" onclick="openBank();">
-          		<i class="iconfont">&#xe6a4;</i>银行
+          <li style="position:relative;display:;" class="MenuBox nobar <c:if test="${type eq 'bank' }">slect</c:if> nobar newhouseA" onclick="openBank();">
+          		<i class="iconfont">&#xe6a4;</i>银行<em class="ico"><i class="iconfont">&#xe6b1;</i></em>
           		<div class="topMenuChid"  id="loanRecord">
                     <span></span>
                     <a href="javascript:void(0)" onclick="openBankOrderList();return false;">推荐记录</a> 

@@ -21,10 +21,10 @@ public class HouseViewCache {
 	
 	public HouseCacheVO loadHouse(Integer hid){
 		String key = ThreadSessionHelper.getCityPinyin()+hid;
-		if(data.containsKey(key)){
+//		if(data.containsKey(key)){
 			return data.get(key);
-		}
-		return null;
+//		}
+//		return null;
 	}
 	
 	public void putHouse(HouseCacheVO house){

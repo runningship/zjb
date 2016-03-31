@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
+
 <style type="text/css">
 body{ }
 .adboxs.ad_phone { position: absolute; top: 0%; right: 0; bottom: 0; left: 0; text-align: center; background:rgba(0,0,0,0.5);}
@@ -167,7 +166,7 @@ animation-direction:alternate;
     100% { opacity: 1;}
 }
 </style>
-</head>
+
 
 <script type="text/javascript">
 $(document).on('click', '.adboxs.ad_phone', function(event) {
@@ -230,4 +229,3 @@ var time_ani2=setTimeout(function(){
             <a href="#" class="btn white posa posaFK">意见问题反馈</a>
     </div>
 </div>
-</html>

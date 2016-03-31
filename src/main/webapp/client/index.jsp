@@ -331,14 +331,14 @@ input:not([type="image"]), textarea {
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>楼层</em></span>
-                            <div class="DivBoxW1 Fleft">
+                            <div class="DivBoxW1 Fleft" style="width: 83px;">
                             <input id="search" class="input-sm input-left inputBox" type="text" desc="楼层" placeholder="" name="lcengStart" />
                             <input id="search" class="input-sm input-left inputBox" type="text" desc="楼层" placeholder="" name="lcengEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>建筑<br />年代</em></span>
-                            <div class="DivBoxW1 Fleft">
+                            <div class="DivBoxW1 Fleft" style="width: 83px;">
                             <input id="search" class="input-sm input-left inputBox" type="text" desc="年代" placeholder="" name="yearFrom" />
                             <input id="search" class="input-sm input-left inputBox" type="text" desc="年代" placeholder="" name="yearTo" />
                             </div>

@@ -235,21 +235,21 @@ function buildQueryOptions(){
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>单价</em></span>
-                            <div class="DivBoxW1 Fleft">
+                            <div class="DivBoxW1 Fleft" style="width: 61px;">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="单价" autocomplete="off" name="djiaStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="单价" autocomplete="off" name="djiaEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>楼层</em></span>
-                            <div class="DivBoxW1 Fleft">
+                            <div class="DivBoxW1 Fleft" style="width: 83px;">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" desc="楼层" autocomplete="off" name="lcengEnd" />
                             </div>
                         </li>
                         <li>
                             <span class="SpanNameH2 not-select"><em>建筑<br />年代</em></span>
-                            <div class="DivBoxW1 Fleft">
+                            <div class="DivBoxW1 Fleft" style="width: 83px;">
                             <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="dateyearStart" />
                             <input class="input-sm input-left inputBox" type="text" placeholder="" autocomplete="off" name="dateyearEnd" />
                             </div>
@@ -258,7 +258,7 @@ function buildQueryOptions(){
                             <span class="SpanNameH2 not-select"><em>发布<br />日期</em></span>
                             <div class="DivBoxW1 Fleft" style="width: 80px;">
                             <input type="text" class="form-control input-left input-sm" name="dateStart" id="idTimes" onFocus="onSetDateStart();" style="width:100%">
-        <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="onSetDataEnd();" style="width:100%">
+                            <input type="text" class="form-control input-left input-sm" name="dateEnd" id="idTime" onFocus="onSetDataEnd();" style="width:100%">
                             </div>
                         </li>
                         

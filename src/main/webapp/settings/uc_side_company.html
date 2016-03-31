@@ -257,7 +257,7 @@ function delNode(){
 }
 
 $(document).ready(function() {
-	console.log(1);
+//	console.log(1);
     $('[data-toggle=tooltip]').tooltip();
     $('.sideCont').on('click', '.btns', function(event) {
         event.preventDefault();
@@ -288,6 +288,12 @@ $(document).ready(function() {
           return false;
         }
 
+    });
+
+    $('[data-toggle=popover]').popover({
+        html:true,
+        container:'body',
+        placement:'top'
     });
     $('#rMenu').on('click', 'a', function(event) {
         var Thi=$(this),
@@ -383,12 +389,6 @@ $(document).ready(function() {
             return false;
         }
     });
-
-    $('[data-toggle=popover]').popover({
-        html:true,
-        container:'body',
-        placement:'top'
-    });
 });
 getFunSettingSideEarch();
 </script>
@@ -413,8 +413,8 @@ getFunSettingSideEarch();
 <div class="sideFoot">
   <ul>
     <li>
-      <a href="" title="搜索数据" class="btns" id="search" data-type="popover" data-toggle="popover" data-content='<input type="text" class="form-control input_search" placeholder="公司代码\公司名\等" name="" value="" style="min-width:250px;">' autofocus="autofocus"><i class="iconfont" style="font-size:13px; font-weight:bold; margin-right:3px;">&#xe649;</i>搜索</a>
-      <a href="" data-toggle="tooltip" auth="sz_dian_add" title="添加公司" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加公司</a>
+      <a href="javascript:void(0);" title="搜索数据" class="btns" id="search" data-type="popover" data-toggle="popover" data-content='<input type="text" class="form-control input_search" placeholder="公司代码\公司名\等" name="" value="" style="min-width:250px;">' autofocus="autofocus"><i class="iconfont" style="font-size:13px; font-weight:bold; margin-right:3px;">&#xe649;</i>搜索</a>
+      <a href="javascript:void(0);" data-toggle="tooltip" auth="sz_dian_add" title="添加公司" class="btns" data-type="add_company"><i class="glyphicon glyphicon-plus"></i>添加公司</a>
     </li>
   </ul>
 </div>

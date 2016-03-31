@@ -169,7 +169,7 @@ $(window).resize(function() {      //类别
       <div class="winSider sideCont" id="sideCont">
       
       </div>
-      <div class="maxHW" style="min-width: 700px;">
+      <div class="winMainer maxHW" style="min-width: 700px;">
 
         <table class="table table-hover table-striped table-nopadding TableB" >
           <tbody>

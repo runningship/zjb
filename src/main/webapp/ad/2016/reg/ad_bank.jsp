@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Examples</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<link href="animate.min.css" rel="stylesheet">
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
 <script type="text/javascript">
     $(document).on('click', '.regPhone .btn_act', function(event) {
         var Thi=$(this),
@@ -51,12 +42,9 @@
 .adboxs.regPhone .nav1{ top: -2px; right: 90px; height: auto; width: auto; bottom: auto; display: none; z-index: 1000;}
 .adboxs.regPhone .nav2{ top: -2px; right: 90px; height: auto; width: auto; bottom: auto; display: none; z-index: 1000;}
 </style>
-</head>
-<body>
+
 <div class="adboxs regPhone animated">
     <div class="adboxitem">
         <img src="/ad/2016/reg/ad_bank.png" alt="" class=" animated fadeIn">
     </div>
 </div>
-</body>
-</html>

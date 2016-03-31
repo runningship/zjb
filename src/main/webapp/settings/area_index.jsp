@@ -191,7 +191,7 @@ function mergeDistrict(){
       </table>
     </div>
     <div class="winBodyer " style=" top: 127px;">
-      <div class="maxHW" style="min-width: 700px;">
+      <div class="winMainer maxHW" style="min-width: 700px;">
 
         <table class="table table-hover table-striped table-nopadding TableB" >
           <tbody>
