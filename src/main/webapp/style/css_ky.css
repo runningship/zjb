@@ -462,7 +462,7 @@ ul.bottomAction, ul.bottomAction li{ margin:0; padding:0;}
 
 .topMenuChid{
     position: absolute;
-	top:50px; left:0;
+	top:48px; left:0;
 	z-index: 1000; 
 	display: none;
 	width:100%;
@@ -611,7 +611,8 @@ background-color: #6FBEFF; color:#000;
 .InputMainLine li button:hover{background:#1AA461; border:none; }
 .InputMainLine li button.selectMethod:hover{  }
 .ulErMenu{  background:rgba(49, 194, 124 ,0.9);box-shadow: inset 0 0 30px #199559; border: none; overflow-y: auto;max-height: 500px;padding-right: 5px; }
-.ulErMenu p{border-bottom: 1px solid rgba(35, 160, 100,0.5);padding: 5px 5px 5px 0;}
+.ulErMenu p{border-bottom: 1px solid rgba(35, 160, 100,0.5);padding: 0px 5px 0px 0;}
+.ulErMenu p label{ padding:5px 25px 5px 10px; }
 .ulErMenu p:last-child{ border: none; }
 .ulErMenu p:hover{ background:rgba(0,0,0,0.1); }
 .ulErMenu:after{content:" ";width:0; height:0; 

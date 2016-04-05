@@ -455,17 +455,17 @@ padding: 0 0 0 15px; color: #20BA5E;
 /*.html .wintools .winBtns { width: auto; height: 50px; line-height: 50px; font-size: 14px; padding: 0 5px; white-space:nowrap;  }
 i.pr{ padding-right: 3px; }*/
 </style>
-                    <div class="wintool title nobar" style="display: none;">
+                    <div class="wintool title nobar" style="display: ;">
                         <ul class="wintools" style="padding-left:50px;">
 <!--                            <li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
                             <!-- <li><a href="#" title="中介宝外网" class="winBtns "><i class="iconfont pr">&#xe673;</i>顾某人</a></li> -->
-                            <li><a href="#"  onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li>
-                            <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li>
-                            <li><a href="#" onclick="fankui();" title="请给予我们您的宝贵意见" class="winBtns "><i class="iconfont">&#xe633;</i></a></li>
+                            <!-- <li><a href="#"  onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li> -->
+                            <!-- <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li> -->
+                            
                             <li class="dropdown btn-group">
-                                <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
+                            <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i class="iconfont">&#xe68b;</i> <b class="me_uname">${me.uname}</b><em class="triangle down "></em></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: <b class="me_uname">${me.uname}</b></a></li>
+                                    <!-- <li><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: <b class="me_uname">${me.uname}</b></a></li> -->
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe651;</i> 账号: <b class="me_lname">${me.lname}</b></a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe61b;</i> <b class="me_cname">${cname}-${dname}</b></a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe657;</i> 职位: <b class="me_title">${role.title}</b></a></li>
@@ -473,6 +473,8 @@ i.pr{ padding-right: 3px; }*/
                                     <li role="presentation" class="divider"></li>
                                     <li onclick="openReg();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 注册账号</a></li>
                                     <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe69d;</i> 修改资料</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                    <li><a href="javascript:void(0)" onclick="fankui();" title="请给予我们您的宝贵意见"><i class="iconfont">&#xe633;</i> 意见建议</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></li>
                                     <li><a href="javascript:void(0)" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行账户</a></li>
@@ -491,45 +493,6 @@ i.pr{ padding-right: 3px; }*/
                         </ul>    
                     </div>
 
-                    <div class="winToolx">
-                        <div class="winToolb" style="display: none;">
-                            <div class="winTooli pad">
-                                <a href="javascript:void(0);" class=""><i class="iconfont">&#xe68b;</i></a>
-                            </div>
-                        </div>
-                        <div class="winToolb">
-                            <div class="winTooli pad winTGroup">
-                                <a href="javascript:void(0);" class="winTTit"><i class="iconfont">&#xe68b;</i> ${me.uname} <em class="triangle down "></em></a>
-                                <div class="winTCont">
-                                    <ul class="WinTCUl">
-                                        <li class="WinTCLi"><a href="javascript:void(0);" title="${cname}-${dname} (${role.title})"><i class="iconfont">&#xe651;</i> ${cname}-${dname} <span class="fr">${role.title}</span></a></li>
-                                        <li class="WinTCLi"><a href="javascript:void(0);" title="手机：${me.tel}&#10;帐号：${me.lname}"><i class="iconfont">&#xe662;</i> ${me.tel} <span class="fr">${me.lname}</span></a></li>
-                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
-                                        <li class="WinTCLi WinNs WinN2">
-                                            <div class="WinN"><a href="javascript:void(0);" class="gray" title="注册帐号" onclick="openReg();"><i class="iconfont">&#xe69b;</i> 注册帐号</a>
-                                            </div><div class="WinN"><a href="javascript:void(0);" class="gray" title="修改资料" onclick="editProfile();"><i class="iconfont">&#xe69d;</i> 修改资料</a>
-                                            </div>
-                                        </li>
-                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
-                                        <li class="WinTCLi WinNs WinN2">
-                                            <div class="WinN"><a href="javascript:void(0);" title="在线支付" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></div><div class="WinN"><a href="javascript:void(0);" title="银行汇款转账" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行转账</a></div></li>
-                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
-                                        <li class="WinTCLi"><a href="javascript:void(0);" title="请给予我们您的宝贵意见" onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');"><i class="iconfont">&#xe666;</i> 外网<span class="fr"></span></a></li>
-                                        <li class="WinTCLi"><a href="javascript:void(0);" title="请给予我们您的宝贵意见" onclick="fankui();"><i class="iconfont">&#xe633;</i> 意见建议<span class="fr">反馈</span></a></li>
-                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
-                                        <li class="WinTCLi"><a href="javascript:void(0);" title="重新登录/切换账号" onclick="relogin();"><i class="iconfont">&#xe650;</i> 重新登录<span class="fr">切换账号</span></a></li>
-                                        <li class="WinTCLi WinTCLider"><div class="divider"></div></li>
-                                        <li class="WinTCLi"><a href="javascript:void(0);" class="noh movre ewm"><span class="imgbox"><img src="style/images/ajb_all_600.png" ></span><div class="tac">扫码下载手机版</div></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="winToolb winTBtnBox">
-                            <div class="winTooli winTBtn">
-                                <a href="javascript:void(0);" class="s winBtn" data-q="min"><i class="iconfont">&#xe6a9;</i></a><a href="javascript:void(0);" class="s winBtn winBtnMax" data-q="max"><i class="iconfont">&#xe6a8;</i></a><a href="javascript:void(0);" class="s winBtn winBtnRevert" data-q="rev"><i class="iconfont">&#xe6b3;</i></a><a href="javascript:void(0);" class="c winBtn" data-q="close"><i class="iconfont">&#xe6ae;</i></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -542,15 +505,6 @@ i.pr{ padding-right: 3px; }*/
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-
-.WinNs{}
-.WinNs:after {content: "\0020"; display: block;clear: both;}
-.WinNs .WinN{ display: inline-block; text-align: center; }
-.WinNs .WinN a{border-right: 1px solid #EEE;}
-.WinNs .WinN:last-child a{ border: none; }
-.WinN2 .WinN{ width: 50%; }
-.WinN3 .WinN{ width: 33.3%; }
-.WinN4 .WinN{ width: 25%; }
 
 .triangle{ display: inline-block;width: 0;height: 0; }
 .triangle.down{
@@ -570,80 +524,28 @@ border-top: 5px solid transparent;
 border-left: 5px solid red;
 border-bottom: 5px solid transparent;}
 
-html .winToolx{ position: absolute;top: 1px;right: 1px;z-index: 990; }
-html .winToolx * {-webkit-transition:all .5s;}
-html .winToolx a{ text-decoration: none; }
-html .winToolb{ white-space: nowrap; border-left: 1px solid rgba(0,0,0,0.1); position: relative; display: inline-block; float: left;}
-html .winTooli{ line-height: 50px; }
-html .winTooli:after {content: "\0020"; display: block;clear: both;}
-html .winTooli.pad>a{ padding: 0 10px; }
-html .winTooli.pad>a:hover{  }
-
-/*html .winTooli .s{ width: 0px; }*/
-.default .winTooli>a{ float: left; display: inline-block; height: 49px; line-height: 49px; color: #000; overflow: hidden; }
-html .winTooli i{ font-size: 16px; font-weight: normal; vertical-align: middle; }
-html .winToolb.winTBtnBox{  }
-html .winTooli.winTBtn{ height: 49px; background: #FFF; }
-html .winTooli.winTBtn i{ display: block; font-size: 20px; }
-html .winTooli.winTBtn a{ float: none; }
-html .winTooli.winTBtn a.s:hover{ background: #20BA5E;}
-html .winTooli.winTBtn a.c:hover{ background: rgba(255,0,0,0.7);}
-
-html .winTooli.winTBtn a.s:hover,
-html .winTooli.winTBtn a.c:hover {color: #FFF;-webkit-transition:all 0.01s;}
-/*html .winTooli.winTBtn:hover .s{ display: inline-block; width: auto; }*/
-/*html .winTooli.winTBtn:hover i{ font-size: 30px;}*/
-html .winTooli.winTBtn:hover i{-webkit-transition:all 0.2s;}
-
-html .winToolb.winTBtnBox.Posa{ width: 16px;}
-html .winToolb.winTBtnBox.Posa .winTooli .s{ width: 0px; }
-html .winToolb.winTBtnBox.Posa .winTooli.winTBtn{ position: absolute; top: 0; right: 0;border-left: 1px solid rgba(0,0,0,0.1);}
-html .winToolb.winTBtnBox.Posa .winTooli.winTBtn:hover .s{ display: inline-block; width: auto; }
-html .winToolb.winTBtnBox.Posa .winTooli.winTBtn:hover i{ font-size: 30px;}
-
-.winTGroup{ position: relative; }
-.winTGroup .winTTit{}
-.winTGroup .winTCont{ position: absolute; right: 0; top: 49px; min-width: 250px; background: #FFF; overflow: hidden; height: 0;
- border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
-.winTGroup:hover{-webkit-transition:all .5s; }
-.winTGroup:hover .winTTit{ }
-.winTGroup:hover .winTCont{ box-shadow: 0px 4px 10px rgba(0,0,0,0.3); height: auto; }
-
-.WinTCUl{ padding: 10px 0 0;}
-.WinTCLi{ }
-.WinTCLider{ padding: 9px 0; }
-.divider{ height: 1px; width: 100%;
-overflow: hidden;
-background-color: #e5e5e5;}
-.WinTCLi a{ color: #666; padding: 0 10px; height: 40px;line-height: 40px; display: block; margin: -5px 0 -5px; }
-.WinTCLi a.gray{ background: #F3F3F3; }
-.WinTCLi a:after {content: "\0020"; display: block;clear: both;}
-.WinTCLi a:hover{ background:#20BA5E;  }
-.WinTCLi .fr{ color: #CCC; }
-.WinTCLi a:hover .fr,
-.WinTCLi a:hover i{ color: #FFF;  }
-.WinTCLi a.noh{ height: auto; line-height: auto; }
-
-
-.imgbox{ width: 100%; display: inline-block; }
-.imgbox img{display: block; height: auto; width: 100%; }
-.imgbox.autoW img{ height: 100%; width: auto; }
-.WinTCLi a.movre.ewm:hover { padding-top: 9px; }
-.WinTCLi a.movre.ewm:hover .imgbox{ height: auto; width: 100%;  }
-.WinTCLi a.movre.ewm:hover .imgbox img{ display: inline-block; height: auto; width: 100%;  }
-
-.winTGroup .triangle.down{    transform-origin: 50% 48%;
+.btn-group .triangle.down{    transform-origin: 50% 48%;
     -webkit-transform-origin: 50% 50%;
     -webkit-transition: transform .2s ease-in;
     -moz-transition: transform .2s ease-in;
     -o-transition: transform .2s ease-in;
-    transition: transform .2s ease-in;}
-.winTGroup:hover  .triangle.down{    transform: rotate(-180deg);
+    transition: transform .2s ease-in;
+    margin: 0 5px 2px 5px;
+    }
+
+
+.html .wintools .btn-group .winBtn{ width: auto; color: #000; text-decoration: none;}
+.html .wintools .btn-group .winBtn i{ display: inline-block; width: auto;background: none;}
+
+.html .wintools .btn-group .winBtn:hover{ background: none; }
+.html .wintools .btn-group.open .triangle.down{    transform: rotate(-180deg);
     -webkit-transform: rotate(-180deg);
     -moz-transform: rotate(-180deg);
     -o-transform: rotate(-180deg);
     -ms-transform: rotate(-180deg);
     cursor: default;}
+.html .wintools ul a i{ vertical-align: middle; }
+
 </style>
 </div>
 <script type="text/javascript">

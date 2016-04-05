@@ -924,7 +924,7 @@ $(document).on('click', '.btn_free', function(event) {
         
         
      <div style="display:table-row; height:30px; overflow:hidden;">     
-        <div class="sideFoot" style="display:table-cell; height:32px; overflow:hidden;">
+        <div class="sideFoot" style="display:table-cell; height:36px; overflow:hidden;">
         
           <ul class="bottomAction" style="margin-bottom:-3px;">
             <li>
