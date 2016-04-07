@@ -85,6 +85,24 @@ function buildQueryOptions(){
     buildHtmlWithJsonArray("id_zhuangtai", ${queryOptions.ztai_sell},true, true);
 }
 </script>
+    <script>
+
+        (function($){
+
+            $(window).load(function(){
+$(".sideMainer").mCustomScrollbar({
+        theme:"minimal"
+    });
+
+                
+
+            });
+
+        })(jQuery);
+
+    </script>
+
+
 <style type="text/css">
   .selected{
     background-color: blue;

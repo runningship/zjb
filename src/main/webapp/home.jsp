@@ -134,15 +134,15 @@ var iframeBox=$('#iframeBox'),
 
 var frameCheckTimer;
 function beforeIframeChange(frameId , targetUrl){
-	$('#'+frameId)[0].contentWindow.location = targetUrl;
-	frameCheckTimer = setTimeout(function(){
-		clearTimeout(frameCheckTimer);
-		beforeIframeChange(frameId , targetUrl);
-	} , 5000);
+    $('#'+frameId)[0].contentWindow.location = targetUrl;
+    frameCheckTimer = setTimeout(function(){
+        clearTimeout(frameCheckTimer);
+        beforeIframeChange(frameId , targetUrl);
+    } , 5000);
 }
 
 function iframeChanged(frameId){
-	clearTimeout(frameCheckTimer);
+    clearTimeout(frameCheckTimer);
 }
 
 $(function() {
@@ -210,8 +210,8 @@ $('.menuSide').find('.curr a').click();
     my_avatar=${me.avatar};
     my_name = '${me.uname}';
     ws_url = 'ws://${domainName}:9099?uid=${me.id}&city=${me.cityPinyin}';
-    //start IM	
-	
+    //start IM  
+    
 });
 
 
@@ -232,7 +232,7 @@ function pay(){
 }
 
 function openBackList(){
-	art.dialog.open('/pay/bank_list.html');
+    art.dialog.open('/pay/bank_list.html');
 }
 
 function openFeedBack(fbId){
@@ -272,11 +272,11 @@ function notify(){
 }
 
 function editProfile(){
-	art.dialog.open('/settings/user_edit.jsp');
+    art.dialog.open('/settings/user_edit.jsp');
 }
 
 function openReg(){
-	art.dialog.open('/settings/uc_index_u_reg.jsp');
+    art.dialog.open('/settings/uc_index_u_reg.jsp');
 }
 </script>
 <script>
@@ -294,7 +294,7 @@ function showAds(){
     $('.adboxs').show();
 }
 $(document).ready(function() {
-	var times;
+    var times;
     $('.showAds').hover(function(){
         times=setTimeout(showAds,500);
     },function(){
@@ -341,39 +341,39 @@ function icoDD(c,n){
     },1800);
 }
 $(document).ready(function() {
-// 	getUnReadStatistic();
-// 	setInterval(function() {
-// 		getUnReadStatistic();
+//  getUnReadStatistic();
+//  setInterval(function() {
+//      getUnReadStatistic();
 //     },60*1000);
 //clearInterval(icoOA);
 });
 
 function getUnReadStatistic(){
-	YW.ajax({
-	    type: 'get',
-	    datatype: 'json',
-	    url: '/c/oa/getUnReadStatistic',
-	    mysuccess: function(data){
-	        var json = JSON.parse(data);
-	        if(json.oaCount>0){
-	        	if(!icoOA){
-	        		icoOA=icoDD('.oaClass');	
-	        	}
-	        }else{
-	        	clearInterval(icoOA);
-	        	icoOA=null;
-	        }
-	        if(json.piazzaCount>0){
-	        	if(!icoGC){
-	        		icoGC=icoDD('.guangchang');	
-	        	}
-	        	
-	        }else{
-	        	clearInterval(icoGC);
-	        	icoGC = null;
-	        }
-	    }
-	  });
+    YW.ajax({
+        type: 'get',
+        datatype: 'json',
+        url: '/c/oa/getUnReadStatistic',
+        mysuccess: function(data){
+            var json = JSON.parse(data);
+            if(json.oaCount>0){
+                if(!icoOA){
+                    icoOA=icoDD('.oaClass');    
+                }
+            }else{
+                clearInterval(icoOA);
+                icoOA=null;
+            }
+            if(json.piazzaCount>0){
+                if(!icoGC){
+                    icoGC=icoDD('.guangchang'); 
+                }
+                
+            }else{
+                clearInterval(icoGC);
+                icoGC = null;
+            }
+        }
+      });
 }
 </script>
 <style type="text/css">
@@ -430,7 +430,7 @@ padding: 0 0 0 15px; color: #20BA5E;
                             <li ><a href="/oa/index.jsp" class="ibtn oaClass" data-type="url" data-id="oa" data-toggle="tooltip" data-placement="right" title="OA"><i class="iconfont">&#xe633;</i><span>OA</span></a></li>
                         </c:if>
                         <li >
-                        	<a href="/piazza/index.jsp" class="ibtn guangchang" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
+                            <a href="/piazza/index.jsp" class="ibtn guangchang" data-type="url" data-id="piazza" data-toggle="tooltip" data-placement="right" title="广场"><i class="iconfont">&#xe604;</i><span>广场</span></a>
                         </li>
                         <c:if test="${authNames.contains('sz_on')}">
                             <li class=" positionBottom"><a href="/settings/uc_index.jsp" data-id="sz" class="ibtn" data-type="url" data-toggle="tooltip" data-placement="right" title="设置"><i class="iconfont">&#xe62c;</i></a></li>
@@ -459,13 +459,13 @@ i.pr{ padding-right: 3px; }*/
                         <ul class="wintools" style="padding-left:50px;">
 <!--                            <li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
                             <!-- <li><a href="#" title="中介宝外网" class="winBtns "><i class="iconfont pr">&#xe673;</i>顾某人</a></li> -->
-                            <!-- <li><a href="#"  onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li> -->
-                            <!-- <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li> -->
-                            
+                            <li><a href="#"  onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li>
+                            <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li>
+                            <li><a href="#" onclick="fankui();" title="请给予我们您的宝贵意见" class="winBtns "><i class="iconfont">&#xe633;</i></a></li>
                             <li class="dropdown btn-group">
-                            <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i class="iconfont">&#xe68b;</i> <b class="me_uname">${me.uname}</b><em class="triangle down "></em></a>
+                                <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <!-- <li><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: <b class="me_uname">${me.uname}</b></a></li> -->
+                                    <li><a href="javascript:void(0)"><i class="iconfont">&#xe68b;</i> 姓名: <b class="me_uname">${me.uname}</b></a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe651;</i> 账号: <b class="me_lname">${me.lname}</b></a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe61b;</i> <b class="me_cname">${cname}-${dname}</b></a></li>
                                     <li><a href="javascript:void(0)"><i class="iconfont">&#xe657;</i> 职位: <b class="me_title">${role.title}</b></a></li>
@@ -473,8 +473,6 @@ i.pr{ padding-right: 3px; }*/
                                     <li role="presentation" class="divider"></li>
                                     <li onclick="openReg();"><a href="javascript:void(0)"><i class="iconfont">&#xe69b;</i> 注册账号</a></li>
                                     <li onclick="editProfile();"><a href="javascript:void(0)"><i class="iconfont">&#xe69d;</i> 修改资料</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li><a href="javascript:void(0)" onclick="fankui();" title="请给予我们您的宝贵意见"><i class="iconfont">&#xe633;</i> 意见建议</a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li><a href="javascript:void(0)" onclick="pay();"><i class="iconfont">&#xe623;</i> 在线支付</a></li>
                                     <li><a href="javascript:void(0)" onclick="openBackList();"><i class="iconfont">&#xe623;</i> 银行账户</a></li>
@@ -533,7 +531,7 @@ border-bottom: 5px solid transparent;}
     margin: 0 5px 2px 5px;
     }
 
-
+/*
 .html .wintools .btn-group .winBtn{ width: auto; color: #000; text-decoration: none;}
 .html .wintools .btn-group .winBtn i{ display: inline-block; width: auto;background: none;}
 
@@ -545,7 +543,7 @@ border-bottom: 5px solid transparent;}
     -ms-transform: rotate(-180deg);
     cursor: default;}
 .html .wintools ul a i{ vertical-align: middle; }
-
+*/
 </style>
 </div>
 <script type="text/javascript">

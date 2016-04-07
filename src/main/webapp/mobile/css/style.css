@@ -257,23 +257,24 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 
 /* ImgListBox */
 .ULImgList{}
-.ULImgList li{ position: relative; border-top: 1px solid #EFEFEF; }
+.ULImgList li{ position: relative; }
 .ULImgList li:first-child{ border: none; }
 .ULImgList li:after {content: "\0020";display: block;height: 0;clear: both;}
-.ULImgList li a{ display: block; position: relative; padding:10pt 6pt; }
+.ULImgList li a{ display: block; position: relative; padding:0pt 0pt; }
 .ULImgList li a .fr{ color:#F54;  }
-.ULImgList li a .imgbox{ position: relative; display: inline-block; width: 90pt; height: 70pt; float: left; margin-right: 10pt; }
+.ULImgList li a:after {content: "\0020";display: block;height: 0;clear: both;}
+.ULImgList li a .imgbox{ position: relative; display: inline-block; width: 100pt; height: 80pt; float: left; margin-right: 4pt; }
 .ULImgList li a .imgbox .img{ display: block; width: 100%; height: 100%; }
 .ULImgList li a .imgbox p{ position: absolute; left:0; bottom: 0; right: 0; overflow: hidden;color: #FFF; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); padding-left: 3px; }
 .ULImgList li a .imgbox div.div{ display: none; position: absolute; top: 0; left: 0; }
 .ULImgList li a .imgbox div.div span{ display: inline-block; }
-.ULImgList li a h3{ font-size: 14pt; padding:0 0 3pt 0;  }
+.ULImgList li a h3{ font-size: 11pt; padding:2pt 0 1pt 0;  }
 .ULImgList li a h3 .tel{ font-size: 11pt; color:#aaa;  }
-.ULImgList li a p{ font-size: 12pt; color: #7F7F7F; line-height: 1.5em;}
+.ULImgList li a p{ font-size: 11pt; color: #7F7F7F; line-height: 1.5em;}
 .ULImgList li a p b{ color: #F54; }
-.ULImgList li a div.xx{margin-top: 2pt;}
+.ULImgList li a div.xx{margin-top: 3pt;}
 .ULImgList li a div.xx span{ display: inline-block; border: 1px solid #CFCFCF; border-radius: 0pt;padding: 0pt 5px 0; }
-.ULImgList li a i.font{ display: inline-block; border: 1px solid #9F9F9F; color: #9F9F9F; border-radius: 100pt; font-size: 10pt; width: 15pt; height: 15pt; line-height: 14pt; text-align: center;  }
+.ULImgList li a i.font{ display: inline-block; border: 1px solid #9F9F9F; color: #9F9F9F; border-radius: 30pt; font-size: 8pt; width: 12pt; height: 12pt; line-height: 12pt; text-align: center;  }
 
 body .ULImgList li a i.red,
 body .ULImgList li a span.red{ border-color: #F54; color: #F32; }
@@ -316,7 +317,7 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 .login .formbox .formItem{ display: block; height: 36pt; line-height: 36pt; border: none; }
 .login .formbox li .formItem{ border-top: 1px solid rgba(255,255,255,0.5);}
 .login .formbox li:first-child .formItem{ border-top: 0px solid #EEE;}
-.login .formbox .formItem .icon{ float: left; display: block; height: inherit; line-height:inherit; width: 20%; }
+.login .formbox .formItem .icon{ float: left; display: block; height: inherit; line-height:inherit; width: 20%; text-align: center;}
 .login .formbox .formItem .icon i{ color: #777; }
 .login .formbox .formItem .inputbox{ display: block; margin-left: 20%; height: inherit; line-height: 16pt; }
 .login .formbox .formItem input.input{ display: block; width: 100%; height: inherit; line-height: inherit; font-size: 20px; border: 0; background: none; }
@@ -570,7 +571,7 @@ min-height: 100px;
 .house.add .joiner{display: inline-block;height: 42px;line-height: 42px;width: 3%;float: left;text-align: center;}
 
 
-.mainer .item{ padding: 10pt; margin: 0px; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
+.mainer .item{ padding: 0pt; margin: 0px; background-color: #FFF; border-top: 1px solid #EEE;  border-bottom: 1px solid #EEE;}
 .mainer .item:first-child{ margin-top: 0; border-top: 0; }
 .mainer .title{ padding: 10px; padding-bottom: 0; background:#F6F6F6; color: #9F9F9F;  }
 .mainer .title i{ font-size: 13pt; }
@@ -685,6 +686,7 @@ work
 .house.new .mainer span.fr span{ display: block; padding-top: 5pt; }
 .house.new .mainer span.fr span i{ font-size: 19pt; }
 
+.house.new .mainer .ULImgList li{ border: 2px solid #EFEFEF; border-left-width: 4px; border-right-width: 4px; border-radius: 2px;}
 
 .house.new.detail .mainer{ padding-bottom:50pt;  }
 .house.new .mainer .title{ padding: 8pt 10pt 6pt; font-size: 12pt; position: relative;}
@@ -733,7 +735,8 @@ work
 .house.new.recordList .posr_cont{ border-color: #EEE; }
 .house.new.recordList .posr_cont span.fr p{ font-size: 10pt; color: #9F9F9F; }
 
-.house.new.recordList .posf_tab.l{ position: absolute; top: 50px; bottom: 0; left: 0; width: 30%; border-bottom: none; border-right: 1px solid rgba(255,102,85,0.7); overflow: hidden; overflow-y: auto;}
+.house.new.recordList .posf_tab.l{ position: absolute; top: 50px; bottom: 0; left: 0; width: 30%; border-bottom: none; border-right: 1px solid #EFEFEF; overflow: hidden; overflow-y: auto;}
+.house.new.recordList .posf_tab.l .BR{ border-top-color: #EFEFEF; }
 
 .house.new.recordList .posr_cont.r{ position: absolute; top: 50px; right: 0; bottom: 0; left: 30%; overflow: hidden; overflow-y: auto; } 
 
@@ -858,7 +861,8 @@ work
 .boxList li{ margin-bottom: 10pt; border: 1px solid #EFEFEF; background: #F6F6F6; color: #6F6F6F; padding: 6pt 8pt; border-radius: 4pt; }
 .boxList li:after {content: "\0020";display: block;clear: both;}
 
-
+.integral.exchange .LiQuan li{border-top:5px solid #999; background:url('../images/bg_quan_no.png') repeat-x top right; background-size: 10px; padding-top: 16px; }
+.integral.exchange .LiQuan li.ok{border-top-color: #0CC5CA; background-image: url('../images/bg_quan.png'); }
 
 
 

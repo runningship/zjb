@@ -487,6 +487,13 @@ function init(){
         $('.TableMainLeftTit h2').text('房源图片');
       }
     });
+
+
+
+    // $(".sideScroll").mCustomScrollbar({
+    //     theme:"minimal-dark"
+    // });
+
 }
 $('#area').on('click',function(){
   var Thi=$(this),
@@ -521,6 +528,7 @@ loadCss('${refPrefix}/style/css.css');
 loadCss('${refPrefix}/bootstrap/css/bootstrap.css');
 loadCss('${refPrefix}/style/style.css');
 loadCss('${refPrefix}/style/css_ky.css');
+// loadCss('${refPrefix}/js/scrolls/jquery.mCustomScrollbar.css');
 
 loadJs('${refPrefix}/js/buildHtml.js');
 //loadJs('${refPrefix}/js/jquery.j.tool.js');
@@ -528,6 +536,7 @@ loadJs('${refPrefix}/bootstrap/js/bootstrap.js');
 loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
 loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
 loadJs('${refPrefix}/js/house/getTelFrom.js');
+// loadJs('${refPrefix}/js/scrolls/jquery.mCustomScrollbar.concat.min.js?16');
 setTimeout(init , 300);
 //init();
 </script>
@@ -580,6 +589,7 @@ body .telTable .telBox .onOpen{ text-align: center; }
      <div style="display:table-row;">     
         <div style="display:table-cell; width:100%;">
         <div class="sideMainer" style="height:100%; overflow:hidden; overflow-y:auto;">
+        <div class="sideScroll">
         <table width="100%" class="TableMainL" id="seeHouse ">
         <tbody>
           <tr>
@@ -903,6 +913,7 @@ h2.h2{border-bottom: 1px solid #d1d1d1;
              </ul>
            </div>
           </div>
+        </div>
         </div>
         </div>
      </div>

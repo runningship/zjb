@@ -183,6 +183,7 @@ function getSider(id){
 //    	frame[0].remove();
 //    	$('.MainRightConL').append('<iframe id="sideCont" src="" style="width:100%;height:100%;border:none"></iframe>');
         $('#sideCont').attr('src','/house/houseSee_v2.jsp?id='+id+'&chuzu='+chuzu);
+
     }
 }
 
