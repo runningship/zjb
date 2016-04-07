@@ -347,7 +347,7 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 .user.side{ background: #333; }
 .user.side .header{ height: auto; line-height: 1.5em; padding: 15px; background: none; }
 .user.side .header .imgbox{ float: left; display: block; width: 85px; height: 85px; line-height: 80px; border-radius: 100px; overflow: hidden; margin-right: 15px; }
-.user.side .header .imgbox img{    width: 100%;  height: 100%;}
+.user.side .header .imgbox #avatar{    width: 100%;height:100%; background-position:center;background-size: cover; background-image:url('../images/zjb.png')}
 
 .user.side .header .uText{ padding-top: 6px; }
 .user.side .mainer { padding:10px 20px; }
@@ -436,7 +436,7 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 house
  */
 .house .header .imgbox{ float: left; display: block; width: 30px; height: 30px; line-height: 30px; border-radius: 100px; overflow: hidden; margin-right: 15px;margin-top: 11px; margin-left: 10px; }
-.house .header .imgbox img{    width: 100%;  height: 100%;}
+.house .header .imgbox #avatar{   width: 100%;height:100%; background-position:center;background-size: cover; background-image:url('../images/zjb.png')}
 
 /* house details */
 .house.details{ font-size: 14pt; }

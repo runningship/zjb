@@ -34,17 +34,7 @@ apiready = function(){
 	getConfig(function(cfg){
 		api.parseTapmode();
 		config = cfg;
-		if(config && config.user){
-			if(config.user.avatarPath){
-				$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
-			}else if(config.user.avatar){
-				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
-			}else{
-				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');	
-			}
-		}else{
-			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
-		}
+		setUserAvatarUrl();
 		
 		//$('#avatar').attr('src','../images/zjb_blue.png');
 		isLayoutOpen = api.pageParam.isLayoutOpen;
@@ -55,20 +45,27 @@ apiready = function(){
 	});
 };
 
+function setUserAvatarUrl(){
+	if(config && config.user){
+		if(config.user.avatarPath){
+			//$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+			$('#avatar').css('background-image' , 'url("'+'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath+'")');
+		}else if(config.user.avatar){
+			//$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
+			$('#avatar').css('background-image' , 'url("'+api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg'+'")')
+		}else{
+			//$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+			$('#avatar').css('background-image' , 'url("'+api.wgtRootDir+'/v4/avatar/zjb.png'+'")')
+		}
+	}else{
+		//$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+		$('#avatar').css('background-image' , 'url("'+api.wgtRootDir+'/v4/avatar/zjb.png'+'")')
+	}
+}
 function refreshIndex(){
 	getConfig(function(cfg){
 		config = cfg;
-		if(config && config.user){
-			if(config.user.avatarPath){
-				$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
-			}else if(config.user.avatar){
-				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
-			}else{
-				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
-			}
-		}else{
-			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
-		}
+		setUserAvatarUrl();
 		
 		api.execScript({
 		    name: 'index',

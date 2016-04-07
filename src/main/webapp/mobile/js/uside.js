@@ -16,11 +16,16 @@ function init(){
 		if(config.user){
 			if(config.user.avatar){
 				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
+				//$('#avatar').css('background-image' , 'url("'++'")');
+				$('#avatar').css('background-image' , 'url("'+api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg'+'")');
 			}else{
-				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+				//$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+				$('#avatar').css('background-image' , 'url("'+api.wgtRootDir+'/v4/avatar/zjb.png'+'")');
 			}
 			if(config.user.avatarPath){
-				$('#avatar').attr('src', 'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+				//blockAlert('http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath);
+				$('#avatar').css('background-image' , 'url("'+'http://'+img_server_host+'/user_avatar_path/'+config.user.uid+'/'+config.user.avatarPath+'")');
+				//$('#avatar').css('background-image' , 'url("'+'http://192.168.1.222/user_avatar_path/1/p-d1e1644d.jpg.t.jpg'+'")');
 			}
 			//$('#avatar').attr('src','../images/zjb_blue.png');
 			if(config.user.pwd){
@@ -54,7 +59,8 @@ function init(){
 				$('#gift').css('display','');
 			}
 		}else{
-			$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+			//$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/zjb.png');
+			$('#avatar').css('background-image' , 'url("'+api.wgtRootDir+'/v4/avatar/zjb.png'+'")');
 		}
 		if(config.city){
 			$('#city').text(config.city.cityName);

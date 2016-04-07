@@ -56,7 +56,8 @@ function addEstateItem(id , name){
 function openEstateChoose(){
 	api.openWin({
 	    name: 'house_new_choose',
-	    url: 'house_new_choose.html'
+	    url: 'house_new_choose.html',
+	    pageParam:{estateIds : estateIds}
 	});
 }
 

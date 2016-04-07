@@ -57,6 +57,12 @@ function loadData(clear){
 				buildHtmlWithJsonArray("repeat",ret.page.data , false,true);
 			}
 			api.parseTapmode();
+			
+			var estateIdArr = api.pageParam.estateIds;
+			for(var i=0;i<estateIdArr.length;i++){
+				var li = $('#estate_'+estateIdArr[i]);
+				select(li);
+			}
 		}else{
 		}
 	});
@@ -103,7 +109,7 @@ function doSelect(){
     <div id="mainer" class="mainer">
         <div class="item posr_cont">
             <ul class="ULImgList">
-                <li class="repeat"  style="display:none;" onclick="select(this);"><a>
+                <li class="repeat"  id="estate_$[id]" style="display:none;" onclick="select(this);"><a>
                     <div class="imgbox"><img src="../images/4.png" alt="" class="img"><p></p><div class="div"><span class="j">荐</span><span class="x">新</span></div></div>
                     <div class="conts">
                         <span class="fr"><i class="font red">佣</i> $[yongjin]

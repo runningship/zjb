@@ -118,7 +118,13 @@ YW={
     }
 }
 
-window.blockAlert = window.alert;
+window.blockAlert =function(msg){
+	api.alert({
+	    msg: msg,
+	    buttons: ['确定']
+	},function( ret, err ){
+	});
+}
 
 window.alert=function(message){
 	api.toast({

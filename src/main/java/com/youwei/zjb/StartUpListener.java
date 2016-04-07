@@ -39,7 +39,10 @@ public class StartUpListener implements ServletContextListener{
 //			e.printStackTrace();
 //		}
 		JobScheduler pullRentHouseJob = new JobScheduler();
-		ZJBQuartzScheduler.AreaCoordinatStart();
+		String flag = ConfigCache.get("startJob", "1");
+		if("1".equals(flag)){
+			ZJBQuartzScheduler.AreaCoordinatStart();
+		}
 	}
 
 	private void initModule() {
