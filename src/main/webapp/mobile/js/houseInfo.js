@@ -180,7 +180,7 @@ function loadData(){
 		var conts = $('#conts').val();
 //		var status = $('#gjType').val();
 		if(conts==''){
-			alert('请先填写跟进信息');
+			info('请先填写跟进信息');
 			return;
 		}
 		api.ajax({
@@ -193,11 +193,11 @@ function loadData(){
 			returnAll:false
 		},function(ret , err){
 			if(ret && ret.result=='1'){
-				alert('跟进成功');
+				info('跟进成功');
 				$('#conts').val('');
 				loadGenJin(true);
 			}else{
-				alert('跟进失败');
+				info('跟进失败');
 			}
 		});
 	}
@@ -205,7 +205,7 @@ function loadData(){
 	function addRentGenJin(){
 		var conts = $('#conts').val();
 		if(conts==''){
-			alert('请先填写跟进信息');
+			info('请先填写跟进信息');
 			return;
 		}
 		api.ajax({
@@ -219,10 +219,10 @@ function loadData(){
 		},function(ret , err){
 			if(ret && ret.result=='1'){
 				$('#conts').val('');
-				alert('跟进成功');
+				info('跟进成功');
 				loadGenJin(true);
 			}else{
-				alert('跟进失败');
+				info('跟进失败');
 			}
 		});
 	}
@@ -266,7 +266,7 @@ function loadData(){
 	}
 	
 	function daohang(){
-//		alert(houseDetail.latitude+','+houseDetail.longitude);
+//		info(houseDetail.latitude+','+houseDetail.longitude);
 //		window.location="intent://map/place/search?query=银行&region=北京&referer=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end";
 			var baiduLocation = api.require('baiduLocation');
 		    baiduLocation.getLocation(

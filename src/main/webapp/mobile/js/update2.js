@@ -13,7 +13,7 @@ function ready(){
 	try{
 		updateIfNeed();
 	}catch(e){
-		alert('连接服务器失败!');
+		info('连接服务器失败!');
 		api.closeWidget({
              id: 'A6989896004356',     //这里改成自己的应用ID
              retData: {name:'closeWidget'},
@@ -23,7 +23,7 @@ function ready(){
 }
 function updateIfNeed(){
 	fsPrefix=api.fsDir;
-	//alert(JSON.stringify(api.wgtParam));
+	//info(JSON.stringify(api.wgtParam));
 	fs = api.require('fs');
 	//下载最新文件
 	api.ajax({
@@ -71,12 +71,12 @@ function updateIfNeed(){
             	});
             });
 	    }else {
-	    	alert('网络连接失败');
+	    	info('网络连接失败');
 	        //下载版本文件失败，获取版本信息失败,应用启动失败
 	        if(err.statusCode==404){
-	        	alert(404);
+	        	info(404);
 	        }else{
-	        	alert('网络连接失败');
+	        	info('网络连接失败');
 	        }
 	        
 	    }
@@ -94,10 +94,10 @@ function update(serverVersion , index){
 	fs.getAttribute({
 	path: fsPrefix+filename
 	},function(ret,err){
-		//alert(fsPrefix+filename+','+JSON.stringify(err));
+		//info(fsPrefix+filename+','+JSON.stringify(err));
 	if (ret.status) {
 	    if(ret.attribute.size!=serverVersion[filename]){
-	    	//alert(filename+','+ret.attribute.size);
+	    	//info(filename+','+ret.attribute.size);
 	    	download(filename , function(){
 				 update(serverVersion , index+1);
 	        });
@@ -115,7 +115,7 @@ function update(serverVersion , index){
 
 function download(path , callback){
 var url = urlPrefix+path;
-//alert('serverUrl: '+url +", savePaht: "+fsPrefix+path);
+//info('serverUrl: '+url +", savePaht: "+fsPrefix+path);
 api.download({
     url: url, 
     savePath: fsPrefix+path,
@@ -124,18 +124,18 @@ api.download({
     allowResume:false
 },function(ret,err){
 	//不成功就不callback了吗?
-	//alert('download:'+JSON.stringify(ret));
+	//info('download:'+JSON.stringify(ret));
 //	callback();
     if (ret) {
         if( ret.state==1 && callback){
         	callback();
         }else if(ret.statusCode==404){
-        	alert(url+' not found');
+        	info(url+' not found');
         }else if(ret.state==2){
-        	alert('更新失败,'+path);
+        	info('更新失败,'+path);
         }
     } else{
-        alert('网络连接失败'+err.msg);
+        info('网络连接失败'+err.msg);
     }
 });
 }

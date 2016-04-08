@@ -106,7 +106,7 @@ obj.pay({
     tradeNO:tradeNO
 },function(ret,err) {
 	if(ret.statusCode=='9000' ){
-		alert('支付成功');
+		info('支付成功');
 		//addChargeRecord(addMonth,amount);
 		//到支付成功页面
 		api.openWin({
@@ -141,7 +141,7 @@ $('#month'+month).css('display','block');
 }
 
 function addChargeRecord(monthAdd , fee , tradeNO){
-alert('同步数据..请勿操作');
+info('同步数据..请勿操作');
 addingRecord=true;
 if(!tradeNO){
 	tradeNO = new Date().getTime();

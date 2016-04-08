@@ -52,7 +52,7 @@ function loadData(clear){
 					api.parseTapmode();
 				}
 			}else{
-				//alert();
+				//info();
 			}
 		});
 }
@@ -146,7 +146,7 @@ function addDelete(id,obj){
  
 function delItems(){
 	if(!Ids || Ids==''){
-		alert('请至少选择一项');
+		info('请至少选择一项');
 		return;
 	}
 	var url="";
@@ -171,7 +171,7 @@ function delItems(){
 			returnAll:false
 		},function(ret , err){
 			if(ret){
-				alert('删除成功');
+				info('删除成功');
 				currentPage=1;
 				loadData(true);
 		        Ids = [];
@@ -233,7 +233,7 @@ apiready=function(){
 			if(currentPage<totalPageCount){
 				currentPage++;
 			}else{
-				alert('已是最后一页');
+				info('已是最后一页');
 				return;
 			}
 			loadData();

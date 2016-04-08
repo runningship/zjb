@@ -97,7 +97,7 @@ function init(){
 			},500);
 			
 		}else{
-			alert('加载数据失败请重试.');
+			info('加载数据失败请重试.');
 		}
 	});
 }
@@ -127,7 +127,7 @@ function delHouse(){
 	    			});
 	    			closexx();
 	    		}else{
-	    			alert('操作失败请重试.');
+	    			info('操作失败请重试.');
 	    		}
 	    	});
 	    }
@@ -180,7 +180,7 @@ function save(){
     		if(ret && ret.result==0){
     			blockAlert('保存成功');
     		}else{
-    			alert($('[name='+ret.field+']').attr('data-tip'));
+    			info($('[name='+ret.field+']').attr('data-tip'));
     			$('[name='+ret.field+']').focus();
     		}
     	});
@@ -213,7 +213,7 @@ function gtouchend() {
     //清除定时器
     if (timeOutEvent != 0) {
         //这里写要执行的内容（尤如onclick事件）
-        //alert("你这是点击，不是长按");
+        //info("你这是点击，不是长按");
     }
     return false;
 };
@@ -227,7 +227,7 @@ function gtouchmove() {
 function longPress() {
     timeOutEvent = 0;
     //执行长按要执行的内容，如弹出菜单
-    //alert("长按事件触发发");
+    //info("长按事件触发发");
     api.actionSheet({
         cancelTitle: '取消',
         destructiveTitle: '删除'

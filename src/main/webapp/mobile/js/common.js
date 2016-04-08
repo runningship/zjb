@@ -127,11 +127,29 @@ window.blockAlert =function(msg){
 }
 
 window.alert=function(message){
-	api.toast({
-	    msg: message,
-	    duration:2000,
-	    location: 'middle'
-	});
+	///
+	blockAlert(api.systemType);
+	if(api.systemType=="ios"){
+		blockAlert(message);
+	}else{
+		api.toast({
+		    msg: message,
+		    duration:2000,
+		    location: 'middle'
+		});
+	}
+}
+
+window.info=function(message){
+	if(api.systemType=="ios"){
+		blockAlert(message);
+	}else{
+		api.toast({
+		    msg: message,
+		    duration:2000,
+		    location: 'middle'
+		});
+	}
 }
 
 //获取url里需要的值

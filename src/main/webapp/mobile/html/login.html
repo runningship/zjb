@@ -20,11 +20,11 @@ function doLogin(){
 	tel = $('#tel').val();
 	var pwd = $('#pwd').val();
 	if(!tel){
-		alert('请输入正确的手机号码');
+		info('请输入正确的手机号码');
 		return;
 	}
 	if(!pwd){
-		alert('请输入登录密码');
+		info('请输入登录密码');
 		return;
 	}
 	tel = tel.trim();
@@ -50,7 +50,7 @@ function doLogin(){
 				    name: 'index',
 				    script: 'refreshIndex();'
 				});
-				//alert('登录成功');
+				//info('登录成功');
 				api.sendEvent({
 				    name: 'loginSuccess',
 				    extra: {
@@ -58,7 +58,7 @@ function doLogin(){
 				});
 				forward();
 		}else{
-			alert(ret.msg);
+			info(ret.msg);
 		}
 		
 	});

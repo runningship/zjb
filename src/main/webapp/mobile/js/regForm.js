@@ -113,7 +113,7 @@ function isFormEach(Thi,submit){
                 })
             }
         }
-        //alert(ThisType +'|'+ This.val())
+        //info(ThisType +'|'+ This.val())
     });
     return isTrues;
 }

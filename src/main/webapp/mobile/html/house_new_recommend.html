@@ -81,7 +81,7 @@ function openContact(){
 	            $('#name').val(ret.name);
 	            $('#tel').val(ret.phone.replace("-" , "").replace("-" , ""));
 	        }else{
-	            api.alert({msg:err.msg});
+	        	info(err.msg);
 	        }
 	    }
 	);

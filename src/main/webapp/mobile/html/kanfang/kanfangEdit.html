@@ -59,7 +59,7 @@ function init(){
 			});
 			$('[name=conts]').val(ret.kanfang.conts);
 		}else{
-			alert('加载数据失败请重试.');
+			info('加载数据失败请重试.');
 		}
 	});
 }
@@ -86,7 +86,7 @@ function delHouse(){
 	    			});
 	    			closexx();
 	    		}else{
-	    			alert('操作失败请重试.');
+	    			info('操作失败请重试.');
 	    		}
 	    	});
 	    }
@@ -108,9 +108,9 @@ function save(){
     		returnAll:false
     	},function(ret , err){
     		if(ret && ret.result==0){
-    			alert('保存成功');
+    			info('保存成功');
     		}else{
-    			alert($('[name='+ret.field+']').attr('data-tip'));
+    			info($('[name='+ret.field+']').attr('data-tip'));
     			$('[name='+ret.field+']').focus();
     		}
     	});

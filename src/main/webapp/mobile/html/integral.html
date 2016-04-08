@@ -55,9 +55,9 @@ apiready = function(){
 		    value: ThiCode
 		}, function(ret, err){
 		    if(ret.status){
-		        api.alert({msg:'邀请码已复制'});
+		        infoinfo('邀请码已复制');
 		    }else{
-		        api.alert({msg:err.msg});
+		    	info(err.msg);
 		    }
 		});
 	});

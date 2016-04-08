@@ -6,7 +6,7 @@ function getVerfiyCode(btn){
 	var tel = $('#tel').val();
 	var pwd = $('#pwd').val();
 	if(!tel){
-		alert('请先填写有效手机号码');
+		info('请先填写有效手机号码');
 		return;
 	}
 	tel = tel.trim();
@@ -29,7 +29,7 @@ function getVerfiyCode(btn){
 			sendingVerifyCode = true;
 			setcode();
 		}else{
-			alert(err.msg);
+			info(err.msg);
 		}
 		
 	});
@@ -56,20 +56,20 @@ function doReg(){
 	var uname = $('#uname').val();
 	var code = $('#verifyCode').val();
 	if(!tel){
-		alert('请输入正确的手机号码');
+		info('请输入正确的手机号码');
 		return;
 	}
 	if(!uname){
-		alert('请输入用户名');
+		info('请输入用户名');
 		return;
 	}else{
 		if(uname.length>5){
-			alert('用户名不能超过5个字');
+			info('用户名不能超过5个字');
 			return;
 		}
 	}
 	if(!pwd){
-		alert('请输入登录密码');
+		info('请输入登录密码');
 		return;
 	}
 	tel = tel.trim();
@@ -96,7 +96,7 @@ function doReg(){
 			    });
 			},1000);
 		}else{
-			alert(ret.msg);
+			info(ret.msg);
 		}
 		
 	});
@@ -107,11 +107,11 @@ function doModifyPwd(){
 	var pwd = $('#pwd').val();
 	var code = $('#verifyCode').val();
 	if(!tel){
-		alert('请输入正确的手机号码');
+		info('请输入正确的手机号码');
 		return;
 	}
 	if(!pwd){
-		alert('请输入登录密码');
+		info('请输入登录密码');
 		return;
 	}
 	//提示信息
@@ -130,7 +130,7 @@ function doModifyPwd(){
 			//跳到登录页面
 			closexx();
 		}else{
-			alert(ret.msg);
+			info(ret.msg);
 		}
 	});
 }

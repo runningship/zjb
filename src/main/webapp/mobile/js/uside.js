@@ -15,7 +15,7 @@ function init(){
 	if(config){
 		if(config.user){
 			if(config.user.avatar){
-				$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
+				//$('#avatar').attr('src',api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg');
 				//$('#avatar').css('background-image' , 'url("'++'")');
 				$('#avatar').css('background-image' , 'url("'+api.wgtRootDir+'/v4/avatar/'+config.user.avatar+'.jpg'+'")');
 			}else{
@@ -106,7 +106,7 @@ function openReg(){
 }
 function openShare(){
 	if(!checkUser()){
-		alert('请先登录');
+		info('请先登录');
 		return;
 	}
 	api.openWin({
@@ -119,7 +119,7 @@ function openShare(){
 
 function openPay(){
 	if(!checkUser()){
-		alert('请先登录');
+		info('请先登录');
 		return;
 	}
 	api.openWin({
@@ -157,7 +157,7 @@ function updateCity(cityName){
 function openCitys(){
 	if(config.user.pwd){
 		//请先退出登录
-		alert('请先退出登录');
+		info('请先退出登录');
 		return;
 	}
 	api.openWin({
@@ -297,12 +297,12 @@ function clearSysCache(){
         key:'version',
         value:''
     });
-	alert('缓存清理成功');
+	info('缓存清理成功');
 }
 
 function openUserProfile(){
 	if(!checkUser()){
-		alert('请先登录');
+		info('请先登录');
 		return;
 	}
 	api.openWin({

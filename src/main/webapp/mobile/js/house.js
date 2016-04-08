@@ -35,7 +35,7 @@ apiready = function(){
 			if(currentPage<totalPageCount){
 				currentPage++;
 			}else{
-				alert('已是最后一页');
+				info('已是最后一页');
 				return;
 			}
 			setTimeout(loadData,100);

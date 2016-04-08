@@ -28,11 +28,11 @@ apiready = function(){
 
 function duihuan(){
 	if(!$('#invitationCode').val()){
-		alert('请先输入邀请码');
+		info('请先输入邀请码');
 		return;
 	}
 	if(isNaN($('#invitationCode').val())){
-		alert('邀请码必须是数字.');
+		info('邀请码必须是数字.');
 		return;
 	}
 	var invitationCode = $('#invitationCode').val();
