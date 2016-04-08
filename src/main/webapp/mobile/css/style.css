@@ -90,6 +90,14 @@ box-orient:horizontal;
 .btnGroup.orange a.btns:first-child{ padding: 0 6pt 0 14pt; }
 .btnGroup.orange a.btns:last-child{ padding: 0 14pt 0 6pt; }
 
+.checkGroup .btnGroups{ position: relative; text-align: center; }
+.checkGroup .btnGroups .showGroup{ border: 1px solid #EFEFEF; }
+.checkGroup .btnGroups:first-child .showGroup{ border-top-left-radius: 3pt; border-bottom-left-radius: 3pt; border-right: none; }
+.checkGroup .btnGroups:last-child .showGroup{ border-top-right-radius: 3pt; border-bottom-right-radius: 3pt; }
+.checkGroup .btnGroups .showGroup{ position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+.checkGroup .btnGroups input{ display: none; }
+.checkGroup .btnGroups input:checked + .showGroup{ border-color: #18B4ED; background: #18B4ED; color: #FFF; }
+
 
 /* input in mi style */
 .form-ul li{ margin-bottom: 15px; position: relative;}
@@ -273,7 +281,11 @@ a.switch input:checked ~ label i:after{opacity: 1; color: rgba(56,116,4,0.6);tex
 .ULImgList li a p{ font-size: 11pt; color: #7F7F7F; line-height: 1.5em;}
 .ULImgList li a p b{ color: #F54; }
 .ULImgList li a div.xx{margin-top: 3pt;}
-.ULImgList li a div.xx span{ display: inline-block; border: 1px solid #CFCFCF; border-radius: 0pt;padding: 0pt 5px 0; }
+.ULImgList li a div.xx span{ display: inline-block; border: 1px solid #CFCFCF; border-radius: 0pt;padding: 0pt 5px 0; 
+padding: 0pt 3px 0;
+line-height: 1.3em;
+font-size: 12px;
+}
 .ULImgList li a i.font{ display: inline-block; border: 1px solid #9F9F9F; color: #9F9F9F; border-radius: 30pt; font-size: 8pt; width: 12pt; height: 12pt; line-height: 12pt; text-align: center;  }
 
 body .ULImgList li a i.red,
@@ -389,6 +401,9 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 .search .sList li:nth-child(3n+3) a{ border-left-width:1px;}
 .search .sList li i{ position: absolute; right: 3px; bottom: 3px; font-size: 6pt; width: 12pt; height: 12pt; line-height: 12pt; background: #CCC; border-radius: 20pt; color: #FFF; }
 .search .sList li.active i{ background: #18B4ED; }
+.search .sList.sListN1 li:nth-child(-n+3) a{ border-top-width:1px; }
+.search .sList.sListN1 li:nth-child(3n+4) a{ border-left-width:1px;}
+.search .sList.sListN1 li:nth-child(3n+3) a{ border-left-width:0px;}
 
 .search .db{display: -webkit-box;-webkit-box-orient: horizontal;-webkit-flex-flow: column;flex-flow: column; height: 26pt; line-height: 26pt; font-size: 14pt; color: #777;}
 .search .db .t{ display: block; width: 20%; text-align:right; padding-right: 5pt; height: inherit; line-height: inherit; }
@@ -402,6 +417,10 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 .search .db  .inputbox:before{content:""; position: absolute; left: 0; bottom: 0; border-left: 1px solid #EEE; height: 8px; }
 .search .db  .inputbox:after {content:""; position: absolute; right: 0; bottom: 0; border-left: 1px solid #EEE; height: 8px; }
 .search .db.b .ia{ width: 90%; }
+
+.search .db .radiobox i.iconfont{margin-right: 3px; }
+.search .db .checkGroup .btnGroups .showGroup i{ width: 0px; visibility: hidden; }
+.search .db .checkGroup .btnGroups input:checked + .showGroup i{ width: auto; visibility: visible; }
 
 .search .btnbox{ padding: 5pt; }
 .search .btn{ font-size: 14pt; display: block; border-radius: 3pt;  }
@@ -462,10 +481,10 @@ house
 .house.details .mainer .htimes{ font-size: 11pt; color: #999; padding-left: 2pt; margin-top: -5px; }
 
 .house.details .mainer .gjList .lists .fc{ margin-left: 50px; }
-.house.details .mainer .gjList .lists .gjTit h1{ color: #555; padding-bottom: 5pt; }
+.house.details .mainer .gjList .lists .gjTit h1{ color: #555; padding-bottom: 5pt; font-size: 11pt;}
 .house.details .mainer .gjList .lists .gjTit b{ display: block; font-size: 11pt; padding-bottom: 5pt; color: #888; position: absolute; top: 0px; right: 0px; font-size: 12px;}
-.house.details .mainer .gjList .lists p{ color: #000; }
-.house.details .mainer .gjList .lists .imgbox{ display: block; width: 40px; height: 40px; line-height: 40px; overflow: hidden; border-radius: 50px; }
+.house.details .mainer .gjList .lists p{ color: #000; word-wrap: break-word; }
+.house.details .mainer .gjList .lists .imgbox{ display: block; width: 40px; height: 40px; line-height: 40px; overflow: hidden; border-radius: 50px; margin-right: 4px; }
 .house.details .mainer .gjList .lists .imgbox img{ display: block; width: 100%; }
 
 .house.details .mainer .gjFaceList .lists li{ display: inline-block; margin-top: 10pt; padding: 0; border: none;}
@@ -483,6 +502,9 @@ house
 .house.details .footer .entered{ border-top: 1px solid #EEE;}
 .house.details .footer .entered .inputbox{-webkit-box-flex: 10; max-height: 60pt; line-height: 35pt; overflow: hidden;  text-align: left;}
 .house.details .footer .entered .btns{ display: block; width: 60px;-webkit-box-flex: 0; text-align: center; line-height: 35pt; background: #18B4ED; color: #FFF }
+
+.house.details .footer .entered .inputbox{ height: auto;}
+.house.details .footer .entered .inputbox textarea{ border: none; }
 
 
 /* .house.seepic */
@@ -686,7 +708,11 @@ work
 .house.new .mainer span.fr span{ display: block; padding-top: 5pt; }
 .house.new .mainer span.fr span i{ font-size: 19pt; }
 
-.house.new .mainer .ULImgList li{ border: 2px solid #EFEFEF; border-left-width: 4px; border-right-width: 4px; border-radius: 2px;}
+.house.new.list .mainer .ULImgList li{ border: 2px solid #EFEFEF; border-left-width: 4px; border-right-width: 4px; border-radius: 2px;}
+.house.new.list .mainer .ULImgList li a h3{ padding:2pt 0 0pt 0;  }
+.house.new.list .mainer .ULImgList li a p{ line-height:1.3em; }
+.house.new.list .mainer .ULImgList li a div.xx{ margin-top:1pt; }
+.house.new.list .mainer .ULImgList li a div.xx span{padding: 0pt 3px 0;line-height: 1.3em;font-size: 12px;}
 
 .house.new.detail .mainer{ padding-bottom:50pt;  }
 .house.new .mainer .title{ padding: 8pt 10pt 6pt; font-size: 12pt; position: relative;}
@@ -739,6 +765,7 @@ work
 .house.new.recordList .posf_tab.l .BR{ border-top-color: #EFEFEF; }
 
 .house.new.recordList .posr_cont.r{ position: absolute; top: 50px; right: 0; bottom: 0; left: 30%; overflow: hidden; overflow-y: auto; } 
+.house.new.recordList .ULImgList li a{padding: 3pt 5pt;}
 
 .house.new.recordInfo .item{ }
 .house.new.recordInfo .posf_tab{ position: relative; padding: 6pt; border-color: #EEE; height: 40pt;}
@@ -833,7 +860,7 @@ work
 .integral .header{ background-color: #0CC5CA;}
 .integral .header a{ color: rgba(255,255,255,0.7);}
 .integral .header h2{ color: rgba(255,255,255,0.8);}
-.integral .mainer{ display:table; width: 100%; }
+.integral .mainer{ display:table; width: 100%;}
 .integral .headbox{ -webkit-box-flex:1; }
 .integral .mainbox{ -webkit-box-flex:1; overflow: hidden;overflow-y: auto;}
 
@@ -861,6 +888,7 @@ work
 .boxList li{ margin-bottom: 10pt; border: 1px solid #EFEFEF; background: #F6F6F6; color: #6F6F6F; padding: 6pt 8pt; border-radius: 4pt; }
 .boxList li:after {content: "\0020";display: block;clear: both;}
 
+.integral.exchange .mainer{ padding: 8pt;}
 .integral.exchange .LiQuan li{border-top:5px solid #999; background:url('../images/bg_quan_no.png') repeat-x top right; background-size: 10px; padding-top: 16px; }
 .integral.exchange .LiQuan li.ok{border-top-color: #0CC5CA; background-image: url('../images/bg_quan.png'); }
 

@@ -145,7 +145,7 @@ ul.titBox{margin-left: 60px;}
           <div class="td oaInfoTit">
             <div class="txt Fleft"><span class="Fleft">房产知识分享</span>
               <i class="Bg add Fleft" onclick="openNewWin('addKnowledge','800','600','添加内容','knowledge/add.jsp')"></i>
-              <span style="color:#9cabb4;font-size:12px;margin-left:30px;">集齐50个赞，可获得50元现金</span>
+              <!-- <span style="color:#9cabb4;font-size:12px;margin-left:30px;">集齐50个赞，可获得50元现金</span> -->
             </div>  
             <form onsubmit="searchKnowledge();return false;" name="form1" style="float: right;width:40%"><div  style="margin-top: 12px;margin-right: 65px;position:relative; ">
             <input id="knowledgeSearch" type="text" placeholder="关键字搜索" style="width:90%;height: 25px;border: 1px solid #fff;border-radius: 10px;" />
@@ -155,7 +155,7 @@ ul.titBox{margin-left: 60px;}
           <div class="td oaInfoTit">
             <div class="txt2 Fleft"><span class="Fleft">增值服务平台</span>
               <i class="Bg add Fleft"  onclick="openNewWin('addSail','800','600','添加内容','sale/add.jsp')" ></i>
-              <span style="color:#9cabb4;font-size:12px;margin-left:30px;">可发布物品出售、转让、业务办理等</span>
+              <!-- <span style="color:#9cabb4;font-size:12px;margin-left:30px;">可发布物品出售、转让、业务办理等</span> -->
             </div> 
             <form name="form2" onsubmit="searchSale();return false;" style="float: right;width:40%;"><div style="margin-top: 12px;margin-right: 90px;position:relative ">
             <input id="saleSearch" type="text" name="title" placeholder="关键字搜索" style="height: 25px;width:90% ;border: 1px solid #fff;border-radius: 10px;" />
