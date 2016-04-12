@@ -691,6 +691,30 @@ work
 .tabs.orange li.active a{ color:rgba(255,102,85,1); border-color: rgba(255,102,85,0.9);  }
 
 
+
+.ulist{}
+.ulist li{}
+.ulist li .L{ padding: 6pt 6pt 6pt 6pt; float: left; color: #999; }
+.ulist li .C{ padding: 6pt; border-bottom: 1px solid #EEE; }
+.ulist li .R{ padding: 6pt 6pt 6pt 6pt; float: right; }
+.ulist li strong{ font-size: 11pt; }
+.ulist li p{ font-size: 9pt; color: #999; }
+.ulist li>a{ display: block; }
+.ulist li:after,
+.ulist li>a:after {content: "\0020";display: block;clear: both;}
+.ulist li:last-child>a .C{ border-bottom: none; }
+/* work client */
+.work.clients{}
+
+
+
+
+
+
+
+/* house */
+/* house new */
+
 .house.new{}
 .house.new .item{ padding: 0px 0pt; border-color:transparent; }
 .house.new .header{ background-color: rgba(255,102,85,1.7);; z-index: 10; }
