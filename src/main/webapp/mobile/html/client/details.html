@@ -13,6 +13,8 @@
 <script src="../../js/jquery.min.js" type="text/javascript"></script>
 <script src="../../js/layer/layer.js" type="text/javascript"></script>
 <script src="../../js/javascript.js" type="text/javascript"></script>
+<script src="../../js/common.js" type="text/javascript"></script>
+<script src="../../js/buildHtml.js" type="text/javascript"></script>
 <script src="../../js/owl/owl.carousel.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 function navActive(t){
@@ -24,9 +26,68 @@ TP.addClass(c).siblings().removeClass(c);
 $(document).on('click', '.tabs a', function(event) {
 navActive($(this));
 });
-$(document).ready(function() {
 
-});
+apiready = function(){
+	getConfig(function(cfg){
+		config = cfg;
+		getData();
+	});
+	
+};
+
+function getData(){
+	var url = 'http://'+server_host+'/c/mobile/client/getClient?cid='+api.pageParam.cid;
+	YW.ajax({
+		url: url,
+		method:'get',
+		cache:false,
+		 dataType: 'json',
+		data:{values:{}},
+		returnAll:false
+	},function(ret , err){
+		if(ret){
+			$('#areas').text(ret.client.areas);
+			$('#tels').text(ret.client.tels);
+			$('#quyus').text(ret.client.quyus);
+			$('#lxings').text(ret.client.lxings);
+			$('#hxings').text(ret.client.hxings);
+			$('#beizhu').text(ret.client.beizhu);
+			$('#cname').text(ret.client.name);
+			if(ret.client.mjiFrom>0 && ret.client.mjiTo<100000){
+				$('#mji').text(ret.client.mjiFrom+' - '+ret.client.mjiTo +' 平 ');
+			}else if(ret.client.mjiFrom>0){
+				$('#mji').text('大于'+ret.client.mjiFrom+'平');
+			}else if(ret.client.mjiTo<100000){
+				$('#mji').text('小于'+ret.client.mjiTo+'平');
+			}else{
+				$('#mji').text('不限');
+			}
+			
+			if(ret.client.jiageFrom>0 && ret.client.jiageTo<100000){
+				$('#zjia').text(ret.client.jiageFrom+' - '+ret.client.jiageTo +' 万 ');
+			}else if(ret.client.jiageFrom>0){
+				$('#zjia').text(ret.client.jiageFrom+'万以上');
+			}else if(ret.client.jiageTo<100000){
+				$('#zjia').text(ret.client.jiageTo+'万以下');
+			}else{
+				$('#zjia').text('不限');
+			}
+			
+			if(ret.client.lcengFrom>0 && ret.client.jiageTo<100000){
+				$('#lceng').text(ret.client.lcengFrom+' - '+ret.client.lcengTo +' 层 ');
+			}else if(ret.client.lcengFrom>0){
+				$('#lceng').text(ret.client.lcengFrom+'层以上');
+			}else if(ret.client.lcengTo<100000){
+				$('#lceng').text(ret.client.lcengTo+'层以下');
+			}else{
+				$('#lceng').text('不限');
+			}
+			
+			buildHtmlWithJsonArray('repeat',ret.genjinList , false,true);
+		}else{
+		}
+	});
+}
 
 </script>
 <style type="text/css">
@@ -37,8 +98,8 @@ $(document).ready(function() {
 <div id="wrap" class="bodyer work clients">
     <div id="header" class="header alpha">
         <span class="left">
-            <a href="#" class="btns"><i class="iconfont">&#xe628;</i></a>
-            <h2>顾某人</h2>
+            <a href="#" class="btns" onclick="closexx();"><i class="iconfont">&#xe628;</i></a>
+            <h2 id="cname"></h2>
         </span>
         <!-- <span class="right">
             <a href="#" class="btns" id="s"><i class="iconfont">&#xe602;</i></a>
@@ -47,46 +108,57 @@ $(document).ready(function() {
     <div id="mainer" class="mainer">
         <div class="item posr_cont">
             <ul class="ulist">
+            	<li class=""><a href="#">
+                    <div class="L">手机</div>
+                    <div id="tels" class="C">
+                        
+                    </div>
+                </a></li>
+            	<li class=""><a href="#">
+                    <div class="L">楼盘</div>
+                    <div id="areas" class="C">
+                        
+                    </div>
+                </a></li>
                 <li class=""><a href="#">
                     <div class="L">区域</div>
-                    <div class="C">
-                        庐阳区,蜀山区
+                    <div id="quyus" class="C">
                     </div>
                 </a></li>
                 <li class=""><a href="#">
                     <div class="L">楼型</div>
-                    <div class="C">
-                        多层复式,多层跃式
+                    <div id="lxings" class="C">
+                        
                     </div>
                 </a></li>
                 <li class=""><a href="#">
                     <div class="L">户型</div>
-                    <div class="C">
-                        2室1厅,2室2厅,3室1厅,3室2厅
+                    <div id="hxings" class="C">
+                        
                     </div>
                 </a></li>
                 <li class=""><a href="#">
                     <div class="L">面积</div>
-                    <div class="C">
-                        80 - 160 平米
+                    <div id="mji" class="C">
+                        
                     </div>
                 </a></li>
                 <li class=""><a href="#">
                     <div class="L">总价</div>
-                    <div class="C">
-                        30 - 100 万
+                    <div id="zjia" class="C">
+                        
                     </div>
                 </a></li>
                 <li class=""><a href="#">
                     <div class="L">楼层</div>
-                    <div class="C">
-                        1 - 7 层
+                    <div id="lceng" class="C">
+                        
                     </div>
                 </a></li>
                 <li class=""><a href="#">
                     <div class="L">备注</div>
-                    <div class="C">
-                        备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位，备注换行会错位。
+                    <div id="beizhu" class="C">
+                        
                     </div>
                 </a></li>
             </ul>
@@ -94,24 +166,13 @@ $(document).ready(function() {
         <div class="title">跟进</div>
         <div class="item posr_cont">
             <ul class="ulist">
-                <li class=""><a href="#">
+                <li class="repeat" style="display:none;"><a href="#">
                     <div class="C">
-                        <strong>确定不买了</strong>
-                        <p>2016-4-12 18:11:35</p>
+                        <strong>$[conts]</strong>
+                        <p>$[addtime]</p>
                     </div>
-                </a></li>
-                <li class=""><a href="#">
-                    <div class="C">
-                        <strong>不准备买了</strong>
-                        <p>2016-4-11 18:11:35</p>
-                    </div>
-                </a></li>
-                <li class=""><a href="#">
-                    <div class="C">
-                        <strong>在忙，改天</strong>
-                        <p>2016-4-10 18:11:35</p>
-                    </div>
-                </a></li>
+                </a>
+                </li>
             </ul>
         </div>
     </div>

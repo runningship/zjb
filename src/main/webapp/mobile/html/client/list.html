@@ -58,11 +58,11 @@ apiready = function(){
 	);
 	
 };
-function openDetail(){
+function openDetail(cid){
 	api.openWin({
 	    name: 'clientDetail',
 	    url: 'details.html',
-	    pageParam: {houseType: ''}
+	    pageParam: {cid: cid}
 	});
 }
 
@@ -114,7 +114,7 @@ function loadData(clear){
     <div id="mainer" class="mainer">
         <div class="item posr_cont">
             <ul class="ulist">
-            	<li class="repeat" onclick="openDetail();" style="display:none"><a href="#">
+            	<li class="repeat" onclick="openDetail($[cid]);" style="display:none"><a href="#">
                     <div class="R"><i class="iconfont">&#xe62a;</i></div>
                     <div class="C">
                         <strong>$[name]</strong>

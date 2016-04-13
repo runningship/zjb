@@ -13,6 +13,7 @@ import org.bc.web.Module;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.client.entity.Client;
+import com.youwei.zjb.client.entity.ClientGenJin;
 import com.youwei.zjb.util.DataHelper;
 
 @Module(name="/mobile/client")
@@ -23,7 +24,7 @@ public class MobileClientService {
 	public ModelAndView list(Integer uid , String tel , Page<Map> page){
 		ModelAndView mv = new ModelAndView();
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder hql = new StringBuilder("select c.name as name,c.tels as tels "
+		StringBuilder hql = new StringBuilder("select c.id as cid, c.name as name,c.tels as tels "
 				+ "from Client c, User u where c.uid=u.id and u.tel=? ");
 		params.add(tel);
 		page.orderBy = "c.addtime";
@@ -38,7 +39,9 @@ public class MobileClientService {
 	public ModelAndView getClient(Integer cid){
 		ModelAndView mv = new ModelAndView();
 		Client client = dao.get(Client.class, cid);
+		List<ClientGenJin> genjinList = dao.listByParams(ClientGenJin.class, "from ClientGenJin where clientId=? ", cid);
 		mv.data.put("client", JSONHelper.toJSON(client));
+		mv.data.put("genjinList", JSONHelper.toJSONArray(genjinList));
 		return mv;
 	}
 }
