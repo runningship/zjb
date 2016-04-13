@@ -695,17 +695,22 @@ work
 .ulist{}
 .ulist li{}
 .ulist li .L{ padding: 6pt 6pt 6pt 6pt; float: left; color: #999; }
-.ulist li .C{ padding: 6pt; border-bottom: 1px solid #EEE; }
+.ulist li .C{ padding: 6pt; border-bottom: 1px solid #EEE; min-height: 2.7em; }
 .ulist li .R{ padding: 6pt 6pt 6pt 6pt; float: right; }
 .ulist li strong{ font-size: 11pt; }
 .ulist li p{ font-size: 9pt; color: #999; }
 .ulist li>a{ display: block; }
 .ulist li:after,
-.ulist li>a:after {content: "\0020";display: block;clear: both;}
+.ulist li>a:after,
+.ulist li .Cc{content: "\0020";display: block;clear: both;}
 .ulist li:last-child .C{ border-bottom: none; }
 .ulist li .C.Cs{padding-left: 33pt;}
 .ulist li .C.Cs4{padding-left: 54pt;}
 .ulist li i.iconfont{ color: #CCC; }
+.ulist li b{ font-size: 9pt; color: #999; }
+
+.ulist li .R.i + .C{ padding-right: 20pt; }
+
 .ulist li .FindLineHeight{}
 .ulist li .FindLineHeight .block{ border-bottom: 1px solid #EEE; padding: 6pt 0; }
 .ulist li .FindLineHeight .block:first-child{ margin-top: -6pt; }
@@ -715,6 +720,13 @@ work
 .ulist li .block{ display: block; }
 
 html .ulist li .green{ color: #65C000; }
+html .ulist li .gray{ color: #999; }
+
+.ulist li .lab{ display: inline-block; font-size: 9pt; line-height: 14pt; background:#CCC; color: #333; border-radius: 20pt; padding:0 5pt; }
+.ulist li .lab.green{ background:#65C000; color: #FFF;  }
+.ulist li .lab.red{ background: #FF0000; color: #FFF; }
+.ulist li .lab.orange{ background: #FF6100; color: #FFF; }
+.ulist li .lab.blue{ background: #0099FF; color: #FFF; }
 
 
 /* Uinfo */
