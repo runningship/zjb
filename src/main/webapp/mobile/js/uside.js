@@ -4,8 +4,10 @@ apiready = function(){
 //    	$('#reg').css('display','');
 //	}
 	//ios上线时要处理
-	$('#pay').css('display','block');
-	$('#reg').css('display','');
+	if(api.version!='3.0.9'){
+		$('#pay').css('display','block');
+		$('#reg').css('display','');
+	}
 	getConfig(function(cfg){
 		config = cfg;
 		init();

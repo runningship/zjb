@@ -56,10 +56,10 @@ public class TrialService {
 			//toList.add("947813825@qq.com");//gujun
 			toList.add("894350008@qq.com");//haibin
 			toList.add("253187898@qq.com");
-			toList.add("673508153@qq.com");//jinfei
+			//toList.add("673508153@qq.com");//jinfei
 			toList.add("837132537@qq.com");//luokai
 			toList.add("907899254@qq.com");//caili
-			toList.add("1244535116@qq.com");
+			//sstoList.add("1244535116@qq.com");
 			MailUtil.send_email(toList, "中介宝试用申请", msg.toString());
 		}catch(Exception ex){
 			LogUtil.warning(msg.toString());

@@ -100,7 +100,12 @@ function loadData(){
 						if(isChuzu){
 							$('#zjia').text(ret.zjia);
 						}else{
-							$('#zjia').text(ret.zjia+'万');
+							if(!ret.zjia){
+								$('#zjia').text('面议');
+							}else{
+								$('#zjia').text(ret.zjia+'万');
+							}
+							
 						}
 						
 					}

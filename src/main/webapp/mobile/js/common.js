@@ -127,8 +127,6 @@ window.blockAlert =function(msg){
 }
 
 window.alert=function(message){
-	///
-	blockAlert(api.systemType);
 	if(api.systemType=="ios"){
 		blockAlert(message);
 	}else{

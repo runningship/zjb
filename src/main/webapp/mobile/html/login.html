@@ -108,7 +108,9 @@ apiready=function(){
 //    	$('#reg').css('display','block');
 //	}
 	//ios上线要处理
-	$('#reg').css('display','block');
+	if(api.version!='3.0.9'){
+		$('#reg').css('display','block');	
+	}
 };
 
 function openReg(){
