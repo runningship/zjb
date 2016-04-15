@@ -569,9 +569,19 @@ body .telTable .telBox .onOpen{ text-align: center; }
 .bottomAction li:first-child{border: none;}
 .bottomAction li a{ width: 100%; border: none; }
 </style>
-
+<script type="text/javascript">document.oncontextmenu=function(e){return false;}</script>
+<style type="text/css">  
+body {  
+    -webkit-touch-callout: none;  
+    -webkit-user-select: none;  
+    -khtml-user-select: none;  
+    -moz-user-select: none;  
+    -ms-user-select: none;  
+    user-select: none;  
+}  
+</style>  
 </head>
-<body >
+<body onselectstart="return false">
 <div class="sideCont" style="width:100%; display:table; height:100%;-webkit-user-select: text;">
 
      <div style="display:table-row;">   

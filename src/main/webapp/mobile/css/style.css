@@ -709,7 +709,13 @@ work
 .ulist li i.iconfont{ color: #CCC; }
 .ulist li b{ font-size: 9pt; color: #999; }
 
-.ulist li .R.i + .C{ padding-right: 20pt; }
+.ulist .C .inputbox{ display: block; height: auto; min-height: 16pt; line-height: 1; }
+.ulist .C .inputbox .input{min-height: inherit;}
+.ulist .C .inputbox .textarea{overflow-y:visible; min-height: inherit; width: 100%; border: none;padding: 0 5pt; background: transparent; }
+.ulist .C .inputbox .input,
+.ulist .C .inputbox .textarea{ font-size: 10pt; font-family: "microsoft yahei";	}
+
+.ulist li .R.i + .C{ padding-right: 25pt; }
 
 .ulist li .FindLineHeight{}
 .ulist li .FindLineHeight .block{ border-bottom: 1px solid #EEE; padding: 6pt 0; }
@@ -746,6 +752,45 @@ html .ulist li .gray{ color: #999; }
 
 /* work business */
 
+
+
+
+
+/* telist */
+.telist{}
+.telist .lWrap{ border-top: 1px solid #EEE; }
+.telist .lWrap{}
+.telist .L{ float: left; color: #999; }
+.telist .C{ padding:10pt 6pt 6pt;min-height: 2.7em; }
+.telist .R{ float: right; }
+.telist li:after,
+.telist .lWrap:after{content: "\0020";display: block;clear: both;}
+.telist .C strong i.iconfont,
+.telist .C .Cc i.iconfont{ font-size: 10pt; line-height: 10pt; margin-right: 3pt; color: #EEE; }
+
+.telist .L { background: #18B4ED; margin-right: 10pt; background: #F6F6F6; }
+.telist .L .btns{ display: block; padding: 10pt; color: #FFF; color: #18B4ED; }
+.telist .L .btns:first-child{ padding-bottom: 5pt; border-bottom: 1px solid rgba(255,255,255,0.1) }
+.telist .L .btns:last-child{ padding-top: 5pt; }
+
+.telist .R .btns{ display: inline-block; padding: 6pt 6pt 6pt 6pt;}
+.telist .R .iconfont{ color: #CCC; }
+
+.telist .C strong{ font-size: 14pt; line-height: 14pt; }
+.telist .C p{ font-size: 12pt; line-height: 14pt; }
+.telist p.sub{ font-size: 9pt; line-height: 9pt; color: #CCC; margin-top: 5pt }
+.telist p.sub .iconfont{ font-size: 10pt; line-height: 10pt; margin-right: 3pt; }
+
+.telist .lGroup{ display: block; overflow: hidden; height: 0; border-top-width: 0px; line-height: 0; background: #F3F3F3;-webkit-transition:all 0.5s;}
+.telist .lGroup .btns{ display: inline-block; padding: 10pt; text-align: center; }
+.telist .lGroup .iconfont{ display: inline-block; padding: 5pt; font-size: 16pt; line-height: 16pt; border-radius: 20pt;border: 2px solid #18B4ED; color: #18B4ED; }
+.telist .open .lGroup{ height: 50pt; border-top-width: 1px; }
+
+.telist .lGroup.N1 .btns{ width: 100%; }
+.telist .lGroup.N2 .btns{ width: 50%; }
+.telist .lGroup.N3 .btns{ width: 33.3%; }
+.telist .lGroup.N4 .btns{ width: 25%; }
+.telist .lGroup.N5 .btns{ width: 20%; }
 
 
 
