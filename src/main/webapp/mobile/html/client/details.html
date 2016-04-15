@@ -36,18 +36,18 @@ apiready = function(){
 };
 
 function getData(){
-	var url = 'http://'+server_host+'/c/mobile/client/getClient?cid='+api.pageParam.cid;
+	var url = 'http://'+server_host+'/c/mobile/client/getClient';
 	YW.ajax({
 		url: url,
 		method:'get',
 		cache:false,
 		 dataType: 'json',
-		data:{values:{}},
+		data:{values:{cid: api.pageParam.cid}},
 		returnAll:false
 	},function(ret , err){
 		if(ret){
 			$('#areas').text(ret.client.areas);
-			$('#tels').text(ret.client.tels);
+			$('#tels').html(getTels(ret.client.tels));
 			$('#quyus').text(ret.client.quyus);
 			$('#lxings').text(ret.client.lxings);
 			$('#hxings').text(ret.client.hxings);
@@ -89,6 +89,17 @@ function getData(){
 	});
 }
 
+function getTels(tels){
+	if(!tels){
+		return '';
+	}
+	var arr = tels.split(',');
+	var html='';
+	for(var i=0;i<arr.length;i++){
+		html=html+'<span class="telItem">'+arr[i]+'</span>';
+	}
+	return html;
+}
 </script>
 <style type="text/css">
 
@@ -111,7 +122,7 @@ function getData(){
             	<li class=""><a href="#">
                     <div class="L">手机</div>
                     <div id="tels" class="C">
-                        
+                        fwfe
                     </div>
                 </a></li>
             	<li class=""><a href="#">

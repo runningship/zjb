@@ -93,6 +93,18 @@ function loadData(clear){
 		}
 	});
 }
+
+function getTels(tels){
+	if(!tels){
+		return '';
+	}
+	var arr = tels.split(',');
+	var html='';
+	for(var i=0;i<arr.length;i++){
+		html=html+'<span class="telItem">'+arr[i]+'</span>';
+	}
+	return html;
+}
 </script>
 <style type="text/css">
 
@@ -118,7 +130,7 @@ function loadData(clear){
                     <div class="R"><i class="iconfont">&#xe62a;</i></div>
                     <div class="C">
                         <strong>$[name]</strong>
-                        <p>$[tels]</p>
+                        <p runscript='true'> getTels('$[tels]')</p>
                     </div>
                 </a></li>
             </ul>
