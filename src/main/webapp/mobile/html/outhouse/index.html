@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>中介宝</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="../../css/reset.css" rel="stylesheet">
+<link href="../../css/style.css" rel="stylesheet">
+<link href="../../css/common.css" rel="stylesheet">
+<script src="../../js/jquery.min.js" type="text/javascript"></script>
+<script src="../../js/layer/layer.js" type="text/javascript"></script>
+<script src="../../js/common.js" type="text/javascript"></script>
+<script src="../../js/javascript.js" type="text/javascript"></script>
+<script type="text/javascript">
+var header;
+var mainer;
+var statusBarHeight=0;
+var statusBarHeight=0;
+apiready = function(){
+	header = $('#header');
+	mainer = $('#mainer');
+	api.parseTapmode();
+	if(api.systemType=='ios'){
+		//statusBarHeight = 25;
+	}
+	api.closeWin({
+	    name: 'login'
+	});
+	getConfig(function(cfg){
+		config = cfg;
+		api.openFrame({
+	        name: 'yewuFrame',
+			url: 'list.html?'+new Date().getTime(),
+			reload:true,
+	        bounces: true,
+	        pageParam:api.pageParam,
+	        vScrollBarEnabled:true,
+	        rect: {
+	            x: 0,
+	            y: header.height()+statusBarHeight,
+	            w: 'auto',
+	            h: mainer.height()-statusBarHeight
+	        }
+	    });
+	});
+};
+
+</script>
+<style type="text/css">
+#mainer{
+    -webkit-box-flex: 1; 
+    -webkit-flex: 1;
+    flex: 1;
+}
+.footer .item{width:50%;}
+.footer .item{line-height:inherit;height:inherit;}
+.footer .item  h2{line-height:inherit;height:inherit;}
+</style>
+</head>
+<body>
+<div id="wrap" class="bodyer house">
+    <div id="header" class="header">
+        <span class="left" onclick="closexx();">
+            <a tapmode="tapped" class="btns"><i class="iconfont">&#xe628;</i></a>
+            <h2>业务</h2>
+        </span>
+        <span class="conter">
+        </span>
+        <span class="right">
+<!--             <a tapmode="tapped" class="btns" id="publish" onclick="openAdd();"><i class="iconfont">&#xe6a1;</i></a> -->
+        </span>
+    </div>
+    <div id="mainer" class="mainer">
+    </div>
+</div>
+</body>
+</html>

@@ -107,7 +107,7 @@ function openClient(){
 		api.openWin({
 		    name: 'login',
 		    url: 'login.html',
-		    pageParam: {forward: 'work_client_list.html',houseType: 'client'}
+		    pageParam: {forward: 'client/index.html',houseType: 'client'}
 		});
 		return;
 	}
@@ -115,6 +115,21 @@ function openClient(){
 	    name: 'client',
 	    url: 'client/index.html',
 	    pageParam: {houseType: 'client'}
+	});
+}
+function openOutHouse(){
+	if(!checkUser()){
+		api.openWin({
+		    name: 'login',
+		    url: 'login.html',
+		    pageParam: {forward: 'outhouse/index.html',houseType: 'client'}
+		});
+		return;
+	}
+	api.openWin({
+	    name: 'outhouse',
+	    url: 'outhouse/index.html',
+	    pageParam: {houseType: 'outhouse'}
 	});
 }
 
@@ -139,7 +154,7 @@ function openChat(){
                 <li onclick="openFav();" class="violet"><i class="iconfont fr">&#xe62a;</i><span tapmode="tapped" ><i class="iconfont">&#xe659;</i></span><strong>我的收藏</strong></li>
                 <li onclick="openViewLog();" class="orange"><i class="iconfont fr">&#xe62a;</i><span tapmode="tapped" ><i class="iconfont">&#xe661;</i></span><strong>访问记录</strong></li>
                 <li onclick="openClient();" class="blue"><i class="iconfont fr">&#xe62a;</i><span tapmode="tapped" ><i class="iconfont">&#xe65f;</i></span><strong>客源管理</strong></li>
-<!--                 <li onclick="openViewLog();" class="red"><i class="iconfont fr">&#xe62a;</i><span tapmode="tapped" ><i class="iconfont">&#xe660;</i></span><strong>业务</strong></li> -->
+                <li onclick="openOutHouse();" class="red"><i class="iconfont fr">&#xe62a;</i><span tapmode="tapped" ><i class="iconfont">&#xe660;</i></span><strong>外出看房</strong></li>
 <!--                 <li onclick="openPics();" class="orange"><i class="iconfont fr">&#xe62a;</i><span tapmode="tapped" ><i class="iconfont">&#xe661;</i></span><strong>访问记录</strong></li> -->
 <!--                 <li onclick="openChat();" class="violet"><i class="iconfont fr">&#xe62a;</i><span tapmode="tapped" ><i class="iconfont">&#xe659;</i></span><strong>我的信息</strong></li> -->
             </ul>
