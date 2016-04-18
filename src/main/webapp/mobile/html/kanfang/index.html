@@ -27,9 +27,7 @@ apiready = function(){
 	mainer = $('#mainer');
 	api.parseTapmode();
 	api.pageParam.useMyHouse=true;
-	if(api.systemType=='ios'){
-		//statusBarHeight = 25;
-	}
+	fixIOSStatusBar();
 	api.closeWin({
 	    name: 'login'
 	});

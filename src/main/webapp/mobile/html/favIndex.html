@@ -27,9 +27,7 @@ apiready = function(){
 	mainer = $('#mainer');
 	api.parseTapmode();
 	api.pageParam.searchFavHouse=true;
-	if(api.systemType=='ios'){
-		//statusBarHeight = 25;
-	}
+	fixIOSStatusBar();
 	if(api.pageParam.houseType=='fav'){
 		$('#search').show();
 	}

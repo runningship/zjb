@@ -27,13 +27,7 @@ apiready = function(){
 	api.clearCache();
 	header = $('#header');
 	mainer = $('#mainer');
-	if(api.systemType=='ios'){
-		if(api.version=='3.0.9'){
-			statusBarHeight = 15;
-			$('#header').css('padding-top','10px');
-			$('#header').css('height','55px');	
-		}
-	}
+	fixIOSStatusBar();
 	getConfig(function(cfg){
 		api.parseTapmode();
 		config = cfg;

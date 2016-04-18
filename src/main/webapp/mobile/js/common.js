@@ -265,6 +265,16 @@ function checkFile(file){
 }
 
 
+function fixIOSStatusBar(){
+	if(api.systemType=='ios'){
+		if(api.version=='3.0.9'){
+			statusBarHeight = 15;
+			$('#header').css('padding-top','10px');
+			$('#header').css('height','55px');	
+		}
+	}
+}
+
 /**
  * jQuery TAH Plugin
  * Using for Textarea-Auto-Height

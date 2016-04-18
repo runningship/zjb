@@ -23,9 +23,7 @@ apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
 	api.parseTapmode();
-	if(api.systemType=='ios'){
-		//statusBarHeight = 25;
-	}
+	fixIOSStatusBar();
 	api.closeWin({
 	    name: 'login'
 	});

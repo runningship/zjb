@@ -21,9 +21,7 @@ apiready = function(){
 	getConfig();
 	header = $('#header');
 	mainer = $('#mainer');
-	if(api.systemType=='ios'){
-		//statusBarHeight = 25;
-	}
+	fixIOSStatusBar();
 	//blockAlert(mainer.height()-statusBarHeight);
 	setTimeout(function(){
 		api.openFrame({
