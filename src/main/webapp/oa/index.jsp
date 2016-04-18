@@ -67,7 +67,7 @@ function buildArticle(page){
              +    ' <div class="infoListImg Fleft"><img src="/oa/images/avatar/'+json[i]['senderAvatar']+'.jpg"></div>'
              +    ' <div class="Fleft userSelectTrue">    '  
              +       '<p><span class="yh">'+json[i]['senderName']+'</span><span class="time">'+json[i]['addtime']+'</span></p>'
-             +       '<p><a href="#" class="tit" onclick="openNewWin(\'viewGg\',\'980\',\'600\',\'查看文章\',\'article/view.html?id='+json[i]['id']+'\')">'+json[i]['title']+'</a></p>'
+             +       '<p><a href="#" class="tit" onclick="openNewWin(\'viewGg\',\'980\',\'600\',\'查看文章\',\'article/view.jsp?id='+json[i]['id']+'\')">'+json[i]['title']+'</a></p>'
              +     '</div>'
              +     '<div class="infoCaozuo">';
              // +     '<c:if test="${article.senderId==myId}">'
@@ -154,7 +154,7 @@ ul.titBox{margin-left: 60px;}
                         <div class="infoListImg Fleft"><img src="/oa/images/avatar/${article.senderAvatar }.jpg" /></div>
                         <div class="Fleft userSelectTrue">      
                           <p><span class="yh">${article.senderName }</span><span class="time"><fmt:formatDate value="${article.addtime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
-                          <p><a href="#" class="tit" onclick="openNewWin('viewGg','980','600','查看文章','article/view.html?id=${article.id}')">${article.title }</a></p>
+                          <p><a href="#" class="tit" onclick="openNewWin('viewGg','980','600','查看文章','article/view.jsp?id=${article.id}')">${article.title }</a></p>
                         </div>
                         <div class="infoCaozuo">
                           <c:if test="${article.senderId==myId}">
@@ -211,7 +211,7 @@ ul.titBox{margin-left: 60px;}
                             <p class="day"><fmt:formatDate value="${notice.addtime}" pattern="dd"/></p>
                           </div>
                           <div class="ggBoxContent">
-                            <p><span class="titL marginLeft10">Tit:</span><a href="#" class="tit marginLeft10 userSelectTrue" onclick="openNewWin('viewGg','980','600','查看公告','notice/view.html?id=${notice.id}')">${notice.title}</a></p>
+                            <p><span class="titL marginLeft10">Tit:</span><a href="#" class="tit marginLeft10 userSelectTrue" onclick="openNewWin('viewGg','980','600','查看公告','notice/view.jsp?id=${notice.id}')">${notice.title}</a></p>
                             <!--<p><span class="marginLeft10 con">${notice.conts}</span></p>-->
                             <span class="GGcon" style="display:none">${notice.conts}</span>
 							

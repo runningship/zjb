@@ -79,7 +79,7 @@ $(function(){
           <div class="ggListBox read$[hasRead] id_notice_list">
                <div class="ggListBoxTit ggBorLeftRed">
                     <div class="tit">
-                        <h2 onclick="window.location='/oa/article/view.html?id=$[id]'">$[title]</h2>
+                        <h2 onclick="window.location='/oa/article/view.jsp?id=$[id]'">$[title]</h2>
                         <div class="conTime"><i class="person">$[senderName]</i><i class="clock">$[addtime]</i></div>
                     </div>
                     <div class="ggListBoxBot">
