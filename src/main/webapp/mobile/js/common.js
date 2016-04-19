@@ -1,6 +1,7 @@
 var server_host = "www.zhongjiebao.com:8081";
 var newhouse_server_host = "www.zhongjiebao.com:8080";
 var img_server_host="www.zhongjiebao.com";
+var statusBarHeight=0;
 //定位所在城市
 var myCity;
 var config;
@@ -266,11 +267,12 @@ function checkFile(file){
 
 
 function fixIOSStatusBar(){
+	//hehehe
 	if(api.systemType=='ios'){
 		if(api.version=='3.0.9'){
-			statusBarHeight = 15;
-			$('#header').css('padding-top','10px');
-			$('#header').css('height','55px');	
+			statusBarHeight = 25;
+			$('#header').css('padding-top','20px');
+			$('#header').css('height','65px');	
 		}
 	}
 }

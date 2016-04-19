@@ -1,6 +1,7 @@
 package com.youwei.zjb.client;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,26 @@ public class MobileClientService {
 		List<ClientGenJin> genjinList = dao.listByParams(ClientGenJin.class, "from ClientGenJin where clientId=? ", cid);
 		mv.data.put("client", JSONHelper.toJSON(client));
 		mv.data.put("genjinList", JSONHelper.toJSONArray(genjinList));
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView addGenJin(String conts, String clientId ,Integer uid){
+		ModelAndView mv = new ModelAndView();
+		ClientGenJin gj = new ClientGenJin();
+		gj.addtime = new Date();
+		gj.clientId = Integer.valueOf(clientId);
+		gj.uid=uid;
+		gj.conts = conts;
+		dao.saveOrUpdate(gj);
+		return mv;
+	}
+	
+	@WebMethod
+	public ModelAndView deleteClient(Integer id){
+		ModelAndView mv = new ModelAndView();
+		Client gj = dao.get(Client.class, id);
+		dao.delete(gj);
 		return mv;
 	}
 }

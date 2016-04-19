@@ -16,13 +16,11 @@
 <script type="text/javascript">
 var header;
 var mainer;
-var statusBarHeight=0;
 apiready = function(){
 	getConfig();
 	header = $('#header');
 	mainer = $('#mainer');
 	fixIOSStatusBar();
-	//blockAlert(mainer.height()-statusBarHeight);
 	setTimeout(function(){
 		api.openFrame({
 	        name: 'areaFrame',
