@@ -31,13 +31,13 @@ function addGenjin(text ,id){
 	},function(ret , err){
 		if(ret){
 			layer.close(gjLayerIndex);
-			alert('保存成功');
+			layer.msg('跟进成功！');
 		}else{
 		}
 	});
 }
 function deleteClient(id){
-	alert(id);
+//	alert(id);
     var url = 'http://'+server_host+'/c/mobile/client/deleteClient';
 	YW.ajax({
 		url: url,
@@ -48,7 +48,7 @@ function deleteClient(id){
 		returnAll:false
 	},function(ret , err){
 		if(ret){
-			alert('删除成功能');
+			layer.msg('删除成功！');
 			loadData(true);
 		}else{
 		}
@@ -64,6 +64,47 @@ if(TP.hasClass(c)){
     TP.addClass(c).siblings().removeClass(c);
 }
 }
+
+function gotoOpen(type,tels){
+if(!type) return false;
+if(!tels) return false;
+var str='',
+    strs=new Array();
+if(tels.indexOf(',')>0){
+    if(type=='sms'){
+        str='<div class="telOpenBox"><h2>选择号码发送短信</h2>'+str;
+    }else if(type=='tel'){
+        str='<div class="telOpenBox"><h2>选择号码拨打电话</h2>'+str;
+    }
+    strs=tels.split(',');
+    $.each(strs, function(index, val) {
+        str=str+'<a href="#" class="btns block btn_act" data-type="open_'+type+'" data-tel='+val+'>'+val+'</a>';
+    });
+    
+    str=str+'</div>';
+    layer.open({
+        title:false
+        ,content:str
+        ,closeBtn:1
+        ,shade:0.3
+        ,shadeClose:false
+        ,btn:['取消']
+        ,yes:function(index){
+            layer.close(index);
+        }
+    })
+}else{
+    //layer.msg('sms opening');
+    if(type=='sms'){
+        //layer.msg('open_sms:'+tels);
+        sendMsg(tels, '');
+    }else if(type=='tel'){
+        //layer.msg('open_tel:'+tels);
+    	call(tels);
+    }
+}
+}
+
 $(document).on('click', '.telist .C', function(event) {
 navActive($(this));
 }).on('click', '.btn_act', function(event) {
@@ -72,9 +113,21 @@ TP=T.parents('li'),
 Type=T.attr('data-type'),
 Tid=TP.attr('data-id');
 if(Type=='sms'){
-    layer.msg('sms');
+    //layer.msg('sms');
+    var tels=TP.attr('data-tels');
+    gotoOpen('sms',tels);
 }else if(Type=='tel'){
-    
+    //layer.msg('tel');
+    var tels=TP.attr('data-tels');
+    gotoOpen('tel',tels);
+}else if(Type=='open_sms'){
+    var Tel=T.attr('data-tel');
+    //layer.msg('open_sms:'+Tel);
+	sendMsg(Tel, '');
+}else if(Type=='open_tel'){
+    var Tel=T.attr('data-tel');
+    //layer.msg('open_tel:'+Tel);
+    call(Tel);
 }if(Type=='gj'){
 //   layer.msg('跟进 id:'+Tid);
 gjLayerIndex = layer.open({
@@ -98,11 +151,19 @@ gjLayerIndex = layer.open({
 
 });
 }if(Type=='see'){
-    //layer.msg('详情');
+    openDetail(Tid);
 }if(Type=='edit'){
     layer.msg('edit');
 }if(Type=='del'){
-	deleteClient(Tid);
+	layer.open({
+		title:false
+		,content:'确定删除？'
+		,icon:3
+		,btn:['确定','取消']
+		,yes:function(index){
+			deleteClient(Tid);
+		}
+	});
 }
 });
 $(document).ready(function() {
@@ -182,12 +243,13 @@ function getTels(tels){
 	}
 	var arr = tels.split(',');
 	var html='';
-	for(var i=0;i<arr.length;i++){
-		html=html+'<p><span onclick="call('+arr[i]+')"><i class="iconfont">&#xe6ef;</i>'+arr[i]+'</span></p>';
-	}
+	html=html+'<i class="iconfont">&#xe6ef;</i>'+arr[0]+'';
 	return html;
 }
 
+	// for(var i=0;i<arr.length;i++){
+	// 	html=html+'<p><span onclick="call('+arr[i]+')"><i class="iconfont">&#xe6ef;</i>'+arr[i]+'</span></p>';
+	// }
 function call(num){
 	api.call({
 	    type: 'tel_prompt',
@@ -215,9 +277,9 @@ function sendMsg(num, text){
     <div id="mainer" class="mainer">
         <div class="item posr_cont">
             <ul class="telist">
-                <li class="repeat" data-id="$[cid]">
+                <li class="repeat" data-id="$[cid]"  data-tels="$[tels]">
                     <div class="lWrap">
-                        <div onclick="openDetail($[cid]);"  class="R">
+                        <div class="R">
                             <a href="#" class="btns btn_act" data-type="see"><i class="iconfont">&#xe62a;</i></a></div>
                         <div class="L">
                             <a href="#" class="btns btn_act" data-type="sms"><i class="iconfont">&#xe6ee;</i></a>

@@ -401,9 +401,9 @@ body .ULImgList li a span.orange{ border-color: #FF8051; color: #FF8051; }
 .search .sList li:nth-child(3n+3) a{ border-left-width:1px;}
 .search .sList li i{ position: absolute; right: 3px; bottom: 3px; font-size: 6pt; width: 12pt; height: 12pt; line-height: 12pt; background: #CCC; border-radius: 20pt; color: #FFF; }
 .search .sList li.active i{ background: #18B4ED; }
-.search .sList.sListN1 li:nth-child(-n+3) a{ border-top-width:1px; }
-.search .sList.sListN1 li:nth-child(3n+4) a{ border-left-width:1px;}
-.search .sList.sListN1 li:nth-child(3n+3) a{ border-left-width:0px;}
+.search .sList.sListN1 li:nth-child(-n+0) a{ border-top-width:1px; }
+.search .sList.sListN1 li:nth-child(3n+3) a{ border-left-width:1px;}
+.search .sList.sListN1 li:nth-child(3n+2) a{ border-left-width:0px;}
 
 .search .db{display: -webkit-box;-webkit-box-orient: horizontal;-webkit-flex-flow: column;flex-flow: column; height: 26pt; line-height: 26pt; font-size: 14pt; color: #777;}
 .search .db .t{ display: block; width: 20%; text-align:right; padding-right: 5pt; height: inherit; line-height: inherit; }
@@ -724,6 +724,10 @@ work
 
 .ulist li .span{ display: inline-block; }
 .ulist li .block{ display: block; }
+.ulist li .span .fr .btns{display:block; padding: 2pt 6pt;}
+
+.ulist li .line{border-bottom: 1px solid #EEE; padding: 6pt 0;}
+
 
 html .ulist li .green{ color: #65C000; }
 html .ulist li .gray{ color: #999; }
@@ -734,6 +738,9 @@ html .ulist li .gray{ color: #999; }
 .ulist li .lab.orange{ background: #FF6100; color: #FFF; }
 .ulist li .lab.blue{ background: #0099FF; color: #FFF; }
 
+.ulist .inputGroup{ display: block; margin-top: 4pt; }
+.ulist .inputGroup .inputbox{ display: inline-block; width: 70%; border: 1px solid #CCC;border-top-left-radius: 22pt;border-radius: 22pt; height: 30px; line-height: 30px; }
+.ulist .inputGroup .btns{ display: inline-block; width: 28%; display: inline-block; text-align: center; background: #3CF;color: #FFF; border-radius: 22pt; height: 30px; line-height: 30px; margin-left: -1px; }
 
 /* Uinfo */
 .Uinfo{}
@@ -746,6 +753,13 @@ html .ulist li .gray{ color: #999; }
 .fasebox img{ display: block; width: 100%;}
 
 
+
+
+
+
+.telOpenBox{ display: block; }
+.telOpenBox a{ display: block; padding:8pt 10pt; border-bottom:1px solid #EEE; }
+.telOpenBox h2{ border-bottom:1px solid #09F; padding-bottom: 6pt; }
 /* work client */
 .work.clients{}
 
@@ -769,12 +783,13 @@ html .ulist li .gray{ color: #999; }
 .telist .C .Cc i.iconfont{ font-size: 10pt; line-height: 10pt; margin-right: 3pt; color: #EEE; }
 
 .telist .L { background: #18B4ED; margin-right: 10pt; background: #F6F6F6; }
-.telist .L .btns{ display: block; padding: 10pt; color: #FFF; color: #18B4ED; }
-.telist .L .btns:first-child{ padding-bottom: 5pt; border-bottom: 1px solid rgba(255,255,255,0.1) }
+.telist .L .btns{ display: block; padding: 10pt 12pt; color: #FFF; color: #18B4ED; border-right:1px solid rgba(0,0,0,0.02); }
+.telist .L .btns:first-child{ padding-bottom: 5pt; border-bottom: 1px solid rgba(0,0,0,0.03); }
 .telist .L .btns:last-child{ padding-top: 5pt; }
+.telist .L .btns i{ font-size: 16pt; }
 
-.telist .R .btns{ display: inline-block; padding: 6pt 6pt 6pt 6pt;}
-.telist .R .iconfont{ color: #CCC; }
+.telist .R .btns{ display: inline-block; padding: 6pt 8pt 6pt 8pt;}
+.telist .R .iconfont{ color: #CCC; font-size: 18pt; }
 
 .telist .C strong{ font-size: 14pt; line-height: 14pt; }
 .telist .C p{ font-size: 12pt; line-height: 14pt; }
