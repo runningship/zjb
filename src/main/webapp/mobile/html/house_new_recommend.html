@@ -29,6 +29,7 @@ var estateIds=[];
 apiready=function(){
 	getConfig(function(cfg){
 		config=cfg;
+		fixIOSStatusBar();
 	});
 	estateIds = [];
 	addEstateItem(api.pageParam.estate.id , api.pageParam.estate.name);

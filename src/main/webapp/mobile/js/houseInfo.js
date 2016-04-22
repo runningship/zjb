@@ -12,7 +12,7 @@ apiready = function(){
 	isChuzu = api.pageParam.isChuzu;
 	api.parseTapmode();
 	getConfig(function(cfg){
-		
+		fixIOSStatusBar();
 		config = cfg;
 		if(config.user){
 			userId = config.user.uid;

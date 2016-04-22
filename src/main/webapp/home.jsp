@@ -460,7 +460,7 @@ i.pr{ padding-right: 3px; }*/
 <!--                            <li><a href="#" onclick="return false;"><img src="style/images/phone.png" style="width:17px;height:17px;margin-right:13px;" onmouseover="$('#ewm').attr('style','position: absolute;top:35px;left:-50px;border:none;width:200px;');" onmouseout="$('#ewm').attr('style','display:none;');"><img src="style/images/zjb-android.png" id="ewm" style="display:none"/></a></li> -->
                             <!-- <li><a href="#" title="中介宝外网" class="winBtns "><i class="iconfont pr">&#xe673;</i>顾某人</a></li> -->
                             <li><a href="#"  onclick="window.top.gui.Shell.openExternal('http://.a.zhongjiebao.com');" title="中介宝外网" class="winBtns "><i class="iconfont">&#xe666;</i></a></li>
-                            <li><a href="#" onclick="return false;" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li>
+                            <li><a href="#" onclick="showAds();" title="中介宝手机版" class="winBtns showAds"><i class="iconfont">&#xe678;</i></a></li>
                             <li><a href="#" onclick="fankui();" title="请给予我们您的宝贵意见" class="winBtns "><i class="iconfont">&#xe633;</i></a></li>
                             <li class="dropdown btn-group">
                                 <a href="" class="winBtn black winBtnMenu" data-toggle="dropdown"><i></i></a>
@@ -554,8 +554,8 @@ function EditToolUser(json){
     $('.me_uname').text(S.uname);
 }
 </script>
-<%-- <jsp:include page="ad/2016/phone/download.jsp"></jsp:include> --%>
-<jsp:include page="ad/2016/reg/ad_bank.jsp"></jsp:include>
+<jsp:include page="ad/2016/phone/download.jsp"></jsp:include>
+<jsp:include page="ad/2016/reg/ad_regPhone.jsp"></jsp:include>
 <%-- <jsp:include page="ad/2016/reg/ad_regPhone.jsp"></jsp:include> --%>
 <%-- <jsp:include page="ad/2016/zufang/index.jsp"></jsp:include> --%>
 </body>

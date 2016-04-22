@@ -20,6 +20,7 @@ var mainer;
 apiready = function(){
 	header = $('#header');
 	mainer = $('#mainer');
+	fixIOSStatusBar();
 	api.parseTapmode();
 	$('#area').text(api.pageParam.searchParams.specArea);
 	api.openFrame({

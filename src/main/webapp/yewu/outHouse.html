@@ -123,6 +123,17 @@ function gettype(a){
   }
 }
 
+function getTels(tels){
+	if(!tels){
+		return '';
+	}
+	var arr = tels.split(',');
+	var html ='';
+	for(var i=0;i<arr.length;i++){
+		html=html+'<div class="telItem">'+arr[i]+'</div>';
+	}
+	return html;
+}
 $(document).ready(function() {
 	
   initTopMenu();
@@ -155,6 +166,7 @@ $(document).ready(function() {
   .待返回{color: red;}
   .已返回{color: green}
   .已批阅{color: gray}
+  .telItem{height: 20px;    line-height: 20px;}
 </style>
 </style>
 </head>
@@ -278,7 +290,7 @@ $(document).ready(function() {
                   <table id="KY_TableListKy" border="0" cellspacing="0" cellpadding="0" class="KY_TableMain table-hover">
                     <tr data-cid="$[id]" style="display:none;" class="id_client_list"  >
                       <td width="60" height="35"><strong>$[clientName]</strong></td>
-                      <td width="100" >$[ctels]</td>
+                      <td width="100"  runscript="true" >getTels('$[ctels]')</td>
                       <!--<td style="width:200px; min-width:50px;" align="left"><div style="padding:0 8px;">$[areas]</div></td>-->
                       <!-- <td width="50">$[lxings]</td> -->
                       <!-- <td width="60">$[hxings]</td> -->

@@ -38,6 +38,7 @@ navActive($(this));
 
 apiready=function(){
 	getConfig(function(cfg){
+		fixIOSStatusBar();
 		config = cfg;
 		loadData();
 	});

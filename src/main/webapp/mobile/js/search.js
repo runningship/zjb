@@ -17,6 +17,7 @@ var historyItemSplitChar='--';
 var isChuzu=false;
 var searchHistoryKey="searchHistory";
 apiready=function(){
+	fixIOSStatusBar();
 	onready();
 };
 

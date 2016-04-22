@@ -9,6 +9,7 @@ apiready = function(){
 		$('#reg').css('display','');
 	}
 	getConfig(function(cfg){
+		fixIOSStatusBar();
 		config = cfg;
 		init();
 	});

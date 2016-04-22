@@ -37,7 +37,6 @@ function addGenjin(text ,id){
 	});
 }
 function deleteClient(id){
-//	alert(id);
     var url = 'http://'+server_host+'/c/mobile/client/deleteClient';
 	YW.ajax({
 		url: url,
@@ -277,7 +276,7 @@ function sendMsg(num, text){
     <div id="mainer" class="mainer">
         <div class="item posr_cont">
             <ul class="telist">
-                <li class="repeat" data-id="$[cid]"  data-tels="$[tels]">
+                <li class="repeat" data-id="$[cid]"  data-tels="$[tels]"    style="display:none;">
                     <div class="lWrap">
                         <div class="R">
                             <a href="#" class="btns btn_act" data-type="see"><i class="iconfont">&#xe62a;</i></a></div>

@@ -26,9 +26,9 @@ public class JobScheduler extends Thread{
 		job365.setDetailPageInterval(100);
 		jobs.put(job365.getJobName(), job365);
 		
-		PullAJKRent jobAjk = new PullAJKRent();
-		jobAjk.setDetailPageInterval(100);
-		jobs.put(jobAjk.getJobName(), jobAjk);
+//		PullAJKRent jobAjk = new PullAJKRent();
+//		jobAjk.setDetailPageInterval(100);
+//		jobs.put(jobAjk.getJobName(), jobAjk);
 		
 //		PullBXRent jobBaixing = new PullBXRent();
 //		jobBaixing.setDetailPageInterval(100);

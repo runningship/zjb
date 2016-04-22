@@ -51,6 +51,7 @@ var estate;
 apiready=function(){
 	getConfig(function(cfg){
 		config = cfg;
+		fixIOSStatusBar();
 		init();
 	});
 }
