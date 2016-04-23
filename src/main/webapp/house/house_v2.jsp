@@ -85,7 +85,7 @@ function buildQueryOptions(){
     buildHtmlWithJsonArray("id_zhuangtai", ${queryOptions.ztai_sell},true, true);
 }
 </script>
-    <script>
+<!--     <script>
 
         (function($){
 
@@ -100,7 +100,7 @@ $(".sideMainer").mCustomScrollbar({
 
         })(jQuery);
 
-    </script>
+    </script> -->
 
 
 <style type="text/css">

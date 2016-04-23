@@ -5,15 +5,32 @@ function GTFCallback(data){
 
 function getTelFormIng(tel){
   if(tel){
-    $('#GTF'+tel).html('加载归属地');
+    var htmlsa=$('#GTF'+tel)
     $.ajax({
-        dataType: 'jsonp',
-      type: 'get',
-      url: 'http://virtual.paipai.com/extinfo/GetMobileProductInfo?mobile='+tel+'&amount=3000&callname=GTFCallback',
-      mysuccess: function(data){
-          //$('#GTF'+tel).html(''+data.province + data.cityname +'');
-      }
-    }); 
+       type: "get",
+       url: 'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel='+tel,
+       dataType: "jsonp",
+       timeout:3000,
+       jsonp: "callback",
+       beforeSend:function(){
+         htmlsa.html('归属地加载中');
+       },
+       success: function(data){
+          console.log(data);
+          htmlsa.html(data.carrier);
+          // $('.error').css('display','none');
+          // var province = data.province,
+          //     operators = data.catName,
+          //     num = data.telString;
+          // $('.num span').html(num);
+          // $('.province span').html(province);
+          // $('.operators span').html(operators);
+       },
+       error:function (){    
+          htmlsa.html('获取超时，请反馈');      
+       }
+    });
+
   }
 }
 function getTelForm(tels){
