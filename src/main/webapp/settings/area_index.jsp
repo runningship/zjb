@@ -52,7 +52,7 @@ function doSearch(){
 }
 
 function editArea(id){
-  art.dialog.open('/v/settings/area_edit.html?id='+id,{
+  art.dialog.open('/settings/area_edit.jsp?id='+id,{
       id:'EditArea',
       title:'修改楼盘',
       height:450,
@@ -201,7 +201,7 @@ function mergeDistrict(){
               <a href="javascript:void(0)" class="btns" data-type="edit" onclick="editArea($[id])">编辑</a>
               <a href="javascript:void(0)" class="btns" data-type="edit" onclick="viewArea('$[name]')">查看</a>
               <a href="javascript:void(0)" class="btns" data-type="del" onclick="deleteArea($[id])">删除</a>
-              <a href="javascript:void(0)" class="btns" data-type="map" onclick="editMap($[id],'$[name]')"> 地图</a>
+<!--               <a href="javascript:void(0)" class="btns" data-type="map" onclick="editMap($[id],'$[name]')"> 地图</a> -->
             </td>
             <td style="width:100px">$[name]</td>
             <td style="width:60px">$[quyu]</td>

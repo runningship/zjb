@@ -150,7 +150,7 @@ gjLayerIndex = layer.open({
 
 });
 }if(Type=='see'){
-    openDetail(Tid);
+    //openDetail(Tid);
 }if(Type=='edit'){
     layer.msg('edit');
 }if(Type=='del'){
@@ -278,7 +278,7 @@ function sendMsg(num, text){
             <ul class="telist">
                 <li class="repeat" data-id="$[cid]"  data-tels="$[tels]"    style="display:none;">
                     <div class="lWrap">
-                        <div class="R">
+                        <div class="R" onclick="openDetail($[cid])">
                             <a href="#" class="btns btn_act" data-type="see"><i class="iconfont">&#xe62a;</i></a></div>
                         <div class="L">
                             <a href="#" class="btns btn_act" data-type="sms"><i class="iconfont">&#xe6ee;</i></a>

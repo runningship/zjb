@@ -320,11 +320,11 @@ public class HouseRentService {
 		if(query.quyus!=null){
 			hql.append(" and ( ");
 			for(int i=0;i<query.quyus.size();i++){
-				hql.append(" h.quyu = ? ");
+				hql.append(" h.quyu like ? ");
 				if(i<query.quyus.size()-1){
 					hql.append(" or ");
 				}
-				params.add(query.quyus.get(i));
+				params.add("%"+query.quyus.get(i).replace("区", "").replace("县", "")+"%");
 			}
 			hql.append(" )");
 		}

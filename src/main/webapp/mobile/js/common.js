@@ -267,7 +267,6 @@ function checkFile(file){
 
 
 function fixIOSStatusBar(){
-	//hehehe
 	if(api.systemType=='ios'){
 		if(api.version=='3.0.9'){
 			statusBarHeight = 25;
