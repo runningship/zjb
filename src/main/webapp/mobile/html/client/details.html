@@ -39,7 +39,7 @@ function getData(){
 	var url = 'http://'+server_host+'/c/mobile/client/getClient';
 	YW.ajax({
 		url: url,
-		method:'get',
+		method:'post',
 		cache:false,
 		 dataType: 'json',
 		data:{values:{cid: api.pageParam.cid}},
