@@ -8,26 +8,37 @@ function getTelFormIng(tel){
     var htmlsa=$('#GTF'+tel)
     $.ajax({
        type: "get",
-       url: 'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel='+tel,
-       dataType: "jsonp",
+       url: '/c/phone/getLocation?tel='+tel+'',
+       dataType: "json",
        timeout:3000,
-       jsonp: "callback",
-       beforeSend:function(){
-         htmlsa.html('归属地加载中');
+       // jsonp: "callback",
+       //data:{'apikey':'d77d10cd1abe511a78aed63c03ee24e8'}
+       beforeSend:function(request){
+         htmlsa.html('加载归属地');
        },
-       success: function(data){
-          console.log(data);
-          htmlsa.html(data.carrier);
-          // $('.error').css('display','none');
-          // var province = data.province,
-          //     operators = data.catName,
-          //     num = data.telString;
-          // $('.num span').html(num);
-          // $('.province span').html(province);
-          // $('.operators span').html(operators);
+       success: function(json){
+          // console.log(json);
+          var result=json.result,
+          data=result.data,
+          error=result.error,
+          msg=result.msg,
+          citys=data.city;
+          // console.log(data);
+          if(error<1){
+            var operators='',os=data.operator;
+            if(os.indexOf('移动')>=0){
+              operators='移动';
+            }else if(os.indexOf('联通')>=0){
+              operators='联通';
+            }else if(os.indexOf('电信')>=0){
+              operators='电信';
+            }
+            citys=citys.replace('市','');
+            htmlsa.html(citys+operators);
+          }
        },
        error:function (){    
-          htmlsa.html('获取超时，请反馈');      
+          htmlsa.html('获取超时');      
        }
     });
 

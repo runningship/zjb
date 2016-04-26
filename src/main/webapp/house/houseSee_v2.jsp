@@ -535,7 +535,7 @@ loadJs('${refPrefix}/js/buildHtml.js');
 loadJs('${refPrefix}/bootstrap/js/bootstrap.js');
 loadJs('${refPrefix}/js/dialog/jquery.artDialog.source.js?skin=win8s');
 loadJs('${refPrefix}/js/dialog/plugins/iframeTools.source.js');
-loadJs('${refPrefix}/js/house/getTelFrom.js');
+loadJs('${refPrefix}/js/house/getTelFrom.js?v=1604251123');
 // loadJs('${refPrefix}/js/scrolls/jquery.mCustomScrollbar.concat.min.js?16');
 setTimeout(init , 300);
 //init();
@@ -970,7 +970,7 @@ $(document).on('click', '.btn_free', function(event) {
 </div>
 <style type="text/css">
 .hoverTitle{ position: relative; }
-.hoverTitle .hoverTitBox{ display: none; position: absolute; background: #FFF;left: 0;top: -26px;text-align: center;width: 100%; border: 1px solid #999; border-radius: 1px; }
+.hoverTitle .hoverTitBox{ display: none; position: absolute; background: #FFF;left: 0;top: -26px;text-align: center; border: 1px solid #999; border-radius: 1px;white-space:nowrap; padding-left: 3px; padding-right: 3px; }
 .hoverTitle:hover .hoverTitBox{ display: block;  }
 .hoverTitle .hoverJTs{ position: absolute; bottom: 0; left: 45%; display: block; border-top: 6px solid #999; border-left: 6pt solid transparent; border-bottom: 6pt solid  transparent; border-right: 6pt solid  transparent;}
 
