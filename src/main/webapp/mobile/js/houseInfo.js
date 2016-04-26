@@ -203,6 +203,7 @@ function loadData(){
 				conts.val('');
 				conts.css({'height':hei+'px','line-height':hei+'px'});
 				conts.parent().height(hei+'px');
+				conts.parents('.footer').removeClass('focus');
 				loadGenJin(true);
 			}else{
 				info('跟进失败');
