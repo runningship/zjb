@@ -507,6 +507,19 @@ house
 .house.details .footer .entered .inputbox{ height: auto;}
 .house.details .footer .entered .inputbox textarea{ border: none; }
 
+.house.details .footer{box-shadow: 0 0 10px rgba(0,0,0,0.2); position: relative; background: #FFF;}
+.house.details .footer .entereds{ display: block; border-top: 1px solid #EEE; padding: 4pt; }
+.house.details .footer .entereds .btns{ float: right; display: inline-block; height: 24pt; line-height: 24pt; font-size: 10pt; width: 40pt; background: #EEE; color: #999; border: 1px solid #DDD; border-radius: 3pt; padding: 0;}
+.house.details .footer .entereds .btns.ok{ background: #18B4ED; color: #FFF;border-color:#13AAE2; }
+.house.details .footer .entereds .textarea{ overflow-y: visible;height: inherit;line-height: inherit; width: 100%;border: none;padding: 0 5pt;background: transparent;font-size: 12pt; border-radius: 3px; outline: none; font-family: "Arial",'Microsoft Yahei'; }
+.house.details .footer .entereds .inputbox{ display: block; margin-right: 44pt; height: 24pt; line-height: 24pt; border: 1px solid #EEE; border-radius: 3pt; overflow: hidden; }
+
+.house.details .footer .option label{ font-size: 12pt; height: 30pt; line-height: 30pt; }
+
+
+.house.details .footer .option{ display: none; }
+.house.details .footer.focus .option{ display: -webkit-box; }
+
 
 /* .house.seepic */
 .house.seepic .header{ -webkit-transition:all 2s; position: fixed;z-index: 9; width: 100%;}

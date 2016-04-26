@@ -61,7 +61,6 @@ function loadData(){
 					fdhao = ret.dhao+' - '+ret.fhao;
 					if(isFufei){
 						$('#area').text(ret.area+'  '+fdhao);
-						$('#footer').show();
 						$('#favBtn').show();
 						$('#image').show();
 						var tels = ret.tel.split(',');
@@ -82,6 +81,7 @@ function loadData(){
 						}else{
 							$('#toXufei').show();
 						}
+						$('#footer').show();
 						$('#area').text(ret.area);
 					}
 					$('#dateadd').text(ret.dateadd);
@@ -199,7 +199,10 @@ function loadData(){
 		},function(ret , err){
 			if(ret && ret.result=='1'){
 				info('跟进成功');
-				$('#conts').val('');
+				var conts=$('#conts'),hei=conts.attr('data-olh');
+				conts.val('');
+				conts.css({'height':hei+'px','line-height':hei+'px'});
+				conts.parent().height(hei+'px');
 				loadGenJin(true);
 			}else{
 				info('跟进失败');
