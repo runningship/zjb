@@ -58,7 +58,7 @@ function checkConfig(){
     if(gui.App.manifest['--use_uuid_lic']){
         if(json.domain==null || json.domain==undefined || json.domain==""){
             //留在当前页面，选择城市
-            window.location="/welcome.html?pcinfo=";
+            window.location="/welcome.html?222&pcinfo=";
         }else{
             window.location="http://"+json.domain+":8081/login/index.jsp?2&pcinfo=";
         }
@@ -68,7 +68,7 @@ function checkConfig(){
             pcinfo = encodeURI(pcinfo);
             if(json.domain==null || json.domain==undefined || json.domain==""){
                 //留在当前页面，选择城市
-                window.location="/welcome.html?pcinfo="+pcinfo;
+                window.location="/welcome.html?222&pcinfo="+pcinfo;
             }else{
                 window.location="http://"+json.domain+":8081/login/index.jsp?&pcinfo="+pcinfo;
             }

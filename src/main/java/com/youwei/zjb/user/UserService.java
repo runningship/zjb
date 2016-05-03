@@ -650,13 +650,14 @@ public class UserService {
 			throw new GException(PlatformExceptionType.BusinessException, "密码不正确");
 		}
 		PC pcpo= null;
-		if(!"8753".equals(pc.debug)){
-			if(uselic!=null && uselic==1){
-				pcpo = SecurityHelper.validateByLic(pc ,po);
-			}else{
-				pcpo = SecurityHelper.validate(pc , po);
-			}
-			
+//		if(!"8753".equals(pc.debug)){
+//			
+//			
+//		}
+		if(uselic!=null && uselic==1){
+			pcpo = SecurityHelper.validateByLic(pc ,po);
+		}else{
+			pcpo = SecurityHelper.validate(pc , po);
 		}
 		if(pcpo!=null){
 			pcpo.lasttime = new Date();

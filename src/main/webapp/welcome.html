@@ -58,7 +58,13 @@ $(document).ready(function() {
             putConfig("cityName",ThiTxt);
             putConfig("city_py",Thi.attr('city_py'));
             putConfig("coodinate",Thi.attr('coodinate'));
-            window.location='/login/index.jsp?cityName='+ThiTxt+'&domain='+ThiVal+'&goto=1&pcinfo='+pcinfo;
+            var domain="http://www.zhongjiebao.com:8081";
+            if(Thi.attr('city_py')=='hefei'){
+            	domain="http://hefei.zhongjiebao.com:8081";
+            }else if(Thi.attr('city_py')=='wuhu'){
+            	domain="http://wuhu.zhongjiebao.com:8081";
+            }
+            window.location=domain+'/login/index.jsp?cityName='+ThiTxt+'&domain='+ThiVal+'&goto=1&pcinfo='+pcinfo;
         }
         return false;
     });
