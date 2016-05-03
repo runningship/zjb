@@ -27,7 +27,15 @@ function getConfig(callback){
 			if(!v){
 				callback(JSON.parse('{}'));
 			}else{
-				callback(JSON.parse(v));
+				var cfg =JSON.parse(v); 
+				if(cfg.city.cityPy=='hefei'){
+					server_host = "hefei.zhongjiebao.com:8081";
+					img_server_host="hefei.zhongjiebao.com";
+				}else if(cfg.city.cityPy=='wuhu'){
+					server_host = "wuhu.zhongjiebao.com:8081";
+					img_server_host="wuhu.zhongjiebao.com";
+				}
+				callback(cfg);
 			}
 		}
 	});
@@ -268,7 +276,7 @@ function checkFile(file){
 
 function fixIOSStatusBar(){
 	if(api.systemType=='ios'){
-		if(api.version=='3.0.9'){
+		if(api.appVersion=='3.0.9'){
 			statusBarHeight = 25;
 			$('#header').css('padding-top','20px');
 			$('#header').css('height','65px');	

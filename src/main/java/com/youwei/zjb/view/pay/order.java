@@ -2,6 +2,7 @@ package com.youwei.zjb.view.pay;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bc.web.ThreadSession;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -26,7 +27,7 @@ public class order {
 		String dname=d.namea==null?"":d.namea;
 		String uname=u.uname==null?"":u.uname;
 		html = html.replace("$${trade_no}", String.valueOf(System.currentTimeMillis()));
-		html = html.replace("$${domainName}", ConfigCache.get("domainName", "localhost"));
+		html = html.replace("$${domainName}", ConfigCache.get("domainName_"+ThreadSession.getCityPY(), "www.zhongjiebao.com"));
 		html = html.replace("$${user}", cname+dname+uname);
 		html = html.replace("$${uid}", u.id.toString());
 		return  Jsoup.parse(html);
