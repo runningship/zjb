@@ -31,6 +31,7 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.spi.LoggingEvent;
+import org.bc.web.ThreadSession;
 
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.user.entity.User;
@@ -361,7 +362,7 @@ public class BcDailyRollingFileAppender extends FileAppender {
 		}
 		User me = ThreadSessionHelper.getUser();
 		if (me != null) {
-			msg = me.uname + ",id=" + me.id + ",cid="+me.cid+"," + msg;
+			msg = ThreadSession.getCityPY()+","+me.uname + ",id=" + me.id + ",cid="+me.cid+"," + msg;
 		}
 		this.qw.write(msg);
 

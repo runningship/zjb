@@ -3,6 +3,7 @@ package com.youwei.zjb.log;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
+import org.bc.web.ThreadSession;
 
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.user.entity.User;
@@ -17,7 +18,7 @@ public class BcConsoleAppender extends ConsoleAppender{
 		}
 		User me = ThreadSessionHelper.getUser();
 		if(me!=null){
-			msg = me.uname+",id="+me.id+",cid="+me.cid+","+msg;
+			msg = ThreadSession.getCityPY()+","+me.uname+",id="+me.id+",cid="+me.cid+","+msg;
 		}
 		this.qw.write(msg);
 
