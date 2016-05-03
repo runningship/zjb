@@ -78,10 +78,12 @@ function loadData(){
 						//如果没有登录 提示登录
 						if(!hasLogin()){
 							$('#toLogin').show();
+							$('#footer').hide();
 						}else{
 							$('#toXufei').show();
+							$('#footer').hide();
 						}
-						$('#footer').show();
+						//$('#footer').show();
 						$('#area').text(ret.area);
 					}
 					$('#dateadd').text(ret.dateadd);
