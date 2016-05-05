@@ -55,9 +55,9 @@ function loadData(clear){
 	if(isChuzu){
 		url = 'http://'+server_host+'/c/mobile/rent/list?page='+currentPage;
 	}
-	if(api.pageParam.searchMyPrivateHouse){
+	searchMyPrivateHouse = getParam('searchMyPrivateHouse');
+	if(searchMyPrivateHouse){
 		searchParams.uid=config.user.uid;
-		searchMyPrivateHouse = 1;
 		searchParams.searchMyPrivateHouse=1;
 	}
 	YW.ajax({

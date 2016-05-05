@@ -28,7 +28,7 @@ apiready = function(){
 	api.closeWin({
 	    name: 'login'
 	});
-	api.pageParam.searchMyPrivateHouse=true;
+	api.pageParam.searchMyPrivateHouse=1;
 	getConfig(function(cfg){
 		config = cfg;
 		openContentFram();
@@ -41,7 +41,7 @@ function openContentFram(isChuzu){
 	}
 	api.openFrame({
         name: 'myHouseFrame',
-		url: 'house.html?'+new Date().getTime(),
+		url: 'house.html?t='+new Date().getTime()+'&searchMyPrivateHouse=1',
 		reload:true,
         bounces: false,
         pageParam:api.pageParam,

@@ -64,8 +64,8 @@ function loadData(){
 		returnAll:false
 	},function(ret , err){
 		if(ret){
-			$('#sellerName').text(ret.order.sellerName);
-			$('#sellerTel').text(ret.order.sellerTel);
+			$('#buyerName').text(ret.order.buyerName);
+			$('#buyerTel').text(ret.order.buyerTel);
 			$('#ordertime').text(ret.order.addtime);
 			if(ret.order.yongjin){
 				$('.overs').show();
@@ -97,8 +97,8 @@ function loadData(){
                 <a class="btns"><i tapmode="tapped" onclick="sendSMS()" class="iconfont green">&#xe6e4;</i></a>
                 <a class="btns"><i tapmode="tapped" onclick="call();" class="iconfont blue">&#xe6e5;</i></a>
             </span>
-            <h3 id="sellerName"></h3>
-            <p id="sellerTel"></p>
+            <h3 id="buyerName"></h3>
+            <p id="buyerTel"></p>
         </div>
         <div class="item posr_cont">
             <ul class="ul">

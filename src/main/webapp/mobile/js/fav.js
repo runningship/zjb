@@ -17,6 +17,7 @@ function loadData(clear){
 		//searchParams.userId = config.user.id;
 		searchParams.searchFavHouse=1;
 	}
+	searchParams.searchFavHouse=getParam('searchFavHouse');
 	if(isChuzu){
 		if(houseType=='fav'){
 			url = 'http://'+server_host+'/c/mobile/rent/list?userid='+userId+'&page='+currentPage;

@@ -68,8 +68,8 @@ function init(){
 	},function(ret , err){
 		if(ret){
 			estate = ret.estate;
-			$('.huxing img').attr('data-src' , 'http://'+img_server_host+ '/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
-			$('.xiaoguo img').attr('data-src' , 'http://'+img_server_host+'/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
+			$('.huxing img').attr('data-src' , 'http://www.zhongjiebao.com/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
+			$('.xiaoguo img').attr('data-src' , 'http://www.zhongjiebao.com/zjb_newhouse_images/$[estateUUID]/$[path].x.jpg');
 			$('#name').text(ret.estate.name);
 			$('.yongjin .text').text(ret.estate.yongjin);
 			$('#junjia').text(ret.estate.junjia);
