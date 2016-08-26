@@ -6,6 +6,12 @@
 	<version>5.0</version>
 	<packaging>war</packaging>
 	<name>zjb</name>
+	<properties>
+		<!-- Generic properties -->
+        <java.version>1.7</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
