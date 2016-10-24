@@ -8,6 +8,7 @@ import java.io.IOException;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
+@SuppressWarnings("restriction")
 public class ImageHelper {
 
 	public static void resize(String srcFile , int w, int h ,String destFile) throws IOException {  
