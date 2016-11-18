@@ -3,6 +3,27 @@ function GTFCallback(data){
 	//$('#GTF'+data.mobile).attr('title' , ''+data.province + data.cityname +'');
 }
 
+//success: function(json){
+//// console.log(json);
+//var result=json.result,
+//data=result.data,
+//error=result.error,
+//msg=result.msg,
+//citys=data.city;
+//// console.log(data);
+//if(error<1){
+//var operators='',os=data.operator;
+//if(os.indexOf('移动')>=0){
+//  operators='移动';
+//}else if(os.indexOf('联通')>=0){
+//  operators='联通';
+//}else if(os.indexOf('电信')>=0){
+//  operators='电信';
+//}
+//citys=citys.replace('市','');
+//htmlsa.html(citys+operators);
+//}
+//},
 function getTelFormIng(tel){
   if(tel){
     var htmlsa=$('#GTF'+tel)
@@ -19,13 +40,13 @@ function getTelFormIng(tel){
        success: function(json){
           // console.log(json);
           var result=json.result,
-          data=result.data,
-          error=result.error,
-          msg=result.msg,
+          data=result.showapi_res_body,
+          error=result.showapi_res_code,
+          msg=result.showapi_res_error,
           citys=data.city;
           // console.log(data);
           if(error<1){
-            var operators='',os=data.operator;
+            var operators='',os=data.name;
             if(os.indexOf('移动')>=0){
               operators='移动';
             }else if(os.indexOf('联通')>=0){

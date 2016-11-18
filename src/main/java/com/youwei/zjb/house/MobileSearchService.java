@@ -23,8 +23,10 @@ public class MobileSearchService {
 	@WebMethod
 	public ModelAndView getLocation(String tel){
 		ModelAndView mv = new ModelAndView();
-		String httpUrl = "http://apis.baidu.com/chazhao/mobilesearch/phonesearch";
-		String httpArg = "phone="+tel;
+//		String httpUrl = "http://apis.baidu.com/chazhao/mobilesearch/phonesearch";
+		//String httpArg = "phone="+tel;
+		String httpUrl = "http://apis.baidu.com/showapi_open_bus/mobile/find";
+		String httpArg = "num="+tel;
 		BufferedReader reader = null;
 	    String result = null;
 	    StringBuffer sbf = new StringBuffer();
@@ -36,6 +38,7 @@ public class MobileSearchService {
 	        connection.setRequestMethod("GET");
 	        // 填入apikey到HTTP header
 	        connection.setRequestProperty("apikey",  "d77d10cd1abe511a78aed63c03ee24e8");
+//	        connection.setRequestProperty("apikey",  "7f767ff8427930b00ee246461d362148");
 	        connection.connect();
 	        InputStream is = connection.getInputStream();
 	        reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -46,6 +49,7 @@ public class MobileSearchService {
 	        }
 	        reader.close();
 	        result = sbf.toString();
+	        System.out.print(result);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
