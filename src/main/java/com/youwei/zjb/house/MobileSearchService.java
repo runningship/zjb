@@ -3,6 +3,7 @@ package com.youwei.zjb.house;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import net.sf.json.JSONObject;
@@ -12,8 +13,6 @@ import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
 import org.bc.web.WebMethod;
-
-import sun.net.www.protocol.http.HttpURLConnection;
 
 @Module(name="/phone/")
 public class MobileSearchService {
@@ -25,6 +24,7 @@ public class MobileSearchService {
 		ModelAndView mv = new ModelAndView();
 //		String httpUrl = "http://apis.baidu.com/chazhao/mobilesearch/phonesearch";
 		//String httpArg = "phone="+tel;
+		System.out.println("tel:"+tel);
 		String httpUrl = "http://apis.baidu.com/showapi_open_bus/mobile/find";
 		String httpArg = "num="+tel;
 		BufferedReader reader = null;
