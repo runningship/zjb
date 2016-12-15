@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bc.sdak.utils.LogUtil;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -61,16 +59,24 @@ public enum FangXing {
 	public int getHxw() {
 		return hxw;
 	}
-
+	
 	public static JSONArray toJsonArray(){
 		JSONArray arr = new JSONArray();
 		for(FangXing fx : FangXing.values()){
 			JSONObject jobj = new JSONObject();
 			jobj.put("name", fx.name);
-			jobj.put("value", fx.name());
+			jobj.put("value", fx.name);
 			arr.add(jobj);
 		}
 		return arr;
+	}
+	
+	public static void main(String[] args){
+	    for(FangXing fx : FangXing.values()){
+           String name =fx.name;
+           String value =fx.name();
+           System.out.println("name:"+name+"/value:"+value);
+        }
 	}
 	
 	public static FangXing parse(String name){
