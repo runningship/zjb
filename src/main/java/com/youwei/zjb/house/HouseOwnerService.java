@@ -352,7 +352,7 @@ public class HouseOwnerService {
 				if(StringUtils.isEmpty(fxing)){
 					continue;
 				}
-				FangXing fx = FangXing.valueOf(fxing);
+				FangXing fx = FangXing.parse(fxing);
 				hql.append("( h.hxf=? and h.hxt=? and h.hxw=?)");
 				if(i<query.fxing.size()-1){
 					hql.append(" or ");
@@ -514,7 +514,7 @@ public class HouseOwnerService {
 			hql.append(" and ( ");
 			for(int i=0;i<query.fxing.size();i++){
 				String fxing = query.fxing.get(i);
-				FangXing fx = FangXing.valueOf(fxing);
+				FangXing fx = FangXing.parse(fxing);
 				hql.append("( h.hxf=? and h.hxt=? and h.hxw=?)");
 				if(i<query.fxing.size()-1){
 					hql.append(" or ");

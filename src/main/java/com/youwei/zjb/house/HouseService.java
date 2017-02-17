@@ -94,6 +94,7 @@ public class HouseService {
 		house.cid = user.cid;
 		house.did = user.did;
 		house.sh = 0;
+		LogUtil.info(hxing);
 		FangXing fx = FangXing.parse(hxing);
 		house.hxf = fx.getHxf();
 		house.hxt = fx.getHxt();
@@ -558,7 +559,8 @@ public class HouseService {
 			hql.append(" and ( ");
 			for(int i=0;i<query.fxing.size();i++){
 				String fxing = query.fxing.get(i);
-				FangXing fx = FangXing.valueOf(fxing);
+//				FangXing fx = FangXing.valueOf(fxing);
+				FangXing fx = FangXing.parse(fxing);
 				hql.append("( h.hxf=? and h.hxt=? and h.hxw=?)");
 				if(i<query.fxing.size()-1){
 					hql.append(" or ");

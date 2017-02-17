@@ -28,8 +28,9 @@ function getTelFormIng(tel){
   if(tel){
     var htmlsa=$('#GTF'+tel)
     $.ajax({
-       type: "get",
-       url: '/c/phone/getLocation?tel='+tel+'',
+       type: "post",
+       url: '/c/phone/getLocation',
+       data: {"tel":tel},
        dataType: "json",
        timeout:3000,
        // jsonp: "callback",

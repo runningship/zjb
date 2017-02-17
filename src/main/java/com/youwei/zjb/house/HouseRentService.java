@@ -15,6 +15,7 @@ import org.bc.sdak.Page;
 import org.bc.sdak.TransactionalServiceHelper;
 import org.bc.sdak.utils.HqlHelper;
 import org.bc.sdak.utils.JSONHelper;
+import org.bc.sdak.utils.LogUtil;
 import org.bc.web.DateSeparator;
 import org.bc.web.ModelAndView;
 import org.bc.web.Module;
@@ -22,12 +23,10 @@ import org.bc.web.PlatformExceptionType;
 import org.bc.web.WebMethod;
 
 import com.youwei.zjb.ThreadSessionHelper;
-import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;
 import com.youwei.zjb.sys.OperatorService;
 import com.youwei.zjb.sys.OperatorType;
 import com.youwei.zjb.user.UserHelper;
-import com.youwei.zjb.user.entity.Department;
 import com.youwei.zjb.user.entity.User;
 import com.youwei.zjb.util.DataHelper;
 
@@ -61,7 +60,14 @@ public class HouseRentService {
 			house.did = user.did;
 			house.cid = user.cid;
 			house.sh = 0;
+			LogUtil.info("add房型:"+hxing);
+//			if(StringUtils.isBlank(hxing)){
+//			    hxing="1房0厅0卫";
+//			}
 			FangXing fx = FangXing.parse(hxing);
+			if(fx==null){
+			    fx=FangXing.valueOf(hxing);
+			}
 			house.hxf = fx.getHxf();
 			house.hxt = fx.getHxt();
 			house.hxw = fx.getHxw();
@@ -356,7 +362,7 @@ public class HouseRentService {
 			hql.append(" and ( ");
 			for(int i=0;i<query.fxing.size();i++){
 				String fxing = query.fxing.get(i);
-				FangXing fx = FangXing.valueOf(fxing);
+				FangXing fx = FangXing.parse(fxing);
 				hql.append("( h.hxf=? and h.hxt=? and h.hxw=?)");
 				if(i<query.fxing.size()-1){
 					hql.append(" or ");

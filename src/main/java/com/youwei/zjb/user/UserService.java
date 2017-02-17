@@ -28,7 +28,6 @@ import com.youwei.zjb.KeyConstants;
 import com.youwei.zjb.ThreadSessionHelper;
 import com.youwei.zjb.cache.ConfigCache;
 import com.youwei.zjb.entity.Role;
-import com.youwei.zjb.entity.RoleAuthority;
 import com.youwei.zjb.house.entity.Agent;
 import com.youwei.zjb.house.entity.House;
 import com.youwei.zjb.house.entity.HouseRent;

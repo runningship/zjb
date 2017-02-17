@@ -138,6 +138,7 @@ public class NoticeService {
 		User sender = dao.get(User.class, po.senderId);
 		po.senderName = sender.uname;
 		po.senderAvatar = sender.avatar;
+		mv.data.put("user",JSONHelper.toJSON(sender));
 		mv.data.put("notice", JSONHelper.toJSON(po));
 		mv.data.put("nr", JSONHelper.toJSON(nr));
 		if(po.zanUids!=null && po.zanUids.contains(ThreadSessionHelper.getUser().id+"")){

@@ -11,7 +11,7 @@ import net.sf.json.JSONObject;
 //户型
 public enum FangXing {
 
-	房1厅0卫0("1房0厅0卫",1,0,0),
+    房1厅0卫0("1房0厅0卫",1,0,0),
 	房1厅0卫1("1房0厅1卫",1,0,1),
 	房1厅1卫0("1房1厅0卫",1,1,0),
 	房1厅1卫1("1房1厅1卫",1,1,1),
@@ -77,6 +77,9 @@ public enum FangXing {
            String value =fx.name();
            System.out.println("name:"+name+"/value:"+value);
         }
+	    String name ="1房0厅0卫";
+	    FangXing fx = FangXing.parse(name);
+	    System.out.println(fx.name);
 	}
 	
 	public static FangXing parse(String name){

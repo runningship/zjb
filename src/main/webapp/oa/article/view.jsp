@@ -16,6 +16,7 @@
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/ueditor.all.yw.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="/js/ueditor1_4_3/lang/zh-cn/zh-cn.js"></script>
+<script src="../../mobile/js/common.js" charset="utf-8" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/style/css_ky.css" />
 <!--<script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/layerBox.js"></script>-->
@@ -41,6 +42,7 @@ function getContent(){
       $('#replys').html(json['notice']['replys']);
       $('#conts').html(json['notice']['conts']);
       $('#zancount').html(json['notice']['zans']);
+      
       $('#senderAvatar').attr('src','/oa/images/avatar/'+json['notice']['senderAvatar']+'.jpg');
       if (json['nr']['zan']==1) {
         $('#zan').addClass('zanSel');
