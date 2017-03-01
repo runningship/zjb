@@ -1,6 +1,7 @@
 @echo install all  dependent jar.
 set LIB=../lib
 
+call mvn install:install-file -DgroupId=org.bc -DartifactId=bc-ueditor -Dversion=1.0 -Dpackaging=jar -Dfile=$LIB/bc-ueditor-1.0.jar
 call mvn install:install-file -DgroupId=org.bc -DartifactId=proxool-bc -Dversion=0.9.1-bc-1 -Dpackaging=jar -Dfile=%LIB%/proxool-bc-0.9.1-bc-1.jar
 call mvn install:install-file -DgroupId=org.bc -DartifactId=sdak -Dversion=makesite1.0 -Dpackaging=jar -Dfile=%LIB%/sdak-makesite1.0.jar
 call mvn install:install-file -DgroupId=com.microsoft -DartifactId=sqljdbc4 -Dversion=4.0 -Dpackaging=jar -Dfile=%LIB%/sqljdbc4-4.0.jar
